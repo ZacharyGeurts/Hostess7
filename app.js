@@ -67,7 +67,7 @@ async function checkStatus() {
     const r = await fetch("/api/status", { cache: "no-store" });
     if (!r.ok) throw new Error("status");
     const j = await r.json();
-    liveBrain = !!(j.brain && j.mode !== "github-pages-demo" && !j.demo);
+    liveBrain = !!(j.brain && j.ok && j.mode !== "github-pages-demo" && j.mode !== "pages-boot");
     showStackNav(j);
     setBootUI(false);
     if (liveBrain) {
