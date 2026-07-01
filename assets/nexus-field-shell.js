@@ -909,6 +909,23 @@
     return false;
   }
 
+  function bootLaunchFromQuery(data) {
+    try {
+      const params = new URLSearchParams(global.location?.search || "");
+      const launchId = (params.get("launch") || params.get("program") || "").trim();
+      if (!launchId) return;
+      const prog =
+        (data?.programs || []).find(function (p) {
+          return p.id === launchId;
+        }) || state.programsById[launchId];
+      if (prog) {
+        setTimeout(function () {
+          launch(prog);
+        }, 180);
+      }
+    } catch (_) {}
+  }
+
   function bootDesktop(data) {
     const boot = String(data?.shell?.boot_program ?? data?.policy?.boot_program ?? "").trim();
     const launchAtDesktop =
@@ -936,6 +953,7 @@
       enterFullscreenDesktop();
       bindFullscreenRetry();
     }
+    bootLaunchFromQuery(data);
   }
 
   global.NexusFieldShell = {

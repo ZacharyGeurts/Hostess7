@@ -1,11 +1,12 @@
 /**
- * GitHub Pages base path — /Hostess7 on project sites.
+ * GitHub Pages base path — /field (canonical) or /Hostess7 (legacy hub).
  */
 (function (global) {
   "use strict";
 
   function detectBase() {
     const parts = global.location.pathname.split("/").filter(Boolean);
+    if (parts[0] === "field") return "/field";
     if (parts[0] === "Hostess7") return "/Hostess7";
     if (parts.length === 0) return "";
     return "/" + parts[0];

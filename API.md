@@ -1,4 +1,4 @@
-# Hostess7 API (1.0.7h)
+# Hostess7 API (2.0.7)
 
 Base URL: `http://127.0.0.1:8080` (configurable via `HOSTESS7_WEB_PORT`).
 

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Old Projects — Hostess 7 Stack</title>
+  <meta name="description" content="Legacy stack siblings wired into Hostess 7. Hostess 7 is the main project at ZacharyGeurts/Hostess7." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .op-main {
+      margin: 0 0 1.5rem;
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      background: rgba(61, 214, 140, 0.08);
+    }
+    .op-main h2 { margin: 0 0 0.35rem; font-size: 1rem; color: var(--accent); }
+    .op-main p { margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+    .op-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.65rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .op-card {
+      display: block;
+      padding: 0.75rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 0.4rem;
+      background: var(--panel);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.15s;
+    }
+    .op-card:hover { border-color: var(--accent); }
+    .op-card strong { display: block; font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .op-card span { font-size: 0.72rem; color: var(--muted); }
+    .op-note { margin-top: 1.25rem; font-size: 0.75rem; color: var(--muted); line-height: 1.55; }
+  </style>
+</head>
+<body>
+  <header class="term-header">
+    <span class="term-logo">H7</span>
+    <div>
+      <h1>Old Projects</h1>
+      <p class="term-sub">Legacy stack siblings · <strong>Hostess 7 is the main project</strong></p>
+    </div>
+    <nav class="term-actions">
+      <a class="btn" href="index.html">Boot</a>
+      <a class="btn primary" href="brain.html">GitHub Brain</a>
+      <a class="btn" href="https://github.com/ZacharyGeurts/Hostess7">Repo</a>
+    </nav>
+  </header>
+
+  <main class="term-main" style="display:block; padding:1.25rem; max-width:960px; margin:0 auto;">
+    <section class="op-main" id="op-main" aria-label="Main project">
+      <h2>Hostess 7 — Main Project</h2>
+      <p id="op-main-desc">Loading…</p>
+    </section>
+
+    <h2 style="font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin:0 0 0.75rem;">Old Projects</h2>
+    <ul class="op-grid" id="op-grid" aria-label="Old projects"></ul>
+
+    <p class="op-note" id="op-note"></p>
+  </main>
+
+  <footer class="term-foot">
+    <span>v<span id="ver">2.0.7</span></span>
+    <span>·</span>
+    <span>canonical hub</span>
+    <span>·</span>
+    <a href="https://github.com/ZacharyGeurts/Hostess7" style="color:inherit">ZacharyGeurts/Hostess7</a>
+  </footer>
+  <script>
+    (function () {
+      const mainDesc = document.getElementById("op-main-desc");
+      const grid = document.getElementById("op-grid");
+      const note = document.getElementById("op-note");
+      fetch("data/hostess7-old-projects.json")
+        .then(function (r) { return r.json(); })
+        .then(function (doc) {
+          const main = doc.main_project || {};
+          if (mainDesc) {
+            mainDesc.innerHTML =
+              "<strong>" + (main.name || "Hostess 7") + " " + (main.version || "2.0.7") + "</strong> — " +
+              (main.role || "") +
+              ' · <a href="' + (main.repo || "#") + '" style="color:var(--accent)">GitHub</a>' +
+              (main.pages ? ' · <a href="' + main.pages + '" style="color:var(--accent)">Pages</a>' : "");
+          }
+          (doc.old_projects || []).forEach(function (p) {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.className = "op-card";
+            a.href = p.pages || p.repo || "#";
+            a.target = p.pages ? "_self" : "_blank";
+            a.rel = "noopener";
+            a.innerHTML = "<strong>" + p.name + "</strong><span>" + (p.tag || "legacy") + "</span>";
+            li.appendChild(a);
+            grid.appendChild(li);
+          });
+          if (note) note.textContent = doc.note || "";
+        })
+        .catch(function () {
+          if (mainDesc) mainDesc.textContent = "Hostess 7 2.0.7 — sovereign field brain. Could not load project index.";
+        });
+    })();
+  </script>
+</body>
+</html>

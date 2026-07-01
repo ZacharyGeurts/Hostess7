@@ -1,4 +1,4 @@
-# Hostess7 Architecture (1.0.7h)
+# Hostess7 Architecture (2.0.7)
 
 ## Overview
 

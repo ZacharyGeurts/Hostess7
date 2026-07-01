@@ -111,7 +111,7 @@
     const sibs = versionDoc?.stack_siblings || [];
     const wired = new Set(["ZNetwork", "Grok16", "AMOURANTHRTX", "KILROY", "Final_Ear", "Final_Eye"]);
     el.innerHTML = sibs
-      .map((name) => `<span class="zn-sib${wired.has(name) ? " on" : ""}">${esc(name)}</span>`)
+      .map((name) => `<span class="zn-sib zn-sib--legacy${wired.has(name) ? " on" : ""}" title="Old Project">${esc(name)}</span>`)
       .join("");
   }
 

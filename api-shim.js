@@ -94,6 +94,13 @@
     if (path === "/api/github-secure") {
       return jsonResponse(await loadStatic("/api/github-secure.json"));
     }
+    if (path === "/api/threat-panel.json" || path === "/api/threat-panel") {
+      try {
+        return jsonResponse(await loadStatic("/api/threat-panel.json"));
+      } catch (_e) {
+        return okStub({ posture: "pages-surfaces", gates_held: true });
+      }
+    }
     if (path === "/api/field-c2-bookmarks" && method === "POST") {
       return okStub({ stored: true });
     }
