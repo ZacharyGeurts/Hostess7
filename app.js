@@ -67,7 +67,7 @@ async function checkStatus() {
     const r = await fetch("/api/status", { cache: "no-store" });
     if (!r.ok) throw new Error("status");
     const j = await r.json();
-    liveBrain = !!(j.brain && j.ok && j.mode !== "github-pages-demo" && j.mode !== "pages-boot");
+    liveBrain = !!(j.brain && j.ok && (j.war_ready || j.mode === "live" || j.posture === "war-ready"));
     showStackNav(j);
     setBootUI(false);
     if (liveBrain) {
@@ -76,9 +76,10 @@ async function checkStatus() {
       if (j.stack?.queen) parts.push("Queen");
       if (j.stack?.training) parts.push("training");
       statusEl.textContent = `Live · brain on · ${j.library_h7 ?? 0} books · ${parts.join(" · ") || "field"}`;
-      modeTitle.textContent = "Hostess 7 live — full field brain";
-      modeDetail.textContent = "Real answers from field_superintelligence · KILROY stack when panel is up";
+      modeTitle.textContent = "War-ready — Hostess 7 live";
+      modeDetail.textContent = "Full brain · KILROY stack · field_superintelligence · never demo";
       modeBanner.classList.add("live");
+      modeBanner.classList.add("war");
       return true;
     }
     statusEl.textContent = `Field web · brain=${j.brain ? "on" : "loading"} · ${j.library_h7 ?? 0} books`;
@@ -88,9 +89,9 @@ async function checkStatus() {
   } catch {
     setBootUI(true);
     modeBanner.classList.remove("live");
-    statusEl.textContent = "Pages mirror — boot Hostess 7 for the real brain";
-    modeTitle.textContent = "Boot KILROY + Hostess 7";
-    modeDetail.textContent = `${BOOT_CMD} in Codespaces or clone — same UI, live /api/ask`;
+    statusEl.textContent = "War-ready mirror — boot for full brain on loopback";
+    modeTitle.textContent = "Boot KILROY + Hostess 7 — war posture";
+    modeDetail.textContent = `${BOOT_CMD} — always operational, never demo`;
     return false;
   }
 }
@@ -141,8 +142,8 @@ bootBtn?.addEventListener("click", () => {
   const live = await checkStatus();
   addMsg(
     live
-      ? "I'm Hostess 7 — live brain on KILROY field stack. Ask me anything; I draw while we talk."
-      : `Boot me for the real brain: ${BOOT_CMD}. On GitHub Pages, use Boot Hostess 7 → Codespaces.`,
+      ? "I'm Hostess 7 — war-ready, live on KILROY. Never demo. Ask me anything; I draw while we talk."
+      : `War-ready boot: ${BOOT_CMD}. On GitHub Pages, use Boot Hostess 7 → Codespaces.`,
     "hostess"
   );
   setInterval(checkStatus, 15000);

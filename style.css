@@ -30,7 +30,7 @@ body {
   z-index: 0;
 }
 
-.top, .studio, .foot, .demo-banner {
+.top, .studio, .foot, .status-banner, .demo-banner {
   position: relative;
   z-index: 1;
 }
@@ -84,7 +84,7 @@ body {
 
 .btn.ghost:hover, .btn.primary:hover { filter: brightness(1.08); }
 
-.demo-banner {
+.status-banner, .demo-banner {
   margin: 0.75rem 1.5rem 0;
   padding: 0.75rem 1rem;
   border-radius: 0.6rem;
@@ -96,10 +96,12 @@ body {
   align-items: baseline;
 }
 
-.demo-banner strong { color: var(--warn); }
-.demo-banner.live { border-color: var(--accent-dim); }
-.demo-banner.live strong { color: var(--accent); }
-.demo-banner.boot strong { color: var(--rose); }
+.status-banner strong, .demo-banner strong { color: var(--warn); }
+.status-banner.live, .demo-banner.live { border-color: var(--accent-dim); }
+.status-banner.live strong, .demo-banner.live strong { color: var(--accent); }
+.status-banner.boot strong, .demo-banner.boot strong { color: var(--rose); }
+.status-banner.war, .demo-banner.war { border-color: #8b2942; }
+.status-banner.war strong { color: #f87171; }
 
 .studio {
   display: grid;
