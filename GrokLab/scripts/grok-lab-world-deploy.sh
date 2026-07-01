@@ -44,7 +44,7 @@ case "$CMD" in
     bash "$ROOT/deploy/world-node-bootstrap.sh" --installed --region local --node-id node-local
     ;;
   sync-nodes)
-    log "Sync 30 geographic nodes from world-node-regions.json…"
+    log "Sync geographic nodes from world-node-regions.json…"
     python3 "$ROOT/deploy/world-nodes-sync.py" sync
     ;;
   launch-qemu|launch-qemu-wave)

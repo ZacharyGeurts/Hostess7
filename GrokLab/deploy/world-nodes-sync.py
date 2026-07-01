@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sync world-nodes.json from world-node-regions.json (30 geographic nodes)."""
+"""Sync world-nodes.json from world-node-regions.json (geographic nodes manifest)."""
 from __future__ import annotations
 
 import json
@@ -177,13 +177,22 @@ def _load_provisioned() -> set[str]:
         return set()
 
 
+def _target_count() -> int:
+    if REGIONS_PATH.is_file():
+        try:
+            return int(_load(REGIONS_PATH).get("target_geographic_nodes", 30))
+        except (json.JSONDecodeError, OSError, TypeError, ValueError):
+            pass
+    return 30
+
+
 def _save_provisioned(ids: set[str], *, active_batch: int | None = None) -> None:
     doc: dict = {
         "schema": "grok-lab-qemu-provisioned/v1",
         "updated": str(date.today()),
         "provisioned": sorted(ids),
         "count": len(ids),
-        "target": 30,
+        "target": _target_count(),
     }
     if active_batch is not None:
         doc["active_batch"] = active_batch
