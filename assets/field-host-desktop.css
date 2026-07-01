@@ -1,0 +1,221 @@
+/* Host desktop — wallpaper, program grid, OS theme shells */
+
+:root {
+  --hd-font: system-ui, sans-serif;
+  --hd-text: #eef4ff;
+  --hd-dim: #94a3b8;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--hd-font);
+  color: var(--hd-text);
+}
+
+.hd-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.hd-desktop {
+  position: relative;
+  flex: 1 1 50%;
+  min-width: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  overflow: hidden;
+}
+
+.hd-monitor {
+  flex: 0 0 50%;
+  max-width: 50%;
+  min-width: 280px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hd-monitor.hd-monitor--solo {
+  position: fixed;
+  inset: 0;
+  flex: none;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+.hd-monitor.hidden {
+  display: none;
+}
+
+html:not(.nfs-taskbar-hidden) .hd-shell {
+  padding-bottom: calc(52px + env(safe-area-inset-bottom, 0));
+}
+
+html:not(.nfs-taskbar-hidden) .hd-desktop,
+html:not(.nfs-taskbar-hidden) .hd-monitor {
+  height: calc(100% - 52px - env(safe-area-inset-bottom, 0));
+}
+
+.hd-icons.hidden {
+  display: none;
+}
+
+/* Wallpapers per AmmoOS theme */
+html[data-os-theme="ammo-c2"] .hd-desktop {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 10%, rgba(0, 120, 212, 0.35), transparent 55%),
+    linear-gradient(160deg, #0a1628 0%, #1a2744 45%, #0d1117 100%);
+}
+
+html[data-os-theme="ammo-field"] .hd-desktop {
+  background:
+    radial-gradient(ellipse 90% 70% at 20% 0%, rgba(53, 132, 228, 0.28), transparent 50%),
+    linear-gradient(180deg, #241f31 0%, #1a1624 100%);
+}
+
+html[data-os-theme="ammo-deep"] .hd-desktop {
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(61, 174, 233, 0.22), transparent),
+    linear-gradient(135deg, #1d2028 0%, #232830 100%);
+}
+
+html[data-os-theme="ammo-rose"] .hd-desktop {
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 100%, rgba(255, 120, 80, 0.2), transparent 60%),
+    linear-gradient(180deg, #2a2040 0%, #141018 50%, #0a0810 100%);
+}
+
+.hd-wall-label {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 11px;
+  color: var(--hd-dim);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.hd-icons {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 4px;
+  padding: 16px;
+  max-height: 100%;
+  overflow: auto;
+  align-items: flex-start;
+}
+
+.hd-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 88px;
+  padding: 8px 4px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--hd-text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  touch-action: manipulation;
+}
+
+.hd-icon:hover,
+.hd-icon.selected {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.hd-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.hd-icon-live-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.hd-app-icon--live {
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px rgba(255, 100, 140, 0.45), 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.hd-live-badge {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  animation: hd-live-blink 1.5s ease-in-out infinite;
+}
+
+@keyframes hd-live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
+}
+
+.hd-icon-fallback {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.hd-icon span {
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.hd-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  color: var(--hd-dim);
+  z-index: 100;
+}
+
+.hd-loading.hidden { display: none; }
+
+html[data-os-theme="macos"] .hd-icons {
+  display: none;
+}
+
+html[data-os-theme="macos"] .hd-wall-label::after {
+  content: " — open Launchpad from the dock";
+}

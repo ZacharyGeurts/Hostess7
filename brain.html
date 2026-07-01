@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hostess 7 — GitHub Brain (chat)</title>
+  <meta name="description" content="Full Hostess 7 package on GitHub Pages — talk, API, brain corpus from repo files. Same surface as local :8080." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:* https://raw.githubusercontent.com https://api.github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="term-header">
+    <span class="term-logo">H7</span>
+    <div>
+      <h1>Hostess 7 — GitHub Brain</h1>
+      <p class="term-sub">Isolated mirror · same doctrine · <strong>sovereign brain untouched</strong></p>
+    </div>
+    <nav class="term-actions">
+      <span id="brain-badge" class="badge">loading…</span>
+      <button type="button" class="btn" id="btn-status">Status</button>
+      <a class="btn primary" href="index.html">Queen + AmmoOS</a>
+      <button type="button" class="btn" id="codespaces-btn">Codespaces</button>
+    </nav>
+  </header>
+
+  <main class="term-main live-layout">
+    <section class="main-col">
+      <section class="chat-panel" aria-label="Hostess 7 talk">
+        <div id="chat-log" class="chat-log" role="log" aria-live="polite"></div>
+        <form id="chat-form" class="chat-input-row" autocomplete="off">
+          <input id="chat-in" type="text" placeholder="Ask Hostess 7 anything…" spellcheck="true" aria-label="Question" />
+          <button type="submit" class="btn primary">Ask</button>
+        </form>
+      </section>
+
+      <section class="gfx-wrap" aria-label="Graphics">
+        <canvas id="gfx" width="960" height="540" aria-label="Hostess 7 graphics canvas"></canvas>
+        <p id="gfx-caption" class="gfx-caption">Vision · lossless pixels</p>
+        <div class="gfx-tools">
+          <button type="button" class="btn" data-scene="smpte">SMPTE</button>
+          <button type="button" class="btn" data-scene="grid">Grid</button>
+          <button type="button" class="btn" data-scene="pen">Draw</button>
+        </div>
+      </section>
+
+      <section class="search-row" aria-label="Corpus search">
+        <form id="search-form" class="search-form">
+          <select id="search-domain" aria-label="Domain">
+            <option value="hearing">Hearing</option>
+            <option value="world">World</option>
+            <option value="library">Library</option>
+            <option value="videogames">Games</option>
+          </select>
+          <input id="search-q" type="search" placeholder="Search corpus…" />
+          <button type="submit" class="btn">Search</button>
+        </form>
+        <pre id="search-out" class="search-out"></pre>
+      </section>
+    </section>
+
+    <aside class="surfaces" id="side-panel">
+      <h2>Package status</h2>
+      <ul class="status-list" id="status-list"></ul>
+      <h2>API routes</h2>
+      <ul class="api-list" id="api-list"></ul>
+      <h2>Loopback upgrade</h2>
+      <p class="surfaces-note"><code>./Hostess7.sh boot</code> — agents, KILROY, Queen on your machine.</p>
+      <ul id="surface-list" class="surface-list"></ul>
+    </aside>
+  </main>
+
+  <footer class="term-foot">
+    <span>v<span id="ver">1.0.7h</span></span>
+    <span>·</span>
+    <span id="posture">war-ready</span>
+    <span>·</span>
+    <span id="route-label">pages-full-package</span>
+  </footer>
+  <script src="api-shim.js"></script>
+  <script src="brain-engine.js"></script>
+  <script src="gfx.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

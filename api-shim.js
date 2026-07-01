@@ -12,8 +12,13 @@
     });
   }
 
+  function staticPath(path) {
+    if (global.H7Base) return global.H7Base(path);
+    return path;
+  }
+
   async function loadStatic(path) {
-    const r = await fetch(path, { cache: "no-store" });
+    const r = await fetch(staticPath(path), { cache: "no-store" });
     if (!r.ok) throw new Error(path + " " + r.status);
     return r.json();
   }
@@ -123,6 +128,15 @@
         note: "Reflect runs on sovereign loopback only. Pages mirror is read-only.",
         ts: new Date().toISOString(),
       });
+    }
+    if (path === "/api/field-host-desktop") {
+      return jsonResponse(await loadStatic("/api/field-host-desktop.json"));
+    }
+    if (path === "/api/field-keyboard-sovereign/engage" && method === "POST") {
+      return jsonResponse(await loadStatic("/api/field-keyboard-sovereign-engage.json"));
+    }
+    if (path === "/api/field-keyboard-sovereign/release" && method === "POST") {
+      return jsonResponse(await loadStatic("/api/field-keyboard-sovereign-release.json"));
     }
     if (path === "/api/ask" && method === "POST") {
       let body = {};

@@ -1,0 +1,166 @@
+/* Queen Browser — user guide (legacy browser → Queen migration help) */
+.qbg {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 90% 60% at 88% 6%, rgba(235, 72, 140, 0.12), transparent 45%),
+    radial-gradient(ellipse 70% 50% at 8% 92%, rgba(34, 197, 94, 0.1), transparent 48%),
+    linear-gradient(165deg, #010302, #040806 50%, #020403);
+  color: #e8f2ea;
+  font: 15px/1.55 system-ui, sans-serif;
+}
+
+.qbg-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 32px 28px 20px;
+  border-bottom: 1px solid #1a4d32;
+  background: linear-gradient(0deg, rgba(8, 16, 12, 0.95), rgba(4, 8, 6, 0.85));
+}
+
+.qbg-hero h1 {
+  margin: 0 0 6px;
+  font-size: 1.65rem;
+  letter-spacing: 0.06em;
+  color: #f472b6;
+}
+
+.qbg-lead {
+  margin: 0;
+  max-width: 52rem;
+  color: #6b9a7a;
+}
+
+.qbg-lead code {
+  color: #3ecf8e;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.qbg-crown {
+  flex-shrink: 0;
+  border-radius: 16px;
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.25);
+}
+
+.qbg-main {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  display: grid;
+  gap: 18px;
+}
+
+.qbg-card {
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid #1a4d32;
+  background: rgba(8, 16, 12, 0.82);
+  box-shadow: inset 0 1px 0 rgba(244, 114, 182, 0.08);
+}
+
+.qbg-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  color: #3ecf8e;
+}
+
+.qbg-card p,
+.qbg-card ul {
+  margin: 0 0 10px;
+  color: #c5d9cc;
+}
+
+.qbg-card ul {
+  padding-left: 1.25rem;
+}
+
+.qbg-chip {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  background: rgba(235, 72, 140, 0.08);
+  color: #f472b6;
+}
+
+.qbg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.qbg-table th,
+.qbg-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(26, 77, 50, 0.5);
+}
+
+.qbg-table a {
+  color: #3ecf8e;
+}
+
+.qbg-kbd-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.qbg-kbd-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(26, 77, 50, 0.35);
+}
+
+.qbg-kbd-list kbd {
+  display: inline-block;
+  min-width: 1.4em;
+  text-align: center;
+  padding: 2px 6px;
+  margin-right: 4px;
+  border-radius: 4px;
+  border: 1px solid #1a4d32;
+  background: #050806;
+  font-size: 0.82rem;
+  color: #f472b6;
+}
+
+.qbg-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #14532d, #22c55e);
+  color: #ecfdf5;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.qbg-btn:hover {
+  box-shadow: 0 0 14px rgba(244, 114, 182, 0.25);
+}
+
+.qbg-stack-list {
+  margin: 0 0 12px;
+  padding-left: 1.35rem;
+  color: #c5d9cc;
+}
+
+.qbg-stack-list li {
+  margin-bottom: 8px;
+}
+
+body[data-queen-surface="browser"] .qb-security-strip.qb-stack-ok {
+  color: #3ecf8e !important;
+  border-color: rgba(34, 197, 94, 0.45) !important;
+}
+
+body[data-queen-surface="browser"] .qb-security-strip.qb-stack-warn {
+  color: #f472b6 !important;
+  border-color: rgba(244, 114, 182, 0.4) !important;
+}
