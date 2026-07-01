@@ -1,0 +1,30 @@
+{
+  "name": "Hostess 7",
+  "version": "1.0.7e",
+  "mode": "pages-boot",
+  "posture": "war-ready",
+  "war_ready": true,
+  "brain": false,
+  "demo": false,
+  "boot_command": "./Hostess7.sh boot",
+  "sovereign_time_only": true,
+  "library_h7": 92,
+  "pages_url": "https://zacharygeurts.github.io/Hostess7/",
+  "repo": "https://github.com/ZacharyGeurts/Hostess7",
+  "codespaces": "https://github.com/codespaces/new?hide_repo_select=true&repo=ZacharyGeurts/Hostess7",
+  "boot_manifest": "/boot.json",
+  "security": {
+    "https": true,
+    "csp": true,
+    "sanitize_input": true,
+    "no_secrets_in_pages": true
+  },
+  "commands": [
+    "./Hostess7.sh boot",
+    "./Hostess7.sh web",
+    "./Hostess7.sh stack status",
+    "./Hostess7.sh alert-posture on"
+  ],
+  "field_stack_doc": "FIELD-STACK.md",
+  "updated": "2026-07-01"
+}

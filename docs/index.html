@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hostess 7 — Live Field Brain</title>
+  <meta name="description" content="Full Hostess 7 — KILROY field stack, real brain, talk and draw." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:* https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="aurora"></div>
+  <header class="top">
+    <div class="brand">
+      <span class="logo">H7</span>
+      <div>
+        <h1>Hostess 7</h1>
+        <p class="tag">KILROY · Brain · Talk · Draw</p>
+      </div>
+    </div>
+    <nav class="actions" id="stack-nav">
+      <button type="button" class="btn primary" id="boot-btn" hidden>Boot Hostess 7</button>
+      <a class="btn ghost" href="http://127.0.0.1:9477/field" id="nav-panel" hidden>Field</a>
+      <a class="btn ghost" href="http://127.0.0.1:9481/world/browser.html" id="nav-queen" hidden>Queen</a>
+      <a class="btn ghost" href="http://127.0.0.1:9488/" id="nav-training" hidden>Training</a>
+      <a class="btn ghost" href="https://github.com/ZacharyGeurts/Hostess7" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <div id="mode-banner" class="status-banner" role="status">
+    <strong id="mode-title">Booting field stack…</strong>
+    <span id="mode-detail">KILROY · panel · Queen · full brain</span>
+  </div>
+
+  <main class="studio">
+    <section class="draw-panel">
+      <div class="panel-head">
+        <h2>Drawing space</h2>
+        <div class="tools">
+          <button type="button" id="tool-pen" class="tool active" title="Draw">Pen</button>
+          <button type="button" id="tool-hostess" class="tool" title="Let Hostess draw">Hostess</button>
+          <button type="button" id="tool-clear" class="tool danger" title="Clear canvas">Clear</button>
+        </div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="gfx" width="960" height="540" aria-label="Hostess 7 drawing canvas"></canvas>
+      </div>
+      <p id="gfx-caption" class="gfx-caption">Ask a question — Hostess draws her answer here.</p>
+    </section>
+
+    <section class="talk-panel">
+      <div class="panel-head">
+        <h2>Talk to Hostess</h2>
+        <p id="status" class="status-inline">Connecting…</p>
+      </div>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <form id="chat-form" class="composer">
+        <input id="query" type="text" placeholder="Ask Hostess anything…" autocomplete="off" />
+        <button type="submit" class="btn primary">Send</button>
+      </form>
+      <div class="chips">
+        <button type="button" class="chip" data-q="What is the SG field stack boot order?">KILROY stack</button>
+        <button type="button" class="chip" data-q="Draw the brain hemispheres">Brain</button>
+        <button type="button" class="chip" data-q="How does Hostess7 hear and speak?">Hearing</button>
+        <button type="button" class="chip" data-q="children books and fiction on the library shelf">Library</button>
+        <button type="button" class="chip" data-q="NEXUS-Shield firewall and HTTPS panel">NEXUS</button>
+        <button type="button" class="chip" data-q="contractions conjunctions gerunds interpersonal English">English</button>
+        <button type="button" class="chip" data-q="What is the law on FCC regulations?">Law</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>ZacharyGeurts</span><span>·</span><span>KILROY · Lossless H7 · Field</span>
+  </footer>
+  <script src="gfx.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
