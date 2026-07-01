@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 import threading
@@ -32,7 +33,13 @@ RSYNC_LOG_PATH = Path(
 )
 SSH_KEY = os.environ.get("GROK_LAB_SSH_KEY", str(DEPLOY / "world-ssh" / "id_ed25519"))
 NL = Path(os.environ.get("NEXUS_INSTALL_ROOT", str(DEPLOY.parent.parent)))
-VERIFY_QUICK_ATTEMPTS = int(os.environ.get("WORLD_PIPELINE_VERIFY_QUICK_ATTEMPTS", "3"))
+CHECK_VERIFY_GRACE_SEC = int(os.environ.get("WORLD_PIPELINE_CHECK_VERIFY_GRACE_SEC", "90"))
+CHECK_VERIFY_POLL_SEC = int(os.environ.get("WORLD_PIPELINE_CHECK_VERIFY_POLL_SEC", "10"))
+_PANEL_CURL = (
+    "code=$(curl -s -o /dev/null -w '%{http_code}' "
+    "http://127.0.0.1:9477/field 2>/dev/null || true); "
+    "printf '%s' \"${code:-000}\""
+)
 REBOOT_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_REBOOT_SSH_SEC", "180"))
 DEPLOY_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_DEPLOY_SSH_SEC", "180"))
 CHECK_KICK_SEC = int(os.environ.get("WORLD_PIPELINE_CHECK_KICK_SEC", "15"))
@@ -442,32 +449,45 @@ def _kick_services(
         subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
+def _parse_http_code(raw: str) -> str:
+    """Normalize panel probe output (curl -w 000 + fallback echo used to yield 000000)."""
+    text = (raw or "").strip()
+    match = re.search(r"(\d{3})\s*$", text)
+    return match.group(1) if match else "000"
+
+
+def _probe_panel_http(port: int) -> str:
+    r = _run(_ssh_cmd(port, _PANEL_CURL, connect_timeout=6), timeout=15)
+    return _parse_http_code(r.stdout or "")
+
+
 def _verify_panel_quick(
     port: int,
     *,
     slot: int | None = None,
     nid: str | None = None,
 ) -> bool:
-    """Short panel probe during VERIFY pass — retry next round if not ready."""
-    attempts = max(1, VERIFY_QUICK_ATTEMPTS)
+    """Poll panel during VERIFY pass; retry next rotation round if not ready."""
+    polls = max(1, CHECK_VERIFY_GRACE_SEC // CHECK_VERIFY_POLL_SEC)
     prefix = f"slot {slot} verify {nid}" if slot is not None else "verify"
+    _run(
+        _ssh_cmd(
+            port,
+            "sudo systemctl start nexus-c2-kilroy.service 2>/dev/null; "
+            "sudo systemctl start nexus-panel.service 2>/dev/null; true",
+            connect_timeout=8,
+        ),
+        timeout=20,
+    )
     last_code = "000"
-    for i in range(attempts):
-        r = _run(
-            _ssh_cmd(
-                port,
-                "curl -sf -o /dev/null -w '%{http_code}' "
-                "http://127.0.0.1:9477/field 2>/dev/null || echo 000",
-                connect_timeout=6,
-            ),
-            timeout=15,
-        )
-        last_code = (r.stdout or "").strip() or "000"
+    for i in range(polls):
+        last_code = _probe_panel_http(port)
         if last_code == "200":
-            _log(f"{prefix} :{port} — panel 200")
+            _log(f"{prefix} :{port} — panel 200 ({i + 1}/{polls})")
             return True
-        if i + 1 < attempts:
-            time.sleep(5)
+        if i == 0 or (i + 1) % 3 == 0:
+            _log(f"{prefix} :{port} — http={last_code} ({i + 1}/{polls})")
+        time.sleep(CHECK_VERIFY_POLL_SEC)
     _log(f"{prefix} :{port} — http={last_code}, retry next round")
     return False
 
@@ -654,7 +674,6 @@ def _slot_worker_check_verify(slot: int) -> None:
                 continue
 
             _set_slot(slot, state="check_verify", node=node)
-            _kick_services(port, slot=slot, nid=nid, wait=False)
             tree_ok = _tree_ok(port)
             verified = _verify_panel_quick(port, slot=slot, nid=nid) if tree_ok else False
 
