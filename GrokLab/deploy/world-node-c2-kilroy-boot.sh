@@ -11,9 +11,11 @@ PY="${GROK_LAB_PY:-python3}"
 
 export SG_ROOT="$SG" NEXUS_INSTALL_ROOT="$NL" NEXUS_STATE_DIR="$STATE"
 export NEXUS_WAR_MACHINE=1 NEXUS_C2_WAR_POSTURE=1 NEXUS_C2_KIOSK=0
+export NEXUS_C2_BASEMENT=1 NEXUS_C2_SECURE_BASEMENT=1 NEXUS_C2_WEAPONIZED=1
 export NEXUS_EVERY_KILL_REKILL=1 NEXUS_BOOT_REKILL=1 NEXUS_FIELD_ATTACK_KIT=1
 export NEXUS_FIELD_AUTO_REKILL=1 NEXUS_ATTACK_KIT_AUTO_CRUSH=1 NEXUS_KILL_DETECT=1
-export KILROY_WAR_POSTURE=1 KILROY_PC_CORE=1 GROK_LAB_WORLD_NODE=1
+export KILROY_WAR_POSTURE=1 KILROY_PC_CORE=1 KILROY_WEAPONIZED=1 KILROY_FULL_WEAPONIZED=1
+export KILROY_OFFENSE_ARMED=1 KILROY_COUNTERMEASURES_ARMED=1 GROK_LAB_WORLD_NODE=1
 export NEXUS_FIELD_STANDALONE=1 NEXUS_ZNETWORK=1 NEXUS_ZNETWORK_PROMPT=0
 export FIELD_STACK_LAYER="hardware,nexus_c2,kilroy"
 
@@ -31,12 +33,9 @@ fi
 
 log() { printf '[c2-kilroy-boot] %s\n' "$*"; }
 
+# Layer 1: NEXUS C2 secure basement → Layer 2: KILROY weaponized (field-war-hardening orchestrates both)
 # shellcheck source=/dev/null
 [[ -f "$NL/lib/field-war-hardening.sh" ]] && AML_BUILD=0 source "$NL/lib/field-war-hardening.sh" && nexus_field_war_harden || true
-
-if [[ -x "$DEPLOY/kilroy-war-arm.sh" ]]; then
-  AML_BUILD=0 bash "$DEPLOY/kilroy-war-arm.sh" 2>&1 | tail -6 || true
-fi
 
 if [[ ! -f "$STATE/threat-panel.json" && -f "$NL/scripts/panel-json-assemble.py" ]]; then
   NEXUS_INSTALL_ROOT="$NL" NEXUS_STATE_DIR="$STATE" "$PY" "$NL/scripts/panel-json-assemble.py" >/dev/null 2>&1 || true

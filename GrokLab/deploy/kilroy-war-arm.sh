@@ -18,11 +18,14 @@ if [[ -x "$NL/Grok16/bin/gpy-16" ]]; then
   PY="$NL/Grok16/bin/gpy-16"
 fi
 
-[[ -f "$KILROY_ROOT/scripts/build-kilroy.sh" ]] || { log "no KILROY — skip"; exit 0; }
+kilroy_present=0
+[[ -d "$KILROY_ROOT" && -f "$KILROY_ROOT/scripts/build-kilroy.sh" ]] && kilroy_present=1
 
-export KILROY_PC_CORE=1 KILROY_WAR_POSTURE=1 KILROY_DEFENSIVE_ONLY=1
+export KILROY_PC_CORE=1 KILROY_WAR_POSTURE=1
+export KILROY_WEAPONIZED=1 KILROY_OFFENSE_ARMED=1 KILROY_FULL_WEAPONIZED=1
+export KILROY_DEFENSIVE_ONLY=0 KILROY_COUNTERMEASURES_ARMED=1
 export KILROY_WAR_SCOPE=defensive_perimeter KILROY_LOOPBACK_SANCTUARY=1
-export NEXUS_BOOT_REKILL=1 NEXUS_EVERY_KILL_REKILL=1 NEXUS_FIELD_ATTACK_KIT=1
+export NEXUS_C2_BASEMENT=1 NEXUS_BOOT_REKILL=1 NEXUS_EVERY_KILL_REKILL=1 NEXUS_FIELD_ATTACK_KIT=1
 mkdir -p "$STATE"
 
 log "=== KILROY war package — arm + deploy ==="
@@ -36,15 +39,19 @@ cat >"$STATE/kilroy-loopback.json" <<EOF
 {"schema":"kilroy-loopback/v1","owner":"kilroy_core","loopback_authority":"127.0.0.1","transparent":true,"active":${panel_up},"updated":"${ts}"}
 EOF
 cat >"$STATE/kilroy-defense-offense.json" <<EOF
-{"schema":"kilroy-defense-offense/v1","owner":"kilroy_core","war_scope":"defensive_perimeter","defensive_only":true,"hostile_inside":false,"self_harm_forbidden":true,"attack_kit_present":true,"offense_scope":"reactive_confirmed_threat_only","updated":"${ts}"}
+{"schema":"kilroy-defense-offense/v1","owner":"kilroy_core","war_scope":"defensive_perimeter","weaponized":true,"fully_weaponized":true,"defensive_only":false,"countermeasures_armed":true,"offense_armed":true,"hostile_inside":false,"self_harm_forbidden":true,"attack_kit_present":true,"offense_scope":"reactive_confirmed_threat_only","updated":"${ts}"}
 EOF
 cat >"$STATE/kilroy-core.json" <<EOF
-{"schema":"kilroy-core/v1","updated":"${ts}","role":"pc_core","war_posture":true,"defensive_only":true,"war_scope":"defensive_perimeter","loopback_authority":"127.0.0.1","boot_ready":true,"kilroy_grants_field":true,"nexus_c2":${panel_up},"world_node":true,"install_root":"${NL}"}
+{"schema":"kilroy-core/v1","updated":"${ts}","role":"pc_core","war_posture":true,"weaponized":true,"fully_weaponized":true,"defensive_only":false,"countermeasures_armed":true,"war_scope":"defensive_perimeter","loopback_authority":"127.0.0.1","boot_ready":true,"kilroy_grants_field":true,"nexus_c2_basement":true,"nexus_c2":${panel_up},"world_node":true,"install_root":"${NL}"}
 EOF
 log "kilroy core stamped"
 
-timeout 10 "$PY" "$NL/lib/kilroy-boot-services.py" board >/dev/null 2>&1 || true
-timeout 10 "$PY" "$NL/lib/kilroy-field-brain.py" board >/dev/null 2>&1 || true
+if [[ "$kilroy_present" -eq 1 ]]; then
+  timeout 10 "$PY" "$NL/lib/kilroy-boot-services.py" board >/dev/null 2>&1 || true
+  timeout 10 "$PY" "$NL/lib/kilroy-field-brain.py" board >/dev/null 2>&1 || true
+else
+  log "KILROY tree slim — weaponized stamps only (no build-kilroy.sh)"
+fi
 
 if [[ -f "$NL/lib/field-attack-kit.py" ]]; then
   export NEXUS_BOOT_REKILL_ONLINE=0
@@ -60,6 +67,6 @@ if [[ -f "$DEPLOY/field-one-world-bring.sh" ]]; then
 fi
 
 cat >"$STATE/kilroy-war-package.json" <<EOF
-{"schema":"kilroy-war-package/v1","updated":"${ts}","armed":true,"deploying":true,"war_posture":true,"defensive_only":true,"war_scope":"defensive_perimeter","loopback_authority":"127.0.0.1","kilroy_root":"${KILROY_ROOT}","boot_rekill":true,"every_kill_rekill":true,"world_node":true}
+{"schema":"kilroy-war-package/v1","updated":"${ts}","armed":true,"weaponized":true,"fully_weaponized":true,"deploying":true,"war_posture":true,"countermeasures_armed":true,"offense_armed":true,"defensive_only":false,"war_scope":"defensive_perimeter","loopback_authority":"127.0.0.1","nexus_c2_basement":true,"kilroy_root":"${KILROY_ROOT}","boot_rekill":true,"every_kill_rekill":true,"world_node":true}
 EOF
-log "KILROY war package armed"
+log "KILROY war package fully weaponized (above NEXUS C2 basement)"

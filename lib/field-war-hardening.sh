@@ -46,8 +46,14 @@ nexus_field_war_export_env() {
   export SG_ROOT_KILL_PREJUDICE="${SG_ROOT_KILL_PREJUDICE:-1}"
   export SG_ROOT_SOVEREIGN_KILL="${SG_ROOT_SOVEREIGN_KILL:-1}"
   export SG_ROOT_SOVEREIGN_GUARD="${SG_ROOT_SOVEREIGN_GUARD:-1}"
+  export NEXUS_C2_BASEMENT="${NEXUS_C2_BASEMENT:-1}"
+  export NEXUS_C2_SECURE_BASEMENT="${NEXUS_C2_SECURE_BASEMENT:-1}"
+  export NEXUS_C2_WEAPONIZED="${NEXUS_C2_WEAPONIZED:-1}"
   export KILROY_WAR_POSTURE="${KILROY_WAR_POSTURE:-1}"
   export KILROY_PC_CORE="${KILROY_PC_CORE:-1}"
+  export KILROY_WEAPONIZED="${KILROY_WEAPONIZED:-1}"
+  export KILROY_OFFENSE_ARMED="${KILROY_OFFENSE_ARMED:-1}"
+  export KILROY_FULL_WEAPONIZED="${KILROY_FULL_WEAPONIZED:-1}"
   export QUEEN_DEFENDS_WITH_NEXUS="${QUEEN_DEFENDS_WITH_NEXUS:-1}"
   export QUEEN_DEFENDS_WITH_KILROY="${QUEEN_DEFENDS_WITH_KILROY:-1}"
   export FIELD_STACK_LAYER="${FIELD_STACK_LAYER:-hardware,nexus_c2,kilroy,ammoos,queen}"
@@ -86,9 +92,18 @@ nexus_field_war_attack_kit() {
   fi
 }
 
+nexus_field_war_c2_basement_arm() {
+  [[ "${NEXUS_C2_BASEMENT:-1}" == "1" ]] || return 0
+  local arm="${NEXUS_INSTALL_ROOT}/GrokLab/deploy/nexus-c2-basement-arm.sh"
+  [[ -f "$arm" ]] || return 0
+  chmod +x "$arm" 2>/dev/null || true
+  AML_BUILD=0 bash "$arm" >>"${NEXUS_STATE_DIR}/nexus-c2-basement.log" 2>&1 || true
+}
+
 nexus_field_war_kilroy_arm() {
   local war="${NEXUS_INSTALL_ROOT}/GrokLab/deploy/kilroy-war-arm.sh"
-  [[ -x "$war" ]] || return 0
+  [[ -f "$war" ]] || return 0
+  chmod +x "$war" 2>/dev/null || true
   AML_BUILD=0 bash "$war" >>"${NEXUS_STATE_DIR}/kilroy-war-arm.log" 2>&1 || true
 }
 
@@ -137,6 +152,7 @@ nexus_field_war_harden() {
   [[ "${NEXUS_WAR_MACHINE:-1}" == "1" ]] || return 0
   mkdir -p "${NEXUS_STATE_DIR}" 2>/dev/null || true
   nexus_field_war_export_env
+  nexus_field_war_c2_basement_arm
   nexus_field_war_arm_settings
   nexus_field_war_attack_kit
   nexus_field_war_kilroy_arm
@@ -148,7 +164,7 @@ nexus_field_war_harden() {
     NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" SG_ROOT="$SG_ROOT" \
       "$py" "${NEXUS_INSTALL_ROOT}/lib/field-war-hardening.py" stamp >>"${NEXUS_STATE_DIR}/war-harden.log" 2>&1 || true
   fi
-  declare -f nexus_log >/dev/null 2>&1 && nexus_log "ALERT" "field-war" "WAR_MACHINE hardened — every_kill_rekill=1 layer=nexus_c2→kilroy→ammoos→queen" || true
+  declare -f nexus_log >/dev/null 2>&1 && nexus_log "ALERT" "field-war" "WAR_MACHINE hardened — basement C2 weaponized → KILROY armed — every_kill_rekill=1" || true
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then

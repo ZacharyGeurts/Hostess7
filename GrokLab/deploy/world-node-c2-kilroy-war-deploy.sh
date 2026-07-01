@@ -73,7 +73,8 @@ for f in field-hostile.tsv kill-rekill-registry.json threat-panel.json settings.
 done
 eval $RS /tmp/wstate/ "ubuntu@127.0.0.1:${RB}/.nexus-state/" 2>/dev/null || true
 
-ssh_ok "chmod +x ${RB}/GrokLab/deploy/world-node-c2-kilroy-boot.sh ${RB}/GrokLab/deploy/kilroy-war-arm.sh 2>/dev/null; \
+ssh_ok "chmod +x ${RB}/GrokLab/deploy/world-node-c2-kilroy-boot.sh ${RB}/GrokLab/deploy/kilroy-war-arm.sh \
+  ${RB}/GrokLab/deploy/nexus-c2-basement-arm.sh 2>/dev/null; \
   chmod +x ${RB}/lib/field-war-hardening.sh 2>/dev/null; true"
 
 log "arm + boot C2/KILROY on :$PORT"

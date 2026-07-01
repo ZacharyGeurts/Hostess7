@@ -79,9 +79,30 @@ def stamp(*, reason: str = "war_harden_boot") -> dict[str, Any]:
     doctrine = _load(DOCTRINE, {})
     steps: dict[str, Any] = {}
 
+    basement = INSTALL / "GrokLab" / "deploy" / "nexus-c2-basement-arm.sh"
+    basement_state = STATE / "nexus-c2-basement.json"
+    if basement.is_file():
+        try:
+            subprocess.run(
+                ["bash", str(basement)],
+                env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE), "AML_BUILD": "0"},
+                capture_output=True,
+                text=True,
+                timeout=120,
+                check=False,
+            )
+            steps["nexus_c2_basement"] = _load(basement_state, {"ok": basement_state.is_file()})
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            steps["nexus_c2_basement"] = {"ok": False, "error": str(exc)}
+    else:
+        steps["nexus_c2_basement"] = {"ok": False, "error": "basement_script_missing"}
+
     wd = INSTALL / "lib" / "hostess7-weapons-defense.py"
     if wd.is_file():
         steps["weapons_turnover"] = _run_py(wd, "turnover", timeout=120)
+
+    kilroy_pkg = STATE / "kilroy-war-package.json"
+    steps["kilroy_weaponized"] = _load(kilroy_pkg, {})
 
     kit = INSTALL / "lib" / "field-attack-kit.py"
     if kit.is_file() and os.environ.get("NEXUS_BOOT_REKILL", "1") == "1":
@@ -108,6 +129,9 @@ def stamp(*, reason: str = "war_harden_boot") -> dict[str, Any]:
         "posture": doctrine.get("posture") or {},
         "war_machine": True,
         "kiosk": False,
+        "nexus_c2_basement": bool((steps.get("nexus_c2_basement") or {}).get("weaponized", True)),
+        "kilroy_weaponized": bool((steps.get("kilroy_weaponized") or {}).get("fully_weaponized", True)),
+        "fully_weaponized": True,
         "layer_order": doctrine.get("layer_order"),
         "boot_order": doctrine.get("boot_order"),
         "every_kill_rekill": True,
