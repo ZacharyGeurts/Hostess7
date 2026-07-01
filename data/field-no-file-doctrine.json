@@ -1,0 +1,78 @@
+{
+  "schema": "field-no-file-doctrine/v1",
+  "title": "Never poison the well — no standalone field files",
+  "motto": "One flat 2D plane. Placement implies field. Sovereign formats presume field underneath; they never create it.",
+  "warning": {
+    "headline": "DO NOT CREATE FIELD FILES",
+    "body": "Standalone .field, depth-field, subfield, or nested field JSON/Launch files export thermal debt to every field on the SG fabric. Use panels, ledgers, and sovereign wire formats instead.",
+    "citation": "ironclad:field_sanity:4"
+  },
+  "policy": {
+    "no_field_files": true,
+    "max_field_depth": 0,
+    "placement_implies_field": true,
+    "never_poison_the_well": true,
+    "requires_sg_root": true,
+    "requires_grok16": true,
+    "enforce_at_every_gate": true
+  },
+  "sovereign_formats": {
+    "rule": "Lossless wire/storage formats presume the 2D platform field — they require SG + Grok16 and never create a field file.",
+    "ids": ["h7c", "g1id", "fielddrive", "wrdt", "wrzc", "field_io_packet", "h7snap"],
+    "flags": {
+      "presumes_field_underneath": true,
+      "requires_grok16": true,
+      "creates_field_file": false
+    }
+  },
+  "forbidden": {
+    "extensions": [".field"],
+    "extension_exceptions": [".fielddrive", ".field-snap", ".field-blanket"],
+    "path_substrings": ["depth-field", "subfield", "nested-field"],
+    "basenames": [
+      "queen-field.json",
+      "internet-field.json",
+      "dns-internet-field.json",
+      ".field-blanket.json",
+      "ammocode-field.json"
+    ],
+    "schemas": [
+      "queen-field/v1",
+      "field-blanket/v1",
+      "internet-field/v1",
+      "dns-internet-field/v1"
+    ]
+  },
+  "panel_truth_basenames": [
+    "packet-field.json",
+    "us-field.json",
+    "thermal-earth-field.json",
+    "dns-internet-harvest-panel.json"
+  ],
+  "allowed_suffixes": [
+    "-panel.json",
+    "-ledger.jsonl",
+    "-doctrine.json",
+    "-table.json",
+    "-manifest.json",
+    "-baseline.json",
+    "-notify.json",
+    "-cursor"
+  ],
+  "replacements": {
+    "queen-field.json": "queen-sovereign-bundle.json",
+    "internet-field.json": "internet-harvest.json",
+    "dns-internet-field.json": "dns-internet-harvest.json",
+    ".field-blanket.json": "blanket-staging.json"
+  },
+  "module": "lib/field-no-file-gate.py",
+  "grok16_module": "Grok16/forge/g16-no-field-files.py",
+  "gates": [
+    "field-no-file-gate",
+    "field-depth-singularizer",
+    "ironclad-field-sanity",
+    "g16-field-sanity",
+    "g16-no-field-files",
+    "g16-linker"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "ammocode-shield-doctrine/v1",
+  "title": "AmmoCode full-stack shield — hook down, secure through",
+  "capture": {
+    "screen_capture": "deny_unless_permitted",
+    "keyloggers": "deny",
+    "sanctioned_screenshot": "gui_save_menu_only",
+    "sanctioned_screenshare": "collab_host_grant_gui_only",
+    "getDisplayMedia": false,
+    "getUserMedia_video": false,
+    "screenshare_max_fps": 2,
+    "message": "No screen capture or keyloggers unless host permits collab GUI share. File → Screenshot… always available."
+  },
+  "mitm": {
+    "beacon_pin": true,
+    "session_proof": true,
+    "frame_mac": true
+  },
+  "znetwork": {
+    "coexist_if_running": true,
+    "never_double_activate": true,
+    "hook_on_open": true,
+    "attach_only_when_running": true,
+    "never_harm_os": true
+  },
+  "memory_vault": {
+    "doctrine": "data/ammocode-memory-vault-doctrine.json",
+    "runtime_tax": 0,
+    "slots": 4,
+    "leak_policy": "bounded_scrub_on_close",
+    "tamper": "scrub_and_abort"
+  },
+  "nondestructive": {
+    "doctrine": "data/ammocode-nondestructive-doctrine.json",
+    "disk_write_api": false,
+    "save_model": "browser_export_only",
+    "read_jail": ["$HOME", "SG", "AmmoOS", "/tmp"],
+    "run_blocked_inside_self": true,
+    "settings_writes": ["~/.config/ammocode", ".nexus-state/ammocode"],
+    "message": "AmmoCode never destructively writes itself or foreign paths — edit in memory, Export to save"
+  },
+  "stack": [
+    "ammocode_editor",
+    "ammocode_nondestructive",
+    "memory_vault_4slot",
+    "g16_security",
+    "ddos_guard",
+    "znetwork_field",
+    "connection_gatekeeper",
+    "hostile_threat"
+  ]
+}

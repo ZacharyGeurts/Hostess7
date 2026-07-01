@@ -1,0 +1,22 @@
+# Hostess 7 full train-up — every track solid before stack update
+@profile fastest
+@verbose clean
+@motto "Train fully first — then update. No fast path on release."
+
+seq ·
+  say "Hostess 7 full train-up — all tracks · campus · embodiment · doctrine — then update gate"
+  post "H7_TRAIN START — progress in .nexus-state/hostess7-full-train-progress.json"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+  post "Phase 1 — full train (curriculum · brain campus · floor · room · hands)"
+  run script:hostess7-full-train timeout:14400 stall:1800
+  post "Phase 2 — brain guard witness + full pre-update (no --fast)"
+  run py:hostess7-brain-guard action:verify timeout:120 stall:60
+  run py:hostess7-brain-guard action:witness timeout:60 stall:30
+  run script:hostess7-pre-update timeout:3600 stall:900
+  run py:hostess7-tasklist action:report timeout:30 stall:15
+  run py:hostess7-change-awareness action:pulse timeout:60 stall:30
+  assist freeze
+  say "Train-up complete — Hostess 7 ready for update / release"
+  post "H7_TRAIN COMPLETE — ./lib/ammolang-run.sh hostess7_release when ready"

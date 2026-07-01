@@ -1,0 +1,41 @@
+{
+  "schema": "field-library-registry-doctrine/v1",
+  "module": "lib/field-library-registry.py",
+  "panel": "field-library-registry-panel.json",
+  "cache": "field-library-registry.json",
+  "motto": "Single point of informational value — registries, catalogs, textbooks, formats, everything on the globe.",
+  "collections": [
+    "devices",
+    "games",
+    "programming_greats",
+    "textbooks",
+    "exploring_speaking",
+    "exploring_subjects",
+    "file_formats",
+    "manifests"
+  ],
+  "readers": [
+    "lib/h7-library-bridge.py",
+    "lib/field-extensive-library.py",
+    "lib/dewey-library-github.py",
+    "lib/h7-library-librarian.py",
+    "lib/field-dewey-index.py",
+    "lib/field-file-formats.py"
+  ],
+  "shelves": {
+    "textbooks": "library/dewey/{subject-shelf}",
+    "file_formats": "library/dewey/005-data/file-formats",
+    "devices": "library/dewey/004-computers",
+    "games": "library/dewey/700-arts/games",
+    "greats": "library/dewey/920-biography/game-programming-greats",
+    "exploring_speaking": "library/dewey/400-education/exploring_speaking_{iso6393}",
+    "exploring_subjects": "library/dewey/{subject-shelf}/exploring_{subject}"
+  },
+  "hostess7_library_doctrine": "data/hostess7-library-doctrine.json",
+  "api": ["/api/library-registry", "/api/library-registry/search"],
+  "ironclad": {
+    "secure_api": "/api/ironclad/secure-api",
+    "sort_context": "registry_index",
+    "singleton": true
+  }
+}

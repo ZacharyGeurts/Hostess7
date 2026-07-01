@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>View</title>
+  <link rel="stylesheet" href="queen-modern.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-syntax.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-viewer.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="view.css" />
+  <link rel="stylesheet" href="queen-zoom-lightbox.css" />
+  <link rel="stylesheet" href="queen-nes-cartridge-theater.css" />
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:*; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'" />
+</head>
+<body data-queen-surface="files" data-telemetry="off">
+  <div class="qf-app" id="qf-app">
+    <header class="qf-top">
+      <span class="qf-brand">View</span>
+      <span class="qf-zero-pill" id="qf-zero-pill" title="AMOURANTHRTX 4-slot · zero runtime tax">4-slot · zero cost</span>
+      <div class="qf-top-actions">
+        <button type="button" class="qf-menu-btn" id="qf-types-btn" title="File types — flags and settings">Types</button>
+        <button type="button" class="qf-menu-btn" id="qf-library-btn" title="Program icon library">Library</button>
+      </div>
+      <div class="qf-folder-menu">
+        <button type="button" class="qf-menu-btn" id="qf-folder-menu-btn" aria-haspopup="true" aria-expanded="false">Folders ▾</button>
+        <ul class="qf-menu-drop" id="qf-folder-menu" role="menu" hidden></ul>
+      </div>
+    </header>
+    <nav class="qf-nav" aria-label="Navigation">
+      <button type="button" id="qf-back" title="Back" aria-label="Back">←</button>
+      <button type="button" id="qf-forward" title="Forward" aria-label="Forward">→</button>
+      <button type="button" id="qf-dock-pin" title="Dock folder">⊕ Dock</button>
+      <select id="qf-mobile-root" class="qf-mobile-select" aria-label="Root folder"></select>
+      <select id="qf-mobile-jump" class="qf-mobile-select" aria-label="Quick jump" hidden></select>
+    </nav>
+    <nav class="qf-crumb" id="qf-crumb" aria-label="Path"></nav>
+    <div class="qf-dock" id="qf-dock" aria-label="Folder dock"></div>
+    <div class="qf-type-bar" id="qf-type-bar" aria-label="Pinned file types" hidden></div>
+    <div class="qf-hotbar" id="qf-hotbar" aria-label="Wishlist">
+      <span class="qf-hotbar-label">Wishlist</span>
+    </div>
+    <div class="qf-split" id="qf-split">
+      <aside class="qf-tree" id="qf-tree" aria-label="Folder tree"></aside>
+      <div class="qf-divider" id="qf-divider" role="separator" aria-orientation="vertical" tabindex="0"></div>
+      <div class="qf-main" id="qf-main">
+        <section class="qf-list" aria-label="Files">
+          <div class="qf-toolbar">
+            <button type="button" id="qf-up">↑ Up</button>
+            <button type="button" id="qf-refresh">↻ Refresh</button>
+            <button type="button" id="qf-mkdir" title="New folder">+ Folder</button>
+            <button type="button" id="qf-hidden">Show hidden</button>
+            <button type="button" id="qf-launch-filter" title="Launchables only">▶ Launchables</button>
+            <select id="qf-sort" aria-label="Sort">
+              <option value="dirs_first">Dirs first</option>
+              <option value="name">Name</option>
+              <option value="size">Size</option>
+              <option value="mtime">Modified</option>
+              <option value="type">Type</option>
+            </select>
+            <button type="button" id="qf-preview-toggle" title="Toggle preview">◇ Preview</button>
+            <button type="button" id="qf-add-hot">+ Wishlist</button>
+            <button type="button" id="qf-open-tab">Open in tab</button>
+            <button type="button" id="qf-shell" title="KILROY shell at this folder">Shell</button>
+          </div>
+          <div class="qf-launchables" id="qf-launchables-panel" hidden></div>
+          <div class="qf-list-head">
+            <span>Name</span>
+            <span>Size</span>
+            <span>Modified</span>
+          </div>
+          <div id="qf-rows"></div>
+        </section>
+        <div class="qf-preview-divider" id="qf-preview-divider" role="separator" aria-orientation="horizontal" tabindex="0"></div>
+        <section class="qf-preview" id="qf-preview" aria-label="File preview">
+          <header class="qf-preview-head">
+            <span class="qf-preview-title" id="qf-preview-title">Select a file to preview</span>
+            <span class="qf-preview-lang" id="qf-preview-lang"></span>
+            <button type="button" id="qf-preview-code" hidden>Queen Code</button>
+            <button type="button" id="qf-preview-props" title="Always Files properties">Properties</button>
+            <button type="button" id="qf-preview-close" title="Hide preview">×</button>
+          </header>
+          <div class="qf-preview-body" id="qf-preview-body">
+            <div class="qv-empty">Secure preview — every format rides inside Queen Browser</div>
+          </div>
+          <aside class="qf-props-flyout" id="qf-props-flyout" hidden aria-label="File properties">
+            <header class="qf-fly-head">
+              <div class="qf-fly-title-wrap">
+                <img id="qf-fly-icon" class="qf-fly-icon" alt="" width="32" height="32" hidden />
+                <div>
+                  <h2 class="qf-fly-title" id="qf-props-title">Properties</h2>
+                  <p class="qf-fly-sub" id="qf-props-sub">Always Files</p>
+                </div>
+              </div>
+              <button type="button" class="qf-fly-close" id="qf-props-close" aria-label="Close properties">×</button>
+            </header>
+            <div class="qf-fly-layout">
+              <nav class="qf-fly-menu" id="qf-props-menu" aria-label="Property sections"></nav>
+              <div class="qf-fly-pane" id="qf-props-pane"></div>
+            </div>
+            <footer class="qf-fly-actions" id="qf-props-actions"></footer>
+          </aside>
+        </section>
+      </div>
+    </div>
+    <aside class="qf-drawer" id="qf-types-drawer" hidden aria-label="File types registry">
+      <header class="qf-drawer-head">
+        <h2>File types</h2>
+        <button type="button" class="qf-drawer-close" id="qf-types-close" aria-label="Close">×</button>
+      </header>
+      <div class="qf-drawer-search-wrap">
+        <input type="search" id="qf-types-search" class="qf-drawer-search" placeholder="Filter types…" autocomplete="off" />
+      </div>
+      <div class="qf-drawer-body" id="qf-types-body"></div>
+    </aside>
+    <aside class="qf-drawer qf-drawer--wide" id="qf-library-drawer" hidden aria-label="Program library">
+      <header class="qf-drawer-head">
+        <h2>Program library</h2>
+        <button type="button" class="qf-drawer-btn" id="qf-library-scan">Scan host</button>
+        <button type="button" class="qf-drawer-close" id="qf-library-close" aria-label="Close">×</button>
+      </header>
+      <div class="qf-drawer-search-wrap">
+        <div class="qf-lib-tabs" role="tablist" aria-label="Library views">
+          <button type="button" class="qf-lib-tab active" data-lib-tab="programs" role="tab">Programs</button>
+          <button type="button" class="qf-lib-tab" data-lib-tab="games" role="tab">Games</button>
+          <button type="button" class="qf-lib-tab" data-lib-tab="nes" role="tab">NES cartridges</button>
+        </div>
+        <input type="search" id="qf-library-search" class="qf-drawer-search" placeholder="Search library — Dewey, games, programs…" autocomplete="off" />
+        <div class="qf-lib-facets" id="qf-library-facets" aria-label="Library filters"></div>
+      </div>
+      <div class="qf-drawer-body" id="qf-library-body"></div>
+    </aside>
+    <section class="qf-terminal-drawer" id="qf-terminal-drawer" hidden aria-label="Queen shell">
+      <iframe
+        id="qf-terminal-frame"
+        class="qf-terminal-frame"
+        title="Queen Terminal"
+        sandbox="allow-scripts allow-same-origin allow-forms"
+        loading="lazy"
+      ></iframe>
+    </section>
+    <footer class="qf-status">
+      <span id="qf-status-left">Loading…</span>
+      <label class="qf-status-search-wrap" id="qf-status-search-wrap">
+        <span class="qf-status-search-label">Instant search</span>
+        <input type="search" id="qf-search" class="qf-status-search" placeholder="Search — jumps to match…" autocomplete="off" aria-label="Instant search" />
+      </label>
+      <span id="qf-status-right">Zero-cost jail active</span>
+    </footer>
+  </div>
+  <menu class="qf-ctx" id="qf-ctx" role="menu" hidden></menu>
+  <script src="queen-icon-engine.js"></script>
+  <script src="queen-ai-surface.js"></script>
+  <script src="queen-code-highlight.js"></script>
+  <script src="queen-viewer.js"></script>
+  <script src="queen-zoom-lightbox.js"></script>
+  <script src="queen-nes-cartridge-theater.js"></script>
+  <script src="view.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "schema": "field-desktop-registry/v1",
+  "updated": "2026-06-30T19:10:00Z",
+  "motto": "Desktop surfaces — H7s condenser is canonical icon + OCR store",
+  "desktop_h7s_bundle": {
+    "path": ".nexus-state/field-desktop.h7s",
+    "format": "h7s/1",
+    "inner_kind": "desktop_condenser",
+    "module": "lib/field-h7s-desktop-bundle.py",
+    "doctrine": "data/field-h7s-desktop-doctrine.json"
+  },
+  "surfaces": {
+    "field_host_desktop": "lib/field-host-desktop.py",
+    "queen_program_library": "Queen/lib/queen-program-library.py",
+    "hostess7_ocr_feed": "lib/hostess7-ocr-feed.py"
+  },
+  "read_priority": ["h7s_bundle", "queen_program_library", "filesystem"]
+}

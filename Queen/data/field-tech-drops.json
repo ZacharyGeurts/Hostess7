@@ -1,0 +1,198 @@
+{
+  "schema": "field-tech-drops/v1",
+  "updated": "2026-06-25T08:08:54.967790+00:00",
+  "doctrine": "Every build entry routes through Queen Forge \u2014 Field Technology v5",
+  "core_order": [
+    "inside",
+    "gcc_fetch",
+    "gcc_prereqs",
+    "gcc_configure",
+    "deps",
+    "shaders",
+    "rtx",
+    "verify"
+  ],
+  "toolchain_long": [
+    "gcc_build"
+  ],
+  "drops": [
+    {
+      "legacy": "scripts/install-inside.sh",
+      "forge": "inside",
+      "track": "core",
+      "ready": true,
+      "label": "Install inside slice"
+    },
+    {
+      "legacy": "clone-all.sh",
+      "forge": "vendors",
+      "track": "media-vendors",
+      "ready": true,
+      "label": "Clone vendors (FFmpeg, Ladybird, Servo)"
+    },
+    {
+      "legacy": "scripts/stage-deps-inside.sh",
+      "forge": "deps",
+      "track": "core",
+      "ready": true,
+      "label": "Stage inside deps (SDL, glm)"
+    },
+    {
+      "legacy": "make Navigator/shaders",
+      "forge": "shaders",
+      "track": "core",
+      "ready": true,
+      "label": "Compile QueenBoot SPIR-V"
+    },
+    {
+      "legacy": "build.sh",
+      "forge": "rtx",
+      "track": "core",
+      "ready": false,
+      "label": "Build queen-browser RTX exe"
+    },
+    {
+      "legacy": "scripts/verify-queen.sh",
+      "forge": "verify",
+      "track": "core",
+      "ready": true,
+      "label": "Verify Queen doctrine + GUI"
+    },
+    {
+      "legacy": "scripts/queen-gpu-probe.sh",
+      "forge": "gpu_probe",
+      "track": "field-probe",
+      "ready": true,
+      "label": "Probe Vulkan/PCI GPUs for Queen RTX"
+    },
+    {
+      "legacy": "scripts/queen-gpu-probe.sh",
+      "forge": "compiler_probe",
+      "track": "hostess",
+      "ready": true,
+      "label": "Probe G16 + host tools \u2192 g16-toolchain.json"
+    },
+    {
+      "legacy": "build-field.sh",
+      "forge": "field",
+      "track": "sovereign",
+      "ready": true,
+      "label": "Full field pipeline"
+    },
+    {
+      "legacy": "build-ffmpeg.sh",
+      "forge": "ffmpeg",
+      "track": "media",
+      "ready": false,
+      "label": "Build FFmpeg static (MP4/H.264/AAC)"
+    },
+    {
+      "legacy": "build-ladybird.sh",
+      "forge": "ladybird",
+      "track": "engine",
+      "ready": false,
+      "label": "Build Ladybird engine"
+    },
+    {
+      "legacy": "build-servo.sh",
+      "forge": "servo",
+      "track": "engine",
+      "ready": false,
+      "label": "Build Servo engine"
+    },
+    {
+      "legacy": "host g++16",
+      "forge": "gcc",
+      "track": "toolchain",
+      "ready": true,
+      "label": "Full G16 pipeline"
+    },
+    {
+      "legacy": "vendor/binutils",
+      "forge": "binutils_fetch",
+      "track": "toolchain",
+      "ready": true,
+      "label": "Clone binutils for Queen toolchain"
+    },
+    {
+      "legacy": "scripts/watch-build.sh",
+      "forge": "forge_watch",
+      "track": "operator",
+      "ready": false,
+      "label": "Poll .queen-forge.log for progress vs stall"
+    },
+    {
+      "legacy": "scripts/build-monitored.sh",
+      "forge": "field_tech",
+      "track": "operator",
+      "ready": false,
+      "label": "Field Technology core pipeline (optimized order)"
+    }
+  ],
+  "gcc": {
+    "g16_version": "16.0.0",
+    "g16_cc": "g16",
+    "g16_cxx": "g++16",
+    "branch": "releases/gcc-16",
+    "repo": "https://gcc.gnu.org/git/gcc.git",
+    "src": "/home/default/Desktop/SG/NewLatest/Queen/vendor/gcc",
+    "src_ready": true,
+    "prereqs_ready": true,
+    "build_dir": "/home/default/Desktop/SG/NewLatest/Queen/build/gcc",
+    "configured": true,
+    "backend_prefix": "/home/default/Desktop/SG/NewLatest/Queen/build/gcc-prefix",
+    "prefix": "/home/default/Desktop/SG/NewLatest/Queen/build/g16-prefix",
+    "ready": true,
+    "dumpversion": "16.0.0",
+    "version": "g++16 (G16 Field C++) 16.0.0",
+    "paths": {
+      "g16": "/home/default/Desktop/SG/NewLatest/Queen/build/g16-prefix/bin/g16",
+      "g++16": "/home/default/Desktop/SG/NewLatest/Queen/build/g16-prefix/bin/g++16",
+      "cmake": "/home/default/Desktop/SG/NewLatest/Queen/cmake/queen-g16-toolchain.cmake"
+    }
+  },
+  "compilers": {
+    "jobs": 24,
+    "cpu_count": 24,
+    "found": {
+      "cmake": "/usr/bin/cmake",
+      "make": "/usr/bin/make",
+      "ninja": "/home/default/.local/bin/ninja",
+      "glslc": "/usr/local/bin/glslc",
+      "git": "/usr/bin/git",
+      "pythong": "/usr/bin/pythong",
+      "bash": "/usr/bin/bash",
+      "ld": "/usr/bin/ld",
+      "g16": "/home/default/Desktop/SG/NewLatest/Queen/build/g16-prefix/bin/g16",
+      "g++16": "/home/default/Desktop/SG/NewLatest/Queen/build/g16-prefix/bin/g++16"
+    },
+    "toolchain": {
+      "g16_version": "16.0.0",
+      "g16_cc": "g16",
+      "g16_cxx": "g++16",
+      "branch": "releases/gcc-16",
+      "repo": "https://gcc.gnu.org/git/gcc.git",
+      "src": "/home/default/Desktop/SG/NewLatest/Queen/vendor/gcc",
+      "src_ready": true,
+      "prereqs_ready": true,
+      "build_dir": "/home/default/Desktop/SG/NewLatest/Queen/build/gcc",
+      "configured": true,
+      "backend_prefix": "/home/default/Desktop/SG/NewLatest/Queen/build/gcc-prefix",
+      "prefix": "/home/default/Desktop/SG/NewLatest/Queen/build/g16-prefix",
+      "ready": true,
+      "dumpversion": "16.0.0",
+      "version": "g++16 (G16 Field C++) 16.0.0",
+      "paths": {
+        "g16": "/home/default/Desktop/SG/NewLatest/Queen/build/g16-prefix/bin/g16",
+        "g++16": "/home/default/Desktop/SG/NewLatest/Queen/build/g16-prefix/bin/g++16",
+        "cmake": "/home/default/Desktop/SG/NewLatest/Queen/cmake/queen-g16-toolchain.cmake"
+      }
+    },
+    "ready_g16": true,
+    "ready_rtx": true,
+    "ready_shaders": true,
+    "ready_ffmpeg": true,
+    "ready_servo": false
+  },
+  "rtx_ready": false
+}

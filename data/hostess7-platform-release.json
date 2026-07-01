@@ -1,0 +1,92 @@
+{
+  "schema": "hostess7-platform-release/v1",
+  "product": "Hostess7",
+  "version": "1.0.0-beta",
+  "tag": "v1.0.0-beta",
+  "edition": "beta",
+  "channel": "release",
+  "release_model": "source_bootstrap_per_platform",
+  "statement": "Hostess 7 1.0.0-beta — complete field stack: brain hub, AmmoOS, Grok16, Queen, KILROY, and wired siblings.",
+  "doctrine": "data/field-h7s-desktop-doctrine.json",
+  "stack_includes": ["Hostess7", "AmmoOS", "Grok16", "Queen", "KILROY", "ZNetwork", "Final_Eye", "Final_Ear"],
+  "launch": {
+    "browser_primary": true,
+    "panel_port": 9477,
+    "queen_port": 9481,
+    "hostess7_cli": "Hostess7/Hostess7.sh",
+    "verify": "scripts/ammoos-launch-verify.sh",
+    "wire_stack": "scripts/wire-stack.sh"
+  },
+  "platforms": [
+    {
+      "id": "linux-gnu-x86_64",
+      "os": "linux",
+      "arch": "x86_64",
+      "format": "h7e",
+      "bootstrap": {
+        "extract": "scripts/field-h7e-extract.sh",
+        "installer": "install-all.sh",
+        "wire": "scripts/wire-stack.sh",
+        "hostess7": "Hostess7/Hostess7.sh on"
+      },
+      "notes": "Primary — full stack, panel :9477, Queen :9481, Hostess7 brain"
+    },
+    {
+      "id": "linux-gnu-aarch64",
+      "os": "linux",
+      "arch": "aarch64",
+      "format": "h7e",
+      "bootstrap": {
+        "extract": "scripts/field-h7e-extract.sh",
+        "installer": "install-all.sh",
+        "wire": "scripts/wire-stack.sh"
+      },
+      "notes": "ARM64 Linux — source bootstrap; Queen RTX build on target"
+    },
+    {
+      "id": "linux-gnu-arm",
+      "os": "linux",
+      "arch": "arm",
+      "format": "h7e",
+      "bootstrap": {
+        "installer": "install-all.sh",
+        "wire": "scripts/wire-stack.sh"
+      },
+      "notes": "ARM32 GNU/Linux"
+    },
+    {
+      "id": "linux-gnu-riscv64",
+      "os": "linux",
+      "arch": "riscv64",
+      "format": "h7e",
+      "bootstrap": {
+        "installer": "install-all.sh",
+        "g16_cross": "riscv64-linux-gnu-"
+      },
+      "notes": "RISC-V 64 — pairs with Grok16 RISC-V linker doctrine"
+    },
+    {
+      "id": "windows-x86_64",
+      "os": "windows",
+      "arch": "x86_64",
+      "format": "zip",
+      "bootstrap": {
+        "installer": "stealth.ps1",
+        "wsl_fallback": "install-all.sh"
+      },
+      "notes": "PowerShell stealth installer; WSL2 runs full Linux stack"
+    },
+    {
+      "id": "darwin-aarch64",
+      "os": "darwin",
+      "arch": "aarch64",
+      "format": "h7e",
+      "bootstrap": {
+        "dev": "nexus.sh",
+        "browser_only": true
+      },
+      "notes": "Apple Silicon — browser surfaces + dev tree"
+    }
+  ],
+  "g16_pairing": "16.2.0"
+}

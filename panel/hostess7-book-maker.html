@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hostess 7 Book Maker</title>
+  <style>
+    :root {
+      --bg: #0a1018;
+      --panel: #121a26;
+      --border: #2a3548;
+      --text: #e8eef7;
+      --muted: #8fa3bf;
+      --gold: #c9a227;
+      --accent: #3d8bfd;
+      --ok: #3ecf8e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #141e2e, var(--bg));
+    }
+    header h1 { margin: 0 0 6px; font-size: 1.5rem; color: var(--gold); }
+    header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    main { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px 24px; max-width: 1400px; }
+    @media (max-width: 960px) { main { grid-template-columns: 1fr; } }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    section h2 { margin: 0 0 12px; font-size: 1.1rem; color: var(--gold); }
+    label { display: block; margin: 10px 0 4px; color: var(--muted); font-size: 0.85rem; }
+    input, select, textarea {
+      width: 100%;
+      background: #0d1420;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 10px 12px;
+      font: inherit;
+    }
+    textarea { min-height: 200px; resize: vertical; font-family: Menlo, Consolas, monospace; font-size: 0.9rem; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    button {
+      margin-top: 14px;
+      background: linear-gradient(180deg, #2a5a9e, #1a3d6e);
+      border: 1px solid var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font: inherit;
+    }
+    button:hover { filter: brightness(1.1); }
+    button.secondary {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--muted);
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .meta-card {
+      background: #0d1420;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.82rem;
+    }
+    .meta-card strong { display: block; color: var(--muted); font-weight: normal; font-size: 0.75rem; }
+    pre {
+      background: #0d1420;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      overflow: auto;
+      font-size: 0.8rem;
+      max-height: 320px;
+    }
+    .status { margin-top: 10px; font-size: 0.9rem; }
+    .status.ok { color: var(--ok); }
+    .status.err { color: #f07178; }
+    .index-list { list-style: none; padding: 0; margin: 0; }
+    .index-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+    .index-list li span { color: var(--muted); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hostess 7 Book Maker</h1>
+    <p>Author field books — timestamps on titles · full per-book information index · Grok or Hostess 7 as author</p>
+  </header>
+  <main>
+    <section aria-label="Compose book">
+      <h2>Compose</h2>
+      <label for="author">Author</label>
+      <select id="author">
+        <option value="hostess7">Hostess 7 — self-author</option>
+        <option value="grok">Grok — xAI author</option>
+        <option value="operator">ZacharyGeurts — Operator</option>
+      </select>
+      <label for="title">Title (timestamp appended on pack)</label>
+      <input id="title" placeholder="Exploring Field Doctrine" />
+      <div class="row">
+        <div>
+          <label for="dewey">Dewey</label>
+          <input id="dewey" value="000" />
+        </div>
+        <div>
+          <label for="shelf">Shelf slug</label>
+          <input id="shelf" value="000-computer-science" />
+        </div>
+      </div>
+      <label for="body">Body (markdown)</label>
+      <textarea id="body" placeholder="# Chapter&#10;&#10;Write here. Pack seals H7c + book.json + book-information-index.json"></textarea>
+      <button type="button" id="pack-btn">Pack book · H7c + full index</button>
+      <button type="button" class="secondary" id="refresh-btn">Refresh panel</button>
+      <div class="status" id="status" role="status"></div>
+    </section>
+    <section aria-label="Information index">
+      <h2>Per-book information index</h2>
+      <p style="color:var(--muted);font-size:0.88rem;margin:0 0 10px">
+        Each volume gets <code>book-information-index.json</code> — author, written date, written_at, Dewey, shelf, EIN, chapters with timestamped titles, facets, search blob.
+      </p>
+      <div class="meta-grid" id="required-meta"></div>
+      <h2 style="margin-top:18px;font-size:1rem">Indexed volumes</h2>
+      <ul class="index-list" id="index-list"></ul>
+      <h2 style="margin-top:18px;font-size:1rem">Last pack result</h2>
+      <pre id="result">Loading…</pre>
+    </section>
+  </main>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const status = (msg, ok) => {
+      const el = $("status");
+      el.textContent = msg;
+      el.className = "status " + (ok ? "ok" : "err");
+    };
+    async function api(path, opts) {
+      const r = await fetch(path, opts);
+      return r.json();
+    }
+    function renderPanel(doc) {
+      const req = doc.required_metadata || [];
+      $("required-meta").innerHTML = req.map((k) =>
+        `<div class="meta-card"><strong>${k}</strong>indexed</div>`
+      ).join("");
+      const sample = doc.index_sample || [];
+      $("index-list").innerHTML = sample.length
+        ? sample.map((b) =>
+            `<li><strong>${b.title || b.book_id}</strong><br><span>${b.author || ""} · ${b.written_at || ""}</span></li>`
+          ).join("")
+        : "<li><span>No indexed books yet — pack one.</span></li>";
+      $("result").textContent = JSON.stringify(doc, null, 2);
+    }
+    async function loadPanel() {
+      try {
+        const doc = await api("/api/hostess7/book-maker");
+        renderPanel(doc);
+        status("Panel loaded", true);
+      } catch (e) {
+        status("Panel load failed: " + e.message, false);
+      }
+    }
+    $("refresh-btn").addEventListener("click", loadPanel);
+    $("pack-btn").addEventListener("click", async () => {
+      const title = $("title").value.trim();
+      const body = $("body").value.trim();
+      if (!title || !body) {
+        status("Title and body required", false);
+        return;
+      }
+      status("Packing…", true);
+      try {
+        const doc = await api("/api/hostess7/book-maker/pack", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title,
+            body,
+            author: $("author").value,
+            dewey: $("dewey").value.trim(),
+            shelf: $("shelf").value.trim(),
+          }),
+        });
+        $("result").textContent = JSON.stringify(doc, null, 2);
+        status(doc.ok ? "Packed · " + (doc.title || doc.book_id) : (doc.error || "Pack failed"), !!doc.ok);
+        if (doc.ok) loadPanel();
+      } catch (e) {
+        status("Pack failed: " + e.message, false);
+      }
+    });
+    loadPanel();
+  </script>
+</body>
+</html>

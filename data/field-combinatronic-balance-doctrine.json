@@ -1,0 +1,59 @@
+{
+  "schema": "field-combinatronic-balance-doctrine/v1",
+  "module": "lib/field-combinatronic-balance.py",
+  "motto": "Balance is the best identifier — precise file at no cost because the system is balanced.",
+  "balance_target": 0.97,
+  "balance_id_prefix": "CBAL",
+  "policy": {
+    "self_adjusting": true,
+    "no_slowdown_at_balance": true,
+    "reorganize_only_on_new": true,
+    "all_data_combinatronic": true,
+    "optimized_combinatronic_stamp": true,
+    "entry_synchronous": true,
+    "fast_path_ms_target": 25,
+    "balance_as_best_identifier": true,
+    "precise_file_at_no_cost": true,
+    "identifier_schema": "field-combinatronic-balance-identify/v1",
+    "predictive_meld": true
+  },
+  "fingerprint_sources": [
+    {"id": "chips", "panel": "field-ironclad-chips-combinatorics.json", "key": "chips", "id_field": "id"},
+    {"id": "programs", "panel": "field-program-combinatronic.json", "key": "commands", "id_field": "combinatorics_leaf"},
+    {"id": "program_langs", "panel": "field-program-combinatronic.json", "key": "languages", "id_field": "id", "dict_keys": true},
+    {"id": "files", "panel": "field-file-formats-table.json", "key": "formats", "id_field": "id"},
+    {"id": "library_devices", "panel": "field-extensive-library.json", "key": "devices", "id_field": "id"},
+    {"id": "library_games", "panel": "field-extensive-library.json", "key": "games", "id_field": "id"},
+    {"id": "library_greats", "panel": "field-extensive-library.json", "key": "programming_greats", "id_field": "id"},
+    {"id": "cpu", "panel": "field-cpu-library.json", "key": "entries", "id_field": "id"},
+    {"id": "universal", "panel": "field-g16-universal-combinatronic.json", "key": "combinatorics_leaves", "id_field": "id"},
+    {"id": "matrix", "panel": "field-combinamatrix.json", "key": "cells", "id_field": "id"},
+    {"id": "growth", "panel": "field-combinatronics-growth.json", "key": "combinatorics_leaves", "id_field": "id"},
+    {"id": "sequence", "panel": "field-combinatorics-sequence.json", "key": "sequence", "id_field": "id"},
+    {"id": "spider", "panel": "field-combinatronic-spider-wire.json", "key": "lanes", "id_field": "instruction"},
+    {"id": "visuals", "panel": "data/field-combinatronic-visuals-registry.json", "key": "file_count", "count_only": true},
+    {"id": "h7c", "panel": "field-h7c-balance-table.json", "key": "entries", "count_only": true},
+    {"id": "library_registry", "panel": "field-library-registry.json", "key": "entries", "id_field": "id"},
+    {"id": "steel_plates", "panel": "field-steel-neural-plates.json", "key": "plates", "id_field": "id"}
+  ],
+  "entry_batteries": [
+    {"id": "chips", "combinatorics": "field-ironclad-chips-combinatorics.json", "module": "field-ironclad-chips-combinatorics.py", "publish": "publish"},
+    {"id": "programs", "battery": "field-program-combinatronic.json", "module": "field-program-combinatronic.py", "publish": "publish_panel"},
+    {"id": "files", "battery": "field-file-formats-table.json", "module": "field-file-formats.py", "publish": "publish_panel"},
+    {"id": "library", "battery": "field-extensive-library.json", "module": "field-extensive-library.py", "publish": "publish_panel"},
+    {"id": "library_registry", "battery": "field-library-registry.json", "module": "field-library-registry.py", "publish": "publish_panel"},
+    {"id": "cpu", "battery": "field-cpu-library.json", "module": "field-cpu-library.py", "publish": "publish_panel"},
+    {"id": "growth", "battery": "field-combinatronics-growth.json", "module": "field-combinatronics-growth.py", "publish": "publish_panel"},
+    {"id": "universal", "battery": "field-g16-universal-combinatronic.json", "module": "field-g16-universal-combinatronic.py", "publish": "publish_panel"},
+    {"id": "matrix", "battery": "field-combinamatrix.json", "module": "field-combinamatrix.py", "publish": "publish_panel"},
+    {"id": "sequence", "battery": "field-combinatorics-sequence.json", "module": "field-combinatorics-sequence.py", "publish": "publish_panel"},
+    {"id": "spider", "battery": "field-combinatronic-spider-wire.json", "module": "field-combinatronic-spider-wire.py", "publish": "publish_panel"},
+    {"id": "visuals", "battery": "field-combinatronic-visuals-panel.json", "module": "field-combinatronic-visuals.py", "publish": "publish_panel", "light": true},
+    {"id": "steel_plates", "battery": "field-steel-neural-plates.json", "module": "field-steel-neural-plates.py", "publish": "publish_panel"}
+  ],
+  "sync_order": [
+    "chips", "programs", "files", "library", "library_registry", "cpu", "growth",
+    "universal", "matrix", "sequence", "spider", "visuals", "steel_plates"
+  ],
+  "api": "/api/combinatronic/balance"
+}

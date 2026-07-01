@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.grok.killorphans</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/sbin/kgo-watchdog</string>
+        <string>-c</string>
+        <string>/etc/kgo/kgo-patterns.json</string>
+        <string>-f</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/var/log/kgo-watchdog.log</string>
+    <key>StandardErrorPath</key>
+    <string>/var/log/kgo-watchdog.err</string>
+</dict>
+</plist>

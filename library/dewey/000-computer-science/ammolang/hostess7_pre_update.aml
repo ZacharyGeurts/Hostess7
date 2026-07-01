@@ -1,0 +1,20 @@
+# Hostess7 pre-update — brain diagnostics + tasklist before GitHub push
+@profile fastest
+@verbose clean
+@motto "Hostess7 first — brain guard · Ironclad · tasklist gate"
+
+seq ·
+  say "Hostess7 pre-update — brain verify · witness · task queue before push"
+  post "HOSTESS7_PRE START — diagnostics · Ironclad seal · open tasks"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+  run py:hostess7-brain-guard action:verify timeout:120 stall:60
+  run py:hostess7-brain-guard action:witness timeout:60 stall:30
+  run py:hostess7-tasklist action:seed timeout:60 stall:30
+  run script:hostess7-pre-update timeout:3600 stall:900
+  run py:hostess7-brain-guard action:verify timeout:120 stall:60
+  run py:hostess7-tasklist action:report timeout:30 stall:15
+  assist freeze
+  say "Hostess7 pre-update complete — inspect hostess7-brain-guard-panel.json + tasklist"
+  post "HOSTESS7_PRE COMPLETE"

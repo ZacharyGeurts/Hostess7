@@ -1,0 +1,126 @@
+{
+  "schema": "field-ellie-fier-doctrine/v2",
+  "title": "ELLIE — unified security authority",
+  "motto": "One fier for the field — network, truth, thermal, vault, media, sovereign time. Workers report; ELLIE decides.",
+  "inspired_by": "AMOURANTHRTX/Navigator/engine/ELLIE.hpp",
+  "authority": {
+    "threat_warn_level": true,
+    "posture_floor": true,
+    "gatekeeper_tighten": true,
+    "universal_protector_feed": true
+  },
+  "policy": {
+    "scan_on_posture": true,
+    "max_media_sample": 120,
+    "threat_escalation_score": 0.45,
+    "plate_attach": true,
+    "ironclad_required": true,
+    "equipment_never_calm": true,
+    "fail_closed": true
+  },
+  "security_pillars": {
+    "network": {
+      "feeds": ["gatekeeper", "logic_gate", "port_ddos", "deinterlace", "znetwork"],
+      "workers": [
+        "connection-gatekeeper.py",
+        "nexus-logic-gate.py",
+        "field-port-ddos-shield.py",
+        "field-packet-deinterlace.py",
+        "znetwork-orchestrator.py"
+      ],
+      "verdict_only_in_ellie": true
+    },
+    "truth": {
+      "feeds": ["ironclad", "ironclad_immediate", "ironclad_reality", "field_sanity", "code_bugfinder"],
+      "workers": [
+        "ironclad-plate.py",
+        "ironclad-immediate.py",
+        "ironclad-reality-field.py",
+        "ironclad-field-sanity.py",
+        "field-code-bugfinder.py"
+      ],
+      "verdict_only_in_ellie": true,
+      "retired_parallel": ["Queen/lib/queen-field-sanity.py"]
+    },
+    "thermal_power": {
+      "feeds": ["thermal_guard", "voltage", "physics_witness"],
+      "workers": ["field-thermal-guard.py", "field-voltage-regulation.py", "field-physics-witness.py"],
+      "verdict_only_in_ellie": true
+    },
+    "firmware_vault": {
+      "feeds": ["firmware", "lock"],
+      "workers": ["field-firmware-threat-removal.py", "field-keepass.py"],
+      "verdict_only_in_ellie": true
+    },
+    "media": {
+      "feeds": ["popcorn", "media_inspector"],
+      "workers": ["field-popcorn-player.py", "field-media-inspector.py"],
+      "verdict_only_in_ellie": true
+    },
+    "sovereign": {
+      "feeds": ["sovereign_sync", "last_host"],
+      "workers": ["field-sovereign-sync.py", "ellie-last-host.py"],
+      "verdict_only_in_ellie": true
+    }
+  },
+  "redundancy_retired": {
+    "threat_warn_level_publishers": [
+      "nexus-logic-gate.py",
+      "hostess7-command.py",
+      "monitor-jockey.py"
+    ],
+    "delegated_to_ellie": [
+      "universal-protector threat_warn_level",
+      "field-command threat_warn_level",
+      "logic_gate threat_warn_level",
+      "field-znetwork standalone panel",
+      "field-gpu standalone panel",
+      "control-panel display slot",
+      "field-broadcaster monitor slot",
+      "field-audio-settings monitor slot"
+    ],
+    "diagnostic_pages_authority": "ELLIE owns all pillar diagnostics — dashboard loads /field-ellie/* only"
+  },
+  "feeds": [
+    {"id": "gatekeeper", "panel": "connection-intent.json", "pillar": "network"},
+    {"id": "logic_gate", "panel": "nexus-logic-gate-runtime.json", "pillar": "network"},
+    {"id": "port_ddos", "panel": "field-port-ddos-panel.json", "pillar": "network"},
+    {"id": "deinterlace", "panel": "field-packet-deinterlace-panel.json", "pillar": "network"},
+    {"id": "znetwork", "panel": "znetwork-status.json", "pillar": "network"},
+    {"id": "ironclad", "panel": "ironclad-plate.json", "pillar": "truth"},
+    {"id": "ironclad_immediate", "panel": "ironclad-immediate.json", "pillar": "truth"},
+    {"id": "ironclad_reality", "panel": "ironclad-reality-field-panel.json", "pillar": "truth"},
+    {"id": "field_sanity", "panel": "ironclad-field-sanity-panel.json", "pillar": "truth"},
+    {"id": "code_bugfinder", "panel": "field-code-bugfinder-panel.json", "pillar": "truth"},
+    {"id": "thermal_guard", "panel": "field-thermal-guard.json", "pillar": "thermal_power"},
+    {"id": "voltage", "panel": "field-voltage-regulation-panel.json", "pillar": "thermal_power"},
+    {"id": "physics_witness", "panel": "field-physics-witness.json", "pillar": "thermal_power"},
+    {"id": "firmware", "panel": "field-firmware-threat-panel.json", "pillar": "firmware_vault"},
+    {"id": "lock", "panel": "field-keepass-panel.json", "pillar": "firmware_vault"},
+    {"id": "field_popcorn", "panel": "field-popcorn-panel.json", "pillar": "media"},
+    {"id": "media_inspector", "script": "field-media-inspector.py", "pillar": "media"},
+    {"id": "sovereign_sync", "panel": "sovereign-sync-manifest.json", "pillar": "sovereign"},
+    {"id": "last_host", "script": "ellie-last-host.py", "pillar": "sovereign"}
+  ],
+  "diagnostic_pages": [
+    {"id": "network", "pillar": "network", "title": "Network Threat", "route": "/field-ellie/network", "program_id": "ellie-diag-network"},
+    {"id": "truth", "pillar": "truth", "title": "Truth & Ironclad", "route": "/field-ellie/truth", "program_id": "ellie-diag-truth"},
+    {"id": "thermal_power", "pillar": "thermal_power", "title": "Thermal & Power", "route": "/field-ellie/thermal", "program_id": "ellie-diag-thermal"},
+    {"id": "firmware_vault", "pillar": "firmware_vault", "title": "Firmware & Vault", "route": "/field-ellie/firmware", "program_id": "ellie-diag-firmware"},
+    {"id": "media", "pillar": "media", "title": "Media Integrity", "route": "/field-ellie/media", "program_id": "ellie-diag-media"},
+    {"id": "sovereign", "pillar": "sovereign", "title": "Sovereign Stack", "route": "/field-ellie/sovereign", "program_id": "ellie-diag-sovereign"}
+  ],
+  "routes": {
+    "panel": "/field-ellie-fier",
+    "diag": "/field-ellie-diag",
+    "api": "/api/field-ellie-fier"
+  },
+  "plate_model": {
+    "condense_group": "operator_surfaces",
+    "combinatorics_role": "security_authority",
+    "dock_glyph": "shield",
+    "meld_key": "field_ellie_fier",
+    "panel_file": "field-ellie-fier-panel.json"
+  },
+  "verdicts": ["clear", "watch", "review", "threat", "fier"]
+}

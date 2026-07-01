@@ -1,0 +1,88 @@
+{
+  "schema": "hostess7-music-battery/v1",
+  "title": "Music theory evaluation battery — pitch, rhythm, harmony, ear, mouth, brain, crosswire",
+  "batteries": {
+    "pitch_rhythm": [
+      {"id": "a4_freq", "query": "A4 concert pitch frequency", "kind": "pitch_freq", "params": {"note": "A4"}, "expected": 440},
+      {"id": "octave_ratio", "query": "octave frequency ratio", "kind": "harmonic_ratio", "params": {"ratio": "2:1"}, "expected": 2},
+      {"id": "fifth_ratio", "query": "perfect fifth ratio", "kind": "harmonic_ratio", "params": {"ratio": "3:2"}, "expected": 1.5},
+      {"id": "major_second", "query": "major second semitones", "kind": "interval_semitones", "params": {"interval": "major_second"}, "expected": 2},
+      {"id": "perfect_fifth", "query": "perfect fifth semitones", "kind": "interval_semitones", "params": {"interval": "perfect_fifth"}, "expected": 7},
+      {"id": "octave_interval", "query": "octave semitones", "kind": "interval_semitones", "params": {"interval": "octave"}, "expected": 12},
+      {"id": "c_to_e", "query": "C to E semitones", "kind": "note_interval", "params": {"from": "C4", "to": "E4"}, "expected": 4},
+      {"id": "meter_44", "query": "4/4 time beats per bar", "kind": "rhythm_meter", "params": {"meter": "4/4"}, "expected": 4},
+      {"id": "meter_34", "query": "3/4 time beats per bar", "kind": "rhythm_meter", "params": {"meter": "3/4"}, "expected": 3},
+      {"id": "tempo_allegro", "query": "allegro BPM range low bound", "kind": "tempo_bpm", "params": {"marking": "allegro"}, "expected": 120}
+    ],
+    "harmony": [
+      {"id": "major_scale_degrees", "query": "major scale semitone pattern count", "kind": "scale_degrees", "params": {"scale": "major"}, "expected": 7},
+      {"id": "major_triad", "query": "C major triad pitch classes", "kind": "chord_quality", "params": {"root": "C", "quality": "major_triad"}, "expected": "C,E,G"},
+      {"id": "minor_triad", "query": "A minor triad pitch classes", "kind": "chord_quality", "params": {"root": "A", "quality": "minor_triad"}, "expected": "A,C,E"},
+      {"id": "dom7", "query": "G dominant seventh", "kind": "chord_quality", "params": {"root": "G", "quality": "dominant_seventh"}, "expected": "G,B,D,F"},
+      {"id": "circle_fifths", "query": "circle of fifths step", "kind": "interval_semitones", "params": {"interval": "perfect_fifth"}, "expected": 7},
+      {"id": "consonance_major_third", "query": "major third consonance semitones", "kind": "interval_semitones", "params": {"interval": "major_third"}, "expected": 4},
+      {"id": "dissonance_tritone", "query": "tritone semitones", "kind": "interval_semitones", "params": {"interval": "tritone"}, "expected": 6}
+    ],
+    "ear_training": [
+      {"id": "ear_perfect_fifth", "query": "identify perfect fifth", "kind": "ear_interval", "params": {"interval": "perfect_fifth"}, "expected": "perfect fifth"},
+      {"id": "ear_major_third", "query": "identify major third", "kind": "ear_interval", "params": {"interval": "major_third"}, "expected": "major third"},
+      {"id": "ear_octave", "query": "identify octave", "kind": "ear_interval", "params": {"interval": "octave"}, "expected": "octave"},
+      {"id": "spectrum_fundamental", "query": "A4 fundamental Hz", "kind": "spectrum_pitch", "params": {"note": "A4"}, "expected": 440},
+      {"id": "harmonic_series_2", "query": "second harmonic of A4", "kind": "harmonic_partial", "params": {"note": "A4", "partial": 2}, "expected": 880}
+    ],
+    "spectrum_pitch": [
+      {"id": "c4_freq", "query": "C4 frequency approximate", "kind": "pitch_freq", "params": {"note": "C4"}, "expected": 261.63},
+      {"id": "g4_freq", "query": "G4 frequency approximate", "kind": "pitch_freq", "params": {"note": "G4"}, "expected": 392},
+      {"id": "pitch_class_c", "query": "C pitch class", "kind": "pitch_class", "params": {"note": "C"}, "expected": 0},
+      {"id": "pitch_class_g", "query": "G pitch class", "kind": "pitch_class", "params": {"note": "G"}, "expected": 7}
+    ],
+    "vocal_production": [
+      {"id": "mouth_semitone_up", "query": "raise pitch one semitone from A4", "kind": "mouth_pitch", "params": {"base": "A4", "semitones": 1}, "expected": 466.16},
+      {"id": "mouth_octave_down", "query": "lower pitch one octave from A4", "kind": "mouth_pitch", "params": {"base": "A4", "semitones": -12}, "expected": 220},
+      {"id": "vocal_formant", "query": "vocal tract resonance trained", "kind": "doctrine_section", "params": {"key": "tracks"}, "expected": true},
+      {"id": "prosody_beat", "query": "speech rhythm aligned to 4/4", "kind": "rhythm_meter", "params": {"meter": "4/4"}, "expected": 4}
+    ],
+    "rhythm_speech": [
+      {"id": "syllable_stress", "query": "trochaic pattern beats", "kind": "rhythm_pattern", "params": {"pattern": "trochee"}, "expected": 2},
+      {"id": "melody_contour", "query": "ascending major third semitones", "kind": "interval_semitones", "params": {"interval": "major_third"}, "expected": 4},
+      {"id": "tts_melody", "query": "TTS melody lesson present in sense doctrine", "kind": "sense_music_step", "params": {"session": "final_mouth", "step_id": "mouth_melody_tts"}, "expected": true}
+    ],
+    "memory_patterns": [
+      {"id": "brain_seq_1", "query": "complete melodic sequence", "kind": "brain_sequence", "params": {"sequence": [0, 2, 4, 7], "next": 9}, "expected": 9},
+      {"id": "brain_seq_2", "query": "circle of fifths pitch class step", "kind": "brain_sequence", "params": {"sequence": [0, 7], "next": 2}, "expected": 2},
+      {"id": "brain_interval_recall", "query": "recall perfect fifth", "kind": "ear_interval", "params": {"interval": "perfect_fifth"}, "expected": "perfect fifth"}
+    ],
+    "brain_mapping": [
+      {"id": "brain_guard_hook", "query": "brain guard music crosswire", "kind": "crosswire_track", "params": {"track": "brain_guard"}, "expected": true},
+      {"id": "brain_pattern_checksum", "query": "melodic pattern checksum", "kind": "brain_checksum", "params": {"pattern": [0, 4, 7, 12]}, "expected": 23},
+      {"id": "brain_hemisphere", "query": "music memory maps to brain guard", "kind": "crosswire_concept", "params": {"track": "brain_guard", "token": "memory"}, "expected": true}
+    ],
+    "notation_reading": [
+      {"id": "treble_clef", "query": "treble clef line 1 note", "kind": "notation_clef", "params": {"clef": "treble", "line": 1}, "expected": "E"},
+      {"id": "bass_clef", "query": "bass clef line 1 note", "kind": "notation_clef", "params": {"clef": "bass", "line": 1}, "expected": "G"},
+      {"id": "whole_note_beats", "query": "whole note duration in 4/4", "kind": "note_duration", "params": {"note_type": "whole", "meter": "4/4"}, "expected": 4},
+      {"id": "quarter_note_beats", "query": "quarter note duration in 4/4", "kind": "note_duration", "params": {"note_type": "quarter", "meter": "4/4"}, "expected": 1}
+    ],
+    "sense_fusion": [
+      {"id": "ear_music_step", "query": "ear music spectrum step", "kind": "sense_music_step", "params": {"session": "final_ear", "step_id": "ear_music_spectrum"}, "expected": true},
+      {"id": "mouth_music_step", "query": "mouth melody TTS step", "kind": "sense_music_step", "params": {"session": "final_mouth", "step_id": "mouth_melody_tts"}, "expected": true},
+      {"id": "eye_music_step", "query": "eye notation step", "kind": "sense_music_step", "params": {"session": "final_eye", "step_id": "eye_notation"}, "expected": true},
+      {"id": "brain_music_step", "query": "brain music pattern step", "kind": "sense_music_step", "params": {"session": "final_mouth", "step_id": "mouth_brain_music"}, "expected": true},
+      {"id": "fusion_quorum", "query": "music evidence on sense fusion", "kind": "doctrine_section", "params": {"key": "music_hub"}, "expected": true}
+    ],
+    "crosswire_all": [
+      {"id": "cw_programming", "query": "programming music hook", "kind": "crosswire_track", "params": {"track": "programming"}, "expected": true},
+      {"id": "cw_g16", "query": "G16 music hook", "kind": "crosswire_track", "params": {"track": "g16"}, "expected": true},
+      {"id": "cw_biology", "query": "biology music hook", "kind": "crosswire_track", "params": {"track": "biology"}, "expected": true},
+      {"id": "cw_engineering", "query": "engineering music hook", "kind": "crosswire_track", "params": {"track": "engineering"}, "expected": true},
+      {"id": "cw_combat", "query": "combat music hook", "kind": "crosswire_track", "params": {"track": "combat"}, "expected": true},
+      {"id": "cw_reality", "query": "reality physics music hook", "kind": "crosswire_track", "params": {"track": "reality_physics"}, "expected": true},
+      {"id": "cw_field", "query": "field technology music hook", "kind": "crosswire_track", "params": {"track": "field_technology"}, "expected": true},
+      {"id": "cw_geography", "query": "geography music hook", "kind": "crosswire_track", "params": {"track": "geography"}, "expected": true},
+      {"id": "cw_final_ear", "query": "final ear music hook", "kind": "crosswire_track", "params": {"track": "final_ear"}, "expected": true},
+      {"id": "cw_final_mouth", "query": "final mouth music hook", "kind": "crosswire_track", "params": {"track": "final_mouth"}, "expected": true},
+      {"id": "cw_brain_guard", "query": "brain guard music hook", "kind": "crosswire_track", "params": {"track": "brain_guard"}, "expected": true},
+      {"id": "cw_hook_count", "query": "minimum crosswire hooks", "kind": "crosswire_count", "params": {"min": 24}, "expected": true}
+    ]
+  }
+}

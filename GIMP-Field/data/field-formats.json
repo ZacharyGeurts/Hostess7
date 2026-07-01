@@ -1,0 +1,21 @@
+{
+  "schema": "ammoos-field-formats/v1",
+  "title": "AmmoOS Image — field technology file formats",
+  "motto": "WRDT · WRZC · ZAC7 · FLD · plate — CPU field_opt flies; RTX batch path when gate permits",
+  "magics": {
+    "WRDT": {"bytes": "57524454", "ext": [".wrdt"], "mime": "application/x-wrdt", "lossless": true},
+    "WRZC": {"bytes": "57525a43", "ext": [".wrzc"], "mime": "application/x-wrzc", "lossless": true},
+    "ZAC7": {"bytes": "5a414337", "ext": [".zac7", ".zac"], "mime": "application/x-zac7", "lossless": true},
+    "FLD":  {"bytes": null, "ext": [".fld"], "mime": "text/x-field-fld", "preview": "text_raster"},
+    "PLATE": {"bytes": null, "ext": [".plate.json", "-plate.json"], "mime": "application/x-field-plate", "preview": "plate_card"},
+    "AMMO": {"bytes": null, "ext": [".ammo", ".obj"], "mime": "application/x-field-ammo", "preview": "metadata"},
+    "H7":   {"bytes": null, "ext": [".h7snap", ".field-snap"], "mime": "application/x-field-snap", "preview": "snap_card"}
+  },
+  "inner_image_types": ["image/png", "image/jpeg", "image/webp", "image/tiff", "image/x-xcf", "image/bmp"],
+  "paths": {
+    "cpu": "field_opt — parallel zlib + simd swizzle",
+    "rtx": "queen_rtx — batch unpack + tile upload queue",
+    "python_backend": "GIMP-Field/lib/field-image-io.py",
+    "c_plugin": "plug-ins/file-field"
+  }
+}

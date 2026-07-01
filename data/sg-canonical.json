@@ -1,0 +1,124 @@
+{
+  "schema": "sg-canonical/v1",
+  "updated": "2026-06-29",
+  "canonical_root": "NewLatest",
+  "motto": "SG/NewLatest \u2014 KILROY PC core \u00b7 AmmoOS+AMOURANTHRTX \u00b7 Queen standalone \u2014 hardware no-break",
+  "stack_layers": {
+    "doctrine": "NewLatest/data/field-stack-layer-doctrine.json",
+    "posture": "NewLatest/lib/field-stack-layer.py",
+    "version": "2.0.0",
+    "order": [
+      "hardware",
+      "nexus_c2",
+      "kilroy",
+      "ammoos",
+      "queen"
+    ]
+  },
+  "sovereignty": {
+    "doctrine": "NewLatest/data/queen-ammoos-sovereignty-doctrine.json",
+    "posture": "NewLatest/lib/queen-ammoos-sovereignty.py",
+    "loopback": "127.0.0.1",
+    "znetwork_pipe_percent": 100,
+    "blessing": "God Bless"
+  },
+  "product": "AmmoOS",
+  "sg_root_semantics": "SG_ROOT defaults to NEXUS_INSTALL_ROOT (NewLatest). Stack siblings are symlinked inside NewLatest via scripts/wire-stack.sh.",
+  "compiler_stack": {
+    "primary": "NewLatest/Grok16",
+    "gui": "NewLatest/AmmoCode",
+    "filetypes_db": "NewLatest/data/field-programming-filetypes.json",
+    "code_open": "NewLatest/scripts/sg-code-open.sh",
+    "fieldc": "NewLatest/AMOURANTHRTX/Navigator/engine/FieldFieldCc.hpp",
+    "vulkan_doctrine": "NewLatest/data/vulkan-os-doctrine.json",
+    "integrate": "NewLatest/scripts/integrate-compiler-stack.sh",
+    "rtx_engine": "NewLatest/AMOURANTHRTX",
+    "rtx_integrate": "NewLatest/scripts/integrate-amouranthrtx.sh",
+    "rtx_open": "NewLatest/scripts/amouranthrtx-open.sh"
+  },
+  "stack": {
+    "operator_surface": "NewLatest/Queen",
+    "network_shield": "NewLatest",
+    "compiler": "NewLatest/Grok16",
+    "ammocode": "NewLatest/AmmoCode",
+    "final_eye": "NewLatest/Final_Eye",
+    "final_ear": "NewLatest/Final_Ear",
+    "final_mouth": "NewLatest/Final_Mouth",
+    "field_research": "NewLatest/Field_Research",
+    "gimp_field": "NewLatest/GIMP-Field",
+    "obs_field": "NewLatest/OBS-Field",
+    "keepass_field": "NewLatest/KeePass-Field",
+    "gdb_field": "NewLatest/GDB-Field",
+    "ammosecurity": "NewLatest/ammosecurity",
+    "world_redata": "World_Redata",
+    "hostess_brain": "NewLatest/Hostess7",
+    "field_kernel": "NewLatest/KILROY",
+    "field_book": "NewLatest/Field_Primer",
+    "textbook": "NewLatest/Textbook",
+    "amouranthrtx": "NewLatest/AMOURANTHRTX",
+    "pythong": "NewLatest/PythonG",
+    "grokpy": "NewLatest/GrokPy",
+    "znetwork": "NewLatest/ZNetwork",
+    "training_viewer": "NewLatest/hostess7-training-viewer"
+  },
+  "wire_script": "NewLatest/scripts/wire-stack.sh",
+  "retired": {
+    "Latest/NEXUS-Shield": "superseded by NewLatest \u2014 remove after migration",
+    "ZOCR": "use Final_Eye only",
+    "ZNEWOCR": "use Final_Eye only",
+    "znetwork": "use ZNetwork only",
+    "NewLatest/NewLatest": "nested stub removed"
+  },
+  "cpu_vulnerability_shield": {
+    "doctrine": "NewLatest/data/cpu-vulnerability-doctrine.json",
+    "posture": "NewLatest/lib/cpu-vulnerability-shield.py",
+    "api": "/api/cpu-vulnerability",
+    "motto": "Known CPU CVEs mitigated; speculative zero-day classes watched; fail closed on Vulnerable"
+  },
+  "native_layer": {
+    "doctrine": "NewLatest/data/native-layer-doctrine.json",
+    "posture": "NewLatest/lib/native-layer.py",
+    "flash_chip": false,
+    "motto": "We are THE native \u2014 BIOS witness, no ROM flash, everything lives with us"
+  },
+  "sense_package": {
+    "doctrine": "NewLatest/data/field-sense-package-doctrine.json",
+    "meld": "NewLatest/lib/field-sense-package-meld.py",
+    "api": "/api/sense-package",
+    "motto": "Eye \u00b7 Ear \u00b7 Final_Eye \u00b7 Redata \u00b7 Hostess7 \u2014 melded and protected; brain witnessed read-only"
+  },
+  "security": {
+    "root_sovereign": "NewLatest/Queen/lib/queen-root-sovereign.py",
+    "kill_policy": "prejudice",
+    "invisible_guard": "NewLatest/lib/root-sovereign-guard.sh",
+    "code_seal": "NewLatest/Queen/lib/queen-security.py",
+    "nexus_daemon": "NewLatest/lib/nexus-daemon.sh",
+    "env": {
+      "SG_ROOT_KILL_PREJUDICE": "1",
+      "SG_ROOT_SOVEREIGN_KILL": "1",
+      "SG_ROOT_GUARD_INTERVAL": "8",
+      "SG_ROOT_GUARD_FAST_INTERVAL": "4"
+    }
+  },
+  "launch": {
+    "queen": "NewLatest/Queen/scripts/run-queen.sh",
+    "nexus": "NewLatest/nexus.sh",
+    "g16_build": "NewLatest/Queen/scripts/g16-build.sh",
+    "field_stack": "NewLatest/scripts/start-field-stack.sh",
+    "live_build": "NewLatest/Queen/scripts/queen-live-build.sh",
+    "training_viewer": "NewLatest/hostess7-training-viewer/launch.sh",
+    "wire_stack": "NewLatest/scripts/wire-stack.sh",
+    "integrate_compiler": "NewLatest/scripts/integrate-compiler-stack.sh",
+    "integrate_ammocode": "NewLatest/scripts/integrate-ammocode.sh",
+    "integrate_amouranthrtx": "NewLatest/scripts/integrate-amouranthrtx.sh",
+    "amouranthrtx_open": "NewLatest/scripts/amouranthrtx-open.sh",
+    "boot_impl": "NewLatest/scripts/nexus-boot-impl.sh"
+  },
+  "boot_impl": {
+    "script": "NewLatest/lib/nexus-boot-impl.sh",
+    "standalone": "NewLatest/scripts/nexus-boot-impl.sh",
+    "first_marker": "first-boot.complete",
+    "last_marker": "boot-impl.last",
+    "semantics": "First install runs full wire+migrate+meld; every reboot runs lighter refresh before normal daemon boot."
+  }
+}

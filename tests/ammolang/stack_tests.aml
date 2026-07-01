@@ -1,0 +1,22 @@
+# Stack test master — all suites through AmmoLang
+@profile fastest
+@verbose clean
+@motto "Stack tests · assert · hang guard · no bash run-tests"
+
+seq ·
+  say "Stack tests — AmmoLang assert engine replaces bash run-tests.sh"
+  post "STACK_TESTS START"
+  assist hang
+  test suite:ammolang no_halt
+  test suite:combinatorics no_halt
+  test suite:core no_halt
+  test suite:grok16 no_halt
+  test suite:hostess7 no_halt
+  test suite:ironclad no_halt
+  test suite:library no_halt
+  test suite:queen no_halt
+  test suite:security no_halt
+  test suite:stack no_halt
+  assist freeze
+  say "Stack tests complete — inspect ammolang-test-panel.json"
+  post "STACK_TESTS COMPLETE"

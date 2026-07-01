@@ -1,0 +1,41 @@
+{
+  "schema": "field-permanent-fielding-doctrine/v1",
+  "title": "Permanent fielding — power input forward",
+  "motto": "One field from the wall forward. KILROY owns syscall truth; SG + NewLatest own userspace fabric. No off switch.",
+  "scope": ["SG", "SG/NewLatest"],
+  "policy": {
+    "permanent": true,
+    "off_switch": false,
+    "reversible": false,
+    "field_depth": 0,
+    "no_subfields": true,
+    "field_on_field_forbidden": true,
+    "boot_ensure_every_cycle": true,
+    "clear_defield_on_commit": true,
+    "underlay_commit": true,
+    "power_witness_required": true
+  },
+  "power_chain": [
+    {"id": "acpi_power", "label": "AC / battery witness", "role": "power_input"},
+    {"id": "grok_boot", "label": "Grok bootloader", "role": "firmware_handoff"},
+    {"id": "kilroy_field_die", "label": "KILROY Field Die", "role": "syscall_truth"},
+    {"id": "sg_fabric", "label": "SG field fabric", "role": "stack_root"},
+    {"id": "newlatest_nexus", "label": "NewLatest NEXUS stack", "role": "userspace_c2"}
+  ],
+  "markers": {
+    "permanent": ".nexus-state/permanent-field.marker",
+    "receipt": ".nexus-state/permanent-field.json",
+    "env": ".nexus-state/permanent-field.env",
+    "underlay_lock": ".nexus-state/field-underlay-lock.json",
+    "runtime": ".nexus-state/field-combinatorics-runtime.json"
+  },
+  "module": "lib/field-permanent-fielding.py",
+  "integrations": {
+    "boot": "lib/nexus-boot-impl.sh",
+    "underlay": "lib/field-underlay-switch.py",
+    "defield_control": "AmmoCode/server/ammocode-field-control.py",
+    "single_field_depth": "data/single-field-depth-doctrine.json",
+    "underlay_doctrine": "data/field-underlay-doctrine.json",
+    "power_ledger": "lib/field-power-ledger.py"
+  }
+}

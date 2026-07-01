@@ -1,0 +1,22 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 44,
+  "slug": "stack-retro-m68k",
+  "title": "Motorola 68000 Platform Stack",
+  "body": "# Motorola 68000 Platform Stack\n\n**Platform stack:** `retro_m68k` · **Era:** 1979–1996 · **Vendor:** Motorola · **Count:** 4\n\n68000-line guests — Genesis, Neo Geo, CoCo, and other m68k arcade/home systems.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: retro_m68k` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **MC68901 MFP** (Motorola, 16-bit) — Multi-function peripheral — ST/Amiga IRQ\n- **MC6840 PTM** (Motorola, 8-bit) — Programmable timer module\n\n## Catalog ids\n\nThe `chip_ids` array holds all **4** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: retro_m68k · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "amiga_68000",
+    "glue_mc6840",
+    "glue_mc68901",
+    "system_neogeo"
+  ],
+  "chip_count": 4,
+  "kind": "platform_stack",
+  "family": "retro",
+  "platform_stack": "retro_m68k",
+  "era": "1979–1996",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

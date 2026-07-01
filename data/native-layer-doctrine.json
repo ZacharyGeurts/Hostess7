@@ -1,0 +1,48 @@
+{
+  "schema": "native-layer-doctrine/v1",
+  "title": "We are THE native",
+  "motto": "Down to actual BIOS — witness and outrank. No chip flash. Be better; everything lives with us.",
+  "policy": {
+    "flash_spi_rom": false,
+    "flash_reason": "Firmware ROM is read-only witness. Sovereignty is software-native: Grok boot, KILROY Field Die, Queen capsule, NEXUS hooks.",
+    "native_authority": "SG/NewLatest — Queen + KILROY + NEXUS",
+    "everything_lives_with_us": true,
+    "competing_layers": "retired_not_replaced — sg_firmware purges third-party security/hack stacks; root-sovereign kills foreign root; hooks block middlemen"
+  },
+  "stack_bottom_up": [
+    {"id": "firmware", "label": "BIOS/UEFI", "role": "witness_only", "flash": false, "audit": "KILROY/scripts/grok-firmware-audit.sh"},
+    {"id": "boot", "label": "Grok Bootloader", "role": "field_native_boot", "target": "KILROY/boot/grok", "host_fallback": "systemd-shim"},
+    {"id": "kernel", "label": "KILROY Field OS", "role": "Field Die @ syscall", "target": "KILROY/kernel/rtx", "host_fallback": "linux-compatible substrate"},
+    {"id": "firmware_layer", "label": "SG firmware layer", "role": "internet_out_only_no_bullshit", "path": "ammosecurity/modules/sg_firmware.sh"},
+    {"id": "sovereign", "label": "Root sovereign + code seal", "role": "operator-bound root vigil", "path": "Queen/lib/queen-root-sovereign.py"},
+    {"id": "capsule", "label": "Queen sovereign capsule", "role": "never_leave — compiler/runtime inside", "path": "Queen/data/queen-sovereign-capsule.json"},
+    {"id": "field_polkit", "label": "Field polkit elevation", "role": "UAC-style pkexec bridge + scoped actions", "path": "NewLatest/lib/nexus-pkexec-bridge.sh"},
+    {"id": "cpu_shield", "label": "CPU vulnerability shield", "role": "Spectre/Meltdown/MDS/retbleed + zero-day watch", "path": "NewLatest/lib/cpu-vulnerability-shield.py"},
+    {"id": "nexus", "label": "NEXUS field shield", "role": "gates, wire, panel, daemon", "path": "NewLatest"},
+    {"id": "surface", "label": "Operator surface", "role": "queen-browser + field command", "path": "Queen/build/rtx"}
+  ],
+  "lives_with_us": [
+    "field_compiler",
+    "grok_build",
+    "ai_integration",
+    "hardware_wire",
+    "truth_dns",
+    "sovereign_time",
+    "sovereign_clock",
+    "packet_field",
+    "connection_gatekeeper",
+    "hostess_brain",
+    "field_gpu_dispatch",
+    "cpu_vulnerability_shield",
+    "field_polkit",
+    "field_substrate_takeover",
+    "field_rtx_forefront",
+    "field_underlay"
+  ],
+  "not_our_job": [
+    "flash_bios_chip",
+    "vendor_me_fw_replace",
+    "third_party_av_edr",
+    "os_browser_as_primary_surface"
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "default_profile": "hostess7",
+  "motto": "World's Best Dewey Library — hot-swappable catalog profiles",
+  "profiles": {
+    "hostess7": {
+      "id": "hostess7",
+      "name": "Hostess 7 Field Library",
+      "short": "H7",
+      "authority": "Hostess7 World's Best Librarian",
+      "dewey_system": "DDC23",
+      "field_root_env": "HOSTESS7_TEAM_FIELD",
+      "github_path": "library/profiles/hostess7.json",
+      "description": "Primary catalog — field drive H7 books, EIN/ISBN bibliography, micro-sig fingerprint sync."
+    },
+    "loc": {
+      "id": "loc",
+      "name": "Library of Congress",
+      "short": "LOC",
+      "authority": "Library of Congress Classification (LCC bridge to Dewey)",
+      "dewey_system": "DDC23-LOC",
+      "github_path": "library/profiles/loc.json",
+      "description": "LOC-aligned Dewey labels — congressional research shelf, LCC crosswalk.",
+      "label_overrides": {
+        "000": "General works & computer science (LOC: QA, Z)",
+        "100": "Philosophy & psychology (LOC: B, BF)",
+        "200": "Religion (LOC: BL–BX)",
+        "300": "Social sciences (LOC: H)",
+        "355": "Military science (LOC: U)",
+        "355.02": "Military art & science — strategy (LOC: U163)",
+        "355.009": "Military history — general (LOC: D25)",
+        "400": "Language (LOC: P)",
+        "500": "Science (LOC: Q)",
+        "600": "Technology & medicine (LOC: R, T)",
+        "700": "Arts & recreation (LOC: N, GV)",
+        "800": "Literature (LOC: P)",
+        "900": "History & geography (LOC: D, E, F, G)",
+        "940": "Europe — history (LOC: D)",
+        "940.54": "World War II — Europe (LOC: D743)",
+        "973.7": "United States — Civil War (LOC: E470)",
+        "973.92": "United States — World War II (LOC: D769)"
+      }
+    },
+    "british_library": {
+      "id": "british_library",
+      "name": "British Library",
+      "short": "BL",
+      "authority": "British Library Integrated Catalogue",
+      "dewey_system": "DDC23-BL",
+      "github_path": "library/profiles/british_library.json",
+      "description": "British Library shelf labels — UK cataloguing practice, imperial history emphasis.",
+      "label_overrides": {
+        "000": "Generalities & computing",
+        "300": "Social sciences, economics & law",
+        "355": "Military & naval science",
+        "355.02": "Strategy & tactics",
+        "355.009": "War — general history",
+        "900": "History & geography",
+        "940": "European history",
+        "940.54": "Second World War",
+        "941": "British Isles — history",
+        "973.7": "American Civil War"
+      }
+    },
+    "oclc_worldcat": {
+      "id": "oclc_worldcat",
+      "name": "OCLC WorldCat",
+      "short": "WC",
+      "authority": "OCLC WorldCat Entities",
+      "dewey_system": "DDC23-WorldCat",
+      "github_path": "library/profiles/oclc_worldcat.json",
+      "description": "WorldCat consortium Dewey — global holdings, MARC-aligned subject headings.",
+      "label_overrides": {
+        "000": "Computer science, knowledge & generalities",
+        "355": "Military science",
+        "355.02": "Military art & science",
+        "355.009": "Military history",
+        "355.48": "Special forces & unconventional warfare",
+        "900": "History",
+        "940": "History of Europe",
+        "940.53": "World War I (1914–1918)",
+        "940.54": "World War II (1939–1945)",
+        "973.7": "United States — Civil War period",
+        "973.92": "United States — World War II"
+      }
+    }
+  },
+  "translation_help": "Select a profile to hot-swap Dewey shelf labels. Book files stay on the Hostess 7 field drive; only catalog display labels and sub-shelf groupings change per authority."
+}

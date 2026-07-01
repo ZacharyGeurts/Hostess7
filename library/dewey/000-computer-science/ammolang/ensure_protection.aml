@@ -1,0 +1,15 @@
+# Ensure AML protection across all of NewLatest
+@profile fastest
+@verbose clean
+@motto "AmmoLang ensure — wire NewLatest · scan registry"
+
+seq ·
+  say "AmmoLang ensure protection — wire all shell entry points in NewLatest"
+  post "AML_ENSURE START — NewLatest full coverage"
+  run py:field-ammolang-boundary action:wire-all arg:--apply timeout:120 stall:60
+  run py:field-ammolang-boundary action:scan timeout:60 stall:30
+  run py:field-ammolang-boundary action:panel timeout:30 stall:15
+  run py:hostess7-change-awareness action:pulse timeout:60 stall:30
+  assist freeze
+  say "NewLatest AML protection ensured — ammolang-boundary-registry.json"
+  post "AML_ENSURE COMPLETE"

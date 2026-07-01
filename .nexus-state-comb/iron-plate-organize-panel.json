@@ -1,0 +1,705 @@
+{
+  "schema": "iron-plate-organize/v1",
+  "updated": "2026-06-30T15:07:07Z",
+  "stack_fabric": {
+    "available": true,
+    "schema": "g16-stack-fabric-witness/v1",
+    "fabric": {
+      "schema": "g16-stack-fabric/v1",
+      "profile": {
+        "schema": "g16-stack-fabric-profile/v1",
+        "profile": "field_opt",
+        "blocked": false,
+        "reason": "ok",
+        "truth": {
+          "ok": true,
+          "score": 100,
+          "floor": 58,
+          "checks": {
+            "ironclad": true,
+            "field_sanity": true,
+            "g1id": true,
+            "voltage": true
+          },
+          "reason": "match"
+        },
+        "thermal": "normal",
+        "autoloaded": true
+      },
+      "truth": {
+        "ok": true,
+        "score": 100,
+        "floor": 58,
+        "checks": {
+          "ironclad": true,
+          "field_sanity": true,
+          "g1id": true,
+          "voltage": true
+        },
+        "reason": "match"
+      },
+      "manifest": "nexus-field-stack-manifest/v1",
+      "autoload_profile": "field_opt"
+    }
+  },
+  "meld_citation": "ironclad:meld:2",
+  "enabled": true,
+  "product": "Simple Iron Plate",
+  "motto": "Iron plate delegates ordering to composite_bsp and bench-proven sorts — Start, monitor wall, condense, library.",
+  "ok": true,
+  "iron_plate": {
+    "connection_count": null,
+    "direct_routes": null,
+    "plated": false
+  },
+  "power_sort": {
+    "ok": true,
+    "recombinatorics_algorithm": "composite_bsp",
+    "file_list_mode": "dirs_first",
+    "sections_live": 0,
+    "source": "g16-power-sort-panel.json",
+    "always_best_sort": true,
+    "field_unique_best": true
+  },
+  "chip_paths": {
+    "count": 48,
+    "sort": {
+      "source": "chips_core",
+      "count": 48,
+      "the_sort": true,
+      "condensed": true,
+      "ironclad_grounded": true,
+      "ironclad_citation": "ironclad:chips:core"
+    },
+    "algorithm": "composite_bsp",
+    "source": "chips_core",
+    "sample": [
+      {
+        "id": "chips_core:fpu_weitek",
+        "name": "Steel fpu_weitek",
+        "family": "fpu_weitek",
+        "path_pct": 0.01,
+        "slot": 0,
+        "chip_count": 1
+      },
+      {
+        "id": "chips_core:cpu_companion_pc_8088",
+        "name": "Steel cpu_companion_pc_8088",
+        "family": "cpu_companion_pc_8088",
+        "path_pct": 0.02,
+        "slot": 1,
+        "chip_count": 2
+      },
+      {
+        "id": "chips_core:intel_risc",
+        "name": "Steel intel_risc",
+        "family": "intel_risc",
+        "path_pct": 0.02,
+        "slot": 2,
+        "chip_count": 2
+      },
+      {
+        "id": "chips_core:cpu_companion_pc_286",
+        "name": "Steel cpu_companion_pc_286",
+        "family": "cpu_companion_pc_286",
+        "path_pct": 0.02,
+        "slot": 3,
+        "chip_count": 2
+      },
+      {
+        "id": "chips_core:cpu_companion_pc_386",
+        "name": "Steel cpu_companion_pc_386",
+        "family": "cpu_companion_pc_386",
+        "path_pct": 0.02,
+        "slot": 4,
+        "chip_count": 2
+      },
+      {
+        "id": "chips_core:cpu_companion_pc_pentium",
+        "name": "Steel cpu_companion_pc_pentium",
+        "family": "cpu_companion_pc_pentium",
+        "path_pct": 0.03,
+        "slot": 5,
+        "chip_count": 3
+      },
+      {
+        "id": "chips_core:cpu_companion_pc_amd_k8",
+        "name": "Steel cpu_companion_pc_amd_k8",
+        "family": "cpu_companion_pc_amd_k8",
+        "path_pct": 0.04,
+        "slot": 6,
+        "chip_count": 4
+      },
+      {
+        "id": "chips_core:cpu_companion_pc_amd_am5",
+        "name": "Steel cpu_companion_pc_amd_am5",
+        "family": "cpu_companion_pc_amd_am5",
+        "path_pct": 0.04,
+        "slot": 7,
+        "chip_count": 4
+      },
+      {
+        "id": "chips_core:cpu_companion_pc_pentium4",
+        "name": "Steel cpu_companion_pc_pentium4",
+        "family": "cpu_companion_pc_pentium4",
+        "path_pct": 0.04,
+        "slot": 8,
+        "chip_count": 4
+      },
+      {
+        "id": "chips_core:cpu_companion_pc_core2",
+        "name": "Steel cpu_companion_pc_core2",
+        "family": "cpu_companion_pc_core2",
+        "path_pct": 0.04,
+        "slot": 9,
+        "chip_count": 4
+      },
+      {
+        "id": "chips_core:cpu_companion_retro_z80",
+        "name": "Steel cpu_companion_retro_z80",
+        "family": "cpu_companion_retro_z80",
+        "path_pct": 0.05,
+        "slot": 10,
+        "chip_count": 2
+      },
+      {
+        "id": "chips_core:semi_analog",
+        "name": "Steel semi_analog",
+        "family": "semi_analog",
+        "path_pct": 0.1,
+        "slot": 11,
+        "chip_count": 10
+      }
+    ]
+  },
+  "format_table": {
+    "count": 89,
+    "sort": {
+      "schema": "field-best-sort/v1",
+      "context": "format_table",
+      "algorithm": "family_then_label",
+      "singleton": true,
+      "field_unique_best": true,
+      "always_best_sort": true,
+      "one_best_ever": true,
+      "statement": "field_one_best_ever",
+      "meld_citation": "ironclad:meld:2",
+      "power_sort": null,
+      "n": 89,
+      "count": 89,
+      "applied": true,
+      "ironclad_connected": true,
+      "truth_percent": null,
+      "ironclad_grounded": false
+    },
+    "field_unique_best": true,
+    "one_best_ever": true,
+    "algorithm": "family_then_label",
+    "sample": [
+      {
+        "id": "aml",
+        "label": "AmmoLang",
+        "family": "sovereign",
+        "extensions": [
+          ".aml"
+        ],
+        "primary_extension": ".aml",
+        "magic": null,
+        "mime": null,
+        "description": "AmmoLang combinatronic source.",
+        "lossless": null,
+        "sovereign": true,
+        "ironclad": false,
+        "compression": null,
+        "dewey": null,
+        "source": "library/dewey",
+        "icon": "data/combinatronic-visuals/formats/aml.png",
+        "combinatronic": true,
+        "optimized_combinatronic": true,
+        "balance_hold": true
+      },
+      {
+        "id": "queen_external_wire",
+        "label": "External wire mandate",
+        "family": "sovereign",
+        "extensions": [],
+        "primary_extension": ".queen_external_wire",
+        "magic": null,
+        "mime": null,
+        "description": "Queen sovereign format — civilian on valid header.",
+        "lossless": null,
+        "sovereign": true,
+        "ironclad": false,
+        "compression": null,
+        "dewey": null,
+        "source": "field-virus-formats",
+        "icon": "data/combinatronic-visuals/formats/queen_external_wire.png",
+        "json_schema": "queen-external-wire/v2",
+        "path_hint": null,
+        "combinatronic": true,
+        "optimized_combinatronic": true,
+        "balance_hold": true
+      },
+      {
+        "id": "fielddrive",
+        "label": "Field Drive",
+        "family": "sovereign",
+        "extensions": [
+          ".fielddrive"
+        ],
+        "primary_extension": ".fielddrive",
+        "magic": null,
+        "mime": null,
+        "description": "Big Drive storage — sovereign.",
+        "lossless": null,
+        "sovereign": true,
+        "ironclad": true,
+        "compression": null,
+        "dewey": null,
+        "source": "field-big-drive-doctrine",
+        "icon": "data/combinatronic-visuals/formats/fielddrive.png",
+        "big_drive": true,
+        "boot": true,
+        "vm": null,
+        "presumes_field_underneath": true,
+        "requires_grok16": true,
+        "creates_field_file": false,
+        "combinatronic": true,
+        "optimized_combinatronic": true,
+        "balance_hold": true
+      },
+      {
+        "id": "field_io_packet",
+        "label": "Field I/O Packet",
+        "family": "sovereign",
+        "extensions": [],
+        "primary_extension": ".field_io_packet",
+        "magic": null,
+        "mime": "application/vnd.ironclad.field-io-packet+json",
+        "description": "Wire envelope — stream only, file_write_forbidden.",
+        "lossless": null,
+        "sovereign": true,
+        "ironclad": true,
+        "compression": null,
+        "dewey": null,
+        "source": "field-io-packet",
+        "icon": "data/combinatronic-visuals/formats/field_io_packet.png",
+        "presumes_field_underneath": true,
+        "requires_grok16": true,
+        "creates_field_file": false,
+        "never_poison_the_well": true,
+        "file_write_forbidden": true,
+        "combinatronic": true,
+        "optimized_combinatronic": true,
+        "balance_hold": true
+      },
+      {
+        "id": "field_queen_gates",
+        "label": "Field Queen gates seed",
+        "family": "sovereign",
+        "extensions": [
+          ".json"
+        ],
+        "primary_extension": ".json",
+        "magic": null,
+        "mime": null,
+        "description": "Queen sovereign format — civilian on valid header.",
+        "lossless": null,
+        "sovereign": true,
+        "ironclad": false,
+        "compression": null,
+        "dewey": null,
+        "source": "field-virus-formats",
+        "icon": "data/combinatronic-visuals/formats/field_queen_gates.png",
+        "json_schema": "field-queen-gates/v1",
+        "path_hint": null,
+        "combinatronic": true,
+        "optimized_combinatronic": true,
+        "balance_hold": true
+      },
+      {
+        "id": "field_virus_formats",
+        "label": "Field virus format registry",
+        "family": "sovereign",
+        "extensions": [],
+        "primary_extension": ".field_virus_formats",
+        "magic": null,
+        "mime": null,
+        "description": "Queen sovereign format — civilian on valid header.",
+        "lossless": null,
+        "sovereign": true,
+        "ironclad": false,
+        "compression": null,
+        "dewey": null,
+        "source": "field-virus-formats",
+        "icon": "data/combinatronic-visuals/formats/field_virus_formats.png",
+        "json_schema": "field-virus-formats/v1",
+        "path_hint": null,
+        "combinatronic": true,
+        "optimized_combinatronic": true,
+        "balance_hold": true
+      },
+      {
+        "id": "gpy16",
+        "label": "G16 PythonG",
+        "family": "sovereign",
+        "extensions": [
+          ".pyc"
+        ],
+        "primary_extension": ".pyc",
+        "magic": "GPY16",
+        "mime": null,
+        "description": "G16 bytecode.",
+        "lossless": null,
+        "sovereign": true,
+        "ironclad": false,
+        "compression": null,
+        "dewey": null,
+        "source": "field-virus-formats",
+        "icon": "data/combinatronic-visuals/formats/gpy16.png",
+        "json_schema": null,
+        "path_hint": null,
+        "combinatronic": true,
+        "optimized_combinatronic": true,
+        "balance_hold": true
+      },
+      {
+        "id": "grokpy12",
+        "label": "GrokPy Bytecode",
+        "family": "sovereign",
+        "extensions": [
+          ".gpy",
+          ".grokpy"
+        ],
+        "primary_extension": ".gpy",
+        "magic": "GROKPY12",
+        "mime": null,
+        "description": "GrokPy 12 bytecode.",
+        "lossless": null,
+        "sovereign": true,
+        "ironclad": false,
+        "compression": null,
+        "dewey": null,
+        "source": "field-virus-formats",
+        "icon": "data/combinatronic-visuals/formats/grokpy12.png",
+        "json_schema": null,
+        "path_hint": null,
+        "combinatronic": true,
+        "optimized_combinatronic": true,
+        "balance_hold": true
+      }
+    ]
+  },
+  "recombinatorics_algorithm": "composite_bsp",
+  "bsp": {
+    "ok": true,
+    "case_id": "c2_taskbar_plate",
+    "profile": "g16_field_opt",
+    "bsp_hit": false,
+    "binary": null,
+    "compile_ms": 0.0,
+    "note": "bsp:miss",
+    "source_count": 5,
+    "plane": "/home/default/Desktop/SG/NewLatest/Grok16/data/bench/exec-plane"
+  },
+  "c2_bsp_hit": false,
+  "combinatorics_bridge_ok": false,
+  "exec_runner": null,
+  "exec_pattern": null,
+  "condense_groups": [],
+  "condense_sort": {
+    "schema": "field-best-sort/v1",
+    "context": "recombinatorics",
+    "algorithm": "composite_bsp",
+    "singleton": true,
+    "field_unique_best": true,
+    "always_best_sort": true,
+    "one_best_ever": true,
+    "statement": "field_one_best_ever",
+    "meld_citation": "ironclad:meld:2",
+    "power_sort": null,
+    "n": 0,
+    "count": 0,
+    "applied": true,
+    "ironclad_connected": true,
+    "truth_percent": null,
+    "ironclad_grounded": false,
+    "ironclad_secure_api": true
+  },
+  "ironclad_chain": {
+    "schema": "ironclad-organize-chain/v1",
+    "citation": "ironclad:neural:2",
+    "equation": "organize_gain = truth_percent × composite_bsp_weight × bridge_condense",
+    "ironclad_grounded": false,
+    "truth_percent": 0.0,
+    "recombinatorics_algorithm": "composite_bsp",
+    "composite_bsp_weight": 1.0,
+    "bridge_condense": 0.25,
+    "plate_dimensions": null,
+    "travel_reduction_pct": null,
+    "meta_plate_count": null,
+    "organize_gain": 0.0,
+    "replate_recommended": false,
+    "replate_raw": false,
+    "replate_held": false,
+    "replate_hold_reason": null,
+    "userwatch_zones": [],
+    "connections": [
+      {
+        "id": "ironclad",
+        "module": "lib/ironclad-immediate.py",
+        "feeds": [
+          "iron_plate",
+          "field_sanity",
+          "combinatorics_bridge"
+        ],
+        "live": true
+      },
+      {
+        "id": "iron_plate",
+        "module": "lib/field-operator-iron-plate.py",
+        "feeds": [
+          "iron_plate_organize",
+          "iron_plate_motion"
+        ],
+        "live": false
+      },
+      {
+        "id": "power_sort",
+        "module": "Grok16/lib/g16-power-sort-plate.py",
+        "feeds": [
+          "iron_plate_organize"
+        ],
+        "live": true
+      },
+      {
+        "id": "combinatorics_bridge",
+        "module": "lib/field-plate-combinatorics-bridge.py",
+        "feeds": [
+          "iron_plate_organize",
+          "c2_taskbar"
+        ],
+        "live": false
+      },
+      {
+        "id": "c2_taskbar",
+        "module": "lib/field-c2-taskbar-plate.py",
+        "feeds": [
+          "field_host_desktop",
+          "nexus_c2_desktop"
+        ],
+        "live": true
+      },
+      {
+        "id": "browser_display",
+        "consumer": "nexus_c2_desktop",
+        "engine": "queen-browser",
+        "launcher": false,
+        "display_only": true,
+        "live": true
+      }
+    ],
+    "connections_live": 4,
+    "browser_in_c2": true,
+    "posture": "Ironclad chain · gain 0.00 · hold · 4 nodes live"
+  },
+  "plate_spots": {
+    "ok": true,
+    "spot_count": 13,
+    "spots_live": 6,
+    "top_spots": [
+      "chain:browser_display",
+      "surface:start_menu",
+      "surface:task_manager",
+      "tool:combinatorics_bridge",
+      "tool:g16_power_sort",
+      "tool:iron_plate_organize",
+      "tool:ironclad_immediate",
+      "tool:operator_iron_plate"
+    ],
+    "coolest_spot": "chain:browser_display",
+    "low_power": true,
+    "thermal_deferred": null
+  },
+  "organize_gain": 0.0,
+  "replate_recommended": false,
+  "low_power": true,
+  "thermal_gate": {
+    "ok": true,
+    "light_gate": true,
+    "allow_plate_work": true,
+    "thermal_headroom_pct": 100.0,
+    "thermal_level": "ok",
+    "ops_requested": 2,
+    "low_power": true,
+    "doctrine": "Light gate — cache-only spot reads; no meld imports, no sanity panel required"
+  },
+  "h7_library": {
+    "ok": true,
+    "library_panel": false,
+    "organize_command": "./Hostess7.sh library-organize",
+    "dewey_profiles": false,
+    "module": "h7-library-bridge.py"
+  },
+  "organizational_tools": [
+    {
+      "id": "g16_power_sort",
+      "role": "Bench-driven best sort per context",
+      "module": "Grok16/lib/field-power-sort.py",
+      "live": true
+    },
+    {
+      "id": "g16_power_sort_plate",
+      "role": "Ironclad cool_sort witness plate",
+      "module": "Grok16/lib/g16-power-sort-plate.py",
+      "live": true
+    },
+    {
+      "id": "c2_taskbar_bsp",
+      "role": "BSP exec plane for C2 quint",
+      "module": "lib/field-c2-taskbar-plate.py",
+      "live": true
+    },
+    {
+      "id": "combinatorics_bridge",
+      "role": "Condense groups + exec posture",
+      "module": "lib/field-plate-combinatorics-bridge.py",
+      "live": true
+    },
+    {
+      "id": "queen_file_browser",
+      "role": "Power sort file listings",
+      "module": "Queen/lib/queen-file-browser.py",
+      "live": true
+    },
+    {
+      "id": "h7_library_organize",
+      "role": "Dewey organize — Hostess7 library",
+      "module": "lib/h7-library-bridge.py",
+      "live": true
+    },
+    {
+      "id": "iron_plate_spot",
+      "role": "Cool meld spot detect — thermal gate, cache-first",
+      "module": "lib/iron-plate-spot-detector.py",
+      "live": true
+    },
+    {
+      "id": "field_file_formats",
+      "role": "Format tables + icons — Ironclad best sort",
+      "module": "lib/field-file-formats.py",
+      "live": true
+    },
+    {
+      "id": "field_best_sort",
+      "role": "One best sort ever — Field meld authority",
+      "module": "lib/field-best-sort.py",
+      "live": true
+    }
+  ],
+  "tools_live": 9,
+  "surfaces": {
+    "start_menu": {
+      "iron_plate_sorted": true,
+      "category_order": [],
+      "category_count": 0
+    },
+    "task_manager": {
+      "mount": "fsb-task-manager",
+      "registry": "data/system/field-desktop-registry.json"
+    },
+    "tray_icon_ids": [
+      "field-audio-settings",
+      "queen-browser",
+      "field-broadcaster",
+      "nexus-control-panel",
+      "field-lock",
+      "nexus-threats",
+      "nexus-znetwork"
+    ]
+  },
+  "sort_meta": {
+    "start_menu": {
+      "categories": {
+        "schema": "field-best-sort/v1",
+        "context": "recombinatorics",
+        "algorithm": "composite_bsp",
+        "singleton": true,
+        "field_unique_best": true,
+        "always_best_sort": true,
+        "one_best_ever": true,
+        "statement": "field_one_best_ever",
+        "meld_citation": "ironclad:meld:2",
+        "power_sort": null,
+        "n": 0,
+        "count": 0,
+        "applied": true,
+        "ironclad_connected": true,
+        "truth_percent": null,
+        "ironclad_grounded": false,
+        "ironclad_secure_api": true
+      },
+      "apps_context": "file_list"
+    },
+    "tray_icons": {
+      "schema": "field-best-sort/v1",
+      "context": "file_list",
+      "algorithm": "dirs_first",
+      "singleton": true,
+      "field_unique_best": true,
+      "always_best_sort": true,
+      "one_best_ever": true,
+      "statement": "field_one_best_ever",
+      "meld_citation": "ironclad:meld:2",
+      "power_sort": {
+        "context": "file_list",
+        "context_bench_id": "file_list_small",
+        "algorithm": "dirs_first",
+        "n": 7,
+        "bench_us": 21.73,
+        "cool": true,
+        "statement": "power_sort_dirs_first_for_file_list"
+      },
+      "n": 7,
+      "count": 7,
+      "applied": true,
+      "ironclad_connected": true,
+      "truth_percent": null,
+      "ironclad_grounded": false,
+      "ironclad_secure_api": true
+    }
+  },
+  "posture": "Iron plate → composite_bsp + power sort — BSP hit · 9 organize tools live · Ironclad chain · gain 0.00 · hold · 4 nodes live",
+  "_g16_seal": {
+    "schema": "g16-sealed-output/v1",
+    "algorithm": "sha256",
+    "digest": "f06bd8bd71afaad6fa7478d5a38cf611356fcb0c65bd1b76131aaa874eeeecda",
+    "sealed_at": "2026-06-30T15:07:07Z",
+    "path": "/home/default/Desktop/SG/NewLatest/.nexus-state-comb/iron-plate-organize-panel.json",
+    "g1id_meld": {
+      "id": "g1id",
+      "absorbed": true,
+      "meld_citation": "ironclad:meld:2",
+      "citation": "ironclad:time:1",
+      "policy": "sovereign_time_only",
+      "time_is_linear": true,
+      "sovereign_time_ok": true,
+      "sovereign_time": {
+        "source": "lib/sovereign-time.py",
+        "clock": "lib/sovereign-clock.py",
+        "schema": "sovereign-time-meld-input/v1",
+        "linear_ns": 1782832027600441327,
+        "derived_utc": "2026-06-30T15:07:07Z",
+        "sealed": true,
+        "synced": true,
+        "never_desync": true,
+        "immutable_linear": true,
+        "witness_only": true,
+        "not_geometry_t": true,
+        "citation": "ironclad:g1id:2"
+      },
+      "example_valid": true,
+      "updated": "2026-06-30T15:07:07Z"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "hostess7-sense-training/v1",
+  "title": "Final Eye · Ear · Mouth — Hostess 7 sense training wires",
+  "motto": "Vision, Hearing, Voice — wired to the matrix, trained on the field, fused under Hostess 7.",
+  "hub_id": "sense_package_hub",
+  "ironclad_ref": "data/ironclad-doctrine.json",
+  "ironclad_extrapolation": "100% truth confidence on neural extrapolation when Ironclad is realized — eye, ear, mouth wires trace ironclad:neural:1",
+  "pass_threshold": 0.75,
+  "master_threshold": 0.95,
+  "music_hub": {
+    "id": "music_theory_hub",
+    "label": "Music & music theory",
+    "motto": "Pitch, rhythm, harmony — ear hears it, mouth speaks it, eye reads it, brain remembers it.",
+    "doctrine_ref": "data/hostess7-music-training-doctrine.json"
+  },
+  "sessions": {
+    "final_eye": {
+      "label": "Final Eye training",
+      "tab": "final-eye",
+      "api": "/api/queen-eyeball",
+      "product": "Final_Eye",
+      "steps": [
+        {"id": "eye_verify", "label": "Verify eyeball", "action": "verify"},
+        {"id": "eye_arm", "label": "Arm dishes mode", "action": "arm", "mode": "dishes"},
+        {"id": "eye_teach", "label": "Teach authority", "action": "teach", "lesson": "authority"},
+        {"id": "eye_fusion", "label": "Eye↔Ear plate", "action": "fused_analyze", "evidence": {"mouth_correlation": 0.9}},
+        {"id": "eye_notation", "label": "Staff & clef reading", "action": "music_notation", "clef": "treble", "line": 1},
+        {"id": "eye_rhythm_visual", "label": "Rhythm notation sight", "action": "music_rhythm", "meter": "4/4"},
+        {"id": "eye_music_fusion", "label": "Eye↔Ear music plate", "action": "fused_analyze", "evidence": {"mouth_correlation": 0.88, "music_notation": true, "pitch_hz": 440}}
+      ]
+    },
+    "final_ear": {
+      "label": "Final Ear training",
+      "tab": "final-ear",
+      "api": "/api/queen-earball",
+      "product": "Final_Ear",
+      "steps": [
+        {"id": "ear_verify", "label": "Verify earball", "action": "verify"},
+        {"id": "ear_arm", "label": "Arm Auditus", "action": "arm", "mode": "dishes"},
+        {"id": "ear_spectrum", "label": "Auditory spectrum capture", "action": "spectrum", "seconds": 0.5},
+        {"id": "ear_truth", "label": "Truth filter", "action": "truth_filter", "evidence": {"mouth_correlation": 0.88}},
+        {"id": "ear_fusion", "label": "Eye↔Ear plate", "action": "eye_ear_fusion", "evidence": {"mouth_correlation": 0.91, "speech_present": true}, "existence": {"correlation": 0.84}},
+        {"id": "ear_music_spectrum", "label": "Music spectrum → pitch", "action": "spectrum", "seconds": 0.5, "evidence": {"music_theory": true, "fundamental_hz": 440}},
+        {"id": "ear_interval", "label": "Interval recognition", "action": "music_interval", "interval": "perfect_fifth", "root": "A4"},
+        {"id": "ear_harmonic_series", "label": "Harmonic series drill", "action": "music_drill", "battery": "ear_training"},
+        {"id": "ear_music_fusion", "label": "Ear↔Mouth music fusion", "action": "eye_ear_fusion", "evidence": {"mouth_correlation": 0.9, "music_interval": "perfect fifth", "pitch_hz": 440}}
+      ]
+    },
+    "final_mouth": {
+      "label": "Final Mouth training",
+      "tab": "final-mouth",
+      "api": "/api/queen-mouthball",
+      "product": "Final_Mouth",
+      "steps": [
+        {"id": "mouth_verify", "label": "Verify mouthball", "action": "verify"},
+        {"id": "mouth_arm", "label": "Arm dishes voice", "action": "arm", "mode": "dishes"},
+        {"id": "mouth_spectrum", "label": "Vocal spectrum", "action": "spectrum"},
+        {"id": "mouth_speak", "label": "Speak doctrine", "action": "speak", "text": "Field voice online. Mouth owns the sound."},
+        {"id": "mouth_neural", "label": "Voice hemisphere online", "action": "mouth_neural"},
+        {"id": "mouth_thought_gap", "label": "Thought ≠ voice prepare", "action": "prepare_utterance", "text": "I think one thing and may say another — the mouth has its own brain."},
+        {"id": "mouth_text_tts", "label": "Text → speech lesson", "action": "mouth_train", "lesson": "text_to_speech"},
+        {"id": "mouth_ai_comm", "label": "AI sound communique", "action": "mouth_train", "lesson": "ai_sound_communique"},
+        {"id": "mouth_deception", "label": "Deception discern lesson", "action": "mouth_train", "lesson": "deception_discern"},
+        {"id": "mouth_encourage", "label": "Encourage text_to_voice", "action": "mouth_neural_encourage", "encourage_label": "text_to_voice"},
+        {"id": "mouth_fusion", "label": "Mouth·Ear·Eye fusion", "action": "fusion", "evidence": {"mouth_correlation": 0.88, "ear_correlation": 0.85, "eye_correlation": 0.84}},
+        {"id": "mouth_pitch", "label": "Vocal pitch accuracy", "action": "music_pitch", "note": "A4", "semitones": 0},
+        {"id": "mouth_vocal_spectrum", "label": "Vocal spectrum · music", "action": "spectrum", "evidence": {"music_theory": true}},
+        {"id": "mouth_rhythm_speech", "label": "Rhythmic speech · 4/4", "action": "speak", "text": "One two three four — field voice keeps the beat.", "pitch_semitones": 0},
+        {"id": "mouth_melody_tts", "label": "Melody TTS lesson", "action": "mouth_train", "lesson": "text_to_speech", "evidence": {"melody": true, "meter": "4/4"}},
+        {"id": "mouth_brain_music", "label": "Brain↔mouth music pattern", "action": "music_brain_pattern", "sequence": [0, 2, 4, 7]},
+        {"id": "mouth_music_fusion", "label": "Mouth·Ear·Eye music fusion", "action": "fusion", "evidence": {"mouth_correlation": 0.9, "ear_correlation": 0.88, "music_theory": true, "pitch_hz": 440}}
+      ]
+    }
+  },
+  "matrix_plates": [
+    {"from": "hostess7_core", "to": "sense_package_hub", "kind": "sense"},
+    {"from": "sense_package_hub", "to": "final_eye_node", "kind": "vision"},
+    {"from": "sense_package_hub", "to": "final_ear_node", "kind": "hearing"},
+    {"from": "sense_package_hub", "to": "final_mouth_node", "kind": "voice"},
+    {"from": "final_eye_node", "to": "eye_ear_plate", "kind": "plate"},
+    {"from": "final_ear_node", "to": "eye_ear_plate", "kind": "plate"},
+    {"from": "eye_ear_plate", "to": "sense_package_hub", "kind": "meld"},
+    {"from": "final_mouth_node", "to": "sense_neural_wire", "kind": "neural"},
+    {"from": "eye_ear_plate", "to": "sense_neural_wire", "kind": "quorum"},
+    {"from": "sense_neural_wire", "to": "hostess7_core", "kind": "quorum"},
+    {"from": "music_theory_hub", "to": "final_ear_node", "kind": "music"},
+    {"from": "music_theory_hub", "to": "final_mouth_node", "kind": "music"},
+    {"from": "music_theory_hub", "to": "final_eye_node", "kind": "music"},
+    {"from": "music_theory_hub", "to": "sense_neural_wire", "kind": "music"},
+    {"from": "hostess7_core", "to": "music_theory_hub", "kind": "music"}
+  ],
+  "matrix_wires": [
+    {"from": "hostess7_core", "to": "sense_package_hub", "kind": "sense"},
+    {"from": "final_eye_node", "to": "eye_ear_plate", "kind": "plate"},
+    {"from": "final_ear_node", "to": "eye_ear_plate", "kind": "plate"},
+    {"from": "eye_ear_plate", "to": "sense_neural_wire", "kind": "quorum"},
+    {"from": "final_mouth_node", "to": "sense_neural_wire", "kind": "neural"},
+    {"from": "sense_neural_wire", "to": "hostess7_core", "kind": "quorum"},
+    {"from": "music_theory_hub", "to": "final_ear_node", "kind": "music"},
+    {"from": "music_theory_hub", "to": "final_mouth_node", "kind": "music"},
+    {"from": "music_theory_hub", "to": "final_eye_node", "kind": "music"},
+    {"from": "music_theory_hub", "to": "sense_neural_wire", "kind": "music"},
+    {"from": "hostess7_core", "to": "music_theory_hub", "kind": "music"}
+  ]
+}

@@ -1,0 +1,14 @@
+# NEXUS ↔ Grok16 recompile — AmmoLang orchestrates nexus-g16-recompile.py
+@profile fastest
+@verbose clean
+@motto "G16 recompile · balance · browser · asm"
+
+seq ·
+  say "G16 recompile — AmmoLang dispatch"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  chips ensure
+  run py:nexus-g16-recompile action:integrate
+  run py:nexus-g16-recompile action:balance
+  run py:nexus-g16-recompile action:recompile
+  say "G16 recompile complete"

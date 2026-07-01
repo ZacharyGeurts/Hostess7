@@ -1,0 +1,35 @@
+Network Security — Field Guide
+NEXUS-Shield · Hostess7 Field Press
+=================================
+
+Chapter 1 — Know the Wire
+
+Every connection on your machine is a contract between a program and a remote peer. Security begins by naming that contract: who initiated it, which ports carry payload, whether traffic is TX (you sent) or RX (you received), and whether the application behind the socket is one you trust.
+
+Deep packet inspection does not mean paranoia. It means translation. A TCP flag of PSH with 1,400 bytes to port 443 is usually a browser loading a page. The same pattern to port 4444 from a binary in /tmp is a different story — but a single frame is never enough to condemn a peer. NEXUS uses corroboration: port class, process path, direction, and repeated behavior.
+
+Chapter 2 — False Positives Are Defeats
+
+An alert that cries wolf trains the operator to ignore real attacks. NEXUS Inspect mode uses high-confidence thresholds: multiple independent signals, or one signal so strong (e.g., temp-binary egress to a shell-class port) that innocence is implausible. Sacred resolvers, trusted browsers on HTTPS, and operator-authorized peers are excluded before heuristics run.
+
+When in doubt, watchlist — do not block. KILL is permanent. NO-KILL exempts a peer from autokill. Trust forever is for friends.
+
+Chapter 3 — Ports Tell Stories
+
+Port numbers are not magic, but they are habits. DNS uses 53. HTTPS uses 443. SSH uses 22. Metasploit listeners often squat on 4444. AsyncRAT clusters in the wild reuse 3004, 6006, 6606. A port registry accumulates what your machine actually uses — not what a textbook lists — and pairs each port with TX/RX counts and owning processes.
+
+Chapter 4 — Exploit Transmission
+
+Exploit transmission is outbound or inbound movement of weaponized bytes: shellcode delivery, staged downloader traffic, C2 beaconing, credential exfil over odd UDP sizes. Indicators include: egress to C2-class ports from non-browser processes, inbound SYN to unexpected listeners, RST storms against non-web ports, and cleartext admin protocols leaving the LAN.
+
+Corroborate with threat intel before KILL. Grok Heavy packets feed nexus-kill-intel JSON. Friendly Guard refuses sacred and trusted peers.
+
+Chapter 5 — National and Individual Respect
+
+Block behavior, not nationality. A VPS in any country can host malware; a CDN in any country can host innocence. High-confidence means evidence tied to activity — campaign tags, feed corroboration, same-host identity markers — never guilt by region alone.
+
+Chapter 6 — Field Memory
+
+Packets archived to field jsonl survive reboot. Dossiers archived on KILL survive forever. H7 books teach operators. The field is the library; the panel is the window.
+
+— End Field Guide Vol 1 (expand in Hostess7 cache) —

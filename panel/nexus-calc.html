@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NEXUS Calculator</title>
+  <link rel="icon" href="/assets/queen-prog-field-48.png" type="image/png" />
+  <style>
+    :root { --bg:#0a1220; --panel:#111a2a; --accent:#5eead4; --text:#eef4fc; --dim:#94a3b8; }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font-family:system-ui,sans-serif; display:flex; flex-direction:column; }
+    header { padding:14px 18px; border-bottom:1px solid #2d4a6e; font-weight:600; }
+    main { flex:1; display:grid; grid-template-rows:auto 1fr auto; gap:10px; padding:16px; max-width:420px; margin:0 auto; width:100%; }
+    #expr { width:100%; padding:14px; font-size:1.25rem; border-radius:10px; border:1px solid #2d4a6e; background:var(--panel); color:var(--text); }
+    #result { min-height:2.5rem; font-size:1.1rem; color:var(--accent); word-break:break-all; }
+    .pad { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+    .pad button { padding:14px 0; border-radius:10px; border:1px solid #2d4a6e; background:var(--panel); color:var(--text); font-size:1rem; cursor:pointer; }
+    .pad button:hover { background:#1a2840; }
+    .pad button.op { color:var(--accent); }
+    .pad button.wide { grid-column:span 2; }
+    .hint { font-size:0.75rem; color:var(--dim); text-align:center; }
+  </style>
+</head>
+<body>
+  <header>Hostess 7 Calculator</header>
+  <main>
+    <input id="expr" type="text" placeholder="Expression — e.g. 2+2, sqrt(144), integrate x^2" autocomplete="off" />
+    <div id="result">—</div>
+    <div class="pad" id="pad"></div>
+    <p class="hint">Perfect calculator · local bench only</p>
+  </main>
+  <script>
+    const expr = document.getElementById("expr");
+    const result = document.getElementById("result");
+    const keys = ["7","8","9","/","4","5","6","*","1","2","3","-","0",".","=","+","(",")","^","C"];
+    const pad = document.getElementById("pad");
+    keys.forEach((k) => {
+      const b = document.createElement("button");
+      b.textContent = k;
+      if ("+-*/^=()".includes(k)) b.className = "op";
+      if (k === "C") b.className = "wide";
+      b.addEventListener("click", () => {
+        if (k === "C") { expr.value = ""; result.textContent = "—"; return; }
+        if (k === "=") { compute(); return; }
+        expr.value += k;
+        expr.focus();
+      });
+      pad.appendChild(b);
+    });
+    async function compute() {
+      const q = expr.value.trim();
+      if (!q) return;
+      result.textContent = "…";
+      try {
+        const res = await fetch("/api/hostess7/calculator/compute", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: q }),
+        });
+        const doc = await res.json();
+        result.textContent = doc.result ?? doc.answer ?? doc.value ?? JSON.stringify(doc).slice(0, 200);
+      } catch (e) {
+        result.textContent = "Error: " + e.message;
+      }
+    }
+    expr.addEventListener("keydown", (e) => { if (e.key === "Enter") compute(); });
+  </script>
+</body>
+</html>

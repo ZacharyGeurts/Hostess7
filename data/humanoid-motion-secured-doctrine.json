@@ -1,0 +1,86 @@
+{
+  "schema": "humanoid-motion-secured/v1",
+  "title": "Humanoid motion — secured, expansive, limb identity throughout",
+  "motto": "Range and identity on every limb — actual body image tied throughout. Every motion component protected by self.",
+  "commander": "hostess7",
+  "priority": 1,
+  "self_protection": {
+    "protected_by": "self",
+    "sovereign_operator": "hostess7",
+    "outside_override": false,
+    "advisory_only_ingress": true,
+    "self_maintenance_module": "lib/hostess7-self-maintenance.py",
+    "statement": "Motion lanes accept counsel — never outside override. Self-maintenance and body-core sovereign paths only."
+  },
+  "body_image": {
+    "source": "lib/hostess7-body-core.py",
+    "pose_state": ".nexus-state/hostess7-body-pose.json",
+    "wireframe_panel": ".nexus-state/hostess7-body-panel.json",
+    "kinematics": "joint_positions",
+    "proprioception": "proprioception_state",
+    "bones": "BONES",
+    "zones": "ZONE_JOINTS"
+  },
+  "range_policy": {
+    "mode": "expansive",
+    "training_envelope_multiplier": 1.15,
+    "identity_clamp": true,
+    "statement": "Training envelopes exceed motor limits for reach — motor commands still identity-clamped."
+  },
+  "protected_components": [
+    {"id": "body_core", "module": "lib/hostess7-body-core.py", "role": "Joint pose · FK · proprioception"},
+    {"id": "motion_training", "module": "lib/humanoid-motion-training.py", "role": "Skill lattice · arena · amplitudes"},
+    {"id": "motion_resolve", "module": "lib/iron-plate-motion-resolve.py", "role": "Iron plate motion verdict"},
+    {"id": "body_control", "module": "lib/hostess7-body-control.py", "role": "Sovereign body dispatch"},
+    {"id": "spatial_cognition", "module": "lib/field-spatial-cognition.py", "role": "Body scale inject"},
+    {"id": "training_floor", "module": "lib/hostess7-training-floor.py", "role": "Reactive sparring mesh"}
+  ],
+  "limb_groups": {
+    "head_neck": ["head", "neck"],
+    "spine": ["spine_upper", "spine_mid", "spine_lower", "chest"],
+    "left_arm": ["shoulder_l", "elbow_l", "wrist_l", "hand_l"],
+    "right_arm": ["shoulder_r", "elbow_r", "wrist_r", "hand_r"],
+    "pelvis": ["hip"],
+    "left_leg": ["knee_l", "ankle_l", "foot_l", "toe_l"],
+    "right_leg": ["knee_r", "ankle_r", "foot_r", "toe_r"]
+  },
+  "zone_map": {
+    "head": ["head", "neck"],
+    "spine": ["spine_upper", "spine_mid", "spine_lower", "chest"],
+    "shoulders": ["shoulder_l", "shoulder_r"],
+    "hands": ["hand_l", "hand_r", "wrist_l", "wrist_r"],
+    "elbows": ["elbow_l", "elbow_r"],
+    "centerline": ["chest", "spine_mid", "hip"],
+    "hips": ["hip"],
+    "knees": ["knee_l", "knee_r"],
+    "ankles": ["ankle_l", "ankle_r"],
+    "feet": ["foot_l", "foot_r"],
+    "toes": ["toe_l", "toe_r"]
+  },
+  "expanded_envelopes": {
+    "spine_upper": {"flex": 52, "extend": 25, "lateral": 20},
+    "spine_mid": {"flex": 65, "extend": 18, "lateral": 16},
+    "spine_lower": {"flex": 85, "extend": 12, "lateral": 10},
+    "hip": {"flex": 135, "extend": 35, "abduct": 52},
+    "knee_l": {"flex": 155, "extend": 8},
+    "knee_r": {"flex": 155, "extend": 8},
+    "ankle_l": {"flex": 58, "extend": 35},
+    "ankle_r": {"flex": 58, "extend": 35},
+    "shoulder_l": {"flex": 195, "abduct": 195, "rotate": 90},
+    "shoulder_r": {"flex": 195, "abduct": 195, "rotate": 90},
+    "elbow_l": {"flex": 150, "extend": 10},
+    "elbow_r": {"flex": 150, "extend": 10},
+    "wrist_l": {"flex": 85, "abduct": 25},
+    "wrist_r": {"flex": 85, "abduct": 25},
+    "neck": {"flex": 55, "lateral": 45, "rotate": 70},
+    "head": {"flex": 35, "lateral": 30, "rotate": 80}
+  },
+  "witness_interval_hours": 8,
+  "api": "/api/humanoid-motion/secured",
+  "cli": [
+    "python3 lib/humanoid-motion-secured.py panel",
+    "python3 lib/humanoid-motion-secured.py registry",
+    "python3 lib/humanoid-motion-secured.py witness",
+    "python3 lib/humanoid-motion-secured.py guard --joint hip --flex 90"
+  ]
+}

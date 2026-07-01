@@ -1,0 +1,26 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 35,
+  "slug": "stack-n64",
+  "title": "Nintendo 64 Platform Stack",
+  "body": "# Nintendo 64 Platform Stack\n\n**Platform stack:** `console_n64` · **Era:** 1996–2002 · **Vendor:** Nintendo · **Count:** 8\n\nNEC VR4300 @ 93.75 MHz with Reality Co-Processor (RSP + RDP) — launched **June 1996** in Japan.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: console_n64` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **Nintendo RCP** (Nintendo, 64-bit) — Reality Co-Processor — RSP+RDP+MI+AI+VI+PI+RI+SI\n- **Nintendo RSP** (Nintendo, 64-bit) — Reality Signal Processor — MIPS-like vector ucode\n- **Nintendo RDP** (Nintendo, 64-bit) — Reality Display Processor — rasterizer + framebuffer\n- **N64 MIPS Interface (MI)** (Nintendo, 64-bit) — CPU↔RCP register bridge — VR4300 glue\n- **N64 Audio Interface (AI)** (Nintendo, 64-bit) — DMA audio buffer to DAC — 44.1kHz path\n- **N64 Video Interface (VI)** (Nintendo, 64-bit) — CRT timing + gamma — framebuffer scan-out\n\n## Catalog ids\n\nThe `chip_ids` array holds all **8** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: console_n64 · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "glue_n64_ai",
+    "glue_n64_mi",
+    "glue_n64_rcp",
+    "glue_n64_rdp",
+    "glue_n64_rsp",
+    "glue_n64_vi",
+    "libretro_mupen64plus_next",
+    "system_n64"
+  ],
+  "chip_count": 8,
+  "kind": "platform_stack",
+  "family": "console",
+  "platform_stack": "console_n64",
+  "era": "1996–2002",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

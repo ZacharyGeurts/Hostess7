@@ -1,0 +1,213 @@
+{
+  "schema": "field-sense-package-doctrine/v1",
+  "title": "Sense Package — Eye · Ear · Mouth · Redata · Hostess7",
+  "motto": "One clean meld + protect envelope — Final_Eye plate-melded; Hostess7 brain read-only, never relocated.",
+  "policy": {
+    "destructive_merge": false,
+    "repos_stay_sibling": true,
+    "resolve_order": [
+      "env",
+      "sg_canonical",
+      "final_eye_only"
+    ],
+    "read_meld_first": true,
+    "chain_with_plate_meld": true,
+    "protect_code_seals": true,
+    "probe_cache_seconds": 12,
+    "shallow_http_probe": true
+  },
+  "epistemic_root": {
+    "ironclad": {
+      "doctrine": "data/ironclad-doctrine.json",
+      "immediate": "ironclad-immediate.json",
+      "engine": "lib/ironclad-immediate.py",
+      "read_first": true,
+      "goldmine": true,
+      "motto": "Plate → eye · ear · mouth · sense wire — all intelligence traces Ironclad first.",
+      "citation": "ironclad:neural:2",
+      "targets": [
+        "eye_neural",
+        "ear_neural",
+        "mouth_neural",
+        "sense_neural_wire"
+      ],
+      "wires": [
+        "ironclad_bible → final_eye_node → eye_neural",
+        "ironclad_bible → final_ear_node → ear_neural",
+        "ironclad_bible → final_mouth_node → mouth_neural",
+        "ironclad_bible → sense_neural_wire"
+      ]
+    },
+    "final_eye_plate": {
+      "doctrine": "data/final-eye-plate-doctrine.json",
+      "module": "lib/eye-ear-plate.py",
+      "rule": "Final_Eye OCR + AI eyeball sealed on eye-ear plate before sense GREEN"
+    },
+    "scene_guard": {
+      "doctrine": "OBS-FieldVoiceFilter/data/field-scene-guard-doctrine.json",
+      "obs_filter": "sg_field_scene_guard",
+      "rule": "One filter on the scene — field repeat inspect + security posterity; prunes legacy filters from tree",
+      "spiderweb_ledger": "spiderweb-tree.jsonl",
+      "posterity_doctrine": "OBS-FieldVoiceFilter/data/field-security-posterity-doctrine.json",
+      "repeat_inspect": "field-repeat-field.c",
+      "security_posterity": "field-security-posterity.c",
+      "final_eye_ref": "Final_Eye/data/zocr-pattern-registry.json",
+      "final_ear_ref": "Final_Ear/data/ear-truth-filter.json",
+      "reject_always": [
+        "banded_signal",
+        "coded_signal",
+        "grid_jam",
+        "moire_weave",
+        "hostile_waveform"
+      ]
+    },
+    "obs_field_stack": {
+      "root": "OBS-FieldVoiceFilter",
+      "install": "OBS-FieldVoiceFilter/install.sh",
+      "runtime_status": "data/field-obs-stack.json",
+      "threat_ledger": "data/threat-ledger.jsonl",
+      "spiderweb_ledger": "data/spiderweb-tree.jsonl",
+      "defaults": "clean_passthrough",
+      "single_filter": "sg_field_scene_guard",
+      "role": "OBS-native sense lane — Scene Guard on scene; spiderweb + tree prune; bridges eye/ear/Hostess7"
+    },
+    "field_obs_capture": {
+      "doctrine": "OBS-Field/data/field-obs-doctrine.json",
+      "panel_tab": "field-obs",
+      "api": "/api/field-obs",
+      "us_slice": "/api/us-obs-field",
+      "g16_toolchain": "OBS-Field/data/g16-field-obs-toolchain.json",
+      "rule": "AmmoOS Field OBS — g16 portable capture; US tab slice; Scene Guard stack via OBS-FieldVoiceFilter"
+    }
+  },
+  "products": {
+    "final_eye": {
+      "env": "FINAL_EYE_ROOT",
+      "canonical": "NewLatest/Final_Eye",
+      "lineage": "Final_Eye",
+      "port_env": "FINAL_EYE_PORT",
+      "default_port": 9479,
+      "health": "/api/health",
+      "bridge": "Queen/lib/queen_final_eye.py",
+      "eyeball": "Queen/lib/queen-eyeball.py",
+      "plate_doctrine": "data/final-eye-plate-doctrine.json",
+      "role": "Vision OCR + AI eyeball — trained, plate-melded, room for neural enhancement",
+      "hostess7_ocr_brain": "data/final-eye-plate-doctrine.json#hostess7_ocr_brain",
+      "ocr_chambers": [
+        "hostess7-calculator",
+        "hostess7-biology",
+        "hostess7-engineering",
+        "hostess7-combat",
+        "hostess7-mos",
+        "hostess7-programming",
+        "hostess7-g16",
+        "hostess7-codecraft",
+        "hostess7-geography",
+        "hostess7-music",
+        "hostess7-imaging",
+        "hostess7-sense",
+        "hostess7-reality_physics"
+      ]
+    },
+    "final_ear": {
+      "env": "FINAL_EAR_ROOT",
+      "canonical": "NewLatest/Final_Ear",
+      "bridge": "Queen/lib/queen-earball.py",
+      "role": "Audio offense — GAC1 truth filter, eye-ear fusion"
+    },
+    "final_mouth": {
+      "env": "FINAL_MOUTH_ROOT",
+      "canonical": "NewLatest/Final_Mouth",
+      "bridge": "Queen/lib/queen_final_mouth.py",
+      "role": "Voice egress — neural assist on eye-ear plate"
+    },
+    "world_redata": {
+      "env": "WORLD_REDATA_ROOT",
+      "canonical": "NewLatest/World_Redata",
+      "port_env": "WORLD_REDATA_WEB_PORT",
+      "default_port": 9478,
+      "health": "/api/health",
+      "formats": [
+        "WRDT1",
+        "WRZC1",
+        "ZAC7"
+      ],
+      "role": "Lossless redata envelopes — drive converter, in-place snap"
+    },
+    "hostess7": {
+      "env": "HOSTESS7_ROOT",
+      "canonical": "NewLatest/Hostess7",
+      "brain_env": "HOSTESS7_TEAM_FIELD",
+      "brain_fallback": "cache/fieldstorage",
+      "bridge": "lib/hostess7-field.sh",
+      "brain_sync": "lib/field-brain-sync.sh",
+      "role": "Forever Watchguard Angel — brain, SDF, truth corroboration; witness only on meld"
+    }
+  },
+  "hostess7_brain": {
+    "witness_only": true,
+    "relocate": false,
+    "destructive_sync": false,
+    "best_of_roots": [
+      "HOSTESS7_TEAM_FIELD",
+      "HOSTESS7_TEAM1_FIELD",
+      "cache/fieldstorage",
+      "HOSTESS7_NEXUS_CACHE"
+    ],
+    "secure_signal_line": "data/signals-field-secure-line-doctrine.json",
+    "score_markers": [
+      "brain/library/manifest.json",
+      "brain/library/search_index.jsonl",
+      "brain/superintel/context.json",
+      "brain/sdf"
+    ]
+  },
+  "bus_slots": {
+    "sense_lane": [
+      12,
+      13,
+      14,
+      15
+    ],
+    "eye_live": 12,
+    "ear_sealed": 13,
+    "eye_plate": 14,
+    "redata_ok": 15,
+    "hostess_brain_tier": 15
+  },
+  "protection": {
+    "flock": true,
+    "fsync": true,
+    "triple_mirror": true,
+    "witness": [
+      "VERSION",
+      "data/code-seal.json",
+      "data/field-manual-index.json"
+    ]
+  },
+  "combinatorics": {
+    "facet": "sense_universal",
+    "condense_group": "universal_lock",
+    "module": "lib/field-sense-package-meld.py",
+    "slice_cmd": "slice",
+    "chain_with_plate_meld": true,
+    "universal_lock": true,
+    "members": [
+      "final_eye",
+      "final_ear",
+      "final_mouth",
+      "eye_ear_plate",
+      "universal_protector"
+    ]
+  },
+  "universal_lock": {
+    "gate": "universal-protector.equipment_holds_gate",
+    "combinatorics_bridge": "field-plate-combinatorics-bridge.json",
+    "combinatorics_panel": "g16-field-combinatorics-panel.json",
+    "motto": "Eye · Ear · Mouth locked everywhere through combinatorics universal condense — Final_Eye plate meld required."
+  },
+  "g16": {
+    "version": "5.1.0",
+    "pairing": "data/ammoos-version.json"
+  }
+}

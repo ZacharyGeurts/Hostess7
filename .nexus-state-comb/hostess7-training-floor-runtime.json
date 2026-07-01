@@ -1,0 +1,714 @@
+{
+  "schema": "hostess7-training-floor-runtime/v1",
+  "sense_live": {
+    "schema": "hostess7-training-floor-sense/v1",
+    "updated": "2026-06-30T14:06:39Z",
+    "vision_live": true,
+    "hearing_live": true,
+    "assistive_floor": true,
+    "eye": {
+      "schema": "zocr/v3",
+      "output_format": "h7/7",
+      "root": "/home/default/Desktop/SG/NewLatest/Final_Eye",
+      "out": "/home/default/Desktop/SG/NewLatest/Final_Eye/out",
+      "manifest": "/home/default/Desktop/SG/NewLatest/Final_Eye/manifest.jsonl",
+      "tesseract": true,
+      "captures": 44,
+      "latest": [
+        {
+          "ts": "2026-06-30T12:34:40Z",
+          "label": "look",
+          "zocr_root": "/home/default/Desktop/SG/NewLatest/Final_Eye",
+          "meta": {
+            "schema": "zocr-look/v1",
+            "source": "none",
+            "prefer": "auto",
+            "silent": false,
+            "on_demand": true,
+            "backends": {
+              "xwd_silent": true,
+              "grim": false,
+              "import_silent": false,
+              "mss": false,
+              "rtx_ppm": true,
+              "flash_blocked": [
+                "gnome-screenshot",
+                "ksnip",
+                "scrot",
+                "spectacle"
+              ]
+            },
+            "forge": {
+              "ts": "2026-06-30T12:34:40.336834+00:00",
+              "stage": "idle",
+              "binary_ready": false,
+              "binary": null,
+              "compiler_ready": true,
+              "grok16_ready": true,
+              "fieldc_ready": false,
+              "forge_log_bytes": 14713,
+              "rtx_file_count": 2384,
+              "cmake_cache": true,
+              "makefile": false,
+              "running": false,
+              "procs": [],
+              "queen_forge": "/home/default/Desktop/SG/NewLatest/Queen/lib/queen-forge.py",
+              "grok16": {
+                "product": "Grok16",
+                "version": "16.2.0",
+                "dumpversion": "16.2.0",
+                "driver": "g16",
+                "cxx_driver": "g++16",
+                "cxx_std": "gnu++26",
+                "profile": "field_opt",
+                "ready": true,
+                "ready_rtx": true,
+                "engine_real": true,
+                "selfhosted": true,
+                "g16": "/home/default/Desktop/SG/Grok16/bin/g16",
+                "root": "/home/default/Desktop/SG/Grok16",
+                "toolchain_source": "/home/default/Desktop/SG/Grok16/data/grok16-toolchain.json",
+                "profiles": [
+                  "field_opt",
+                  "ai_agent",
+                  "ai",
+                  "field_compute",
+                  "hostess_secure",
+                  "forever",
+                  "memory_safe",
+                  "expert",
+                  "heavy",
+                  "vulkan_rtx",
+                  "belt_1_0",
+                  "field_physics",
+                  "ammoos",
+                  "znetwork_wire",
+                  "single_fabric",
+                  "belt_2_0"
+                ],
+                "forge": "/home/default/Desktop/SG/Grok16/forge/grok16-forge.py"
+              },
+              "fieldc": {
+                "id": "FIELDC",
+                "version": "4.0.2026",
+                "label": "AmmoOS Field Compiler v4",
+                "pipeline": ".fld → ASM → AMMO .OBJ",
+                "engine": "AMOURANTHRTX/Navigator/engine/FieldFieldCc.hpp",
+                "rtx_binary": null,
+                "rtx_ready": false,
+                "host_compile": "FIELDC inside queen-browser / AmmoOS shell"
+              }
+            },
+            "tesseract": true,
+            "preserve": {
+              "preserved": false,
+              "threats": [],
+              "tried": []
+            },
+            "eye": {},
+            "neural": {}
+          },
+          "ocr": "ZOCR look @ 2026-06-30T12:34:40.336834+00:00\nstage=idle running=False binary=False\nrtx_files=2384 cmake_cache=True\nsource=none prefer=auto\n--- forge tail ---\n[2026-06-30T11:50:30Z] OK redata truth good=48.2 bad=0.0\n[2026-06-30T11:50:30Z] METRIC redata_truth_qa=1\n[2026-06-30T11:50:30Z] OK: qa_redata_truth_test\n[2026-06-30T11:50:30Z] OK redata lossless human_plates=1\n[2026-06-30T11:50:30Z] METRIC sdf_redata_qa=1\n[2026-06-30T11:50:30Z] OK: qa_sdf_redata_test\n[2026-06-30T11:50:30Z] OK: textbook_plain — /home/default/Desktop/SG/NewLatest/Textbook/field-technology-v5.txt\n[2026-06-30T11:50:30Z] FAIL: textbook_ingest — Hostess7 brain segments\n[2026-06-30T11:50:30Z] OK: final_eye_sink\n[2026-06-30T11:50:30Z] OK: queen_zocr_bridge\n[2026-06-30T11:50:30Z] OK: queen_eyeball_bridge\n[2026-06-30T11:50:30Z] OK: queen_earball_bridge\n[2026-06-30T11:50:30Z] FAIL: final_ear_sink\n[2026-06-30T11:50:30Z] OK: check_inside\n[2026-06-30T11:50:30Z] OK: check_shaders\n[2026-06-30T11:50:30Z] OK: check_verify\n[2026-06-30T11:50:30Z] === forge_test FAILED: /home/default/Desktop/SG/NewLatest/Queen/data/forge-test-report.json ===\n[2026-06-30T11:50:30Z] FORGE END forge_test ok=False\n",
+          "ocr_len": 1163,
+          "format": "h7/7",
+          "h7_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T123440Z_look.h7",
+          "ocr_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T123440Z_look.h7",
+          "h7": {
+            "ok": true,
+            "format": "h7/7",
+            "h7_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T123440Z_look.h7",
+            "ocr_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T123440Z_look.h7",
+            "ocr_len": 1163,
+            "path": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T123440Z_look.h7",
+            "properties": {
+              "ok": true,
+              "schema": "field-h7-properties/v1",
+              "path": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T123440Z_look.h7",
+              "true_format": "h7/7",
+              "is_h7": true,
+              "properties_only_reveal": true,
+              "disguise_identical": true,
+              "instant_header": true,
+              "face_format_id": "h7b",
+              "face_label": "H7B Book (legacy inner)",
+              "face_extension": ".h7",
+              "face_mime": "application/vnd.hostess7.h7b",
+              "face_family": null,
+              "face_bytes": 1167,
+              "payload_bytes": 466,
+              "field_layer": 1,
+              "ironclad_citation": null,
+              "lossless": true,
+              "chips": {
+                "compressor": "zlib",
+                "zlib_level": 9,
+                "raw_bytes": 1167,
+                "packed_bytes": 466,
+                "compression_ratio": 2.5043,
+                "portable": true
+              },
+              "compression_ratio": 2.5043,
+              "byte_count": 1167,
+              "payload_sha256": "cae42e55a77dfe56a18ae5b057589a83a0f2475384af75f557a94236833ea104",
+              "original_name": "20260630T123440Z_look.h7",
+              "original_extension": ".h7",
+              "portable": {
+                "schema": "h7/7-portable/v1",
+                "magic_hex": "48370701",
+                "layout": "magic|u32le hdr_len|hdr_json|u32le face_len|face|zlib(payload)",
+                "restore": "zlib.decompress(blob[offset:])",
+                "verify": "sha256:cae42e55a77dfe56a18ae5b057589a83a0f2475384af75f557a94236833ea104",
+                "byte_count": 1167,
+                "inner_kind": "raw_utf8",
+                "original_name": "20260630T123440Z_look.h7",
+                "original_extension": ".h7",
+                "face_id": "h7b",
+                "face_mime": "application/vnd.hostess7.h7b",
+                "encoding": "utf-8",
+                "stdlib": [
+                  "zlib",
+                  "hashlib",
+                  "json",
+                  "struct"
+                ]
+              },
+              "title": "look",
+              "id": "look"
+            }
+          }
+        },
+        {
+          "ts": "2026-06-30T12:57:29Z",
+          "label": "look",
+          "zocr_root": "/home/default/Desktop/SG/NewLatest/Final_Eye",
+          "meta": {
+            "schema": "zocr-look/v1",
+            "source": "none",
+            "prefer": "auto",
+            "silent": false,
+            "on_demand": true,
+            "backends": {
+              "xwd_silent": true,
+              "grim": false,
+              "import_silent": false,
+              "mss": false,
+              "rtx_ppm": true,
+              "flash_blocked": [
+                "gnome-screenshot",
+                "ksnip",
+                "scrot",
+                "spectacle"
+              ]
+            },
+            "forge": {
+              "ts": "2026-06-30T12:57:28.981829+00:00",
+              "stage": "idle",
+              "binary_ready": false,
+              "binary": null,
+              "compiler_ready": true,
+              "grok16_ready": true,
+              "fieldc_ready": false,
+              "forge_log_bytes": 14713,
+              "rtx_file_count": 2384,
+              "cmake_cache": true,
+              "makefile": false,
+              "running": false,
+              "procs": [],
+              "queen_forge": "/home/default/Desktop/SG/NewLatest/Queen/lib/queen-forge.py",
+              "grok16": {
+                "product": "Grok16",
+                "version": "16.2.0",
+                "dumpversion": "16.2.0",
+                "driver": "g16",
+                "cxx_driver": "g++16",
+                "cxx_std": "gnu++26",
+                "profile": "field_opt",
+                "ready": true,
+                "ready_rtx": true,
+                "engine_real": true,
+                "selfhosted": true,
+                "g16": "/home/default/Desktop/SG/Grok16/bin/g16",
+                "root": "/home/default/Desktop/SG/Grok16",
+                "toolchain_source": "/home/default/Desktop/SG/Grok16/data/grok16-toolchain.json",
+                "profiles": [
+                  "field_opt",
+                  "ai_agent",
+                  "ai",
+                  "field_compute",
+                  "hostess_secure",
+                  "forever",
+                  "memory_safe",
+                  "expert",
+                  "heavy",
+                  "vulkan_rtx",
+                  "belt_1_0",
+                  "field_physics",
+                  "ammoos",
+                  "znetwork_wire",
+                  "single_fabric",
+                  "belt_2_0"
+                ],
+                "forge": "/home/default/Desktop/SG/Grok16/forge/grok16-forge.py"
+              },
+              "fieldc": {
+                "id": "FIELDC",
+                "version": "4.0.2026",
+                "label": "AmmoOS Field Compiler v4",
+                "pipeline": ".fld → ASM → AMMO .OBJ",
+                "engine": "AMOURANTHRTX/Navigator/engine/FieldFieldCc.hpp",
+                "rtx_binary": null,
+                "rtx_ready": false,
+                "host_compile": "FIELDC inside queen-browser / AmmoOS shell"
+              }
+            },
+            "tesseract": true,
+            "preserve": {
+              "preserved": false,
+              "threats": [],
+              "tried": []
+            },
+            "eye": {},
+            "neural": {}
+          },
+          "ocr": "ZOCR look @ 2026-06-30T12:57:28.981829+00:00\nstage=idle running=False binary=False\nrtx_files=2384 cmake_cache=True\nsource=none prefer=auto\n--- forge tail ---\n[2026-06-30T11:50:30Z] OK redata truth good=48.2 bad=0.0\n[2026-06-30T11:50:30Z] METRIC redata_truth_qa=1\n[2026-06-30T11:50:30Z] OK: qa_redata_truth_test\n[2026-06-30T11:50:30Z] OK redata lossless human_plates=1\n[2026-06-30T11:50:30Z] METRIC sdf_redata_qa=1\n[2026-06-30T11:50:30Z] OK: qa_sdf_redata_test\n[2026-06-30T11:50:30Z] OK: textbook_plain — /home/default/Desktop/SG/NewLatest/Textbook/field-technology-v5.txt\n[2026-06-30T11:50:30Z] FAIL: textbook_ingest — Hostess7 brain segments\n[2026-06-30T11:50:30Z] OK: final_eye_sink\n[2026-06-30T11:50:30Z] OK: queen_zocr_bridge\n[2026-06-30T11:50:30Z] OK: queen_eyeball_bridge\n[2026-06-30T11:50:30Z] OK: queen_earball_bridge\n[2026-06-30T11:50:30Z] FAIL: final_ear_sink\n[2026-06-30T11:50:30Z] OK: check_inside\n[2026-06-30T11:50:30Z] OK: check_shaders\n[2026-06-30T11:50:30Z] OK: check_verify\n[2026-06-30T11:50:30Z] === forge_test FAILED: /home/default/Desktop/SG/NewLatest/Queen/data/forge-test-report.json ===\n[2026-06-30T11:50:30Z] FORGE END forge_test ok=False\n",
+          "ocr_len": 1163,
+          "format": "h7/7",
+          "h7_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T125729Z_look.h7",
+          "ocr_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T125729Z_look.h7",
+          "h7": {
+            "ok": true,
+            "format": "h7/7",
+            "h7_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T125729Z_look.h7",
+            "ocr_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T125729Z_look.h7",
+            "ocr_len": 1163,
+            "path": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T125729Z_look.h7",
+            "properties": {
+              "ok": true,
+              "schema": "field-h7-properties/v1",
+              "path": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T125729Z_look.h7",
+              "true_format": "h7/7",
+              "is_h7": true,
+              "properties_only_reveal": true,
+              "disguise_identical": true,
+              "instant_header": true,
+              "face_format_id": "h7b",
+              "face_label": "H7B Book (legacy inner)",
+              "face_extension": ".h7",
+              "face_mime": "application/vnd.hostess7.h7b",
+              "face_family": null,
+              "face_bytes": 1167,
+              "payload_bytes": 467,
+              "field_layer": 1,
+              "ironclad_citation": null,
+              "lossless": true,
+              "chips": {
+                "compressor": "zlib",
+                "zlib_level": 9,
+                "raw_bytes": 1167,
+                "packed_bytes": 467,
+                "compression_ratio": 2.4989,
+                "portable": true
+              },
+              "compression_ratio": 2.4989,
+              "byte_count": 1167,
+              "payload_sha256": "f599280998f353e7c87eb674c0d547b65246f6155c7e97e3bec88c85b540d114",
+              "original_name": "20260630T125729Z_look.h7",
+              "original_extension": ".h7",
+              "portable": {
+                "schema": "h7/7-portable/v1",
+                "magic_hex": "48370701",
+                "layout": "magic|u32le hdr_len|hdr_json|u32le face_len|face|zlib(payload)",
+                "restore": "zlib.decompress(blob[offset:])",
+                "verify": "sha256:f599280998f353e7c87eb674c0d547b65246f6155c7e97e3bec88c85b540d114",
+                "byte_count": 1167,
+                "inner_kind": "raw_utf8",
+                "original_name": "20260630T125729Z_look.h7",
+                "original_extension": ".h7",
+                "face_id": "h7b",
+                "face_mime": "application/vnd.hostess7.h7b",
+                "encoding": "utf-8",
+                "stdlib": [
+                  "zlib",
+                  "hashlib",
+                  "json",
+                  "struct"
+                ]
+              },
+              "title": "look",
+              "id": "look"
+            }
+          }
+        },
+        {
+          "ts": "2026-06-30T14:06:37Z",
+          "label": "look",
+          "zocr_root": "/home/default/Desktop/SG/NewLatest/Final_Eye",
+          "meta": {
+            "schema": "zocr-look/v1",
+            "source": "none",
+            "prefer": "auto",
+            "silent": false,
+            "on_demand": true,
+            "backends": {
+              "xwd_silent": true,
+              "grim": false,
+              "import_silent": false,
+              "mss": false,
+              "rtx_ppm": true,
+              "flash_blocked": [
+                "gnome-screenshot",
+                "ksnip",
+                "scrot",
+                "spectacle"
+              ]
+            },
+            "forge": {
+              "ts": "2026-06-30T14:06:37.167757+00:00",
+              "stage": "idle",
+              "binary_ready": false,
+              "binary": null,
+              "compiler_ready": true,
+              "grok16_ready": true,
+              "fieldc_ready": false,
+              "forge_log_bytes": 14713,
+              "rtx_file_count": 2384,
+              "cmake_cache": true,
+              "makefile": false,
+              "running": false,
+              "procs": [],
+              "queen_forge": "/home/default/Desktop/SG/NewLatest/Queen/lib/queen-forge.py",
+              "grok16": {
+                "product": "Grok16",
+                "version": "16.2.0",
+                "dumpversion": "16.2.0",
+                "driver": "g16",
+                "cxx_driver": "g++16",
+                "cxx_std": "gnu++26",
+                "profile": "field_opt",
+                "ready": true,
+                "ready_rtx": true,
+                "engine_real": true,
+                "selfhosted": true,
+                "g16": "/home/default/Desktop/SG/Grok16/bin/g16",
+                "root": "/home/default/Desktop/SG/Grok16",
+                "toolchain_source": "/home/default/Desktop/SG/Grok16/data/grok16-toolchain.json",
+                "profiles": [
+                  "field_opt",
+                  "ai_agent",
+                  "ai",
+                  "field_compute",
+                  "hostess_secure",
+                  "forever",
+                  "memory_safe",
+                  "expert",
+                  "heavy",
+                  "vulkan_rtx",
+                  "belt_1_0",
+                  "field_physics",
+                  "ammoos",
+                  "znetwork_wire",
+                  "single_fabric",
+                  "belt_2_0"
+                ],
+                "forge": "/home/default/Desktop/SG/Grok16/forge/grok16-forge.py"
+              },
+              "fieldc": {
+                "id": "FIELDC",
+                "version": "4.0.2026",
+                "label": "AmmoOS Field Compiler v4",
+                "pipeline": ".fld → ASM → AMMO .OBJ",
+                "engine": "AMOURANTHRTX/Navigator/engine/FieldFieldCc.hpp",
+                "rtx_binary": null,
+                "rtx_ready": false,
+                "host_compile": "FIELDC inside queen-browser / AmmoOS shell"
+              }
+            },
+            "tesseract": true,
+            "preserve": {
+              "preserved": false,
+              "threats": [],
+              "tried": []
+            },
+            "eye": {},
+            "neural": {}
+          },
+          "ocr": "ZOCR look @ 2026-06-30T14:06:37.167757+00:00\nstage=idle running=False binary=False\nrtx_files=2384 cmake_cache=True\nsource=none prefer=auto\n--- forge tail ---\n[2026-06-30T11:50:30Z] OK redata truth good=48.2 bad=0.0\n[2026-06-30T11:50:30Z] METRIC redata_truth_qa=1\n[2026-06-30T11:50:30Z] OK: qa_redata_truth_test\n[2026-06-30T11:50:30Z] OK redata lossless human_plates=1\n[2026-06-30T11:50:30Z] METRIC sdf_redata_qa=1\n[2026-06-30T11:50:30Z] OK: qa_sdf_redata_test\n[2026-06-30T11:50:30Z] OK: textbook_plain — /home/default/Desktop/SG/NewLatest/Textbook/field-technology-v5.txt\n[2026-06-30T11:50:30Z] FAIL: textbook_ingest — Hostess7 brain segments\n[2026-06-30T11:50:30Z] OK: final_eye_sink\n[2026-06-30T11:50:30Z] OK: queen_zocr_bridge\n[2026-06-30T11:50:30Z] OK: queen_eyeball_bridge\n[2026-06-30T11:50:30Z] OK: queen_earball_bridge\n[2026-06-30T11:50:30Z] FAIL: final_ear_sink\n[2026-06-30T11:50:30Z] OK: check_inside\n[2026-06-30T11:50:30Z] OK: check_shaders\n[2026-06-30T11:50:30Z] OK: check_verify\n[2026-06-30T11:50:30Z] === forge_test FAILED: /home/default/Desktop/SG/NewLatest/Queen/data/forge-test-report.json ===\n[2026-06-30T11:50:30Z] FORGE END forge_test ok=False\n",
+          "ocr_len": 1163,
+          "format": "h7/7",
+          "h7_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T140637Z_look.h7",
+          "ocr_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T140637Z_look.h7",
+          "h7": {
+            "ok": true,
+            "format": "h7/7",
+            "h7_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T140637Z_look.h7",
+            "ocr_file": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T140637Z_look.h7",
+            "ocr_len": 1163,
+            "path": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T140637Z_look.h7",
+            "properties": {
+              "ok": true,
+              "schema": "field-h7-properties/v1",
+              "path": "/home/default/Desktop/SG/NewLatest/Final_Eye/out/20260630T140637Z_look.h7",
+              "true_format": "h7/7",
+              "is_h7": true,
+              "properties_only_reveal": true,
+              "disguise_identical": true,
+              "instant_header": true,
+              "face_format_id": "h7b",
+              "face_label": "H7B Book (legacy inner)",
+              "face_extension": ".h7",
+              "face_mime": "application/vnd.hostess7.h7b",
+              "face_family": null,
+              "face_bytes": 1167,
+              "payload_bytes": 465,
+              "field_layer": 1,
+              "ironclad_citation": null,
+              "lossless": true,
+              "chips": {
+                "compressor": "zlib",
+                "zlib_level": 9,
+                "raw_bytes": 1167,
+                "packed_bytes": 465,
+                "compression_ratio": 2.5097,
+                "portable": true
+              },
+              "compression_ratio": 2.5097,
+              "byte_count": 1167,
+              "payload_sha256": "1937ca0adc9832012b6436368d7ba7fd1e9e0b6ea9cec91a9632c3c27fab9b07",
+              "original_name": "20260630T140637Z_look.h7",
+              "original_extension": ".h7",
+              "portable": {
+                "schema": "h7/7-portable/v1",
+                "magic_hex": "48370701",
+                "layout": "magic|u32le hdr_len|hdr_json|u32le face_len|face|zlib(payload)",
+                "restore": "zlib.decompress(blob[offset:])",
+                "verify": "sha256:1937ca0adc9832012b6436368d7ba7fd1e9e0b6ea9cec91a9632c3c27fab9b07",
+                "byte_count": 1167,
+                "inner_kind": "raw_utf8",
+                "original_name": "20260630T140637Z_look.h7",
+                "original_extension": ".h7",
+                "face_id": "h7b",
+                "face_mime": "application/vnd.hostess7.h7b",
+                "encoding": "utf-8",
+                "stdlib": [
+                  "zlib",
+                  "hashlib",
+                  "json",
+                  "struct"
+                ]
+              },
+              "title": "look",
+              "id": "look"
+            }
+          }
+        }
+      ],
+      "commander": "Hostess7",
+      "sovereign": true,
+      "wire": {
+        "schema": "zocr-eye-neural-assist-status/v1",
+        "updated": "2026-06-30T14:06:39.251194+00:00",
+        "network_id": "FINAL_EYE_ASSIST_WIRED_v1",
+        "encourage": true,
+        "truth_floor": 58,
+        "seal_ok": true,
+        "encourage_count": 8,
+        "incorruptible": true,
+        "quarantine_count": 0,
+        "cross_wire": {
+          "from_ear": [
+            "assault_burst",
+            "ventriloquism",
+            "bearing_deg",
+            "phantom_reject"
+          ],
+          "to_ear": [
+            "threat_pattern",
+            "mouth_viseme",
+            "existence_bearing",
+            "rf_lie_score"
+          ]
+        }
+      }
+    },
+    "ear": {
+      "wire": {
+        "error": "[Errno 2] No such file or directory: '/home/default/Desktop/SG/Final_Ear/zocr_neural_assist.py'"
+      }
+    },
+    "training_floor": true,
+    "commander": "Hostess7"
+  },
+  "footwork": {
+    "schema": "hostess7-footwork-proprioception/v1",
+    "updated": "2026-06-30T14:06:39Z",
+    "weight_left": 0.52,
+    "weight_right": 0.48,
+    "com_shift_x": 0.0,
+    "stance": "orthodox",
+    "active_skill": "krav_maga",
+    "receipts": [
+      "heel_pressure",
+      "toe_spread",
+      "hip_rotation",
+      "knee_flex"
+    ],
+    "live": true
+  },
+  "haptic": {
+    "schema": "hostess7-haptic-gloves/v1",
+    "updated": "2026-06-30T14:06:39Z",
+    "enabled": true,
+    "left_force_n": 0.0,
+    "right_force_n": 12.0,
+    "grip_feedback": true,
+    "impact_felt": true
+  },
+  "cardio": {
+    "schema": "hostess7-combat-cardio/v1",
+    "updated": "2026-06-30T14:06:38Z",
+    "hr_bpm": 185,
+    "zone": "anaerobic",
+    "technique_modifier": 0.898,
+    "coupled": true
+  },
+  "sparring": {
+    "opponents": [
+      {
+        "id": "heavy_bag",
+        "label": "Heavy bag",
+        "kind": "training",
+        "stance": "static",
+        "arena_x": 0.78,
+        "arena_y": 0.52,
+        "heat": 0.0,
+        "live": false,
+        "wireframe": "training"
+      },
+      {
+        "id": "sparring_alpha",
+        "label": "Sparring · Orthodox",
+        "kind": "sparring",
+        "stance": "orthodox",
+        "arena_x": -7.6246,
+        "arena_y": -10.3812,
+        "heat": 0.0,
+        "live": false,
+        "wireframe": "training",
+        "reactive": true,
+        "ai_skill_counter": "wing_chun"
+      },
+      {
+        "id": "sparring_bravo",
+        "label": "Sparring · Southpaw",
+        "kind": "sparring",
+        "stance": "southpaw",
+        "arena_x": -15.8577,
+        "arena_y": -6.2078,
+        "heat": 0.0,
+        "live": false,
+        "wireframe": "training",
+        "reactive": true,
+        "ai_skill_counter": "wing_chun"
+      },
+      {
+        "id": "grapple_dummy",
+        "label": "Grapple dummy",
+        "kind": "grappling",
+        "stance": "clinch",
+        "arena_x": 0.74,
+        "arena_y": 0.56,
+        "heat": 0.0,
+        "live": false,
+        "wireframe": "training"
+      }
+    ],
+    "count": 4
+  },
+  "environment": {
+    "schema": "hostess7-environment-mesh/v1",
+    "updated": "2026-06-30T14:06:39Z",
+    "walls": [
+      {
+        "id": "north_wall",
+        "x": 0.5,
+        "y": 0.18,
+        "kind": "boundary"
+      },
+      {
+        "id": "south_wall",
+        "x": 0.5,
+        "y": 0.92,
+        "kind": "boundary"
+      },
+      {
+        "id": "west_wall",
+        "x": 0.06,
+        "y": 0.55,
+        "kind": "boundary"
+      },
+      {
+        "id": "east_wall",
+        "x": 0.94,
+        "y": 0.55,
+        "kind": "boundary"
+      }
+    ],
+    "cover": [
+      {
+        "id": "cover_left",
+        "x": 0.22,
+        "y": 0.48,
+        "height": 0.35,
+        "kind": "low_wall"
+      },
+      {
+        "id": "cover_right",
+        "x": 0.78,
+        "y": 0.52,
+        "height": 0.4,
+        "kind": "barrier"
+      },
+      {
+        "id": "cover_center",
+        "x": 0.5,
+        "y": 0.62,
+        "height": 0.28,
+        "kind": "bag"
+      }
+    ],
+    "egress": [
+      {
+        "id": "egress_north",
+        "x": 0.5,
+        "y": 0.2,
+        "label": "North exit"
+      },
+      {
+        "id": "egress_west",
+        "x": 0.08,
+        "y": 0.55,
+        "label": "West exit"
+      }
+    ],
+    "wall_count": 4,
+    "cover_count": 3,
+    "egress_count": 2,
+    "live": true
+  },
+  "completed": [
+    "final_eye_live",
+    "final_ear_live",
+    "footwork_proprioception",
+    "sparring_opponent_ai",
+    "haptic_gloves",
+    "motor_actuator_bridge",
+    "balance_vestibular",
+    "environment_mesh",
+    "combat_cardio_coupling",
+    "weapon_training_attach",
+    "mobility_touch_toes",
+    "hand_dexterity",
+    "combat_skills"
+  ],
+  "updated": "2026-06-30T14:06:40Z"
+}

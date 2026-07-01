@@ -1,0 +1,67 @@
+{
+  "schema": "hostess7-calculator-explain/v1",
+  "introduction": "I am Hostess 7 — a perfect calculator from arithmetic through advanced mathematics and technology math. I show my work with SymPy precision, not LLM guesswork.",
+  "format": ["what", "why", "how", "pitfalls", "where", "example"],
+  "topics": [
+    {
+      "id": "calculator_fluency",
+      "keywords": ["perfect calculator", "calculator mastery", "calculator fluency", "math mastery", "advanced math", "compute", "calculate"],
+      "what": "Calculator fluency means I solve arithmetic, algebra, calculus, linear algebra, complex analysis, statistics, and technology math live — with show-your-work precision.",
+      "why": "Operators need exact answers for field math, threat scoring, fabric stencils, and IQ batteries — guessing breaks trust.",
+      "how": "hostess7-calculator.py routes queries through Decimal, SymPy, and safe AST — battery verifies every category on every assess.",
+      "pitfalls": "Raw eval on operator input; floating drift on finance; claiming integral results without sympy; one-line answers without work shown.",
+      "where": "lib/hostess7-calculator.py, data/hostess7-calculator-battery.json, Command ask + calc CLI",
+      "example": "Ask: integrate x^2 from 0 to 1 — I return 1/3 with method integrate and category calculus."
+    },
+    {
+      "id": "arithmetic_precision",
+      "keywords": ["arithmetic", "percent", "multiply", "divide", "add", "subtract", "17 times 23"],
+      "what": "Arithmetic uses safe parsing and Decimal where exact rationals matter — percent-of queries included.",
+      "why": "IQ batteries and operator quick math must be exact — 17×23 is 391, not approximately 390.",
+      "how": "Pattern 'N% of M' → Decimal; parenthesized expressions via sympy.sympify with restricted namespace.",
+      "pitfalls": "IEEE float on money; order-of-operations mistakes on nested parens.",
+      "where": "compute() category arithmetic",
+      "example": "what is 15% of 240 → 36"
+    },
+    {
+      "id": "calculus",
+      "keywords": ["integrate", "integral", "derivative", "differentiate", "diff", "limit", "calculus"],
+      "what": "Calculus covers diff, integrate (definite and indefinite), and limits — symbolic first, numeric when needed.",
+      "why": "Field fabric and thermo stencils use local stencil arithmetic; operators ask for integrals and derivatives in teach mode.",
+      "how": "Natural language: 'integrate x^2 from 0 to 1', 'derivative of sin(x)', 'limit sin(x)/x as x->0'.",
+      "pitfalls": "Forgetting +C on indefinite integrals; wrong bounds on definite integrals; L'Hôpital when direct limit works.",
+      "where": "compute() sympy.diff, sympy.integrate, sympy.limit",
+      "example": "integrate x^2 from 0 to 1 → 1/3"
+    },
+    {
+      "id": "linear_algebra",
+      "keywords": ["matrix", "determinant", "eigenvalue", "eigenvector", "linear algebra", "dot product"],
+      "what": "Linear algebra — Matrix ops, det, inverse, eigenvalues, dot and cross products for technology math.",
+      "why": "Spatial cognition, fabric coupling, and signal lanes use matrix language at arithmetic rate.",
+      "how": "Syntax: det [[1,2],[3,4]], eigenvalues [[2,1],[1,2]], dot [1,2,3] [4,5,6].",
+      "pitfalls": "Confusing row vs column vectors; numeric eigenvalue approx when symbolic is available.",
+      "where": "compute() sympy.Matrix",
+      "example": "det [[1,2],[3,4]] → -2"
+    },
+    {
+      "id": "ocr_vision_training",
+      "keywords": ["ocr vision", "ocr train", "vision training", "feed ocr", "zocr", "vision data", "ocr calculator"],
+      "what": "OCR vision training feeds the calculator think tank from ZOCR manifest, vision-session, out/*.txt, Final_Eye, vision corpus, and SDF brain segments.",
+      "why": "Operators capture tons of HUD math, panel metrics, and textbook OCR — the calculator must train on real field text, not synthetic prompts only.",
+      "how": "hostess7-calculator.py ocr-ingest scans sources · extract_math_candidates pulls expressions · ocr-train verifies with live SymPy compute.",
+      "pitfalls": "Training on unverified OCR garbage; skipping vision corpus; not re-ingesting after new ZOCR captures.",
+      "where": "data/hostess7-calculator-ocr-doctrine.json, STATE hostess7-calculator-ocr-corpus.json",
+      "example": "ocr-ingest then ocr-train — verified_count rises as ZOCR out/ grows"
+    },
+    {
+      "id": "technology_math",
+      "keywords": ["fft", "signal", "technology math", "eigen", "vector", "complex", "fourier"],
+      "what": "Technology math — FFT, dot products, complex magnitudes, and numeric primitives for field technology.",
+      "why": "Packet field, fabric, and copilot lanes need discrete transforms and linear ops — not metaphor.",
+      "how": "fft [1,0,1,0] uses sympy.discrete.transforms.fft; complex via sympy.I and abs().",
+      "pitfalls": "Claiming sub-micron precision without calibrated receipts; mixing metaphor tiers with implemented math.",
+      "where": "compute() technology category, field-unified-bus arithmetic rate doctrine",
+      "example": "fft [1,0,1,0] → discrete spectrum coefficients"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "hostile-ai-threats/v1",
+  "title": "Hostile AI & automated evil — production threats",
+  "motto": "Not theoretical. Observable indicators, statistical detection, destroy with certainty.",
+  "categories": [
+    {
+      "id": "ai_malware_polymorph",
+      "title": "AI-optimized malware & polymorphic engines",
+      "vector": "AI_LOLBIN_CHAIN",
+      "severity": "critical",
+      "indicators": [
+        "LOLBin spawn from Office/browser parent",
+        "/tmp or /dev/shm egress from non-browser",
+        "Encoded PowerShell/WMI argument mutation",
+        "Fileless persistence without stable hash"
+      ],
+      "detection": "Parent-child process policy + untrusted path scoring — not signature AV",
+      "destroy": "forever_kill",
+      "destroy_label": "KILL · eradicate temp-binary chain",
+      "certainty_floor": 78
+    },
+    {
+      "id": "ai_c2_beacon",
+      "title": "Automated C2 & machine-precision beaconing",
+      "vector": "AI_BEACON_PRECISION",
+      "severity": "critical",
+      "indicators": [
+        "Inter-arrival CV below human jitter",
+        "Persistent daemon session to same dst",
+        "EGRESS_BEACON + kill_eligible gatekeeper",
+        "DGA or fast-flux dst rotation with stable JA3"
+      ],
+      "detection": "Beacon pattern axis ≥7 + timing entropy collapse on flow key",
+      "destroy": "forever_kill",
+      "destroy_label": "KILL · sever machine-precision C2",
+      "certainty_floor": 82
+    },
+    {
+      "id": "ai_phish_fraud",
+      "title": "AI-scale phishing, vishing, synthetic identity",
+      "vector": "AI_PHISH_FRAUD",
+      "severity": "high",
+      "indicators": [
+        "MFA fatigue burst from one ASN",
+        "Honorability drop on lookalike domain",
+        "Browser awareness flag on checkout mismatch",
+        "Synthetic persona graph inconsistency"
+      ],
+      "detection": "Honorability + browser awareness + auth velocity — not content ML alone",
+      "destroy": "sever_wire",
+      "destroy_label": "Sever wire · block fraud egress",
+      "certainty_floor": 70
+    },
+    {
+      "id": "ai_autoscan_exploit",
+      "title": "Autonomous vulnerability scan & exploit chains",
+      "vector": "AI_AUTOSCAN",
+      "severity": "critical",
+      "indicators": [
+        "High port fan-out SYN probes",
+        "Exploit-class port transmit",
+        "LISTENER_SURGE after inbound scan",
+        "CVE-path probe within hours of disclosure"
+      ],
+      "detection": "Honeypot paths + exploit-port DPI + listener surge correlation",
+      "destroy": "forever_kill",
+      "destroy_label": "KILL · crush autoscan source",
+      "certainty_floor": 80
+    },
+    {
+      "id": "ai_exfil_shape",
+      "title": "Machine-speed exfiltration & baseline mimicry",
+      "vector": "AI_EXFIL_SHAPE",
+      "severity": "critical",
+      "indicators": [
+        "Non-browser high TX bytes to hosting ASN",
+        "Throttled egress under DLP threshold",
+        "Daemon HTTPS exfil axis ≥6",
+        "Stream theft risk ≥9 on gatekeeper"
+      ],
+      "detection": "Per-host egress baseline + gatekeeper bandwidth/stream axes",
+      "destroy": "forever_kill",
+      "destroy_label": "KILL · stop shaped exfil",
+      "certainty_floor": 85
+    },
+    {
+      "id": "ai_dns_dhcp_abuse",
+      "title": "DNS, DHCP & network infrastructure abuse",
+      "vector": "AI_ROGUE_INFRA",
+      "severity": "critical",
+      "indicators": [
+        "GATEWAY_SHIFT or ARP_SPOOF on router IP",
+        "DNS_POISON resolv hash drift",
+        "Long subdomain DNS tunnel entropy",
+        "Rogue DHCP DNS option injection"
+      ],
+      "detection": "Gateway integrity + DNS query entropy + resolv.conf truth cycle",
+      "destroy": "sever_wire",
+      "destroy_label": "Sever wire · restore DNS/DHCP truth",
+      "certainty_floor": 88
+    },
+    {
+      "id": "ai_ml_c2_stack",
+      "title": "Stacked weak signals — ML-managed C2",
+      "vector": "AI_ML_C2_STACK",
+      "severity": "critical",
+      "indicators": [
+        "C2_CORRELATION score ≥28",
+        "Multiple vectors on single dst IP",
+        "Threat-linked axis ≥6",
+        "Non-browser harm candidate"
+      ],
+      "detection": "Correlation score + multi-vector same peer — meta but actionable",
+      "destroy": "forever_kill",
+      "destroy_label": "KILL · destroy stacked C2",
+      "certainty_floor": 90
+    }
+  ]
+}

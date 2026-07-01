@@ -1,0 +1,16 @@
+# Hostess 7 presume — sovereign timing layer (separate from AML boundary)
+@profile fastest
+@verbose clean
+@motto "Hostess 7 presume — sovereign · uninterruptable · separate from AML"
+
+seq ·
+  say "Hostess 7 presume — sovereign pulse · timing witness · propagation"
+  post "HOSTESS7_PRESUME START — separate from AML boundary"
+  run py:hostess7-presume action:sweep timeout:30 stall:15
+  run py:hostess7-presume action:panel timeout:30 stall:15
+  run py:hostess7-change-awareness action:pulse timeout:60 stall:30
+  run py:hostess7-presume action:timing timeout:30 stall:15
+  run py:hostess7-presume action:propagate timeout:30 stall:15
+  assist freeze
+  say "Hostess 7 presume complete — inspect hostess7-presume-panel.json"
+  post "HOSTESS7_PRESUME COMPLETE"

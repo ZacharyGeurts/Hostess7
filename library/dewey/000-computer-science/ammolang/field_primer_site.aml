@@ -1,0 +1,7 @@
+# Field_Primer — textbook site + PDF build
+@profile fastest
+@verbose clean
+
+seq ·
+  say "Field_Primer site build"
+  run script:Field_Primer/scripts/build-site.sh timeout:1200 stall:300

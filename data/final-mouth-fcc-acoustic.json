@@ -1,0 +1,73 @@
+{
+  "schema": "final-mouth-fcc-acoustic/v1",
+  "title": "Final Mouth — FCC-safe acoustic emission",
+  "motto": "Synthesize any frequency internally; air output prioritizes spoken-word bands for humans and animals. RF stays on permitted FCC spectrum.",
+  "rule": "Glottis may model full audible range — egress to listeners is clamped, leveled, and audience-prioritized.",
+  "synthesis_range_hz": [20, 20000],
+  "rf_ref": "data/fcc-permitted-frequencies.json",
+  "rf_rule": "Wireless voice relay uses field-rf-sentinel permitted bands only — never illegal carrier.",
+  "audiences": {
+    "human": {
+      "label": "Human spoken word",
+      "priority": 1,
+      "fundamental_hz": [85, 255],
+      "intelligibility_hz": [300, 3400],
+      "formant_priority_hz": [500, 1500, 2500],
+      "max_spl_db": 85,
+      "teach": "Telephone-band intelligibility + natural F0 — default for operator counsel."
+    },
+    "animal_dog": {
+      "label": "Canine communication",
+      "priority": 2,
+      "fundamental_hz": [75, 1000],
+      "intelligibility_hz": [200, 6000],
+      "formant_priority_hz": [400, 1200, 2800],
+      "max_spl_db": 90,
+      "teach": "Bark/whine band — short bursts, avoid ultrasonic annoyance unless training recall."
+    },
+    "animal_cat": {
+      "label": "Feline communication",
+      "priority": 2,
+      "fundamental_hz": [100, 800],
+      "intelligibility_hz": [300, 8000],
+      "formant_priority_hz": [550, 1800, 3500],
+      "max_spl_db": 82,
+      "teach": "Meow/chirp/trill — higher formants than dog; keep egress gentle."
+    },
+    "animal_horse": {
+      "label": "Equine communication",
+      "priority": 2,
+      "fundamental_hz": [50, 500],
+      "intelligibility_hz": [150, 4000],
+      "formant_priority_hz": [300, 900, 2000],
+      "max_spl_db": 88,
+      "teach": "Nickers and blows — low fundamental, nasal formants."
+    },
+    "animal_bird": {
+      "label": "Avian communication",
+      "priority": 2,
+      "fundamental_hz": [200, 4000],
+      "intelligibility_hz": [1000, 8000],
+      "formant_priority_hz": [800, 2500, 5000],
+      "max_spl_db": 78,
+      "teach": "Song/call — bright highs; clamp subsonic rumble."
+    },
+    "operator": {
+      "label": "Close-talk operator",
+      "priority": 1,
+      "fundamental_hz": [85, 220],
+      "intelligibility_hz": [300, 4000],
+      "formant_priority_hz": [520, 1550, 2600],
+      "max_spl_db": 80,
+      "teach": "Headset proximity — truth gate binds to visible mouth."
+    }
+  },
+  "default_audience": "human",
+  "spoken_word_first": true,
+  "clamp_policy": {
+    "below_intelligibility": "attenuate_12db",
+    "above_intelligibility": "attenuate_6db",
+    "outside_synthesis": "reject",
+    "rf_unpermitted": "block_transmit"
+  }
+}

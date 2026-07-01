@@ -1,0 +1,40 @@
+{
+  "schema": "g1id-baseline-doctrine/v1",
+  "title": "G1ID Immoveable Baselines — secure sealed anchors",
+  "motto": "Cold .g1id baselines — sovereign time meld, plate preserved, rewrite forbidden.",
+  "format": "g1id",
+  "extension": ".g1id",
+  "meld_citation": "ironclad:meld:2",
+  "policy": {
+    "immoveable": true,
+    "rewrite_forbidden": true,
+    "amendment_forbidden": true,
+    "atomic_write_once": true,
+    "mode_bits": "0444",
+    "optional_chattr_immutable": true,
+    "meld_input": "sovereign_time_only",
+    "geometry_dimensions": 3,
+    "geometry_t_forbidden": true
+  },
+  "seal_requirements": [
+    "meld_inputs.sovereign_time.linear_ns",
+    "meld_inputs.sovereign_time.derived_utc",
+    "plate.canonical_hash",
+    "integrity.payload_hash",
+    "baseline.immoveable"
+  ],
+  "directories": {
+    "install_baselines": "data/baselines",
+    "manifest": "data/g1id-baseline-manifest.json",
+    "runtime_panel": "g1id-baseline-panel.json"
+  },
+  "integrations": {
+    "g1id_format": "lib/g1id-format.py",
+    "g1id_baseline": "lib/g1id-baseline.py",
+    "sovereign_time": "lib/sovereign-time.py",
+    "sovereign_clock": "lib/sovereign-clock.py",
+    "ironclad_plate": "lib/ironclad-plate.py",
+    "field_plate_meld": "lib/field-plate-meld.py",
+    "spatial_existence": "lib/ironclad-spatial-existence.py"
+  }
+}

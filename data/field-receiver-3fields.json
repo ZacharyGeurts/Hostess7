@@ -1,0 +1,75 @@
+{
+  "schema": "field-receiver-3fields/v1",
+  "motto": "We are the hardware — three fields in one file. Generated fields read every frequency; no stable snapshots.",
+  "receiver": {
+    "mode": "generated_fields",
+    "primary_storage": "memory",
+    "fallback_storage": "state",
+    "read_method": "live_field_mesh",
+    "no_stable_data": true,
+    "ota_via_fields": true,
+    "we_are_the_antenna": true,
+    "no_dongle_required": true,
+    "no_external_antenna": true,
+    "fidelity_boost": true,
+    "corrections": ["crosstalk", "sway", "interference_patterns"]
+  },
+  "operator_field_id": "field_gladstone",
+  "default_mhz": 93.1,
+  "default_station_id": "wimk-931",
+  "fields": [
+    {
+      "id": "field_gladstone",
+      "label": "Gladstone · operator field",
+      "lat": 45.845976,
+      "lon": -87.055759,
+      "role": "operator_home",
+      "weight": 0.4
+    },
+    {
+      "id": "field_escanaba",
+      "label": "Escanaba · south field",
+      "lat": 45.7452,
+      "lon": -87.0646,
+      "role": "tower_reference",
+      "weight": 0.3
+    },
+    {
+      "id": "field_iron_mountain",
+      "label": "Iron Mountain · west field",
+      "lat": 45.82,
+      "lon": -88.041,
+      "role": "triangulation_west",
+      "weight": 0.3
+    }
+  ],
+  "bands": {
+    "am": {"min_khz": 530, "max_khz": 1700, "step_khz": 10},
+    "fm": {"min_mhz": 88.1, "max_mhz": 107.9, "step_mhz": 0.2},
+    "vhf_catch": {"min_mhz": 76.0, "max_mhz": 108.0, "step_mhz": 0.1}
+  },
+  "capture": {
+    "iq_sample_rate_hz": 2400000,
+    "audio_rate_hz": 48000,
+    "channel_bw_hz": 200000,
+    "max_deviation_hz": 75000,
+    "deemphasis_us": 75,
+    "polite_rms_dbfs": -20,
+    "polite_peak_dbfs": -6,
+    "quality": {
+      "crest_min": 2.5,
+      "flatness_min": 0.02,
+      "rms_linear_min": 0.008,
+      "note": "crest · spectral flatness · RMS — program audio validation"
+    },
+    "field_resolution": 1000000000,
+    "storage": "state_dir",
+    "iq_pattern": "field-capture-{station_id}.iq",
+    "demod": "wbfm_discriminator"
+  },
+  "prototype": {
+    "sound_off_seconds": 6.0,
+    "play_seconds": 30.0,
+    "pipeline": "field-spectrum-demod.py"
+  }
+}

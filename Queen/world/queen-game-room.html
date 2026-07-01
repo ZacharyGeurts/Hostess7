@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen Game Room · CHIPS</title>
+  <link rel="stylesheet" href="queen-modern.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-world.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-styles.css" />
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://127.0.0.1:*; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+</head>
+<body class="queen-game-room-page qw" data-queen-surface="gameroom" data-gr-layout="theater75-arcade25">
+  <header class="gr-hero gr-hero--compact">
+    <div class="gr-hero-inner">
+      <p class="gr-eyebrow">Queen Game Room · 75% Theater · 25% Arcade</p>
+      <h1 class="gr-title" id="gr-stage-title">Game Room</h1>
+      <p class="gr-sub" id="gr-mode-label">Pick a system — test ROM auto-loads on Launch</p>
+      <p class="gr-test-rom" id="gr-test-rom" hidden></p>
+      <div class="gr-status" id="gr-status"></div>
+    </div>
+    <div class="gr-hero-actions">
+      <button type="button" class="gr-btn gr-btn--gold" id="gr-launch">Launch</button>
+      <button type="button" class="gr-btn" id="gr-fullscreen" title="Fullscreen (F)">⛶</button>
+      <button type="button" class="gr-btn" id="gr-styles" data-queen-styles-open title="Styles" aria-label="Styles">◈</button>
+      <button type="button" class="gr-btn" id="gr-refresh">↻</button>
+      <label class="gr-btn gr-btn--file">
+        Movie<input type="file" id="gr-movie-input" accept="video/*,.mkv,.avi,.mov,.mp4,.webm,.m4v,.mpg,.mpeg,.m3u8" hidden />
+      </label>
+    </div>
+  </header>
+  <div class="gr-layout">
+    <section class="gr-theater" aria-label="Movie theater — 75%">
+      <div class="gr-theater-marquee" aria-hidden="true">
+        <span class="gr-theater-marquee-text">★ QUEEN CINEMA ★</span>
+      </div>
+      <main class="gr-stage" id="gr-stage" aria-label="Queen Game Room theater screen">
+        <div class="gr-curtain gr-curtain--left" id="gr-curtain-l" aria-hidden="true"></div>
+        <div class="gr-curtain gr-curtain--right" id="gr-curtain-r" aria-hidden="true"></div>
+        <div class="gr-screen-wrap" id="gr-screen-wrap">
+          <canvas class="gr-canvas" id="gr-canvas" width="640" height="480" aria-label="CHIPS emulator viewport"></canvas>
+          <img class="gr-fb" id="gr-fb" alt="CHIPS live framebuffer" hidden />
+          <video class="gr-video" id="gr-video" controls playsinline hidden></video>
+          <div class="gr-screen-glow" aria-hidden="true"></div>
+          <div class="gr-screen-hud" id="gr-hud" hidden></div>
+        </div>
+        <div class="gr-theater-seats" aria-hidden="true"></div>
+      </main>
+    </section>
+    <aside class="gr-arcade" aria-label="Arcade deck — 25%">
+      <div class="gr-arcade-marquee">
+        <span class="gr-arcade-marquee-text">ARCADE</span>
+        <span class="gr-arcade-sub">CHIPS · Grok16 field_opt</span>
+      </div>
+      <div class="gr-arcade-body">
+        <h3 class="gr-arcade-heading">Systems</h3>
+        <div class="gr-tiles gr-tiles--arcade" id="gr-systems"></div>
+        <div class="gr-controls gr-controls--arcade">
+          <label class="gr-field">
+            <span>Host CPU</span>
+            <select class="gr-select" id="gr-cpus" aria-label="Host CPU"></select>
+          </label>
+          <label class="gr-field">
+            <span>Memory</span>
+            <select class="gr-select" id="gr-memory" aria-label="Memory profile"></select>
+          </label>
+          <label class="gr-field">
+            <span>Screen ratio</span>
+            <select class="gr-select" id="gr-aspect" aria-label="Aspect ratio">
+              <option value="16/9">16:9 widescreen</option>
+              <option value="4/3">4:3 retro</option>
+              <option value="2.39/1">2.39:1 cinema</option>
+              <option value="10/9">10:9 handheld</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <pre class="gr-log gr-log--arcade" id="gr-log"></pre>
+    </aside>
+  </div>
+  <section class="gr-nes-room" id="gr-nes-room" hidden>
+    <div class="gr-nes-toolbar">
+      <h2>Nintendo Entertainment System</h2>
+      <span class="gr-nes-stats" id="gr-nes-stats">—</span>
+      <label class="gr-nes-sort-label">
+        Sort
+        <select id="gr-nes-sort" class="gr-select" aria-label="Sort library">
+          <option value="title_az">A → Z</option>
+          <option value="title_za">Z → A</option>
+          <option value="have_first">Have first</option>
+          <option value="have_last">Have last</option>
+        </select>
+      </label>
+      <input type="search" id="gr-nes-search" class="gr-nes-search" placeholder="Search titles…" aria-label="Search NES library" />
+      <button type="button" class="gr-btn" id="gr-nes-more">Load more</button>
+    </div>
+    <div class="gr-nes-grid" id="gr-nes-grid" role="listbox" aria-label="NES cartridge library"></div>
+    <div class="gr-nes-detail" id="gr-nes-detail"></div>
+  </section>
+
+  <section class="gr-sap-panel" id="gr-sap-panel" aria-label="Sweet Anita Protocol multiplayer">
+    <div class="gr-sap-head">
+      <h3>Sweet Anita Protocol</h3>
+      <p class="gr-sap-sub">Queen ↔ Queen only · HTTP tunnel · pixel-perfect lockstep</p>
+      <div class="gr-sap-status" id="gr-sap-status"></div>
+    </div>
+    <div class="gr-sap-controls">
+      <button type="button" class="gr-btn gr-btn--gold" id="gr-sap-host">Host session</button>
+      <input type="text" id="gr-sap-remote" class="gr-nes-search" placeholder="Friend Queen host:9481" aria-label="Remote Queen host" />
+      <input type="text" id="gr-sap-session" class="gr-sap-field" placeholder="session id" aria-label="SAP session id" />
+      <input type="text" id="gr-sap-token" class="gr-sap-field" placeholder="token" aria-label="SAP token" />
+      <button type="button" class="gr-btn" id="gr-sap-join">Join</button>
+      <input type="text" id="gr-sap-invite" class="gr-sap-invite" readonly hidden aria-label="Invite link" />
+    </div>
+  </section>
+
+
+  <script src="queen-game-room-nes.js" defer></script>
+  <script src="queen-game-room-sap.js" defer></script>
+  <script src="queen-game-room.js" defer></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+// FieldNetDos.fld — INT 2Ah / 2Ch / 2Dh Queen redirector (guest x86)
+// Replaces DOS "network not installed" stub inside RTX-DOS guest die
+
+module FieldNetDos {
+  int INT_NET  = 0x2A;
+  int INT_NET2 = 0x2C;
+  int INT_NET3 = 0x2D;
+
+  handler fn on_int(num: int) -> int {
+    // 1 = handled by Queen FieldNet; 0 = fall through
+    if num == INT_NET || num == INT_NET2 || num == INT_NET3 { return 1; }
+    return 0;
+  }
+}

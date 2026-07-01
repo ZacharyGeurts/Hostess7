@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026" class="nexus-military-v8 qfm-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Final Mouth — NEXUS C2</title>
+  <link rel="stylesheet" href="queen-nexus-c2.css" />
+  <link rel="stylesheet" href="queen-final-mouth-manager.css" />
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+</head>
+<body data-queen-surface="final-mouth-manager">
+  <div class="qfm-shell" id="qfm-window">
+    <header class="qfm-bar">
+      <div class="qfm-bar-brand">
+        <span class="qfm-sigil" aria-hidden="true">◉</span>
+        <div>
+          <span class="qfm-title">Final Mouth</span>
+          <span class="qfm-sub">NEXUS C2 · Loquor · Veritas Vox · GVC1 vocal spectrum</span>
+        </div>
+      </div>
+      <span class="qfm-pill" id="qfm-level" data-level="ok">VOICED</span>
+      <span class="qfm-g16" id="qfm-g16">G16…</span>
+      <button type="button" class="qfm-btn" id="qfm-arm" title="Arm mouthball">Arm voice</button>
+      <button type="button" class="qfm-btn qfm-btn--ghost" id="qfm-refresh">Refresh</button>
+      <button type="button" class="qfm-btn qfm-styles" data-queen-styles-open title="Styles">◈</button>
+      <span class="qfm-status" id="qfm-status" aria-live="polite"></span>
+    </header>
+
+    <main class="qfm-stage">
+      <section class="qfm-hero" aria-label="Voice posture">
+        <div class="qfm-wave-wrap">
+          <canvas class="qfm-spectrum" id="qfm-spectrum" width="480" height="160" role="img" aria-label="Vocal spectrum"></canvas>
+          <div class="qfm-wave-ring" aria-hidden="true"></div>
+        </div>
+
+        <div class="qfm-hero-metrics">
+          <article class="qfm-stat qfm-stat--living">
+            <span class="qfm-stat-label">Loquor</span>
+            <strong class="qfm-stat-val" id="qfm-loquor">—</strong>
+            <span class="qfm-stat-hint" id="qfm-living-hint">living mouth</span>
+          </article>
+          <article class="qfm-stat qfm-stat--truth">
+            <span class="qfm-stat-label">Veritas Vox</span>
+            <strong class="qfm-stat-val" id="qfm-veritas">—</strong>
+            <span class="qfm-stat-hint" id="qfm-truth-hint">truth voice</span>
+          </article>
+          <article class="qfm-stat">
+            <span class="qfm-stat-label">Active mode</span>
+            <strong class="qfm-stat-val" id="qfm-mode">—</strong>
+            <span class="qfm-stat-hint" id="qfm-profile">profile —</span>
+          </article>
+          <article class="qfm-stat">
+            <span class="qfm-stat-label">Block held</span>
+            <strong class="qfm-stat-val" id="qfm-held">—</strong>
+            <span class="qfm-stat-hint" id="qfm-headroom">headroom —</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="qfm-grid" aria-label="Mouth metrics">
+        <article class="qfm-card">
+          <h3>Product doctrine</h3>
+          <dl class="qfm-kv">
+            <div><dt>Product</dt><dd id="qfm-product">—</dd></div>
+            <div><dt>Version</dt><dd id="qfm-version">—</dd></div>
+            <div><dt>Codec</dt><dd id="qfm-codec">—</dd></div>
+            <div><dt>Rule</dt><dd id="qfm-rule">—</dd></div>
+          </dl>
+        </article>
+        <article class="qfm-card">
+          <h3>Voice fix</h3>
+          <dl class="qfm-kv">
+            <div><dt>Rate WPM</dt><dd id="qfm-rate">—</dd></div>
+            <div><dt>Pitch</dt><dd id="qfm-pitch">—</dd></div>
+            <div><dt>Formants</dt><dd id="qfm-formants">—</dd></div>
+            <div><dt>Neural</dt><dd id="qfm-neural">—</dd></div>
+          </dl>
+        </article>
+        <article class="qfm-card qfm-card--wide">
+          <h3>Vocal modes</h3>
+          <div class="qfm-modes" id="qfm-modes"></div>
+        </article>
+        <article class="qfm-card">
+          <h3>Ironclad block</h3>
+          <p class="qfm-motto" id="qfm-block-posture">—</p>
+          <dl class="qfm-kv qfm-kv--compact">
+            <div><dt>OCR hits</dt><dd id="qfm-ocr">—</dd></div>
+            <div><dt>Citation</dt><dd>ironclad:final_mouth:1</dd></div>
+          </dl>
+        </article>
+        <article class="qfm-card">
+          <h3>C2 quick panels</h3>
+          <nav class="qfm-links" id="qfm-links">
+            <a href="/world/queen-nexus-c2.html" target="_top">AmmoOS C2</a>
+            <a href="/world/queen-final-ear-manager.html" target="_top">Final Ear</a>
+            <a href="/world/queen-thermal-manager.html" target="_top">Thermal Manager</a>
+            <a href="http://127.0.0.1:9477/threat-panel" target="_top">Threat Panel</a>
+          </nav>
+        </article>
+      </section>
+    </main>
+
+    <footer class="qfm-foot">
+      <span id="qfm-ts">—</span>
+      <span class="qfm-foot-sep">·</span>
+      <span>We never presume speech loss — confidence always in Voice</span>
+      <span class="qfm-foot-sep">·</span>
+      <span id="qfm-motto">Final_Mouth · queen-mouthball · GVC1 vocal spectrum</span>
+    </footer>
+  </div>
+  <script src="queen-final-mouth-manager.js"></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

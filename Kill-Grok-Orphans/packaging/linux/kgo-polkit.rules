@@ -1,0 +1,7 @@
+// Allow admin users to run one-shot Kill Grok Orphans scan with auth
+polkit.addRule(function(action, subject) {
+    if (action.id == "com.grok.kgo.scan" &&
+        subject.isInGroup("sudo")) {
+        return polkit.Result.YES;
+    }
+});

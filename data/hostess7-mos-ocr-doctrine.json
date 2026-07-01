@@ -1,0 +1,99 @@
+{
+  "schema": "hostess7-mos-ocr-doctrine/v1",
+  "title": "MOS OCR vision training — field manuals, TMs, warfare and technical text",
+  "motto": "She reads the field — TM extracts, doctrine paragraphs, and vision OCR train MOS assistance.",
+  "feed_sources": [
+    {
+      "id": "final_eye_manifest",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "manifest.jsonl",
+      "text_fields": [
+        "ocr",
+        "narrative"
+      ],
+      "role": "Final_Eye manifest"
+    },
+    {
+      "id": "final_eye_out_txt",
+      "kind": "glob",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "out/*.txt",
+      "role": "Final_Eye out/ text"
+    },
+    {
+      "id": "warfare_corpus",
+      "kind": "json",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/warfare/corpus.json",
+      "text_fields": [
+        "body"
+      ],
+      "nested": "domains",
+      "role": "Warfare corpus — doctrine feed"
+    },
+    {
+      "id": "vision_corpus",
+      "kind": "json",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/vision/corpus.json",
+      "text_fields": [
+        "body"
+      ],
+      "nested": "domains",
+      "role": "Vision corpus"
+    },
+    {
+      "id": "sdf_segments",
+      "kind": "glob",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/sdf/segments/*.json",
+      "text_fields": [
+        "text"
+      ],
+      "role": "SDF segments"
+    },
+    {
+      "id": "mos_catalog",
+      "kind": "json",
+      "path_env": "NEXUS_INSTALL_ROOT",
+      "path_rel": "data/hostess7-mos-catalog.json",
+      "text_fields": [
+        "title",
+        "duties",
+        "assist",
+        "tags"
+      ],
+      "nested": "entries",
+      "role": "MOS catalog text"
+    },
+    {
+      "id": "humanoid_motion_doctrine",
+      "kind": "json",
+      "path_env": "NEXUS_INSTALL_ROOT",
+      "path_rel": "data/humanoid-motion-doctrine.json",
+      "text_fields": [
+        "label",
+        "motto"
+      ],
+      "nested": "skills",
+      "role": "Motion skills — combat-adjacent MOS"
+    }
+  ],
+  "ingest": {
+    "max_files_per_source": 400,
+    "max_bytes_per_file": 250000,
+    "max_candidates_per_ingest": 6000
+  },
+  "train": {
+    "verify_with_catalog": true,
+    "min_candidate_len": 10,
+    "fluent_samples_floor": 35,
+    "master_samples_floor": 90,
+    "verified_rate_floor": 0.28
+  },
+  "g16": {
+    "version": "5.1.0",
+    "profile": "g16_field_opt"
+  }
+}

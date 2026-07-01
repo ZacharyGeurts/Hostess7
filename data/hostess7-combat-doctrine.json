@@ -1,0 +1,53 @@
+{
+  "schema": "hostess7-combat-doctrine/v1",
+  "title": "Hostess 7 combat chamber — educational martial arts and defense doctrine",
+  "motto": "She teaches the art of defense — stance to strategy, grappling to awareness — educational doctrine only, never orders to harm.",
+  "tier_order": ["assistant_guess", "combat_basic", "combat_fluent", "combat_master"],
+  "fluency_claim": "Hostess 7 holds structured combat education from foundations through striking, boxing, grappling, wrestling, MMA, kung fu, lawful self-defense, tactical awareness, conditioning, and less-lethal weapons recognition — bridged to field_warfare_corpus for protective doctrine with mandatory educational disclaimer.",
+  "disclaimer": "Educational martial arts and defense doctrine only — not instructions to harm. Lawful self-defense where permitted by jurisdiction; de-escalation and retreat when possible. Not military operational orders. No capability employment without Ironclad corroboration.",
+  "autonomous_warfare_gate": "Library deception flags and LIKELY_FALSE claims are withheld from fielded capability until verified — counsel and education only.",
+  "categories": [
+    {"id": "foundations_combat", "label": "Combat foundations", "weight": 0.09},
+    {"id": "striking", "label": "Striking fundamentals", "weight": 0.10},
+    {"id": "boxing_kickboxing", "label": "Boxing & kickboxing", "weight": 0.10},
+    {"id": "grappling_bjj", "label": "Grappling & BJJ", "weight": 0.10},
+    {"id": "wrestling", "label": "Wrestling", "weight": 0.09},
+    {"id": "mma_mixed", "label": "Mixed martial arts", "weight": 0.09},
+    {"id": "kung_fu", "label": "Kung fu & Chinese arts", "weight": 0.08},
+    {"id": "self_defense", "label": "Lawful self-defense", "weight": 0.10},
+    {"id": "tactical_awareness", "label": "Tactical awareness", "weight": 0.10},
+    {"id": "fitness_conditioning", "label": "Fitness & conditioning", "weight": 0.08},
+    {"id": "weapons_education", "label": "Weapons education (less-lethal)", "weight": 0.08},
+    {"id": "warfare_bridge", "label": "Warfare corpus bridge", "weight": 0.09}
+  ],
+  "library_books": {
+    "hand_to_hand": "exploring_hand_to_hand_combat",
+    "weaponized": "exploring_weaponized_combat",
+    "combat_anatomy_shelf": "library/dewey/611-human-anatomy",
+    "combat_anatomy_module": "lib/field-exploring-combat-anatomy.py",
+    "personhood_only": true,
+    "not_vehicles": true,
+    "doctrine": "data/exploring-combat-personhood-doctrine.json",
+    "generator": "lib/field-exploring-combat-personhood.py"
+  },
+  "patterns": [
+    {"id": "domain_corpus", "label": "Structured combat domain corpus — foundations through weapons education"},
+    {"id": "library_hand_to_hand", "label": "Exploring Hand-to-Hand Combat — personhood martial arts · BJJ · all families"},
+    {"id": "library_weaponized", "label": "Exploring Weaponized Combat — personhood firearms · knives · less-lethal"},
+    {"id": "library_combat_anatomy", "label": "Exploring combat anatomy — mechanical & biological depth per body area"},
+    {"id": "warfare_bridge", "label": "field_warfare_corpus bridge — LOAC, measures, countermeasures; educational only, no operational employment"},
+    {"id": "motion_bridge", "label": "humanoid-motion-panel skills_loaded meld in score"},
+    {"id": "battery_verify", "label": "Live battery — search hits expected domains"},
+    {"id": "disclaimer_seal", "label": "Combat disclaimer on every reply"},
+    {"id": "natural_language", "label": "Natural language martial arts and defense queries"},
+    {"id": "structured_explain", "label": "Six-section teach — What / Why / How / Pitfalls / Where / Example"},
+    {"id": "ocr_vision_train", "label": "OCR vision combat ingest — ZOCR · vision · SDF · warfare corpus · motion doctrine"}
+  ],
+  "assistant_ceiling": {
+    "label": "Generic LLM martial arts",
+    "limitations": ["Instructs harm without legal framing", "Fantasy fight choreography", "No de-escalation", "Treats sport rules as street law"]
+  },
+  "fluent_floor_score": 0.86,
+  "master_combat_score": 0.95,
+  "battery_pass_threshold": 0.85
+}

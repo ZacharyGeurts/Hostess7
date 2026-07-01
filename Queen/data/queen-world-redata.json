@@ -1,0 +1,26 @@
+{
+  "schema": "queen-world-redata/v1",
+  "title": "Queen World Redata — secure forever invincibility lane",
+  "motto": "Lossless. Sealed. Field-compiler native. Above all — SECURITY.",
+  "upstream": "World_Redata",
+  "github": "https://github.com/ZacharyGeurts/World_Redata",
+  "doctrine": {
+    "forever": true,
+    "fail_closed_on_seal_break": true,
+    "individual_files_gui_only": true,
+    "no_disk_write_without_confirm": true,
+    "field_compiler": "Grok16 g16 @ gnu++26 field_opt",
+    "binary": "World_Redata/cpp/build/world-redata",
+    "formats": ["WRZC1", "WRDT1", "ZAC7"]
+  },
+  "security": {
+    "queen_code_seal": true,
+    "wrdt_verify_passes": 3,
+    "pin_mode": "0600",
+    "mmap_bounded_io": true
+  },
+  "api": {
+    "path": "/api/world-redata",
+    "actions": ["status", "verify", "security", "mandate", "fast"]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "nexus-field-os/v1",
+  "title": "NEXUS Field OS — ./nexus.sh is the launcher",
+  "motto": "Panel · Underlay · ZNetwork · Queen · Grok16 · AmmoLang — one command.",
+  "launcher": "nexus.sh",
+  "deprecated_launchers": [
+    "nexus-launch.sh",
+    "nexus-install-gui.sh",
+    "install-all.sh"
+  ],
+  "commands": {
+    "default": "Boot stack → panel → underlay witness → NEXUS C2 desktop",
+    "--underlay": "Tristate / Underlay F9 installer",
+    "--clean": "Remove stale build trees (Queen/build, Grok16/build, dist extracts)",
+    "--build": "AmmoLang sovereign build pipeline",
+    "--drop-in": "Defield → redata → secure net",
+    "--shutdown": "Stop panel and tray"
+  },
+  "underlay": {
+    "doctrine": "data/field-underlay-doctrine.json",
+    "surface": "lib/field-underlay-surface.py",
+    "hotkey": "lib/field-underlay-hotkey.py",
+    "switch": "lib/field-underlay-switch.py"
+  },
+  "os_keybindings": {
+    "doctrine": "data/field-os-keybindings-doctrine.json",
+    "kernel": "lib/field-os-keybindings.py",
+    "desktop": "panel/assets/field-os-keybindings.js"
+  },
+  "build_cleanup": "lib/nexus-field-build-cleanup.py",
+  "ammolang_build": "lib/field-ammolang-build.py"
+}

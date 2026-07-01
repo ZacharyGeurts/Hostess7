@@ -1,0 +1,28 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 32,
+  "slug": "stack-snes",
+  "title": "Super Nintendo Platform Stack",
+  "body": "# Super Nintendo Platform Stack\n\n**Platform stack:** `console_snes` · **Era:** 1990–1996 · **Vendor:** Nintendo · **Count:** 10\n\nRicoh **5A22** (65C816 @ 3.58 MHz), dual PPU, Sony **SPC700** audio sub-system — launched **November 1990** in Japan.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: console_snes` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **Ricoh 5A22 CPU Glue** (Ricoh, 16-bit) — 65C816 derivative — SNES main CPU bus + DMA glue\n- **Nintendo SA-1 Coprocessor** (Nintendo, 16-bit) — SA-1 enhancement ASIC — BW-RAM arithmetic copro\n- **Sony S-SMP (SPC700)** (Sony, 8-bit) — SPC700 audio sub-CPU — 64KB ARAM + DSP\n- **SNES PPU (S-PPU)** (Nintendo, 16-bit) — Picture Processing Unit — dual 8-bit BG layers\n- **SNES CIC Lockout** (Nintendo, 8-bit) — Region lock + reset handshake — cart/console glue\n- **SNES WRAM Controller** (Nintendo, 16-bit) — Work RAM bus arbiter — CPU/PPU/DMA access\n\n## Catalog ids\n\nThe `chip_ids` array holds all **10** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: console_snes · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "glue_snes_5a22",
+    "glue_snes_cic",
+    "glue_snes_ppu",
+    "glue_snes_sa1",
+    "glue_snes_smp",
+    "glue_snes_wram",
+    "intel_strongarm_sa110",
+    "jp_ricoh_5a22",
+    "libretro_snes9x",
+    "system_snes"
+  ],
+  "chip_count": 10,
+  "kind": "platform_stack",
+  "family": "console",
+  "platform_stack": "console_snes",
+  "era": "1990–1996",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/thumbs/intel_strongarm_sa110.png",
+  "thumb": "/world/assets/combinatronic/chips/thumbs/intel_strongarm_sa110.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

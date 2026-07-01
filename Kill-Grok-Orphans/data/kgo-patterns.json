@@ -1,0 +1,79 @@
+{
+  "version": "1.1.0",
+  "description": "Grok orphan process signatures — reparented to init with no live supervisor",
+  "interval_sec": 3,
+  "grace_sec": 2,
+  "min_age_sec": 1,
+  "patterns": [
+    {
+      "id": "grok-firmware-audit",
+      "match": "grok-firmware-audit.sh",
+      "reason": "Stale grok-firmware-audit orphan (boot-simulate leak)"
+    },
+    {
+      "id": "grok16-awk-wrapper",
+      "match": "Grok16/bin/awk",
+      "reason": "Runaway Grok16 awk bash wrapper"
+    },
+    {
+      "id": "grok16-bin-bash",
+      "match": "Grok16/bin/",
+      "shell_only": true,
+      "reason": "Orphaned Grok16 bin bash shim"
+    },
+    {
+      "id": "grok-boot-simulate",
+      "match": "boot-simulate.sh",
+      "reason": "Orphaned boot-simulate subprocess"
+    },
+    {
+      "id": "dump-bash-state",
+      "match": "dump_bash_state",
+      "shell_only": true,
+      "reason": "Orphaned Grok agent dump_bash_state shell"
+    },
+    {
+      "id": "grok-agent-orphan",
+      "match": ".grok/sessions",
+      "shell_only": true,
+      "reason": "Orphaned Grok CLI session bash"
+    },
+    {
+      "id": "ammoos-release-stuck",
+      "match": "ammoos-release.sh",
+      "shell_only": true,
+      "reason": "Stuck AmmoOS release rsync/push orphan"
+    },
+    {
+      "id": "pack-ammoos-stuck",
+      "match": "pack-ammoos-release.sh",
+      "shell_only": true,
+      "reason": "Stuck AmmoOS pack orphan"
+    },
+    {
+      "id": "queen-asset-audit",
+      "match": "queen-asset-audit.py",
+      "shell_only": true,
+      "reason": "Orphaned Queen asset audit subprocess"
+    },
+    {
+      "id": "panel-tab-audit",
+      "match": "panel-tab-audit.py",
+      "shell_only": true,
+      "reason": "Orphaned panel tab audit subprocess"
+    },
+    {
+      "id": "iron-plate-organize",
+      "match": "iron-plate-organize.py",
+      "shell_only": true,
+      "reason": "Orphaned iron-plate BSP sort leak"
+    },
+    {
+      "id": "grok-firmware-child",
+      "match": "grok-firmware",
+      "shell_only": true,
+      "reason": "Orphaned grok-firmware child shell"
+    }
+  ],
+  "exclude_ppid": []
+}

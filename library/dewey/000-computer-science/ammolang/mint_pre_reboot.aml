@@ -1,0 +1,22 @@
+# Mint pre-reboot — monitored boot chain to guest desktop (AmmoLang hang guard)
+@profile fastest
+@verbose clean
+@motto "Mint reboot ready · early layer · genius · Mint desktop path · Grok16 monitor"
+
+combinator observe {
+  source "nexus"
+  source "kilroy"
+  source "ammoos"
+}
+
+seq ·
+  say "Mint pre-reboot monitor — AmmoLang + g16_self_monitor heartbeats"
+  post "MINT_PRE_REBOOT START — reboot lands GRUB/Mint unchanged → early → desktop → F9"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+  run script:impl/field-mint-pre-reboot-test timeout:180 stall:60
+  run script:impl/field-kilroy-bzimage arg:status timeout:30 stall:15
+  run py:field_stack_monitor action:stack_status timeout:45 stall:20
+  assist freeze
+  say "Mint pre-reboot complete — inspect ammolang-hang-freeze-assist.json + field-ammolang-build-panel.json"

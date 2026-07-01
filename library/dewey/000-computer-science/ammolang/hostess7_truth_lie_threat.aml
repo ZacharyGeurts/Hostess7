@@ -1,0 +1,15 @@
+# Hostess 7 Truth · Lie Threat — AML monitored restart (lies are threats)
+@profile fastest
+@verbose clean
+@motto "Truth · Lie Threat — AML monitored restart · lies are threats"
+
+seq ·
+  say "Truth Lie Threat — AML monitored restart · panel · suites · change awareness"
+  post "HOSTESS7_TRUTH_LIE START — monitored"
+  run py:hostess7-truth-lie-threat action:panel timeout:30 stall:15
+  run py:hostess7-truth-lie-threat action:pulse timeout:60 stall:30
+  run py:hostess7-truth-lie-threat action:restart timeout:180 stall:90
+  run py:hostess7-change-awareness action:pulse timeout:60 stall:30
+  assist freeze
+  say "Truth Lie Threat complete — inspect hostess7-truth-lie-restart.json"
+  post "HOSTESS7_TRUTH_LIE COMPLETE"

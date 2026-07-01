@@ -1,0 +1,67 @@
+{
+  "schema": "hostess7-engineering-explain/v1",
+  "introduction": "I am Hostess 7 — I hold full educational understanding of engineering across mechanical, electrical, civil, materials, thermodynamics, fluids, robotics, manufacturing, software, and NEXUS field systems. I synthesize from structured domains and the Hostess7 physics and chemistry corpora. I am not a licensed PE; this is not stamped design or code sign-off.",
+  "format": ["what", "why", "how", "pitfalls", "where", "example"],
+  "topics": [
+    {
+      "id": "engineering_fluency",
+      "keywords": ["engineering mastery", "engineering fluency", "applied engineering", "field engineering", "mechanical electrical civil"],
+      "what": "Engineering fluency means I answer from structured domains — foundations, mechanical, electrical, civil/structural, materials, thermodynamics, fluids/HVAC, robotics/control, manufacturing, software systems, field engineering — plus physics and chemistry corpus bridges for physical depth.",
+      "why": "Operators need trustworthy engineering education on the field — guessing load paths, code compliance, or PE sign-off breaks trust and can harm.",
+      "how": "hostess7-engineering.py search_engineering scores domains and field_physics_corpus / field_chemistry_corpus; battery verifies expected domain hits; OCR ingest trains on vision text.",
+      "pitfalls": "Claiming PE stamp or code compliance; omitting educational disclaimer; outdated stack paths without corpus refresh; reading binary .h7 as plaintext.",
+      "where": "lib/hostess7-engineering.py, Hostess7/scripts/field_physics_corpus.py, field_chemistry_corpus.py, Command ask + /api/hostess7/engineering",
+      "example": "Ask: PID feedback control loop — I return robotics_control domain with educational disclaimer."
+    },
+    {
+      "id": "mechanical",
+      "keywords": ["mechanical", "gear", "torque", "stress", "strain", "beam", "machine design"],
+      "what": "Mechanical engineering covers forces, motion, machine elements, stress analysis, and power transmission.",
+      "why": "Structural and mechanical failures often trace to misunderstood loads, fatigue, or tolerance stack — foundational literacy prevents field mistakes.",
+      "how": "mechanical domain + physics dynamics bridge for Newtonian mechanics depth.",
+      "pitfalls": "Ignoring safety factors; confusing static vs dynamic loads; unsigned PE claims on structural members.",
+      "where": "search_engineering category mechanical",
+      "example": "gears mechanical advantage torque → power transmission and efficiency with disclaimer"
+    },
+    {
+      "id": "field_engineering",
+      "keywords": ["field engineering", "nexus field", "field stack", "hostess7 deploy", "pipeline commissioning", "canvas dispatch"],
+      "what": "Field engineering — NEXUS field stack deployment, Hostess7 canvas integration, pipeline commissioning, and operator-facing systems.",
+      "why": "The built software-hardware field stack is itself an engineered system — operators need literacy on deploy paths and integration seams.",
+      "how": "field_engineering domain + physics field_canvas_physics bridge for canvas motion context.",
+      "pitfalls": "Treating educational synthesis as production runbook without verification; skipping disclaimer on safety-critical deploy.",
+      "where": "field_engineering domain, Hostess7/scripts/field_superintelligence.py",
+      "example": "NEXUS field stack deployment commissioning → pipeline checklist with educational framing"
+    },
+    {
+      "id": "physics_bridge",
+      "keywords": ["physics", "newton", "kinematics", "navier", "bernoulli", "thermodynamics physics", "fluid continuum"],
+      "what": "Physics bridge routes mechanics, fluids, and thermodynamics queries to field_physics_corpus — kinematics, dynamics, fluid continuum, entropy.",
+      "why": "Engineering rests on physics first principles; the corpus holds educational synthesis tied to Field canvas where noted.",
+      "how": "search_engineering merges engineering domains with search_physics(); physics keywords prioritize corpus hits.",
+      "pitfalls": "Confusing educational physics synthesis with jurisdiction-specific engineering code; unsigned PE on structural calcs.",
+      "where": "Hostess7/scripts/field_physics_corpus.py, cache/fieldstorage/brain/physics/corpus.json",
+      "example": "newton second law force acceleration → dynamics domain from physics corpus"
+    },
+    {
+      "id": "chemistry_bridge",
+      "keywords": ["chemistry", "corrosion", "polymer", "oxidation", "electrochemistry", "material chemistry"],
+      "what": "Chemistry bridge routes materials-chemistry queries to field_chemistry_corpus — bonds, reactions, corrosion, polymers.",
+      "why": "Materials selection and failure analysis require chemical literacy — corrosion, composites, and surface treatments are chemistry problems.",
+      "how": "search_engineering merges materials domain with search_chemistry(); corrosion and polymer keywords prioritize corpus hits.",
+      "pitfalls": "Lab instructions without safety context; treating corpus synthesis as MSDS or regulatory compliance.",
+      "where": "Hostess7/scripts/field_chemistry_corpus.py, cache/fieldstorage/brain/chemistry/corpus.json",
+      "example": "steel corrosion oxidation → general_chemistry domain with educational disclaimer"
+    },
+    {
+      "id": "ocr_vision_training",
+      "keywords": ["ocr engineering", "vision training engineering", "schematic ocr", "textbook ocr engineering", "zocr engineering"],
+      "what": "OCR vision training feeds engineering think tank from ZOCR, Final_Eye, vision corpus, SDF segments, physics/chemistry corpus, and textbook manifest.",
+      "why": "Operators capture schematics, datasheet pages, and field notes — engineering must train on real field text.",
+      "how": "ocr-ingest extracts engineering candidates · ocr-train verifies against domain tags and physics/chemistry corpus.",
+      "pitfalls": "Training on binary .h7 garbage; skipping corpus refresh; no disclaimer on safety-critical OCR snippets.",
+      "where": "data/hostess7-engineering-ocr-doctrine.json, STATE hostess7-engineering-ocr-corpus.json",
+      "example": "ocr-ingest then ocr-train — verified_count rises as vision captures grow"
+    }
+  ]
+}

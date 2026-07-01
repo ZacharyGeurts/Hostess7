@@ -1,0 +1,330 @@
+{
+  "schema": "field-cpu-companion-seed/v1",
+  "title": "CPU companions — universal north/south bridge, Super I/O, always-with-CPU glue",
+  "motto": "Populate for free — every host CPU gets its platform stack stamped.",
+  "universal": [
+    {"id": "uni_intel_8259a", "label": "Intel 8259A PIC", "vendor": "Intel", "kind": "chipset", "companion_role": "pic", "bits": 8, "note": "Programmable interrupt controller — ISA/AT universal"},
+    {"id": "uni_intel_8237a", "label": "Intel 8237A DMA", "vendor": "Intel", "kind": "chipset", "companion_role": "dma", "bits": 8, "note": "Direct memory access controller — PC AT era"},
+    {"id": "uni_intel_8254", "label": "Intel 8254 PIT", "vendor": "Intel", "kind": "chipset", "companion_role": "timer", "bits": 8, "note": "Programmable interval timer — system tick"},
+    {"id": "uni_intel_8284", "label": "Intel 8284 Clock Generator", "vendor": "Intel", "kind": "chipset", "companion_role": "clock", "bits": 8, "note": "8088/8086 bus clock + reset"},
+    {"id": "uni_mc146818", "label": "Motorola MC146818 RTC", "vendor": "Motorola", "kind": "chipset", "companion_role": "rtc", "bits": 8, "note": "Real-time clock + CMOS — PC/AT CMOS RAM"},
+    {"id": "uni_ds12887", "label": "Dallas DS12887 RTC", "vendor": "Dallas", "kind": "chipset", "companion_role": "rtc", "bits": 8, "note": "Integrated RTC/NVRAM — 286/386/486 PC"},
+    {"id": "uni_intel_82288", "label": "Intel 82288 Bus Controller", "vendor": "Intel", "kind": "chipset", "companion_role": "bus", "bits": 8, "note": "8088/8086 bus timing and control"},
+    {"id": "uni_ct_82c206", "label": "Chips & Tech 82C206", "vendor": "Chips & Technologies", "kind": "southbridge", "companion_role": "southbridge", "bits": 16, "note": "AT chipset — PIC/DMA/RTC/keyboard glue"},
+    {"id": "uni_winbond_w83627", "label": "Winbond W83627HF Super I/O", "vendor": "Winbond", "kind": "super_io", "companion_role": "super_io", "bits": 16, "note": "Floppy/LPT/COM/KBC — PC south companion"},
+    {"id": "uni_national_pc87309", "label": "National PC87309 Super I/O", "vendor": "National Semiconductor", "kind": "super_io", "companion_role": "super_io", "bits": 16, "note": "ISA/PCI era Super I/O"},
+    {"id": "uni_ite_it8712", "label": "ITE IT8712F Super I/O", "vendor": "ITE", "kind": "super_io", "companion_role": "super_io", "bits": 16, "note": "LPC Super I/O — ACPI, KBC, floppy"},
+    {"id": "uni_ite_it8708", "label": "ITE IT8708F Super I/O", "vendor": "ITE", "kind": "super_io", "companion_role": "super_io", "bits": 16, "note": "LPC Super I/O — modern ATX path"}
+  ],
+  "platform_stacks": {
+    "pc_8088": {
+      "label": "IBM PC/XT 8088",
+      "match": {"arch": ["8088", "8086", "x86"], "bits": [8, 16], "era_max": 1985},
+      "companions": [
+        {"id": "nb_pc_8088_glue", "label": "PC/XT Glue Logic", "vendor": "IBM", "kind": "chipset", "companion_role": "glue", "bits": 8, "note": "Address decode + DMA glue — 8088 bus"},
+        {"id": "sb_pc_8088_io", "label": "PC/XT I/O Channel", "vendor": "IBM", "kind": "southbridge", "companion_role": "southbridge", "bits": 8, "note": "Expansion bus + IRQ steering"}
+      ],
+      "always_with": ["uni_intel_8259a", "uni_intel_8237a", "uni_intel_8254", "uni_intel_8284", "uni_intel_82288"]
+    },
+    "pc_286": {
+      "label": "PC/AT 80286",
+      "match": {"arch": ["80286", "286", "x86"], "bits": [16]},
+      "companions": [
+        {"id": "nb_intel_82284", "label": "Intel 82284 Clock", "vendor": "Intel", "kind": "northbridge", "companion_role": "clock", "bits": 16, "note": "286 clock + ready generation"},
+        {"id": "sb_intel_82288_at", "label": "Intel 82288 AT Bus", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 16, "note": "AT bus controller companion"}
+      ],
+      "always_with": ["uni_intel_8259a", "uni_intel_8237a", "uni_intel_8254", "uni_ds12887", "uni_ct_82c206"]
+    },
+    "pc_386": {
+      "label": "Intel 80386DX platform",
+      "match": {"arch": ["80386", "386", "i386", "x86"], "bits": [32]},
+      "companions": [
+        {"id": "nb_intel_82385", "label": "Intel 82385 Cache Controller", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "386 cache + bus control"},
+        {"id": "sb_intel_82380", "label": "Intel 82380 SBIC", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "386 system peripheral bus interface"}
+      ],
+      "always_with": ["uni_intel_8259a", "uni_intel_8237a", "uni_ds12887", "uni_national_pc87309"]
+    },
+    "pc_486_intel": {
+      "label": "Intel 80486 + 420TX",
+      "match": {"arch": ["80486", "486", "i486", "x86"], "bits": [32], "vendor": ["Intel", "AMD", "Cyrix"]},
+      "companions": [
+        {"id": "nb_intel_420tx", "label": "Intel 420TX Saturn", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "486 PCI northbridge — memory + cache"},
+        {"id": "sb_intel_82378", "label": "Intel 82378 SIO", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "486 system I/O — IDE DMA PIC"},
+        {"id": "sb_intel_piix", "label": "Intel 82371FB PIIX", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "PCI ISA IDE southbridge — 430FX era"}
+      ],
+      "always_with": ["uni_intel_8259a", "uni_intel_8237a", "uni_winbond_w83627"]
+    },
+    "pc_486_via": {
+      "label": "VIA 486/586 platform",
+      "match": {"vendor": ["VIA", "Cyrix", "IDT"], "bits": [32]},
+      "companions": [
+        {"id": "nb_via_vt82c495", "label": "VIA VT82C495", "vendor": "VIA", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "486/586 PCI northbridge"},
+        {"id": "sb_via_vt82c586b", "label": "VIA VT82C586B", "vendor": "VIA", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "PCI-ISA southbridge — USB1.1 path"}
+      ],
+      "always_with": ["uni_winbond_w83627", "uni_intel_8259a"]
+    },
+    "pc_pentium": {
+      "label": "Pentium + 430FX/HX/VX",
+      "match": {"label": ["Pentium", "5x86", "6x86"], "bits": [32]},
+      "companions": [
+        {"id": "nb_intel_430fx", "label": "Intel 430FX Triton", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "Pentium PCI northbridge"},
+        {"id": "nb_intel_430vx", "label": "Intel 430VX", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "Pentium SDRAM northbridge"},
+        {"id": "sb_intel_piix3", "label": "Intel 82371SB PIIX3", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "ACPI IDE USB southbridge"}
+      ],
+      "always_with": ["sb_intel_piix", "uni_winbond_w83627"]
+    },
+    "pc_pentium2": {
+      "label": "Pentium II + 440BX",
+      "match": {"label": ["Pentium II", "Pentium Pro", "K6", "K6-2", "K6-III", "Athlon"], "bits": [32, 64]},
+      "companions": [
+        {"id": "nb_intel_440bx", "label": "Intel 440BX", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "Universal AGP northbridge — slot 1 / PPGA"},
+        {"id": "sb_intel_piix4e", "label": "Intel 82371AB PIIX4E", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "PIIX4E ACPI southbridge"},
+        {"id": "nb_amd_751", "label": "AMD 751 Irongate", "vendor": "AMD", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "K7 Athlon northbridge"},
+        {"id": "sb_amd_756", "label": "AMD 756 Viper", "vendor": "AMD", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "K7 southbridge — PCI ISA IDE"}
+      ],
+      "always_with": ["uni_ite_it8712"]
+    },
+    "pc_pentium3": {
+      "label": "Pentium III / Coppermine",
+      "match": {"label": ["Pentium III", "Coppermine", "Tualatin", "Duron", "Thunderbird"]},
+      "companions": [
+        {"id": "nb_intel_440bx_p3", "label": "Intel 440BX (P3)", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "133MHz FSB AGP northbridge"},
+        {"id": "nb_intel_82815", "label": "Intel 82815 GMCH", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "i815 integrated graphics northbridge"},
+        {"id": "sb_intel_ich2", "label": "Intel ICH2 (82801BA)", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "AC'97 LAN USB southbridge"}
+      ],
+      "always_with": ["sb_intel_piix4e", "uni_ite_it8712"]
+    },
+    "pc_pentium4": {
+      "label": "Pentium 4 / NetBurst",
+      "match": {"label": ["Pentium 4", "Celeron", "NetBurst", "Prescott"]},
+      "companions": [
+        {"id": "nb_intel_82845", "label": "Intel 82845 MCH", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "Brookdale DDR northbridge"},
+        {"id": "nb_intel_865pe", "label": "Intel 865PE MCH", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "Springdale AGP8x northbridge"},
+        {"id": "sb_intel_ich5", "label": "Intel ICH5 (82801EB)", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "SATA USB2 southbridge"},
+        {"id": "sb_intel_ich7", "label": "Intel ICH7 (82801GB)", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "ICH7 southbridge — PCIe gen1"}
+      ],
+      "always_with": ["uni_ite_it8712"]
+    },
+    "pc_core2": {
+      "label": "Core 2 / Penryn",
+      "match": {"label": ["Core 2", "Penryn", "Conroe", "Wolfdale", "Xeon 5", "Core Duo"]},
+      "companions": [
+        {"id": "nb_intel_p35", "label": "Intel P35 MCH", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "Bearlake DDR2/DDR3 northbridge"},
+        {"id": "nb_intel_x48", "label": "Intel X48 MCH", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "Enthusiast DDR3 northbridge"},
+        {"id": "sb_intel_ich9", "label": "Intel ICH9 (82801IR)", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "ICH9 southbridge — SATA AHCI"},
+        {"id": "sb_intel_ich10", "label": "Intel ICH10 (82801JI)", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "ICH10R southbridge"}
+      ],
+      "always_with": ["uni_ite_it8708"]
+    },
+    "pc_intel_pch": {
+      "label": "Intel Core i + PCH",
+      "match": {"family": ["x86_intel"], "vendor": ["Intel"]},
+      "companions": [
+        {"id": "nb_intel_z170", "label": "Intel Z170 PCH-era MCH", "vendor": "Intel", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "Skylake platform controller hub era"},
+        {"id": "sb_intel_z790", "label": "Intel Z790 PCH", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "Raptor Lake desktop PCH"},
+        {"id": "sb_intel_b660", "label": "Intel B660 PCH", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "Alder Lake mainstream PCH"},
+        {"id": "sb_intel_h610", "label": "Intel H610 PCH", "vendor": "Intel", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "Entry Raptor/Alder PCH"}
+      ],
+      "always_with": ["uni_ite_it8708"]
+    },
+    "pc_amd_k8": {
+      "label": "AMD K8 / AM2",
+      "match": {"family": ["x86_amd"], "label": ["Athlon 64", "Opteron", "Sempron", "Phenom"]},
+      "companions": [
+        {"id": "nb_amd_rd580", "label": "AMD RD580 CrossFire", "vendor": "AMD", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "K8 dual PCIe northbridge"},
+        {"id": "sb_amd_sb600", "label": "AMD SB600", "vendor": "AMD", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "K8 southbridge — SATA USB"},
+        {"id": "sb_amd_sb700", "label": "AMD SB700", "vendor": "AMD", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "SB700 southbridge — RAID"},
+        {"id": "sb_amd_sb850", "label": "AMD SB850", "vendor": "AMD", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "SB850 SATA6G southbridge"}
+      ],
+      "always_with": ["uni_ite_it8712"]
+    },
+    "pc_amd_am5": {
+      "label": "AMD Ryzen AM5",
+      "match": {"family": ["x86_amd"], "label": ["Ryzen", "EPYC", "Threadripper"]},
+      "companions": [
+        {"id": "nb_amd_x670e", "label": "AMD X670E chipset", "vendor": "AMD", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "AM5 enthusiast — dual PCIe5"},
+        {"id": "sb_amd_prom21", "label": "AMD PROM21 X670E south", "vendor": "AMD", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "Secondary southbridge die — AM5"},
+        {"id": "sb_amd_b650", "label": "AMD B650 chipset", "vendor": "AMD", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "AM5 mainstream south"},
+        {"id": "sb_amd_fch", "label": "AMD FCH Fusion Hub", "vendor": "AMD", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "Integrated southbridge — APU/SoC path"}
+      ],
+      "always_with": ["uni_ite_it8708"]
+    },
+    "retro_c64": {
+      "label": "Commodore 64 classic chipset",
+      "match": {"platforms": ["c64"], "chip_id": ["c64_6510", "system_c64"]},
+      "companions": [
+        {"id": "c64_6510", "label": "MOS 6510", "vendor": "MOS", "kind": "guest_cpu", "companion_role": "cpu", "bits": 8, "note": "C64 CPU — 6502 derivative with integrated I/O"},
+        {"id": "c64_sid6581", "label": "MOS 6581 SID", "vendor": "MOS", "kind": "sound", "companion_role": "sound", "bits": 8, "note": "3-voice analog synth — early C64 boards"},
+        {"id": "c64_sid8580", "label": "MOS 8580 SID", "vendor": "MOS", "kind": "sound", "companion_role": "sound", "bits": 8, "note": "8580 SID — later C64 boards"},
+        {"id": "c64_vic2", "label": "MOS VIC-II", "vendor": "MOS", "kind": "video", "companion_role": "video", "bits": 8, "note": "VIC-II video — 40×25 text, sprites"},
+        {"id": "c64_cia1", "label": "MOS 6526 CIA1", "vendor": "MOS", "kind": "pio", "companion_role": "pio", "bits": 8, "note": "Keyboard + joystick matrix"},
+        {"id": "c64_cia2", "label": "MOS 6526 CIA2", "vendor": "MOS", "kind": "pio", "companion_role": "pio", "bits": 8, "note": "Serial + user port"}
+      ],
+      "always_with": ["c64_6510", "c64_vic2", "c64_sid6581", "c64_cia1", "c64_cia2"]
+    },
+    "c64_ultimate_fpga": {
+      "label": "Commodore 64 Ultimate FPGA",
+      "match": {"platforms": ["c64_ultimate"], "chip_id": ["system_c64_ultimate"]},
+      "companions": [
+        {"id": "glue_c64u_fpga_core", "label": "C64 Ultimate FPGA core", "vendor": "Commodore", "kind": "fpga", "companion_role": "soc", "bits": 32, "note": "AMD Xilinx Artix-7 — cycle-accurate 6510/SID/VIC/CIA"},
+        {"id": "glue_c64u_hdmi", "label": "C64 Ultimate HDMI bridge", "vendor": "Commodore", "kind": "video", "companion_role": "video", "bits": 32, "note": "1080p HDMI output — PAL/NTSC"},
+        {"id": "glue_c64u_sid_sockets", "label": "C64 Ultimate SID sockets", "vendor": "Commodore", "kind": "sound", "companion_role": "sound", "bits": 8, "note": "Dual 6581/8580 sockets + 8 FPGA SIDs"}
+      ],
+      "always_with": ["glue_c64u_fpga_core", "glue_c64u_hdmi"]
+    },
+    "retro_6502": {
+      "label": "6502 family glue",
+      "match": {"mame_device": ["m6502", "m65c02"], "arch": ["6502"]},
+      "companions": [
+        {"id": "glue_mos_6530", "label": "MOS 6530 RIOT", "vendor": "MOS", "kind": "glue", "companion_role": "glue", "bits": 8, "note": "RAM I/O timer — 6502 always-with"},
+        {"id": "glue_mos_6522", "label": "MOS 6522 VIA", "vendor": "MOS", "kind": "pio", "companion_role": "pio", "bits": 8, "note": "Versatile interface adapter — 6502 systems"}
+      ],
+      "always_with": ["glue_mos_6522"]
+    },
+    "retro_z80": {
+      "label": "Z80 family glue",
+      "match": {"mame_device": ["z80", "z180"], "arch": ["Z80", "z80"]},
+      "companions": [
+        {"id": "glue_z80_ctc", "label": "Zilog Z80 CTC", "vendor": "Zilog", "kind": "chipset", "companion_role": "timer", "bits": 8, "note": "Counter/timer chip — Z80 DMA path"},
+        {"id": "glue_z80_dart", "label": "Zilog Z80 DART", "vendor": "Zilog", "kind": "pio", "companion_role": "pio", "bits": 8, "note": "Dual UART — Z80 serial"}
+      ],
+      "always_with": ["glue_z80_ctc"]
+    },
+    "retro_m68k": {
+      "label": "Motorola 68000 glue",
+      "match": {"mame_device": ["m68000", "m68010", "m68020", "m68030", "m68040"], "arch": ["m68k", "68000"]},
+      "companions": [
+        {"id": "glue_mc68901", "label": "MC68901 MFP", "vendor": "Motorola", "kind": "chipset", "companion_role": "pic", "bits": 16, "note": "Multi-function peripheral — ST/Amiga IRQ"},
+        {"id": "glue_mc6840", "label": "MC6840 PTM", "vendor": "Motorola", "kind": "chipset", "companion_role": "timer", "bits": 8, "note": "Programmable timer module"}
+      ],
+      "always_with": ["glue_mc68901"]
+    },
+    "amiga_chipset": {
+      "label": "Commodore Amiga OCS/ECS/AGA",
+      "match": {"platforms": ["amiga"], "label": ["Amiga", "amiga"]},
+      "companions": [
+        {"id": "nb_amiga_agnus", "label": "MOS Agnus", "vendor": "MOS", "kind": "northbridge", "companion_role": "northbridge", "bits": 16, "note": "DMA + blitter address — Amiga north"},
+        {"id": "sb_amiga_paula", "label": "MOS Paula", "vendor": "MOS", "kind": "southbridge", "companion_role": "southbridge", "bits": 16, "note": "Audio + floppy + IRQ — Amiga south"},
+        {"id": "glue_amiga_denise", "label": "MOS Denise", "vendor": "MOS", "kind": "video", "companion_role": "video", "bits": 16, "note": "Display encoder — OCS/ECS"}
+      ],
+      "always_with": ["nb_amiga_agnus", "sb_amiga_paula", "glue_amiga_denise"]
+    },
+    "pc_zhaoxin_kx": {
+      "label": "VIA / Zhaoxin KX x86 lineage",
+      "match": {"vendor": ["Zhaoxin", "VIA", "Centaur"], "label": ["KX", "Zhaoxin", "C3", "C7", "Nano", "Eden"]},
+      "companions": [
+        {"id": "nb_zhaoxin_kx6000_mch", "label": "Zhaoxin KX-6000 MCH", "vendor": "Zhaoxin", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "KX-6000 memory controller hub — VIA-derived x86 domestic"},
+        {"id": "nb_zhaoxin_kx7000_mch", "label": "Zhaoxin KX-7000 MCH", "vendor": "Zhaoxin", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "KX-7000 DDR5/PCIe5 north — Zhaoxin 7-series"},
+        {"id": "sb_zhaoxin_chx003", "label": "Zhaoxin CHX003 I/O Hub", "vendor": "Zhaoxin", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "CHX003 south — SATA USB LPC for KX platforms"},
+        {"id": "sb_via_vt8237", "label": "VIA VT8237 Southbridge", "vendor": "VIA", "kind": "southbridge", "companion_role": "southbridge", "bits": 32, "note": "VIA lineage south — IDE SATA USB2 — KX/C7 path"},
+        {"id": "nb_via_cn400", "label": "VIA CN400 Northbridge", "vendor": "VIA", "kind": "northbridge", "companion_role": "northbridge", "bits": 32, "note": "C3/C7 integrated graphics north — Centaur heritage"},
+        {"id": "glue_zhaoxin_ioapic", "label": "Zhaoxin IOAPIC Glue", "vendor": "Zhaoxin", "kind": "chipset", "companion_role": "pic", "bits": 64, "note": "APIC/IOAPIC interrupt steering — KX platform glue"},
+        {"id": "glue_via_centaur_fsb", "label": "VIA Centaur FSB Bridge", "vendor": "VIA", "kind": "chipset", "companion_role": "bus", "bits": 64, "note": "Front-side bus + QPI-like link — VIA→Zhaoxin lineage"}
+      ],
+      "always_with": ["nb_zhaoxin_kx6000_mch", "sb_zhaoxin_chx003", "uni_ite_it8712"]
+    },
+    "pc_loongson": {
+      "label": "Loongson MIPS / LoongArch",
+      "match": {"vendor": ["Loongson"], "arch": ["LoongArch", "MIPS", "mips", "loongarch"], "label": ["Loongson", "LoongArch", "3A", "2K", "龙芯"]},
+      "companions": [
+        {"id": "nb_loongson_ls7a", "label": "Loongson 7A1000 Bridge", "vendor": "Loongson", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "7A northbridge — PCIe3 SATA USB — 3A5000 pairing"},
+        {"id": "nb_loongson_ls3a_ddr", "label": "Loongson 3A DDR MC", "vendor": "Loongson", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "On-die/off-chip DDR4 memory controller — 3A series"},
+        {"id": "sb_loongson_ls2k", "label": "Loongson 2K1000 SoC Hub", "vendor": "Loongson", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "2K embedded south — GMAC SATA USB LPC"},
+        {"id": "glue_loongson_iommu", "label": "Loongson IOMMU", "vendor": "Loongson", "kind": "chipset", "companion_role": "bus", "bits": 64, "note": "DMA address translation — LoongArch platform IOMMU"},
+        {"id": "glue_loongson_lpc", "label": "Loongson LPC Controller", "vendor": "Loongson", "kind": "chipset", "companion_role": "southbridge", "bits": 64, "note": "LPC bus — Super I/O and legacy ISA path"},
+        {"id": "glue_loongson_pcie_root", "label": "Loongson PCIe Root Complex", "vendor": "Loongson", "kind": "chipset", "companion_role": "bus", "bits": 64, "note": "PCIe root ports — 7A/3A platform expansion"},
+        {"id": "glue_loongson_cpucfg", "label": "Loongson CPUCFG Glue", "vendor": "Loongson", "kind": "glue", "companion_role": "glue", "bits": 64, "note": "CPUCFG feature regs — LA464/LA664 always-with"}
+      ],
+      "always_with": ["nb_loongson_ls7a", "sb_loongson_ls2k", "glue_loongson_iommu"]
+    },
+    "pc_elbrus": {
+      "label": "Elbrus MCST VLIW",
+      "match": {"vendor": ["MCST", "Elbrus"], "arch": ["Elbrus", "elbrus", "E2K"], "label": ["Elbrus", "E2K", "MCST"]},
+      "companions": [
+        {"id": "nb_elbrus_e2k_hub", "label": "Elbrus E2K System Hub", "vendor": "MCST", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "E2K on-chip ring + memory hub — VLIW host"},
+        {"id": "glue_elbrus_ddr_mc", "label": "Elbrus DDR4 MC", "vendor": "MCST", "kind": "chipset", "companion_role": "northbridge", "bits": 64, "note": "4-channel DDR4 memory controller — Elbrus-8CB"},
+        {"id": "glue_elbrus_pcie_switch", "label": "Elbrus PCIe Switch", "vendor": "MCST", "kind": "chipset", "companion_role": "bus", "bits": 64, "note": "PCIe gen3 switch — server expansion"},
+        {"id": "sb_elbrus_io_hub", "label": "Elbrus I/O Hub", "vendor": "MCST", "kind": "southbridge", "companion_role": "southbridge", "bits": 64, "note": "SATA USB Ethernet south — MCST platform"},
+        {"id": "glue_elbrus_x86_trans", "label": "Elbrus x86 Translator", "vendor": "MCST", "kind": "glue", "companion_role": "glue", "bits": 64, "note": "Binary translation layer — x86 guest on VLIW host"}
+      ],
+      "always_with": ["nb_elbrus_e2k_hub", "glue_elbrus_ddr_mc", "sb_elbrus_io_hub"]
+    },
+    "console_snes": {
+      "label": "Super Nintendo 5A22 / SA-1",
+      "match": {"platforms": ["snes"], "mame_device": ["snes", "5a22", "sa1", "spc700", "wdc65816"], "label": ["SNES", "Super Nintendo", "5A22", "SA-1", "65816"]},
+      "companions": [
+        {"id": "glue_snes_5a22", "label": "Ricoh 5A22 CPU Glue", "vendor": "Ricoh", "kind": "glue", "companion_role": "glue", "bits": 16, "note": "65C816 derivative — SNES main CPU bus + DMA glue"},
+        {"id": "glue_snes_sa1", "label": "Nintendo SA-1 Coprocessor", "vendor": "Nintendo", "kind": "glue", "companion_role": "glue", "bits": 16, "note": "SA-1 enhancement ASIC — BW-RAM arithmetic copro"},
+        {"id": "glue_snes_smp", "label": "Sony S-SMP (SPC700)", "vendor": "Sony", "kind": "sound", "companion_role": "sound", "bits": 8, "note": "SPC700 audio sub-CPU — 64KB ARAM + DSP"},
+        {"id": "glue_snes_ppu", "label": "SNES PPU (S-PPU)", "vendor": "Nintendo", "kind": "video", "companion_role": "video", "bits": 16, "note": "Picture Processing Unit — dual 8-bit BG layers"},
+        {"id": "glue_snes_cic", "label": "SNES CIC Lockout", "vendor": "Nintendo", "kind": "chipset", "companion_role": "glue", "bits": 8, "note": "Region lock + reset handshake — cart/console glue"},
+        {"id": "glue_snes_wram", "label": "SNES WRAM Controller", "vendor": "Nintendo", "kind": "chipset", "companion_role": "bus", "bits": 16, "note": "Work RAM bus arbiter — CPU/PPU/DMA access"}
+      ],
+      "always_with": ["glue_snes_5a22", "glue_snes_ppu", "glue_snes_smp"]
+    },
+    "console_ps1": {
+      "label": "PlayStation R3000 glue",
+      "match": {"platforms": ["psx", "ps1", "playstation"], "arch": ["R3000", "R3000A", "mips"], "label": ["PlayStation", "PS1", "PSX", "R3000", "CXD8530"]},
+      "companions": [
+        {"id": "glue_ps1_cxd8530", "label": "Sony CXD8530 CPU+Glue", "vendor": "Sony", "kind": "glue", "companion_role": "glue", "bits": 32, "note": "R3000A + bus glue — PlayStation main SoC path"},
+        {"id": "glue_ps1_gpu", "label": "Sony GPU (GP0/GP1)", "vendor": "Sony", "kind": "video", "companion_role": "video", "bits": 32, "note": "Geometry transform + raster — VRAM DMA companion"},
+        {"id": "glue_ps1_spu", "label": "Sony SPU", "vendor": "Sony", "kind": "sound", "companion_role": "sound", "bits": 32, "note": "Sound Processing Unit — 24 voices ADPCM reverb"},
+        {"id": "glue_ps1_cdrom", "label": "Sony CD-ROM Controller", "vendor": "Sony", "kind": "chipset", "companion_role": "southbridge", "bits": 32, "note": "Disc DMA + subchannel — PS1 storage glue"},
+        {"id": "glue_ps1_dma", "label": "PS1 MDEC/DMA Glue", "vendor": "Sony", "kind": "chipset", "companion_role": "dma", "bits": 32, "note": "MDEC video decode + root DMA controller"},
+        {"id": "glue_ps1_bios_rom", "label": "PS1 BIOS ROM Interface", "vendor": "Sony", "kind": "chipset", "companion_role": "bus", "bits": 32, "note": "KSEG1 ROM + expansion port decode"}
+      ],
+      "always_with": ["glue_ps1_cxd8530", "glue_ps1_gpu", "glue_ps1_spu"]
+    },
+    "console_saturn": {
+      "label": "Sega Saturn SCU",
+      "match": {"platforms": ["saturn"], "label": ["Saturn", "SCU", "SH-2", "VDP1", "VDP2"]},
+      "companions": [
+        {"id": "glue_saturn_scu", "label": "Sega 315-5570 SCU", "vendor": "Sega", "kind": "glue", "companion_role": "glue", "bits": 32, "note": "System Control Unit — DSP DMA between SH-2 and VDPs"},
+        {"id": "glue_saturn_vdp1", "label": "Sega VDP1", "vendor": "Sega", "kind": "video", "companion_role": "video", "bits": 32, "note": "Sprite/polygon renderer — framebuffer VRAM"},
+        {"id": "glue_saturn_vdp2", "label": "Sega VDP2", "vendor": "Sega", "kind": "video", "companion_role": "video", "bits": 32, "note": "Background scroll planes — tile/sprite priority"},
+        {"id": "glue_saturn_smpc", "label": "Sega SMPC", "vendor": "Sega", "kind": "chipset", "companion_role": "southbridge", "bits": 32, "note": "System Manager & Peripheral Control — reset/RTC/pad"},
+        {"id": "glue_saturn_sh2_glue", "label": "Saturn Dual SH-2 Glue", "vendor": "Sega", "kind": "chipset", "companion_role": "bus", "bits": 32, "note": "Master/slave SH-2 bus matrix + shared RAM arbiter"},
+        {"id": "glue_saturn_scsp", "label": "Saturn SCSP Audio", "vendor": "Sega", "kind": "sound", "companion_role": "sound", "bits": 32, "note": "Sound CPU + 32 PCM voices — Saturn audio path"}
+      ],
+      "always_with": ["glue_saturn_scu", "glue_saturn_vdp1", "glue_saturn_vdp2", "glue_saturn_smpc"]
+    },
+    "console_n64": {
+      "label": "Nintendo 64 RCP",
+      "match": {"platforms": ["n64"], "label": ["Nintendo 64", "N64", "RCP", "VR4300", "RSP", "RDP"]},
+      "companions": [
+        {"id": "glue_n64_rcp", "label": "Nintendo RCP", "vendor": "Nintendo", "kind": "glue", "companion_role": "glue", "bits": 64, "note": "Reality Co-Processor — RSP+RDP+MI+AI+VI+PI+RI+SI"},
+        {"id": "glue_n64_rsp", "label": "Nintendo RSP", "vendor": "Nintendo", "kind": "glue", "companion_role": "glue", "bits": 64, "note": "Reality Signal Processor — MIPS-like vector ucode"},
+        {"id": "glue_n64_rdp", "label": "Nintendo RDP", "vendor": "Nintendo", "kind": "video", "companion_role": "video", "bits": 64, "note": "Reality Display Processor — rasterizer + framebuffer"},
+        {"id": "glue_n64_mi", "label": "N64 MIPS Interface (MI)", "vendor": "Nintendo", "kind": "chipset", "companion_role": "bus", "bits": 64, "note": "CPU↔RCP register bridge — VR4300 glue"},
+        {"id": "glue_n64_ai", "label": "N64 Audio Interface (AI)", "vendor": "Nintendo", "kind": "sound", "companion_role": "sound", "bits": 64, "note": "DMA audio buffer to DAC — 44.1kHz path"},
+        {"id": "glue_n64_vi", "label": "N64 Video Interface (VI)", "vendor": "Nintendo", "kind": "video", "companion_role": "video", "bits": 64, "note": "CRT timing + gamma — framebuffer scan-out"}
+      ],
+      "always_with": ["glue_n64_rcp", "glue_n64_rsp", "glue_n64_rdp", "glue_n64_mi"]
+    },
+    "console_genesis": {
+      "label": "Sega Genesis VDP",
+      "match": {"platforms": ["genesis", "megadrive"], "label": ["Genesis", "Mega Drive", "VDP", "68000", "YM2612"]},
+      "companions": [
+        {"id": "glue_genesis_vdp", "label": "Sega 315-5313 VDP", "vendor": "Sega", "kind": "video", "companion_role": "video", "bits": 16, "note": "Video Display Processor — scroll planes + sprites"},
+        {"id": "glue_genesis_ym2612", "label": "Yamaha YM2612 FM", "vendor": "Yamaha", "kind": "sound", "companion_role": "sound", "bits": 8, "note": "6-channel FM synth — Genesis stereo audio"},
+        {"id": "glue_genesis_z80_snd", "label": "Genesis Z80 Sound Glue", "vendor": "Sega", "kind": "glue", "companion_role": "glue", "bits": 8, "note": "Sub-CPU bus arbiter — Z80 ↔ 68000 sound path"},
+        {"id": "glue_genesis_io", "label": "Sega 315-5304 I/O", "vendor": "Sega", "kind": "chipset", "companion_role": "southbridge", "bits": 16, "note": "Controller port + expansion — Genesis I/O ASIC"},
+        {"id": "glue_genesis_tmss", "label": "Genesis TMSS Security", "vendor": "Sega", "kind": "chipset", "companion_role": "glue", "bits": 16, "note": "Trademark Security System — boot lock handshake"}
+      ],
+      "always_with": ["glue_genesis_vdp", "glue_genesis_ym2612", "glue_genesis_z80_snd"]
+    },
+    "arm_soc_template": {
+      "label": "ARM SoC PMIC / DDRC companions",
+      "match": {"family": ["apple_silicon", "mobile_soc", "arm_soc"], "arch": ["ARM", "arm", "aarch64", "AArch64"], "label": ["Snapdragon", "Exynos", "MediaTek", "Apple", "Cortex", "SoC"]},
+      "companions": [
+        {"id": "glue_arm_ddrc", "label": "ARM SoC DDRC Template", "vendor": "ARM", "kind": "northbridge", "companion_role": "northbridge", "bits": 64, "note": "DDR/LPDDR memory controller — always-with host SoC"},
+        {"id": "glue_arm_pmu", "label": "ARM SoC PMIC Template", "vendor": "ARM", "kind": "chipset", "companion_role": "power", "bits": 32, "note": "Power Management IC — buck/LDO rail sequencing"},
+        {"id": "glue_arm_gic", "label": "ARM GIC Interrupt Ctrl", "vendor": "ARM", "kind": "chipset", "companion_role": "pic", "bits": 64, "note": "Generic Interrupt Controller — GICv3/v4 distributor"},
+        {"id": "glue_arm_clk_rst", "label": "ARM SoC Clock/Reset", "vendor": "ARM", "kind": "chipset", "companion_role": "clock", "bits": 32, "note": "CRU/PLL — CPU/GPU/DDR clock tree template"},
+        {"id": "glue_arm_pinctrl", "label": "ARM SoC Pin Controller", "vendor": "ARM", "kind": "chipset", "companion_role": "gpio", "bits": 32, "note": "Pin mux + pad config — mobile SoC GPIO template"},
+        {"id": "glue_arm_usb_phy", "label": "ARM SoC USB PHY", "vendor": "ARM", "kind": "chipset", "companion_role": "southbridge", "bits": 32, "note": "USB3/Type-C PHY companion — PMIC-rail coupled"}
+      ],
+      "always_with": ["glue_arm_ddrc", "glue_arm_pmu", "glue_arm_gic", "glue_arm_clk_rst"]
+    }
+  }
+}

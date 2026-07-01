@@ -1,0 +1,33 @@
+{
+  "schema": "field-gdb-doctrine/v1",
+  "title": "Field GDB — rewrite path from field binutils + AI decode/repair",
+  "motto": "Debug face is ours — colors, graphs, Ironclad truth, bugfinder repair.",
+  "phases": {
+    "1_field_face": {
+      "status": "active",
+      "statement": "MI/batch bridge, g16-objdump disasm, ANSI/HTML highlight, chart JSON, bugfinder decode/repair"
+    },
+    "2_ptrace_core": {
+      "status": "planned",
+      "statement": "Field ptrace session — breakpoints, watchpoints, register read without host gdb UI"
+    },
+    "3_full_rewrite": {
+      "status": "planned",
+      "statement": "Native debugger consuming g16 binutils DWARF — GPLv3 toolchain already vendored"
+    }
+  },
+  "capabilities": {
+    "colors": true,
+    "syntax_highlight": ["asm", "c", "cpp", "python"],
+    "charting": ["call_stack", "register_timeline", "memory_map"],
+    "graphing": ["cfg_edges", "stack_depth"],
+    "ai_decode": "field-code-bugfinder.py + h7-library-atlas + ironclad slice",
+    "ai_repair": "bugfinder findings → ranked patch hints → queen launch verify"
+  },
+  "toolchain": {
+    "disassembler": "Grok16/bin/g16-objdump",
+    "debugger_host": "gdb",
+    "field_module": "NewLatest/lib/field-gdb.py"
+  },
+  "ironclad": "Decode/repair receipts land on Ironclad — no repair without corroborated KB hit"
+}

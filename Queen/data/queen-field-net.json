@@ -1,0 +1,83 @@
+{
+  "schema": "queen-field-net/v1",
+  "title": "Queen FieldNet — sovereign stack inside RTX memory",
+  "motto": "No URLs outside Queen. Hostess 7 + Queen is everything. Field compiler builds the wire.",
+  "doctrine": {
+    "takeover": "Queen Sovereign Capsule — never leave; build everything inside",
+    "internal_only": true,
+    "no_host_os_stack": true,
+    "no_external_monitor": true,
+    "capsule": "data/queen-sovereign-capsule.json",
+    "hostess7_brain": "Hostess 7 + Horizon 7 lane inside capsule — truth filter on every frame",
+    "ammoos_ints": "INT 2Ah/2Ch/2Dh → Queen FieldNet (replaces DOS redirector stub)",
+    "compiler": "Grok16 g16 @ gnu++26 field_opt — Queen + Horizon 7 rebuild, test, reboot inside"
+  },
+  "internal_scheme": "queen",
+  "loopback_only": true,
+  "capsule_internal": true,
+  "operator_surface": "AMOURANTHRTX queen-browser FieldWebPanel — not host port monitor",
+  "routes": [
+    {"id": "nexus", "path": "http://127.0.0.1:9477/field", "title": "NEXUS Field C2", "layer": "shell"},
+    {"id": "queen", "path": "/world/browser.html", "title": "Queen", "layer": "shell"},
+    {"id": "queen-code", "path": "/world/queen-code.html", "title": "Queen Code", "layer": "editor"},
+    {"id": "queen_home", "path": "/world/queen-field-home.html", "title": "Queen", "layer": "engine"},
+    {"id": "forge", "path": "/gui/queen-build-deck.html", "title": "Queen Forge", "layer": "build"},
+    {"id": "hostess", "path": "/api/field-brain", "title": "Hostess 7 Brain", "layer": "brain"},
+    {"id": "eyeball", "path": "/api/queen-eyeball", "title": "Final_Eye", "layer": "offense"},
+    {"id": "gates", "path": "/api/queen-browser", "title": "Gate manifest", "layer": "security"},
+    {"id": "secure", "path": "/api/queen-boot", "title": "RTX secure space", "layer": "chip"},
+    {"id": "packet", "path": "/api/field-net/packets", "title": "Packet field", "layer": "egress"},
+    {"id": "nexus-jump", "path": "/api/nexus-jump", "title": "NEXUS Jump — security at navigation", "layer": "security"},
+    {"id": "compiler", "path": "/api/sovereign", "title": "Grok16 + FIELDC", "layer": "compile"},
+    {"id": "capsule", "path": "/api/sovereign", "title": "Sovereign Capsule", "layer": "seal"},
+    {"id": "horizon7", "path": "/api/horizon7", "title": "Horizon 7 · Hostess", "layer": "brain"},
+    {"id": "earball", "path": "/api/queen-earball", "title": "Final Ear · Auditus", "layer": "offense"},
+    {"id": "sense_neural", "path": "/api/sense-neural", "title": "Eye↔Ear Invincible Wire", "layer": "offense"},
+    {"id": "field_manual", "path": "/api/field-manual", "title": "Field Manuals — AI corpus", "layer": "brain"},
+    {"id": "external_wire", "path": "/api/external-wire", "title": "External Field Wire — quarantine lane", "layer": "external"},
+    {"id": "world_redata", "path": "/api/world-redata", "title": "World Redata — secure forever", "layer": "storage"},
+    {"id": "secure_channel", "path": "/api/secure-channel", "title": "Secure Channel — forever invincible comms", "layer": "security"},
+    {"id": "world_repack", "path": "http://127.0.0.1:9480/", "title": "World Repack — individual-file GUI", "layer": "storage"},
+    {"id": "contact_vector", "path": "/api/contact-vector", "title": "Contact classification vector", "layer": "security"},
+    {"id": "field_sanity", "path": "/api/field-sanity", "title": "Field sanity", "layer": "thermo"}
+  ],
+  "external_wire": {
+    "lane": "External",
+    "import_to_main": false,
+    "ddos_immune": true,
+    "refuse_storage_balloon": true,
+    "mandate": "data/queen-external-wire.json",
+    "module": "queen-external-wire.py"
+  },
+  "fieldc_targets": [
+    {
+      "id": "fieldnet_core",
+      "fld": "AmmoOS/net/FieldNetCore.fld",
+      "role": "Loopback framing + IFF tag per datagram",
+      "compile_with": "FIELDC v4 via FieldFieldCc.hpp"
+    },
+    {
+      "id": "fieldnet_dos",
+      "fld": "AmmoOS/net/FieldNetDos.fld",
+      "role": "INT 2Ah-2Dh handlers — Queen redirector inside guest",
+      "compile_with": "FIELDC v4"
+    },
+    {
+      "id": "fieldnet_gate",
+      "fld": "AmmoOS/net/FieldNetGate.fld",
+      "role": "Connection gatekeeper hook — honorability before egress",
+      "compile_with": "Grok16 field_opt"
+    }
+  ],
+  "nexus_bindings": {
+    "packet_field": "packet-field.py",
+    "connection_gatekeeper": "connection-gatekeeper.py",
+    "truth_dns": "field-dns.py",
+    "browser_awareness": "browser-awareness.py"
+  },
+  "phases": {
+    "now": "Python loopback + packet-field observe — internal routes only in browser",
+    "next": "FieldQueenNet.hpp INT hooks — guest DOS sees Queen redirector",
+    "forever": "Full FieldNet in RTX memory — g16-compiled, zero host libc socket for UI path"
+  }
+}

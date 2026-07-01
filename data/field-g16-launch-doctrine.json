@@ -1,0 +1,42 @@
+{
+  "schema": "field-g16-launch-doctrine/v1",
+  "title": "G16 Launch — .launch chambers without compiling AmmoOS",
+  "motto": "g16 + .launch — inspect, explore, fire. No full OS compile required.",
+  "policy": {
+    "organized_field_default": true,
+    "compile_on_launch": false,
+    "discover_on_open": true,
+    "max_launches": 500,
+    "max_depth": 8,
+    "desktop_explorer": true,
+    "right_click_explore": true
+  },
+  "scan_roots": [
+    "~/Desktop/SG"
+  ],
+  "g16": {
+    "version": "5.1.0",
+    "bin_names": ["g16", "g++", "gcc"],
+    "root_env": "GROK16_ROOT",
+    "canonical_root": "NewLatest/Grok16",
+    "statement": "NewLatest/Grok16 provides g16; queen-launch-chamber runs organized field without AmmoOS build"
+  },
+  "desktop_actions": {
+    ".launch": [
+      {"id": "run", "label": "Run chamber"},
+      {"id": "explore", "label": "Explore inside"},
+      {"id": "manifest", "label": "View manifest"},
+      {"id": "files", "label": "Open in Queen Files"},
+      {"id": "copy", "label": "Copy path"}
+    ],
+    "chamber_dir": [
+      {"id": "run", "label": "Run chamber"},
+      {"id": "explore", "label": "Browse inside"},
+      {"id": "seal", "label": "Refresh .launch"}
+    ]
+  },
+  "routes": {
+    "panel": "/field-launch-explorer",
+    "api": "/api/field-g16-launch"
+  }
+}

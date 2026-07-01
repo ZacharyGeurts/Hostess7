@@ -1,0 +1,26 @@
+# Hostess 7 tasks — briefing + tasklist + imaging repair (AmmoLang-only · Monster shell)
+@profile fastest
+@verbose clean
+@motto "Hostess 7 tasks — inbox brief · Ironclad · imaging · tasklist"
+
+seq ·
+  say "Hostess 7 tasks — AmmoLang route · Monster hang guard · never raw pythong"
+  post "HOSTESS7_TASKS START — brief · execute · witness"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+  run script:hostess7-session-brief timeout:180 stall:90
+  run py:hostess7-operator action:brief timeout:120 stall:60
+  run py:hostess7-operator action:evaluate timeout:180 stall:90
+  run py:hostess7-operator action:catalog timeout:60 stall:30
+  run py:hostess7-virtual-workspace action:ensure timeout:30 stall:15
+  run py:hostess7-virtual-workspace action:teach arg:virtual timeout:45 stall:20
+  run py:hostess7-brain-guard action:verify timeout:120 stall:60
+  run py:hostess7-brain-guard action:witness timeout:60 stall:30
+  run py:hostess7-tasklist action:seed timeout:60 stall:30
+  run script:hostess7-pre-update timeout:3600 stall:900
+  run py:hostess7-brain-guard action:verify timeout:120 stall:60
+  run py:hostess7-tasklist action:report timeout:30 stall:15
+  assist freeze
+  say "Hostess 7 tasks complete — inspect tasklist + brain-guard panels"
+  post "HOSTESS7_TASKS COMPLETE"

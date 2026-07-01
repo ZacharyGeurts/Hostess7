@@ -1,0 +1,168 @@
+{
+  "schema": "g16-power-sort-bench/v1",
+  "updated": "2026-06-29T06:56:05Z",
+  "ok": true,
+  "elapsed_ms": 49.61,
+  "contexts": {
+    "file_list_small": {
+      "best": "locale_ci",
+      "candidates": [
+        {
+          "algorithm": "locale_ci",
+          "elapsed_us": 39.25,
+          "ops_per_sec": 5095974.14,
+          "n": 200
+        },
+        {
+          "algorithm": "timsort_key",
+          "elapsed_us": 45.89,
+          "ops_per_sec": 4358374.67,
+          "n": 200
+        },
+        {
+          "algorithm": "radix_bucket_name",
+          "elapsed_us": 80.78,
+          "ops_per_sec": 2475747.99,
+          "n": 200
+        },
+        {
+          "algorithm": "dirs_first",
+          "elapsed_us": 135.49,
+          "ops_per_sec": 1476098.28,
+          "n": 200,
+          "semantic_bonus": 0.92,
+          "effective_us": 124.65
+        }
+      ],
+      "n": 200
+    },
+    "file_list_large": {
+      "best": "locale_ci",
+      "candidates": [
+        {
+          "algorithm": "locale_ci",
+          "elapsed_us": 156.36,
+          "ops_per_sec": 7674695.24,
+          "n": 1200
+        },
+        {
+          "algorithm": "radix_bucket_name",
+          "elapsed_us": 263.11,
+          "ops_per_sec": 4560882.07,
+          "n": 1200
+        },
+        {
+          "algorithm": "timsort_key",
+          "elapsed_us": 267.39,
+          "ops_per_sec": 4487854.75,
+          "n": 1200
+        },
+        {
+          "algorithm": "dirs_first",
+          "elapsed_us": 442.92,
+          "ops_per_sec": 2709280.64,
+          "n": 1200,
+          "semantic_bonus": 0.92,
+          "effective_us": 407.49
+        }
+      ],
+      "n": 1200
+    },
+    "integer_keys": {
+      "best": "radix_bucket_256",
+      "candidates": [
+        {
+          "algorithm": "radix_bucket_256",
+          "elapsed_us": 457.82,
+          "ops_per_sec": 17474001.96,
+          "n": 8000
+        },
+        {
+          "algorithm": "timsort",
+          "elapsed_us": 581.98,
+          "ops_per_sec": 13746294.93,
+          "n": 8000
+        }
+      ],
+      "n": 8000
+    },
+    "nearly_sorted": {
+      "best": "timsort",
+      "candidates": [
+        {
+          "algorithm": "timsort",
+          "elapsed_us": 146.59,
+          "ops_per_sec": 54572865.02,
+          "n": 8000
+        },
+        {
+          "algorithm": "radix_bucket_256",
+          "elapsed_us": 260.93,
+          "ops_per_sec": 30660033.99,
+          "n": 8000
+        }
+      ],
+      "n": 8000
+    },
+    "reversed": {
+      "best": "timsort",
+      "candidates": [
+        {
+          "algorithm": "timsort",
+          "elapsed_us": 27.92,
+          "ops_per_sec": 286512424.4,
+          "n": 8000
+        },
+        {
+          "algorithm": "radix_bucket_256",
+          "elapsed_us": 215.21,
+          "ops_per_sec": 37172821.24,
+          "n": 8000
+        }
+      ],
+      "n": 8000
+    },
+    "thermal_layers": {
+      "best": "cool_sort",
+      "candidates": [
+        {
+          "algorithm": "cool_sort",
+          "elapsed_us": 3.14,
+          "ops_per_sec": 15289871.21,
+          "n": 48
+        }
+      ],
+      "n": 48
+    },
+    "bench_rank": {
+      "best": "desc_numeric",
+      "candidates": [
+        {
+          "algorithm": "desc_numeric",
+          "elapsed_us": 4.17,
+          "ops_per_sec": 15331789.63,
+          "n": 64
+        }
+      ],
+      "n": 64
+    },
+    "drive_index": {
+      "best": "radix_bucket_256",
+      "candidates": [
+        {
+          "algorithm": "radix_bucket_256",
+          "elapsed_us": 658.35,
+          "ops_per_sec": 18227469.7,
+          "n": 12000
+        },
+        {
+          "algorithm": "timsort_key",
+          "elapsed_us": 5282.25,
+          "ops_per_sec": 2271757.47,
+          "n": 12000
+        }
+      ],
+      "n": 12000
+    }
+  }
+}

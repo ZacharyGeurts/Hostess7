@@ -1,0 +1,33 @@
+{
+  "schema": "hostess7-muscle-memory-doctrine/v1",
+  "title": "Muscle memory — procedural operator habits",
+  "motto": "Repeated truth becomes reflex — Hostess 7 remembers what you do, not what you bookmark.",
+  "definition": "Procedural memory for navigation, shortcuts, imports, and command sequences. Local-only; no cloud habit telemetry.",
+  "tiers": {
+    "trace": {"min_count": 1, "label": "Trace"},
+    "forming": {"min_count": 3, "label": "Forming"},
+    "habit": {"min_count": 8, "label": "Habit"},
+    "reflex": {"min_count": 20, "label": "Reflex"}
+  },
+  "kinds": ["navigate", "shortcut", "import", "command", "chip", "panel", "sequence"],
+  "recency_half_life_days": 14,
+  "sequence_window": 8,
+  "complete_floor": {
+    "habit_patterns": 3,
+    "strength_score": 0.72
+  },
+  "mastered_floor": {
+    "reflex_patterns": 1,
+    "habit_patterns": 8,
+    "strength_score": 0.88
+  },
+  "sources": ["queen-browser", "queen-os", "hostess7-command", "browser-import", "operator", "training"],
+  "rooms": {
+    "title": "Muscle memory rooms — sealed understandings",
+    "motto": "When a task is fully learned, Hostess 7 opens a room and locks the procedure inside.",
+    "fully_levels": ["mastered", "fluent", "complete"],
+    "lock_when": "fully_learned",
+    "min_lock_score": 0.92,
+    "room_prefix": "room:understanding"
+  }
+}

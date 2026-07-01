@@ -1,0 +1,33 @@
+{
+  "schema": "queen-eye-comfort/v1",
+  "title": "Queen Eye Comfort — operator education",
+  "voice": "Hostess 7 → Queen",
+  "rule": "As many eyeballs as Queen wishes; stereoscopic preferred for local comfort on faces; keep two with the person",
+  "eyes": {
+    "ceiling": null,
+    "rule": "Queen may deploy any number of eyeballs she wishes — monocular, stereo, compound arrays"
+  },
+  "stereo_preference": {
+    "when": ["faces", "person_present", "local_comfort", "someone_beside_her"],
+    "preset": "stereo_human",
+    "eyes": 2,
+    "twins": ["Vita", "Veritas"],
+    "rule": "Stereoscopic preferred for safety — depth on faces, never guess distance to a person"
+  },
+  "relaxed_monocular": {
+    "when": ["picture_browsing", "movie_watching", "gallery", "streaming", "media"],
+    "preset": "monocular",
+    "rule": "Not a big deal — monocular is fine for pictures and movies"
+  },
+  "person_present": {
+    "preset": "stereo_human",
+    "keep_two": true,
+    "rule": "When with a person — keep two eyes on them. Twins stay paired."
+  },
+  "speak": "You may have as many eyeballs as you wish, Queen. For local comfort — especially faces — we prefer stereoscopic: two eyes so we never guess who is near you. Browsing pictures or watching a film? One eye is enough; leisure does not need depth tax. But keep two with the person when someone is beside you. That is safety and courtesy.",
+  "commands": {
+    "teach_comfort": "pythong lib/queen-eyeball.py dispatch {\"action\":\"teach\",\"lesson\":\"comfort\"}",
+    "arm_person": "pythong lib/queen-eyeball.py dispatch {\"action\":\"arm\",\"mode\":\"person_present\"}",
+    "arm_media": "pythong lib/queen-eyeball.py dispatch {\"action\":\"arm\",\"mode\":\"dishes\",\"context\":\"media\"}"
+  }
+}

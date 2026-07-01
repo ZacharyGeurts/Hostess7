@@ -1,0 +1,252 @@
+/* Queen Program Surface — properties flyout + context menu */
+
+.qps-ctx {
+  position: fixed;
+  z-index: 5000;
+  min-width: 220px;
+  max-width: 300px;
+  padding: 4px 0;
+  background: rgba(8, 18, 12, 0.97);
+  border: 1px solid rgba(62, 207, 142, 0.32);
+  border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  display: none;
+}
+
+.qps-ctx.open {
+  display: block;
+}
+
+.qps-ctx-group {
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.1);
+}
+
+.qps-ctx-group:last-child {
+  border-bottom: none;
+}
+
+.qps-ctx-title {
+  display: block;
+  padding: 4px 12px 2px;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(122, 154, 136, 0.9);
+}
+
+.qps-ctx-hint {
+  display: block;
+  padding: 0 12px 4px;
+  font-size: 0.62rem;
+  color: rgba(122, 154, 136, 0.65);
+}
+
+.qps-ctx button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: #b8e8c8;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.qps-ctx button:hover,
+.qps-ctx button.primary {
+  background: rgba(34, 197, 94, 0.14);
+  color: #f0fff4;
+}
+
+.qps-ctx button.primary {
+  color: #3ecf8e;
+  font-weight: 600;
+}
+
+.qps-ctx hr {
+  border: none;
+  border-top: 1px solid rgba(62, 207, 142, 0.12);
+  margin: 4px 8px;
+}
+
+.qps-props-flyout {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  background: rgba(2, 4, 3, 0.55);
+}
+
+.qps-props-flyout[hidden] {
+  display: none !important;
+}
+
+.qps-props-sheet {
+  margin: auto;
+  width: min(96vw, 720px);
+  max-height: min(88vh, 640px);
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: #060a08;
+  border: 1px solid rgba(62, 207, 142, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.qps-fly-head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.18);
+  background: linear-gradient(180deg, #0c1812, #08100c);
+}
+
+.qps-fly-title {
+  margin: 0;
+  font-size: 1rem;
+  color: #3ecf8e;
+}
+
+.qps-fly-sub {
+  margin: 2px 0 0;
+  font-size: 0.68rem;
+  color: #7a9a88;
+}
+
+.qps-fly-close {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #7a9a88;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.qps-fly-menu {
+  padding: 8px 6px;
+  border-right: 1px solid rgba(62, 207, 142, 0.12);
+  overflow-y: auto;
+}
+
+.qps-fly-menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #9ad4b0;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.qps-fly-menu-item.active,
+.qps-fly-menu-item:hover {
+  background: rgba(34, 197, 94, 0.14);
+  color: #e8fff0;
+}
+
+.qps-props-pane {
+  padding: 12px 14px;
+  overflow-y: auto;
+  font-size: 0.78rem;
+}
+
+.qps-props-section h3 {
+  margin: 0 0 8px;
+  font-size: 0.82rem;
+  color: #3ecf8e;
+}
+
+.qps-props-banner {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(34, 197, 94, 0.08);
+  color: #9ad4b0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.qps-props-row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.08);
+}
+
+.qps-props-row.mono .qps-props-v {
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  word-break: break-all;
+}
+
+.qps-props-k {
+  color: #7a9a88;
+}
+
+.qps-props-v {
+  color: #d8f8e4;
+}
+
+.qps-surface-pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.qps-surface-btn {
+  border: 1px solid rgba(62, 207, 142, 0.28);
+  border-radius: 6px;
+  background: rgba(8, 20, 14, 0.8);
+  color: #9ad4b0;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.qps-surface-btn.selected {
+  border-color: #3ecf8e;
+  color: #3ecf8e;
+  box-shadow: 0 0 8px rgba(62, 207, 142, 0.25);
+}
+
+.qps-props-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  border-top: 1px solid rgba(62, 207, 142, 0.14);
+  background: #050a07;
+}
+
+.qps-props-action {
+  border: 1px solid rgba(62, 207, 142, 0.22);
+  border-radius: 6px;
+  background: rgba(12, 24, 18, 0.9);
+  color: #b8e8c8;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.qps-props-action:hover {
+  border-color: #3ecf8e;
+  color: #3ecf8e;
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "hostess7-brain-training/v1",
+  "title": "Brain training campus — library study + body embodiment",
+  "motto": "Nine thousand books deserve a real gym — brain reads through Ironclad; body trains through anatomy and the floor.",
+  "commander": "hostess7",
+  "module": "lib/hostess7-brain-training-chamber.py",
+  "api": "/api/hostess7/brain-training",
+  "ui": {
+    "bookshelf": "/field-library-bookshelf.html",
+    "training_chamber": "/humanoid-train.html",
+    "training_tab": "https://127.0.0.1:9477/field#training"
+  },
+  "zones": {
+    "brain": {
+      "label": "Brain study hall",
+      "role": "Dewey library → brain areas → truth gate → callosum receipt",
+      "workspace_default": "default",
+      "pages_per_session": 2,
+      "sentences_per_page": 3,
+      "batch_books": 3
+    },
+    "body": {
+      "label": "Body & other embodiment",
+      "role": "Anatomy books · training chamber · humanoid motion · body-core",
+      "module": "lib/hostess7-training-chamber.py",
+      "anatomy_index": "data/hostess7-anatomy-books-index.json",
+      "body_system": "data/field-body-system-doctrine.json",
+      "pages_per_session": 1
+    }
+  },
+  "brain_lanes": [
+    {"dewey_prefix": "000", "brain_area": "broca", "workspace": "field", "intent": "code"},
+    {"dewey_prefix": "100", "brain_area": "wernicke", "workspace": "counsel", "intent": "english"},
+    {"dewey_prefix": "300", "brain_area": "insula", "workspace": "detective", "intent": "truth"},
+    {"dewey_prefix": "400", "brain_area": "wernicke", "workspace": "default", "intent": "english"},
+    {"dewey_prefix": "500", "brain_area": "parietal_l", "workspace": "field", "intent": "general"},
+    {"dewey_prefix": "600", "brain_area": "temporal", "workspace": "clinic", "intent": "medical"},
+    {"dewey_prefix": "611", "brain_area": "temporal", "workspace": "clinic", "intent": "medical", "zone": "body"},
+    {"dewey_prefix": "613", "brain_area": "insula", "workspace": "default", "intent": "comfort", "zone": "brain"},
+    {"dewey_prefix": "700", "brain_area": "occipital", "workspace": "vision", "intent": "vision"},
+    {"dewey_prefix": "800", "brain_area": "wernicke", "workspace": "default", "intent": "english"},
+    {"dewey_prefix": "900", "brain_area": "temporal", "workspace": "beyond", "intent": "beyond"}
+  ],
+  "priority_collections": [
+    "exploring_comfort",
+    "nexus-shield-operator-manual",
+    "network-security-field-guide",
+    "h7-security-field-corpus",
+    "nervous_brain_regions",
+    "eye",
+    "ear"
+  ],
+  "progress_registry": ".nexus-state/hostess7-brain-training-progress.json",
+  "panel": ".nexus-state/hostess7-brain-training-panel.json",
+  "h7b_brain_storage": {
+    "doctrine": "data/field-h7b-brain-doctrine.json",
+    "module": "lib/field-h7b-brain-storage.py",
+    "api": "/api/hostess7/h7b-brain",
+    "rule": "After campus sessions, pack brain sections to H7B/3 — lossless, ≤20MB per GitHub part."
+  },
+  "paired": {
+    "library": "data/hostess7-library-doctrine.json",
+    "body_system": "data/field-body-system-doctrine.json",
+    "training_chamber": "data/hostess7-training-chamber-doctrine.json",
+    "brain_guard": "data/hostess7-brain-guard-doctrine.json",
+    "system_core": "data/hostess7-system-core-doctrine.json",
+    "fifth_amendment": "data/hostess7-fifth-amendment-doctrine.json"
+  }
+}

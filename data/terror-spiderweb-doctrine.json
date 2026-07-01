@@ -1,0 +1,21 @@
+{
+  "schema": "terror-spiderweb-doctrine/v1",
+  "title": "Terror Spiderweb — operator-triggered survey",
+  "motto": "Tempered intel — no automatic probe storms; rebuild only when the operator asks.",
+  "policy": {
+    "auto_publish": false,
+    "auto_parallel_poll": false,
+    "cache_first_json": true,
+    "rebuild_on_demand": true,
+    "deep_harvest_env": "NEXUS_SPIDERWEB_DEEP",
+    "default_deep": false
+  },
+  "tempered_build": {
+    "skip_census_populate": true,
+    "skip_live_operator_probe": true,
+    "skip_thermal_earth": true,
+    "skip_existence_identity": true,
+    "skip_precision_embed": true
+  },
+  "sections": ["homes", "internet", "mobile", "batteries", "edges", "terror", "pipes"]
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>AmmoOS — Platforms</title>
+  <meta name="description" content="AmmoOS 2.0.0-beta5 beta manual — field OS, browser surfaces, combinatronic engine." />
+  <link rel="canonical" href="https://zacharygeurts.github.io/AmmoOS/platforms.html" />
+  <link rel="stylesheet" href="manual.css?v3" />
+  <style>
+.github-chrome-top, .github-chrome-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.55rem 0.85rem;
+  margin: 0 0 1rem;
+  border-radius: 8px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  font-size: 0.92rem;
+}
+.github-chrome-bottom { margin: 2rem 0 0; }
+.github-chrome-top a.github-repo-primary,
+.github-chrome-bottom a.github-repo-primary {
+  font-weight: 700;
+  color: #4ade80;
+  text-decoration: none;
+}
+.github-chrome-top a.github-repo-primary:hover,
+.github-chrome-bottom a.github-repo-primary:hover { text-decoration: underline; }
+.github-chrome-links a { margin-right: 0.75rem; color: #94a3b8; }
+</style>
+</head>
+<body>
+<div class="github-chrome-top" role="navigation" aria-label="GitHub repo">
+  <a class="github-repo-primary" href="https://github.com/ZacharyGeurts/AmmoOS">→ GitHub: ZacharyGeurts/AmmoOS</a>
+  <span class="github-chrome-links">
+    <a href="https://zacharygeurts.github.io/AmmoOS/">Pages</a>
+    <a href="https://zacharygeurts.github.io/ZacharyGeurts/stack.html">Stack hub</a>
+    <a href="https://github.com/ZacharyGeurts/AmmoOS/releases">Releases</a>
+  </span>
+</div>
+
+  <nav>
+    <div class="nav-top">
+      <div class="nav-brand">
+        <strong>AmmoOS C2</strong>
+        <span class="nav-version">2.0.0-beta5 beta</span>
+      </div>
+      <div class="nav-profile">
+        <a href="https://github.com/ZacharyGeurts">@ZacharyGeurts</a>
+        · <a href="profile.html">Profile</a>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting Started</a>
+      <a href="launch-surfaces.html">Launch Surfaces</a>
+      <a href="update-your-os.html">Software Updates</a>
+      <a href="combinatronic.html">Combinatronic</a>
+      <a href="platforms.html" aria-current="page">Platforms</a>
+      <a href="io.html">Field I/O</a>
+      <a href="queen-browser.html">Queen Browser</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="profile.html">Profile</a>
+      <a href="stack-hub.html">Stack Hub</a>
+      <a href="https://github.com/ZacharyGeurts/AmmoOS">GitHub</a>
+    </div>
+  </nav>
+  <section class="code-first" aria-label="Quick code layout">
+    <div class="code-first-head">
+      <span class="code-first-label">Code first</span>
+      <span class="code-first-note">Clone · install · open C2 <code>http://127.0.0.1:9477/field</code></span>
+    </div>
+    <pre><code>git clone https://github.com/ZacharyGeurts/AmmoOS.git
+cd AmmoOS
+sudo ./install-all.sh
+# dev tree:
+export SG_ROOT=/path/to/SG && ./nexus.sh</code></pre>
+    <div class="code-first-actions">
+      <a href="getting-started.html">Install guide</a>
+      <a href="http://127.0.0.1:9477/field">Open /field</a>
+      <a href="https://github.com/ZacharyGeurts">GitHub profile</a>
+    </div>
+  </section>
+  <section class="favorites-wall" aria-label="GitHub favorites">
+    <div class="favorites-head">
+      <h2><span class="star-mark" aria-hidden="true">★</span> Favorites</h2>
+      <p class="favorites-sub">16 public repos — page-first pins, release SHA manifest.</p>
+    </div>
+    <div class="favorites-grid">
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/AmmoOS" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">AmmoOS</span></div><span class="fav-tag">field OS</span><span class="fav-repo">AmmoOS</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/Grok16" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">Grok16</span></div><span class="fav-tag">G16 compiler</span><span class="fav-repo">Grok16</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/KILROY" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">KILROY</span></div><span class="fav-tag">Field boot</span><span class="fav-repo">KILROY</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/ZNetwork" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">ZNetwork</span></div><span class="fav-tag">smart relayer</span><span class="fav-repo">ZNetwork</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/AmmoCode" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">AmmoCode</span></div><span class="fav-tag">compiler GUI</span><span class="fav-repo">AmmoCode</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/Field_Primer" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">Field_Primer</span></div><span class="fav-tag">field primer</span><span class="fav-repo">Field_Primer</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/Field_Research" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">Field_Research</span></div><span class="fav-tag">combinatorics manual</span><span class="fav-repo">Field_Research</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/Final_Eye" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">Final_Eye</span></div><span class="fav-tag">vision stack</span><span class="fav-repo">Final_Eye</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/World_Redata" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">World_Redata</span></div><span class="fav-tag">WRDT1 redata</span><span class="fav-repo">World_Redata</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/AMOURANTHRTX" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">AMOURANTHRTX</span></div><span class="fav-tag">Field Die</span><span class="fav-repo">AMOURANTHRTX</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/OBS-FieldVoiceFilter" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">OBS-FieldVoiceFilter</span></div><span class="fav-tag">OBS plugin</span><span class="fav-repo">OBS-FieldVoiceFilter</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/Kill-Grok-Orphans" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">Kill-Grok-Orphans</span></div><span class="fav-tag">Grok watchdog</span><span class="fav-repo">Kill-Grok-Orphans</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/memes" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">memes</span></div><span class="fav-tag">vision feed</span><span class="fav-repo">memes</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/retrotool" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">retrotool</span></div><span class="fav-tag">retro tooling</span><span class="fav-repo">retrotool</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/Poop" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">Poop</span></div><span class="fav-tag">misc</span><span class="fav-repo">Poop</span></a>
+    <a class="fav-card" href="https://github.com/ZacharyGeurts/ZacharyGeurts" rel="noopener"><div class="fav-card-top"><span class="fav-star" aria-hidden="true">★</span><span class="fav-name">ZacharyGeurts</span></div><span class="fav-tag">profile hub</span><span class="fav-repo">ZacharyGeurts</span></a>
+    </div>
+  </section>
+
+  <h1>Platform matrix</h1>
+  <p>AmmoOS <strong>2.0.0-beta5</strong> ships source bootstrap per platform family.</p>
+  <table>
+    <tr><th>ID</th><th>OS</th><th>Arch</th><th>Bootstrap</th></tr>
+    <tr><td><code>linux-gnu-x86_64</code></td><td>linux</td><td>x86_64</td><td><code>installer</code>, <code>dev</code></td></tr>
+    <tr><td><code>linux-gnu-aarch64</code></td><td>linux</td><td>aarch64</td><td><code>installer</code>, <code>cross_host</code></td></tr>
+    <tr><td><code>linux-gnu-arm</code></td><td>linux</td><td>arm</td><td><code>installer</code></td></tr>
+    <tr><td><code>linux-gnu-riscv64</code></td><td>linux</td><td>riscv64</td><td><code>installer</code>, <code>g16_cross</code></td></tr>
+    <tr><td><code>linux-gnu-i386</code></td><td>linux</td><td>i386</td><td><code>installer</code></td></tr>
+    <tr><td><code>windows-x86_64</code></td><td>windows</td><td>x86_64</td><td><code>installer</code>, <code>wsl_fallback</code></td></tr>
+    <tr><td><code>darwin-aarch64</code></td><td>darwin</td><td>aarch64</td><td><code>dev</code>, <code>browser_only</code></td></tr>
+    <tr><td><code>darwin-x86_64</code></td><td>darwin</td><td>x86_64</td><td><code>dev</code>, <code>browser_only</code></td></tr>
+    <tr><td><code>freebsd-amd64</code></td><td>freebsd</td><td>amd64</td><td><code>installer</code></td></tr>
+    <tr><td><code>android-aarch64</code></td><td>android</td><td>aarch64</td><td><code>webview</code>, <code>ndk</code></td></tr>
+  </table>
+  <p>Release assets: <code>ammoos-2.0.0-beta5-platforms.json</code> · <code>ammoos-2.0.0-beta5-PLATFORMS.md</code></p>
+<div class="github-chrome-bottom" role="contentinfo">
+  <a class="github-repo-primary" href="https://github.com/ZacharyGeurts/AmmoOS">→ GitHub: ZacharyGeurts/AmmoOS</a>
+  <span class="github-chrome-links">AmmoOS field OS · 2.0.0-beta5</span>
+</div>
+
+  <footer>
+    <a href="index.html">Home</a> ·
+    <a href="https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta5">Release v2.0.0-beta5</a> ·
+    <a href="https://github.com/ZacharyGeurts/AmmoOS">GitHub</a> ·
+    <a href="https://zacharygeurts.github.io/ZacharyGeurts/stack.html">Stack hub</a>
+    <p class="footer-meta">AmmoOS 2.0.0-beta5 · field OS beta · GPLv3</p>
+  </footer>
+</body>
+</html>

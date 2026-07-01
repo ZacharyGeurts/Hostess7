@@ -1,0 +1,31 @@
+{
+  "schema": "field-g16-script-compile/v1",
+  "title": "Grok16 script executables — g16-compiled launchers for field speed",
+  "motto": "Compile launcher stubs with bin/g16; run hot scripts via gpy-16 bytecode lane.",
+  "enabled": true,
+  "output_dir": "lib/bin",
+  "manifest": ".nexus-state/g16-script-compile-manifest.json",
+  "profile_default": "ai_agent",
+  "hot_scripts": [
+    "lib/field-ammolang-test.py",
+    "lib/field-combinatronic-balance.py",
+    "lib/field-ironclad-chips-combinatorics.py",
+    "lib/field-chips-core.py",
+    "lib/field-steel-neural-plates.py",
+    "lib/field-chips-plate-stack.py",
+    "lib/nexus-g16-recompile.py",
+    "lib/field-h7s-fs.py"
+  ],
+  "extensions": {
+    ".py": "python_launcher",
+    ".pyw": "python_launcher",
+    ".sh": "shell_launcher",
+    ".bash": "shell_launcher"
+  },
+  "env": {
+    "G16_SCRIPT_EXEC": "1",
+    "GPY16_FAST": "1",
+    "GPY16_CACHE": "1",
+    "G16_AI_PROFILE": "ai_agent"
+  }
+}

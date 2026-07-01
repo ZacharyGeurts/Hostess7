@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+  <vendor>NEXUS Field</vendor>
+  <vendor_url>https://github.com/ZacharyGeurts/AMOURANTHRTX</vendor_url>
+
+  <!-- First install from dev tree — no exec.path lock; bridge still whitelists verbs/paths -->
+  <action id="com.nexus.field.bootstrap">
+    <description>Bootstrap NEXUS Field install (policy not yet on system)</description>
+    <message>NEXUS Field needs administrator approval to install field systems (bootstrap)</message>
+    <icon_name>security-high</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+  </action>
+
+  <!-- Full install — locked to hardened bridge + run-install verb only -->
+  <action id="com.nexus.field.install">
+    <description>Install NEXUS Field Command Center (all major systems)</description>
+    <message>Authentication is required to install NEXUS Field on this computer</message>
+    <icon_name>security-high</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/local/lib/nexus-shield/lib/nexus-pkexec-bridge.sh</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">run-install</annotate>
+  </action>
+
+  <!-- GitHub / panel update apply -->
+  <action id="com.nexus.field.update">
+    <description>Apply NEXUS Field update and restart services</description>
+    <message>Authentication is required to apply a NEXUS Field update</message>
+    <icon_name>software-update-available</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/local/lib/nexus-shield/lib/nexus-pkexec-bridge.sh</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">run-update</annotate>
+  </action>
+
+  <!-- CPU sysctl / shield hardening — re-auth every time -->
+  <action id="com.nexus.field.harden">
+    <description>Harden CPU vulnerability shield and sysctl posture</description>
+    <message>Authentication is required to apply NEXUS CPU hardening</message>
+    <icon_name>security-high</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/local/lib/nexus-shield/lib/nexus-pkexec-bridge.sh</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">run-harden</annotate>
+  </action>
+
+  <!-- systemd nexus-genius — scoped service control -->
+  <action id="com.nexus.field.service">
+    <description>Control NEXUS Field genius service</description>
+    <message>Authentication is required to manage the NEXUS Field service</message>
+    <icon_name>system-run</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/local/lib/nexus-shield/lib/nexus-pkexec-bridge.sh</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">run-service</annotate>
+  </action>
+
+  <!-- ZNetwork field secure network — root gate before operator accepts -->
+  <action id="com.nexus.field.znetwork">
+    <description>Enable ZNetwork field secure network manager</description>
+    <message>Authentication is required to activate ZNetwork on this computer</message>
+    <icon_name>network-wired</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/local/lib/nexus-shield/lib/nexus-pkexec-bridge.sh</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">run-znetwork</annotate>
+  </action>
+
+  <!-- Host OS freeze — cgroup soft freeze, ACPI mem/disk, sovereign resume witness -->
+  <action id="com.nexus.field.freeze">
+    <description>Freeze host OS in place (field draw isolated)</description>
+    <message>Authentication is required to freeze or thaw the host operating system</message>
+    <icon_name>system-suspend</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/local/lib/nexus-shield/lib/nexus-pkexec-bridge.sh</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">run-freeze</annotate>
+  </action>
+
+  <!-- 2026 Tristate Installer — permanent underlay commit, WRDT apply, reboot -->
+  <action id="com.nexus.field.underlay">
+    <description>Commit permanent field underlay (Tristate Installer)</description>
+    <message>Authentication is required for underlay commit, storage repack, or field reboot</message>
+    <icon_name>security-high</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/local/lib/nexus-shield/lib/nexus-pkexec-bridge.sh</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">run-underlay</annotate>
+  </action>
+</policyconfig>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026" class="nexus-military-v8 qtm-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thermal Manager — NEXUS C2</title>
+  <link rel="stylesheet" href="queen-nexus-c2.css" />
+  <link rel="stylesheet" href="queen-thermal-manager.css" />
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+</head>
+<body data-queen-surface="thermal-manager">
+  <div class="qtm-shell" id="qtm-window">
+    <header class="qtm-bar">
+      <div class="qtm-bar-brand">
+        <span class="qtm-sigil" aria-hidden="true">◈</span>
+        <div>
+          <span class="qtm-title">Thermal Manager</span>
+          <span class="qtm-sub">NEXUS C2 · Landauer guard · incremental redata</span>
+        </div>
+      </div>
+      <span class="qtm-pill" id="qtm-level" data-level="ok">STABLE</span>
+      <span class="qtm-g16" id="qtm-g16">G16…</span>
+      <button type="button" class="qtm-btn" id="qtm-cycle" title="Run thermal guard cycle">Cycle guard</button>
+      <button type="button" class="qtm-btn qtm-btn--ghost" id="qtm-refresh">Refresh</button>
+      <button type="button" class="qtm-btn qtm-styles" data-queen-styles-open title="Styles">◈</button>
+      <span class="qtm-status" id="qtm-status" aria-live="polite"></span>
+    </header>
+
+    <main class="qtm-stage">
+      <section class="qtm-hero" aria-label="Thermal posture">
+        <div class="qtm-gauge-wrap">
+          <svg class="qtm-gauge" viewBox="0 0 200 200" role="img" aria-label="Headroom gauge">
+            <defs>
+              <linearGradient id="qtm-heat-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#5ecf7a" />
+                <stop offset="55%" stop-color="#e8a84a" />
+                <stop offset="100%" stop-color="#e85c3a" />
+              </linearGradient>
+              <filter id="qtm-glow">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+            <circle class="qtm-gauge-track" cx="100" cy="100" r="82" />
+            <circle class="qtm-gauge-fill" id="qtm-gauge-fill" cx="100" cy="100" r="82" />
+            <text class="qtm-gauge-val" id="qtm-headroom-val" x="100" y="96">—</text>
+            <text class="qtm-gauge-unit" x="100" y="118">headroom %</text>
+          </svg>
+          <div class="qtm-thermo-ring" aria-hidden="true"></div>
+        </div>
+
+        <div class="qtm-hero-metrics">
+          <article class="qtm-stat qtm-stat--heat">
+            <span class="qtm-stat-label">Peak sensor</span>
+            <strong class="qtm-stat-val" id="qtm-peak-c">—</strong>
+            <span class="qtm-stat-hint" id="qtm-sensors">0 sensors</span>
+          </article>
+          <article class="qtm-stat">
+            <span class="qtm-stat-label">RAPL draw</span>
+            <strong class="qtm-stat-val" id="qtm-rapl">—</strong>
+            <span class="qtm-stat-hint">package watts</span>
+          </article>
+          <article class="qtm-stat">
+            <span class="qtm-stat-label">Certainty</span>
+            <strong class="qtm-stat-val" id="qtm-certainty">—</strong>
+            <span class="qtm-stat-hint" id="qtm-certainty-label">field layers</span>
+          </article>
+          <article class="qtm-stat">
+            <span class="qtm-stat-label">CPU quota</span>
+            <strong class="qtm-stat-val" id="qtm-quota">—</strong>
+            <span class="qtm-stat-hint" id="qtm-wave">wave shed ok</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="qtm-grid" aria-label="Budget metrics">
+        <article class="qtm-card">
+          <h3>Landauer budget</h3>
+          <dl class="qtm-kv">
+            <div><dt>Max J/s</dt><dd id="qtm-max-j">—</dd></div>
+            <div><dt>J per op</dt><dd id="qtm-j-op">—</dd></div>
+            <div><dt>Ops/s @ budget</dt><dd id="qtm-ops-budget">—</dd></div>
+            <div><dt>Current W</dt><dd id="qtm-cur-w">—</dd></div>
+          </dl>
+        </article>
+        <article class="qtm-card">
+          <h3>4K redata path</h3>
+          <dl class="qtm-kv">
+            <div><dt>Canvas pixels</dt><dd id="qtm-canvas-px">—</dd></div>
+            <div><dt>Chunk size</dt><dd id="qtm-chunk">—</dd></div>
+            <div><dt>Incremental passes</dt><dd id="qtm-passes">—</dd></div>
+            <div><dt>Dispatch gain</dt><dd id="qtm-gain">—</dd></div>
+          </dl>
+        </article>
+        <article class="qtm-card qtm-card--wide">
+          <h3>Layer certainty</h3>
+          <div class="qtm-layers" id="qtm-layers"></div>
+        </article>
+        <article class="qtm-card">
+          <h3>Anomaly gate</h3>
+          <p class="qtm-motto" id="qtm-anomaly">No thermal anomaly</p>
+          <dl class="qtm-kv qtm-kv--compact">
+            <div><dt>Rate limit</dt><dd id="qtm-rate">off</dd></div>
+            <div><dt>Monolithic blast</dt><dd>forbidden</dd></div>
+          </dl>
+        </article>
+        <article class="qtm-card">
+          <h3>C2 quick panels</h3>
+          <nav class="qtm-links" id="qtm-links">
+            <a href="/world/queen-nexus-c2.html" target="_top">AmmoOS C2</a>
+            <a href="/world/queen-diagnostic-pane.html?api=/api/physics-witness&amp;panel=1&amp;chromeless=1" target="_top">Physics Witness</a>
+            <a href="/world/queen-field-home.html" target="_top">Field Sanity</a>
+            <a href="http://127.0.0.1:9477/field" target="_top">NEXUS Field</a>
+          </nav>
+        </article>
+      </section>
+    </main>
+
+    <footer class="qtm-foot">
+      <span id="qtm-ts">—</span>
+      <span class="qtm-foot-sep">·</span>
+      <span>FieldThermalGuard · thermo binding 2 every dispatch</span>
+      <span class="qtm-foot-sep">·</span>
+      <span id="qtm-motto">Quality job 1 — bounded work, observable headroom</span>
+    </footer>
+  </div>
+  <script src="queen-thermal-manager.js"></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

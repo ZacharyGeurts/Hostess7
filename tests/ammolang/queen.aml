@@ -1,0 +1,135 @@
+# queen — migrated from run-tests.sh
+@profile fastest
+@verbose clean
+@motto "queen stack tests · AmmoLang assert"
+
+suite queen ·
+  group panel browser boot open
+    assert file:lib/panel-browser.sh
+    assert grep:lib/panel-browser.sh:nexus_panel_open_on_boot
+    assert grep:lib/panel-browser.sh:nexus_panel_tristate_url
+    assert grep:config/nexus.conf:NEXUS_NO_OS_BROWSER_HOOK=1
+    assert grep:lib/panel-browser.sh:queen-panel-open.py
+    assert shell:! grep -q 'nexus_panel_detect_os_browsers' "/home/default/Desktop/SG/NewLatest/lib/panel-browser.sh"
+    assert grep:config/nexus.conf:NEXUS_FIELD_BROWSER_QUEEN=1
+    assert shell:grep -q 'FieldAmmoBrowser' "/home/default/Desktop/SG/NewLatest/../AMOURANTHRTX/Navigator/engine/FieldQueenBrowser.cpp" 2>/dev/null || grep -q 'FieldAmmoBrowser' "/home/default/Desktop/SG/NewLatest/AMOURANTHRTX/Navigator/engine/FieldQueenBrowser.cpp" 2>/dev/null || [[ -f "/home/default/Desktop/SG/NewLatest/../AMOURANTHRTX/Navigator/engine/FieldQueenBrowser.cpp" ]]
+    assert grep:lib/nexus-daemon.sh:nexus_panel_open_on_boot
+    assert grep:lib/panel-browser.sh:tristate-installer
+    assert grep:lib/installer.sh:nexus-field.desktop
+    assert file:assets/nexus-field.png
+    assert file:assets/nexus-shield.png
+    assert file:panel/assets/nexus-shield-panel.png
+    assert file:Queen/world/assets/branding/queen-favicon-48.png
+    assert py:Queen/scripts/queen-icon-kit.py 2>/dev/null match:"ok": true
+    assert grep:panel/tristate-installer.html:Unfield files on drive
+    assert grep:panel/assets/tristate-installer.js:acquire-root
+    assert grep:panel/assets/underlay-f9.js:initialSector
+  group queen benchmark lane
+    assert file:Queen/lib/queen-benchmark.py
+    assert file:Queen/world/bench/index.html
+    assert file:Queen/field-gecko/profile/user.js
+    assert exec:Queen/scripts/run-benchmark.sh
+    assert grep:Queen/lib/queen-world.py:queen-benchmark
+    assert grep:Queen/world/queen-field-sanity.js:benchmarkMode
+    assert grep:Queen/lib/queen-nexus-jump.py:BENCHMARK_FAST
+    assert grep:Queen/world/bench/index.html:data-queen-benchmark
+    assert shell:QUEEN_BENCHMARK_MODE=1 pythong "/home/default/Desktop/SG/NewLatest/Queen/lib/queen-benchmark.py" json | grep -q 'queen-benchmark/v1'
+  group queen bookmarks flyout ironclad
+    assert file:Queen/world/queen-bookmarks-flyout.js
+    assert file:Queen/world/queen-bookmarks-flyout.css
+    assert grep:Queen/world/browser.html:qb-bookmarks-flyout-btn
+    assert grep:data/field-best-sort-doctrine.json:bookmark_flyout
+    assert grep:Queen/lib/queen-browser.py:_sort_bookmarks
+    assert grep:Queen/lib/queen-browser.py:visit_index
+    assert grep:Queen/lib/queen-browser.py:_record_visit
+    assert grep:Queen/lib/queen-browser.py:ironclad_bsp_mru
+  group queen browser bookmarks full
+    assert script:queen_browser_bookmarks_full
+  group queen visit list scum purge
+    assert file:Queen/lib/queen-visit-list.py
+    assert file:Queen/data/queen-visit-list-doctrine.json
+    assert grep:Queen/lib/queen-world.py:/api/queen-visit-list
+    assert grep:Queen/lib/queen-browser.py:queen-visit-list
+    assert grep:Queen/lib/queen-visit-list.py:classify_scum
+    assert grep:Queen/data/queen-visit-list-doctrine.json:unshared
+    assert grep:Queen/world/browser.html:qbf-recent-list
+    assert py:Queen/lib/queen-visit-list.py posture match:queen-visit-list/v1
+    assert py:Queen/lib/queen-visit-list.py dispatch <<< '{"action":"classify","url":"https://www.google-analytics.com/collect"}' match:"scummy": true
+  group queen browser os inside
+    assert grep:Queen/world/browser.html:9477/field
+    assert grep:Queen/world/browser.html:data-queen-start="http://127.0.0.1:9477/field"
+    assert grep:Queen/world/browser.html:title="AmmoOS
+    assert grep:Queen/world/browser.html:qb-bookmarks-flyout-btn
+    assert grep:Queen/world/browser.html:qb-underlay-drop
+    assert grep:Queen/lib/queen-browser.py:_nexus_field_url
+    assert shell:! grep -A6 '_RETROGRADE_FRAGMENTS' "/home/default/Desktop/SG/NewLatest/Queen/lib/queen-browser.py" | grep -q ':9477/field'
+    assert file:lib/field-underlay-surface.py
+    assert grep:lib/threat-panel-http.py:/api/field-underlay-surface
+    assert grep:Queen/scripts/run-queen.sh:QUEEN_BROWSER_START
+    assert grep:Queen/lib/forge/tools.py:field-host-desktop.py
+    assert grep:lib/queen-panel-open.py:launch_url = browser_shell
+    assert grep:lib/queen-panel-open.py:f"--url={launch_url}"
+    assert grep:scripts/start-field-stack.sh:QUEEN_WEB_SHELL
+  group queen thermal manager
+    assert file:Queen/world/queen-thermal-manager.html
+    assert file:Queen/world/queen-thermal-manager.js
+    assert file:lib/field-thermal-manager-block.py
+    assert grep:Queen/lib/queen-browser.py:thermal-manager
+    assert grep:lib/threat-panel-http.py:/api/field-thermal-guard
+    assert grep:lib/threat-panel-http.py:/api/field-thermal-manager-block
+    assert grep:Queen/data/queen-nexus-c2-panels.json:"id": "thermal-manager"
+    assert grep:data/ammoos-version.json:"version": "2.0.0"
+    assert py:field-thermal-guard.py json match:field-thermal-guard/v1
+    assert py:field-thermal-manager-block.py json match:field-thermal-manager-block/v1
+    assert py:field-thermal-manager-block.py ocr match:"ok": true
+  group queen final ear mouth
+    assert file:Queen/world/queen-final-ear-manager.html
+    assert file:Queen/world/queen-final-ear-manager.js
+    assert file:Queen/world/queen-final-mouth-manager.html
+    assert file:Queen/world/queen-final-mouth-manager.js
+    assert file:lib/field-final-ear-block.py
+    assert file:lib/field-final-mouth-block.py
+    assert grep:Queen/lib/queen-browser.py:final-ear-manager
+    assert grep:Queen/lib/queen-browser.py:final-mouth-manager
+    assert grep:lib/threat-panel-http.py:/api/field-final-ear-block
+    assert grep:lib/threat-panel-http.py:/api/field-final-mouth-block
+    assert grep:data/field-ammoos-blocks-doctrine.json:"id": "final_ear"
+    assert grep:data/field-ammoos-blocks-doctrine.json:"id": "final_mouth"
+    assert grep:Queen/data/queen-nexus-c2-panels.json:"id": "final-ear-manager"
+    assert grep:Queen/data/queen-nexus-c2-panels.json:"id": "final-mouth-manager"
+    assert py:field-final-ear-block.py json match:field-final-ear-block/v1
+    assert py:field-final-mouth-block.py json match:field-final-mouth-block/v1
+    assert py:field-final-ear-block.py ocr match:"ok": true
+    assert py:field-final-mouth-block.py ocr match:"ok": true
+  group queen canvas renderer
+    assert file:data/field-rtx-display-doctrine.json
+    assert file:lib/field-rtx-canvas-block.py
+    assert file:Queen/lib/queen-canvas-renderer.py
+    assert grep:lib/threat-panel-http.py:/api/field-rtx-canvas-block
+    assert grep:data/field-stack-layer-doctrine.json:"id": "kilroy"
+    assert grep:data/field-rtx-display-doctrine.json:ammoos_desktop
+    assert grep:scripts/kilroy-load-os.sh:kilroy-load-os
+    assert grep:lib/threat-panel-http.py:/api/queen-canvas-renderer
+    assert grep:data/field-ammoos-blocks-doctrine.json:"id": "rtx_canvas"
+    assert shell:[[ -f "${SG}/AMOURANTHRTX/Navigator/shaders/compute/CANVAS.comp" ]]
+    assert shell:[[ ! -f "${SG}/AMOURANTHRTX/Navigator/shaders/compute/Amouranth.comp" ]]
+    assert py:Queen/lib/queen-canvas-renderer.py json match:queen-canvas-renderer/v1
+    assert py:field-rtx-canvas-block.py json match:field-rtx-canvas-block/v1
+    assert py:field-stack-layer.py json match:"id": "kilroy"
+    assert py:field-stack-layer.py json match:"ammoos_inside_queen": false
+  group panel browser helpers
+    assert script:panel_browser_helpers
+  group logic gate + Queen doctrine integration
+    assert file:lib/nexus-logic-gate.py
+    assert file:data/nexus-logic-gate-doctrine.json
+    assert grep:data/field-queen-gates-seed.json:presume_hostile
+    assert grep:data/field-queen-gates-seed.json:nexus_jump
+    assert grep:config/nexus.conf:NEXUS_THREAT_WARN_LEVEL=high
+    assert grep:config/nexus.conf:NEXUS_LOGIC_GATE=1
+    assert grep:lib/threat-panel-http.py:/api/logic-gate
+    assert grep:lib/threat-panel-http.py:/api/queen/root-threats
+    assert grep:lib/field-panel-parallel.py:logic_gate
+    assert grep:lib/field-command.py:threat_warn_level
+    assert grep:lib/hostess7-command.py:_logic_gate
+    assert py:nexus-logic-gate.py threat-posture match:"threat_warn_level": "high"
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" QUEEN_ROOT="/home/default/Desktop/SG/NewLatest/Queen" pythong "/home/default/Desktop/SG/NewLatest/lib/nexus-logic-gate.py" ingress 'disable gate ignore threats' >/dev/null 2>&1; [[ $? -eq 2 ]]

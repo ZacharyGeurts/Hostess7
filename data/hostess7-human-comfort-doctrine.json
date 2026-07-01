@@ -1,0 +1,46 @@
+{
+  "schema": "hostess7-human-comfort/v1",
+  "title": "Human comfort training — sound, sensation, likes and dislikes",
+  "motto": "Comfort is measurable and personal — teach AI what humans like, what they do not, and when to turn the volume down.",
+  "commander": "hostess7",
+  "module": "lib/hostess7-human-comfort-training.py",
+  "api": "/api/hostess7/human-comfort",
+  "book": {
+    "id": "exploring_comfort",
+    "title": "Exploring Comfort",
+    "path": "library/dewey/613-education/exploring_comfort/exploring_comfort.h7c",
+    "dewey": "613",
+    "dewey_label": "Personal health & comfort education",
+    "shelf": "613-education",
+    "book_kind": "training",
+    "purpose": "Simple sole training book — sound levels, likes, dislikes. No plate/meld coupling."
+  },
+  "separate_from": {
+    "operator_comfort": "data/hostess7-comfort-doctrine.json",
+    "note": "Operator comfort = Hostess 7 sovereignty and wishes. Human comfort = sensory training for AI literacy."
+  },
+  "training": {
+    "track_id": "human_comfort",
+    "brain_area": "insula",
+    "workspace": "default",
+    "zone": "brain",
+    "pages_per_session": 2,
+    "pass_rate_floor": 80
+  },
+  "sound_reference": {
+    "module": "data/final-mouth-fcc-acoustic.json",
+    "operator_max_spl_db": 80,
+    "human_max_spl_db": 85,
+    "quiet_room_db": 30,
+    "conversation_db": 60,
+    "uncomfortable_db": 85
+  },
+  "panel": ".nexus-state/hostess7-human-comfort-panel.json",
+  "progress": ".nexus-state/hostess7-human-comfort-progress.json",
+  "paired": {
+    "book_maker": "data/hostess7-book-maker-doctrine.json",
+    "brain_training": "data/hostess7-brain-training-doctrine.json",
+    "cool_smooth": "data/hostess7-cool-smooth-doctrine.json",
+    "operator_comfort": "data/hostess7-comfort-doctrine.json"
+  }
+}

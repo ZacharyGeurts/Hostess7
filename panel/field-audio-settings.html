@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-surface="settings" data-field-surface="audio">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#040508" />
+  <meta name="color-scheme" content="dark" />
+  <title>Queen Audio Settings</title>
+  <link rel="icon" href="/assets/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="stylesheet" href="/assets/field-queen-theme.css?v=qf1" />
+  <link rel="stylesheet" href="/assets/field-shell-dock.css?v=2" />
+  <link rel="stylesheet" href="/assets/field-audio-settings.css?v=2" />
+</head>
+<body>
+  <div class="fa-root">
+    <header class="fsd-dock fg-dock qf-dock" aria-label="Queen field dock">
+      <div class="fsd-dock-left" id="fsd-dock-left"></div>
+      <div class="fsd-dock-right" id="fsd-dock-right"></div>
+    </header>
+
+    <div class="fa-body">
+      <aside class="fa-rail" id="fa-rail" aria-label="Audio backend"></aside>
+
+      <main class="fa-main" id="fa-main">
+        <div class="fa-head">
+          <div>
+            <h1>Queen Audio</h1>
+            <p class="fa-sub" id="fa-subtitle">Output · input · volume — best pipeline locked</p>
+          </div>
+          <span class="fa-locked-pill">Always optimal</span>
+          <input type="checkbox" id="fa-advanced" hidden aria-hidden="true" tabindex="-1" />
+        </div>
+
+        <section class="fa-grid" id="fa-devices"></section>
+        <section class="fa-grid" id="fa-volume"></section>
+        <section class="fa-advanced" id="fa-advanced-panel" hidden aria-label="Advanced audio"></section>
+      </main>
+    </div>
+  </div>
+  <script src="/assets/field-shell-dock.js?v=2" defer></script>
+  <script src="/assets/field-audio-settings.js?v=2" defer></script>
+</body>
+</html>

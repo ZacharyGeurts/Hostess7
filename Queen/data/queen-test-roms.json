@@ -1,0 +1,131 @@
+{
+  "schema": "queen-test-roms/v1",
+  "title": "Queen Game Room — canonical test ROM per system",
+  "motto": "Best available legal/homebrew QA ROM for each active emulator — auto-loaded on Launch.",
+  "incoming_root": "assets/dos/incoming",
+  "systems": {
+    "nes": {
+      "label": "NES",
+      "filename": "nestest.nes",
+      "fallback": "contra.nes",
+      "title": "NESTest (CPU/PPU timing)",
+      "kind": "homebrew_qa",
+      "extensions": [".nes", ".NES"],
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/christopherpow/nes-test-roms/master/other/nestest.nes",
+          "sha256": ""
+        },
+        {
+          "url": "https://raw.githubusercontent.com/nwidger/nintengo/master/m65go2/test-roms/nestest/nestest.nes",
+          "sha256": ""
+        }
+      ]
+    },
+    "snes": {
+      "label": "Super Nintendo",
+      "filename": "snes-test.smc",
+      "title": "SNES test ROM",
+      "kind": "homebrew_qa",
+      "extensions": [".smc", ".sfc"],
+      "sources": []
+    },
+    "genesis": {
+      "label": "Genesis",
+      "filename": "genesis-test.md",
+      "title": "Genesis 68000 test",
+      "kind": "homebrew_qa",
+      "extensions": [".md", ".bin", ".gen"],
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/frankvl/68K-MiniTest/master/bin/68000TEST.BIN",
+          "save_as": "genesis-test.bin",
+          "sha256": ""
+        }
+      ]
+    },
+    "sms": {
+      "label": "Master System",
+      "filename": "sms-test.sms",
+      "title": "SMS test",
+      "kind": "homebrew_qa",
+      "extensions": [".sms", ".bin"],
+      "sources": []
+    },
+    "a2600": {
+      "label": "Atari 2600",
+      "filename": "a2600-test.a26",
+      "title": "Atari 2600 test",
+      "kind": "homebrew_qa",
+      "extensions": [".a26", ".bin"],
+      "sources": []
+    },
+    "gameboy": {
+      "label": "Game Boy",
+      "filename": "gb-test.gb",
+      "extensions": [".gb", ".gbc"],
+      "sources": []
+    },
+    "gamegear": {
+      "label": "Game Gear",
+      "filename": "gg-test.gg",
+      "extensions": [".gg", ".bin"],
+      "sources": []
+    },
+    "n64": {
+      "label": "Nintendo 64",
+      "filename": "n64-test.z64",
+      "extensions": [".z64", ".n64", ".v64"],
+      "sources": []
+    },
+    "pce": {
+      "label": "PC Engine",
+      "filename": "pce-test.pce",
+      "extensions": [".pce", ".bin"],
+      "sources": []
+    },
+    "neogeo": {
+      "label": "Neo Geo",
+      "filename": "neogeo-test.neo",
+      "extensions": [".neo", ".bin"],
+      "sources": []
+    },
+    "msx": {
+      "label": "MSX",
+      "filename": "msx-test.rom",
+      "extensions": [".rom", ".mx1", ".mx2"],
+      "sources": []
+    },
+    "spectrum": {
+      "label": "ZX Spectrum",
+      "filename": "spectrum-test.tap",
+      "extensions": [".tap", ".tzx", ".z80"],
+      "sources": []
+    },
+    "c64": {
+      "label": "Commodore 64 (classic)",
+      "filename": "c64-test.prg",
+      "extensions": [".prg", ".crt", ".d64"],
+      "sources": []
+    },
+    "c64_ultimate": {
+      "label": "Commodore 64 Ultimate",
+      "filename": "",
+      "extensions": [".prg", ".crt", ".d64", ".tap", ".t64"],
+      "sources": [],
+      "note": "Hardware pair — load via USB cassette / CommoServe on device; no host test ROM"
+    },
+    "apple2": {
+      "label": "Apple II",
+      "filename": "apple2-test.dsk",
+      "extensions": [".dsk", ".po", ".nib"],
+      "sources": []
+    },
+    "amiga": {
+      "label": "Amiga",
+      "filename": "amiga-test.adf",
+      "extensions": [".adf", ".hdf"],
+      "sources": []
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "field-combinatronics-growth-doctrine/v1",
+  "title": "Combinatronics growth — whole-system scan, surface collapse, optimal width",
+  "motto": "Every file indexed — tree grows then collapses to surface until optimal compute width emerges.",
+  "product": "AmmoOS",
+  "module": "lib/field-combinatronics-growth.py",
+  "panel": "field-combinatronics-growth-panel.json",
+  "methods": {
+    "scan": "rglob all stack roots — py json png html combinatronics facets",
+    "sort": "van_emde_bois_surface_first — bucket by depth, surface-first",
+    "tree": "surface_collapse — merge depth N+ into parent each generation",
+    "width": "bench WIDTH_CANDIDATES — minimize overflow, maximize facet spread"
+  },
+  "growth": {
+    "generations": 8,
+    "collapses_to_surface": true,
+    "improves_steadily": "surface_score rises as depth merges upward"
+  },
+  "api": "/api/combinatronics/growth",
+  "rebalance_hook": "g16-combinatronic-rebalance.py optimal — growth step before spider_wire"
+}

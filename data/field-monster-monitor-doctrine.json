@@ -1,0 +1,42 @@
+{
+  "schema": "field-monster-monitor-doctrine/v1",
+  "title": "Monster — system monitor & rescue",
+  "motto": "Ctrl+Alt+Del opens full task and services panel — kill, terminate, rescue.",
+  "module": "lib/field-monster-monitor.py",
+  "g16": {
+    "version": "5.1.0",
+    "profile": "g16_field_opt",
+    "compiler": "Grok16/lib/g16-universal-compiler.py",
+    "pairing": "data/ammoos-version.json"
+  },
+  "api": {
+    "status": "/api/field-monster-monitor",
+    "processes": "/api/field-monster-monitor/processes",
+    "services": "/api/field-monster-monitor/services",
+    "action": "/api/field-monster-monitor/action"
+  },
+  "cad_hook": {
+    "chords": ["Control+Alt+Delete", "Control+Shift+Escape"],
+    "require_focus_or_running_os": true,
+    "require_keyboard_sovereign": false
+  },
+  "ui": {
+    "tabs": ["graphs", "vision", "security", "processes", "resources", "services", "rescue"],
+    "theme": "chrome_black_green_pink",
+    "product_name": "Monster",
+    "lineage": "AmmoOS native — graphs, vision OCR, security hold, tasks, rescue",
+    "default_tab": "graphs",
+    "security_hold": {
+      "freeze_underlying_os": false,
+      "yield_to_host": true,
+      "alt_tab_release_on_yield": true
+    }
+  },
+  "protected_process_markers": [
+    "threat-panel-http",
+    "field-host-desktop",
+    "queen-world",
+    "field-monster-monitor",
+    "start-field-stack"
+  ]
+}

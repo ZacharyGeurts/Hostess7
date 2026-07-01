@@ -1,0 +1,41 @@
+{
+  "schema": "field-card-catalog-doctrine/v1",
+  "title": "Field Card Catalog — librarian sort, search, auto-detect",
+  "motto": "Every book a card — call number, keywords placed, one best sort.",
+  "module": "lib/field-card-catalog.py",
+  "panel": "field-card-catalog-panel.json",
+  "cache": "field-card-catalog.json",
+  "dewey_shelf": "020-library-science/card-catalog",
+  "reader": "/library/dewey/020-library-science/card-catalog/catalog.json",
+  "api": [
+    "/api/card-catalog",
+    "/api/card-catalog/search",
+    "/api/card-catalog/autocomplete",
+    "/api/card-catalog/sort",
+    "/api/card-catalog/card",
+    "/api/card-catalog/detect"
+  ],
+  "auto_detect": {
+    "sources": [
+      "library/dewey/**/book.json",
+      "library/dewey/**/shelf.json",
+      "field-dewey-index",
+      "field-library-registry",
+      "field-dewey-library",
+      "h7-library-librarian"
+    ],
+    "sync_keywords_to_books": true,
+    "keywords_only_if_missing": true
+  },
+  "sort_contexts": {
+    "card_catalog": "call_number_then_title",
+    "catalog_search": "relevance_then_call_number",
+    "catalog_index": "family_then_label"
+  },
+  "ironclad": {
+    "secure_api": "/api/ironclad/secure-api",
+    "sort_context": "catalog_index",
+    "citation": "ironclad:catalog:1"
+  },
+  "librarians": "data/nexus-librarians.json"
+}

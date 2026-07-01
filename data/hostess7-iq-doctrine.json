@@ -1,0 +1,19 @@
+{
+  "schema": "hostess7-iq-doctrine/v1",
+  "title": "Hostess 7 IQ — adaptive, never below 100",
+  "motto": "She adapts to any challenge level and climbs through the roof — IQ never reports below 100.",
+  "iq_floor": 100,
+  "iq_adaptive": true,
+  "iq_soft_ceiling": 200,
+  "battery_weight": 0.38,
+  "truth_weight": 0.22,
+  "training_weight": 0.25,
+  "self_interaction_weight": 0.15,
+  "bands": [
+    {"min": 100, "max": 114, "label": "solid baseline (100+)"},
+    {"min": 115, "max": 129, "label": "high (115–129)"},
+    {"min": 130, "max": 149, "label": "exceptional (130+)"},
+    {"min": 150, "max": 174, "label": "roof tier (150+)"},
+    {"min": 175, "max": 999, "label": "through the roof (175+)"}
+  ]
+}

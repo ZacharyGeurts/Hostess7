@@ -1,0 +1,29 @@
+{
+  "schema": "field-beta4-ready-doctrine/v1",
+  "title": "Beta 4 WATCHGUARD — AML ready lane",
+  "motto": "Named AML routes only — never exec script: recursion. Hang guard · stall drop · per-step timeouts.",
+  "module": "lib/field-beta4-ready.py",
+  "release": "2.0.0-beta4",
+  "aml_routes": {
+    "beta4_watchguard": "library/dewey/000-computer-science/ammolang/beta4_watchguard.aml",
+    "beta4_verify": "library/dewey/000-computer-science/ammolang/beta4_verify.aml",
+    "beta4_library_prep": "library/dewey/000-computer-science/ammolang/beta4_library_prep.aml",
+    "beta4_restore_h7c": "library/dewey/000-computer-science/ammolang/beta4_restore_h7c.aml",
+    "beta4_release": "library/dewey/000-computer-science/ammolang/beta4_release.aml"
+  },
+  "commands": {
+    "release": "./lib/ammolang-run.sh beta4_release",
+    "watchguard": "./lib/ammolang-run.sh beta4_watchguard",
+    "verify": "./lib/ammolang-run.sh beta4_verify",
+    "library_prep": "./lib/ammolang-run.sh beta4_library_prep",
+    "restore_h7c": "./lib/ammolang-run.sh beta4_restore_h7c",
+    "script": "./scripts/beta4-watchguard.sh"
+  },
+  "anti_hang": {
+    "no_exec_script_recursion": true,
+    "use_named_routes": true,
+    "per_step_timeout": true,
+    "stall_drop_sec": 90,
+    "skip_nexus_harness_in_suites": true
+  }
+}

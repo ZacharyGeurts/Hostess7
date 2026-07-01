@@ -1,0 +1,89 @@
+{
+  "schema": "field-compatibility-layers-doctrine/v1",
+  "title": "Efficient & Cool compatibility layers",
+  "motto": "Pre-baked profiles stack upward — combinatorics runs itself; you ride the layers.",
+  "policy": {
+    "operator_combinatorics": false,
+    "auto_cycle_on_refresh": true,
+    "fast_cycle_default": true,
+    "skip_full_condense_on_refresh": true,
+    "bsp_sorted_recombine": true,
+    "combinatorics_engine_lock": true,
+    "combinatorics_sha256": true,
+    "combinatorics_additions_via_rebuild_only": true,
+    "combinatorics_reject_on_mismatch": true,
+    "combinatorics_never_break_on_mismatch": true,
+    "combinatorics_threat_retaliate": true,
+    "combinatorics_never_update_on_running_operator": true,
+    "hold_all_gates": true,
+    "omit_capabilities": false,
+    "secured_launch_files": true,
+    "launch_refresh_requires_sync": true,
+    "always_optimal": true,
+    "always_optimal_module": "Grok16/lib/field-always-optimal.py"
+  },
+  "launch_seal": {
+    "module": "Queen/lib/queen-launch-chamber.py",
+    "state_key": "launch_seal.generation",
+    "motto": "Locked .launch builds — sync layers, then refresh chamber index"
+  },
+  "layers": [
+    {
+      "id": "substrate",
+      "index": 0,
+      "label": "Substrate",
+      "glyph": "⬡",
+      "color": "#64748b",
+      "role": "KILROY / linux compat pin — guest OS rides the field die",
+      "refs": ["KILROY/scripts/kilroy-compat-path.sh", "lib/field-underlay.py"]
+    },
+    {
+      "id": "exec",
+      "index": 1,
+      "label": "Exec / BSP",
+      "glyph": "⚙",
+      "color": "#5eead4",
+      "role": "Auto combinatorics cycle → belt, die slots, native BSP runner",
+      "refs": ["lib/field-plate-combinatorics-bridge.py", "Grok16/lib/field_combinatorics.py"]
+    },
+    {
+      "id": "program",
+      "index": 2,
+      "label": "Program interop",
+      "glyph": "◈",
+      "color": "#38bdf8",
+      "role": "Queen↔NEXUS jump, pythong/grokpy, G16 toolchain symlinks",
+      "refs": ["Queen/lib/queen-nexus-jump.py", "Queen/lib/forge/pythong_tools.py"]
+    },
+    {
+      "id": "web",
+      "index": 3,
+      "label": "Web compat",
+      "glyph": "◎",
+      "color": "#a78bfa",
+      "role": "Full HTML/JS/CSS spectrum — pre-1.0 through future drafts, legacy caged",
+      "refs": ["Queen/lib/queen-web-compat.py"]
+    },
+    {
+      "id": "chips",
+      "index": 4,
+      "label": "CHIPS / emu",
+      "glyph": "▣",
+      "color": "#fcd34d",
+      "role": "FieldChip BSP + manifest — retro cores behind gates",
+      "refs": ["Queen/lib/queen-chips.py", "AMOURANTHRTX/Navigator/engine/CHIPS/"]
+    },
+    {
+      "id": "surface",
+      "index": 5,
+      "label": "Field surface",
+      "glyph": "◇",
+      "color": "#4ade80",
+      "role": "NEXUS field shell programs — each tab a window, Queen browser only",
+      "refs": ["data/field-host-desktop-doctrine.json", "panel/assets/nexus-field-shell.js"]
+    }
+  ],
+  "auto_pipeline": ["fast_cycle", "bridge", "always_optimal"],
+  "deep_pipeline": ["truth_publish", "condense_full", "cycle", "bridge", "always_optimal"],
+  "replaces": "combinatorics-studio operator workflow"
+}

@@ -1,0 +1,13 @@
+# AmmoOS git publish — normal git commit + push (replaces push-only lane)
+@profile fastest
+@verbose clean
+@motto "AmmoOS git publish — origin main"
+
+seq ·
+  say "AmmoOS git publish — commit + push from live tree"
+  post "GIT_PUBLISH START"
+  self upgrade
+  fast path:gpy fastest
+  run script:seal-built-executables timeout:300 stall:120
+  run script:git-publish arg:--siblings timeout:1800 stall:900
+  post "GIT_PUBLISH COMPLETE"

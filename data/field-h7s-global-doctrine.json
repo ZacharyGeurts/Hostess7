@@ -1,0 +1,92 @@
+{
+  "schema": "field-h7s-global-doctrine/v1",
+  "motto": "H7s everywhere hot-read wins — KILROY kernel loved; boot images never wrapped.",
+  "module": "lib/field-h7s-adopt.py",
+  "lane_module": "lib/field-h7s-lane.py",
+  "cleanup_module": "lib/field-h7s-cleanup.py",
+  "hostess7": {
+    "maintenance_op": "h7s_lane_tick",
+    "module": "lib/field-h7s-lane.py",
+    "cmd": "hostess7"
+  },
+  "ironclad": {
+    "hook": "ironclad-immediate.py publish_immediate",
+    "module": "lib/field-h7s-lane.py",
+    "cmd": "ironclad"
+  },
+  "format": "h7s/1",
+  "speedup_lane": true,
+  "kilroy": {
+    "loved": true,
+    "integrated": true,
+    "statement": "KILROY is the Field OS kernel stack — fully wired. H7s never wraps boot/runtime kernel images."
+  },
+  "exclude": {
+    "reason": "Boot and kernel runtime binaries must stay native — slice execute is wrong lane for vmlinuz/initrd/modules.",
+    "path_globs": [
+      "**/boot/**",
+      "**/KILROY/build/**",
+      "**/vmlinuz*",
+      "**/initrd*",
+      "**/bzImage*",
+      "**/Image-*"
+    ],
+    "extensions": [".ko", ".efi", ".img", ".iso", ".cpio", ".dtb"],
+    "basenames": ["vmlinuz", "initrd", "bzImage", "Image"],
+    "never_h7s": ["kernel_image", "initrd", "boot_artifact", "fielddrive"]
+  },
+  "include": {
+    "desktop_condenser": ".nexus-state/field-desktop.h7s",
+    "hot_json_corpora": [
+      ".nexus-state/field-chips-core.json",
+      ".nexus-state/field-ironclad-chips-combinatorics.json",
+      ".nexus-state/field-g16-universal-combinatronic.json",
+      ".nexus-state/threat-panel.json",
+      ".nexus-state/field-popcorn-library.json"
+    ],
+    "read_priority": ["in_place_h7s", "native"],
+    "sidecars": false,
+    "in_place_disguise": true,
+    "statement": "JSON batteries and panel corpora — in-place H7s at original extension; no sidecars."
+  },
+  "cleanup": {
+    "after_bundle_pack": true,
+    "final_eye_out_retention": "manifest_only",
+    "ocr_clean_cmd": "clean-ocr --apply",
+    "ocr_keep_feeds": ["desktop-live"],
+    "migrate_legacy_sidecars": true,
+    "reclaim_native_json": false,
+    "loose_bench_h7s": true,
+    "plate_meld_bak": true,
+    "annotate_library_h7s": true,
+    "dev_log_trim_mb": 2
+  },
+  "filesystem": {
+    "module": "lib/field-h7s-fs.py",
+    "read_priority": ["in_place_h7s", "native"],
+    "sidecars": false,
+    "in_place_disguise": true,
+    "always_files": "lib/field-always-files.py resolve",
+    "kilroy_boot_excluded": true,
+    "statement": "Each path handles its own format when read — H7s in-place at original extension; no sidecars."
+  },
+  "library": {
+    "doctrine": "data/library-exploring-format-doctrine.json",
+    "exploring_books": "h7c",
+    "exploring_speaking_books": "h7c",
+    "metadata_h7s": true,
+    "statement": "Exploring .h7c bodies stay H7c — figures and reader. book.json / shelf.json may get in-place H7s via annotate_library_h7s."
+  },
+  "family_roles": {
+    "h7/7": "canonical storage — zlib lossless library adopt",
+    "h7c/3": "exploring shelf books — embedded figures, NEXUS_H7C reader",
+    "h7e/1": "release shipping — extractable tar",
+    "h7s/1": "hot-read speedup — slice execute, desktop condenser, CHIPS batteries, library metadata"
+  },
+  "cli": [
+    "python3 lib/field-h7s-adopt.py audit",
+    "python3 lib/field-h7s-adopt.py adopt --apply",
+    "python3 lib/field-h7s-cleanup.py audit",
+    "python3 lib/field-h7s-cleanup.py clean --apply"
+  ]
+}

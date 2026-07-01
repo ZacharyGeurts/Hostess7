@@ -1,0 +1,21 @@
+{
+  "name": "ammocode-editor",
+  "displayName": "AmmoCode",
+  "description": "AmmoCode sovereign editor — embed in VS Code as webview host",
+  "version": "4.9.0",
+  "publisher": "amouranthrtx",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other", "Programming Languages"],
+  "activationEvents": ["onCommand:ammocode.open", "onLanguage:ammolang"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "ammocode.open", "title": "AmmoCode: Open Editor" },
+      { "command": "ammocode.setLanguage", "title": "AmmoCode: Set Language" }
+    ],
+    "languages": [
+      { "id": "ammolang", "aliases": ["AmmoLang", "Ammo"], "extensions": [".aml"] },
+      { "id": "field", "aliases": ["Field"], "extensions": [".fld"] }
+    ]
+  }
+}

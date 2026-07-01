@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="znetwork-hub" class="nexus-military-v8">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZNetwork · NEXUS C2 · Queen · AmmoOS</title>
+  <meta name="description" content="ZNetwork relayer hub — stack layers, live posture, Queen Browser and AmmoOS integration, settings galore." />
+  <link rel="icon" href="/assets/znetwork-tray-24.png" type="image/png" />
+  <link rel="stylesheet" href="/assets/field-znetwork-hub.css?v=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://127.0.0.1:*; frame-src 'self' http://127.0.0.1:*; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <div class="zn-root">
+    <header class="zn-hero">
+      <figure class="zn-founder">
+        <img src="/assets/znetwork-founder.png" alt="ZNetwork field operator" width="320" height="434" loading="eager" decoding="async" />
+        <figcaption class="zn-founder-cap">ZNetwork · field operator</figcaption>
+      </figure>
+      <div class="zn-hero-text">
+        <p class="zn-eyebrow">NEXUS C2 · Layer 2 · sole internet pipe</p>
+        <h1>
+          <img src="/assets/znetwork-tray-24.png" alt="" width="28" height="28" />
+          ZNetwork Hub
+        </h1>
+        <p class="zn-tagline">
+          Hardware → <strong>NEXUS C2</strong> commands → <strong>ZNetwork</strong> pipes 100% internet →
+          Queen CANVAS renders → <strong>Queen Browser</strong> defends → <strong>AmmoOS</strong> lives inside Queen.
+          Not a browser tab — loopback sovereignty on <code>127.0.0.1</code>.
+        </p>
+        <div class="zn-pills" id="zn-pills" aria-live="polite">Loading…</div>
+        <div class="zn-actions">
+          <a class="zn-btn zn-btn--primary" href="/field">NEXUS C2 Desktop</a>
+          <a class="zn-btn zn-btn--gold" href="http://127.0.0.1:9481/world/browser.html" target="_blank" rel="noopener">Queen Browser</a>
+          <a class="zn-btn" href="/field-znetwork-vault">Secure Vault</a>
+          <a class="zn-btn" href="http://127.0.0.1:9481/world/queen-nexus-c2.html" target="_blank" rel="noopener">AmmoOS C2</a>
+          <button type="button" class="zn-btn" id="zn-refresh">↻ Refresh</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="zn-layout">
+      <div class="zn-main">
+        <section class="zn-card">
+          <h2>Field stack</h2>
+          <p class="zn-tagline" style="margin:0 0 0.75rem;font-size:0.82rem">Bottom-up layers wired in NewLatest — click through to each surface.</p>
+          <div class="zn-stack" id="zn-stack"></div>
+        </section>
+
+        <section class="zn-card">
+          <h2>Settings</h2>
+          <div class="zn-settings-grid">
+            <div class="zn-setting">
+              <label><input type="checkbox" id="zn-pref-auto" checked /> Auto-refresh posture</label>
+              <small>Poll <code>/api/znetwork</code> and stack doctrine on an interval.</small>
+            </div>
+            <div class="zn-setting">
+              <label for="zn-pref-interval">Refresh interval (seconds)</label>
+              <select id="zn-pref-interval" aria-label="Refresh interval">
+                <option value="5">5</option>
+                <option value="15" selected>15</option>
+                <option value="30">30</option>
+                <option value="60">60</option>
+              </select>
+            </div>
+            <div class="zn-setting">
+              <label><input type="checkbox" id="zn-pref-compact" /> Compact stack view</label>
+              <small>Denser layer cards for C2 panel thumbnails.</small>
+            </div>
+            <div class="zn-setting">
+              <label><input type="checkbox" id="zn-pref-siblings" checked /> Show stack siblings</label>
+              <small>Inventory from <code>ammoos-version.json</code> — what NewLatest wires.</small>
+            </div>
+            <div class="zn-setting">
+              <label for="zn-pref-layer">Highlight layer</label>
+              <select id="zn-pref-layer" aria-label="Highlight layer">
+                <option value="hardware">Hardware</option>
+                <option value="nexus_c2">NEXUS C2</option>
+                <option value="znetwork" selected>ZNetwork</option>
+                <option value="queen_canvas">Queen CANVAS</option>
+                <option value="queen">Queen Browser</option>
+                <option value="ammoos">AmmoOS</option>
+              </select>
+            </div>
+          </div>
+
+          <h3>Doctrine toggles (runtime)</h3>
+          <p class="zn-tagline" style="margin:0 0 0.65rem;font-size:0.78rem">
+            Live values from orchestrator — change via <code>scripts/integrate-znetwork.sh</code> or env
+            (<code>ZNETWORK_MODE</code>, <code>ZNETWORK_RELAYER</code>, <code>ZNETWORK_SMART_INSIDE</code>).
+          </p>
+          <div class="zn-gates" id="zn-gates"></div>
+        </section>
+
+        <section class="zn-card">
+          <h2>NewLatest stack siblings</h2>
+          <div class="zn-siblings" id="zn-siblings"></div>
+        </section>
+      </div>
+
+      <aside class="zn-side">
+        <section class="zn-card zn-hostess" id="zn-hostess-card">
+          <h2>Hostess 7 · Super Intelligence</h2>
+          <div class="zn-hostess-head">
+            <img id="zn-h7-avatar" src="/assets/hostess7-operator-x-avatar.jpg" alt="" width="56" height="56" loading="lazy" />
+            <div>
+              <strong id="zn-h7-display">BIG GRIN</strong>
+              <span class="zn-h7-handle" id="zn-h7-handle">@ZacharyGeurts</span>
+            </div>
+          </div>
+          <p class="zn-h7-bio" id="zn-h7-bio"></p>
+          <div class="zn-pills" id="zn-h7-pills"></div>
+          <label class="zn-setting">
+            <span>Speak out (ZNetwork egress)</span>
+            <textarea id="zn-h7-speak" rows="2" placeholder="Queen talks out — local profile, relayer only"></textarea>
+          </label>
+          <div class="zn-actions">
+            <button type="button" class="zn-btn zn-btn--primary" id="zn-h7-send">Send via ZNetwork</button>
+            <button type="button" class="zn-btn" id="zn-h7-rebuild">Rebuild local profile</button>
+          </div>
+          <p class="zn-tagline" style="margin:0.65rem 0 0;font-size:0.72rem">
+            Profile built from <a href="https://x.com/ZacharyGeurts" target="_blank" rel="noopener">x.com/ZacharyGeurts</a> — stored locally, never fetched at runtime.
+          </p>
+        </section>
+        <section class="zn-card">
+          <h2>Live posture</h2>
+          <div id="zn-live"></div>
+        </section>
+        <section class="zn-card">
+          <h2>Internet pipe</h2>
+          <div id="zn-pipe"></div>
+        </section>
+        <section class="zn-card">
+          <h2>Witness log</h2>
+          <pre class="zn-log" id="zn-log" aria-live="polite"></pre>
+        </section>
+      </aside>
+    </div>
+
+    <p class="zn-foot">
+      ZNetwork 2.1.0 Stack · canonical <code>NewLatest/ZNetwork</code> ·
+      Queen Browser :9481 · NEXUS C2 :9477 · tray icon on the right
+    </p>
+  </div>
+  <script src="/assets/field-znetwork-hub.js?v=1"></script>
+</body>
+</html>

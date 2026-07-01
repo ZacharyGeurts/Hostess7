@@ -1,0 +1,23 @@
+{
+  "schema": "field-keepass-ui-tiers/v1",
+  "title": "Resolution-aware UI scale — 10% desktop bump baseline",
+  "base_bump": 1.1,
+  "tiers": [
+    {"id": "compact", "min_width": 0, "max_width": 1365, "scale": 1.0, "font_pt": 10, "icon_px": 20, "btn_min_h": 28},
+    {"id": "hd", "min_width": 1366, "max_width": 1919, "scale": 1.1, "font_pt": 11, "icon_px": 22, "btn_min_h": 32},
+    {"id": "fhd", "min_width": 1920, "max_width": 2559, "scale": 1.1, "font_pt": 12, "icon_px": 24, "btn_min_h": 34},
+    {"id": "qhd", "min_width": 2560, "max_width": 3839, "scale": 1.15, "font_pt": 13, "icon_px": 26, "btn_min_h": 36},
+    {"id": "uhd", "min_width": 3840, "max_width": 99999, "scale": 1.22, "font_pt": 14, "icon_px": 28, "btn_min_h": 38}
+  ],
+  "rtx_profile": {
+    "reduce_scale": true,
+    "factor": 0.92,
+    "note": "RTX hosts may drop one tier for comfort — operator override in panel"
+  },
+  "overflow_guards": {
+    "toolbar_icon_max_px": 28,
+    "tree_indent_px": 18,
+    "entry_row_min_h": 32,
+    "truncate_long_labels": true
+  }
+}

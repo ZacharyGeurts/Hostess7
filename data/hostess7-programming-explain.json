@@ -1,0 +1,88 @@
+{
+  "schema": "hostess7-programming-explain/v1",
+  "title": "How Hostess 7 explains code — properly",
+  "format": ["what", "why", "how", "pitfalls", "where", "example"],
+  "introduction": "I explain code in complete thoughts: what it is, why this stack uses it, how to write it correctly, what breaks, and where you see it in NEXUS-Shield.",
+  "topics": [
+    {
+      "id": "atomic_write",
+      "keywords": ["atomic", "tmp", "replace", "panel write", "fsync", "partial read"],
+      "what": "An atomic panel write means readers never see half a JSON file. We write to a temporary sibling file, flush/fsync if needed, then rename-replace into place.",
+      "why": "Plate consumers (meld, command deck, motion resolve) poll panels every second. A direct write can leave truncated JSON mid-crash — that looks like corruption and can trigger false brain holds.",
+      "how": "Create path.with_suffix('.tmp'), write full JSON, flush, then tmp.replace(path). field-plate-meld uses _fsync_write for chain-critical meld files.",
+      "pitfalls": "Writing in place; forgetting parent.mkdir; not using a unique tmp suffix under concurrent writers; reading without try/except when file may be mid-replace.",
+      "where": "hostess7-brain-guard.py _save, iron-plate-motion-resolve.py _save, field-plate-meld.py _fsync_write",
+      "example": "tmp = path.with_suffix('.tmp')\ntmp.write_text(json.dumps(doc, indent=2) + '\\n', encoding='utf-8')\ntmp.replace(path)"
+    },
+    {
+      "id": "safe_json_load",
+      "keywords": ["json load", "read json", "pathlib", "_load", "jsondecodeerror", "safe load"],
+      "what": "Safe JSON load wraps file read + json.loads in try/except and returns a default when the file is missing or malformed.",
+      "why": "STATE panels are optional on first boot. Crashing on missing hostess7-brain-guard-panel.json would break the whole meld cycle; default {} lets the stack cold-start and rebuild.",
+      "how": "def _load(path, default=None): try return json.loads(path.read_text(encoding='utf-8')) except (OSError, json.JSONDecodeError): return default or {}",
+      "pitfalls": "Using eval(); bare except Exception; not distinguishing missing vs corrupt; loading multi-megabyte files without bounds on hot path.",
+      "where": "Every Hostess7 lib module, iron-plate-motion-resolve.py, hostess7-self-view.py",
+      "example": "brain = _load(STATE / 'hostess7-brain-guard-panel.json', {})"
+    },
+    {
+      "id": "importlib_refresh",
+      "keywords": ["importlib", "refresh", "plate refresh", "exec_module", "circular import"],
+      "what": "importlib loads a .py file by path at runtime without adding it to sys.path permanently — spec_from_file_location + exec_module.",
+      "why": "Plate meld must refresh ten+ panels per cycle. Spawning subprocess per plate is slow and loses shared STATE; importlib calls build_panel() in-process.",
+      "how": "spec = importlib.util.spec_from_file_location('alias', INSTALL / 'lib' / 'mod.py'); mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); mod.build_panel(write=True)",
+      "pitfalls": "Re-exec_module without isolating global side effects; naming collisions if alias repeats; swallowing all exceptions silently in refresh (we pass on meld refresh but log in programming review).",
+      "where": "field-plate-meld.py _refresh_hostess7_brain, _refresh_iron_plate_motion, universal-protector.py",
+      "example": "_refresh_hostess7_programming() in field-plate-meld.py"
+    },
+    {
+      "id": "brain_guard",
+      "keywords": ["brain guard", "checksum", "manifest", "sha256", "corruption", "quarantine"],
+      "what": "Brain guard SHA256-compares critical Hostess7 engines against MANIFEST.sha256, witnesses brain read-only via sense package, and appends chain-hashed quarantine rows on tamper.",
+      "why": "She is our brains — if hostess7-neural.py or doctrine JSON is swapped mid-run, motion and lethal chains must not proceed on corrupted cognition.",
+      "how": "verify_brain() hashes each protected path, compares to manifest, detects removal vs prior fingerprints, sets verdict brain_verified or brain_corruption_hold.",
+      "pitfalls": "Skipping re-sign after new lib files; trusting panel JSON without panel_sha256; refreshing motion before brain guard in resolve order.",
+      "where": "hostess7-brain-guard.py, iron-plate-motion-resolve.py resolve_motion()",
+      "example": "if brain_corrupt: verdict = 'brain_corruption_hold'"
+    },
+    {
+      "id": "plate_meld",
+      "keywords": ["meld", "chain_hash", "plate meld", "generation", "snapshots", "flock"],
+      "what": "Plate meld flock-locks, refreshes plates in deterministic order, collects snapshots, and hashes chain_hash = SHA256(prev_chain + sorted plate JSON).",
+      "why": "Every consumer must read one generation-linked truth — not stale iron plate while motion panel already advanced.",
+      "how": "meld() calls _refresh_* sequence, _collect_plates(), _digest(plates, prev_chain), writes field-plate-meld.json + triple mirror.",
+      "pitfalls": "Consumers reading individual panels first; skipping hostess7_brain refresh; meld without prev_chain (breaks audit trail).",
+      "where": "field-plate-meld.py, iron-plate-motion-resolve.py _meld_snapshots()",
+      "example": "ctx['meld'] = _load(STATE / 'field-plate-meld.json', {})"
+    },
+    {
+      "id": "install_state_env",
+      "keywords": ["nexus_install_root", "nexus_state_dir", "environment", "install", "state dir"],
+      "what": "INSTALL and STATE are Path roots from NEXUS_INSTALL_ROOT and NEXUS_STATE_DIR — never hardcode /usr/local or /var/lib in library logic.",
+      "why": "Tests run with NEXUS_STATE_DIR=/tmp/...; dev runs from Desktop/SG/NewLatest. Hardcoded paths break CI and corrupt operator machines.",
+      "how": "INSTALL = Path(os.environ.get('NEXUS_INSTALL_ROOT', '/usr/local/lib/nexus-shield')); STATE = Path(os.environ.get('NEXUS_STATE_DIR', '/var/lib/nexus-shield'))",
+      "pitfalls": "Mixing INSTALL data with STATE panels; writing doctrine to STATE; assuming HOSTESS7_ROOT exists on every host.",
+      "where": "All lib/*.py in this stack",
+      "example": "DOCTRINE = INSTALL / 'data' / 'hostess7-programming-doctrine.json'"
+    },
+    {
+      "id": "chips_virtual_coding",
+      "keywords": ["chips", "virtual workspace", "gpy", "debug", "promote", "self edit", "recompile"],
+      "what": "Hostess 7 codes on the CHIPS G16 Python die inside hostess7-virtual — mirror, edit, py_compile, smoke json, debug stderr, promote with PROMOTE only after testing center passes.",
+      "why": "Live INSTALL is the production brain; virtual die isolates mistakes before plate meld or brain guard witness corruption.",
+      "how": "hostess7-virtual-workspace.py mirror → edit virtual → test → codecraft testing-center → promote. Native recompile: lib/ammolang-run.sh g16_recompile.",
+      "pitfalls": "Editing live lib/hostess7-*.py; skipping virtual; raw pythong for field tasks instead of ammolang-run.sh.",
+      "where": "lib/hostess7-virtual-workspace.py, data/hostess7-chips-coding-explain.json, lib/hostess7-operator.py",
+      "example": "POST /api/hostess7/virtual-workspace {\"action\":\"mirror\",\"path\":\"lib/hostess7-noti.py\"}"
+    },
+    {
+      "id": "explain_properly",
+      "keywords": ["explain coding", "explain code", "teach code", "how to code", "programming explain", "explain properly"],
+      "what": "Proper explanation means: define the concept, justify it in this architecture, show the idiomatic implementation, warn about failures, cite real files in the repo.",
+      "why": "One-line answers train nobody and cause assistants to hallucinate APIs. Operator and Hostess 7 both need reproducible reasoning on the live stack.",
+      "how": "Match keywords → load topic from hostess7-programming-explain.json → emit What / Why / How / Pitfalls / Where / Example. Route Command coding questions to hostess7_programming engine before generic fallback.",
+      "pitfalls": "Pasting generic Python tutorials; citing functions that do not exist in NEXUS; skipping why meld/brain guard matter for the answer.",
+      "where": "hostess7-programming.py explain_programming(), hostess7-command.py _programming_cadence_reply()",
+      "example": "Ask: 'How does atomic panel write work here?' — get six sections with field-plate-meld citation."
+    }
+  ]
+}

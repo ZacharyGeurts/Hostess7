@@ -1,0 +1,165 @@
+{
+  "schema": "connectivity-law-watch/v1",
+  "motto": "Every path knows the law — inspect, strip, clean, reconverge without violation.",
+  "operator_posture": "Local-first inspection of THIS machine's traffic only — not third-party wiretap.",
+  "surfaces": ["packet", "dns", "dhcp", "ntp", "wifi", "firewall", "storage", "privacy"],
+  "laws": [
+    {
+      "id": "cfaa_access",
+      "citation": "18 U.S.C. § 1030(a)(2)(C)",
+      "title": "Computer Fraud and Abuse Act — unauthorized access",
+      "surfaces": ["packet", "dns", "firewall"],
+      "requirement": "No exceeding authorized access to obtain information from protected computers.",
+      "nexus_control": "Gatekeeper IFF + DPI block C2/exfil vectors; no offensive pivot beyond operator host.",
+      "violation_vectors": ["C2_BEACON", "PACKET_INJECTION", "DNS_POISON", "RAW_SOCKET_INJECTION"]
+    },
+    {
+      "id": "cfaa_damage",
+      "citation": "18 U.S.C. § 1030(a)(5)(A)",
+      "title": "Computer Fraud and Abuse Act — damage",
+      "surfaces": ["packet", "firewall"],
+      "requirement": "No knowingly causing damage to protected computers.",
+      "nexus_control": "RST_FLOOD, DDOS_FLOOD, SYN_FLOOD → heat crush + segment block.",
+      "violation_vectors": ["RST_FLOOD", "DDOS_FLOOD", "CONN_HARM"]
+    },
+    {
+      "id": "ecpa_wiretap",
+      "citation": "18 U.S.C. § 2511",
+      "title": "Electronic Communications Privacy Act — intercept",
+      "surfaces": ["packet", "storage", "privacy"],
+      "requirement": "No intentional interception of wire/electronic communications without consent or lawful authority.",
+      "nexus_control": "Capture limited to local NIC/tcpdump on operator host; dirty ring local-only; no upstream tap.",
+      "violation_vectors": ["UPSTREAM_TAP", "THIRD_PARTY_INTERCEPT"]
+    },
+    {
+      "id": "sca_stored",
+      "citation": "18 U.S.C. § 2701",
+      "title": "Stored Communications Act",
+      "surfaces": ["storage", "privacy"],
+      "requirement": "No unauthorized access to stored electronic communications.",
+      "nexus_control": "Field drive append-only on operator path; privacy-guard on sensitive fd paths.",
+      "violation_vectors": ["UNAUTHORIZED_STORED_ACCESS"]
+    },
+    {
+      "id": "cpni_47usc222",
+      "citation": "47 U.S.C. § 222",
+      "title": "Communications Act — CPNI",
+      "surfaces": ["dns", "packet", "storage"],
+      "requirement": "Protect customer proprietary network information.",
+      "nexus_control": "Resolver + packet logs stay local; foreign ISP DNS egress blocked.",
+      "violation_vectors": ["DNS_TUNNEL", "FOREIGN_RESOLVER_BYPASS"]
+    },
+    {
+      "id": "fcc_cpni_64",
+      "citation": "47 CFR § 64.2003",
+      "title": "FCC CPNI (voice/broadband)",
+      "surfaces": ["dns"],
+      "requirement": "Opt-in for use of CPNI.",
+      "nexus_control": "Charter/Spectrum and ISP DNS redirection classified foreign — blocked.",
+      "violation_vectors": ["ISP_DNS_REDIRECT"]
+    },
+    {
+      "id": "fcc_part15",
+      "citation": "47 CFR Part 15",
+      "title": "FCC unlicensed RF devices",
+      "surfaces": ["wifi"],
+      "requirement": "Operate only on permitted UNII/ISM bands; no intentional interference.",
+      "nexus_control": "Passive scan + disconnect our station; NO jamming/deauth floods.",
+      "violation_vectors": ["RF_JAMMING", "DEAUTH_FLOOD", "UNPERMITTED_SPECTRUM_TX"]
+    },
+    {
+      "id": "fcc_wireless_forbidden",
+      "citation": "FCC policy — nexus-fcc-wireless-v2",
+      "title": "Lawful RF kick chain",
+      "surfaces": ["wifi", "firewall"],
+      "requirement": "Wire-layer cleanup only — disconnect, firewall, autokill; never overpower TX.",
+      "nexus_control": "field-rf-sentinel lawful_kick_actions whitelist.",
+      "violation_vectors": ["INTENTIONAL_JAMMING", "SPOOFED_BEACON_TX"]
+    },
+    {
+      "id": "gdpr_integrity",
+      "citation": "GDPR Art. 5(1)(f)",
+      "title": "GDPR — integrity and confidentiality",
+      "surfaces": ["dns", "packet", "storage"],
+      "requirement": "Personal data processed with integrity and confidentiality.",
+      "nexus_control": "Loopback truth DNS; strip lane removes payload from clean paths; local logs.",
+      "violation_vectors": ["FOREIGN_DNS_LEAK", "PAYLOAD_EXFIL_UNSTRIPPED"]
+    },
+    {
+      "id": "gdpr_security",
+      "citation": "GDPR Art. 32",
+      "title": "GDPR — security of processing",
+      "surfaces": ["packet", "firewall"],
+      "requirement": "Appropriate technical measures for security.",
+      "nexus_control": "Multi-path deinterlace + sovereign fabric seal on reconverged manifest.",
+      "violation_vectors": ["UNSEALED_CLEAN_PATH"]
+    },
+    {
+      "id": "nis2_dns",
+      "citation": "EU Directive 2022/2555 (NIS2)",
+      "title": "Network and Information Security",
+      "surfaces": ["dns", "dhcp", "ntp"],
+      "requirement": "DNS/service providers implement security risk management.",
+      "nexus_control": "field-services-2026 + sovereign sync per section.",
+      "violation_vectors": ["ROGUE_DHCP", "POOL_NTP_ONLY"]
+    },
+    {
+      "id": "coppa",
+      "citation": "15 U.S.C. §§ 6501-6506",
+      "title": "COPPA",
+      "surfaces": ["dns", "packet"],
+      "requirement": "Verifiable parental consent before collecting children's data.",
+      "nexus_control": "Ad/tracking domains blocked at resolver when adblock lists apply.",
+      "violation_vectors": ["AD_TRACKING_EGRESS"]
+    },
+    {
+      "id": "icann_raa",
+      "citation": "ICANN RAA 2013",
+      "title": "Registrar Accreditation Agreement",
+      "surfaces": ["dns"],
+      "requirement": "Accurate WHOIS/RDAP — not forged locally.",
+      "nexus_control": "RDAP lookups documented; no local WHOIS forgery.",
+      "violation_vectors": ["FORGED_WHOIS"]
+    },
+    {
+      "id": "rfc9520_resolver",
+      "citation": "RFC 9520",
+      "title": "DNS Resolver Integrity",
+      "surfaces": ["dns"],
+      "requirement": "Resolver must not substitute answers without operator policy.",
+      "nexus_control": "Truth DNS trace-only; foreign resolvers blocked.",
+      "violation_vectors": ["SHORTCUT_PUBLIC_DNS"]
+    },
+    {
+      "id": "pen_register",
+      "citation": "18 U.S.C. § 3121",
+      "title": "Pen Register / Trap and Trace",
+      "surfaces": ["packet"],
+      "requirement": "Non-content dial/connection records require legal process for third parties.",
+      "nexus_control": "Metadata strip lane on operator host only; dirty dump segregated.",
+      "violation_vectors": ["THIRD_PARTY_METADATA_HARVEST"]
+    },
+    {
+      "id": "local_only_capture",
+      "citation": "NEXUS operator covenant",
+      "title": "Local-first packet capture doctrine",
+      "surfaces": ["packet", "storage"],
+      "requirement": "Dirty ring forensic; clean paths stripped; reconverge sealed.",
+      "nexus_control": "field-packet-deinterlace.py multi-lane router.",
+      "violation_vectors": ["CLEAN_PATH_PAYLOAD_LEAK", "DIRTY_TO_CLEAN_BLEED"]
+    }
+  ],
+  "forbidden_actions": [
+    "Intentional RF jamming or deauthentication floods",
+    "Upstream ISP/tap interception of third-party communications",
+    "Exporting dirty-ring payload content to clean reconverge path",
+    "Forging DNS answers or WHOIS records",
+    "Offensive pivot beyond operator-owned host"
+  ],
+  "clean_path_requirements": [
+    "strip_payload_before_clean",
+    "gatekeeper_permit_or_rank_le_2",
+    "legal_lane_zero_violations",
+    "sovereign_fabric_seal_on_manifest"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "ok": false,
+  "schema": "field-code-bugfinder/v1",
+  "updated": "2026-06-27T07:30:39Z",
+  "path": "GIMP-Field/lib",
+  "file_count": 1,
+  "claim_count": 4,
+  "heuristic_count": 2,
+  "heuristic_actionable": 0,
+  "truth_suspect_count": 2,
+  "bug_count": 2,
+  "truth_compares_per_sec": 1622.2,
+  "compare_summary": {
+    "compares": 14,
+    "elapsed_ms": 8.63,
+    "counts": {
+      "bug": 0,
+      "suspect": 2,
+      "clear": 0,
+      "investigate": 12
+    }
+  },
+  "ironclad_landing": {
+    "sealed": true,
+    "verdict": "GREEN",
+    "truth_percent": 100.0,
+    "citation": "ironclad:{book}:{verse}"
+  },
+  "thermal_gate": {
+    "ok": false,
+    "allow_plate_work": false,
+    "thermal_headroom_pct": 100.0,
+    "thermal_level": "ok",
+    "field_sanity_ok": false,
+    "never_build_under_heat": true,
+    "entropy_on_trust_layer": false,
+    "entropy_ok": true,
+    "bus_entropy": null,
+    "ops_requested": 4,
+    "doctrine": "Thermals + entropy checked before plate meld and library truth passes."
+  },
+  "heuristics": [],
+  "truth_suspects": [
+    {
+      "code_claim": "AmmoOS Image field I/O — WRDT/WRZC/ZAC7/FLD/plate decode with CPU and RTX paths.",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Batch-friendly path — parallel digest verify + single-shot zlib.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    }
+  ],
+  "bugs": [
+    {
+      "code_claim": "AmmoOS Image field I/O — WRDT/WRZC/ZAC7/FLD/plate decode with CPU and RTX paths.",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Batch-friendly path — parallel digest verify + single-shot zlib.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    }
+  ],
+  "doctrine": "/home/default/Desktop/SG/NewLatest/data/field-code-bugfinder-doctrine.json"
+}

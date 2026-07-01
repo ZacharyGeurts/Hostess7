@@ -1,0 +1,45 @@
+{
+  "schema": "queen-secure-channel/v1",
+  "title": "Queen Secure Channel — forever invincible comms hub",
+  "motto": "Forever sealed. Presume hostile. Weapons quarantined. World_Redata + World_Repack + External wire — one hardened lane.",
+  "tier": "forever_secure",
+  "doctrine": {
+    "forever": true,
+    "lane": "SecureChannel",
+    "presume_hostile": true,
+    "defend_by_default": true,
+    "offense_on_threat": true,
+    "fail_closed_on_seal_break": true,
+    "never_tampered_or_broken": true,
+    "import_to_main": false,
+    "internal_touch": false,
+    "weapons_quarantine": true,
+    "subbit_heuristics_immesurable": true,
+    "heuristic_never_poison_memory": true,
+    "heuristic_never_poison_disk": true,
+    "threat_scan_required": true,
+    "external_wire_delegate": true,
+    "world_redata_engine": "World_Redata",
+    "world_repack_gui": "World_Repack",
+    "repack_autostart": false,
+    "repack_loopback_only": true
+  },
+  "threat": {
+    "harm_block_score": 12,
+    "harm_hold_score": 6,
+    "weapon_signals_mandate": "data/neural-encourage-incorruptible.json",
+    "hostile_threats_seed": "NewLatest/data/hostile-ai-threats-seed.json",
+    "contact_vector_alien_block_pct": 55,
+    "contact_vector_unknown_hold_pct": 72
+  },
+  "lanes": {
+    "external": "/api/external-wire",
+    "redata": "/api/world-redata",
+    "repack": "http://127.0.0.1:9480/",
+    "contact_vector": "/api/contact-vector"
+  },
+  "api": {
+    "path": "/api/secure-channel",
+    "actions": ["status", "fast", "scan", "receive", "speak", "verify", "quarantine"]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "ammocode-toolbar-doctrine/v2",
+  "title": "AmmoCode toolbar — lean professional editor",
+  "motto": "Code editor essentials only — no minimap, collab theater, or stub tools",
+  "icon_base": "assets/icons/toolbar",
+  "icon_sizes": [16, 20, 24, 32],
+  "default_enabled": [
+    "new", "open", "export", "undo", "redo", "cut", "copy", "paste",
+    "find", "replace", "comment", "goto_line",
+    "g16_check", "g16_build", "g16_run", "g16_profile", "discern_lang",
+    "word_wrap", "font_dec", "font_inc", "theme", "syntax_theme", "settings"
+  ],
+  "items": [
+    {"id": "new", "label": "New", "group": "file", "shortcut": "Ctrl+N", "g16": false, "secure": true},
+    {"id": "open", "label": "Open", "group": "file", "shortcut": "Ctrl+O", "g16": false, "secure": true},
+    {"id": "export", "label": "Export", "group": "file", "shortcut": "Ctrl+S", "g16": false, "secure": true},
+    {"id": "undo", "label": "Undo", "group": "edit", "shortcut": "Ctrl+Z", "g16": false},
+    {"id": "redo", "label": "Redo", "group": "edit", "shortcut": "Ctrl+Y", "g16": false},
+    {"id": "cut", "label": "Cut", "group": "edit", "shortcut": "Ctrl+X", "g16": false},
+    {"id": "copy", "label": "Copy", "group": "edit", "shortcut": "Ctrl+C", "g16": false},
+    {"id": "paste", "label": "Paste", "group": "edit", "shortcut": "Ctrl+V", "g16": false},
+    {"id": "find", "label": "Find", "group": "edit", "shortcut": "Ctrl+F", "g16": false},
+    {"id": "replace", "label": "Replace", "group": "edit", "shortcut": "Ctrl+H", "g16": false},
+    {"id": "comment", "label": "Toggle comment", "group": "edit", "shortcut": "Ctrl+/", "g16": true},
+    {"id": "goto_line", "label": "Go to line", "group": "edit", "shortcut": "Ctrl+G", "g16": false},
+    {"id": "g16_check", "label": "g16 syntax check", "group": "g16", "shortcut": "F5", "g16": true, "secure": true},
+    {"id": "g16_build", "label": "g16 Build", "group": "g16", "shortcut": "F6", "g16": true, "secure": true},
+    {"id": "g16_run", "label": "g16 Run", "group": "g16", "shortcut": "F7", "g16": true, "secure": true},
+    {"id": "g16_profile", "label": "Compiler profile", "group": "g16", "g16": true},
+    {"id": "discern_lang", "label": "Discern language", "group": "g16", "g16": true},
+    {"id": "ironclad_verify", "label": "Ironclad verify", "group": "secure", "secure": true},
+    {"id": "path_jail", "label": "Path jail status", "group": "secure", "secure": true},
+    {"id": "word_wrap", "label": "Word wrap", "group": "view", "g16": false},
+    {"id": "font_dec", "label": "Font smaller", "group": "view"},
+    {"id": "font_inc", "label": "Font larger", "group": "view"},
+    {"id": "fullscreen", "label": "Fullscreen", "group": "view", "shortcut": "F11"},
+    {"id": "theme", "label": "Editor theme", "group": "view"},
+    {"id": "syntax_theme", "label": "Syntax colors", "group": "view"},
+    {"id": "settings", "label": "Settings", "group": "app", "shortcut": "Ctrl+,"},
+    {"id": "problems", "label": "Problems", "group": "tools"}
+  ]
+}

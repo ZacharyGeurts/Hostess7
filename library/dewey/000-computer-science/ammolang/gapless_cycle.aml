@@ -1,0 +1,19 @@
+# AmmoLang — gapless optimal cycle for AI dispatch
+# Runs the full combinatorics rebalance as a pure sequence.
+
+@width 16
+@motto no gaps only sequences
+
+par ⊕
+  grow scan
+  surface collapse depth:8
+
+seq ·
+  width 16
+  gap fill all
+  leaf growth:0001
+  leaf prog:canonical:assign
+  leaf prog:canonical:loop
+  wire band:narrow:0
+  wire band:narrow:1
+  exec canonical:meta

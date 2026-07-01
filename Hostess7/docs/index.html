@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hostess 7 — Talk & Draw</title>
+  <meta name="description" content="Talk to Hostess 7 — ask questions, watch her draw on the canvas." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="canonical" href="https://zacharygeurts.github.io/Hostess7/" />
+  <link rel="alternate" type="application/json" href="manifest.json" title="Hostess 7 manifest" />
+  <link rel="alternate" type="application/json" href="status.json" title="Hostess 7 status" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="aurora"></div>
+  <header class="top">
+    <div class="brand">
+      <span class="logo">H7</span>
+      <div>
+        <h1>Hostess 7</h1>
+        <p class="tag">Talk · Draw · Ask anything</p>
+      </div>
+    </div>
+    <nav class="actions">
+      <a class="btn ghost" href="https://github.com/ZacharyGeurts/Hostess7" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn primary" href="https://github.com/codespaces/new?hide_repo_select=true&repo=ZacharyGeurts/Hostess7" target="_blank" rel="noopener">Full brain (Codespaces)</a>
+    </nav>
+  </header>
+
+  <div class="demo-banner" role="status">
+    <strong>GitHub Pages demo</strong> — HTTPS, sanitized chat, machine-readable
+    <a href="status.json">status.json</a> ·
+    <a href="manifest.json">manifest.json</a>.
+    Full brain: <a href="https://github.com/codespaces/new?hide_repo_select=true&repo=ZacharyGeurts/Hostess7">Codespaces</a>
+    or <code>./Hostess7.sh web</code>.
+    License: GPL v3 or 3% commercial · <a href="mailto:gzac5314@gmail.com">gzac5314@gmail.com</a>
+  </div>
+
+  <main class="studio">
+    <section class="draw-panel">
+      <div class="panel-head">
+        <h2>Drawing space</h2>
+        <div class="tools">
+          <button type="button" id="tool-pen" class="tool active" title="Draw">Pen</button>
+          <button type="button" id="tool-hostess" class="tool" title="Let Hostess draw">Hostess</button>
+          <button type="button" id="tool-clear" class="tool danger" title="Clear canvas">Clear</button>
+        </div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="gfx" width="960" height="540" aria-label="Hostess 7 drawing canvas"></canvas>
+      </div>
+      <p id="gfx-caption" class="gfx-caption">Ask a question — Hostess draws her answer here.</p>
+    </section>
+
+    <section class="talk-panel">
+      <div class="panel-head">
+        <h2>Talk to Hostess</h2>
+        <p id="status" class="status-inline">Connecting…</p>
+      </div>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <form id="chat-form" class="composer">
+        <input id="query" type="text" placeholder="Ask Hostess anything…" autocomplete="off" />
+        <button type="submit" class="btn primary">Send</button>
+      </form>
+      <div class="chips">
+        <button type="button" class="chip" data-q="Draw the brain hemispheres">Brain</button>
+        <button type="button" class="chip" data-q="Show me SMPTE color bars">TV bars</button>
+        <button type="button" class="chip" data-q="pixel grid 4k framebuffer">Pixels</button>
+        <button type="button" class="chip" data-q="How does Hostess7 hear and speak?">Hearing</button>
+        <button type="button" class="chip" data-q="children books and fiction on the library shelf">Library</button>
+        <button type="button" class="chip" data-q="NEXUS-Shield firewall and HTTPS panel">NEXUS</button>
+        <button type="button" class="chip" data-q="contractions conjunctions gerunds interpersonal English">English</button>
+        <button type="button" class="chip" data-q="deceit hyperbolic hypocritical conversational terms with humans">Human talk</button>
+        <button type="button" class="chip" data-q="Heaven and Hell honesty doctrine Bible denominations">Heaven & Hell</button>
+        <button type="button" class="chip" data-q="What is the law on FCC regulations?">Law</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>ZacharyGeurts</span><span>·</span><span>Lossless FLD1 · H7 · Field</span>
+  </footer>
+  <script src="gfx.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

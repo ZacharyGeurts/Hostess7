@@ -1,0 +1,56 @@
+{
+  "schema": "nexus-fcc-wireless-v2",
+  "authority": "FCC Part 15 (unlicensed) + operator device control",
+  "motto": "Permitted spectrum only. Shoot to kill everything else — on the wire, never on the air.",
+  "permitted_spectrum": "data/fcc-permitted-frequencies.json",
+  "allowed": [
+    "Passive WiFi beacon scan (receive-only correlation via nmcli)",
+    "Permitted-frequency whitelist enforcement (2.4/5/6 GHz FCC UNII/ISM)",
+    "Disconnect OUR station from rogue, unpermitted, or hostile APs (nmcli dev disconnect)",
+    "Firewall block hostile IPs on the wire path (nftables)",
+    "Trust Strike autokill + hardware destroy at 100% certainty on correlated threats",
+    "Operator-initiated soft rfkill on OUR wlan only",
+    "Automatic soft rfkill when confirmed RF hostilities exceed threshold (on by default)"
+  ],
+  "forbidden": [
+    "Intentional jamming or deauthentication floods",
+    "Overpower transmission or burst interference",
+    "Spoofed beacon frames or deceptive RF transmission",
+    "Rfkill on noise spikes without confirmed hostility markers",
+    "Tolerating APs outside FCC permitted frequency bands"
+  ],
+  "lawful_kick_actions": [
+    "disconnect_rogue_ap",
+    "disconnect_unpermitted_spectrum",
+    "firewall_block_correlated_ip",
+    "autokill_strike_certain",
+    "hardware_destroy_strike_certain",
+    "disable_unhealthy_forever",
+    "auto_rfkill_hostility"
+  ],
+  "auto_rfkill": {
+    "enabled_by_default": true,
+    "scope": "our_wlan_soft_block_only",
+    "triggers": ["connected_unpermitted", "connected_rogue", "hostile_oui", "pollution_cluster", "hot_attack_correlated", "forever_disabled_nearby"],
+    "note": "Soft rfkill OUR radio when hostility score confirms threat — never jamming."
+  },
+  "shoot_to_kill": {
+    "enabled_by_default": true,
+    "targets": ["unpermitted_spectrum", "evil_twin", "rogue_open", "hostile_oui", "connected_rogue", "connected_unpermitted"],
+    "note": "Aggressive lawful wire-layer kill chain. No RF transmission."
+  },
+  "disable_unhealthy_forever": {
+    "enabled_by_default": true,
+    "registry": "field-rf-disabled-forever.json",
+    "actions": ["permanent_bssid_registry", "forever_firewall_block", "forever_dossier_archive", "boot_reenforce_disconnect"],
+    "note": "Unhealthy RF detections are disabled forever — never allowed back."
+  },
+  "global_pollution_cleanup": {
+    "enabled_by_default": true,
+    "policy": "data/fcc-global-pollution-policy.json",
+    "ledger": "field-rf-pollution-ledger.json",
+    "operations_log": "field-rf-operations.jsonl",
+    "near_infinite_passive_reach": true,
+    "note": "Passive horizon grows each cycle. Pollution ledger accumulates globally. Full operations detail logged. Wire-layer cleanup only — FCC safe."
+  }
+}

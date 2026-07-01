@@ -1,0 +1,61 @@
+{
+  "schema": "ammoos-boot/v1",
+  "title": "Queen Boot Aperture — AmmoOS Everything OS",
+  "motto": "Queen is the browser and the boot space. One aperture into Hostess 7, chips, CPUs, FieldNet, and the full sovereign stack.",
+  "doctrine": "ASM phases: SEAL → BROWSER → WORLD → LIVE. No operator setup. Page load seals Grok16 + RTX secure memory.",
+  "phases": [
+    {"id": "SEAL", "order": 0, "role": "Grok16 + RTX secure space", "target": "/api/queen-boot", "module": "queen-secure-space.py"},
+    {"id": "SOVEREIGN_CAPSULE", "order": 1, "role": "Self-contained OS — compile, rebuild, test, reboot inside", "target": "queen://capsule", "module": "queen-sovereign.py"},
+    {"id": "FIELD_NET", "order": 2, "role": "Internal-only routing · queen:// scheme", "target": "/api/field-net", "module": "queen-field-net.py"},
+    {"id": "GATES", "order": 3, "role": "IFF civilian/hostile · hold all", "target": "/api/queen-browser", "module": "queen-gate.py"},
+    {"id": "BROWSER", "order": 4, "role": "Tabs · nav · history · bookmarks · iframe", "target": "world/queen-os.js", "module": "queen-browser.py"},
+    {"id": "CODE", "order": 4.5, "role": "Queen Code — g16 viewer · no telemetry", "target": "world/queen-code.html", "module": "queen-code.py"},
+    {"id": "HOSTESS", "order": 5, "role": "Hostess 7 Forever Watchguard brain", "target": "queen://hostess", "module": "queen-hostess-brain.py"},
+    {"id": "HORIZON7", "order": 6, "role": "Horizon 7 lane · geography + people corpus inside capsule", "target": "queen://horizon7", "module": "queen-sovereign.py"},
+    {"id": "EYE", "order": 7, "role": "Final_Eye assistive offense tenant", "target": "queen://eyeball", "module": "queen-eyeball.py"},
+    {"id": "FORGE", "order": 8, "role": "Self-build · Grok16 · FIELDC", "target": "queen://forge", "module": "queen-forge.py"},
+    {"id": "KILROY", "order": 9, "role": "KILROY Field OS kernel · CONFIG_RTX_FIELD_DIE", "target": "SG/KILROY/build/bzImage", "module": "kernel/rtx/"},
+    {"id": "AMOURANTHRTX", "order": 10, "role": "RTX engine · FieldKilroy syscall fabric", "target": "github.com/ZacharyGeurts/AMOURANTHRTX", "module": "FieldKilroy/"},
+    {"id": "RTX", "order": 11, "role": "queen-browser exe · FieldWebPanel + FieldSocket", "target": "build/rtx/bin/Linux/queen-browser", "module": "FieldQueenBrowser.cpp"},
+    {"id": "AMMOOS_NET", "order": 12, "role": "INT 2Ah-2Dh FieldNet in guest", "target": "AmmoOS/net/*.fld", "module": "FieldQueenNet.hpp"}
+  ],
+  "sovereign_capsule": {
+    "api": "/api/sovereign",
+    "horizon7": "/api/horizon7",
+    "manifest": "data/queen-sovereign-capsule.json",
+    "doctrine": "never_leave",
+    "compiler_lane": "Grok16 g16 @ field_opt — Queen + Horizon 7 rebuild inside"
+  },
+  "chips": [
+    {"id": "grok16", "name": "Grok16 g16", "role": "gnu++26 field_opt compiler inside RTX memory"},
+    {"id": "fieldc", "name": "FIELDC v4", "role": "Compiles .fld network modules for guest die"},
+    {"id": "rtx", "name": "CHIPS Webbrowser", "role": "Queen Webbrowser surface · CHIPS headers + die cores (no comp shader)"},
+    {"id": "kilroy", "name": "Field KILROY", "role": "Guest kernel die · CONFIG_RTX_FIELD_DIE"},
+    {"id": "hostess_cpu", "name": "Hostess 7 CPU witness", "role": "Truth filter · SDF brain imaging · IFF"},
+    {"id": "packet", "name": "Packet field", "role": "Datagram IFF tags · connection gatekeeper hook"},
+    {"id": "chips_nes", "name": "CHIPS NES 6502", "role": "Navigator/engine/CHIPS/Nes · g16 field_opt"},
+    {"id": "chips_genesis", "name": "CHIPS Genesis 68000", "role": "YM2612 + VDP · active silicon"},
+    {"id": "chips_snes", "name": "CHIPS SNES", "role": "Super Nintendo scaffold→active path"},
+    {"id": "gameroom", "name": "Queen Game Room", "role": "Theater UI · cinema · controller · queen://gameroom"}
+  ],
+  "game_room": {
+    "api": "/api/game-room",
+    "manifest": "data/queen-game-room.json",
+    "g16": "data/chips-g16-manifest.json",
+    "dock": "gameroom"
+  },
+  "cpus": [
+    {"id": "guest_x86", "role": "RTX-DOS guest · INT 2A-2D Queen redirector"},
+    {"id": "hostess7", "role": "Brain orchestration · comfort · redata teach"},
+    {"id": "queen_world", "role": "Horizon 7 isolation · go to Queen there — not a loopback port"}
+  ],
+  "entry": {
+    "url": "http://127.0.0.1:9481/world/browser.html",
+    "script": "world/queen-os.js",
+    "env": ["QUEEN_INTERNAL_ONLY=1", "QUEEN_SOVEREIGN=1", "GROK16_ROOT", "QUEEN_ROOT", "KILROY_ROOT", "AMOURANTHRTX_ROOT", "SG_ROOT"]
+  },
+  "repos": {
+    "kilroy": "/home/default/Desktop/SG/NewLatest/KILROY",
+    "amouranthrtx": "https://github.com/ZacharyGeurts/AMOURANTHRTX"
+  }
+}

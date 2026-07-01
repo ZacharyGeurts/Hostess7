@@ -1,0 +1,38 @@
+{
+  "schema": "hostess7-positional-awareness/v1",
+  "title": "Positional awareness — location, heading, movement always known",
+  "motto": "Place and bearing are never optional — movement and its mode are receipt. Every object and positional is priority 1 until familiarized.",
+  "commander": "hostess7",
+  "module": "lib/hostess7-positional-awareness.py",
+  "api": "/api/hostess7/positional-awareness",
+  "always_known": {
+    "location": "Operator GPS or sealed address — lat/lon + label",
+    "heading": "bearing_deg from field lattice, threat geometry, or sense wire",
+    "movement": "approach · recede · stable from 4D delta_t and temporal slope",
+    "movement_mode": "geometry class — stable, approaching, receding, trespass, humanoid policy"
+  },
+  "unfamiliar_priority": {
+    "priority": 1,
+    "rule": "All objects and positionals are IDENTIFY priority 1 until marked familiar or auto-familiarized",
+    "auto_familiarize_after_sightings": 3,
+    "requires_for_auto": ["location_resolved", "heading_resolved", "label_or_ip"]
+  },
+  "sources": {
+    "locational_sitrep": "lib/field-locational-sitrep-plate.py",
+    "operator_location": "lib/operator-location.py",
+    "field_spatial": "lib/field-spatial-cognition.py",
+    "spatial_existence": "lib/ironclad-spatial-existence.py",
+    "targets": "lib/hostess7-targets.py",
+    "humanoid_motion": "lib/humanoid-motion-training.py",
+    "threat_panel": ".nexus-state/threat-panel.json"
+  },
+  "paired": {
+    "locational_sitrep": "data/field-locational-sitrep-doctrine.json",
+    "missions": "data/hostess7-missions-doctrine.json",
+    "mission_intel": "data/hostess7-mission-intel-doctrine.json",
+    "war_system": "data/hostess7-war-system-doctrine.json",
+    "system_core": "data/hostess7-system-core-doctrine.json"
+  },
+  "familiarity_registry": ".nexus-state/hostess7-positional-familiarity.json",
+  "panel": ".nexus-state/hostess7-positional-awareness-panel.json"
+}

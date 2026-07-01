@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="big-drive">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Big Drive</title>
+  <link rel="stylesheet" href="/assets/field-big-drive.css?v=2" />
+</head>
+<body>
+  <div class="bd-root">
+    <header class="bd-head">
+      <div>
+        <h1>Big Drive</h1>
+        <p class="bd-sub" id="bd-motto">Field frame slider · any format · permanent field replaces USB</p>
+      </div>
+      <span class="bd-pill" id="bd-persist-pill">Field 50+ yr · USB 5–10 yr</span>
+    </header>
+
+    <section class="bd-persist" id="bd-persist" aria-label="USB vs Field persistence"></section>
+
+    <div class="bd-layout">
+      <aside class="bd-aside">
+        <h2>Field frame</h2>
+        <label class="bd-slider-label">
+          <span id="bd-frame-label">4 KiB sector</span>
+          <input type="range" id="bd-frame-slider" min="0" max="12" value="1" />
+        </label>
+        <p class="bd-hint" id="bd-frame-bytes">4,096 bytes / sector</p>
+
+        <h2>Format</h2>
+        <select id="bd-format" class="bd-select" aria-label="Output format"></select>
+
+        <h2>Source</h2>
+        <p class="bd-path" id="bd-source-path">No file — open from Queen Files right-click</p>
+        <section class="bd-stabilizer" aria-label="Field stabilizer progress">
+          <h2>Field stabilizer</h2>
+          <p class="bd-hint">Copy → defield → blanket field → return. No double fields.</p>
+          <div class="bd-progress-wrap">
+            <progress id="bd-stabilizer-bar" max="100" value="0"></progress>
+            <span class="bd-progress-label" id="bd-stabilizer-label">Idle</span>
+          </div>
+        </section>
+        <div class="bd-actions">
+          <button type="button" class="primary" id="bd-ingest">Stabilize to Field Drive</button>
+          <button type="button" id="bd-copy-iso">Copy ISO</button>
+          <button type="button" id="bd-boot-iso">Boot ISO</button>
+          <button type="button" id="bd-replace-usb">Replace USB stick</button>
+          <button type="button" id="bd-vm">VM attach</button>
+        </div>
+      </aside>
+
+      <main class="bd-main">
+        <h2>Devices</h2>
+        <div class="bd-device-grid" id="bd-device-grid" aria-label="Storage devices"></div>
+        <div class="bd-plan" id="bd-plan" hidden></div>
+      </main>
+    </div>
+
+    <footer class="bd-foot" id="bd-status">Loading…</footer>
+  </div>
+  <script src="/assets/field-big-drive.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "schema": "field-ammolang-boundary/v1",
+  "title": "AmmoLang — universal protective execution boundary",
+  "motto": "Everything runs through AmmoLang — script, compiler, Python, Hostess 7, or raw command. Hang guard · freeze assist · change awareness. Presume is Hostess 7 sovereign — separate.",
+  "policy": {
+    "universal_boundary": true,
+    "never_bypass_default": true,
+    "aml_build_default": "1",
+    "bypass_env": "AML_BUILD=0",
+    "active_env": "AML_BOUNDARY_ACTIVE",
+    "protects": ["scripts", "compilers", "python_modules", "hostess7", "bash", "routes", "unknown"],
+    "convert_code_to_aml": false,
+    "convert_execution_to_aml": true,
+    "layering": {
+      "aml": "Orchestration + protective boundary — hang guard, freeze assist (presume separate)",
+      "sh": "Thin routers only — exec ammolang-run.sh or boundary shim at top",
+      "py": "Implementation — logic stays in lib/*.py; AML invokes via run py:module action:"
+    }
+  },
+  "module": "lib/field-ammolang-boundary.py",
+  "aml": "library/dewey/000-computer-science/ammolang/universal_boundary.aml",
+  "router": "lib/ammolang-run.sh",
+  "resolution_order": [
+    "script_routes",
+    "task_registry",
+    "boundary_registry",
+    "scripts/*.sh",
+    "lib/*.py",
+    "Hostess7/Hostess7.sh",
+    "Grok16 compiler shortcuts",
+    "bash fallback"
+  ],
+  "presume": {
+    "separate_from_aml": true,
+    "module": "lib/hostess7-presume.py",
+    "hostess7_route": "hostess7_presume",
+    "note": "Presume is Hostess 7 sovereign — not invoked from AML boundary execution"
+  },
+  "change_awareness": {
+    "module": "lib/hostess7-change-awareness.py",
+    "pulse_after_run": true
+  },
+  "hostess7": {
+    "prefix": "hostess7:",
+    "script": "Hostess7/Hostess7.sh",
+    "note": "Route Hostess 7 work as hostess7:exploring-self status"
+  },
+  "compiler_aliases": {
+    "g16_recompile": "scripts/nexus-g16-recompile.sh",
+    "compiler_stack": "route:compiler_stack",
+    "grok16_ship": "route:grok16_ship",
+    "grok16_gates": "route:grok16_gates",
+    "kilroy_bzimage": "scripts/field-kilroy-bzimage.sh",
+    "beta_pipeline": "route:beta_pipeline"
+  },
+  "newlatest_coverage": {
+    "scope": "SG/NewLatest",
+    "wire_prefixes": ["scripts", "Hostess7", "Queen/scripts", "KILROY/scripts", "GrokLab/scripts", "Grok16/scripts", "AmmoCode/scripts", "Final_Mouth", "lib", "hostess7-training-viewer"],
+    "wire_root_files": ["nexus.sh", "stealth_install.sh", "install-all.sh", "genius_shield.sh"],
+    "ensure_aml": "library/dewey/000-computer-science/ammolang/ensure_protection.aml",
+    "ensure_command": "./lib/ammolang-run.sh ensure_protection"
+  },
+  "registry": "data/field-ammolang-boundary-registry.json",
+  "state_spec": ".nexus-state/ammolang-boundary-spec.json",
+  "panel": ".nexus-state/ammolang-boundary-panel.json",
+  "ledger": ".nexus-state/ammolang-boundary.jsonl"
+}

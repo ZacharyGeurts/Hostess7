@@ -1,0 +1,903 @@
+{
+  "ok": false,
+  "schema": "field-code-bugfinder/v1",
+  "updated": "2026-06-27T07:30:39Z",
+  "path": "OBS-Field",
+  "file_count": 48,
+  "claim_count": 43,
+  "heuristic_count": 28,
+  "heuristic_actionable": 10,
+  "truth_suspect_count": 24,
+  "bug_count": 34,
+  "truth_compares_per_sec": 2044.2,
+  "compare_summary": {
+    "compares": 118,
+    "elapsed_ms": 57.72,
+    "counts": {
+      "bug": 0,
+      "suspect": 24,
+      "clear": 0,
+      "investigate": 94
+    }
+  },
+  "ironclad_landing": {
+    "sealed": true,
+    "verdict": "GREEN",
+    "truth_percent": 100.0,
+    "citation": "ironclad:{book}:{verse}"
+  },
+  "thermal_gate": {
+    "ok": false,
+    "allow_plate_work": false,
+    "thermal_headroom_pct": 100.0,
+    "thermal_level": "ok",
+    "field_sanity_ok": false,
+    "never_build_under_heat": true,
+    "entropy_on_trust_layer": false,
+    "entropy_ok": true,
+    "bus_entropy": null,
+    "ops_requested": 4,
+    "doctrine": "Thermals + entropy checked before plate meld and library truth passes."
+  },
+  "heuristics": [
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 77,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-oauth.cpp",
+      "text": "int OAuthLogin::exec()",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 81,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-oauth.cpp",
+      "text": "return QDialog::exec();",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 26,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-oauth.hpp",
+      "text": "virtual int exec() override;",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 228,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-restream.cpp",
+      "text": "if (login.exec() == QDialog::Rejected) {",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 247,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-restream.cpp",
+      "text": "if (login.exec() == QDialog::Rejected) {",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 464,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-twitch.cpp",
+      "text": "if (login.exec() == QDialog::Rejected) {",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 480,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-twitch.cpp",
+      "text": "if (login.exec() == QDialog::Rejected) {",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 324,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-youtube.cpp",
+      "text": "dlg.exec();",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 327,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-youtube.cpp",
+      "text": "dlg.exec();",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 143,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/frontend-plugins/decklink-captions/decklink-captions.cpp",
+      "text": "dialog.exec();",
+      "kb_query": "code injection eval exec security"
+    }
+  ],
+  "truth_suspects": [
+    {
+      "code_claim": "Field OBS hardening — portable config, offline, readable UI stamps.",
+      "kb_text": "AM.\n\n## Depth, stereo & metric vision\nBinocular stereo: disparity d relates depth Z = fB/d (focal length f, baseline B). Monocular depth networks infer scale-ambiguous geometry; metric depth needs calibration or fusion. RGB-D sensors (struc",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Field OBS hardening — portable config, offline, readable UI stamps.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "only ~2600 lines so this isn't too crazy and makes the lookup very easy",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.381,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "This is an automatically created pull request to remove unresponsive servers and services.",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "{   repositoryOwner(login: \"obsproject\") {     repository(name: \"obs-studio\") {       object(expression: \"master\") {         ... on Commit {           blame(path: \"plugins/rtmp-services/data/services.json\") {            ",
+      "kb_text": "or CAD overlays. FieldDosViewport maps storage image coords to dispatched framebuffer — aosViewport() in aos_chrome.inc. 4K 3840×2160 default; autoZoom4K and SCALE shell command adjust apparent spatial scale on canvas.\n*Tags: projection, ca",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "{   repositoryOwner(login: \"obsproject\") {     repository(name: \"obs-studio\") {       object(expression: \"master\") {         ... on Commit {           blame(path: \"plugins/rtmp-services/data/services.json\") {            ",
+      "kb_text": "AMOURANTHRTX Field Die — Biography Volume 1\nHostess7 Field Press\n=============================================\nTarget length: 230 pages (field-expandable via Hostess7 H7 chapters)\nThis volume: Origins, architecture, operator ethos — Chapter",
+      "kb_source": "atlas",
+      "contradiction": 0.386,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 21.0,
+      "truth_delta": 0.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "absolute_language",
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "{   repositoryOwner(login: \"obsproject\") {     repository(name: \"obs-studio\") {       object(expression: \"master\") {         ... on Commit {           blame(path: \"plugins/rtmp-services/data/services.json\") {            ",
+      "kb_text": "Ekman microexpressions: fleeting universal affect leakage — training improves detection modestly; not courtroom-proof alone. Baseline deviation: compare subject's normal speech rate, gesture rate, pause pattern under low-stakes vs high-stak",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Check if hostname resolves to a valid address - FTL handshake not implemented",
+      "kb_text": "Investigation is structured doubt: observe → hypothesize → test → corroborate. Deduction: if premises true, conclusion necessary. Induction: best explanation from evidence. Abduction (inference to best explanation): rank hypotheses by parsi",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Check if URL responds with status code < 500 and not 404, indicating that at least there's *something* there",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Check if URL responds with status code < 500 and not 404, indicating that at least there's *something* there",
+      "kb_text": "1. State why this book exists beside Field Primer and the Grok16 wiki.",
+      "kb_source": "field_research",
+      "contradiction": 0.383,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Try connecting and sending a RTMP handshake (with SSL if necessary)",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Try connecting and sending a RTMP handshake (with SSL if necessary)",
+      "kb_text": "Grok16 began as a question: *Can we own the full compile chain for field-native execution without forking reality?*",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Fallback encoder bitrates:%s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"%s (%s) encoder bitrates:%s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"AAC simple encoder bitrate mapping:%s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Opus simple encoder bitrate mapping:%s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Server could not start\");",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Server started at port %d\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"redirect: %s\", QT_TO_UTF8(redirect));",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "only for preferences stored in the browser's local store",
+      "kb_text": "Investigation is structured doubt: observe → hypothesize → test → corroborate. Deduction: if premises true, conclusion necessary. Induction: best explanation from evidence. Abduction (inference to best explanation): rank hypotheses by parsi",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "only be loaded once we know that Twitch has auth'ed",
+      "kb_text": "2. Name Ironclad as the immutable knowledge floor and cite its realization date.",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Got youtube redirected answer: %s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "// TODO: Revisit hang on Ubuntu with native dialog",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "// TODO: Revisit hang on Ubuntu with native dialog",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    }
+  ],
+  "bugs": [
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 77,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-oauth.cpp",
+      "text": "int OAuthLogin::exec()",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 81,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-oauth.cpp",
+      "text": "return QDialog::exec();",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 26,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-oauth.hpp",
+      "text": "virtual int exec() override;",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 228,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-restream.cpp",
+      "text": "if (login.exec() == QDialog::Rejected) {",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 247,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-restream.cpp",
+      "text": "if (login.exec() == QDialog::Rejected) {",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 464,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-twitch.cpp",
+      "text": "if (login.exec() == QDialog::Rejected) {",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 480,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-twitch.cpp",
+      "text": "if (login.exec() == QDialog::Rejected) {",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 324,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-youtube.cpp",
+      "text": "dlg.exec();",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 327,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/auth-youtube.cpp",
+      "text": "dlg.exec();",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 143,
+      "path": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/UI/frontend-plugins/decklink-captions/decklink-captions.cpp",
+      "text": "dialog.exec();",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "code_claim": "Field OBS hardening — portable config, offline, readable UI stamps.",
+      "kb_text": "AM.\n\n## Depth, stereo & metric vision\nBinocular stereo: disparity d relates depth Z = fB/d (focal length f, baseline B). Monocular depth networks infer scale-ambiguous geometry; metric depth needs calibration or fusion. RGB-D sensors (struc",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Field OBS hardening — portable config, offline, readable UI stamps.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "only ~2600 lines so this isn't too crazy and makes the lookup very easy",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.381,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "This is an automatically created pull request to remove unresponsive servers and services.",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "{   repositoryOwner(login: \"obsproject\") {     repository(name: \"obs-studio\") {       object(expression: \"master\") {         ... on Commit {           blame(path: \"plugins/rtmp-services/data/services.json\") {            ",
+      "kb_text": "or CAD overlays. FieldDosViewport maps storage image coords to dispatched framebuffer — aosViewport() in aos_chrome.inc. 4K 3840×2160 default; autoZoom4K and SCALE shell command adjust apparent spatial scale on canvas.\n*Tags: projection, ca",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "{   repositoryOwner(login: \"obsproject\") {     repository(name: \"obs-studio\") {       object(expression: \"master\") {         ... on Commit {           blame(path: \"plugins/rtmp-services/data/services.json\") {            ",
+      "kb_text": "AMOURANTHRTX Field Die — Biography Volume 1\nHostess7 Field Press\n=============================================\nTarget length: 230 pages (field-expandable via Hostess7 H7 chapters)\nThis volume: Origins, architecture, operator ethos — Chapter",
+      "kb_source": "atlas",
+      "contradiction": 0.386,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 21.0,
+      "truth_delta": 0.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "absolute_language",
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "{   repositoryOwner(login: \"obsproject\") {     repository(name: \"obs-studio\") {       object(expression: \"master\") {         ... on Commit {           blame(path: \"plugins/rtmp-services/data/services.json\") {            ",
+      "kb_text": "Ekman microexpressions: fleeting universal affect leakage — training improves detection modestly; not courtroom-proof alone. Baseline deviation: compare subject's normal speech rate, gesture rate, pause pattern under low-stakes vs high-stak",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Check if hostname resolves to a valid address - FTL handshake not implemented",
+      "kb_text": "Investigation is structured doubt: observe → hypothesize → test → corroborate. Deduction: if premises true, conclusion necessary. Induction: best explanation from evidence. Abduction (inference to best explanation): rank hypotheses by parsi",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Check if URL responds with status code < 500 and not 404, indicating that at least there's *something* there",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Check if URL responds with status code < 500 and not 404, indicating that at least there's *something* there",
+      "kb_text": "1. State why this book exists beside Field Primer and the Grok16 wiki.",
+      "kb_source": "field_research",
+      "contradiction": 0.383,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Try connecting and sending a RTMP handshake (with SSL if necessary)",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Try connecting and sending a RTMP handshake (with SSL if necessary)",
+      "kb_text": "Grok16 began as a question: *Can we own the full compile chain for field-native execution without forking reality?*",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Fallback encoder bitrates:%s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"%s (%s) encoder bitrates:%s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"AAC simple encoder bitrate mapping:%s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Opus simple encoder bitrate mapping:%s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Server could not start\");",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Server started at port %d\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"redirect: %s\", QT_TO_UTF8(redirect));",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "only for preferences stored in the browser's local store",
+      "kb_text": "Investigation is structured doubt: observe → hypothesize → test → corroborate. Deduction: if premises true, conclusion necessary. Induction: best explanation from evidence. Abduction (inference to best explanation): rank hypotheses by parsi",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "only be loaded once we know that Twitch has auth'ed",
+      "kb_text": "2. Name Ironclad as the immutable knowledge floor and cite its realization date.",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "blog(LOG_DEBUG, \"Got youtube redirected answer: %s\",",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "// TODO: Revisit hang on Ubuntu with native dialog",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "// TODO: Revisit hang on Ubuntu with native dialog",
+      "kb_text": "nics of materials: stress/strain, Mohr's circle, failure theories. Fluids: Bernoulli, Reynolds, pumps, turbulence basics. Thermo-fluids: heat exchangers, HVAC loads. Civil: structural analysis, reinforced concrete, geotechnical bearing, hyd",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    }
+  ],
+  "doctrine": "/home/default/Desktop/SG/NewLatest/data/field-code-bugfinder-doctrine.json"
+}

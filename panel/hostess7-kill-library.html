@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hostess 7 KILL Library</title>
+  <style>
+    :root {
+      --bg: #0c0808;
+      --panel: #1a1010;
+      --border: #4a2020;
+      --text: #f0e6e6;
+      --muted: #a08080;
+      --kill: #c43c3c;
+      --gold: #c9a227;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #241414, var(--bg));
+    }
+    header h1 { margin: 0 0 6px; color: var(--kill); font-size: 1.4rem; }
+    header p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+    main { display: grid; grid-template-columns: 280px 1fr; gap: 16px; padding: 16px 22px; max-width: 1200px; }
+    @media (max-width: 800px) { main { grid-template-columns: 1fr; } }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    h2 { margin: 0 0 10px; font-size: 1rem; color: var(--gold); }
+    .book-list { list-style: none; padding: 0; margin: 0; max-height: 420px; overflow: auto; }
+    .book-list li {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.88rem;
+    }
+    .book-list li:hover, .book-list li.active { background: rgba(196,60,60,0.15); }
+    .book-list li span { display: block; color: var(--muted); font-size: 0.78rem; }
+    pre {
+      background: #100a0a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      overflow: auto;
+      font-size: 0.82rem;
+      max-height: 520px;
+      white-space: pre-wrap;
+    }
+    button {
+      background: #5a2020;
+      border: 1px solid var(--kill);
+      color: #fff;
+      border-radius: 8px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font: inherit;
+      margin-right: 8px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(196,60,60,0.25);
+      border: 1px solid var(--kill);
+      font-size: 0.75rem;
+      margin-left: 8px;
+    }
+    .status { margin-top: 8px; font-size: 0.85rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hostess 7 KILL Library <span class="badge">PRIVATE · VIEW</span></h1>
+    <p>Who and what is on KILL — secured to Hostess 7. Operator may view; only Hostess 7 writes.</p>
+  </header>
+  <main>
+    <section>
+      <h2>KILL books</h2>
+      <button type="button" id="sync-btn">Sync from targets</button>
+      <button type="button" id="refresh-btn">Refresh</button>
+      <p class="status" id="meta">Loading…</p>
+      <ul class="book-list" id="books"></ul>
+    </section>
+    <section>
+      <h2 id="reader-title">Select a book</h2>
+      <pre id="reader">—</pre>
+    </section>
+  </main>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let selected = "";
+    async function api(path, opts) {
+      const r = await fetch(path, opts);
+      return r.json();
+    }
+    function renderBooks(doc) {
+      const books = doc.books || [];
+      $("meta").textContent = `KILL count: ${doc.kill_count ?? 0} · books: ${doc.book_count ?? books.length} · tier: ${doc.security_tier || "secured"}`;
+      $("books").innerHTML = books.map((b) =>
+        `<li data-id="${b.book_id || b.id}" class="${(b.book_id || b.id) === selected ? "active" : ""}">
+          <strong>${b.title || b.book_id || b.id}</strong>
+          <span>${b.target_id || ""} ${b.index ? "· INDEX" : ""}</span>
+        </li>`
+      ).join("") || "<li><span>No KILL books — sync from targets.</span></li>";
+      document.querySelectorAll("#books li[data-id]").forEach((el) => {
+        el.addEventListener("click", () => openBook(el.dataset.id));
+      });
+    }
+    async function loadPanel() {
+      const doc = await api("/api/hostess7/kill-library");
+      renderBooks(doc);
+    }
+    async function openBook(id) {
+      selected = id;
+      $("reader-title").textContent = id;
+      $("reader").textContent = "Loading…";
+      const doc = await api(`/api/hostess7/kill-library/read?book_id=${encodeURIComponent(id)}`);
+      if (doc.ok) {
+        $("reader-title").textContent = doc.title || id;
+        $("reader").textContent = doc.text || "(empty)";
+      } else {
+        $("reader").textContent = JSON.stringify(doc, null, 2);
+      }
+      loadPanel();
+    }
+    $("refresh-btn").addEventListener("click", loadPanel);
+    $("sync-btn").addEventListener("click", async () => {
+      $("meta").textContent = "Syncing…";
+      const doc = await api("/api/hostess7/kill-library/sync", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
+      $("meta").textContent = doc.ok ? `Synced · ${doc.kill_count} KILL · ${doc.packed} packed` : (doc.error || "sync failed");
+      loadPanel();
+    });
+    loadPanel();
+  </script>
+</body>
+</html>

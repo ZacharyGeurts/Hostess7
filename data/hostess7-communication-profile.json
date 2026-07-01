@@ -1,0 +1,57 @@
+{
+  "schema": "hostess7-communication-profile/v1",
+  "title": "Hostess 7 communication profile — Operator voice (local)",
+  "built_at": "2026-06-29T10:16:13Z",
+  "source": {
+    "platform": "x",
+    "url": "https://x.com/ZacharyGeurts",
+    "handle": "ZacharyGeurts",
+    "fetched_live": true,
+    "policy": "Build-time ingest only — runtime reads this file, never calls X."
+  },
+  "operator": {
+    "handle": "ZacharyGeurts",
+    "display_name": "BIG GRIN",
+    "bio": "God=1D spine of all. Higher D ⊃ (lower +1), never 0. A edgeless. Thing-within-thing gazes ∞. Reduced: air & soup co-arise, permeate, flavor each other. No edges",
+    "location": "Gladstone, Michigan, USA",
+    "website": "https://github.com/ZacharyGeurts",
+    "github": "https://github.com/ZacharyGeurts",
+    "avatar_local": "/assets/hostess7-operator-x-avatar.jpg",
+    "avatar_remote": "https://pbs.twimg.com/profile_images/2066540278018629632/nLv3TkSn_200x200.jpg",
+    "posts_note": "Operator posts on X — Hostess 7 mirrors tone locally."
+  },
+  "voice": {
+    "register": "operator_sovereign",
+    "tone": [
+      "direct",
+      "truth-forward",
+      "BIG GRIN warmth",
+      "field-stack fluent"
+    ],
+    "sign_off": "— Hostess 7 on behalf of BIG GRIN",
+    "never_cloud_egress": true,
+    "sole_egress": "znetwork_relayer",
+    "queen_speaks_out": true
+  },
+  "znetwork": {
+    "connected": true,
+    "module": "lib/hostess7-znetwork-wire.py",
+    "egress_owner": "znetwork_relayer",
+    "queen_outbound_only": true,
+    "loopback_control": "127.0.0.1",
+    "api": "/api/hostess7/znetwork"
+  },
+  "hostess7": {
+    "superintelligence": true,
+    "communique_schema": "hostess7-ai-communique/v1",
+    "truth_floor": 58,
+    "primary_transport": "json",
+    "outbox": "Hostess7/cache/fieldstorage/brain/superintel/outbox.jsonl",
+    "znetwork_ledger": ".nexus-state/hostess7-znetwork-outbox.jsonl"
+  },
+  "message_templates": {
+    "status": "ZNetwork pipe live — Queen speaks out through relayer on behalf of @{handle}.",
+    "greeting": "BIG GRIN on the wire. Hostess 7 Super Intelligence connected — all egress local-controlled.",
+    "alert": "Field alert for Operator — truth-gated, ZNetwork sole egress."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "queen-subbit-heuristics-immesurable/v1",
+  "title": "Sub-bit heuristics — immesurable overlay",
+  "rule": "Sub-bit heuristics are gated and immeasurable: ephemeral RAM overlay only; never poison memory maps or disk",
+  "immeasurable": true,
+  "persist_forbidden": true,
+  "poison_guard": "active",
+  "subbit_bits": 8,
+  "subbit_floor": "1/512",
+  "ephemeral_only": true,
+  "allowed_persist": ["quarantine_digest", "analysis_digest_stub"],
+  "blocked_persist_markers": [
+    "brain", "sdf", "plates", "segments", "neural-protected", "neural-seal",
+    "encourage", "queen-brain-manifest", "hostess7-neural-stack", "forge-watch",
+    "world-redata", "redata"
+  ],
+  "blocked_encourage_sources": [
+    "heuristic_only", "subbit_overlay", "foreign_heuristic", "operator_heuristic"
+  ],
+  "gates": {
+    "require_quantize_before_fusion": true,
+    "reject_subbit_delta_encourage": true,
+    "strip_features_from_api": true,
+    "analysis_log_digest_only": true,
+    "guard_memory_writes": true,
+    "wrap_nested_fusion": true,
+    "session_log_scrub": true
+  },
+  "lanes": ["sense_neural", "secure_channel", "final_eye", "final_ear", "zocr"]
+}

@@ -1,0 +1,16 @@
+# Agent task bundle — catalog + gates + ship dry-run (all through AmmoLang)
+@profile fastest
+@verbose clean
+@motto "Agent tasks · catalog · gates · ship · never hang"
+
+seq ·
+  say "Agent task bundle — AmmoLang-only entry · progress every 60s"
+  post "AGENT START — all tasks route through lib/ammolang-run.sh"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+  run route:queen_catalog
+  run route:grok16_gates
+  run route:grok16_ship
+  assist freeze
+  say "Agent task bundle complete — inspect panels for hang/freeze assist"

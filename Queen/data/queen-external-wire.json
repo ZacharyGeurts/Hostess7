@@ -1,0 +1,111 @@
+{
+  "schema": "queen-external-wire/v2",
+  "title": "Queen External Field Wire — beyond-DARPA grounded secure comms",
+  "motto": "Redundant truth. Sealed chain. External never bleeds in. Human input is situational — keystroke and voice always compromised.",
+  "tier": "beyond_darpa_lockheed",
+  "doctrine": {
+    "lane": "External",
+    "import_to_main": false,
+    "internal_touch": false,
+    "presume_hostile": true,
+    "ddos_immune": true,
+    "refuse_storage_balloon": true,
+    "grounded_only": true,
+    "positive_id_before_expand": true,
+    "never_tampered_or_broken": true,
+    "fail_closed_on_seal_break": true,
+    "redundancy_required": true,
+    "truth_filter_required": true,
+    "integrity_chain": true
+  },
+  "parties": {
+    "hostess7": {
+      "label": "Hostess 7 peer",
+      "secure_pair": true,
+      "wire_token_required": true,
+      "may_speak_to": ["hostess7", "ai", "human"],
+      "trust": "capsule_peer"
+    },
+    "ai": {
+      "label": "Artificial intelligence",
+      "secure_pair": true,
+      "wire_token_required": false,
+      "may_speak_to": ["hostess7", "ai", "human"],
+      "trust": "machine_json"
+    },
+    "human": {
+      "label": "Human operator",
+      "secure_pair": true,
+      "wire_token_required": false,
+      "may_speak_to": ["hostess7", "ai", "human"],
+      "trust": "situational",
+      "input_compromise_expected": true,
+      "note": "id10t behind keyboard — keystroke and voice always situational; never full trust"
+    }
+  },
+  "input_channels": {
+    "keystroke": {"compromise": "expected", "adjustment": "truth_strict_redundancy_hold"},
+    "voice": {"compromise": "expected", "adjustment": "truth_strict_redundancy_hold"},
+    "typed": {"compromise": "likely", "adjustment": "truth_filter"},
+    "paste": {"compromise": "high", "adjustment": "redundancy_hold"},
+    "machine": {"compromise": "low", "adjustment": "standard"}
+  },
+  "filters": {
+    "redundancy": {
+      "paths": ["structure", "truth", "echo"],
+      "min_pass": 2,
+      "require_all_for_human": true
+    },
+    "truth": {
+      "floor": 58,
+      "tier": "adapt",
+      "human_floor": 58,
+      "reject_below": 28
+    },
+    "integrity": {
+      "algorithm": "sha256_chain",
+      "verify_on_poll": true,
+      "verify_on_append": true
+    }
+  },
+  "storage": {
+    "ring_max_lines": 480,
+    "ring_max_bytes": 2097152,
+    "refuse_when_full": true,
+    "no_auto_purge_on_surge": true,
+    "state_subdir": "external-wire"
+  },
+  "rate_limits": {
+    "per_source_per_minute": 24,
+    "global_per_minute": 96,
+    "max_body_bytes": 8192,
+    "max_concurrent_burst": 8,
+    "surge_window_seconds": 10,
+    "surge_trip_count": 40,
+    "circuit_cooldown_seconds": 45
+  },
+  "verdicts": {
+    "accept": "EXTERNAL_SECURE_ACK",
+    "hold": "EXTERNAL_REDUNDANCY_HOLD",
+    "reject": "EXTERNAL_TRUTH_REJECT",
+    "seal_break": "EXTERNAL_SEAL_BROKEN",
+    "surge": "EXTERNAL_CIRCUIT_OPEN",
+    "storage_full": "EXTERNAL_STORAGE_REFUSE"
+  },
+  "api": {
+    "path": "/api/external-wire",
+    "actions": ["status", "receive", "speak", "ground", "poll", "verify", "teach", "purge", "reset_limits"]
+  },
+  "contact_vector": {
+    "axes": ["ai", "human", "unknown", "alien"],
+    "api": "/api/contact-vector",
+    "update_on_contact": true,
+    "instant_read": true
+  },
+  "world_redata": {
+    "api": "/api/world-redata",
+    "forever": true,
+    "upstream": "World_Redata",
+    "github": "https://github.com/ZacharyGeurts/World_Redata"
+  }
+}

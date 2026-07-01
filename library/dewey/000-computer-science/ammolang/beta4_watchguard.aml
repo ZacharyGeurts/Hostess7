@@ -1,0 +1,17 @@
+# Beta 4 WATCHGUARD — verify + truth-lie + optional prep (AML monitored)
+@profile fastest
+@verbose clean
+@motto "Beta 4 WATCHGUARD — verify · truth-lie · Hostess7 stack ready"
+
+seq ·
+  say "Beta 4 WATCHGUARD — AML ready lane for 2.0.0-beta4"
+  post "BETA4_WATCHGUARD START"
+  test suite:beta4_verify
+  run py:hostess7-truth-lie-threat action:panel timeout:30 stall:15
+  run py:hostess7-presume action:panel timeout:30 stall:15
+  run py:hostess7-aml-ingress action:panel timeout:30 stall:15
+  run py:field-ammolang-boundary action:panel timeout:30 stall:15
+  run py:hostess7-change-awareness action:pulse timeout:60 stall:30
+  assist freeze
+  say "Beta 4 WATCHGUARD verify complete — run beta4_library_prep + beta4_restore_h7c for full corpus"
+  post "BETA4_WATCHGUARD COMPLETE"

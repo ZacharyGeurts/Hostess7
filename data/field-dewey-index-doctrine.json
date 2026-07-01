@@ -1,0 +1,60 @@
+{
+  "schema": "field-dewey-index/v1",
+  "title": "Dewey index librarian — catalog, tag, find",
+  "motto": "Every book indexed — call number, shelf, tags, facets. Find by keyword, tag, Dewey, or kind.",
+  "module": "lib/field-dewey-index.py",
+  "root": "library/dewey",
+  "outputs": {
+    "index": ".nexus-state/field-dewey-index.json",
+    "search_jsonl": ".nexus-state/field-dewey-search.jsonl",
+    "tags": ".nexus-state/field-dewey-tags.json",
+    "brain_mirror": "brain/library/dewey_index.json"
+  },
+  "facets": [
+    "book_kind",
+    "dewey",
+    "shelf",
+    "collection",
+    "personhood",
+    "vehicles",
+    "speaking",
+    "combat",
+    "subject",
+    "format",
+    "ready"
+  ],
+  "tag_families": {
+    "kind": ["exploring", "textbook", "corpus", "manual", "guide", "speaking"],
+    "scope": ["personhood", "vehicles", "language", "stem", "security", "war"],
+    "combat": ["hand-to-hand", "weaponized", "martial-arts", "bjj", "grappling", "firearms", "knives"],
+    "speaking": ["phonetics", "dictionary", "thesaurus", "language"],
+    "format": ["h7c", "pdf", "corpus"]
+  },
+  "sources": [
+    "library/dewey/**/shelf.json",
+    "library/dewey/**/book.json",
+    "library/dewey/**/book-manifest.json",
+    "library/dewey/**/book-information-index.json",
+    "library/dewey/**/*.h7c",
+    "library/dewey/400-education/speaking-index.jsonl"
+  ],
+  "integrations": {
+    "dewey_library": "lib/field-dewey-library.py",
+    "card_catalog": "lib/field-card-catalog.py",
+    "librarian": "lib/h7-library-librarian.py",
+    "library_registry": "lib/field-library-registry.py"
+  },
+  "api": [
+    "/api/dewey-index",
+    "/api/dewey-index/search",
+    "/api/dewey-index/tags",
+    "/api/dewey-index/facets",
+    "/api/dewey-index/book"
+  ],
+  "cli": [
+    "python3 lib/field-dewey-index.py build",
+    "python3 lib/field-dewey-index.py search bjj",
+    "python3 lib/field-dewey-index.py tags",
+    "python3 lib/field-dewey-index.py facets"
+  ]
+}

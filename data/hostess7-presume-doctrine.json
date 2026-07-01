@@ -1,0 +1,106 @@
+{
+  "schema": "hostess7-presume-doctrine/v3",
+  "title": "Hostess 7 presume — sovereign timing, uninterruptable decisions, propagated power",
+  "motto": "Presume is powerful — not go away. Resources stay devoted where needed. Once decided, the action is uninterruptable; no outside influence may override it.",
+  "module": "lib/hostess7-presume.py",
+  "api": "/api/hostess7/presume",
+  "aml_separation": {
+    "separate_from_aml": true,
+    "aml_optional": true,
+    "rule": "Presume is Hostess 7 sovereign — AML is execution boundary only. Presume never rides universal_boundary.",
+    "stale_commit_ttl_us": 120000000,
+    "sweep_aml_orphan_us": 5000000,
+    "aml_route": null,
+    "hostess7_route": "hostess7_presume",
+    "hostess7_aml": "library/dewey/000-computer-science/ammolang/hostess7_presume.aml",
+    "hostess7_commands": "./Hostess7.sh presume {panel|pulse|timing|propagate|train|sweep|witness}"
+  },
+  "precision_us": true,
+  "no_busy_wait": true,
+  "resume_on_point": true,
+  "not_go_away": {
+    "rule": "Presume does NOT mean dismiss, abandon, or release resources.",
+    "meaning": "While one thread presumes a deadline, alternate tasks and parallel devotion continue — CPU, counsel, and field wire stay available wherever needed.",
+    "resources_remain": true
+  },
+  "sovereign_binding": {
+    "uninterruptable_once_decided": true,
+    "outside_influence_blocked": true,
+    "override_authority": ["hostess7", "operator"],
+    "release_requires": "explicit release by binding authority — never external cancel",
+    "motto": "Decide once. Finish the action. Outside voices cannot revoke the decision."
+  },
+  "rules": [
+    "Every presume() records file, line, function, and microsecond checkpoint.",
+    "Line profiler traces execution to the line with duration_us per step.",
+    "When wait_us > 0, alternate tasks run until resume_at_us — never sleep-spin.",
+    "Return precisely at resume point; drift_us logged for witness.",
+    "decide() binds an action as uninterruptable — no outside influence may cancel or redirect it.",
+    "Resources remain devoted during presume — alternate tasks, parallel slices, and field counsel continue.",
+    "Presume hostile (Queen IFF) is a separate security lane — this doctrine is sovereign timing + decision binding."
+  ],
+  "alternate_tasks": [
+    {
+      "id": "self_maintenance_probe",
+      "label": "Self-maintenance probe",
+      "module": "lib/hostess7-self-maintenance.py",
+      "callable": "probe_hostess7",
+      "max_slice_us": 250000
+    },
+    {
+      "id": "idle_status",
+      "label": "Idle grow status",
+      "module": "lib/hostess7-idle-grow.py",
+      "callable": "idle_status",
+      "max_slice_us": 100000
+    },
+    {
+      "id": "master_tick",
+      "label": "Master operator tick",
+      "module": "lib/hostess7-master.py",
+      "callable": "master_operator_tick",
+      "args": [0],
+      "max_slice_us": 500000
+    },
+    {
+      "id": "sovereign_know",
+      "label": "Sovereign clock know",
+      "module": "lib/sovereign-clock.py",
+      "callable": "know",
+      "max_slice_us": 50000
+    }
+  ],
+  "propagation": {
+    "mandatory": true,
+    "rule": "Every listed module honors presume commits — uninterruptable actions, resources still devoted.",
+    "targets": [
+      {"id": "system_core", "module": "lib/hostess7-system-core.py", "bind": "pillar_verify"},
+      {"id": "mouth_neural", "module": "lib/hostess7-mouth-neural.py", "bind": "run_mouth_training"},
+      {"id": "speaking_training", "module": "lib/hostess7-speaking-training.py", "bind": "run_speaking_training"},
+      {"id": "training", "module": "lib/hostess7-training.py", "bind": "run_track"},
+      {"id": "cool_smooth", "module": "lib/hostess7-cool-smooth.py", "bind": "build_panel"},
+      {"id": "brain_guard", "module": "lib/hostess7-brain-guard.py", "bind": "witness"},
+      {"id": "mouthball", "module": "Queen/lib/queen-mouthball.py", "bind": "dispatch"},
+      {"id": "threat_panel", "module": "lib/threat-panel-http.py", "bind": "api"},
+      {"id": "exploring_self", "module": "lib/field-exploring-hostess7.py", "bind": "pack_edition"}
+    ]
+  },
+  "change_awareness": {
+    "doctrine": "data/hostess7-change-awareness-doctrine.json",
+    "module": "lib/hostess7-change-awareness.py",
+    "rule": "Hostess 7 knows all changes when they happen. Check presume panel for slowdown, speedup, hang.",
+    "timing_verdicts": ["steady", "speedup", "slowdown", "slowdown_severe", "hang"]
+  },
+  "paired_doctrine": {
+    "world_honor": "data/hostess7-world-honor-doctrine.json",
+    "self_maintenance": "data/hostess7-self-maintenance-doctrine.json",
+    "hang_guard": "lib/hostess7-hang-guard.py",
+    "change_awareness": "data/hostess7-change-awareness-doctrine.json",
+    "aml_ingress": "data/hostess7-aml-ingress-doctrine.json",
+    "supreme_authority": "data/hostess7-supreme-authority.json"
+  },
+  "disambiguation": {
+    "hostess7_presume": "Sovereign timing + uninterruptable decision binding — NOT go away.",
+    "queen_presume_hostile": "Security IFF — every contact hostile until positive ID. Separate lane."
+  }
+}

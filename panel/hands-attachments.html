@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hostess 7 — Hands &amp; Attachments</title>
+  <link rel="icon" href="/assets/hostess7-hands-chamber.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/hands-attachments.css" />
+  <link rel="stylesheet" href="/assets/hostess7-program-frame.css" />
+</head>
+<body class="ha-page">
+  <header class="ha-head">
+    <div>
+      <h1>Hands &amp; Attachments</h1>
+      <p>Look at what is mounted · learn until it moves like a native hand</p>
+    </div>
+    <span class="ha-badge">HOSTESS7 SOVEREIGN</span>
+  </header>
+
+  <div class="ha-grid">
+    <section class="ha-card" aria-label="Left hand">
+      <h2>Left hand</h2>
+      <div class="ha-canvas-wrap">
+        <canvas id="ha-canvas-left" class="ha-canvas" aria-label="Left hand wireframe"></canvas>
+      </div>
+      <div class="ha-grip-row" id="ha-grip-left">
+        <button type="button" data-grip="open">Open</button>
+        <button type="button" data-grip="power">Power</button>
+        <button type="button" data-grip="precision">Precision</button>
+        <button type="button" data-grip="pinch">Pinch</button>
+        <button type="button" data-grip="tripod">Tripod</button>
+        <button type="button" data-grip="sphere">Sphere</button>
+      </div>
+    </section>
+
+    <section class="ha-card" aria-label="Right hand">
+      <h2>Right hand</h2>
+      <div class="ha-canvas-wrap">
+        <canvas id="ha-canvas-right" class="ha-canvas" aria-label="Right hand wireframe"></canvas>
+      </div>
+      <div class="ha-grip-row" id="ha-grip-right">
+        <button type="button" data-grip="open">Open</button>
+        <button type="button" data-grip="power">Power</button>
+        <button type="button" data-grip="precision">Precision</button>
+        <button type="button" data-grip="pinch">Pinch</button>
+        <button type="button" data-grip="tripod">Tripod</button>
+        <button type="button" data-grip="hook">Hook</button>
+      </div>
+      <div class="ha-prof" id="ha-hand-prof">Hand proficiency —</div>
+      <div class="ha-bar"><span id="ha-hand-bar" style="width:0%"></span></div>
+      <div class="ha-actions" style="margin-top:10px">
+        <button type="button" id="ha-train-hands">Train hands</button>
+        <button type="button" id="ha-refresh">Refresh</button>
+      </div>
+    </section>
+
+    <section class="ha-card" aria-label="Attachments">
+      <h2>Attachments</h2>
+      <p style="font-size:0.78rem;opacity:0.75;margin:0 0 10px">Mount · Look (vision) · Learn · Wield — proficiency tracks toward hand equivalence.</p>
+      <div class="ha-attach-list" id="ha-attach-list"></div>
+      <div class="ha-register">
+        <input id="ha-reg-label" type="text" placeholder="New attachment label" aria-label="Attachment label" />
+        <input id="ha-reg-kind" type="text" placeholder="kind" value="custom" aria-label="Kind" />
+        <input id="ha-reg-mount" type="text" placeholder="mount" value="hand_r" aria-label="Mount point" />
+        <button type="button" id="ha-reg-btn">Register</button>
+      </div>
+      <div class="ha-log" id="ha-log" aria-live="polite"></div>
+    </section>
+  </div>
+
+  <script src="/assets/queen-program-launch.js"></script>
+  <script src="/assets/hostess7-program-frame.js"></script>
+  <script src="/assets/hands-attachments.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      Hostess7ProgramFrame.mount({
+        programId: "hostess7-hands",
+        title: "Hands & Attachments",
+        icon: "/assets/hostess7-hands-chamber.svg",
+        exportUrl: "/api/hostess7/hands",
+        onRefresh: function () { document.getElementById("ha-refresh")?.click(); },
+      });
+    });
+  </script>
+</body>
+</html>

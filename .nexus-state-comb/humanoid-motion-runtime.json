@@ -1,0 +1,191 @@
+{
+  "schema": "humanoid-motion-runtime/v1",
+  "loaded": {
+    "touch_toes": {
+      "id": "touch_toes",
+      "label": "Touch toes",
+      "family": "mobility",
+      "proficiency": 0.006,
+      "matrix_loaded": false,
+      "physics_loaded": true,
+      "loaded_at": "2026-06-30T14:06:36Z",
+      "ticks": 0,
+      "primitives": [
+        "hip_hinge",
+        "spinal_flexion",
+        "hamstring_lengthen",
+        "toe_reach"
+      ],
+      "matrix_quote": "I can touch my toes.",
+      "training_quote": "Training Touch toes under gravity — receipts, not instant load."
+    },
+    "wing_chun": {
+      "id": "wing_chun",
+      "label": "Wing Chun",
+      "family": "kung_fu",
+      "proficiency": 0.9036,
+      "matrix_loaded": false,
+      "physics_loaded": true,
+      "loaded_at": "2026-06-30T14:06:37Z",
+      "ticks": 88,
+      "primitives": [
+        "chain_punch",
+        "pak_sao",
+        "tan_sao",
+        "biu_jee",
+        "chi_sao"
+      ],
+      "matrix_quote": "I know Wing Chun.",
+      "training_quote": "Training Wing Chun under gravity — receipts, not instant load."
+    },
+    "forward_fold": {
+      "id": "forward_fold",
+      "label": "Forward fold",
+      "family": "mobility",
+      "proficiency": 0.006,
+      "matrix_loaded": false,
+      "physics_loaded": true,
+      "loaded_at": "2026-06-30T14:06:36Z",
+      "ticks": 0,
+      "primitives": [
+        "spinal_flexion",
+        "hip_hinge",
+        "hamstring_lengthen"
+      ],
+      "matrix_quote": "I know forward fold.",
+      "training_quote": "Training Forward fold under gravity — receipts, not instant load."
+    },
+    "boxing": {
+      "id": "boxing",
+      "label": "Boxing",
+      "family": "striking",
+      "proficiency": 0.2508,
+      "matrix_loaded": false,
+      "physics_loaded": true,
+      "loaded_at": "2026-06-30T14:06:37Z",
+      "ticks": 24,
+      "primitives": [
+        "jab",
+        "cross",
+        "hook",
+        "uppercut",
+        "slip",
+        "roll"
+      ],
+      "matrix_quote": "I know boxing.",
+      "training_quote": "Training Boxing under gravity — receipts, not instant load."
+    },
+    "mma_mixed": {
+      "id": "mma_mixed",
+      "label": "MMA — Mixed Martial Arts",
+      "family": "mma",
+      "proficiency": 0.2508,
+      "matrix_loaded": false,
+      "physics_loaded": true,
+      "loaded_at": "2026-06-30T14:06:37Z",
+      "ticks": 24,
+      "primitives": [
+        "jab_cross",
+        "double_leg",
+        "guillotine",
+        "ground_pound",
+        "sprawl"
+      ],
+      "matrix_quote": "I know MMA.",
+      "training_quote": "Training MMA — Mixed Martial Arts under gravity — receipts, not instant load."
+    },
+    "muay_thai": {
+      "id": "muay_thai",
+      "label": "Muay Thai",
+      "family": "striking",
+      "proficiency": 0.2508,
+      "matrix_loaded": false,
+      "physics_loaded": true,
+      "loaded_at": "2026-06-30T14:06:38Z",
+      "ticks": 24,
+      "primitives": [
+        "teep",
+        "round_kick",
+        "elbow",
+        "clinch_knee",
+        "check"
+      ],
+      "matrix_quote": "I know Muay Thai.",
+      "training_quote": "Training Muay Thai under gravity — receipts, not instant load."
+    },
+    "krav_maga": {
+      "id": "krav_maga",
+      "label": "Krav Maga",
+      "family": "defense",
+      "proficiency": 0.2508,
+      "matrix_loaded": false,
+      "physics_loaded": true,
+      "loaded_at": "2026-06-30T14:06:38Z",
+      "ticks": 24,
+      "primitives": [
+        "defense_v",
+        "groin_kick",
+        "eye_strike",
+        "weapon_disarm",
+        "retzev"
+      ],
+      "matrix_quote": "I know Krav Maga.",
+      "training_quote": "Training Krav Maga under gravity — receipts, not instant load."
+    }
+  },
+  "active_skill": "krav_maga",
+  "training": {
+    "skill": "krav_maga",
+    "ticks_ran": 24,
+    "proficiency": 0.2508,
+    "physics_mode": true,
+    "physics_sim": {
+      "com_y": -34.897019,
+      "com_vy": -22.713696,
+      "mass_kg": 68.0,
+      "grounded": false,
+      "kinetic_j": 17541.008286,
+      "potential_j": 23351.176401,
+      "energy_drift_pct": 1.2478,
+      "stance_stability": 0.0,
+      "ticks": 184,
+      "gravity_m_s2": 9.80665,
+      "dt_s": 0.0166667,
+      "energy_ok": true
+    },
+    "updated": "2026-06-30T14:06:38Z"
+  },
+  "total_ticks": 184,
+  "updated": "2026-06-30T14:06:38Z",
+  "physics_state": {
+    "com_y": -34.897019,
+    "com_vy": -22.713696,
+    "mass_kg": 68.0,
+    "grounded": false,
+    "kinetic_j": 17541.008286,
+    "potential_j": 23351.176401,
+    "energy_drift_pct": 1.2478,
+    "stance_stability": 0.0,
+    "ticks": 184
+  },
+  "body_motion": [
+    {
+      "primitive": "defense_v",
+      "zone": "hands",
+      "norm_x": 0.0,
+      "norm_y": 0.0,
+      "norm_z": 0.72,
+      "weight": 0.2207,
+      "skill": "krav_maga"
+    },
+    {
+      "primitive": "retzev",
+      "zone": "centerline",
+      "norm_x": 0.0,
+      "norm_y": 0.0,
+      "norm_z": 0.58,
+      "weight": 0.2257,
+      "skill": "krav_maga"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "signals-field-secure-line-doctrine/v1",
+  "motto": "One secure signal line in and out — plated, melded to Hostess7, never system corrupt.",
+  "policy": {
+    "plated": true,
+    "meld_to_hostess7": true,
+    "brain_witness_only": true,
+    "brain_relocate": false,
+    "destructive_sync": false,
+    "system_corrupt": false,
+    "ingress_sealed": true,
+    "egress_sealed": true,
+    "shared_program_comms": true,
+    "flock_fsync_mirror": true
+  },
+  "lines": {
+    "ingress": {
+      "role": "Secure line in — Hostess7 truth corroboration before field accept",
+      "witness": "hostess7",
+      "plate_slot": 15
+    },
+    "egress": {
+      "role": "Secure line out — gatekeeper + sense package chain before field emit",
+      "witness": "hostess7",
+      "plate_slot": 15
+    }
+  },
+  "chain": {
+    "sense_package": "lib/field-sense-package-meld.py",
+    "plate_meld": "lib/field-plate-meld.py",
+    "signals_field": "lib/signals-field.py",
+    "hostess7_bridge": "lib/hostess7-field.sh"
+  }
+}

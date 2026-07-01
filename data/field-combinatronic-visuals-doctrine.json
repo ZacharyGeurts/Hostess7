@@ -1,0 +1,197 @@
+{
+  "schema": "field-combinatronic-visuals-doctrine/v1",
+  "title": "Combinatronic visuals — every file, every pattern, cross-machine repair",
+  "motto": "Know every file. Know the pattern. Rebuild any broken asset from seeds on any clone.",
+  "module": "lib/field-combinatronic-visuals.py",
+  "registry": "data/field-combinatronic-visuals-registry.json",
+  "manifest": "data/field-combinatronic-visuals-manifest.json",
+  "panel": "field-combinatronic-visuals-panel.json",
+  "apis": {
+    "manifest": "/api/combinatronic/visuals",
+    "inventory": "/api/combinatronic/visuals/inventory",
+    "registry": "/api/combinatronic/visuals/registry",
+    "repair": "/api/combinatronic/visuals/repair",
+    "pattern": "/api/combinatronic/visuals/pattern"
+  },
+  "sources": {
+    "ironclad_chips": {
+      "path": "field-ironclad-chips-combinatorics.json",
+      "root": "NEXUS_STATE_DIR",
+      "role": "source_of_truth",
+      "drives": ["chip_thumb_png", "chip_detail_png", "chip_thumb_mirror", "chip_detail_mirror"],
+      "ids": "chips[].id",
+      "repair": "field-ironclad-chips-combinatorics.py publish — then ironclad-all",
+      "note": "Every die exists here — ask Ironclad, then chips_core after seal"
+    },
+    "chip_catalog": {
+      "path": "data/field-combinatronic-chip-catalog.json",
+      "role": "featured_render_overlay",
+      "drives": ["chip_png", "chip_mirror"],
+      "ids": "chips[].id where featured",
+      "truth_from": "ironclad_chips",
+      "fields": ["imprint", "package", "pins", "socket", "body", "featured"],
+      "forbidden": ["schematic_blueprint", "design_over_standard", "duplicate ingest"],
+      "repair": "field-ironclad-chips-combinatorics.py clean-catalog — then field-combinatronic-visuals.py chip <id>"
+    },
+    "program_seed": {
+      "path": "data/field-program-combinatronic-seed.json",
+      "role": "source_of_truth",
+      "drives": ["book_cover", "book_mirror", "h7_manual", "book_json"],
+      "ids": "language_packs keys",
+      "repair": "restore from git; language_packs commands drive manual text"
+    },
+    "h7_packer": {
+      "path": "Hostess7/scripts/field_h7_book.py",
+      "role": "codec",
+      "drives": ["h7_manual"],
+      "repair": "required on any machine that packs or verifies .h7"
+    },
+    "generator": {
+      "path": "lib/field-combinatronic-visuals.py",
+      "role": "builder",
+      "repair": "restore from git — all generated assets rebuild from this module"
+    }
+  },
+  "patterns": {
+    "chip_png": {
+      "kind": "generated_png",
+      "path": "data/combinatronic-visuals/chips/{chip_id}.png",
+      "url": "/world/assets/combinatronic/chips/{chip_id}.png",
+      "id_key": "chip_id",
+      "ids_from": "chip_catalog.chips[].id",
+      "min_bytes": 8000,
+      "magic": "89504e47",
+      "repair_cmd": "field-combinatronic-visuals.py chip {chip_id}",
+      "render": "PIL macro — pink felt #d4899a, black #080808, exact imprint + pin count from catalog"
+    },
+    "chip_mirror": {
+      "kind": "mirror",
+      "path": "Queen/world/assets/combinatronic/chips/{chip_id}.png",
+      "source_pattern": "chip_png",
+      "repair_cmd": "field-combinatronic-visuals.py repair mirror",
+      "note": "byte-identical copy of chip_png for Queen /world/ static serve"
+    },
+    "chip_thumb_png": {
+      "kind": "generated_png",
+      "path": "data/combinatronic-visuals/chips/thumbs/{chip_id}.png",
+      "url": "/world/assets/combinatronic/chips/thumbs/{chip_id}.png",
+      "id_key": "chip_id",
+      "ids_from": "ironclad_chips.chips[].id",
+      "min_bytes": 1500,
+      "magic": "89504e47",
+      "repair_cmd": "field-combinatronic-visuals.py ironclad-chip {chip_id}",
+      "render": "PIL thumb 320×240 — labeled band, vendor·kind, pink felt macro"
+    },
+    "chip_detail_png": {
+      "kind": "generated_png",
+      "path": "data/combinatronic-visuals/chips/detail/{chip_id}.png",
+      "url": "/world/assets/combinatronic/chips/detail/{chip_id}.png",
+      "id_key": "chip_id",
+      "ids_from": "ironclad_chips.chips[].id",
+      "min_bytes": 12000,
+      "magic": "89504e47",
+      "repair_cmd": "field-combinatronic-visuals.py ironclad-chip {chip_id}",
+      "render": "PIL catalog page 1200×900 — imprint, vendor, kind, era, note, package"
+    },
+    "chip_thumb_mirror": {
+      "kind": "mirror",
+      "path": "Queen/world/assets/combinatronic/chips/thumbs/{chip_id}.png",
+      "source_pattern": "chip_thumb_png",
+      "repair_cmd": "field-combinatronic-visuals.py repair mirror ironclad"
+    },
+    "chip_detail_mirror": {
+      "kind": "mirror",
+      "path": "Queen/world/assets/combinatronic/chips/detail/{chip_id}.png",
+      "source_pattern": "chip_detail_png",
+      "repair_cmd": "field-combinatronic-visuals.py repair mirror ironclad"
+    },
+    "book_cover": {
+      "kind": "generated_png",
+      "path": "data/combinatronic-visuals/books/{lang_id}.png",
+      "url": "/world/assets/combinatronic/books/{lang_id}.png",
+      "id_key": "lang_id",
+      "ids_from": "program_seed.language_packs keys",
+      "min_bytes": 3000,
+      "magic": "89504e47",
+      "repair_cmd": "field-combinatronic-visuals.py book {lang_id}",
+      "render": "Explaining {Language} cover — title from LANG_LABELS, command count from seed"
+    },
+    "book_mirror": {
+      "kind": "mirror",
+      "path": "Queen/world/assets/combinatronic/books/{lang_id}.png",
+      "source_pattern": "book_cover",
+      "repair_cmd": "field-combinatronic-visuals.py repair mirror"
+    },
+    "h7_manual": {
+      "kind": "h7_book",
+      "path": "library/dewey/000-computer-science/explaining_{lang_id}/explaining_{lang_id}.h7c",
+      "id_key": "lang_id",
+      "magic": "48374201",
+      "repair_cmd": "field-combinatronic-visuals.py book {lang_id}",
+      "verify": "unpack_h7 text_sha256 + char_count; lossless zlib+fly",
+      "text_from": "write_explaining_manual(lang_id) — command→canonical op sections"
+    },
+    "book_json": {
+      "kind": "shelf_entry",
+      "path": "library/dewey/000-computer-science/explaining_{lang_id}/book.json",
+      "id_key": "lang_id",
+      "repair_cmd": "field-combinatronic-visuals.py book {lang_id}",
+      "fields": ["id", "title", "ein", "format", "cover", "combinatronic_lang", "field_path"]
+    },
+    "manifest": {
+      "kind": "aggregate",
+      "path": "data/field-combinatronic-visuals-manifest.json",
+      "repair_cmd": "field-combinatronic-visuals.py generate",
+      "schema": "field-combinatronic-visuals-manifest/v1"
+    },
+    "registry": {
+      "kind": "fingerprint",
+      "path": "data/field-combinatronic-visuals-registry.json",
+      "repair_cmd": "field-combinatronic-visuals.py registry",
+      "schema": "field-combinatronic-visuals-registry/v1",
+      "note": "sha256 of every expected file — compare across machines; content hashes stable when seeds unchanged"
+    },
+    "panel": {
+      "kind": "state_cache",
+      "path": "field-combinatronic-visuals-panel.json",
+      "root": "NEXUS_STATE_DIR",
+      "repair_cmd": "field-combinatronic-visuals.py manifest"
+    }
+  },
+  "wiring": [
+    {"path": "Queen/world/queen-chips-cores.html", "role": "ui", "ids": ["qcc-chip-gallery", "qcc-book-gallery"]},
+    {"path": "Queen/world/queen-chips-cores.js", "role": "ui", "api": "/api/combinatronic/visuals"},
+    {"path": "Queen/world/queen-chips-cores.css", "role": "ui"},
+    {"path": "lib/threat-panel-http.py", "role": "api", "routes": ["/api/combinatronic/visuals"]},
+    {"path": "Queen/lib/queen-world.py", "role": "api", "routes": ["/api/combinatronic/visuals"]},
+    {"path": "tests/run-tests.sh", "role": "test", "fn": "test_combinatronic_visuals"}
+  ],
+  "repair": {
+    "cross_machine": "Any NEXUS_INSTALL_ROOT with sources + generator rebuilds all generated files. No PNG/H7 binary transfer required.",
+    "order": [
+      "1. Restore source JSON + lib/field-combinatronic-visuals.py + Hostess7/scripts/field_h7_book.py from git or donor clone",
+      "2. field-combinatronic-visuals.py inventory — list missing/corrupt",
+      "3. field-combinatronic-visuals.py repair — regenerate only broken rows",
+      "4. field-combinatronic-visuals.py registry — refresh fingerprints",
+      "5. h7-library-bridge.py build — re-index Explaining shelf"
+    ],
+    "commands": {
+      "inventory": "field-combinatronic-visuals.py inventory",
+      "verify": "field-combinatronic-visuals.py verify",
+      "repair_all": "field-combinatronic-visuals.py repair",
+      "repair_one_chip": "field-combinatronic-visuals.py chip <chip_id>",
+      "ironclad_chip": "field-combinatronic-visuals.py ironclad-chip <chip_id>",
+      "ironclad_all": "field-combinatronic-visuals.py ironclad-all",
+      "ironclad_thumbs": "field-combinatronic-visuals.py ironclad-thumbs",
+      "repair_one_book": "field-combinatronic-visuals.py book <lang_id>",
+      "repair_mirrors": "field-combinatronic-visuals.py repair mirror",
+      "full_rebuild": "field-combinatronic-visuals.py generate",
+      "pattern_help": "field-combinatronic-visuals.py pattern <pattern_id>",
+      "registry": "field-combinatronic-visuals.py registry"
+    }
+  },
+  "env": {
+    "NEXUS_INSTALL_ROOT": "repo root NewLatest — all relative paths anchor here",
+    "NEXUS_STATE_DIR": "writable state — panel cache only"
+  }
+}

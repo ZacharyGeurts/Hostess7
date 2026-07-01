@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NEXUS Field Talk</title>
+  <meta http-equiv="refresh" content="0;url=/field" />
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #000; color: #fff; padding: 24px; }
+    a { color: #9ad4ff; }
+    p { color: #888; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <h1>NEXUS Field</h1>
+  <p>Opening full GUI… <a href="/field">Click here if not redirected</a>.</p>
+  <p>Quick talk without full panel: stay on this page and use the script below (disabled auto-redirect in noscript).</p>
+  <noscript>
+    <p><a href="/field">Open full NEXUS GUI →</a></p>
+  </noscript>
+  <script>
+    if (!window.location.search.includes("stay=1")) {
+      window.location.replace("/field");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "schema": "field-code-bugfinder/v1",
+  "title": "Code bugfinder — knowledgebase + Ironclad truth compare",
+  "motto": "Code claims meet corpus evidence at high rate; contradictions surface before ship.",
+  "knowledge_sources": [
+    "h7-library-atlas passages.jsonl",
+    "field_detective_corpus",
+    "Field_Research/content/chapters",
+    "embedded code-bug pattern registry"
+  ],
+  "compare_axis": "truth_compares_per_sec",
+  "ironclad_landing": "Every compare runs through field_detective_corpus.analyze_truth with live Ironclad slice.",
+  "verdicts": {
+    "bug": "Static heuristic + KB contradiction + truth_score < 40",
+    "suspect": "KB mismatch or questionable truth on code claim",
+    "clear": "Corroborated against knowledgebase",
+    "investigate": "No KB hit — queue for operator"
+  },
+  "rate_policy": {
+    "batch_truth_compare": true,
+    "thermal_gate_once_per_scan": true,
+    "default_max_compares": 256
+  },
+  "ironclad_combinatorics": {
+    "condense_group": "iron_truth",
+    "cycle_command": "pythong lib/field-code-bugfinder.py ironclad-cycle",
+    "queue_panel": "field-ironclad-bugfix-queue.json",
+    "gate": "thermal_entropy_gate via combinatorics bridge",
+    "priority_targets": [
+      "NewLatest/lib/field-wave-engine.py",
+      "NewLatest/lib/field-popcorn-player.py",
+      "NewLatest/lib/field-plate-combinatorics-bridge.py",
+      "Grok16/lib/field_combinatorics.py"
+    ]
+  },
+  "codec_reference": "field-media-codec-doctrine.json"
+}

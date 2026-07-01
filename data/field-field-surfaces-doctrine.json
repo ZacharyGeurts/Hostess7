@@ -1,0 +1,135 @@
+{
+  "schema": "field-field-surfaces-doctrine/v1",
+  "title": "Operator field surfaces — C2 quint, dock, media, launch, GPU, audio, lock",
+  "motto": "Goodies plated once — meld, combinatorics condense, parallel publish share the same posture.",
+  "condense_group": "operator_surfaces",
+  "surfaces": [
+    {
+      "id": "c2_taskbar",
+      "label": "C2 Taskbar Quint",
+      "plate_key": "c2_taskbar",
+      "panel": "field-c2-taskbar-panel.json",
+      "script": "field-c2-taskbar-plate.py",
+      "route": "/api/field-c2-taskbar",
+      "exec": "/field",
+      "combinatorics_role": "c2_surface_quint",
+      "dock_glyph": "start",
+      "condense_group": "c2_taskbar"
+    },
+    {
+      "id": "shell_dock",
+      "label": "Shell Dock",
+      "plate_key": "shell_dock",
+      "panel": "field-shell-dock-panel.json",
+      "script": "field-shell-dock.py",
+      "route": "/api/field-shell-dock",
+      "exec": null,
+      "combinatorics_role": "sovereign_tray",
+      "dock_glyph": "tray"
+    },
+    {
+      "id": "field_popcorn",
+      "label": "Popcorn",
+      "plate_key": "field_popcorn",
+      "panel": "field-popcorn-panel.json",
+      "script": "field-popcorn-player.py",
+      "route": "/field-popcorn",
+      "exec": "/field-popcorn",
+      "combinatorics_role": "media_theatre",
+      "dock_glyph": "popcorn"
+    },
+    {
+      "id": "field_ellie_fier",
+      "label": "ELLIE Fier",
+      "plate_key": "field_ellie_fier",
+      "panel": "field-ellie-fier-panel.json",
+      "script": "field-ellie-fier.py",
+      "route": "/api/field-ellie-fier",
+      "exec": null,
+      "combinatorics_role": "threat_fier",
+      "dock_glyph": "shield"
+    },
+    {
+      "id": "field_g16_launch",
+      "label": "Launch Explorer",
+      "plate_key": "field_g16_launch",
+      "panel": "field-g16-launch-panel.json",
+      "script": "field-g16-launch.py",
+      "route": "/field-launch-explorer",
+      "exec": "/field-launch-explorer",
+      "combinatorics_role": "uncompiled_chamber",
+      "dock_glyph": "launch",
+      "file_assoc": [".launch"]
+    },
+    {
+      "id": "field_gpu",
+      "label": "GPU Control",
+      "plate_key": "field_gpu",
+      "panel": "field-gpu-control-panel.json",
+      "script": "field-gpu-control.py",
+      "route": "/field-gpu",
+      "exec": "/field-gpu",
+      "combinatorics_role": "rtx_dispatch",
+      "dock_glyph": "gpu"
+    },
+    {
+      "id": "field_audio",
+      "label": "Audio Settings",
+      "plate_key": "field_audio",
+      "panel": "field-audio-settings-panel.json",
+      "script": "field-audio-settings.py",
+      "route": "/field-audio-settings",
+      "exec": "/field-audio-settings",
+      "combinatorics_role": "pulse_pipewire",
+      "dock_glyph": "music"
+    },
+    {
+      "id": "field_broadcaster",
+      "label": "Broadcaster",
+      "plate_key": "field_broadcaster",
+      "panel": "field-broadcaster-panel.json",
+      "script": "field-broadcaster.py",
+      "route": "/field-broadcaster",
+      "exec": "/field-broadcaster",
+      "combinatorics_role": "capture_theatre",
+      "dock_glyph": "broadcast",
+      "legacy_route": "/field-obs"
+    },
+    {
+      "id": "field_lock",
+      "label": "Lock",
+      "plate_key": "field_lock",
+      "panel": "field-keepass-panel.json",
+      "script": "field-keepass.py",
+      "route": "/field-lock",
+      "exec": "/field-lock",
+      "combinatorics_role": "vault_sovereign",
+      "dock_glyph": "lock",
+      "legacy_route": "/field-keepass"
+    },
+    {
+      "id": "field_big_drive",
+      "label": "Big Drive",
+      "plate_key": "field_big_drive",
+      "panel": "field-big-drive-panel.json",
+      "script": "field-big-drive.py",
+      "route": "/field-big-drive",
+      "exec": "/field-big-drive",
+      "combinatorics_role": "storage_fabric",
+      "dock_glyph": "drive",
+      "file_assoc": [".iso", ".img", ".fielddrive", ".vhd", ".vhdx", ".vdi", ".qcow2", ".dmg", ".ima", ".flp"]
+    }
+  ],
+  "poll_ms": {
+    "c2_taskbar": 2500,
+    "shell_dock": 2500,
+    "field_popcorn": 5000,
+    "field_ellie_fier": 6000,
+    "field_g16_launch": 8000,
+    "field_gpu": 1200,
+    "field_audio": 3000,
+    "field_broadcaster": 4000,
+    "field_lock": 5000,
+    "field_big_drive": 10000
+  }
+}

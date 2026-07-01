@@ -1,0 +1,26 @@
+#version 460 core
+// Queen Browser — void fill only (no boot splash rings)
+#extension GL_EXT_scalar_block_layout : enable
+layout(local_size_x = 16, local_size_y = 16, local_size_z = 1) in;
+layout(rgba32f, binding = 0) uniform image2D resultImage;
+
+layout(push_constant) uniform FieldSocket {
+    float sealed_time;
+    uint control;
+    uint data_bus[64];
+    uint address_bus[16];
+    float maxwell_entropy_seed;
+    float mouse_x;
+    float mouse_y;
+    float viewport_w;
+    float viewport_h;
+} field;
+
+void main() {
+    ivec2 coord = ivec2(gl_GlobalInvocationID.xy);
+    ivec2 size = imageSize(resultImage);
+    if (coord.x >= size.x || coord.y >= size.y) return;
+
+    vec3 void_ = vec3(0.008, 0.016, 0.012);
+    imageStore(resultImage, coord, vec4(void_, 1.0));
+}

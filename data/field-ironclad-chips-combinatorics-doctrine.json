@@ -1,0 +1,97 @@
+{
+  "schema": "field-ironclad-chips-combinatorics-doctrine/v1",
+  "title": "Ironclad chip combinatorics — every die off truth, no battery",
+  "motto": "Combinatorics every chip from Ironclad — Cyrix, CoCo, MAME, CHIPS — THE sort on truth.",
+  "module": "lib/field-ironclad-chips-combinatorics.py",
+  "panel": "field-ironclad-chips-combinatorics-panel.json",
+  "combinatorics": "field-ironclad-chips-combinatorics.json",
+  "seed": "data/field-chip-battery-seed.json",
+  "mame_cache": "data/field-chip-battery-mame-cache.json",
+  "combinatorics_facet": {
+    "facet": "ironclad_chips",
+    "leaf_prefix": "chip",
+    "doctrine": "Grok16/data/g16-field-combinatorics-doctrine.json"
+  },
+  "combinatronic": {
+    "schema": "field-chips-combinatronic/v1",
+    "title": "Ironclad CHIPS Combinatronic",
+    "motto": "Every die a combinatorics leaf off Ironclad — hard path %, composite_bsp THE sort.",
+    "api": "/api/chips/combinatronic",
+    "queen_surface": "/world/queen-chips-cores.html",
+    "panel_cmd": "combinatronic",
+    "visuals": {
+      "doctrine": "data/field-combinatronic-visuals-doctrine.json",
+      "catalog": "data/field-combinatronic-chip-catalog.json",
+      "catalog_role": "featured_render_overlay",
+      "truth": "field-ironclad-chips-combinatorics.json",
+      "patterns": {
+        "chip_png": "featured felt macro — catalog overlay only",
+        "chip_thumb_png": "ironclad gallery thumb",
+        "chip_detail_png": "ironclad catalog page — schematic at render"
+      },
+      "repair": "field-combinatronic-visuals.py repair"
+    },
+    "layer_above_ironclad": [
+      {"layer": 1, "id": "iron_plate", "role": "THE sort composite_bsp", "module": "lib/iron-plate-organize.py"},
+      {"layer": 2, "id": "steel_plate", "role": "family neural plates", "module": "lib/field-steel-neural-plates.py"},
+      {"layer": 3, "id": "steel_family", "role": "fewer slots, lossless leaf index", "module": "lib/field-chips-plate-stack.py"},
+      {"layer": 4, "id": "chips_core", "role": "condensed Hostess read after seal", "module": "lib/field-chips-core.py"},
+      {"layer": 5, "id": "featured_render", "role": "felt macro imprint overlay — no duplicate truth", "module": "lib/field-combinatronic-visuals.py"}
+    ]
+  },
+  "ironclad": {
+    "root": "lib/ironclad-immediate.py",
+    "citation": "ironclad:chips:3",
+    "meld_citation": "ironclad:meld:2",
+    "connected_throughout": true,
+    "modules": [
+      "lib/ironclad-immediate.py",
+      "lib/ironclad-field-sanity.py",
+      "lib/field-best-sort.py",
+      "lib/field-ironclad-chips-combinatorics.py"
+    ]
+  },
+  "sources": [
+    {"id": "seed", "label": "Curated seed — Cyrix, CoCo, classic MAME"},
+    {"id": "mame", "label": "MAME -listdevices live import"},
+    {"id": "chips_manifest", "label": "Queen CHIPS g16 hot paths"},
+    {"id": "queen_game_room", "label": "Queen game room systems + host CPUs"},
+    {"id": "isa_data", "label": "Hostess7 ISA opcode platforms"},
+    {"id": "cpu_library", "label": "CPU library catalog — ARM, Apple, mobile, x86"},
+    {"id": "libretro", "label": "Libretro cores installed — RetroArch / Steam"},
+    {"id": "featured_render_overlay", "label": "Combinatronic catalog — featured felt-macro imprint only (not ingest)", "path": "data/field-combinatronic-chip-catalog.json", "ingest": false},
+    {"id": "world_chips", "label": "World CHIPS seed — rare national dies by country", "seed": "data/field-world-chips-seed.json"},
+    {"id": "semiconductor_world", "label": "Semiconductor world seed — logic, memory, analog, MCU, DSP, GPU, fab", "seed": "data/field-semiconductor-world-seed.json"},
+    {"id": "cpu_companion", "label": "CPU companions — universal north/south bridge, Super I/O, free always_with stamp", "seed": "data/field-cpu-companion-seed.json", "populate": "free"}
+  ],
+  "thermal_gate": {
+    "low_power_default": true,
+    "env": "NEXUS_IRONCLAD_CHIPS_LOW_POWER",
+    "mame_live_env": "NEXUS_IRONCLAD_CHIPS_MAME_LIVE",
+    "headroom_min_pct": 12,
+    "max_mame_live_devices": 8000
+  },
+  "plate_stack": {
+    "doctrine": "data/field-chips-iron-steel-plate-doctrine.json",
+    "module": "lib/field-chips-plate-stack.py",
+    "api": "/api/chips/plate-stack",
+    "layer_above": "ironclad",
+    "connection": "sovereign_time_only"
+  },
+  "chips_core": {
+    "doctrine": "data/field-chips-core-doctrine.json",
+    "module": "lib/field-chips-core.py",
+    "api": "/api/chips/core",
+    "condense_after": "ironclad_sealed",
+    "facet": "chips_core"
+  },
+  "code_path_prediction": {
+    "seed": "data/field-chip-path-predict-seed.json",
+    "hard_percent": true,
+    "pipe_policy": "composite_bsp",
+    "power_sort_context": "chip_paths",
+    "organize_algorithm": "composite_bsp",
+    "the_sort": "field-best-sort",
+    "one_best_ever": true
+  }
+}

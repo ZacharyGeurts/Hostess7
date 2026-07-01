@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CPU Library</title>
+  <link rel="stylesheet" href="queen-viewer.css" />
+  <link rel="stylesheet" href="queen-cpu-library.css" />
+</head>
+<body data-queen-surface="browser" data-clipboard-wire>
+  <header class="qcl-head">
+    <h1>CPU Library</h1>
+    <p>Every make · model · ARM · Mac · mobile · schematic detail</p>
+    <input type="search" id="qcl-search" placeholder="Search vendor, arch, die…" />
+    <button type="button" id="qcl-refresh">Refresh</button>
+  </header>
+  <main class="qcl-main">
+    <aside id="qcl-stats" class="qcl-stats"></aside>
+    <section id="qcl-list" class="qcl-list"></section>
+    <article id="qcl-detail" class="qcl-detail"><p class="qcl-muted">Select a CPU</p></article>
+  </main>
+  <script src="queen-cpu-library.js"></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

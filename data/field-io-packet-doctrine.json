@@ -1,0 +1,80 @@
+{
+  "schema": "field-io-packet-doctrine/v1",
+  "title": "Field I/O Packet — sovereign time in, notify when out is ready",
+  "motto": "We do not await output — the field notifies when a packet must come through. Voltage regulated. Translator to SDF only after evaluation.",
+  "meld_citation": "ironclad:meld:2",
+  "policy": {
+    "sovereign_time_in_only": true,
+    "await_output_forbidden": true,
+    "notify_when_ready": true,
+    "file_write_forbidden": true,
+    "output_stream_only": true,
+    "conversation_out_only": true,
+    "baseline_read_gated": true,
+    "ironclad_required": true,
+    "field_sanity_required": true,
+    "voltage_regulation_required": true,
+    "sdf_share_after_evaluation_only": true,
+    "no_hacks": true,
+    "grid_reentry_forbidden": true
+  },
+  "truth_gate": {
+    "sources": [
+      {"id": "ironclad", "module": "lib/ironclad-plate.py", "check": "verify_integrity"},
+      {"id": "field_sanity", "module": "lib/ironclad-field-sanity.py", "check": "build_panel"},
+      {"id": "g1id_baselines", "module": "lib/g1id-baseline.py", "check": "verify_all"},
+      {"id": "voltage_regulation", "module": "lib/field-voltage-regulation.py", "check": "evaluate"}
+    ],
+    "pass_requires_all": true
+  },
+  "input_kinds": ["sovereign_tick", "baseline_verify", "doctrine_read"],
+  "output_kinds": ["conversation", "action", "gesture", "speech"],
+  "conversation_verbs": [
+    "say",
+    "move_leg",
+    "turn_head",
+    "tilt_head",
+    "blink",
+    "nod",
+    "gesture",
+    "point",
+    "step",
+    "reach",
+    "wave",
+    "pause",
+    "look",
+    "shift_weight",
+    "raise_hand"
+  ],
+  "read_allowlist_prefixes": [
+    "data/baselines/",
+    "data/g1id-",
+    "data/ironclad-",
+    "data/field-io-packet-doctrine.json"
+  ],
+  "streams": {
+    "conversation_out": "field-io-conversation.stream.jsonl",
+    "pending_out": "field-io-pending-out.jsonl",
+    "notify": "field-io-packet-notify.json",
+    "packet_ledger": "field-io-packet-ledger.jsonl",
+    "sdf_export": "field-io-sdf-export.jsonl",
+    "panel": "field-io-packet-panel.json"
+  },
+  "sdf_translator": {
+    "schema": "field-io-sdf/v1",
+    "role": "translator_after_evaluation",
+    "share_forbidden_until_evaluated": true,
+    "topology_anchor": [256, 192],
+    "ref": "Hostess7/scripts/field_hostess_sdf_storage.py"
+  },
+  "packet_schema": "field-io-packet/v1",
+  "integrations": {
+    "sovereign_clock": "lib/sovereign-clock.py",
+    "g1id_baseline": "lib/g1id-baseline.py",
+    "ironclad_plate": "lib/ironclad-plate.py",
+    "field_sanity": "lib/ironclad-field-sanity.py",
+    "voltage_regulation": "lib/field-voltage-regulation.py",
+    "unified_bus": "lib/field-unified-bus.py",
+    "field_plate_meld": "lib/field-plate-meld.py"
+  }
+}

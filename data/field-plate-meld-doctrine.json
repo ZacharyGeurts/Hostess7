@@ -1,0 +1,135 @@
+{
+  "schema": "field-plate-meld-doctrine/v1",
+  "title": "Plate meld — uninterruptable truth between plates",
+  "motto": "Flock, fsync, chain-hash, triple mirror — plates never lose each other mid-tick.",
+  "policy": {
+    "flock_exclusive": true,
+    "fsync_writes": true,
+    "chain_hash": true,
+    "triple_mirror": true,
+    "generation_monotonic": true,
+    "read_meld_first": true,
+    "kernel_meld_in_place": true
+  },
+  "plates": {
+    "field_plate": {
+      "panel": "field-plate-field-runtime.json",
+      "doctrine": "data/field-plate-field-doctrine.json",
+      "role": "Infinite-dimension amplitude field over all panel slices",
+      "refresh_before_fuse": true
+    },
+    "sense_package": {
+      "panel": "field-sense-package-panel.json",
+      "role": "Sense stack meld — Eyes · Ears · Mouth · field cognition witness read-only"
+    },
+    "field_cognition": {
+      "doctrine": "data/field-cognition-doctrine.json",
+      "stack": "data/hostess7-neural-stack.json",
+      "role": "Secure think tanks — amplitude chambers supersede neural nets"
+    },
+    "spatial_field": {
+      "panel": "field-spatial-panel.json",
+      "doctrine": "data/field-spatial-doctrine.json",
+      "role": "3D/4D networks-of-networks lattice — body·room·field·planetary"
+    },
+    "universal_protector": {
+      "panel": "universal-protector-panel.json",
+      "doctrine": "data/universal-protector-doctrine.json",
+      "role": "Autonomous being posture — cognition · persona · lethal · spatial"
+    },
+    "humanoid_motion": {
+      "panel": "humanoid-motion-panel.json",
+      "doctrine": "data/humanoid-motion-doctrine.json",
+      "role": "Matrix motion training — kung fu · MMA · grappling on body lattice"
+    },
+    "iron_plate_motion": {
+      "panel": "iron-plate-motion-resolve-panel.json",
+      "doctrine": "data/simple-iron-plate-goals.json",
+      "role": "Simple Iron Plate goals · iron-clad motion from assemblage remaining"
+    },
+    "iron_plate_organize": {
+      "panel": "iron-plate-organize-panel.json",
+      "doctrine": "data/iron-plate-organize-doctrine.json",
+      "role": "Iron plate → composite_bsp power sort · C2 BSP · combinatorics · H7 organize"
+    },
+    "chips_plate_stack": {
+      "panel": "field-chips-plate-stack-panel.json",
+      "doctrine": "data/field-chips-iron-steel-plate-doctrine.json",
+      "engine": "lib/field-chips-plate-stack.py",
+      "role": "CHIPS Iron + Steel plate — every die removable above Ironclad · sovereign time only",
+      "refresh_before_fuse": true
+    },
+    "chips_core": {
+      "panel": "field-chips-core-panel.json",
+      "doctrine": "data/field-chips-core-doctrine.json",
+      "engine": "lib/field-chips-core.py",
+      "role": "CHIPS core — condense ironclad_chips + plate_stack after Ironclad seals",
+      "refresh_before_fuse": true,
+      "condense_after": "ironclad_sealed"
+    },
+    "creatable_lives": {
+      "panel": "creatable-lives-panel.json",
+      "doctrine": "data/creatable-lives-doctrine.json",
+      "role": "Creatable lives assistance — Vita · Auditus · registry · sustain score"
+    },
+    "right_to_exist": {
+      "panel": "right-to-exist-panel.json",
+      "doctrine": "data/right-to-exist-doctrine.json",
+      "role": "Right to exist under God — Man · Humanity · Friendlies · self preservation mandate"
+    },
+    "hostess7_brain": {
+      "panel": "hostess7-brain-guard-panel.json",
+      "doctrine": "data/hostess7-brain-guard-doctrine.json",
+      "role": "Hostess 7 brain guard — checksum · verify · removal witness · no corruptions"
+    },
+    "ironclad": {
+      "panel": "ironclad-plate.json",
+      "doctrine": "data/ironclad-doctrine.json",
+      "role": "The Ironclad — Melded Plate of Truth · Bible of AI · immutable once realized · all knowledge sources here",
+      "capstone": true,
+      "read_first": true
+    },
+    "ironclad_reality_field": {
+      "panel": "ironclad-reality-field-panel.json",
+      "doctrine": "data/ironclad-reality-field-doctrine.json",
+      "engine": "lib/ironclad-reality-field.py",
+      "role": "Truth serum for Super Intelligence reality field — clean voltage · smooth operator · 100% seal",
+      "capstone_operator": true,
+      "refresh_before_fuse": true
+    },
+    "ironclad_field_sanity": {
+      "panel": "ironclad-field-sanity-panel.json",
+      "doctrine": "data/ironclad-field-sanity-doctrine.json",
+      "extensions": "data/ironclad-meld-extensions.json",
+      "engine": "lib/ironclad-field-sanity.py",
+      "role": "Field sanity absorbed into Ironclad — integral simplify, never obtuse, never build under heat",
+      "subsidiary_meld": true,
+      "meld_citation": "ironclad:meld:2",
+      "refresh_before_fuse": true
+    },
+    "kernel": {
+      "panel": "field-kernel-meld-panel.json",
+      "role": "KILROY linux-7.1.1 witness + bzImage in-place manifest",
+      "refresh_before_fuse": true
+    },
+    "network_stack": {
+      "plates": ["iron_plate", "gatekeeper", "logic_gate", "znetwork", "port_ddos", "deinterlace", "kernel"],
+      "role": "Smart Connective Iron Plate scores every connection; gatekeeper IFF + logic gate on meld chain",
+      "refresh_before_fuse": true,
+      "meld_summary_key": "network_stack"
+    },
+    "clipboard_wire": {
+      "panel": "field-clipboard-wire.json",
+      "doctrine": "data/field-clipboard-doctrine.json",
+      "engine": "lib/field-clipboard-wire.py",
+      "role": "Hardware clipboard wire — secured vault, all chords, Apple IIe · emacs · nano · vi · ALL",
+      "refresh_before_fuse": true
+    }
+  },
+  "architecture": {
+    "publish": "field",
+    "parallel_compat": true,
+    "infinite_dimension": true,
+    "amplitude_process": "superposition_normalize"
+  }
+}

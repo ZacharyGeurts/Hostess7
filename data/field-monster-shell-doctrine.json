@@ -1,0 +1,27 @@
+{
+  "schema": "field-monster-shell-doctrine/v1",
+  "title": "Monster secure shell — stall & hang policy",
+  "motto": "Prompt only when the whole process tree is truly idle — compilers and pack jobs get patience.",
+  "defaults": {
+    "grace_sec": 8,
+    "stall_sec": 180,
+    "timeout_sec": 7200,
+    "poll_ms": 500,
+    "smart_vitals": true,
+    "prompt_only_when_idle": true,
+    "vitals_quiet_sec": 15,
+    "max_prompts_per_session": 2,
+    "native_hang_popup": false,
+    "desktop_hang_wait_sec": 300,
+    "hang_queue_ttl_sec": 900,
+    "watch_log_throttle_sec": 90,
+    "watch_log_phases": ["prompt", "busy"],
+    "re_prompt_cooldown_sec": 120
+  },
+  "slow_markers": [
+    "gcc", "g16", "cc1", "lto", "ld", "ninja", "cmake", "make", "qemu",
+    "pack-ammoos", "rsync", "tar", "integrate", "compile", "chips",
+    "wire-stack", "field-ammolang", "grok16", "python3", "pythong"
+  ],
+  "slow_stall_floor_sec": 300
+}

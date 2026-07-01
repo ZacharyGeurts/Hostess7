@@ -1,0 +1,31 @@
+{
+  "schema": "chips-g16/v1",
+  "title": "CHIPS silicon — Grok16 g16 field_opt hot paths",
+  "profile": "field_opt",
+  "cxx_std": "gnu++26",
+  "c_std": "gnu17",
+  "cmake": "cmake/g16-chips-field-opt.cmake",
+  "compiler_flags": [
+    "-O3", "-march=native", "-flto", "-ffast-math",
+    "-DGROK16_PROFILE_FIELD_OPT=1", "-DFIELD_ENTROPY_DISPATCH=1",
+    "-DCHIPS_G16_ACCURATE=1"
+  ],
+  "hot_paths": [
+    {"chip": "6502", "header": "CHIPS/Common/FieldChips6502.hpp", "note": "NES/A2600 opcode dispatch — vectorized table walk"},
+    {"chip": "2C02", "header": "CHIPS/Nes/FieldNesChip2C02.hpp", "note": "PPU scanline — SIMD tile fetch"},
+    {"chip": "68000", "header": "CHIPS/Common/FieldChips68000.hpp", "note": "Genesis main CPU — field_opt EA calc"},
+    {"chip": "Z80", "header": "CHIPS/Common/FieldChipsZ80.hpp", "note": "SMS/MSX — flag table LTO"},
+    {"chip": "YM2612", "header": "CHIPS/Common/FieldChipsYm2612.hpp", "note": "Genesis FM — fast-math envelope"},
+    {"chip": "SN76489", "header": "CHIPS/Common/FieldChipsSn76489.hpp", "note": "PSG square — unrolled period"},
+    {"chip": "TIA", "header": "CHIPS/Atari2600/FieldAtari2600ChipTia.hpp", "note": "Atari raster — entropy-scheduled"},
+    {"chip": "FieldChips", "header": "CHIPS/FieldChips.hpp", "note": "Aggregator — rebuild with g++16 field_opt"},
+    {"chip": "2A03", "header": "CHIPS/Nes/FieldNesChip2A03.hpp", "note": "NES Ricoh CPU+APU — integrated tick"},
+    {"chip": "65816", "header": "CHIPS/Common/FieldChipWdc65816.hpp", "note": "SNES main CPU — HDMA path"},
+    {"chip": "6507", "header": "CHIPS/Common/FieldChip6507.hpp", "note": "Atari 2600 — 13-bit address bus"},
+    {"chip": "SM83", "header": "CHIPS/Common/FieldChipSm83.hpp", "note": "Game Boy LR35902"},
+    {"chip": "8080", "header": "CHIPS/Common/FieldChip8080.hpp", "note": "Intel 8080 — arcade/CPM"},
+    {"chip": "SID", "header": "CHIPS/Common/FieldChipSid.hpp", "note": "C64 MOS 6581/8580"},
+    {"chip": "SPC700", "header": "CHIPS/Snes/FieldSnes.hpp", "note": "SNES audio sub-CPU"}
+  ],
+  "rebuild": "cd AMOURANTHRTX && G16_PREFIX=../Grok16 CXX=g++16 cmake -DCMAKE_CXX_FLAGS='-O3 -flto' -B build && cmake --build build"
+}

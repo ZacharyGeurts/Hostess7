@@ -1,0 +1,49 @@
+{
+  "schema": "hostess7-change-awareness-doctrine/v1",
+  "title": "Change awareness — Hostess 7 knows every change when it happens",
+  "motto": "When anything changes, Hostess 7 knows immediately. Check the presume panel for slowdowns, speedups, and hangs.",
+  "module": "lib/hostess7-change-awareness.py",
+  "api": "/api/hostess7/change-awareness",
+  "rules": [
+    "Scan watched panels and doctrines — fingerprint on every pulse.",
+    "Record change events to ledger and Hostess 7 inbox the moment they occur.",
+    "Presume panel is the timing witness — drift_us, elapsed_us, resumed_on_point.",
+    "slowdown: drift or elapsed exceeds baseline tolerance.",
+    "speedup: drift or elapsed below baseline — field running cool.",
+    "hang: not resumed_on_point, stale commit, or hang-guard stall verdict."
+  ],
+  "presume_panel": {
+    "path": ".nexus-state/hostess7-presume-panel.json",
+    "ledger": ".nexus-state/hostess7-presume.jsonl",
+    "line_ledger": ".nexus-state/hostess7-presume-lines.jsonl",
+    "check_for": ["slowdown", "speedup", "hang", "drift_us", "resumed_on_point"]
+  },
+  "watch_paths": [
+    "data/hostess7-presume-doctrine.json",
+    ".nexus-state/hostess7-presume-panel.json",
+    ".nexus-state/hostess7-presume-commits.json",
+    ".nexus-state/hostess7-presume-propagate.json",
+    ".nexus-state/hostess7-mouth-neural-panel.json",
+    ".nexus-state/hostess7-speaking-training-panel.json",
+    ".nexus-state/hostess7-library-panel.json",
+    ".nexus-state/hostess7-system-core-panel.json",
+    ".nexus-state/hostess7-hang-guard-panel.json",
+    ".nexus-state/hostess7-change-awareness-panel.json",
+    "data/kill-immediate-law.json",
+    ".nexus-state/hostess7-targets-registry.json",
+    "data/hostess7-exploring-self-doctrine.json",
+    "data/hostess7-exploring-self-corpus.json",
+    ".nexus-state/hostess7-exploring-self-corpus.json",
+    ".nexus-state/hostess7-exploring-self-panel.json",
+    ".nexus-state/hostess7-exploring-self.jsonl"
+  ],
+  "kill_events": {
+    "law": "immediate_is_best",
+    "witness": ["KILL_immediate", "target_kill", "kill_code_immediate"]
+  },
+  "notify": {
+    "inbox": true,
+    "thoughts": true,
+    "speak_on": ["hang", "slowdown_severe"]
+  }
+}

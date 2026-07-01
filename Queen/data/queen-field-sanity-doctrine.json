@@ -1,0 +1,37 @@
+{
+  "schema": "queen-field-sanity/v1",
+  "motto": "Integral field sanity — simplify layers, never obtuse. Infinite resolution is an aspiration; we do not build under it when it generates heat.",
+  "integral": {
+    "rule": "one_pass_simplify",
+    "never_obtuse": true,
+    "dedupe_by_url": true,
+    "flatten_depth": true,
+    "prefer_active_layer": true
+  },
+  "resolution": {
+    "aspiration": "infinite_resolution_no_holdbacks",
+    "build_rule": "never_build_under_heat",
+    "thermo_slot": "AMOURANTHRTX THERMO",
+    "note": "Look toward infinite resolution — but stop stacking layers that only add heat"
+  },
+  "g16": {
+    "mandate": "G16_FIELD_SAFETY_MANDATE_v1",
+    "single_pass": true,
+    "no_entropy_hotspots": true,
+    "max_layers": 64
+  },
+  "single_field_depth": {
+    "max_depth": 0,
+    "always": true,
+    "declaration": "Depth fields are to be sealed and destroyed.",
+    "doctrine": "data/single-field-depth-doctrine.json",
+    "soft_touch": true,
+    "parallel_single_field": "lib/field-panel-field.py"
+  },
+  "fielded_areas": {
+    "simplify_first": true,
+    "external_quarantine": true,
+    "field_on_field": "sealed and destroyed — single field depth always"
+  },
+  "pass": ["classify", "strip", "dedupe", "flatten", "cool_sort"]
+}

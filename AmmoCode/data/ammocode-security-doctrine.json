@@ -1,0 +1,31 @@
+{
+  "schema": "ammocode-security-doctrine/v1",
+  "title": "Connection security — MITM prevention, session proofs, permitted screenshare",
+  "mitm": {
+    "beacon_fingerprint": "sha256 stable identity fields",
+    "tofu_pin_on_first_trusted": true,
+    "mismatch_blocks_tunnel": true,
+    "mismatch_blocks_collab_relay": true,
+    "storage": "data/security-pins.json"
+  },
+  "attacks": {
+    "mitm": "beacon pin mismatch → block",
+    "replay": "frame mac + monotonic frame_id",
+    "invite_theft": "invite-only + IP friend list + session proof",
+    "downgrade": "require ammocode beacon for tunnel",
+    "spam": "ddos_guard + discovery rate limit"
+  },
+  "screenshare": {
+    "mode": "collab_host_permit_only",
+    "capture": "gui_element_only",
+    "no_getDisplayMedia": true,
+    "max_fps": 2,
+    "max_frame_bytes": 262144,
+    "requires": ["invite_verified", "host_grant", "session_proof"]
+  },
+  "management": {
+    "pins": "security_pin_list / security_pin_add / security_pin_remove",
+    "field": "sg_field_status / defield_sg",
+    "status": "security_status"
+  }
+}

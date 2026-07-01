@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-surface="nexus-c2">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0;url=/world/queen-nexus-c2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AmmoOS C2</title>
+  <link rel="stylesheet" href="queen-nexus-c2.css" />
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http://127.0.0.1:* https:; connect-src 'self' http://127.0.0.1:*; frame-src 'self' http://127.0.0.1:* https: queen:; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <div class="qdash-window" id="qdash-window">
+    <header class="qdash-bar" aria-label="Dashboard toolbar">
+      <span class="qdash-title">Dashboard</span>
+      <label>
+        Columns
+        <select id="qdash-cols" aria-label="Column layout">
+          <option value="auto" selected>Auto</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="6">6</option>
+        </select>
+      </label>
+      <button type="button" id="qdash-clear" title="Remove all panels">Clear</button>
+    </header>
+
+    <div class="qdash-canvas-wrap">
+      <div class="qdash-canvas" id="qdash-canvas">
+        <div class="qdash-empty" id="qdash-empty">
+          <strong>Empty dashboard</strong>
+          <span>Drag programs or links here</span>
+          <span>Double-click a panel to fullscreen · double-click again to return</span>
+        </div>
+        <div class="qdash-grid" id="qdash-grid" data-cols="auto"></div>
+      </div>
+    </div>
+
+    <div class="qdash-fs-layer" id="qdash-fs-layer" hidden>
+      <div class="qdash-fs-panel" id="qdash-fs-panel"></div>
+      <p class="qdash-fs-hint">Double-click to return to dashboard</p>
+    </div>
+
+    <p class="qdash-status" id="qdash-status" aria-live="polite"></p>
+  </div>
+  <script src="queen-dashboard.js"></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

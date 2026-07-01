@@ -1,0 +1,70 @@
+{
+  "schema": "field-operator-doctrine/v1",
+  "title": "Operator — field workhorse",
+  "motto": "Knows every interrupt, every DMA, every wire — Smart Connective Iron Plate across all connections.",
+  "role": "workhorse",
+  "field_plate": {
+    "name": "Infinite-dimension field plate",
+    "policy": "Amplitude process over all slices — field not parallel fan-out",
+    "infinite_dimension": true,
+    "amplitude_process": "superposition_normalize",
+    "doctrine": "data/field-plate-field-doctrine.json"
+  },
+  "simple_iron_plate_goals": "data/simple-iron-plate-goals.json",
+  "motion_resolve": "lib/iron-plate-motion-resolve.py",
+  "iron_plate": {
+    "name": "Smart Connective Iron Plate",
+    "policy": "Field stack owns hardware wires — no third-party middlemen on IRQ/DMA/bus paths",
+    "assemblage_remaining": "Iron-clad motion verdict from remaining slots after storm exclusion",
+    "layers": ["irq", "dma", "pci", "usb", "net", "input", "storage"],
+    "arithmetic": {
+      "route_word": "bus|channel<<4|tier<<8|slot<<10|quality<<22|board_direct<<30|storm<<31",
+      "hot_path": "slot lookup + AND/SHR — no JSON walk, no delegate on board_direct wires",
+      "signal_clean": "noise floor zeroed, labels ascii-stripped, IRQ loads capped, storm bit set"
+    },
+    "copilot_cpu": {
+      "role": "Plate copilot — field intelligence routes at 0ms, faster than sysfs CPU profile",
+      "hot": "immutable tuple route_words in RAM — panel calls in-process, no subprocess spawn",
+      "intelligence": "quality byte on route_word — field_intelligence when quality >= 192"
+    }
+  },
+  "fast_profiles": [
+    "cpu",
+    "irq",
+    "dma",
+    "pci",
+    "net",
+    "storage",
+    "iommu",
+    "clock"
+  ],
+  "clock": {
+    "triple": ["monotonic", "realtime", "micron_witness"],
+    "anchor": "field-operator-clock-anchor.json",
+    "sovereign_port": 9123,
+    "ntp_port": 123,
+    "policy": "Sovereign-first — signed pulses before NTP replies; monotonic-anchored UTC for all operator receipts"
+  },
+  "communication": {
+    "prefer_order": [
+      "field_mmio_shadow",
+      "netlink_field",
+      "ioctl_direct",
+      "mmap_userspace",
+      "znetwork_shadow",
+      "userspace_delegate"
+    ],
+    "override": "Operator accepts operator_override — documents risk, still routes best path"
+  },
+  "promises": [
+    "True hardware discovery — not guessed from model strings alone",
+    "IRQ affinity and storm detection on fast profile",
+    "DMA / IOMMU group visibility before any takeover",
+    "Iron plate scores every connection — secure low-level, intelligible high-level",
+    "Works with ZNetwork SHADOW until reboot",
+    "Sovereign triple clock — monotonic · realtime · micron witness — stable as sealed session time",
+    "Field NTP 2026 on loopback — pool never sole authority when sovereign-first is on",
+    "Iron plate arithmetic — route traffic board-direct at CPU instruction rate",
+    "Copilot CPU on plate — 0ms hot route, faster than physical CPU sysfs profile"
+  ]
+}

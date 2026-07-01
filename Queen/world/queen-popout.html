@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen · window</title>
+  <link rel="stylesheet" href="queen-browser-shell.css" />
+</head>
+<body class="qbp">
+  <header class="qbp-chrome">
+    <button type="button" class="qbp-btn" id="qbp-attach" title="Attach tab to shell">⤡ Attach</button>
+    <span class="qbp-title" id="qbp-title">Queen window</span>
+    <button type="button" class="qbp-btn" id="qbp-fullscreen" title="Fullscreen F11 Alt+Enter">⛶</button>
+  </header>
+  <main class="qbp-viewport">
+    <iframe class="qbp-frame" id="qbp-frame" title="Queen tab surface" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation"></iframe>
+  </main>
+  <script>
+    (function () {
+      const params = new URLSearchParams(location.search);
+      const url = params.get("url") || "http://127.0.0.1:9477/field";
+      const tabId = params.get("tab") || "";
+      const frame = document.getElementById("qbp-frame");
+      const titleEl = document.getElementById("qbp-title");
+      if (titleEl) titleEl.textContent = params.get("title") || "Queen window";
+      if (frame) frame.src = url.startsWith("http") ? url : url;
+
+      function toggleFs() {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+        else document.exitFullscreen?.();
+      }
+      document.getElementById("qbp-fullscreen")?.addEventListener("click", toggleFs);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "F11") { e.preventDefault(); toggleFs(); }
+        if (e.altKey && e.key === "Enter") { e.preventDefault(); toggleFs(); }
+      });
+      document.getElementById("qbp-attach")?.addEventListener("click", () => {
+        if (window.opener && !window.opener.closed) {
+          window.opener.postMessage({ type: "queen:shell", action: "attach_tab", tab_id: tabId }, location.origin);
+        }
+        window.close();
+      });
+      window.addEventListener("message", (e) => {
+        if (e.origin !== location.origin) return;
+        if (e.data?.type !== "queen:shell") return;
+        if (e.data.action === "load" && frame) frame.src = e.data.url;
+      });
+    })();
+  </script>
+</body>
+</html>

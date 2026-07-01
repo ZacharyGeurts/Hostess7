@@ -1,0 +1,199 @@
+{
+  "schema": "field-media-inspector-doctrine/v1",
+  "title": "Field Media Inspector — provenance, OCR, neural generation, Ironclad threat",
+  "motto": "Know what you play — source, synthesis, encoding, and content threat before the theatre opens.",
+  "policy": {
+    "scan_light_on_library": true,
+    "deep_on_inspect": true,
+    "cache_ttl_sec": 86400,
+    "max_ocr_bytes": 8388608,
+    "max_audio_probe_bytes": 4194304,
+    "ironclad_wav_required": true
+  },
+  "generation_sources": [
+    {
+      "id": "grok",
+      "label": "Grok / xAI",
+      "markers": [
+        "grok",
+        "xai",
+        "grok-imagine",
+        "grok-image"
+      ]
+    },
+    {
+      "id": "openai",
+      "label": "OpenAI / DALL·E",
+      "markers": [
+        "openai",
+        "dall-e",
+        "dalle",
+        "chatgpt",
+        "gpt-4o"
+      ]
+    },
+    {
+      "id": "midjourney",
+      "label": "Midjourney",
+      "markers": [
+        "midjourney",
+        "mj_",
+        "mj-v"
+      ]
+    },
+    {
+      "id": "stable_diffusion",
+      "label": "Stable Diffusion",
+      "markers": [
+        "stable diffusion",
+        "stablediffusion",
+        "sdxl",
+        "comfyui",
+        "automatic1111",
+        "a1111"
+      ]
+    },
+    {
+      "id": "adobe_firefly",
+      "label": "Adobe Firefly",
+      "markers": [
+        "adobe firefly",
+        "firefly",
+        "adobe photoshop"
+      ]
+    },
+    {
+      "id": "google_imagen",
+      "label": "Google Imagen / Gemini",
+      "markers": [
+        "imagen",
+        "gemini",
+        "google ai",
+        "vertex ai"
+      ]
+    },
+    {
+      "id": "runway",
+      "label": "Runway / Sora class",
+      "markers": [
+        "runway",
+        "sora",
+        "pika",
+        "gen-2",
+        "gen-3"
+      ]
+    },
+    {
+      "id": "leonardo",
+      "label": "Leonardo / Ideogram",
+      "markers": [
+        "leonardo.ai",
+        "ideogram",
+        "flux"
+      ]
+    },
+    {
+      "id": "camera",
+      "label": "Camera / Scanner",
+      "markers": [
+        "canon",
+        "nikon",
+        "sony",
+        "iphone",
+        "pixel",
+        "samsung",
+        "scanner"
+      ]
+    },
+    {
+      "id": "unknown",
+      "label": "Unknown / Unattributed",
+      "markers": []
+    }
+  ],
+  "neural_generated": {
+    "confidence_threshold": 0.55,
+    "signals": [
+      "c2pa_manifest",
+      "png_parameters_chunk",
+      "exif_software_ai",
+      "no_exif_camera",
+      "square_resolution_ai",
+      "metadata_generator_tag"
+    ],
+    "trained_patterns": [
+      {
+        "id": "sd_parameters",
+        "regex": "Steps:\\s*\\d+.*Sampler:",
+        "weight": 0.85
+      },
+      {
+        "id": "mj_job",
+        "regex": "Job\\s+#[0-9a-f-]{36}",
+        "weight": 0.9
+      },
+      {
+        "id": "openai_png",
+        "regex": "PNG created by OpenAI",
+        "weight": 0.92
+      },
+      {
+        "id": "grok_meta",
+        "regex": "grok[-_]?(image|imagine|generated)",
+        "weight": 0.88
+      },
+      {
+        "id": "c2pa_ai",
+        "regex": "c2pa\\.ai|claim_generator",
+        "weight": 0.8
+      }
+    ]
+  },
+  "audio_threat": {
+    "wav_ironclad": true,
+    "max_sample_rate_hz": 192000,
+    "min_sample_rate_hz": 8000,
+    "ultrasonic_carrier_hz": 18000,
+    "max_channels": 32,
+    "suspicious_chunk_ids": [
+      "JUNK",
+      "bext",
+      "iXML",
+      "LIST",
+      "id3 "
+    ]
+  },
+  "ocr": {
+    "bridge": "FINAL_EYE_ROOT",
+    "fallback": "heuristic_ascii",
+    "min_confidence": 0.4
+  },
+  "ironclad": {
+    "citation": "ironclad:media-threat:1",
+    "wav_content_gate": true,
+    "systemwide_via": "field_ellie_fier"
+  },
+  "file_detail_formats": [
+    "container",
+    "codec",
+    "mime",
+    "dimensions",
+    "duration_est",
+    "bitrate_est",
+    "sample_rate",
+    "channels",
+    "bit_depth",
+    "color_space",
+    "frame_rate_est",
+    "metadata_keys",
+    "generation_source",
+    "generation_confidence",
+    "ai_generated",
+    "ocr_text",
+    "ocr_confidence",
+    "encoding_issues",
+    "content_threat",
+    "ironclad_verdict",
+    "provenance_chain"
+  ]
+}

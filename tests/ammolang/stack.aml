@@ -1,0 +1,248 @@
+# stack — migrated from run-tests.sh
+@profile fastest
+@verbose clean
+@motto "stack stack tests · AmmoLang assert"
+
+suite stack ·
+  group NewLatest stack wired
+    assert script:newlatest_stack_wired
+  group nexus boot impl
+    assert file:lib/nexus-boot-impl.sh
+    assert exec:scripts/nexus-boot-impl.sh
+    assert grep:lib/nexus-boot-impl.sh:nexus_boot_impl_run
+    assert grep:lib/nexus-daemon.sh:nexus_boot_impl_run
+    assert grep:nexus.sh:nexus_boot_impl_run
+    assert grep:genius_shield.sh:nexus-boot-impl.sh
+    assert grep:data/sg-canonical.json:boot_impl
+    assert grep:lib/nexus-boot-impl.sh:nexus_boot_impl_validate_install_root
+    assert grep:lib/nexus-boot-impl.sh:nexus_boot_impl_script_trusted
+    assert grep:lib/nexus-boot-impl.sh:nexus_boot_impl_rotate_log
+    assert grep:lib/nexus-boot-impl.sh:INTEGRITY_VERIFY_FAILED
+    assert shell:! grep -q 'nexus_verify_integrity 2>/dev/null || true' "/home/default/Desktop/SG/NewLatest/lib/nexus-boot-impl.sh"
+  group nexus field early boot
+    assert script:nexus_field_early_boot
+  group field ammoos blocks
+    assert file:lib/field-ammoos-blocks.py
+    assert file:data/field-ammoos-blocks-doctrine.json
+    assert grep:lib/threat-panel-http.py:/api/field-ammoos-blocks
+    assert grep:lib/field-plate-meld.py:ammoos_blocks
+    assert grep:data/field-ammoos-blocks-doctrine.json:"id": "chips"
+    assert grep:data/field-ammoos-blocks-doctrine.json:"id": "codecs"
+    assert grep:lib/field-ammoos-blocks.py:thermal_safe
+    assert grep:lib/field-plate-meld.py:field-ammoos-blocks-panel.json
+    assert py:field-ammoos-blocks.py json match:field-ammoos-blocks/v1
+    assert shell:NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/lib/field-ammoos-blocks.py" scan | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['child_count']>=8; assert any(c['block_id']=='chips' for c in d['children']); assert any(c['block_id']=='codecs' for c in d['children'])"
+    assert py:field-ammoos-blocks.py thermal match:field-ammoos-thermal-gate/v1
+    assert py:field-ammoos-blocks.py publish match:"ok": true
+  group nexus c2 overhaul
+    assert file:data/nexus-c2-doctrine.json
+    assert file:lib/nexus-c2-overhaul.py
+    assert file:panel/assets/nexus-c2-bus.js
+    assert file:panel/assets/nexus-c2-status.css
+    assert grep:lib/threat-panel-http.py:/api/nexus-c2/snapshot
+    assert grep:lib/threat-panel-http.py:nexus-c2-overhaul
+    assert grep:lib/threat-panel-http.py:threat-panel.html
+    assert grep:panel/field-desktop.html:nexus-c2-bus.js
+    assert grep:data/nexus-c2-doctrine.json:never_live_on_get
+    assert py:nexus-c2-overhaul.py snapshot match:nexus-c2-overhaul/v1
+  group ammoos hot incorporate
+    assert file:data/ammoos-incorporate-doctrine.json
+    assert file:lib/ammoos-incorporate.py
+    assert file:scripts/ammoos-incorporate.sh
+    assert file:panel/ammoos-incorporate.html
+    assert file:panel/assets/ammoos-incorporate.js
+    assert grep:nexus.sh:\-\-incorporate
+    assert grep:nexus.sh:\-\-reconcile
+    assert grep:lib/ammoos-incorporate.py:coexist_reconcile
+    assert grep:lib/threat-panel-http.py:/api/ammoos-incorporate
+    assert grep:lib/threat-panel-http.py:/ammoos-incorporate
+    assert grep:data/field-host-desktop-doctrine.json:ammoos-incorporate
+    assert grep:data/ammoos-incorporate-doctrine.json:never_reboot
+    assert py:ammoos-incorporate.py posture match:ammoos-incorporate/v1
+  group ammoos coexist reconcile
+    assert file:data/ammoos-coexist-doctrine.json
+    assert file:lib/ammoos-coexist-reconcile.py
+    assert grep:data/ammoos-coexist-doctrine.json:never_harm_self_on_update
+    assert grep:nexus.sh:ammoos-coexist-reconcile
+    assert py:ammoos-coexist-reconcile.py posture match:ammoos-coexist-reconcile/v1
+    assert py:ammoos-coexist-reconcile.py safe match:"safe": true
+  group ammoos startup sovereignty
+    assert file:data/ammoos-startup-sovereignty-doctrine.json
+    assert file:lib/ammoos-startup-sovereign.py
+    assert file:lib/ammoos-startup-sovereign.sh
+    assert grep:nexus.sh:ammoos-startup-sovereign
+    assert grep:lib/panel-browser.sh:nexus_ammoos_startup_should_desktop
+    assert grep:data/field-host-desktop-doctrine.json:startup_sovereignty
+    assert grep:lib/threat-panel-http.py:/api/ammoos-startup
+    assert grep:data/ammoos-startup-sovereignty-doctrine.json:resume_host_os
+    assert grep:data/ammoos-startup-sovereignty-doctrine.json:start_ammoos_desktop
+    assert py:ammoos-startup-sovereign.py posture match:ammoos-startup-sovereign/v1
+    assert py:ammoos-startup-sovereign.py orchestrate match:"launch_desktop": false
+    assert py:ammoos-startup-sovereign.py orchestrate match:"launch_desktop": true
+  group ammoos program shell
+    assert file:data/field-program-shell-doctrine.json
+    assert file:panel/assets/field-program-shell.css
+    assert file:panel/assets/field-program-shell.js
+    assert file:Queen/world/queen-ammoos-bridge.js
+    assert file:scripts/ammoos-wrap-program-shell.py
+    assert grep:panel/assets/field-program-shell.js:FieldProgramShell
+    assert grep:panel/assets/nexus-field-shell.js:ammoos:launch
+    assert grep:panel/assets/field-shell-dock.js:FieldProgramShell?.navigate
+    assert grep:panel/field-lock.html:field-program-shell.css
+    assert grep:panel/nexus-calc.html:field-program-shell.js
+    assert grep:Queen/world/browser.html:queen-ammoos-bridge.js
+    assert grep:data/field-field-surfaces-doctrine.json:program_shell
+  group ammoos themes and secured defaults
+    assert file:data/ammoos-themes-doctrine.json
+    assert file:data/ammoos-security-defaults-doctrine.json
+    assert file:lib/ammoos-theme-engine.py
+    assert file:lib/ammoos-security-defaults.py
+    assert file:panel/assets/ammoos-c2-themes.css
+    assert file:panel/assets/ammoos-theme-engine.js
+    assert grep:data/field-host-desktop-doctrine.json:default_ammoos_theme
+    assert grep:data/ammoos-themes-doctrine.json:nexus_c2
+    assert grep:data/queen-settings-surface-doctrine.json:ammoos_theme
+    assert grep:lib/field-shell-settings.py:ammoos_theme
+    assert grep:lib/threat-panel-http.py:/api/ammoos-themes
+    assert grep:panel/field-desktop.html:nexus-military-v8
+    assert grep:panel/field-desktop.html:ammoos-c2-themes
+    assert grep:lib/nexus-settings.sh:nexus_settings_apply_ammoos_defaults
+    assert py:ammoos-theme-engine.py catalog match:nexus_c2
+    assert py:ammoos-theme-engine.py default match:nexus_c2
+  group ammoos update your os
+    assert file:lib/ammoos-update-inplace.py
+    assert file:data/ammoos-update-doctrine.json
+    assert file:panel/ammoos-update-os.html
+    assert file:panel/assets/ammoos-update-os.js
+    assert file:panel/assets/ammoos-update-os.css
+    assert file:scripts/ammoos-update-inplace.sh
+    assert grep:lib/threat-panel-http.py:/api/ammoos-update
+    assert grep:lib/threat-panel-http.py:/ammoos-update-os
+    assert grep:data/field-host-desktop-doctrine.json:ammoos-update-os
+    assert grep:data/field-host-desktop-doctrine.json:Update your own OS
+    assert grep:data/field-shell-dock-doctrine.json:ammoos-update
+    assert grep:docs/build-ammoos-manual.py:update-your-os.html
+    assert grep:data/ammoos-update-doctrine.json:ZacharyGeurts/AmmoOS
+    assert grep:data/ammoos-update-doctrine.json:AmmoCode
+    assert py:ammoos-update-inplace.py check match:ammoos-update/v1
+    assert py:ammoos-update-inplace.py doctrine match:getting_started
+  group nexus plugins module
+    assert file:lib/nexus-plugins.py
+    assert file:lib/nexus-plugins.sh
+    assert file:plugins/tab-beacon/manifest.json
+    assert file:plugins/tab-beacon/plugin.py
+    assert file:panel/assets/nexus-plugin-runtime.js
+    assert grep:lib/threat-panel.sh:nexus_plugins_merge_panel
+    assert grep:lib/threat-panel-http.py:/api/plugins
+    assert grep:plugins/tab-beacon/plugin.py:panel_snapshot
+    assert py:nexus-plugins.py json match:tab-beacon
+    assert py:nexus-plugins.py json match:"view_ids"
+  group nexus settings roundtrip
+    assert script:nexus_settings_roundtrip
+  group ZNetwork triple-check publish
+    assert shell:[[ -x "$ZNETWORK_BIN" ]] || return 0
+    assert shell:NEXUS_ZNETWORK=1 nexus_znetwork_triple_check
+    assert shell:[[ -f "/home/default/Desktop/SG/NewLatest/.nexus-state/znetwork-status.json" ]]
+  group ZNetwork relayer sole internet stack
+    assert file:lib/znetwork-relayer.py
+    assert grep:data/znetwork-doctrine.json:"relayer"
+    assert grep:lib/znetwork-field.sh:nexus_znetwork_relayer_board
+    assert grep:config/nexus.conf:ZNETWORK_RELAYER=1
+    assert grep:config/nexus.conf:ZNETWORK_UNDERHOOK=0
+    assert py:znetwork-relayer.py json match:"schema": "znetwork-relayer/v1"
+  group ZNetwork replace in place retires old stack
+    assert file:lib/znetwork-replace-in-place.py
+    assert grep:data/znetwork-doctrine.json:replace_in_place
+    assert grep:lib/znetwork-field.sh:nexus_znetwork_replace_py
+    assert grep:config/nexus.conf:ZNETWORK_TAKEOVER=0
+    assert grep:config/nexus.conf:ZNETWORK_SMART_INSIDE=1
+    assert py:znetwork-replace-in-place.py json match:"schema": "znetwork-replace-in-place/v1"
+  group ZNetwork exploit shield zero-day behavioral
+    assert file:lib/znetwork-exploit-shield.py
+    assert grep:data/znetwork-doctrine.json:exploit_shield
+    assert grep:data/znetwork-doctrine.json:zero_day_behavioral
+    assert grep:lib/znetwork-field.sh:nexus_znetwork_exploit_scan
+    assert grep:lib/znetwork-orchestrator.py:exploit_shield_scan
+    assert py:znetwork-exploit-shield.py scan match:"schema": "znetwork-exploit-shield/v1"
+  group ZNetwork smart inside passthrough
+    assert file:lib/znetwork-smart-inside.py
+    assert grep:data/znetwork-doctrine.json:smart_inside
+    assert grep:data/znetwork-doctrine.json:passthrough_all_traffic
+    assert grep:lib/znetwork-field.sh:nexus_znetwork_smart_inside
+    assert py:znetwork-smart-inside.py json match:"schema": "znetwork-smart-inside/v1"
+    assert py:znetwork-handler-retire.py replace match:ZNETWORK_SMART_INSIDE
+  group ZNetwork handler retire no sudo
+    assert grep:lib/znetwork-handler-retire.py:never_harm_os
+    assert grep:data/znetwork-doctrine.json:coexist_os
+    assert grep:lib/network-lockdown.sh:never_harm_os
+    assert file:lib/znetwork-handler-retire.py
+    assert grep:lib/znetwork-field.sh:NEXUS_ZNETWORK_NO_SUDO
+    assert grep:lib/znetwork-field.sh:nexus_znetwork_retire_legacy_handlers
+    assert grep:data/znetwork-doctrine.json:handler_retire
+    assert grep:lib/network-lockdown.sh:znetwork-handler-guard
+    assert py:znetwork-handler-retire.py detect match:"schema": "znetwork-handler-retire/v1"
+    assert py:znetwork-handler-retire.py replace match:"policy_owner": "znetwork"
+  group ZNetwork wireless FCC trace strike
+    assert script:znetwork_wireless_fcc
+  group ZNetwork startup retire host networking
+    assert script:znetwork_startup_retire
+  group ZNetwork tray flow and panel slice
+    assert grep:lib/panel-tray.sh:znetwork-tray-24.png
+    assert grep:lib/panel-tray.sh:nexus_panel_tray_stop_app
+    assert grep:lib/znetwork-field.sh:nexus_znetwork_ensure_tray
+    assert grep:lib/znetwork-field.sh:znetwork-running.marker
+    assert grep:lib/panel-tray-icon.py:znetwork-v3:z-over-network
+    assert grep:lib/field-panel-parallel.py:znetwork-orchestrator.py
+    assert grep:panel/threat-panel.html:znetwork-status-card
+    assert grep:panel/threat-panel.html:renderZnetworkStatus
+    assert grep:lib/threat-panel-http.py:znetwork-orchestrator.py
+    assert shell:NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" NEXUS_TRAY_MODE=znetwork NEXUS_TRAY_ICON_REFRESH=1 pythong "/home/default/Desktop/SG/NewLatest/lib/panel-tray-icon.py" --force --znetwork >/dev/null
+    assert shell:[[ -s "/home/default/Desktop/SG/NewLatest/panel/assets/znetwork-tray-24.png" ]]
+  group ZNetwork secure vault ZISV
+    assert file:lib/znetwork-secure-vault.py
+    assert file:panel/field-znetwork-vault.html
+    assert file:panel/assets/field-znetwork-vault.js
+    assert grep:lib/panel-tray.py:ZNetwork · Secure Vault
+    assert grep:lib/panel-tray.py:__vault__
+    assert grep:lib/threat-panel-http.py:/api/znetwork/vault
+    assert grep:lib/threat-panel-http.py:field-znetwork-vault
+    assert grep:data/znetwork-doctrine.json:secure_vault
+    assert py:znetwork-secure-vault.py queue match:znetwork-vault-queue/v1
+  group ZNetwork operator registry BSP
+    assert file:lib/znetwork-operator-registry.py
+    assert grep:data/znetwork-doctrine.json:operator_registry
+    assert grep:lib/threat-panel-http.py:/api/znetwork/registry
+    assert grep:lib/znetwork-operator-registry.py:composite_bsp
+    assert grep:panel/field-znetwork-vault.html:zv-register-form
+    assert py:znetwork-operator-registry.py register '{"full_name":"Test Operator","region":"Earth"}' match:znetwork-operator-registry/v1
+    assert py:znetwork-operator-registry.py mesh match:composite_bsp
+  group ZNetwork hostile threat detection
+    assert file:lib/znetwork-hostile-threat.py
+    assert grep:data/znetwork-doctrine.json:hostile_threat
+    assert grep:lib/znetwork-orchestrator.py:hostile_scan
+    assert grep:lib/znetwork-orchestrator.py:hostile_countermeasure
+    assert grep:lib/znetwork-field.sh:nexus_znetwork_hostile_scan
+    assert grep:lib/znetwork-field.sh:nexus_znetwork_hostile_respond
+    assert grep:lib/threat-panel-http.py:/api/znetwork/hostile
+    assert py:znetwork-hostile-threat.py scan match:"schema": "znetwork-hostile-threat/v1"
+  group ammoos rebrand
+    assert file:panel/assets/ammoos-field.png
+    assert file:panel/assets/ammoos-field-48.png
+    assert file:Queen/world/assets/branding/ammoos-wordmark.svg
+    assert grep:Queen/gui/queen-theme-2026.json:AmmoOS
+    assert grep:Queen/world/queen-nexus-c2.html:AmmoOS C2
+    assert grep:Queen/plugins/builtin-manifest.json:queen-browser-engine
+    assert grep:Queen/field-gecko/manifest.json:Queen Browser
+    assert grep:data/sg-canonical.json:AmmoOS
+    assert grep:Queen/world/queen-icon-engine.js:ammoos-field
+  group nexus update lock module
+    assert file:lib/nexus-update-lock.py
+    assert file:data/github-update-lock.schema.json
+    assert grep:lib/threat-panel-http.py:/api/update/status
+    assert grep:data/github-update-lock.schema.json:github-update.lock
+    assert py:nexus-update-lock.py status match:"locked": false
+    assert py:nexus-update-lock.py acquire --holder=test --target=9.9.9 --previous=9.9.8 match:"ok": true
+    assert py:nexus-update-lock.py acquire --holder=test2 match:update_in_progress
+    assert py:nexus-update-lock.py release --force match:"released": true
+  group nexus update module
+    assert script:nexus_update_module

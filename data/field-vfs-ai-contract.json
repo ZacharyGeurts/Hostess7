@@ -1,0 +1,57 @@
+{
+  "schema": "field-vfs-ai-contract/v1",
+  "tag": "NEXUS_VFS_AI_v1",
+  "title": "Field VFS — agent contract for Always Files",
+  "constraints": {
+    "never": [
+      "Hard-delete paths under field-soft-vault or listed-deletes without operator confirm",
+      "Edit files without checkpoint when checkpoint_before_edit is true",
+      "Read unbounded bytes — use ai.read_max_bytes from always-file row",
+      "Bypass queen-file-browser jail — all paths must resolve under SG roots",
+      "Ignore destroyed/catalog_only rows as live bytes — ghost entries are lineage only"
+    ],
+    "always": [
+      "Bootstrap with: field-always-files.py ai",
+      "Resolve path via always_files.resolve() before edit or grep",
+      "Create TimeShift checkpoint before bulk index rebuild or destroy plan",
+      "Prefer /api/field-vfs/resolve?path= for single-file truth",
+      "Merge overlay + catalog + index — never trust live stat alone for destroyed files",
+      "System security is automatic — operator never sets passwords or seals files manually"
+    ]
+  },
+  "workflows": {
+    "agent_onboard": [
+      "curl -s http://127.0.0.1:9477/api/field-vfs/ai",
+      "curl -s http://127.0.0.1:9477/api/field-vfs/status",
+      "curl -s 'http://127.0.0.1:9477/api/field-vfs/resolve?path=lib/field-always-files.py'"
+    ],
+    "before_edit": [
+      "POST /api/field-timeshift/checkpoint {\"note\":\"pre-edit\"}",
+      "GET /api/field-vfs/resolve?path=<rel>",
+      "edit with bounded read per ai.read_max_bytes"
+    ],
+    "rollback_index": [
+      "GET /api/field-timeshift/list",
+      "POST /api/field-timeshift/rollback {\"id\":\"<checkpoint>\",\"confirm\":true}"
+    ],
+    "queen_browse": [
+      "POST http://127.0.0.1:9481/api/queen-file-browser {\"action\":\"list\",\"path\":\"/home/.../SG\"}",
+      "entries include always.knows + always.rollback"
+    ]
+  },
+  "tools": {
+    "resolve": "Single path → full always-file record",
+    "search": "Query index+catalog+overlay",
+    "sync": "Refresh awareness plate",
+    "ai_context": "Full agent bundle",
+    "timeshift_list": "Checkpoint inventory",
+    "timeshift_rollback": "Non-destructive index restore"
+  },
+  "file_policies": {
+    "runtime_py": {"read_max_bytes": 131072, "edit_policy": "checkpoint_first", "grep_ok": true},
+    "data_json": {"read_max_bytes": 65536, "edit_policy": "checkpoint_first", "grep_ok": true},
+    "panel_html": {"read_max_bytes": 32768, "edit_policy": "checkpoint_first", "grep_ok": true},
+    "destroyed": {"read_max_bytes": 0, "edit_policy": "forbidden", "catalog_only": true},
+    "default": {"read_max_bytes": 65536, "edit_policy": "checkpoint_first", "grep_ok": true}
+  }
+}

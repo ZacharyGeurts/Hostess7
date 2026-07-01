@@ -1,0 +1,43 @@
+{
+  "schema": "field-gpu-control-doctrine/v1",
+  "title": "Field GPU Control — NVIDIA · AMD · Intel · Legacy",
+  "motto": "Detect everything. Fan monitors. Vendor-grade readouts. Color wheel when unknown.",
+  "policy": {
+    "detect_all": true,
+    "no_sudo": true,
+    "legacy_manual_ok": true,
+    "color_wheel_unknown": true,
+    "poll_ms": 1200
+  },
+  "palette": {
+    "base": "#0a0c10",
+    "green": "#3fb950",
+    "pink": "#f472b6",
+    "red": "#f85149",
+    "blue": "#58a6ff",
+    "nvidia": "#76b900",
+    "amd": "#ed1c24",
+    "intel": "#0071c5",
+    "legacy": "#c9a227"
+  },
+  "vendors": {
+    "nvidia": {"id": "nvidia", "name": "NVIDIA", "pci_vendor": "10de", "accent": "#76b900"},
+    "amd": {"id": "amd", "name": "AMD", "pci_vendor": "1002", "accent": "#ed1c24"},
+    "intel": {"id": "intel", "name": "Intel", "pci_vendor": "8086", "accent": "#0071c5"},
+    "all": {"id": "all", "name": "All GPUs", "accent": "#3fb950"}
+  },
+  "dock_icons_ref": "field-shell-dock-doctrine.json",
+  "legacy_catalog": [
+    {"id": "voodoo2", "name": "3dfx Voodoo 2", "vendor": "3dfx", "era": "1998", "vram_mb": 12, "bus": "PCI", "color": "#6b4e9a"},
+    {"id": "voodoo3", "name": "3dfx Voodoo 3", "vendor": "3dfx", "era": "1999", "vram_mb": 16, "bus": "AGP", "color": "#7c5cbf"},
+    {"id": "voodoo5", "name": "3dfx Voodoo 5 5500", "vendor": "3dfx", "era": "2000", "vram_mb": 64, "bus": "AGP", "color": "#8b6fd4"},
+    {"id": "geforce256", "name": "NVIDIA GeForce 256", "vendor": "nvidia", "era": "1999", "vram_mb": 32, "bus": "AGP", "color": "#76b900"},
+    {"id": "radeon9700", "name": "ATI Radeon 9700 Pro", "vendor": "amd", "era": "2002", "vram_mb": 128, "bus": "AGP", "color": "#ed1c24"},
+    {"id": "gtx1080", "name": "NVIDIA GeForce GTX 1080", "vendor": "nvidia", "era": "2016", "vram_mb": 8192, "bus": "PCIe", "color": "#76b900"},
+    {"id": "rx7900xtx", "name": "AMD Radeon RX 7900 XTX", "vendor": "amd", "era": "2022", "vram_mb": 24576, "bus": "PCIe", "color": "#ed1c24"},
+    {"id": "arc_a770", "name": "Intel Arc A770", "vendor": "intel", "era": "2022", "vram_mb": 16384, "bus": "PCIe", "color": "#0071c5"},
+    {"id": "rtx4070ti", "name": "NVIDIA GeForce RTX 4070 Ti", "vendor": "nvidia", "era": "2023", "vram_mb": 12288, "bus": "PCIe", "color": "#76b900"},
+    {"id": "color_wheel", "name": "Unknown — Color wheel", "vendor": "unknown", "era": "?", "vram_mb": null, "bus": "?", "color": null, "color_wheel": true}
+  ],
+  "routes": {"panel": "/field-gpu", "api": "/api/field-gpu"}
+}

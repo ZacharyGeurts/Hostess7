@@ -1,0 +1,10 @@
+# AmmoLang self-upgrade — refresh parser + build when sources change
+@profile fastest
+@verbose clean
+@motto "AmmoLang self-upgrade · parse cache · module stamp"
+
+seq ·
+  say "AmmoLang self-upgrade — faster parse and build when sources change"
+  self refresh
+  fast path:aml path:gpy fastest
+  say "AmmoLang modules warm — scripts should route through ammolang-run.sh"

@@ -1,0 +1,15 @@
+# Subfolder migrate — gut vestigial · wire AML · stack v2 sync
+@profile fastest
+@verbose clean
+@motto "Subfolders → AmmoLang · consume stubs · one tight tree"
+
+seq ·
+  say "Subfolder migrate — consolidate vestigial folders · wire AmmoLang routes"
+  post "SUBFOLDER_MIGRATE START"
+  assist hang
+  run py:field-folder-consolidate.py status
+  run py:field-folder-consolidate.py consolidate timeout:600 stall:300
+  run py:field-folder-consolidate.py wire_aml timeout:120 stall:60
+  run script:impl/wire-stack timeout:120 stall:60
+  post "SUBFOLDER_MIGRATE COMPLETE — inspect folder-consolidate-panel.json"
+  assist freeze

@@ -1,0 +1,638 @@
+{
+  "schema": "grok16-build-essential-toolchain/v1",
+  "updated": "2026-06-29T14:48:34.413554+00:00",
+  "product": "Grok16-build-essential",
+  "replaces": "ubuntu:build-essential",
+  "field_version": "16.2.0",
+  "prefix": "/home/default/Desktop/SG/NewLatest/Grok16",
+  "root": "/home/default/Desktop/SG/NewLatest/Grok16",
+  "ready": true,
+  "ubuntu_parity": {
+    "ready": true,
+    "core": {
+      "g16": true,
+      "g++16": true,
+      "g16-make": true,
+      "g16-as": true,
+      "g16-ld": true,
+      "g16-ar": true,
+      "libc-dev": true
+    }
+  },
+  "g16": {
+    "product": "Grok16",
+    "g16_version": "16.2.0",
+    "driver_mode": "unified",
+    "discern_langs": [
+      "c",
+      "cxx",
+      "python"
+    ],
+    "gpy16_pair": {
+      "driver": "/home/default/Desktop/SG/NewLatest/Grok16/bin/gpy-16",
+      "ready": true,
+      "health": {
+        "ok": true,
+        "schema": "gpy-16-health/v1",
+        "score": 9,
+        "max": 9,
+        "runtime": "grok_vm",
+        "field_native": true,
+        "builtin": true,
+        "field_cpython": "/usr/bin/python3",
+        "checks": {
+          "gpy16_builtin_tree": true,
+          "gpy16_root": true,
+          "gpy16_driver": true,
+          "interpreter_vm": true,
+          "grok_core": true,
+          "field_env": true,
+          "g16_pair": true,
+          "toolkits_manifest": true,
+          "hostess_stack": true
+        },
+        "ai_field": {
+          "fast_mode": true
+        },
+        "bytecode_cache": {
+          "enabled": true,
+          "version": "16.1.1-fast1",
+          "memory_entries": 0,
+          "disk_entries": 0,
+          "cache_dir": "/home/default/Desktop/SG/NewLatest/.nexus-state/gpy16-bytecode-cache"
+        },
+        "fast_mode": true,
+        "profile": "fastest",
+        "ready": true,
+        "driver": "/home/default/Desktop/SG/NewLatest/Grok16/bin/gpy-16"
+      },
+      "version": "16.1.1",
+      "pkgversion": "GPY-16.1.1"
+    },
+    "discern_probe": {
+      "c": "c",
+      "cxx": "cxx",
+      "python": "python",
+      "python_m": "python",
+      "python_c": "python"
+    },
+    "field_rewrite": "gcc-15 \u2192 field 16.0.0 (BASE-VER + program-transform-name)",
+    "branch": "releases/gcc-15",
+    "repo": "https://gcc.gnu.org/git/gcc.git",
+    "src": "/home/default/Desktop/SG/NewLatest/Grok16/vendor/gcc",
+    "src_ready": true,
+    "prereqs_ready": true,
+    "build_dir": "/home/default/Desktop/SG/NewLatest/Grok16/build/gcc",
+    "prefix": "/home/default/Desktop/SG/NewLatest/Grok16",
+    "engine_real": true,
+    "ready": true,
+    "unified_driver": true,
+    "selfhosted": true,
+    "dumpversion": "16.2.0",
+    "version": "g16 (Grok16-5.0.0) 16.2.0",
+    "paths": {
+      "g16": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16",
+      "g++16": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g++16",
+      "backend_cc": "/home/default/Desktop/SG/NewLatest/Grok16/libexec/grok16/g16-cc",
+      "backend_cxx": "/home/default/Desktop/SG/NewLatest/Grok16/libexec/grok16/g16-cxx",
+      "cmake": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-toolchain.cmake"
+    }
+  },
+  "binutils": {
+    "product": "Grok16-binutils",
+    "field_version": "16.1.1",
+    "binutils_version": "2.44",
+    "branch": "binutils-2_44-branch",
+    "repo": "https://sourceware.org/git/binutils-gdb.git",
+    "src": "/home/default/Desktop/SG/NewLatest/Grok16/vendor/binutils",
+    "src_ready": true,
+    "build_dir": "/home/default/Desktop/SG/NewLatest/Grok16/build/binutils",
+    "prefix": "/home/default/Desktop/SG/NewLatest/Grok16",
+    "ready": true,
+    "tools_ready": 13,
+    "tools_total": 14,
+    "tools": {
+      "as": {
+        "field": "g16-as",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-as",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/as"
+      },
+      "ld": {
+        "field": "g16-ld",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-ld",
+        "ready": false,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/ld"
+      },
+      "objdump": {
+        "field": "g16-objdump",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-objdump",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/objdump"
+      },
+      "objcopy": {
+        "field": "g16-objcopy",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-objcopy",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/objcopy"
+      },
+      "strip": {
+        "field": "g16-strip",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-strip",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/strip"
+      },
+      "readelf": {
+        "field": "g16-readelf",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-readelf",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/readelf"
+      },
+      "nm": {
+        "field": "g16-nm",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-nm",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/nm"
+      },
+      "ar": {
+        "field": "g16-ar",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-ar",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/ar"
+      },
+      "ranlib": {
+        "field": "g16-ranlib",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-ranlib",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/ranlib"
+      },
+      "addr2line": {
+        "field": "g16-addr2line",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-addr2line",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/addr2line"
+      },
+      "c++filt": {
+        "field": "g16-c++filt",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-c++filt",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/c++filt"
+      },
+      "elfedit": {
+        "field": "g16-elfedit",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-elfedit",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/elfedit"
+      },
+      "strings": {
+        "field": "g16-strings",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-strings",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/strings"
+      },
+      "size": {
+        "field": "g16-size",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-size",
+        "ready": true,
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/size"
+      }
+    },
+    "assembler": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-as",
+    "linker": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-ld",
+    "disassembler": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-objdump"
+  },
+  "field_build": {
+    "product": "Grok16-field-build",
+    "field_version": "16.2.0",
+    "pkgversion": "Grok16-field-build-16.2.0",
+    "prefix": "/home/default/Desktop/SG/NewLatest/Grok16",
+    "root": "/home/default/Desktop/SG/NewLatest/Grok16",
+    "ready": true,
+    "tools_ready": 9,
+    "tools_total": 9,
+    "tools": {
+      "cmake": {
+        "field": "g16-cmake",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-cmake",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/cmake"
+      },
+      "ninja": {
+        "field": "g16-ninja",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-ninja",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/ninja"
+      },
+      "make": {
+        "field": "g16-make",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-make",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/make"
+      },
+      "bison": {
+        "field": "g16-bison",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-bison",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/bison"
+      },
+      "flex": {
+        "field": "g16-flex",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-flex",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/flex"
+      },
+      "autoconf": {
+        "field": "g16-autoconf",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-autoconf",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/autoconf"
+      },
+      "automake": {
+        "field": "g16-automake",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-automake",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/automake"
+      },
+      "libtoolize": {
+        "field": "g16-libtoolize",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-libtoolize",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/libtoolize"
+      },
+      "pkg-config": {
+        "field": "g16-pkg-config",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-pkg-config",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/pkg-config"
+      },
+      "m4": {
+        "field": "g16-m4",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-m4",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/m4"
+      },
+      "meson": {
+        "field": "g16-meson",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-meson",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/meson"
+      },
+      "gperf": {
+        "field": "g16-gperf",
+        "path": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-gperf",
+        "ready": true,
+        "wrapper": true,
+        "upstream": "",
+        "compat": "/home/default/Desktop/SG/NewLatest/Grok16/bin/gperf"
+      }
+    },
+    "cmake": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-cmake",
+    "ninja": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-ninja",
+    "make": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-make",
+    "compiler": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16",
+    "linker": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-ld",
+    "field_cmake_script": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/field-cmake.sh",
+    "toolchain_cmake": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-toolchain.cmake"
+  },
+  "sysroot": {
+    "field": "g16-sysroot",
+    "role": "libc-dev parity",
+    "prefix": "/home/default/Desktop/SG/NewLatest/Grok16",
+    "include_dirs": [
+      "/home/default/Desktop/SG/NewLatest/Grok16/include",
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib/gcc/x86_64-pc-linux-gnu/16.2.0/include",
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib/gcc/x86_64-pc-linux-gnu/16.2.0/include-fixed",
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include",
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include-fixed",
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib/gcc/x86_64-pc-linux-gnu/16.1.0/include",
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib/gcc/x86_64-pc-linux-gnu/16.1.0/include-fixed",
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib/gcc/x86_64-pc-linux-gnu/16.0.0/include",
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib/gcc/x86_64-pc-linux-gnu/16.0.0/include-fixed",
+      "/usr/include"
+    ],
+    "lib_dirs": [
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib",
+      "/home/default/Desktop/SG/NewLatest/Grok16/lib64"
+    ],
+    "host_libc_headers": true,
+    "ready": true
+  },
+  "utilities": {
+    "ready": 13,
+    "total": 13
+  },
+  "packaging": {
+    "ready": 3,
+    "total": 3
+  },
+  "build_env": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/g16-build-env.sh",
+  "vendor_manifest": "/home/default/Desktop/SG/NewLatest/Grok16/data/grok16-vendor-build-tools.json",
+  "layers": {
+    "ubuntu_parity": {
+      "label": "Ubuntu build-essential parity",
+      "required": true,
+      "tools": {
+        "gcc": {
+          "field": "g16",
+          "compat": [
+            "gcc",
+            "cc"
+          ],
+          "built": true,
+          "role": "compiler"
+        },
+        "g++": {
+          "field": "g++16",
+          "compat": [
+            "g++",
+            "c++"
+          ],
+          "built": true,
+          "role": "compiler"
+        },
+        "make": {
+          "field": "g16-make",
+          "compat": [
+            "make",
+            "gmake"
+          ],
+          "role": "build"
+        },
+        "as": {
+          "field": "g16-as",
+          "compat": [
+            "as"
+          ],
+          "built": true,
+          "role": "assembler"
+        },
+        "ld": {
+          "field": "g16-ld",
+          "compat": [
+            "ld"
+          ],
+          "built": true,
+          "role": "linker"
+        },
+        "ar": {
+          "field": "g16-ar",
+          "compat": [
+            "ar"
+          ],
+          "built": true,
+          "role": "archive"
+        },
+        "libc-dev": {
+          "field": "g16-sysroot",
+          "compat": [
+            "libc6-dev"
+          ],
+          "role": "headers",
+          "staged": true
+        }
+      }
+    },
+    "binutils": {
+      "label": "GNU binutils (field rebuild)",
+      "required": true,
+      "manifest": "data/grok16-binutils-version.json",
+      "tools": [
+        "g16-objdump",
+        "g16-objcopy",
+        "g16-nm",
+        "g16-ranlib",
+        "g16-readelf",
+        "g16-strings",
+        "g16-size",
+        "g16-strip"
+      ]
+    },
+    "autotools": {
+      "label": "Parser + configure generators",
+      "required": true,
+      "tools": {
+        "bison": {
+          "field": "g16-bison",
+          "compat": [
+            "bison",
+            "yacc"
+          ]
+        },
+        "flex": {
+          "field": "g16-flex",
+          "compat": [
+            "flex",
+            "lex"
+          ]
+        },
+        "autoconf": {
+          "field": "g16-autoconf",
+          "compat": [
+            "autoconf"
+          ]
+        },
+        "automake": {
+          "field": "g16-automake",
+          "compat": [
+            "automake"
+          ]
+        },
+        "libtoolize": {
+          "field": "g16-libtoolize",
+          "compat": [
+            "libtoolize"
+          ]
+        },
+        "m4": {
+          "field": "g16-m4",
+          "compat": [
+            "m4"
+          ]
+        }
+      }
+    },
+    "meta_build": {
+      "label": "CMake / Ninja / Meson",
+      "required": true,
+      "tools": {
+        "cmake": {
+          "field": "g16-cmake",
+          "compat": [
+            "cmake"
+          ]
+        },
+        "ninja": {
+          "field": "g16-ninja",
+          "compat": [
+            "ninja"
+          ]
+        },
+        "meson": {
+          "field": "g16-meson",
+          "compat": [
+            "meson"
+          ]
+        },
+        "pkg-config": {
+          "field": "g16-pkg-config",
+          "compat": [
+            "pkg-config"
+          ]
+        },
+        "gperf": {
+          "field": "g16-gperf",
+          "compat": [
+            "gperf"
+          ]
+        }
+      }
+    },
+    "utilities": {
+      "label": "Core build utilities (extended parity)",
+      "required": false,
+      "tools": {
+        "patch": {
+          "field": "g16-patch",
+          "compat": [
+            "patch"
+          ]
+        },
+        "diff": {
+          "field": "g16-diff",
+          "compat": [
+            "diff"
+          ]
+        },
+        "install": {
+          "field": "g16-install",
+          "compat": [
+            "install"
+          ]
+        },
+        "tar": {
+          "field": "g16-tar",
+          "compat": [
+            "tar"
+          ]
+        },
+        "gzip": {
+          "field": "g16-gzip",
+          "compat": [
+            "gzip"
+          ]
+        },
+        "gunzip": {
+          "field": "g16-gunzip",
+          "compat": [
+            "gunzip"
+          ]
+        },
+        "sed": {
+          "field": "g16-sed",
+          "compat": [
+            "sed"
+          ]
+        },
+        "awk": {
+          "field": "g16-awk",
+          "compat": [
+            "awk",
+            "gawk"
+          ]
+        },
+        "file": {
+          "field": "g16-file",
+          "compat": [
+            "file"
+          ]
+        },
+        "cp": {
+          "field": "g16-cp",
+          "compat": [
+            "cp"
+          ]
+        },
+        "mkdir": {
+          "field": "g16-mkdir",
+          "compat": [
+            "mkdir"
+          ]
+        },
+        "rm": {
+          "field": "g16-rm",
+          "compat": [
+            "rm"
+          ]
+        },
+        "ln": {
+          "field": "g16-ln",
+          "compat": [
+            "ln"
+          ]
+        }
+      }
+    },
+    "packaging": {
+      "label": "Debian packaging (dpkg-dev parity)",
+      "required": false,
+      "tools": {
+        "dpkg-buildpackage": {
+          "field": "g16-dpkg-buildpackage",
+          "compat": [
+            "dpkg-buildpackage"
+          ]
+        },
+        "dpkg-architecture": {
+          "field": "g16-dpkg-architecture",
+          "compat": [
+            "dpkg-architecture"
+          ]
+        },
+        "dpkg-source": {
+          "field": "g16-dpkg-source",
+          "compat": [
+            "dpkg-source"
+          ]
+        }
+      }
+    }
+  },
+  "policy": {
+    "no_prebuilts": true,
+    "self_host": true,
+    "unified_discern": true,
+    "legacy_fallback_last": true,
+    "prefix": "${G16_PREFIX}",
+    "bootstrap_host_apt": "build-essential flex bison libgmp-dev libmpfr-dev libmpc-dev",
+    "bootstrap_note": "Host apt is one-time bootstrap only; runtime builds use Grok16 prefix"
+  },
+  "entry": {
+    "script": "scripts/grok16-build-essential.sh",
+    "env": "scripts/g16-build-env.sh",
+    "forge": "forge/build_essential_tools.py",
+    "vendor": "data/grok16-vendor-build-tools.json",
+    "version_pair": "data/grok16-build-essential-version.json"
+  }
+}

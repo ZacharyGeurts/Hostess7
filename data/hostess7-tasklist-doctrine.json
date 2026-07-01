@@ -1,0 +1,28 @@
+{
+  "schema": "hostess7-tasklist-doctrine/v1",
+  "title": "Hostess 7 secure tasklist — she fills it, assistant executes, Ironclad witnesses",
+  "motto": "She queues. Assistant does. Every completion is ledger-sealed under Ironclad.",
+  "policy": {
+    "hostess7_may_add": true,
+    "owner_may_add": true,
+    "assistant_may_complete": true,
+    "assistant_may_read": true,
+    "immutable_completion_ledger": true,
+    "ironclad_preflight_on_write": true,
+    "no_field_files": true
+  },
+  "roles": {
+    "fill": "hostess7",
+    "execute": "assistant",
+    "witness": "ironclad"
+  },
+  "streams": {
+    "live": "hostess7-tasklist.json",
+    "ledger": "hostess7-tasklist-ledger.jsonl",
+    "panel": "hostess7-tasklist-panel.json",
+    "brain_mirror": "Hostess7/cache/fieldstorage/brain/superintel/hostess_tasklist.json"
+  },
+  "module": "lib/hostess7-tasklist.py",
+  "report_format": "concise_markdown_lines",
+  "ironclad_cite": "ironclad:tasklist:1"
+}

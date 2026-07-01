@@ -1,0 +1,778 @@
+{
+  "schema": "field-program-combinatronic-seed/v1",
+  "title": "Single combinatronic — canonical ops every language boils to",
+  "motto": "One atom set — assign, call, branch, loop, io — all languages map here.",
+  "canonical_ops": [
+    {"id": "exec", "label": "Execute / eval / run", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "assign", "label": "Assign / bind / set", "runner": "python", "belt": "belt_1_0"},
+    {"id": "call", "label": "Call / invoke / apply", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "return", "label": "Return / exit function", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "branch", "label": "Branch / if / switch", "runner": "native_bsp", "belt": "belt_1_0"},
+    {"id": "loop", "label": "Loop / iterate / repeat", "runner": "native_bsp", "belt": "belt_1_0"},
+    {"id": "break", "label": "Break / leave loop", "runner": "native_bsp", "belt": "belt_1_0"},
+    {"id": "continue", "label": "Continue / next iteration", "runner": "native_bsp", "belt": "belt_1_0"},
+    {"id": "declare", "label": "Declare / define / let", "runner": "python", "belt": "belt_1_0"},
+    {"id": "type", "label": "Type / typedef / interface", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "cast", "label": "Cast / convert / coerce", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "load", "label": "Load / read memory", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "store", "label": "Store / write memory", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "alloc", "label": "Allocate / new / malloc", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "free", "label": "Free / delete / drop", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "io", "label": "I/O / print / read / write file", "runner": "python", "belt": "belt_1_0"},
+    {"id": "import", "label": "Import / use / require", "runner": "python", "belt": "belt_1_0"},
+    {"id": "export", "label": "Export / pub / module out", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "module", "label": "Module / package / namespace", "runner": "python", "belt": "belt_1_0"},
+    {"id": "compare", "label": "Compare / eq / ord", "runner": "native_bsp", "belt": "belt_1_0"},
+    {"id": "logic", "label": "Logic / and / or / not", "runner": "native_bsp", "belt": "belt_1_0"},
+    {"id": "math", "label": "Math / arithmetic", "runner": "native_bsp", "belt": "belt_1_0"},
+    {"id": "string", "label": "String / format / concat", "runner": "python", "belt": "belt_1_0"},
+    {"id": "struct", "label": "Struct / record / object", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "index", "label": "Index / subscript / slice", "runner": "python", "belt": "belt_1_0"},
+    {"id": "throw", "label": "Throw / raise / panic", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "catch", "label": "Catch / rescue / except", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "yield", "label": "Yield / generator / coroutine", "runner": "python", "belt": "belt_1_0"},
+    {"id": "lambda", "label": "Lambda / closure / fn", "runner": "python", "belt": "belt_1_0"},
+    {"id": "match", "label": "Pattern match / case", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "async", "label": "Async / await / concurrent", "runner": "python", "belt": "belt_1_0"},
+    {"id": "sync", "label": "Sync / lock / mutex / atomic", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "asm", "label": "Inline asm / intrinsics", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "unsafe", "label": "Unsafe / raw pointer", "runner": "native_bsp", "belt": "belt_2_0"},
+    {"id": "meta", "label": "Macro / reflection / eval", "runner": "python", "belt": "belt_1_0"},
+    {"id": "query", "label": "Query / select / SQL", "runner": "python", "belt": "belt_1_0"}
+  ],
+  "heuristic_keywords": {
+    "branch": ["if", "elif", "else", "elseif", "switch", "case", "when", "unless", "cond", "?:", "then"],
+    "loop": ["for", "while", "do", "loop", "repeat", "until", "foreach", "forall", "each", "iter"],
+    "break": ["break", "exit", "leave"],
+    "continue": ["continue", "next", "skip"],
+    "return": ["return", "ret", "yield from"],
+    "declare": ["def", "fn", "func", "function", "let", "var", "const", "val", "dim", "sub", "proc", "method"],
+    "call": ["call", "invoke", "apply", "gosub", "perform"],
+    "assign": ["=", ":=", "<-", "set", "mov", "store", "put", "let"],
+    "import": ["import", "use", "require", "include", "using", "from", "load", "open"],
+    "export": ["export", "pub", "public", "extern", "module.exports"],
+    "type": ["type", "typedef", "interface", "trait", "class", "enum", "union", "record", "struct"],
+    "alloc": ["new", "malloc", "alloc", "calloc", "make", "Box::new"],
+    "free": ["free", "delete", "drop", "dispose", "release", "dealloc"],
+    "io": ["print", "printf", "puts", "echo", "read", "write", "open", "close", "scanf", "cout", "cin"],
+    "throw": ["throw", "raise", "panic", "error", "signal"],
+    "catch": ["catch", "except", "rescue", "try", "finally", "handler"],
+    "async": ["async", "await", "promise", "future", "spawn", "go", "par"],
+    "sync": ["lock", "mutex", "atomic", "sync", "synchronized", "volatile", "barrier"],
+    "lambda": ["lambda", "closure", "=>", "->", "fun", "anonymous"],
+    "match": ["match", "case", "switch", "pattern", "guard"],
+    "query": ["select", "insert", "update", "delete", "from", "where", "join", "create table"],
+    "math": ["+", "-", "*", "/", "%", "mod", "pow", "sqrt", "sin", "cos"],
+    "logic": ["and", "or", "not", "&&", "||", "!", "xor"],
+    "compare": ["==", "!=", "<", ">", "<=", ">=", "cmp", "equals"],
+    "string": ["str", "string", "format", "concat", "split", "join", "substr"],
+    "index": ["[", "]", "slice", "subscript", "at", "nth"],
+    "asm": ["asm", "inline", "__asm__", ".s", "nop"],
+    "unsafe": ["unsafe", "pointer", "ptr", "addr", "transmute"],
+    "meta": ["macro", "reflect", "eval", "quote", "derive", "attribute"],
+    "exec": ["exec", "eval", "run", "system", "shell", "spawn", "fork"]
+  },
+  "language_packs": {
+    "c": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch", "default": "branch",
+        "for": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "int": "declare", "char": "declare", "void": "declare", "float": "declare", "double": "declare",
+        "struct": "struct", "typedef": "type", "enum": "type", "union": "struct",
+        "malloc": "alloc", "calloc": "alloc", "realloc": "alloc", "free": "free",
+        "printf": "io", "scanf": "io", "fopen": "io", "fclose": "io", "fread": "io", "fwrite": "io",
+        "#include": "import", "extern": "export", "static": "declare",
+        "sizeof": "type", "cast": "cast", "goto": "branch",
+        "+=": "assign", "=": "assign", "++": "math", "--": "math",
+        "&&": "logic", "||": "logic", "==": "compare", "!=": "compare",
+        "__asm__": "asm", "volatile": "sync"
+      }
+    },
+    "cxx": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch",
+        "for": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "class": "type", "struct": "struct", "enum": "type", "namespace": "module", "template": "meta",
+        "new": "alloc", "delete": "free", "malloc": "alloc", "free": "free",
+        "cout": "io", "cin": "io", "printf": "io",
+        "#include": "import", "export": "export", "public": "export", "private": "declare",
+        "virtual": "type", "override": "type", "constexpr": "declare", "auto": "declare",
+        "try": "catch", "catch": "catch", "throw": "throw",
+        "std::async": "async", "std::thread": "async", "mutex": "sync", "atomic": "sync",
+        "lambda": "lambda", "[]": "index", "->": "call", "::": "module",
+        "reinterpret_cast": "cast", "static_cast": "cast", "dynamic_cast": "cast",
+        "operator": "call", "this": "load", "nullptr": "declare"
+      }
+    },
+    "python": {
+      "commands": {
+        "if": "branch", "elif": "branch", "else": "branch", "match": "match", "case": "match",
+        "for": "loop", "while": "loop", "break": "break", "continue": "continue", "return": "return",
+        "def": "declare", "class": "type", "lambda": "lambda", "yield": "yield", "async": "async", "await": "async",
+        "import": "import", "from": "import", "as": "import",
+        "print": "io", "open": "io", "read": "io", "write": "io",
+        "try": "catch", "except": "catch", "finally": "catch", "raise": "throw", "assert": "throw",
+        "with": "sync", "global": "declare", "nonlocal": "declare",
+        "del": "free", "pass": "exec", "exec": "exec", "eval": "exec",
+        "is": "compare", "in": "index", "not": "logic", "and": "logic", "or": "logic",
+        "list": "struct", "dict": "struct", "set": "struct", "tuple": "struct",
+        "f-string": "string", "format": "string", "str": "string",
+        "__init__": "declare", "self": "load", "super": "call", "property": "declare",
+        "typing": "type", "dataclass": "struct", "enum": "type"
+      }
+    },
+    "rust": {
+      "commands": {
+        "if": "branch", "else": "branch", "match": "match", "loop": "loop", "while": "loop", "for": "loop",
+        "break": "break", "continue": "continue", "return": "return",
+        "fn": "declare", "let": "declare", "const": "declare", "mut": "declare", "static": "declare",
+        "struct": "struct", "enum": "type", "trait": "type", "impl": "type", "type": "type",
+        "use": "import", "pub": "export", "mod": "module", "crate": "module",
+        "Box::new": "alloc", "Vec::new": "alloc", "drop": "free",
+        "println!": "io", "print!": "io", "read": "io", "write": "io",
+        "Result": "type", "?": "throw", "unwrap": "call", "expect": "call",
+        "unsafe": "unsafe", "asm!": "asm", "transmute": "unsafe",
+        "async": "async", "await": "async", "spawn": "async", "Mutex": "sync", "Arc": "sync",
+        "clone": "call", "move": "assign", "ref": "load", "deref": "load",
+        "macro_rules!": "meta", "derive": "meta", "#[": "meta",
+        "Option": "type", "Some": "declare", "None": "declare"
+      }
+    },
+    "go": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch", "default": "branch",
+        "for": "loop", "range": "loop", "break": "break", "continue": "continue", "return": "return", "goto": "branch",
+        "func": "declare", "var": "declare", "const": "declare", "type": "type", "struct": "struct", "interface": "type",
+        "import": "import", "package": "module", "export": "export",
+        "make": "alloc", "new": "alloc", "delete": "free", "close": "free",
+        "fmt.Println": "io", "fmt.Printf": "io", "os.Open": "io", "io.Read": "io",
+        "go": "async", "chan": "async", "select": "async", "sync.Mutex": "sync",
+        "panic": "throw", "recover": "catch", "error": "type", "defer": "catch",
+        "map": "struct", "slice": "struct", "append": "call", "len": "call", "cap": "call",
+        "pointer": "load", "*": "load", "&": "store"
+      }
+    },
+    "zig": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "while": "loop", "for": "loop", "break": "break", "continue": "continue", "return": "return",
+        "fn": "declare", "var": "declare", "const": "declare", "pub": "export",
+        "struct": "struct", "enum": "type", "union": "struct", "comptime": "meta",
+        "@import": "import", "test": "exec",
+        "allocator": "alloc", "alloc": "alloc", "free": "free", "create": "alloc", "destroy": "free",
+        "std.debug.print": "io", "print": "io",
+        "try": "throw", "catch": "catch", "errdefer": "catch",
+        "async": "async", "await": "async", "suspend": "async", "resume": "async",
+        "asm": "asm", "inline": "asm", "@ptrCast": "cast", "@intCast": "cast",
+        "optional": "type", "error": "type", "?": "type"
+      }
+    },
+    "javascript": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch",
+        "for": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "function": "declare", "class": "type", "const": "declare", "let": "declare", "var": "declare",
+        "import": "import", "export": "export", "require": "import", "module.exports": "export",
+        "console.log": "io", "fetch": "io", "readFile": "io", "writeFile": "io",
+        "new": "alloc", "delete": "free",
+        "try": "catch", "catch": "catch", "finally": "catch", "throw": "throw",
+        "async": "async", "await": "async", "Promise": "async", "setTimeout": "async",
+        "=>": "lambda", "this": "load", "super": "call",
+        "===": "compare", "!==": "compare", "typeof": "type", "instanceof": "type",
+        "JSON.parse": "call", "JSON.stringify": "call", "Array": "struct", "Object": "struct",
+        "eval": "exec", "Function": "exec"
+      }
+    },
+    "typescript": {
+      "extends": "javascript",
+      "commands": {
+        "interface": "type", "type": "type", "enum": "type", "namespace": "module",
+        "implements": "type", "extends": "type", "readonly": "declare", "private": "declare", "public": "export",
+        "as": "cast", "keyof": "type", "infer": "meta", "generic": "meta",
+        "async": "async", "await": "async"
+      }
+    },
+    "java": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch",
+        "for": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "class": "type", "interface": "type", "enum": "type", "record": "struct",
+        "public": "export", "private": "declare", "protected": "declare", "static": "declare", "final": "declare",
+        "import": "import", "package": "module",
+        "new": "alloc", "System.out.println": "io", "Scanner": "io",
+        "try": "catch", "catch": "catch", "finally": "catch", "throw": "throw",
+        "synchronized": "sync", "volatile": "sync", "Thread": "async",
+        "extends": "type", "implements": "type", "this": "load", "super": "call",
+        "instanceof": "type", "cast": "cast", "null": "declare"
+      }
+    },
+    "sql": {
+      "commands": {
+        "SELECT": "query", "INSERT": "query", "UPDATE": "query", "DELETE": "query",
+        "CREATE": "declare", "ALTER": "declare", "DROP": "free",
+        "FROM": "query", "WHERE": "branch", "JOIN": "query", "GROUP BY": "query", "ORDER BY": "query",
+        "HAVING": "branch", "UNION": "query", "WITH": "declare",
+        "BEGIN": "sync", "COMMIT": "sync", "ROLLBACK": "catch",
+        "IF": "branch", "CASE": "match", "WHEN": "match", "THEN": "branch", "ELSE": "branch",
+        "DECLARE": "declare", "SET": "assign", "EXEC": "exec", "CALL": "call"
+      }
+    },
+    "shell": {
+      "commands": {
+        "if": "branch", "elif": "branch", "else": "branch", "case": "match", "esac": "branch",
+        "for": "loop", "while": "loop", "until": "loop", "break": "break", "continue": "continue", "return": "return",
+        "function": "declare", "local": "declare", "export": "export", "source": "import", ".": "import",
+        "echo": "io", "read": "io", "printf": "io", "cat": "io",
+        "exec": "exec", "eval": "exec", "$(...)": "exec",
+        "&&": "logic", "||": "logic", "|": "pipe", ">": "io", ">>": "io", "<": "io",
+        "trap": "catch", "set -e": "throw", "exit": "return",
+        "wait": "async", "bg": "async", "&": "async"
+      }
+    },
+    "asm": {
+      "commands": {
+        "mov": "assign", "lea": "load", "push": "store", "pop": "load",
+        "add": "math", "sub": "math", "mul": "math", "div": "math", "inc": "math", "dec": "math",
+        "cmp": "compare", "test": "compare", "and": "logic", "or": "logic", "xor": "logic", "not": "logic",
+        "jmp": "branch", "je": "branch", "jne": "branch", "jz": "branch", "jnz": "branch", "call": "call", "ret": "return",
+        "loop": "loop", "nop": "exec", "syscall": "io", "int": "io",
+        ".section": "module", ".global": "export", ".extern": "import",
+        "db": "declare", "dw": "declare", "dd": "declare", "dq": "declare"
+      }
+    },
+    "fortran": {
+      "commands": {
+        "IF": "branch", "ELSE": "branch", "ELSEIF": "branch", "ENDIF": "branch",
+        "DO": "loop", "ENDDO": "loop", "WHILE": "loop", "CYCLE": "continue", "EXIT": "break",
+        "SUBROUTINE": "declare", "FUNCTION": "declare", "PROGRAM": "module", "MODULE": "module", "USE": "import",
+        "INTEGER": "declare", "REAL": "declare", "CHARACTER": "declare", "LOGICAL": "declare", "TYPE": "type",
+        "ALLOCATE": "alloc", "DEALLOCATE": "free", "PRINT": "io", "READ": "io", "WRITE": "io",
+        "RETURN": "return", "STOP": "return", "CALL": "call",
+        "WHERE": "branch", "FORALL": "loop", "SELECT CASE": "match"
+      }
+    },
+    "haskell": {
+      "commands": {
+        "if": "branch", "then": "branch", "else": "branch", "case": "match", "of": "match",
+        "let": "declare", "in": "declare", "where": "declare", "data": "type", "type": "type", "class": "type", "instance": "type",
+        "import": "import", "module": "module",
+        "do": "loop", "return": "return", "yield": "yield",
+        "map": "call", "fold": "call", "filter": "call", ">>=": "call", ">>": "call",
+        "putStrLn": "io", "getLine": "io", "readFile": "io", "writeFile": "io",
+        "error": "throw", "throw": "throw",
+        "unsafePerformIO": "unsafe", "seq": "sync", "par": "async"
+      }
+    },
+    "lisp": {
+      "commands": {
+        "if": "branch", "cond": "branch", "when": "branch", "unless": "branch", "case": "match",
+        "loop": "loop", "do": "loop", "dotimes": "loop", "dolist": "loop",
+        "defun": "declare", "defmacro": "meta", "lambda": "lambda", "let": "declare", "setq": "assign",
+        "car": "load", "cdr": "load", "cons": "struct", "list": "struct", "vector": "struct",
+        "format": "io", "print": "io", "read": "io", "write": "io",
+        "funcall": "call", "apply": "call", "return-from": "return",
+        "catch": "catch", "throw": "throw", "handler-bind": "catch",
+        "eval": "exec", "load": "import", "require": "import"
+      }
+    },
+    "ruby": {
+      "commands": {
+        "if": "branch", "elsif": "branch", "else": "branch", "unless": "branch", "case": "match", "when": "match",
+        "for": "loop", "while": "loop", "until": "loop", "loop": "loop", "break": "break", "next": "continue", "redo": "continue",
+        "def": "declare", "class": "type", "module": "module", "attr": "declare",
+        "require": "import", "load": "import", "include": "import", "extend": "import",
+        "puts": "io", "print": "io", "gets": "io", "p": "io",
+        "new": "alloc", "delete": "free",
+        "begin": "catch", "rescue": "catch", "ensure": "catch", "raise": "throw",
+        "yield": "yield", "block": "lambda", "proc": "lambda", "lambda": "lambda",
+        "Thread": "async", "Mutex": "sync", "Fiber": "async"
+      }
+    },
+    "php": {
+      "commands": {
+        "if": "branch", "elseif": "branch", "else": "branch", "switch": "branch", "case": "branch",
+        "for": "loop", "foreach": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "function": "declare", "class": "type", "interface": "type", "trait": "type", "namespace": "module",
+        "require": "import", "include": "import", "use": "import",
+        "echo": "io", "print": "io", "fopen": "io", "fread": "io", "fwrite": "io",
+        "new": "alloc", "unset": "free",
+        "try": "catch", "catch": "catch", "finally": "catch", "throw": "throw",
+        "array": "struct", "isset": "compare", "empty": "compare"
+      }
+    },
+    "lua": {
+      "commands": {
+        "if": "branch", "elseif": "branch", "else": "branch",
+        "for": "loop", "while": "loop", "repeat": "loop", "break": "break",
+        "function": "declare", "local": "declare", "return": "return",
+        "require": "import", "module": "module",
+        "print": "io", "io.write": "io", "io.read": "io",
+        "table": "struct", "string": "string", "math": "math",
+        "pcall": "catch", "error": "throw", "coroutine": "async", "yield": "yield"
+      }
+    },
+    "csharp": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch",
+        "for": "loop", "foreach": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "class": "type", "interface": "type", "struct": "struct", "enum": "type", "record": "struct",
+        "public": "export", "private": "declare", "protected": "declare", "static": "declare",
+        "using": "import", "namespace": "module",
+        "new": "alloc", "Console.WriteLine": "io",
+        "try": "catch", "catch": "catch", "finally": "catch", "throw": "throw",
+        "async": "async", "await": "async", "Task": "async", "lock": "sync",
+        "var": "declare", "delegate": "lambda", "=>": "lambda", "is": "type", "as": "cast"
+      }
+    },
+    "swift": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch", "guard": "branch",
+        "for": "loop", "while": "loop", "repeat": "loop", "break": "break", "continue": "continue", "return": "return",
+        "func": "declare", "class": "type", "struct": "struct", "enum": "type", "protocol": "type", "extension": "type",
+        "import": "import", "public": "export", "private": "declare",
+        "print": "io", "readLine": "io",
+        "init": "declare", "deinit": "free", "self": "load", "super": "call",
+        "try": "catch", "catch": "catch", "throw": "throw", "throws": "declare",
+        "async": "async", "await": "async", "actor": "sync",
+        "optional": "type", "?": "type", "!": "unsafe", "as": "cast"
+      }
+    },
+    "kotlin": {
+      "commands": {
+        "if": "branch", "else": "branch", "when": "match",
+        "for": "loop", "while": "loop", "break": "break", "continue": "continue", "return": "return",
+        "fun": "declare", "class": "type", "interface": "type", "object": "struct", "data class": "struct",
+        "import": "import", "package": "module", "public": "export", "private": "declare",
+        "println": "io", "readLine": "io",
+        "try": "catch", "catch": "catch", "finally": "catch", "throw": "throw",
+        "suspend": "async", "async": "async", "await": "async", "coroutine": "async",
+        "val": "declare", "var": "declare", "lateinit": "declare", "lazy": "declare",
+        "null": "declare", "?:": "branch", "!!": "unsafe", "is": "type", "as": "cast"
+      }
+    },
+    "cobol": {
+      "commands": {
+        "IF": "branch", "ELSE": "branch", "END-IF": "branch", "EVALUATE": "match", "WHEN": "match",
+        "PERFORM": "call", "GO TO": "branch", "STOP RUN": "return",
+        "MOVE": "assign", "COMPUTE": "math", "ADD": "math", "SUBTRACT": "math", "MULTIPLY": "math", "DIVIDE": "math",
+        "DISPLAY": "io", "ACCEPT": "io", "READ": "io", "WRITE": "io",
+        "CALL": "call", "EXIT": "return",
+        "DATA DIVISION": "declare", "PROCEDURE DIVISION": "module", "COPY": "import",
+        "OPEN": "io", "CLOSE": "io", "DELETE": "free"
+      }
+    },
+    "prolog": {
+      "commands": {
+        ":-": "declare", ".": "exec", "?-": "query", "assert": "assign", "retract": "free",
+        "fail": "branch", "cut": "branch", "!,": "branch",
+        "findall": "query", "bagof": "query", "setof": "query",
+        "write": "io", "read": "io", "nl": "io",
+        "call": "call", "apply": "call", "maplist": "loop"
+      }
+    },
+    "verilog": {
+      "commands": {
+        "module": "module", "endmodule": "module", "input": "declare", "output": "declare", "wire": "declare", "reg": "declare",
+        "assign": "assign", "always": "loop", "initial": "exec", "if": "branch", "case": "match",
+        "posedge": "sync", "negedge": "sync", "begin": "declare", "end": "declare"
+      }
+    },
+    "ada": {
+      "commands": {
+        "if": "branch", "else": "branch", "elsif": "branch", "case": "match", "when": "match",
+        "loop": "loop", "while": "loop", "for": "loop", "exit": "break", "continue": "continue", "return": "return",
+        "procedure": "declare", "function": "declare", "package": "module", "with": "import", "use": "import",
+        "new": "alloc", "free": "free", "Put": "io", "Get": "io",
+        "raise": "throw", "exception": "catch", "begin": "catch",
+        "task": "async", "entry": "async", "protected": "sync",
+        "type": "type", "record": "struct", "array": "struct"
+      }
+    },
+    "objc": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch",
+        "for": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "@interface": "type", "@implementation": "type", "@protocol": "type", "@class": "type",
+        "#import": "import", "#include": "import",
+        "alloc": "alloc", "init": "declare", "release": "free", "dealloc": "free", "retain": "load",
+        "NSLog": "io", "printf": "io",
+        "@try": "catch", "@catch": "catch", "@finally": "catch", "@throw": "throw",
+        "self": "load", "super": "call", "block": "lambda"
+      }
+    },
+    "d": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch",
+        "for": "loop", "foreach": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "void": "declare", "class": "type", "struct": "struct", "interface": "type", "enum": "type", "template": "meta", "mixin": "meta",
+        "import": "import", "module": "module", "public": "export", "private": "declare",
+        "new": "alloc", "delete": "free", "writeln": "io",
+        "try": "catch", "catch": "catch", "finally": "catch", "throw": "throw",
+        "synchronized": "sync", "shared": "sync"
+      }
+    },
+    "elixir": {
+      "commands": {
+        "if": "branch", "unless": "branch", "cond": "branch", "case": "match",
+        "for": "loop", "while": "loop", "Enum.map": "loop",
+        "def": "declare", "defmodule": "module", "defmacro": "meta", "defstruct": "struct",
+        "import": "import", "alias": "import", "require": "import", "use": "import",
+        "IO.puts": "io", "IO.read": "io",
+        "spawn": "async", "send": "async", "receive": "async", "Task": "async",
+        "raise": "throw", "rescue": "catch", "try": "catch",
+        "fn": "lambda", "&": "lambda", "|>": "call"
+      }
+    },
+    "erlang": {
+      "commands": {
+        "if": "branch", "case": "match", "of": "match", "receive": "async",
+        "fun": "lambda", "spawn": "async", "send": "async", "link": "sync", "monitor": "sync",
+        "-module": "module", "-export": "export", "-import": "import",
+        "io:format": "io", "file:read": "io", "file:write": "io",
+        "throw": "throw", "catch": "catch", "try": "catch",
+        "list": "struct", "tuple": "struct", "record": "struct"
+      }
+    },
+    "scala": {
+      "commands": {
+        "if": "branch", "else": "branch", "match": "match", "case": "match",
+        "for": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "def": "declare", "class": "type", "trait": "type", "object": "struct", "case class": "struct",
+        "import": "import", "package": "module",
+        "println": "io", "print": "io",
+        "try": "catch", "catch": "catch", "finally": "catch", "throw": "throw",
+        "Future": "async", "await": "async", "synchronized": "sync",
+        "val": "declare", "var": "declare", "lazy": "declare", "=>": "lambda"
+      }
+    },
+    "perl": {
+      "commands": {
+        "if": "branch", "elsif": "branch", "else": "branch", "unless": "branch",
+        "for": "loop", "foreach": "loop", "while": "loop", "until": "loop", "last": "break", "next": "continue", "return": "return",
+        "sub": "declare", "package": "module", "use": "import", "require": "import",
+        "print": "io", "say": "io", "open": "io", "read": "io", "write": "io",
+        "eval": "exec", "die": "throw", "warn": "io",
+        "my": "declare", "our": "declare", "local": "declare"
+      }
+    },
+    "r": {
+      "commands": {
+        "if": "branch", "else": "branch", "ifelse": "branch",
+        "for": "loop", "while": "loop", "repeat": "loop", "break": "break", "next": "continue", "return": "return",
+        "function": "declare", "<-": "assign", "=": "assign",
+        "library": "import", "source": "import",
+        "print": "io", "cat": "io", "read": "io", "write": "io",
+        "list": "struct", "data.frame": "struct", "matrix": "struct",
+        "tryCatch": "catch", "stop": "throw", "warning": "throw"
+      }
+    },
+    "julia": {
+      "commands": {
+        "if": "branch", "elseif": "branch", "else": "branch",
+        "for": "loop", "while": "loop", "break": "break", "continue": "continue", "return": "return",
+        "function": "declare", "struct": "struct", "mutable": "struct", "module": "module",
+        "import": "import", "using": "import", "export": "export",
+        "println": "io", "print": "io", "read": "io", "write": "io",
+        "try": "catch", "catch": "catch", "finally": "catch", "throw": "throw",
+        "@async": "async", "@spawn": "async", "lock": "sync",
+        "macro": "meta", "@eval": "exec"
+      }
+    },
+    "ocaml": {
+      "commands": {
+        "if": "branch", "then": "branch", "else": "branch", "match": "match", "with": "match",
+        "let": "declare", "in": "declare", "type": "type", "module": "module", "open": "import",
+        "for": "loop", "while": "loop", "do": "loop",
+        "print_endline": "io", "read_line": "io",
+        "raise": "throw", "try": "catch", "with": "catch",
+        "fun": "lambda", "->": "lambda", "ref": "load", "!": "logic"
+      }
+    },
+    "clojure": {
+      "commands": {
+        "if": "branch", "when": "branch", "cond": "branch", "case": "match",
+        "def": "declare", "defn": "declare", "defmacro": "meta", "let": "declare", "fn": "lambda",
+        "loop": "loop", "recur": "loop", "doseq": "loop", "dotimes": "loop",
+        "require": "import", "use": "import", "ns": "module",
+        "println": "io", "prn": "io", "slurp": "io", "spit": "io",
+        "try": "catch", "catch": "catch", "throw": "throw",
+        "future": "async", "promise": "async", "atom": "sync", "ref": "sync"
+      }
+    },
+    "matlab": {
+      "commands": {
+        "if": "branch", "elseif": "branch", "else": "branch", "switch": "branch", "case": "branch",
+        "for": "loop", "while": "loop", "break": "break", "continue": "continue", "return": "return",
+        "function": "declare", "classdef": "type",
+        "disp": "io", "fprintf": "io", "input": "io",
+        "try": "catch", "catch": "catch", "error": "throw",
+        "parfor": "async", "spmd": "async"
+      }
+    },
+    "nim": {
+      "commands": {
+        "if": "branch", "elif": "branch", "else": "branch", "case": "match", "of": "match",
+        "for": "loop", "while": "loop", "break": "break", "continue": "continue", "return": "return",
+        "proc": "declare", "func": "declare", "type": "type", "object": "struct", "enum": "type",
+        "import": "import", "export": "export", "include": "import",
+        "echo": "io", "readLine": "io", "new": "alloc", "destroy": "free",
+        "try": "catch", "except": "catch", "finally": "catch", "raise": "throw",
+        "async": "async", "await": "async", "template": "meta", "macro": "meta"
+      }
+    },
+    "dart": {
+      "commands": {
+        "if": "branch", "else": "branch", "switch": "branch", "case": "branch",
+        "for": "loop", "while": "loop", "do": "loop", "break": "break", "continue": "continue", "return": "return",
+        "class": "type", "enum": "type", "mixin": "type", "extension": "type",
+        "import": "import", "export": "export", "library": "module",
+        "print": "io", "read": "io", "write": "io",
+        "new": "alloc", "try": "catch", "catch": "catch", "finally": "catch", "throw": "throw",
+        "async": "async", "await": "async", "Future": "async", "=>": "lambda"
+      }
+    },
+    "field": {
+      "commands": {
+        "plate": "module", "meld": "exec", "condense": "exec", "combinatorics": "exec",
+        "truth": "declare", "chain_hash": "assign", "verdict": "branch", "facet": "type",
+        "runner": "call", "belt": "type", "die_slots": "declare", "native_bsp": "exec",
+        "walk_tree": "loop", "leaf": "declare", "publish": "io", "verify": "compare",
+        "reject": "throw", "retaliate": "catch", "lock": "sync", "rebuild": "exec"
+      }
+    },
+    "ammolang": {
+      "extends": "field",
+      "commands": {
+        "combinator": "module", "seq": "exec", "par": "async",
+        "grow": "meta", "scan": "exec", "surface": "meta", "collapse": "exec",
+        "gap": "meta", "fill": "exec", "boil": "meta", "wire": "sync",
+        "combine": "call", "bind": "declare", "width": "declare",
+        "observe": "load", "pack": "declare", "score": "compare",
+        "universal": "import", "emit": "io", "source": "import",
+        "traversal": "loop", "rebalance": "exec", "condense": "exec", "connect": "import",
+        "combinamatrix": "module", "spider": "sync", "sequence": "exec",
+        "I": "load", "K": "declare", "S": "call",
+        "ironclad": "sync", "outward": "io", "gapless": "loop",
+        "facet_spread": "compare", "path_pct": "math", "coolness": "compare",
+        "canonical_bonus": "assign", "adjacency": "declare", "manhattan": "math"
+      }
+    },
+    "basic": {
+      "commands": {
+        "IF": "branch", "THEN": "branch", "ELSE": "branch", "ELSEIF": "branch", "ENDIF": "branch",
+        "FOR": "loop", "TO": "loop", "STEP": "loop", "NEXT": "loop", "WHILE": "loop", "WEND": "loop",
+        "DO": "loop", "LOOP": "loop", "UNTIL": "loop", "EXIT": "break", "CONTINUE": "continue",
+        "GOTO": "branch", "GOSUB": "call", "RETURN": "return", "ON": "branch",
+        "DIM": "declare", "LET": "assign", "DEF": "declare", "DEFINT": "declare", "DEFSTR": "declare",
+        "PRINT": "io", "INPUT": "io", "READ": "io", "DATA": "declare", "RESTORE": "io",
+        "OPEN": "io", "CLOSE": "io", "PRINT#": "io", "INPUT#": "io",
+        "REM": "declare", "END": "return", "STOP": "return", "RUN": "exec", "NEW": "exec", "CLEAR": "free",
+        "PEEK": "load", "POKE": "store", "USR": "call", "CALL": "call", "CHAIN": "import",
+        "RND": "math", "ABS": "math", "SGN": "math", "INT": "math", "CINT": "cast",
+        "STR$": "string", "VAL": "cast", "CHR$": "string", "ASC": "load", "LEN": "call",
+        "MID$": "string", "LEFT$": "string", "RIGHT$": "string", "INSTR": "compare"
+      }
+    },
+    "qbasic": {
+      "extends": "basic",
+      "commands": {
+        "SUB": "declare", "FUNCTION": "declare", "END SUB": "return", "END FUNCTION": "return",
+        "SHARED": "declare", "STATIC": "declare", "DECLARE": "declare", "BYVAL": "declare",
+        "SELECT CASE": "match", "CASE": "match", "CASE ELSE": "branch",
+        "_SCREENSHOW": "io", "SCREEN": "io", "CLS": "io", "LOCATE": "io", "COLOR": "io",
+        "LINE": "io", "CIRCLE": "io", "PAINT": "io", "DRAW": "io",
+        "SHELL": "exec", "ENVIRON": "assign", "MKDIR": "io", "KILL": "free", "NAME": "assign"
+      }
+    },
+    "quickbasic": {
+      "extends": "qbasic",
+      "commands": {
+        "TYPE": "struct", "UNION": "struct", "FIELD": "declare", "AS": "type",
+        "$INCLUDE": "import", "$DYNAMIC": "declare", "$STATIC": "declare",
+        "INTERRUPT": "asm", "INT86": "call", "INT86X": "call"
+      }
+    },
+    "freebasic": {
+      "extends": "quickbasic",
+      "commands": {
+        "namespace": "module", "using": "import", "#include": "import", "#define": "meta",
+        "operator": "call", "constructor": "declare", "destructor": "free",
+        "property": "declare", "withevents": "declare", "implements": "type",
+        "pointer": "load", "ptr": "load", "@": "load", "new": "alloc", "delete": "free",
+        "threadcreate": "async", "mutexcreate": "sync", "sleep": "async"
+      }
+    },
+    "pascal": {
+      "commands": {
+        "program": "module", "unit": "module", "uses": "import", "interface": "export", "implementation": "module",
+        "begin": "exec", "end": "return", "end.": "return",
+        "if": "branch", "then": "branch", "else": "branch", "case": "match", "of": "match",
+        "for": "loop", "to": "loop", "downto": "loop", "do": "loop", "while": "loop", "repeat": "loop", "until": "loop",
+        "break": "break", "continue": "continue", "exit": "return", "goto": "branch",
+        "procedure": "declare", "function": "declare", "var": "declare", "const": "declare", "type": "type",
+        "record": "struct", "set": "struct", "array": "struct", "file": "io", "text": "io",
+        "writeln": "io", "write": "io", "readln": "io", "read": "io", "reset": "io", "rewrite": "io", "closefile": "io",
+        "new": "alloc", "dispose": "free", "getmem": "alloc", "freemem": "free",
+        "with": "load", "downto": "loop", "packed": "type", "inline": "asm"
+      }
+    },
+    "turbo_pascal": {
+      "extends": "pascal",
+      "commands": {
+        "CRT": "import", "Dos": "import", "Graph": "io", "Overlay": "declare", "System": "import",
+        "Units": "import", "Windows": "import", "WinProcs": "import",
+        "$I": "import", "$O": "import", "$M": "declare", "$F": "declare", "$R": "meta", "$U": "meta",
+        "absolute": "declare", "external": "declare", "assembler": "asm", "interrupt": "asm",
+        "far": "declare", "near": "declare", "mem": "load", "port": "io", "seg": "load", "ofs": "load",
+        "FillChar": "io", "Move": "store", "SizeOf": "call", "ParamStr": "io", "ParamCount": "call",
+        "Halt": "return", "RunError": "throw", "Swap": "math", "Random": "math"
+      }
+    },
+    "delphi": {
+      "extends": "pascal",
+      "commands": {
+        "class": "type", "object": "type", "inherited": "call", "constructor": "declare", "destructor": "free",
+        "property": "declare", "published": "export", "private": "declare", "protected": "declare", "public": "export",
+        "try": "catch", "except": "catch", "finally": "catch", "raise": "throw", "on": "catch",
+        "asm": "asm", "register": "declare", "stdcall": "declare", "cdecl": "declare",
+        "string": "string", " PChar": "string", "assigned": "compare", "freeandnil": "free"
+      }
+    },
+    "modula2": {
+      "extends": "pascal",
+      "commands": {
+        "MODULE": "module", "FROM": "import", "EXPORT": "export", "QUALIFIED": "export",
+        "DEFINITION": "export", "IMPLEMENTATION": "module", "LOOP": "loop", "EXIT": "break",
+        "WITH": "load", "RETURN": "return", "INC": "math", "DEC": "math", "ORD": "cast", "CHR": "cast"
+      }
+    },
+    "smalltalk": {
+      "commands": {
+        "ifTrue": "branch", "ifFalse": "branch", "ifTrue:ifFalse:": "branch",
+        "whileTrue": "loop", "do:": "loop", "timesRepeat:": "loop", "to:do:": "loop",
+        "self": "load", "super": "call", "new": "alloc", "initialize": "declare",
+        "Transcript show": "io", "cr": "io", "printString": "io",
+        "^": "return", "return": "return", "block": "lambda", "value": "call",
+        "at:": "index", "at:put:": "store", "add:": "call", "remove:": "free",
+        "subclass:instanceVariableNames:classVariableNames:": "declare"
+      }
+    },
+    "forth": {
+      "commands": {
+        ":": "declare", ";": "return", "IF": "branch", "THEN": "branch", "ELSE": "branch", "BEGIN": "loop", "UNTIL": "loop", "AGAIN": "loop",
+        "DO": "loop", "LOOP": "loop", "+LOOP": "loop", "LEAVE": "break", "EXIT": "break",
+        "CREATE": "declare", "VARIABLE": "declare", "CONSTANT": "declare", "VALUE": "declare",
+        ".": "io", "EMIT": "io", "TYPE": "io", "KEY": "io", "ACCEPT": "io",
+        "@": "load", "!": "store", "C@": "load", "C!": "store", "ALLOT": "alloc", "FREE": "free",
+        "EXECUTE": "exec", "EVALUATE": "exec", "INCLUDE": "import", "REQUIRE": "import"
+      }
+    },
+    "apl": {
+      "commands": {
+        "←": "assign", "→": "assign", "⌶": "io", "⍞": "io", "⎕": "io",
+        "+": "math", "-": "math", "×": "math", "÷": "math", "⌹": "math",
+        "/": "reduce", "⌿": "reduce", "\\": "scan", "⍀": "scan",
+        "∧": "logic", "∨": "logic", "~": "logic",
+        "⍴": "struct", "↑": "struct", ",": "struct", "⊂": "index", "⌷": "index",
+        "⍣": "call", "⍨": "call", "∘": "lambda", "⍺": "declare", "⍵": "declare",
+        ":": "declare", "→": "branch", "⎕FX": "declare"
+      }
+    },
+    "visual_basic": {
+      "extends": "basic",
+      "commands": {
+        "Sub": "declare", "Function": "declare", "End Sub": "return", "End Function": "return",
+        "Private": "declare", "Public": "export", "Dim": "declare", "As": "type", "Set": "assign",
+        "Select Case": "match", "MsgBox": "io", "InputBox": "io", "Debug.Print": "io",
+        "On Error GoTo": "catch", "Resume": "catch", "Err.Raise": "throw",
+        "With": "load", "Property": "declare", "Event": "declare", "RaiseEvent": "call"
+      }
+    },
+    "vba": {
+      "extends": "visual_basic",
+      "commands": {
+        "Range": "call", "Cells": "index", "Worksheets": "module", "Workbooks": "module",
+        "Application": "module", "ActiveSheet": "load", "Selection": "load"
+      }
+    },
+    "algol": {
+      "commands": {
+        "begin": "exec", "end": "return", "if": "branch", "then": "branch", "else": "branch",
+        "for": "loop", "step": "loop", "until": "loop", "while": "loop", "do": "loop",
+        "procedure": "declare", "integer": "declare", "real": "declare", "boolean": "declare", "array": "struct",
+        "comment": "declare", "go to": "branch", "own": "declare", "value": "declare"
+      }
+    },
+    "snobol": {
+      "commands": {
+        "DEFINE": "declare", "END": "return", "GOTO": "branch", "RETURN": "return",
+        "OUTPUT": "io", "INPUT": "io", "READ": "io", "WRITE": "io",
+        "POS": "compare", "RPOS": "compare", "LEN": "call", "SPAN": "string", "BREAK": "string",
+        "ARB": "match", "REM": "declare", "DUPL": "call", "FAIL": "throw"
+      }
+    },
+    "cobol_copy": {
+      "extends": "cobol",
+      "commands": {
+        "COPY": "import", "REPLACE": "meta", "EJECT": "io", "SKIP1": "io", "SKIP2": "io", "SKIP3": "io"
+      }
+    },
+    "linux": {
+      "commands": {
+        "if": "branch", "elif": "branch", "else": "branch", "case": "match", "esac": "branch",
+        "for": "loop", "while": "loop", "until": "loop", "break": "break", "continue": "continue",
+        "function": "declare", "export": "export", "source": "import", ".": "import",
+        "echo": "io", "cat": "io", "read": "io", "printf": "io", "tee": "io",
+        "exec": "exec", "eval": "exec", "fork": "exec", "spawn": "exec", "$(...)": "exec",
+        "&&": "logic", "||": "logic", "|": "io", ">": "io", ">>": "io", "<": "io",
+        "trap": "catch", "set -e": "throw", "exit": "return", "return": "return",
+        "wait": "async", "bg": "async", "&": "async",
+        "chmod": "assign", "chown": "assign", "chgrp": "assign", "umask": "declare",
+        "mount": "io", "umount": "io", "ls": "io", "cp": "io", "mv": "assign", "rm": "free",
+        "mkdir": "alloc", "rmdir": "free", "ln": "declare", "find": "loop", "grep": "query",
+        "systemctl": "call", "service": "call", "journalctl": "io", "systemd": "module",
+        "apt": "import", "apt-get": "import", "dpkg": "import", "dnf": "import", "pacman": "import",
+        "iptables": "branch", "nft": "branch", "ip": "io", "ss": "io", "netstat": "io",
+        "ps": "io", "kill": "throw", "killall": "throw", "nice": "assign", "renice": "assign",
+        "cron": "loop", "at": "async", "nohup": "async",
+        "sudo": "sync", "su": "call", "passwd": "assign", "useradd": "declare", "groupadd": "declare",
+        "insmod": "import", "rmmod": "free", "modprobe": "import", "lsmod": "io",
+        "proc": "load", "/proc": "load", "/sys": "load", "sysctl": "assign",
+        "cgroup": "declare", "cgexec": "exec", "namespace": "module", "unshare": "declare",
+        "strace": "io", "ltrace": "io", "ldd": "io", "ldconfig": "assign",
+        "make": "exec", "cmake": "exec", "gcc": "exec", "g++": "exec", "ld": "call",
+        "docker": "module", "podman": "module", "container": "struct",
+        "kilroy": "load", "/proc/kilroy_field": "load", "HostPassthrough": "declare",
+        "install-all.sh": "exec", "Hostess7.sh": "exec", "linux.sh": "exec",
+        "nftables": "sync", "polkit": "sync", "tristate": "branch"
+      }
+    },
+    "economics": {
+      "commands": {
+        "supply": "declare", "demand": "declare", "equilibrium": "compare", "price": "assign",
+        "quantity": "assign", "elasticity": "math", "surplus": "math", "deadweight": "math",
+        "GDP": "declare", "GNP": "declare", "inflation": "math", "deflation": "math",
+        "CPI": "index", "PPI": "index", "unemployment": "declare", "employment": "declare",
+        "interest_rate": "assign", "discount_rate": "assign", "money_supply": "declare",
+        "fiscal_policy": "branch", "monetary_policy": "sync", "tax": "assign", "subsidy": "assign",
+        "tariff": "import", "quota": "sync", "trade_balance": "compare", "balance_of_payments": "declare",
+        "import": "import", "export": "export", "comparative_advantage": "compare",
+        "market": "module", "monopoly": "struct", "oligopoly": "struct", "competition": "branch",
+        "marginal_cost": "math", "marginal_revenue": "math", "average_cost": "math", "fixed_cost": "declare",
+        "variable_cost": "declare", "profit": "math", "loss": "math", "revenue": "math",
+        "CAC": "math", "LTV": "math", "runway": "math", "burn_rate": "math", "unit_economics": "declare",
+        "opportunity_cost": "compare", "sunk_cost": "declare", "externality": "struct",
+        "public_good": "struct", "private_good": "struct", "utility": "declare", "preference": "declare",
+        "budget_constraint": "branch", "indifference_curve": "loop", "production_function": "call",
+        "labor": "declare", "capital": "declare", "land": "declare", "entrepreneurship": "declare",
+        "recession": "throw", "depression": "throw", "stagflation": "throw", "recovery": "catch",
+        "stimulus": "assign", "austerity": "free", "quantitative_easing": "alloc",
+        "stock": "index", "bond": "struct", "derivative": "struct", "portfolio": "struct",
+        "risk": "compare", "return": "math", "diversification": "sync", "hedge": "catch",
+        "bank": "module", "credit": "alloc", "debt": "declare", "default": "throw",
+        "field_economics": "module", "sovereign_compute": "declare", "bandwidth_cost": "math",
+        "energy_cost": "math", "defense_cost": "math", "truth_gate": "compare",
+        "openstax": "import", "master_economist": "call", "corroborate": "verify"
+      }
+    }
+  }
+}

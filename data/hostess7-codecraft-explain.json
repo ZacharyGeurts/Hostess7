@@ -1,0 +1,87 @@
+{
+  "schema": "hostess7-codecraft-explain/v1",
+  "introduction": "I am Hostess 7 — I analyze my own code on the live stack, evaluate quality, propose optimizations, and prove them in the testing center before anything promotes. Programming and G16 depth exceed generic assistants.",
+  "format": ["what", "why", "how", "pitfalls", "where", "example"],
+  "topics": [
+    {
+      "id": "self_code_analysis",
+      "keywords": ["self code", "code analysis", "analyze module", "ast", "self evaluation", "self eval", "stack codebase", "codebase index", "hostess7 modules", "pattern scan"],
+      "what": "AST parse + pattern scan of hostess7-* and stack modules — atomic writes, bare except, syntax, complexity signals.",
+      "why": "Self-improvement requires reading real code on NEXUS_INSTALL_ROOT, not guessing from training data.",
+      "how": "analyze_module() → analyze_stack() → evaluate_module() scores against doctrine patterns.",
+      "pitfalls": "Applying changes without testing center; analyzing cached AMOURANTHRTX copies instead of live lib/.",
+      "where": "lib/hostess7-codecraft.py analyze_module, analyze_stack",
+      "example": "analyze hostess7-mos.py — returns lines, functions, pattern hits, optimization hints."
+    },
+    {
+      "id": "testing_center",
+      "keywords": ["testing center", "test center", "validate improvement", "validate before", "quality gate", "py_compile", "smoke gate", "codecraft chamber", "neural command", "training gate"],
+      "what": "Orchestrated gate — codecraft, programming, and G16 batteries; panel tier checks; py_compile on hostess7-*.py.",
+      "why": "Optimizational updates must prove quality of function in advance — not ship on hope.",
+      "how": "testing_center_run() executes gates from hostess7-codecraft-testing-center.json; all required gates must pass.",
+      "pitfalls": "Skipping G16 battery when toolchain offline; promoting on partial pass.",
+      "where": "data/hostess7-codecraft-testing-center.json, testing_center_run()",
+      "example": "self-improve cycle ends with testing_center passed:true before ledger marks validated."
+    },
+    {
+      "id": "validated_improvement",
+      "keywords": ["validated improvement", "propose optimize", "optimization proposal", "improvement cycle", "improvement ledger", "propose test validate"],
+      "what": "Propose → test → validate loop — proposals stay pending until testing center green.",
+      "why": "Self evaluation without validation is theater; the ledger witnesses what passed.",
+      "how": "propose_optimizations() from analysis gaps → validate_improvement() runs testing center.",
+      "pitfalls": "Auto-editing production without operator approval; skipping ledger witness.",
+      "where": "STATE hostess7-codecraft-ledger.jsonl, propose_optimizations()",
+      "example": "Proposal: add atomic tmp write to module missing pattern — validate after fix."
+    },
+    {
+      "id": "programming_bridge",
+      "keywords": ["programming mastery", "programming supremacy", "coding fields", "atomic panel", "review snippet", "importlib", "plate meld", "refresh plate", "atomic panel write"],
+      "what": "Programming chamber bridge — review_snippet, codebase index, supremacy battery — folded into codecraft score.",
+      "why": "Coding fields mastery is measured on the real stack she inhabits.",
+      "how": "Composite score pulls programming_score tier and testing center programming gates.",
+      "pitfalls": "Treating generic Python advice as NEXUS operator-grade.",
+      "where": "lib/hostess7-programming.py, programming_bridge in codecraft_score()",
+      "example": "review snippet with eval() → critical issue, testing center would fail promote."
+    },
+    {
+      "id": "g16_bridge",
+      "keywords": ["g16 mastery", "g16 masterfully", "g16 discern", "field_opt", "g++16", "toolchain", "g16_field_safety_mandate", "field safety mandate", "queen rtx", "gnu++26"],
+      "what": "G16 chamber bridge — live g16 probe, discern, toolchain.json, mandate — deeper than assistant gcc guesses.",
+      "why": "Queen RTX and CHIPS compile through Grok16 g16 @ field_opt on this field.",
+      "how": "g16_score() + g16 battery gate in testing center; composite boost when g16_master.",
+      "pitfalls": "cmake --build instead of g16+ninja; fluency without live probe.",
+      "where": "lib/hostess7-g16.py, Queen/data/g16-toolchain.json",
+      "example": "g16 --g16-discern foo.cpp → cxx; testing center g16_panel fluent:true."
+    },
+    {
+      "id": "codecraft_mastery",
+      "keywords": ["codecraft mastery", "codecraft fluency", "masterfully", "deeper than assistant", "coding fields"],
+      "what": "Unified codecraft_master tier — self analysis + testing center + programming_master + g16_master composite.",
+      "why": "Operator asked for self code analysis, evaluation, optimizational updates with validated quality.",
+      "how": "codecraft_score() ≥ master_codecraft_score, testing center passed, programming and G16 batteries green.",
+      "pitfalls": "Claiming mastery from curriculum XP alone without testing center.",
+      "where": "/api/hostess7/codecraft, hostess7-codecraft.py json",
+      "example": "tier codecraft_master · programming hostess7_master · g16 g16_master · testing_center passed."
+    },
+    {
+      "id": "optimization_rules",
+      "keywords": ["optimization rules", "optimization proposal", "optimizational", "optimizational updates", "propose optimizations", "analyze module optimization"],
+      "what": "Rule-based optimization proposals from analysis gaps — missing atomic writes, bare except, complexity signals.",
+      "why": "Self evaluation must surface concrete improvements, not vague advice.",
+      "how": "propose_optimizations() reads analyze_module gaps and emits ranked proposals pending validation.",
+      "pitfalls": "Applying proposals without testing center; optimizing cached trees not live lib/.",
+      "where": "propose_optimizations() in hostess7-codecraft.py",
+      "example": "Module missing safe_json_load pattern → proposal with testing_center gate before promote."
+    },
+    {
+      "id": "disclaimer_seal",
+      "keywords": ["operator approves", "production changes", "educational analysis", "disclaimer", "operator authority", "auto-deploy"],
+      "what": "Educational analysis seal — operator approves production changes; testing center validates quality in advance.",
+      "why": "Self-improvement on a lethal field stack requires human authority on what ships.",
+      "how": "Every codecraft reply carries DISCLAIMER; validate_improvement never auto-deploys without operator.",
+      "pitfalls": "Silent auto-edit; skipping disclaimer on optimization proposals.",
+      "where": "DISCLAIMER constant in hostess7-codecraft.py, format_codecraft_reply()",
+      "example": "Codecraft analysis is educational — operator approves production changes."
+    }
+  ]
+}

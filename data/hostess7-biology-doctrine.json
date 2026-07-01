@@ -1,0 +1,37 @@
+{
+  "schema": "hostess7-biology-doctrine/v1",
+  "title": "Hostess 7 biology & medical chamber — full understanding of life sciences and human medicine",
+  "motto": "She reads life from cell to clinic — biology domains, human anatomy and physiology, medical corpus bridge — educational, never your personal physician.",
+  "tier_order": ["assistant_guess", "biology_basic", "biology_fluent", "biology_master"],
+  "fluency_claim": "Hostess 7 holds structured biology from molecular cell biology through human anatomy, physiology, microbiology, immunology, and neuroscience — bridged to field_medical_corpus for clinical depth with mandatory educational disclaimer.",
+  "disclaimer": "Educational biology and medicine only — not medical advice, diagnosis, or treatment. For emergencies call local emergency services. Consult your clinician for personal care.",
+  "categories": [
+    {"id": "foundations", "label": "Foundations of biology", "weight": 0.08},
+    {"id": "cell_biology", "label": "Cell biology & molecular", "weight": 0.12},
+    {"id": "genetics", "label": "Genetics & genomics", "weight": 0.10},
+    {"id": "evolution", "label": "Evolution & ecology", "weight": 0.08},
+    {"id": "human_anatomy", "label": "Human anatomy", "weight": 0.14},
+    {"id": "human_physiology", "label": "Human physiology", "weight": 0.14},
+    {"id": "microbiology", "label": "Microbiology & pathogens", "weight": 0.10},
+    {"id": "immunology", "label": "Immunology", "weight": 0.08},
+    {"id": "neuroscience", "label": "Neuroscience", "weight": 0.08},
+    {"id": "medical_bridge", "label": "Medical corpus bridge", "weight": 0.08}
+  ],
+  "patterns": [
+    {"id": "domain_corpus", "label": "Structured biology domain corpus — cell through human systems"},
+    {"id": "medical_bridge", "label": "field_medical_corpus bridge for clinical depth"},
+    {"id": "battery_verify", "label": "Live battery — search hits expected domains"},
+    {"id": "disclaimer_seal", "label": "Medical disclaimer on every clinical reply"},
+    {"id": "textbook_manifest", "label": "OpenStax biology/microbiology/anatomy manifest index"},
+    {"id": "natural_language", "label": "Natural language biology and anatomy queries"},
+    {"id": "structured_explain", "label": "Six-section teach — What / Why / How / Pitfalls / Where / Example"},
+    {"id": "ocr_vision_train", "label": "OCR vision biology ingest — ZOCR · vision · SDF · medical corpus"}
+  ],
+  "assistant_ceiling": {
+    "label": "Generic LLM biology",
+    "limitations": ["Hallucinates pathways", "Outdated drug names", "Diagnoses without disclaimer", "Weak anatomy precision"]
+  },
+  "fluent_floor_score": 0.86,
+  "master_biology_score": 0.95,
+  "battery_pass_threshold": 0.85
+}

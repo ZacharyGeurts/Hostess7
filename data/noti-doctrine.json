@@ -1,0 +1,38 @@
+{
+  "schema": "noti-doctrine/v1",
+  "title": "Noti — sovereign notifier",
+  "motto": "Smart notifier — mirrored rooms, real addresses, immutable log. Red circle 24h; deny anytime.",
+  "hostess7_authority": "Hostess 7 speaks Noti alerts, truth-gates address changes, owns room witness.",
+  "policy": {
+    "address_reset_hours": 48,
+    "red_circle_hours": 24,
+    "deny_anytime_in_red_window": true,
+    "desktop_accept_required": true,
+    "immutable_ledger": true,
+    "irc_like_rooms": true,
+    "no_moderators": true,
+    "one_room_per_person_default": true,
+    "address_must_be_real": true
+  },
+  "taskbar": {
+    "icon_id": "noti",
+    "red_state": "red_circle",
+    "green_state": "green",
+    "unbreakable_while_red": true,
+    "position": "by_clock"
+  },
+  "streams": {
+    "ledger": "noti-ledger.jsonl",
+    "panel": "noti-panel.json",
+    "rooms": "noti-rooms.json",
+    "pending": "noti-pending.json"
+  },
+  "integrations": {
+    "hostess7": "lib/hostess7-noti.py",
+    "voice": "lib/hostess7-voice.py",
+    "people": "Hostess7/scripts/field_people_registry.py",
+    "operator": "lib/operator-default.py",
+    "field_io_packet": "lib/field-io-packet.py",
+    "c2_taskbar": "lib/field-c2-taskbar-plate.py"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema": "field-media-codec/v1",
+  "title": "Field media codec tree — containers, MIME, browser + FFmpeg posture",
+  "motto": "MP4 H.264 AAC mandatory in-tree; WebM VP9/Opus native; everything else FFmpeg transcode or stream probe.",
+  "ref": "MDN Web media formats — Containers, Video codecs, Audio codecs, codecs parameter",
+  "policy": {
+    "browser_first": true,
+    "ffmpeg_fallback": true,
+    "mse_required": true,
+    "mp4_mandatory": true,
+    "probe_unknown": true
+  },
+  "containers": [
+    {"id": "mp4", "label": "MP4 / ISOBMFF", "mime": "video/mp4", "extensions": ["mp4", "m4v", "m4a"], "browser_native": true, "kind": "video"},
+    {"id": "webm", "label": "WebM", "mime": "video/webm", "extensions": ["webm"], "browser_native": true, "kind": "video"},
+    {"id": "mkv", "label": "Matroska", "mime": "video/x-matroska", "extensions": ["mkv", "mk3d", "mka"], "browser_native": false, "kind": "video", "ffmpeg": true},
+    {"id": "ogg", "label": "Ogg", "mime": "video/ogg", "extensions": ["ogv", "ogg", "oga"], "browser_native": true, "kind": "video"},
+    {"id": "quicktime", "label": "QuickTime", "mime": "video/quicktime", "extensions": ["mov", "qt"], "browser_native": "partial", "kind": "video"},
+    {"id": "avi", "label": "AVI", "mime": "video/x-msvideo", "extensions": ["avi"], "browser_native": false, "kind": "video", "ffmpeg": true},
+    {"id": "mpeg", "label": "MPEG-TS / PS", "mime": "video/mpeg", "extensions": ["mpg", "mpeg", "ts", "m2ts", "vob"], "browser_native": false, "kind": "video", "ffmpeg": true},
+    {"id": "flv", "label": "Flash Video", "mime": "video/x-flv", "extensions": ["flv", "f4v"], "browser_native": false, "kind": "video", "ffmpeg": true},
+    {"id": "wmv", "label": "Windows Media", "mime": "video/x-ms-wmv", "extensions": ["wmv", "asf"], "browser_native": false, "kind": "video", "ffmpeg": true},
+    {"id": "3gp", "label": "3GPP", "mime": "video/3gpp", "extensions": ["3gp", "3g2"], "browser_native": "partial", "kind": "video"},
+    {"id": "mp3", "label": "MP3", "mime": "audio/mpeg", "extensions": ["mp3", "mpga"], "browser_native": true, "kind": "audio"},
+    {"id": "aac", "label": "AAC in ADTS/MP4", "mime": "audio/aac", "extensions": ["aac", "adts"], "browser_native": true, "kind": "audio"},
+    {"id": "m4a", "label": "AAC in MP4", "mime": "audio/mp4", "extensions": ["m4a"], "browser_native": true, "kind": "audio"},
+    {"id": "flac", "label": "FLAC", "mime": "audio/flac", "extensions": ["flac"], "browser_native": true, "kind": "audio"},
+    {"id": "wav", "label": "WAV / PCM", "mime": "audio/wav", "extensions": ["wav"], "browser_native": true, "kind": "audio"},
+    {"id": "opus", "label": "Opus", "mime": "audio/opus", "extensions": ["opus"], "browser_native": true, "kind": "audio"},
+    {"id": "vorbis", "label": "Vorbis", "mime": "audio/ogg", "extensions": ["ogg"], "browser_native": true, "kind": "audio"},
+    {"id": "wma", "label": "WMA", "mime": "audio/x-ms-wma", "extensions": ["wma"], "browser_native": false, "kind": "audio", "ffmpeg": true},
+    {"id": "aiff", "label": "AIFF", "mime": "audio/aiff", "extensions": ["aiff", "aif"], "browser_native": true, "kind": "audio"},
+    {"id": "jpeg", "label": "JPEG", "mime": "image/jpeg", "extensions": ["jpg", "jpeg"], "browser_native": true, "kind": "image"},
+    {"id": "png", "label": "PNG", "mime": "image/png", "extensions": ["png"], "browser_native": true, "kind": "image"},
+    {"id": "gif", "label": "GIF", "mime": "image/gif", "extensions": ["gif"], "browser_native": true, "kind": "image"},
+    {"id": "webp", "label": "WebP", "mime": "image/webp", "extensions": ["webp"], "browser_native": true, "kind": "image"},
+    {"id": "avif", "label": "AVIF", "mime": "image/avif", "extensions": ["avif"], "browser_native": true, "kind": "image"},
+    {"id": "heic", "label": "HEIC", "mime": "image/heic", "extensions": ["heic", "heif"], "browser_native": "partial", "kind": "image"},
+    {"id": "hls", "label": "HLS", "mime": "application/x-mpegURL", "extensions": ["m3u8"], "browser_native": true, "kind": "stream"},
+    {"id": "dash", "label": "MPEG-DASH", "mime": "application/dash+xml", "extensions": ["mpd"], "browser_native": "partial", "kind": "stream"}
+  ],
+  "video_codecs": [
+    {"id": "h264", "label": "H.264 / AVC", "fourcc": "avc1", "codecs_param": "avc1.42E01E", "browser_native": true, "containers": ["mp4", "mkv", "mov"]},
+    {"id": "h265", "label": "HEVC / H.265", "fourcc": "hev1", "codecs_param": "hev1.1.6.L93.B0", "browser_native": "partial", "containers": ["mp4", "mkv"], "ffmpeg": true},
+    {"id": "vp8", "label": "VP8", "fourcc": "vp8", "codecs_param": "vp8", "browser_native": true, "containers": ["webm"]},
+    {"id": "vp9", "label": "VP9", "fourcc": "vp9", "codecs_param": "vp9", "browser_native": true, "containers": ["webm", "mkv"]},
+    {"id": "av1", "label": "AV1", "fourcc": "av01", "codecs_param": "av01.0.05M.08", "browser_native": true, "containers": ["mp4", "webm", "mkv"]},
+    {"id": "theora", "label": "Theora", "fourcc": "theora", "codecs_param": "theora", "browser_native": true, "containers": ["ogg"]},
+    {"id": "mpeg2", "label": "MPEG-2 Video", "fourcc": "mp2v", "browser_native": false, "containers": ["mpeg", "ts"], "ffmpeg": true},
+    {"id": "mpeg4", "label": "MPEG-4 Part 2", "fourcc": "mp4v", "browser_native": false, "containers": ["avi", "mp4"], "ffmpeg": true},
+    {"id": "wmv", "label": "WMV", "fourcc": "wmv3", "browser_native": false, "containers": ["wmv"], "ffmpeg": true}
+  ],
+  "audio_codecs": [
+    {"id": "aac", "label": "AAC", "fourcc": "mp4a", "codecs_param": "mp4a.40.2", "browser_native": true, "containers": ["mp4", "m4a"]},
+    {"id": "mp3", "label": "MP3", "fourcc": "mp3", "codecs_param": "mp3", "browser_native": true, "containers": ["mp3"]},
+    {"id": "opus", "label": "Opus", "fourcc": "opus", "codecs_param": "opus", "browser_native": true, "containers": ["webm", "ogg"]},
+    {"id": "vorbis", "label": "Vorbis", "fourcc": "vorbis", "codecs_param": "vorbis", "browser_native": true, "containers": ["ogg", "webm"]},
+    {"id": "flac", "label": "FLAC", "fourcc": "flac", "codecs_param": "flac", "browser_native": true, "containers": ["flac", "mkv"]},
+    {"id": "pcm", "label": "PCM", "fourcc": "pcm", "browser_native": true, "containers": ["wav", "aiff"]},
+    {"id": "ac3", "label": "AC-3", "fourcc": "ac-3", "browser_native": "partial", "containers": ["mkv", "mp4"], "ffmpeg": true},
+    {"id": "eac3", "label": "E-AC-3", "fourcc": "ec-3", "browser_native": "partial", "containers": ["mkv", "mp4"], "ffmpeg": true},
+    {"id": "wma", "label": "WMA", "fourcc": "wma", "browser_native": false, "containers": ["wma"], "ffmpeg": true}
+  ],
+  "mime_by_extension": {
+    "mp4": "video/mp4", "m4v": "video/mp4", "webm": "video/webm", "mkv": "video/x-matroska",
+    "ogv": "video/ogg", "ogg": "audio/ogg", "oga": "audio/ogg", "mov": "video/quicktime",
+    "avi": "video/x-msvideo", "mpg": "video/mpeg", "mpeg": "video/mpeg", "ts": "video/mp2t",
+    "m2ts": "video/mp2t", "vob": "video/mpeg", "flv": "video/x-flv", "f4v": "video/x-flv",
+    "wmv": "video/x-ms-wmv", "3gp": "video/3gpp", "3g2": "video/3gpp2", "nut": "video/x-nut",
+    "divx": "video/x-msvideo", "mp3": "audio/mpeg", "flac": "audio/flac", "wav": "audio/wav",
+    "opus": "audio/opus", "m4a": "audio/mp4", "aac": "audio/aac", "wma": "audio/x-ms-wma",
+    "aiff": "audio/aiff", "aif": "audio/aiff", "mid": "audio/midi", "midi": "audio/midi",
+    "jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png", "gif": "image/gif",
+    "webp": "image/webp", "bmp": "image/bmp", "tif": "image/tiff", "tiff": "image/tiff",
+    "svg": "image/svg+xml", "ico": "image/x-icon", "avif": "image/avif", "heic": "image/heic",
+    "heif": "image/heif", "m3u8": "application/x-mpegURL"
+  },
+  "type_sniff": {
+    "ftyp": {"offset": 4, "mime": "video/mp4", "container": "mp4"},
+    "webm": {"offset": 0, "mime": "video/webm", "container": "webm"},
+    "ID3": {"offset": 0, "mime": "audio/mpeg", "container": "mp3"},
+    "fLaC": {"offset": 0, "mime": "audio/flac", "container": "flac"},
+    "RIFF": {"offset": 0, "mime": "audio/wav", "container": "wav"},
+    "OggS": {"offset": 0, "mime": "audio/ogg", "container": "ogg"},
+    "GIF8": {"offset": 0, "mime": "image/gif", "container": "gif"},
+    "\u0089PNG": {"offset": 0, "mime": "image/png", "container": "png"}
+  },
+  "popcorn_playback": {
+    "native_tags": ["video/mp4", "video/webm", "video/ogg", "audio/mpeg", "audio/mp4", "audio/ogg", "audio/wav", "audio/flac", "image/jpeg", "image/png", "image/gif", "image/webp"],
+    "transcode_hint": "ffmpeg -i INPUT -c:v libx264 -c:a aac -movflags +faststart OUTPUT.mp4",
+    "can_play_type_templates": {
+      "h264_aac_mp4": "video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"",
+      "vp9_opus_webm": "video/webm; codecs=\"vp9, opus\"",
+      "av1_mp4": "video/mp4; codecs=\"av01.0.05M.08\""
+    }
+  }
+}

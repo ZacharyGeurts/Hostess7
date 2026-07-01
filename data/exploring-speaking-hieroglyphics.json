@@ -1,0 +1,60 @@
+{
+  "schema": "exploring-speaking-hieroglyphics/v1",
+  "title": "Hieroglyphics translation reference — Egyptian, Luwian, and logographic lanes",
+  "motto": "Glyph → transliteration → IPA → English gloss — for humans and AI retrieval.",
+  "reading_order": ["LTR", "RTL", "boustrophedon"],
+  "egyptian_periods": [
+    {"id": "old_kingdom", "label": "Old Kingdom / Classical", "script": "hieroglyphic + hieratic"},
+    {"id": "middle_kingdom", "label": "Middle Kingdom", "script": "hieroglyphic + hieratic"},
+    {"id": "new_kingdom", "label": "New Kingdom", "script": "hieroglyphic + hieratic"},
+    {"id": "late_period", "label": "Late Period", "script": "hieroglyphic + demotic"},
+    {"id": "ptolemaic", "label": "Ptolemaic / Roman", "script": "hieroglyphic + demotic + cursive"}
+  ],
+  "unilateral_signs": [
+    {"glyph": "𓄿", "gardiner": "A1", "value": "ꜣ", "ipa": "/aː/", "gloss": "vulture (aleph value)"},
+    {"glyph": "𓇋", "gardiner": "M17", "value": "i/y", "ipa": "/i/", "gloss": "reed (yod value)"},
+    {"glyph": "𓇌", "gardiner": "M17A", "value": "y", "ipa": "/j/", "gloss": "double reed"},
+    {"glyph": "𓅱", "gardiner": "G43", "value": "w", "ipa": "/w/", "gloss": "quail chick (waw)"},
+    {"glyph": "𓃀", "gardiner": "D58", "value": "b", "ipa": "/b/", "gloss": "foot (beth)"},
+    {"glyph": "𓊪", "gardiner": "Q3", "value": "p", "ipa": "/p/", "gloss": "stool (pe)"},
+    {"glyph": "𓆑", "gardiner": "F35", "value": "f", "ipa": "/f/", "gloss": "horned viper"},
+    {"glyph": "𓅓", "gardiner": "G17", "value": "m", "ipa": "/m/", "gloss": "owl"},
+    {"glyph": "𓈖", "gardiner": "N35", "value": "n", "ipa": "/n/", "gloss": "water ripple"},
+    {"glyph": "𓂋", "gardiner": "D21", "value": "r", "ipa": "/r/", "gloss": "mouth"},
+    {"glyph": "𓉔", "gardiner": "O4", "value": "h", "ipa": "/h/", "gloss": "shelter / reed mat"},
+    {"glyph": "𓐍", "gardiner": "V28", "value": "ḥ", "ipa": "/ħ/", "gloss": "wick / emphatic h"},
+    {"glyph": "𓄡", "gardiner": "Aa1", "value": "ẖ", "ipa": "/χ/", "gloss": "placenta / kh"},
+    {"glyph": "𓆓", "gardiner": "M17B", "value": "s", "ipa": "/s/", "gloss": "folded cloth (samekh)"},
+    {"glyph": "𓋴", "gardiner": "N37", "value": "š", "ipa": "/ʃ/", "gloss": "pool"},
+    {"glyph": "𓈙", "gardiner": "N29", "value": "ḫ", "ipa": "/x/", "gloss": "sieve"},
+    {"glyph": "𓎛", "gardiner": "N14", "value": "q", "ipa": "/q/", "gloss": "hill slope"},
+    {"glyph": "𓏏", "gardiner": "X1", "value": "t", "ipa": "/t/", "gloss": "bread loaf"},
+    {"glyph": "𓍿", "gardiner": "M33", "value": "t", "ipa": "/t/", "gloss": "cattle hobble (alternate t)"},
+    {"glyph": "𓎡", "gardiner": "D46", "value": "k", "ipa": "/k/", "gloss": "hand / arm"},
+    {"glyph": "𓎼", "gardiner": "N25", "value": "g", "ipa": "/ɡ/", "gloss": "jar stand"},
+    {"glyph": "𓏭", "gardiner": "Z4", "value": "j", "ipa": "/ɟ/", "gloss": "two strokes (yod variant)"}
+  ],
+  "core_words": [
+    {"glyphs": "𓈖 𓂋", "translit": "nfr", "ipa": "/ˈnaːfir/", "pos": "adjective", "gloss": "good / beautiful / perfect", "register": "formal"},
+    {"glyphs": "𓅱 𓏏 𓅱", "translit": "mwt", "ipa": "/ˈmuːwat/", "pos": "noun", "gloss": "water", "register": "neutral"},
+    {"glyphs": "𓂋 𓏤", "translit": "rꜥ", "ipa": "/ˈriːʕa/", "pos": "noun", "gloss": "sun / Ra", "register": "formal"},
+    {"glyphs": "𓇋 𓂋 𓏏", "translit": "jrt", "ipa": "/ˈjaːrat/", "pos": "noun", "gloss": "eye", "register": "neutral"},
+    {"glyphs": "𓀀", "translit": "j", "ipa": "/ja/", "pos": "noun", "gloss": "man / person", "register": "neutral"},
+    {"glyphs": "𓏏 𓅱 𓏏", "translit": "twt", "ipa": "/ˈtuːwat/", "pos": "noun", "gloss": "image / statue", "register": "formal"},
+    {"glyphs": "𓊪 𓏏 𓀀", "translit": "ptḥ", "ipa": "/ˈpataħ/", "pos": "noun", "gloss": "Ptah (creator god)", "register": "formal"},
+    {"glyphs": "𓇋 𓈖 𓇋", "translit": "jnj", "ipa": "/ˈjini/", "pos": "verb", "gloss": "to say / speak", "register": "neutral"},
+    {"glyphs": "𓅓 𓂋", "translit": "mr", "ipa": "/ˈmaːri/", "pos": "verb", "gloss": "to love / want", "register": "neutral"},
+    {"glyphs": "𓇋 𓅱", "translit": "jw", "ipa": "/ˈjaːwu/", "pos": "particle", "gloss": "yes / indeed", "register": "neutral"},
+    {"glyphs": "𓈖", "translit": "n", "ipa": "/n/", "pos": "particle", "gloss": "not / negation", "register": "neutral"},
+    {"glyphs": "𓂋 𓏤 𓈖 𓇋", "translit": "rnn", "ipa": "/ˈriːnani/", "pos": "verb", "gloss": "to name / speak a name", "register": "formal"}
+  ],
+  "translation_method": [
+    "Identify script period: hieroglyphic, hieratic, demotic, or cursive.",
+    "Segment into signs; note determinatives (semantic classifiers, not pronounced).",
+    "Apply uniliteral / biliteral / triliteral phonetic values.",
+    "Reconstruct vocalization (Middle Egyptian standard for classroom).",
+    "Gloss into English; mark uncertain readings with (?) and damaged signs with […].",
+    "AI keys: glyph_ids, gardiner, translit, ipa, gloss_en, period, register"
+  ],
+  "hieroglyph_lang_codes": ["egy", "hlu", "cop", "xpu", "phn", "uga", "emy", "xep", "lab"]
+}

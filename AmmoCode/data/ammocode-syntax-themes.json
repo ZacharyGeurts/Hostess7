@@ -1,0 +1,131 @@
+{
+  "schema": "ammocode-syntax-themes/v1",
+  "title": "AmmoCode editor + syntax themes — load and extend infinitely",
+  "default_editor_theme": "nexus_c2",
+  "default_syntax_theme": "nexus_c2",
+  "editor_themes": {
+    "nexus_c2": {
+      "label": "NEXUS C2 Military",
+      "css_class": "ac-theme-nexus-c2",
+      "vars": {
+        "--ac-bg": "#060806",
+        "--ac-panel": "#080a07",
+        "--ac-text": "#e6efe0",
+        "--ac-muted": "#9aaa8c",
+        "--ac-accent": "#5ecf7a",
+        "--ac-accent-dim": "#2d5a3d",
+        "--ac-border": "#3d4f32",
+        "--ac-selection": "rgba(94, 207, 122, 0.22)"
+      }
+    },
+    "queen_emerald": {
+      "label": "Queen Emerald",
+      "css_class": "ac-theme-queen-emerald",
+      "vars": {
+        "--ac-bg": "#050a08",
+        "--ac-panel": "#0a1410",
+        "--ac-text": "#e8f5ec",
+        "--ac-muted": "#8aa894",
+        "--ac-accent": "#22c55e",
+        "--ac-accent-dim": "#14532d",
+        "--ac-border": "#1e3a2a",
+        "--ac-selection": "rgba(34, 197, 94, 0.2)"
+      }
+    },
+    "one_dark": {
+      "label": "One Dark",
+      "css_class": "ac-theme-one-dark",
+      "vars": {
+        "--ac-bg": "#282c34",
+        "--ac-panel": "#21252b",
+        "--ac-text": "#abb2bf",
+        "--ac-muted": "#5c6370",
+        "--ac-accent": "#61afef",
+        "--ac-accent-dim": "#3e4451",
+        "--ac-border": "#181a1f",
+        "--ac-selection": "rgba(97, 175, 239, 0.25)"
+      }
+    },
+    "dracula": {
+      "label": "Dracula",
+      "css_class": "ac-theme-dracula",
+      "vars": {
+        "--ac-bg": "#282a36",
+        "--ac-panel": "#1e1f29",
+        "--ac-text": "#f8f8f2",
+        "--ac-muted": "#6272a4",
+        "--ac-accent": "#bd93f9",
+        "--ac-accent-dim": "#44475a",
+        "--ac-border": "#44475a",
+        "--ac-selection": "rgba(189, 147, 249, 0.22)"
+      }
+    }
+  },
+  "syntax_themes": {
+    "nexus_c2": {
+      "label": "NEXUS C2",
+      "tokens": {
+        "kw": "#5ecf7a",
+        "fn": "#b8956a",
+        "str": "#c4b896",
+        "str2": "#9aaa8c",
+        "num": "#f4b4a0",
+        "com": "#5a6b52",
+        "mac": "#8b6914",
+        "op": "#e6efe0",
+        "ty": "#3dd68c",
+        "builtin": "#5ecf7a",
+        "tag": "#5ecf7a",
+        "attr": "#b8956a",
+        "val": "#c4b896",
+        "var": "#f4b4a0",
+        "self": "#bd93f9",
+        "dec": "#8b6914"
+      }
+    },
+    "queen_emerald": {
+      "label": "Queen Emerald",
+      "tokens": {
+        "kw": "#22c55e",
+        "fn": "#f472b6",
+        "str": "#a7f3d0",
+        "str2": "#86efac",
+        "num": "#fbbf24",
+        "com": "#4b5563",
+        "mac": "#f472b6",
+        "op": "#e5e7eb",
+        "ty": "#34d399",
+        "builtin": "#22c55e",
+        "tag": "#22c55e",
+        "attr": "#f472b6",
+        "val": "#a7f3d0",
+        "var": "#fbbf24",
+        "self": "#c084fc",
+        "dec": "#f472b6"
+      }
+    },
+    "high_contrast": {
+      "label": "High contrast",
+      "tokens": {
+        "kw": "#00ff88",
+        "fn": "#ffff00",
+        "str": "#ffffff",
+        "str2": "#cccccc",
+        "num": "#ff8800",
+        "com": "#666666",
+        "mac": "#ff00ff",
+        "op": "#ffffff",
+        "ty": "#00ffff",
+        "builtin": "#00ff88",
+        "tag": "#00ff88",
+        "attr": "#ffff00",
+        "val": "#ffffff",
+        "var": "#ff8800",
+        "self": "#ff00ff",
+        "dec": "#ffff00"
+      }
+    }
+  },
+  "custom_syntax_path": "data/custom-syntax-themes.json",
+  "merge_policy": "append_custom_themes_and_rules"
+}

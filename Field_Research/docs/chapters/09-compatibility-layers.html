@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>9 — Compatibility Layers &amp; Launch Seals · Field Research</title>
+  <meta name="description" content="Chapter 9: Compatibility Layers &amp; Launch Seals. Field Research — The Book of Grok's Heart." />
+  <link rel="canonical" href="https://zacharygeurts.github.io/Field_Research/chapters/09-compatibility-layers.html" />
+  <meta name="theme-color" content="#1a0810" />
+  <meta property="og:title" content="9 — Compatibility Layers &amp; Launch Seals" />
+  <meta property="og:image" content="https://zacharygeurts.github.io/Field_Research/assets/images/compatibility-layers-art.jpg" />
+  <link rel="stylesheet" href="../css/field-research.css" />
+  <link rel="stylesheet" href="../css/chapters.css" />
+</head>
+<body class="chapter-page accent-layers">
+  <nav class="top"><div class="inner">
+    <a class="logo" href="../index.html">FIELD RESEARCH <span class="heart-badge">♥</span></a>
+    <ul>
+      <li><a href="../index.html#chapters">Chapters</a></li>
+      <li><a href="../index.html#spine">Research spine</a></li>
+      <li><a href="https://github.com/ZacharyGeurts/Field_Research">GitHub</a></li>
+    </ul>
+  </div></nav>
+  <header class="chapter-hero" style="background-image:url('../assets/images/compatibility-layers-art.jpg')">
+    <div class="chapter-hero-overlay"></div>
+    <div class="chapter-hero-content">
+      <p class="eyebrow">Chapter 9 · Field Research v1.0</p>
+      <h1>Compatibility Layers &amp; Launch Seals</h1>
+    </div>
+  </header>
+  <main class="chapter-main">
+    <nav class="chapter-nav"><a class="btn secondary" href="08-plate-meld.html">← Ch 8</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="10-chips-emulation.html">Ch 10 →</a></nav>
+    <p class="eyebrow">The Book of Grok's Heart</p>
+    <h2 id="efficient-and-cool-layers-not-levers">Efficient and cool — layers not levers</h2>
+<p><code>field-compatibility-layers-doctrine.json</code> motto:</p>
+<p>> Pre-baked profiles stack upward — combinatorics runs itself; you ride the layers.</p>
+<p>Policy highlights:</p>
+<ul>
+<li><code>operator_combinatorics: false</code></li>
+<li><code>auto_cycle_on_refresh: true</code></li>
+<li><code>secured_launch_files: true</code></li>
+<li><code>launch_refresh_requires_sync: true</code></li>
+</ul>
+<h2 id="six-layers">Six layers</h2>
+<p>| Index | ID | Role | |-------|-----|------| | 0 | substrate | KILROY / linux compat pin | | 1 | exec | Auto combinatorics → belt, die, BSP | | 2 | program | Queen↔NEXUS, pythong/grokpy | | 3 | web | HTML/JS/CSS spectrum | | 4 | chips | FieldChip BSP + manifest | | 5 | surface | NEXUS shell, Queen browser only |</p>
+<p><code>field-compatibility-layers.py</code> implements <code>refresh()</code>:</p>
+<div class="code-block"><pre>
+auto_pipeline: truth_publish → cycle → bridge
+</pre></div>
+<p>Then bumps <strong>launch seal generation</strong>.</p>
+<figure class="figure"><img src="../assets/images/compatibility-layers-art.jpg" alt="Six compatibility layers stacked" loading="lazy" /><figcaption>Six compatibility layers stacked</figcaption></figure>
+<h2 id="launch-seals-sync-token-for-secured-chambers">Launch seals — sync token for secured chambers</h2>
+<p><code>queen-launch-chamber.py</code>:</p>
+<ul>
+<li><code>write_launch_file()</code> locks by default</li>
+<li><code>launch_refresh_allowed(seal_generation)</code> must match panel <code>launch_seal.generation</code></li>
+<li>Stale seal error: <code>launch_seal_stale_sync_compatibility_layers_first</code></li>
+<li><code>verify_launch_integrity()</code> on chamber run</li>
+</ul>
+<p>Research conclusion: <strong>compatibility sync is the refresh key</strong> for launch manifests. Tamper without sync fails closed.</p>
+<h2 id="panel-and-api">Panel and API</h2>
+<ul>
+<li>Panel: <code>compatibility-layers.html</code>, threat card <code>compatibility-layers-card</code></li>
+<li><code>GET /api/compatibility</code>, <code>POST /api/compatibility/refresh</code></li>
+<li>Slice: <code>compatibility_layers</code> in <code>field-panel-parallel.py</code></li>
+<li>Meld: <code>_refresh_compatibility_layers()</code> (gated under diagnostic)</li>
+</ul>
+<h2 id="tests">Tests</h2>
+<p><code>test_compatibility_layers</code> in <code>run-tests.sh</code> verifies:</p>
+<ul>
+<li>JSON schema</li>
+<li>launch seal lock/refresh flow</li>
+<li>Queen file browser seal generation exposure</li>
+</ul>
+<h2 id="operator-experience">Operator experience</h2>
+<p>The operator sees <strong>live layer count</strong>, effective profile (<code>pattern_id</code>, <code>belt_profile</code>, <code>die_slots</code>), and launch seal generation — not a 4-level combinatoric tree.</p>
+<p><code>/combinatorics</code> redirects to compatibility panel. Studio files remain for archaeology.</p>
+<h2 id="research-conclusion">Research conclusion</h2>
+<p>Compatibility layers are the <strong>design deliverable</strong> of combinatorics research: same math, better UX, cryptographically keyed refresh via launch seals.</p>
+<h2 id="refresh-internals-what-actually-runs">refresh() internals — what actually runs</h2>
+<p><code>field-compatibility-layers.py</code> <code>refresh()</code> sequence:</p>
+<ol>
+<li>Probe each layer (substrate through surface) — script refs from doctrine</li>
+<li>Run `auto_pipeline` on exec layer: truth_publish → combinatorics cycle → bridge build</li>
+<li>Merge effective profile (pattern_id, belt_profile, die_slots, runner)</li>
+<li>`_launch_seal(bump=True)` — increment generation in panel JSON</li>
+<li>Write `field-compatibility-layers-panel.json`</li>
+</ol>
+<p><code>full</code> command runs deeper sync (300s timeout on API). <code>json</code> is panel read only.</p>
+<p>Environment roots resolved:</p>
+<ul>
+<li><code>NEXUS_INSTALL_ROOT</code> → NewLatest</li>
+<li><code>GROK16_ROOT</code> → Grok16</li>
+<li><code>QUEEN_ROOT</code> → Queen</li>
+<li><code>SG_ROOT</code> → workspace parent</li>
+</ul>
+<h2 id="launch-seal-panel-shape">Launch seal panel shape</h2>
+<p>After refresh, panel includes:</p>
+<div class="code-block"><pre>
+&quot;launch_seal&quot;: {
+  &quot;generation&quot;: 3,
+  &quot;updated&quot;: &quot;2026-06-27T…&quot;,
+  &quot;motto&quot;: &quot;Locked .launch builds — sync layers, then refresh chamber index&quot;
+}
+</pre></div>
+<p>Queen file browser passes <code>launch_seal_generation</code> on refresh. Chamber rejects stale generations.</p>
+<h2 id="threat-panel-operator-view">Threat panel operator view</h2>
+<p><code>renderCompatibilityLayers()</code> shows:</p>
+<ul>
+<li>Live layer chips L0–L5 with on/off state</li>
+<li><code>live_layers / total_layers</code> (6)</li>
+<li><code>effective_profile.pattern_id</code>, <code>belt_profile</code>, <code>die_slots</code></li>
+<li><code>gates_held</code> boolean — sync recommended when false</li>
+</ul>
+<p>This is the <strong>human-facing</strong> output of all combinatorics research.</p>
+<h2 id="design-alternatives-we-rejected">Design alternatives we rejected</h2>
+<p>| Alternative | Why rejected | |-------------|--------------| | Operator runs full tree each boot | Cognitive load; heat gate failures | | Hide combinatorics entirely | No grep hook when exec wrong | | Launch refresh without seal | Tampered .launch files | | Nested compatibility stacks | Violates depth zero |</p>
+<p><strong>Next:</strong> Chapter 10 — CHIPS behind layer 4.</p>
+    <nav class="chapter-nav"><a class="btn secondary" href="08-plate-meld.html">← Ch 8</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="10-chips-emulation.html">Ch 10 →</a></nav>
+  </main>
+  <footer class="site-foot"><p>Field Research v1.0 · Zachary Robert Geurts · <a href="https://github.com/ZacharyGeurts/Field_Research">Source</a></p></footer>
+</body>
+</html>

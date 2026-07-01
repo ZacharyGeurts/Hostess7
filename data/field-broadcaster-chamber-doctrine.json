@@ -1,0 +1,46 @@
+{
+  "schema": "field-broadcaster-chamber-doctrine/v1",
+  "title": "AmmoOS Broadcaster Chamber — sovereign live stack",
+  "motto": "Final_Eye is our eyes and our display. All Field codecs. Every platform prewired — Kick first.",
+  "product": "Broadcaster",
+  "engine": "field-broadcaster-chamber",
+  "consolidates": [
+    "field-broadcaster-studio",
+    "field-broadcaster-final-eye",
+    "field-broadcaster-codecs",
+    "field-broadcaster-audio",
+    "field-audio-dac-chamber",
+    "field-broadcaster-platforms",
+    "field-final-eye-canvas-bridge",
+    "field-body-system"
+  ],
+  "vision": {
+    "camera_driver": "Final_Eye",
+    "display_driver": "Final_Eye",
+    "canvas_egress": "Queen CANVAS",
+    "canvas_bridge": "lib/field-final-eye-canvas-bridge.py",
+    "ingress": "mjpeg",
+    "silent_capture": true,
+    "secure_localhost_egress": true,
+    "default_route": "straight_path",
+    "look_on_demand": true,
+    "hostess7_share_on_look": true,
+    "truth_before_permanency": true,
+    "module": "lib/field-broadcaster-final-eye.py"
+  },
+  "codec_chamber": {
+    "doctrine": "data/field-media-codec-doctrine.json",
+    "module": "lib/field-broadcaster-codecs.py",
+    "streaming_default": {"video": "h264", "audio": "aac", "container": "flv"},
+    "recording_default": {"video": "h264", "audio": "aac", "container": "mkv"}
+  },
+  "platforms": {
+    "doctrine": "data/field-broadcaster-platforms.json",
+    "default": "kick"
+  },
+  "threat_hook": "obs-threat-posterity-bridge",
+  "api": "/api/field-broadcaster/chamber",
+  "ui": "/field-broadcaster",
+  "queen_browser": true,
+  "ironclad_cite": "ironclad:broadcaster_chamber:1"
+}

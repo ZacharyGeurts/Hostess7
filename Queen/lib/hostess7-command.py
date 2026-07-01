@@ -1,0 +1,1 @@
+/home/default/Desktop/SG/NewLatest/lib/hostess7-command.py

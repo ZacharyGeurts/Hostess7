@@ -1,0 +1,65 @@
+{
+  "schema": "field-services-2026/v1",
+  "edition": "Grok rewrite 2026",
+  "motto": "Public DNS, DHCP, and time — loopback-first, sovereign-gated, never lose a cycle.",
+  "vulnerabilities_retired": [
+    "Hardcoded DNS admin passkeys in seed only — env or Hostess7 required in production",
+    "DHCP bind 0.0.0.0 without takeover primary — blocked by default",
+    "Pool NTP as sole authority — sovereign-first policy",
+    "dig-per-query fork bomb — rate limits + takeover gating retained",
+    "DHCP REQUEST without option-50 pool match — rejected in v2026",
+    "No ARP/ping conflict detect on lease — ping probe before OFFER",
+    "Cleartext admin on 7/77/777 — localhost bind default; TLS panel preferred",
+    "SQUIDGIE blocking NTP replies — retired; threats log, derived time always serves"
+  ],
+  "public_exposure": {
+    "dns_wan_default": false,
+    "dhcp_wan_default": false,
+    "ntp_wan_default": false,
+    "opt_in_env": "NEXUS_FIELD_SERVICES_PUBLIC=1"
+  },
+  "security_model": {
+    "gate": "field-sovereign-gate.py",
+    "clock": "sovereign-clock.py — everyone everything everywhere",
+    "sync": "field-sovereign-sync.py",
+    "never_desync": true,
+    "doctrine": "data/field-sovereign-sync-doctrine.json",
+    "cycle": "sovereign-cycle-state.json — monotonic, never backward, never skipped",
+    "anchor": "sovereign-time-anchor.json — derived UTC under sonic/RF/SQUIDGIE",
+    "redundancy": "sovereign-redundant/ — mirror + .bak per state file",
+    "sync_ledger": "sovereign-sync-ledger.jsonl — append-only, fsync, never lose data",
+    "verdicts": ["USER_OK", "SQUIDGIE", "SONIC_RF"],
+    "services_bound": ["dns", "dhcp", "ntp", "sovereign_udp", "operator", "refield", "underlay"]
+  },
+  "dns": {
+    "bind_ipv4_default": "127.0.0.1,127.0.0.53",
+    "bind_ipv6_default": "::1",
+    "sovereign_gate": true,
+    "enforce_resolv": true,
+    "block_foreign_resolvers": true
+  },
+  "dhcp": {
+    "bind_default": "lan-only",
+    "dns_option_v4": ["127.0.0.1"],
+    "dns_option_v6": ["::1"],
+    "sovereign_gate": true,
+    "require_takeover_primary": true
+  },
+  "time": {
+    "sovereign_udp_port": 9123,
+    "ntp_udp_port": 123,
+    "sovereign_first": true,
+    "never_lose_cycle": true,
+    "pool_ntp_fallback": false,
+    "micron_witness": true,
+    "sonic_rf_detect": true
+  },
+  "receive_verify": [
+    "HMAC pulse signature",
+    "monotonic never backward",
+    "cycle never skipped",
+    "derived time from anchor under threat",
+    "micron_witness sysfs freq — sonic/RF tamper",
+    "SQUIDGIE logged — time still serves"
+  ]
+}

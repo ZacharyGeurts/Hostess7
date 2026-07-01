@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 400" width="920" height="400" role="img">
+<rect width="920" height="400" fill="#060806"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5a7a3a"/></marker></defs>
+<rect x="40" y="40" width="220" height="100" rx="4" fill="#1a1f14" stroke="#2a3324" stroke-width="1.5"/>
+<text x="52" y="62" fill="#7faa55" font-family="Segoe UI,system-ui,sans-serif" font-size="13" font-weight="600">FieldWave update</text>
+<text x="52" y="82" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">entropyFabricPredict</text>
+<text x="52" y="98" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">allow_update(num_ops)</text>
+<text x="52" y="114" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">record_ops on pass</text><rect x="300" y="40" width="220" height="100" rx="4" fill="#141810" stroke="#6f9a52" stroke-width="1.5"/>
+<text x="312" y="62" fill="#7faa55" font-family="Segoe UI,system-ui,sans-serif" font-size="13" font-weight="600">Work budget</text>
+<text x="312" y="82" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">joules_per_field_op proxy</text>
+<text x="312" y="98" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">max_joules_per_second</text>
+<text x="312" y="114" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">1s rolling window</text><rect x="560" y="40" width="320" height="100" rx="4" fill="#141810" stroke="#c45c3a" stroke-width="1.5"/>
+<text x="572" y="62" fill="#7faa55" font-family="Segoe UI,system-ui,sans-serif" font-size="13" font-weight="600">Global redata</text>
+<text x="572" y="82" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">safe_global_redata — chunked</text>
+<text x="572" y="98" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">max_global_redata_chunk</text>
+<text x="572" y="114" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">NO monolithic blast</text><line x1="260" y1="90" x2="300" y2="90" stroke="#5a7a3a" stroke-width="2" marker-end="url(#arrow)"/><line x1="520" y1="90" x2="560" y2="90" stroke="#5a7a3a" stroke-width="2" marker-end="url(#arrow)"/><rect x="40" y="170" width="400" height="110" rx="4" fill="#141810" stroke="#5c4332" stroke-width="1.5"/>
+<text x="52" y="192" fill="#7faa55" font-family="Segoe UI,system-ui,sans-serif" font-size="13" font-weight="600">Back-off path</text>
+<text x="52" y="212" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">projected_power > budget → sleep 5ms</text>
+<text x="52" y="228" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">skip chunk this pass · quality scaling</text>
+<text x="52" y="244" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">cold path: one atomic + timestamp</text><rect x="460" y="170" width="420" height="110" rx="4" fill="#141810" stroke="#4d8ab8" stroke-width="1.5"/>
+<text x="472" y="192" fill="#7faa55" font-family="Segoe UI,system-ui,sans-serif" font-size="13" font-weight="600">NEXUS-Shield observability</text>
+<text x="472" y="212" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">hwmon + RAPL anomaly → gatekeeper tighten</text>
+<text x="472" y="228" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">field thermal headroom X% log</text>
+<text x="472" y="244" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">boot-test redata on first + refresh</text><rect x="40" y="310" width="840" height="70" rx="4" fill="#1a1f14" stroke="#2a3324" stroke-width="1.5"/>
+<text x="52" y="332" fill="#7faa55" font-family="Segoe UI,system-ui,sans-serif" font-size="13" font-weight="600">Landauer</text>
+<text x="52" y="352" fill="#c5d4b0" font-family="Consolas,monospace" font-size="11">kT ln 2 per bit erased — field entropy paths budget irreversible work before hard-drive global refresh</text></svg>

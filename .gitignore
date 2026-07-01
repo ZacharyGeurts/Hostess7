@@ -1,0 +1,69 @@
+.venv-screenshots/
+__pycache__/
+.nexus-state/
+.nexus-state-test/
+.build/
+*.pyc
+
+# Runtime state — machine-specific; never commit
+*.jsonl
+nexus-trusted.jsonl
+/var/lib/nexus-shield/
+
+# Local operator intel (created at runtime)
+gov-dossiers.json
+human-dossier-kill-orders.json
+home-gps-correlation.json
+operator-location.json
+
+# Stack siblings — symlinked via scripts/wire-stack.sh (not vendored)
+/AMOURANTHRTX
+/Grok16
+/GrokPy
+/PythonG
+/KILROY
+/Final_Eye
+/Final_Ear
+# ZOCR/ZNEWOCR retired — Final_Eye canonical
+/ZNetwork
+/World_Redata
+/World_Repack
+/Field_Primer
+/Spiderweb
+
+# Runtime caches / field storage images
+/cache/
+/state/
+.nexus-field-drive/
+Textbook/staging/
+Queen/field-gecko/profile/
+.wiki-publish/
+.pages-publish/
+__pycache__/
+*.img
+*.zac
+
+# Queen runtime / build artifacts
+Queen/build/
+Queen/build-*/
+Queen/vendor/
+Queen/cache/
+Queen/field/sovereign/
+Queen/.venv*/
+Queen/.grok/
+Queen/.final-eye.*
+Queen/.queen-*
+Queen/*.log
+Queen/amouranth_engine.log
+Queen/data/*.log
+MANIFEST.sha256.bak
+
+# Release pack staging (tarballs uploaded to GitHub releases only)
+/dist/
+/_archive/
+
+# Hostess7 cache + field storage (source lives in-tree)
+Hostess7/cache/
+Hostess7/zac/
+Hostess7/.git/.github/workflows/
+amouranth_engine.log

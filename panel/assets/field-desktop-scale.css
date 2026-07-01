@@ -1,0 +1,91 @@
+/* Field desktop scale — quality rendering tied to --fds-scale */
+
+html.fds-quality {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.fds-scaled {
+  --fds-quick: calc(36px * var(--fds-scale, 1));
+  --fds-icon-sm: calc(20px * var(--fds-scale, 1));
+  --fds-icon-md: calc(22px * var(--fds-scale, 1));
+  --fds-icon-lg: calc(28px * var(--fds-scale, 1));
+  --fds-tray: calc(28px * var(--fds-scale, 1));
+  --fds-tray-tiny: calc(22px * var(--fds-scale, 1));
+  --fds-menu-icon: calc(32px * var(--fds-scale, 1));
+  --fds-flyout-icon: calc(40px * var(--fds-scale, 1));
+  --fds-font-base: var(--fds-base-font, 16px);
+}
+
+html.fds-quality img,
+html.fds-quality .qie-prog-icon,
+html.fds-quality .fsb-app-icon {
+  image-rendering: auto;
+  transform: translateZ(0);
+}
+
+html.fds-scaled .fsb-quick-btn {
+  width: var(--fds-quick);
+  height: var(--fds-quick);
+}
+
+html.fds-scaled .fsb-quick-svg {
+  width: var(--fds-icon-md);
+  height: var(--fds-icon-md);
+}
+
+html.fds-scaled .fsb-app-icon--sm,
+html.fds-scaled .fsb-task img,
+html.fds-scaled .fsb-task .qie-prog-icon--sm {
+  width: var(--fds-icon-sm);
+  height: var(--fds-icon-sm);
+}
+
+html.fds-scaled .fsb-start-icon,
+html.fds-scaled .fsb-start-queen {
+  width: var(--fds-icon-md);
+  height: var(--fds-icon-md);
+}
+
+html.fds-scaled .fsb-tray-icon {
+  width: var(--fds-tray);
+  height: var(--fds-tray);
+}
+
+html.fds-scaled .fsb-tray-icon--tiny {
+  width: var(--fds-tray-tiny);
+  height: var(--fds-tray-tiny);
+}
+
+html.fds-scaled .fsb-tray-icon--tiny img,
+html.fds-scaled .fsb-tray-icon--tiny .fsb-quick-svg {
+  width: calc(16px * var(--fds-scale, 1));
+  height: calc(16px * var(--fds-scale, 1));
+}
+
+html.fds-scaled .fsb-menu-item img,
+html.fds-scaled .fsb-menu-item .qie-prog-icon:not(.qie-prog-icon--sm) {
+  width: var(--fds-menu-icon);
+  height: var(--fds-menu-icon);
+}
+
+html.fds-scaled .fsb-menu-item--flyout .qie-prog-icon,
+html.fds-scaled .fsb-menu-item--flyout img {
+  width: var(--fds-flyout-icon);
+  height: var(--fds-flyout-icon);
+}
+
+html.fds-scaled .c2tm-root {
+  bottom: calc(8px * var(--fds-scale, 1) + env(safe-area-inset-bottom, 0));
+}
+
+html.fds-scaled .c2tm-btn {
+  width: calc(34px * var(--fds-scale, 1));
+  height: calc(34px * var(--fds-scale, 1));
+}
+
+html.fds-scaled #hd-toast {
+  font-size: calc(13px * var(--fds-scale, 1));
+  padding: calc(8px * var(--fds-scale, 1)) calc(14px * var(--fds-scale, 1));
+}

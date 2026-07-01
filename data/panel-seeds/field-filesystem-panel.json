@@ -1,0 +1,40 @@
+{
+  "schema": "field-filesystem-update/v1",
+  "updated": "2026-06-27T05:44:11Z",
+  "ok": true,
+  "motto": "Warn before overwrite. Listed deleted goes first; bin is more precious. Catalog keeps the date when bytes are gone.",
+  "disk": {
+    "path": ".",
+    "total_bytes": 3936290119680,
+    "used_bytes": 650344271872,
+    "free_bytes": 3085916672000,
+    "total_mb": 3753938.8,
+    "used_mb": 620216.6,
+    "free_mb": 2942959.5,
+    "pct_used": 16.52,
+    "pct_free": 78.4
+  },
+  "pressure_level": "ok",
+  "warn": false,
+  "message": "Disk comfortable · 2942959.5 MB free",
+  "used_mb": 620216.6,
+  "free_mb": 2942959.5,
+  "deleted_bytes": 0,
+  "deleted_mb": 0.0,
+  "listed_deleted_mb": 0.0,
+  "bin_deleted_mb": 0.0,
+  "overwrite_pending_mb": 0.0,
+  "need_mb": 0.0,
+  "destroy_order": [
+    "listed",
+    "bin"
+  ],
+  "destroy_candidates": 0,
+  "destroyed_catalog_count": 0,
+  "thresholds": {
+    "warn_free_mb": 2048.0,
+    "reclaim_free_mb": 1024.0,
+    "critical_free_mb": 256.0,
+    "target_free_mb": 1536.0
+  }
+}

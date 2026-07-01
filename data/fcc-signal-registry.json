@@ -1,0 +1,68 @@
+{
+  "schema": "fcc-signal-registry/v1",
+  "authority": "FCC 47 CFR Part 15 · US permitted spectrum registry",
+  "motto": "Every signal identified by FCC lookup — unpermitted spectrum tagged as threat.",
+  "audio": {
+    "id": "fcc_audio_part15",
+    "label": "Audio · Part 15 incidental radiator",
+    "rule": "47 CFR §15.101",
+    "service": "Low-power audio device / media playback",
+    "permitted_default": true
+  },
+  "wired": {
+    "id": "fcc_wired_lan",
+    "label": "Wired LAN · exempt equipment",
+    "rule": "47 CFR §15.103",
+    "service": "Intentional radiator on wire — not OTA",
+    "permitted_default": true
+  },
+  "laser": {
+    "id": "fcc_laser_part15",
+    "label": "Laser / optical · Part 15 incidental",
+    "rule": "47 CFR §15.101 · IEC 60825-1",
+    "service": "LIDAR / free-space optical / pointer class",
+    "permitted_default": true
+  },
+  "ble": {
+    "id": "fcc_ble_part15",
+    "label": "Bluetooth LE · 2.4 GHz ISM",
+    "rule": "47 CFR Part 15",
+    "service": "BLE advertising · 2.402–2.480 GHz",
+    "frequency_mhz": 2402,
+    "permitted_default": true
+  },
+  "broadcast": {
+    "id": "fcc_broadcast_part73",
+    "label": "AM/FM/SW/LW broadcast · licensed",
+    "rule": "47 CFR Part 73 · ITU RR",
+    "service": "Licensed broadcast station",
+    "permitted_default": true
+  },
+  "broadcast_fm": {
+    "id": "fcc_broadcast_fm_part73",
+    "label": "FM broadcast · licensed",
+    "rule": "47 CFR Part 73 · FM",
+    "service": "Licensed FM broadcast station",
+    "permitted_default": true
+  },
+  "broadcast_pirate": {
+    "id": "fcc_broadcast_unlicensed",
+    "label": "UNLICENSED broadcast · band pirate",
+    "rule": "47 CFR Part 73 — NO LICENSE",
+    "service": "Illegal in-band transmission",
+    "permitted_default": false
+  },
+  "threat_tags": {
+    "none": { "label": "FCC permitted", "level": "none", "color": "#3dd68c" },
+    "watch": { "label": "FCC watch", "level": "watch", "color": "#e8c878" },
+    "unpermitted_spectrum": { "label": "UNPERMITTED SPECTRUM", "level": "critical", "color": "#ff5c7a", "vector": "WIFI_THREAT", "shoot_to_kill": true },
+    "rogue_open": { "label": "ROGUE OPEN AP", "level": "critical", "color": "#ff5c7a", "vector": "WIFI_THREAT", "shoot_to_kill": true },
+    "evil_twin": { "label": "EVIL TWIN", "level": "critical", "color": "#ff3a4a", "vector": "WIFI_THREAT", "shoot_to_kill": true },
+    "hostile_oui": { "label": "HOSTILE OUI", "level": "critical", "color": "#ff5c7a", "vector": "WIFI_THREAT", "shoot_to_kill": true },
+    "connected_rogue": { "label": "CONNECTED ROGUE", "level": "critical", "color": "#ff3a4a", "vector": "WIFI_THREAT", "shoot_to_kill": true },
+    "connected_unpermitted": { "label": "CONNECTED UNPERMITTED", "level": "critical", "color": "#ff3a4a", "vector": "WIFI_THREAT", "shoot_to_kill": true },
+    "audio_hostile": { "label": "AUDIO HOSTILE INTENT", "level": "critical", "color": "#ff5c7a", "vector": "AUDIO_RANGE_VIOLATION", "shoot_to_kill": false },
+    "airspace_unauthorized": { "label": "AIRSPACE UNAUTHORIZED", "level": "critical", "color": "#ff5c7a", "vector": "HOME_AIRSPACE_INTRUDER", "shoot_to_kill": true },
+    "correlated_hostile_ip": { "label": "HOSTILE IP CORRELATED", "level": "critical", "color": "#ff3a4a", "vector": "WIFI_THREAT", "shoot_to_kill": true }
+  }
+}

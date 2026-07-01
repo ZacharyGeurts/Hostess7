@@ -1,0 +1,93 @@
+{
+  "schema": "beyond-darpa-security/v1",
+  "title": "Beyond DARPA · Lockheed security — all systems, all data",
+  "motto": "HIGHLY beyond DARPA and Lockheed et al. secure for user AND machine. Human threats and machine threats both fail closed.",
+  "tier": "beyond_darpa_lockheed",
+  "baseline_exceeds": [
+    "DARPA STIG hardening",
+    "Lockheed Martin CMMC Level 3+",
+    "NIST SP 800-53 High",
+    "NSA CSI hardening patterns",
+    "zero-trust continuous verification"
+  ],
+  "scope": {
+    "all_systems": true,
+    "all_data": true,
+    "operator_user": true,
+    "hostess7_body": true,
+    "queen_browser": true,
+    "nexus_panel": true,
+    "state_and_install": true,
+    "external_wire_quarantine": true
+  },
+  "user_security": {
+    "operator_sovereign": true,
+    "human_input_compromise_expected": true,
+    "keystroke_situational": true,
+    "voice_situational": true,
+    "paste_high_risk": true,
+    "redundancy_required_for_human": true,
+    "truth_floor_human": 58,
+    "never_full_trust_human_channel": true
+  },
+  "machine_security": {
+    "ai_json_only_default": true,
+    "automation_fail_closed": true,
+    "c2_presumed_hostile": true,
+    "malware_presumed_hostile": true,
+    "supply_chain_verify": true,
+    "loopback_only_apis": true,
+    "ironclad_grounding_required": true,
+    "no_direct_body_reach": true
+  },
+  "threat_classes": {
+    "human_threats": [
+      "social_engineering",
+      "compromised_keystroke",
+      "compromised_voice",
+      "insider_malice",
+      "paste_injection",
+      "credential_phishing",
+      "operator_coercion"
+    ],
+    "machine_threats": [
+      "c2_beacon",
+      "malware_dropper",
+      "automated_scan",
+      "bot_swarm",
+      "ai_prompt_injection",
+      "supply_chain_tamper",
+      "ddos_surge",
+      "non_loopback_probe"
+    ]
+  },
+  "enforcement": {
+    "fail_closed": true,
+    "advisory_never_defeats_gate": true,
+    "destructive_blocked": true,
+    "external_never_bleeds_in": true,
+    "sealed_hash_chains": true,
+    "triple_redundancy_human_path": true
+  },
+  "module": "lib/beyond-darpa-security.py",
+  "integrations": [
+    "lib/ironclad-secure-api.py",
+    "lib/ironclad-immediate.py",
+    "lib/field-io-packet.py",
+    "lib/threat-panel-http.py",
+    "lib/hostess7-advisory-body.py",
+    "lib/hostess7-targets.py",
+    "lib/lethal-enforcement.py",
+    "lib/gov-intel-db.py",
+    "Queen/lib/queen-external-wire.py",
+    "data/ironclad-secure-api-doctrine.json",
+    "data/hostess7-advisory-body-doctrine.json",
+    "data/hostess7-targets-doctrine.json",
+    "data/ammoos-security-defaults-doctrine.json"
+  ],
+  "api": {
+    "posture": "/api/beyond-darpa-security",
+    "assess": "/api/beyond-darpa-security/assess",
+    "gate": "/api/beyond-darpa-security/gate"
+  }
+}

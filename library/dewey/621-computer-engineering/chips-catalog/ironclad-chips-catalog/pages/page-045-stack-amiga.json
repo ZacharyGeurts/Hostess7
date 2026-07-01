@@ -1,0 +1,22 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 45,
+  "slug": "stack-amiga",
+  "title": "Commodore Amiga Chipset Stack",
+  "body": "# Commodore Amiga Chipset Stack\n\n**Platform stack:** `amiga_chipset` · **Era:** 1985–1996 · **Vendor:** Commodore · **Count:** 4\n\nAgnus, Denise, Paula — OCS/ECS/AGA chipset for Amiga 500/1200/4000 class machines.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: amiga_chipset` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **MOS Agnus** (MOS, 16-bit) — DMA + blitter address — Amiga north\n- **MOS Paula** (MOS, 16-bit) — Audio + floppy + IRQ — Amiga south\n- **MOS Denise** (MOS, 16-bit) — Display encoder — OCS/ECS\n\n## Catalog ids\n\nThe `chip_ids` array holds all **4** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: amiga_chipset · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "glue_amiga_denise",
+    "nb_amiga_agnus",
+    "sb_amiga_paula",
+    "system_amiga"
+  ],
+  "chip_count": 4,
+  "kind": "platform_stack",
+  "family": "retro",
+  "platform_stack": "amiga_chipset",
+  "era": "1985–1996",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

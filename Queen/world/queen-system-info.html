@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emulator System Info · Queen CHIPS</title>
+  <link rel="stylesheet" href="queen-modern.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-world.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-chips-catalog.css" />
+  <link rel="stylesheet" href="queen-system-info.css" />
+  <link rel="stylesheet" href="queen-styles.css" />
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://127.0.0.1:*; object-src 'none'; base-uri 'self'; form-action 'self'" />
+</head>
+<body class="queen-system-info-page qw" data-queen-surface="system-info">
+  <header class="gr-hero gr-hero--compact qsi-hero">
+    <div class="gr-hero-inner">
+      <p class="gr-eyebrow">Queen Game Room · CHIPS silicon</p>
+      <h1 class="gr-title" id="qsi-title">System Info</h1>
+      <p class="gr-sub" id="qsi-sub">Device visual · platform stack · catalog dies</p>
+      <div class="gr-status" id="qsi-status"></div>
+    </div>
+    <div class="gr-hero-actions">
+      <a class="gr-btn gr-btn--gold" id="qsi-launch" href="/world/queen-game-room.html">Launch in Game Room</a>
+      <a class="gr-btn" id="qsi-catalog" href="/world/queen-chips-catalog.html">CHIPS Catalog</a>
+      <button type="button" class="gr-btn" id="qsi-styles" data-queen-styles-open title="Styles" aria-label="Styles">◈</button>
+      <button type="button" class="gr-btn" id="qsi-refresh" title="Refresh">↻</button>
+    </div>
+  </header>
+
+  <main class="qsi-main" id="qsi-root">
+    <p class="qsi-loading">Loading system info…</p>
+  </main>
+
+  <script src="queen-system-info.js" defer></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

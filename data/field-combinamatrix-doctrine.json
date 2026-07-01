@@ -1,0 +1,32 @@
+{
+  "schema": "field-combinamatrix-doctrine/v1",
+  "title": "Combinamatrix — width × length combinatoric matrix",
+  "motto": "Every leaf lands in a cell — matrix pack, neural wire, universal traverse.",
+  "product": "AmmoOS",
+  "module": "lib/field-combinamatrix.py",
+  "panel": "field-combinamatrix-panel.json",
+  "dimensions": {
+    "width_from": "field-combinatronics-growth-panel.json:optimal_width",
+    "length_from": "field-plate-dimensions-panel.json:dimensions.length",
+    "fallback_width": 16,
+    "fallback_length": 0
+  },
+  "sources": [
+    {"id": "g16", "panel": "field-g16-universal-combinatronic.json", "key": "combinatorics_leaves", "weight": 1.0},
+    {"id": "chips", "panel": "field-ironclad-chips-combinatorics.json", "key": "combinatorics_leaves", "weight": 0.85},
+    {"id": "program", "panel": "field-program-combinatronic.json", "key": "combinatorics_leaves", "weight": 0.85},
+    {"id": "growth", "panel": "field-combinatronics-growth.json", "key": "combinatorics_leaves", "weight": 0.7},
+    {"id": "sequence", "panel": "field-combinatorics-sequence.json", "key": "sequence", "weight": 0.9},
+    {"id": "spider", "panel": "field-combinatronic-spider-wire.json", "key": "lanes", "weight": 0.8}
+  ],
+  "neural_weights": {
+    "facet_spread": 0.25,
+    "path_pct": 0.20,
+    "coolness": 0.18,
+    "surface_depth": 0.12,
+    "wire_adjacency": 0.15,
+    "canonical_bonus": 0.10
+  },
+  "traverse": "van_emde_bois_row_major",
+  "api": "/api/combinamatrix"
+}

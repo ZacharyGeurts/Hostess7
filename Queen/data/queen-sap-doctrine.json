@@ -1,0 +1,57 @@
+{
+  "schema": "queen-sweet-anita-protocol/v1",
+  "name": "Sweet Anita Protocol",
+  "abbrev": "SAP",
+  "motto": "Queen Game Room ↔ Queen Game Room only — pixel-perfect lockstep over hardened HTTP tunnels.",
+  "purpose": "Sovereign retro netplay between trusted Queen peers. No generic relays — only SAP beacons on Queen World ports.",
+  "transport": {
+    "primary": "http_tunnel",
+    "poll_ms": 120,
+    "long_poll_ms": 2500,
+    "max_queue": 512,
+    "user_agent": "Queen-SAP/1.0"
+  },
+  "peer_policy": {
+    "queen_game_room_only": true,
+    "require_sap_beacon": true,
+    "require_beacon_fields": ["sap", "queen_game_room", "world_port"],
+    "reject_generic_http": true,
+    "friend_list_optional": true,
+    "mitm_pin_optional": true
+  },
+  "netplay": {
+    "mode": "lockstep",
+    "pixel_perfect": true,
+    "frame_hash": "sha256_vga_slice",
+    "input_latency_frames": 2,
+    "max_players": 4,
+    "rollback": false,
+    "note": "Rollback reserved for SAP v2; v1 is strict lockstep for NES-class systems."
+  },
+  "viewport": {
+    "profiles": ["mobile", "tablet", "desktop"],
+    "default": "desktop",
+    "nes_aspect": "4/3",
+    "touch_controls": true
+  },
+  "rom_policy": {
+    "any_dumped_rom": true,
+    "mapper_fix_hints": true,
+    "host_rom_authoritative": true,
+    "guest_must_match_sha256": true
+  },
+  "api": {
+    "status": "/api/sap",
+    "host": "/api/sap/host",
+    "join": "/api/sap/join",
+    "poll": "/api/sap/poll",
+    "send": "/api/sap/send",
+    "connect": "/api/sap/connect",
+    "sync": "/api/sap/sync"
+  },
+  "related": {
+    "game_room": "/api/game-room",
+    "nes_library": "/api/nes-library",
+    "framebuffer": "/api/game-room/fb"
+  }
+}

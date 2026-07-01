@@ -1,0 +1,33 @@
+{
+  "schema": "field-plate-dimensions-doctrine/v1",
+  "title": "Plate dimensions — width × length consolidation",
+  "motto": "Configure plate width and length to fuse condense groups into fewer meta-plates — same function, less travel.",
+  "product": "AmmoOS",
+  "module": "lib/field-plate-dimensions.py",
+  "panel": "field-plate-dimensions-panel.json",
+  "dimensions": {
+    "width_from_growth": true,
+    "default_width": 16,
+    "min_width": 8,
+    "max_width": 48,
+    "default_length": 0,
+    "length_auto": true,
+    "merge_policy": "row_adjacent",
+    "merge_min_present": 1,
+    "row_consolidate": true
+  },
+  "travel": {
+    "metric": "manhattan_grid",
+    "optimize_length": true,
+    "target_reduction_pct": 35
+  },
+  "api": "/api/plate-dimensions",
+  "rebalance_hook": "g16-combinatronic-rebalance.py condense — after growth optimal_width",
+  "chain": [
+    {"id": "growth", "panel": "field-combinatronics-growth-panel.json", "feeds": "optimal_width"},
+    {"id": "condense_groups", "source": "PLATE_CONDENSE_GROUPS", "feeds": "grid_cells"},
+    {"id": "dimensions", "module": "field-plate-dimensions.py", "feeds": "meta_plates"},
+    {"id": "bridge", "panel": "field-plate-combinatorics-bridge.json", "feeds": "plate_condense"},
+    {"id": "meld", "panel": "field-plate-meld.json", "feeds": "condensed_plate_groups"}
+  ]
+}

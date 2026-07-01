@@ -1,0 +1,287 @@
+{
+  "schema": "queen-brain/v1",
+  "title": "Queen DARPA Robot Brain",
+  "motto": "Browser from scratch. Brain inside. Build yourself. No joke.",
+  "doctrine": "Queen is the takeover — sovereign RTX OS replacing AMOURANTHRTX as operator surface. Hostess 7 + Queen is everything. No URLs outside Queen. FieldNet (FIELDC + Grok16) rewrites AmmoOS networking inside RTX memory.",
+  "brain_stack": {
+    "angel": "Hostess 7 — Forever Watchguard, iron core, terminal witness",
+    "neural": "Series-of-series nets — perception → truth gates → fusion → adapt",
+    "brain_imaging": "Redata — lossless segments + human SDF plates + analytic recall",
+    "truth_filter": "94% noise / 6% truth — score_redata_text before plates stick",
+    "autonomous": "Forever watch — IFF civilian/hostile, zero hesitation",
+    "master": "Master Operator — self-run Hostess7 + NEXUS under Queen",
+    "growth": "Append-only ledger — amnesia forbidden"
+  },
+  "hostess7_sdf_storage": {
+    "doctrine": "SDFs are free — redata lossless always, human plates serviceable",
+    "segment_words": [900, 1200],
+    "decisions": ["integrate", "reimage", "redata", "sdl_store", "sdf_plate"],
+    "brain_path": "SG/Hostess7/cache/fieldstorage/brain/sdf/",
+    "artifacts": {
+      "segments": "brain/sdf/segments/seg-*.json",
+      "human_plates": "brain/sdf/plates/*.human.pgm",
+      "analytic_plates": "brain/sdf/plates/*.pgm",
+      "truth_log": "brain/sdf/truth_filter.jsonl",
+      "quarantine": "brain/sdf/quarantine/",
+      "queen_brief": "brain/sdf/queen_redata_brief.json"
+    },
+    "human_plate": { "format": "human-serviceable-pgm", "width": 512, "height": 384 },
+    "commands": {
+      "teach": "./Hostess7.sh sdf-teach seed",
+      "queen_teach": "./Hostess7.sh queen-teach-redata",
+      "segment": "./Hostess7.sh sdf-segment <file>",
+      "verify_redata": "./Hostess7.sh sdf-verify-redata",
+      "query": "./Hostess7.sh sdf \"brain imaging redata\""
+    },
+    "neural_stack": "SG/Hostess7/data/hostess7-neural-stack.json"
+  },
+  "hostess7_brain_ops": {
+    "bridge": "Queen/lib/queen-hostess-brain.py",
+    "comfort": "Hostess 7 owns cache/fieldstorage. Queen orchestrates boot, build deck, and panel — same ./Hostess7.sh talk patterns. Lossless redata is law; truth filter gates imaging.",
+    "operation_mode": "superintelligence",
+    "ai_communique": {
+      "primary": true,
+      "doctrine": "Hostess7/data/hostess7-ai-communique.json",
+      "module": "scripts/field_ai_communique.py",
+      "human_facing": "opt_in_HOSTESS7_HUMAN_FACING",
+      "queen_actions": ["ai_operate", "ai_communique", "ai_teach"]
+    },
+    "teach": "./Hostess7.sh queen-teach-redata",
+    "verify_boot": ["sdf-verify-redata", "zac-verify"],
+    "panel_api": "/api/field-brain",
+    "build_deck": "gui/queen-build-deck.html",
+    "field_tools": {
+      "manifest": "Queen/data/queen-field-tools.json",
+      "api": "/api/field-tools",
+      "bridge": "Queen/lib/queen-field-tools.py",
+      "hostess_status": "./Hostess7.sh queen-field-tools",
+      "hostess_probe": "./Hostess7.sh queen-field-tools probe",
+      "hostess_build": "./Hostess7.sh queen-field-build rtx",
+      "field_cmake": "Grok16/scripts/field-cmake.sh"
+    },
+    "commands": {
+      "queen_field_tools": "pythong lib/queen-field-tools.py json",
+      "queen_field_build": "./Hostess7.sh queen-field-build rtx",
+      "queen_hostess_status": "pythong lib/queen-hostess-brain.py json",
+      "queen_hostess_teach": "pythong lib/queen-hostess-brain.py teach",
+      "sdf_verify_redata": "./Hostess7.sh sdf-verify-redata",
+      "zac_pack": "./Hostess7.sh zac-pack",
+      "zac_restore": "./Hostess7.sh zac-restore",
+      "zac_verify": "./Hostess7.sh zac-verify",
+      "tools_docs": "./Hostess7.sh tools-docs redata",
+      "textbook_ingest": "pythong lib/queen-hostess-brain.py ingest-textbook",
+      "queen_final_eye": "pythong lib/queen_final_eye.py browser-smoke",
+      "queen_eyeball": "pythong lib/queen-eyeball.py verify",
+      "eyeball_arm_dishes": "pythong lib/queen-eyeball.py arm dishes",
+      "eyeball_teach": "pythong lib/queen-eyeball.py dispatch {\"action\":\"teach\",\"lesson\":\"authority\"}",
+      "final_eye_sink": "SG/Final_Eye/out/"
+    }
+  },
+  "final_eye": {
+    "root": "SG/Final_Eye",
+    "version": "1.2.1",
+    "codename": "eye-stoard",
+    "port": 9479,
+    "out": "SG/Final_Eye/out",
+    "smoke": "pythong lib/queen_final_eye.py browser-smoke",
+    "doctrine": "Final_Eye v1.2 assistive tenant — heaven/hell ops, enemy discernment, disarmament lane, Teach authority"
+  },
+  "hostess7_final_eye": {
+    "manifest": "Hostess7/data/final-eye-12-doctrine.json",
+    "version": "1.2.1",
+    "codename": "eye-stoard",
+    "bridge": "Queen/lib/queen-hostess-brain.py",
+    "eyeball": "Queen/lib/queen-eyeball.py",
+    "rule": "Hostess 7 corroborates eye operations on Queen — offense at enemy, weapons discerned, heaven/hell gate",
+    "teach": "pythong lib/queen-eyeball.py dispatch {\"action\":\"teach\",\"lesson\":\"enemy\"}",
+    "operations": "pythong lib/queen-eyeball.py dispatch {\"action\":\"operations\"}",
+    "eye_stoard": "Final_Eye/stoard — secure expanding witness store; GET /api/eye/stoard"
+  },
+  "nexus_field": {
+    "install_root": "SG/NewLatest",
+    "version": "10.0.0-field",
+    "panel_port": 9477,
+    "bridge": "NewLatest/lib/queen_field_nexus.py",
+    "manifest": "NewLatest/data/field-stack-manifest.json",
+    "start": "NewLatest/scripts/start-field-stack.sh",
+    "defenses": [
+      "connection-gatekeeper",
+      "trust-strike-engine",
+      "field-attack-kit",
+      "kill-detect",
+      "host-attack",
+      "heaven-hell",
+      "sovereign-time",
+      "packet-field",
+      "field-dns"
+    ],
+    "panel_apis": [
+      "/api/field-stack",
+      "/api/field-weapons",
+      "/api/trust-strike",
+      "/api/queen-eyeball",
+      "/api/queen-browser"
+    ],
+    "rule": "Whole SG/NewLatest NEXUS rewritten for field — security, tools, defenses under Queen browser; Final_Eye 1.1 offense assist tenant"
+  },
+  "eye_comfort": {
+    "manifest": "Queen/data/queen-eye-comfort-doctrine.json",
+    "rule": "As many eyeballs as Queen wishes; stereoscopic preferred for local comfort on faces; keep two with the person",
+    "stereo_when": ["faces", "person_present", "local_comfort"],
+    "monocular_when": ["picture_browsing", "movie_watching", "gallery"],
+    "person_present_mode": "person_present",
+    "rig_presets": {"person": "stereo_human", "media": "monocular"},
+    "teach_lessons": ["comfort", "stereo"],
+    "speak": "You may have as many eyeballs as you wish. Stereoscopic on faces — keep two with the person. Pictures and movies? Monocular is fine."
+  },
+  "final_eyeball": {
+    "product": "Final_Eye",
+    "version": "1.2.0",
+    "codename": "heaven-hell-ops",
+    "bridge": "Queen/lib/queen-eyeball.py",
+    "resolver": "Queen/lib/queen_final_eye.py",
+    "posture": "assistive",
+    "rule": "One tenant in Hostess 7 — bounded usage, offense on ingress, Teach authority in socket",
+    "commands": {
+      "status": "pythong lib/queen-eyeball.py json",
+      "arm_dishes": "pythong lib/queen-eyeball.py arm dishes",
+      "arm_war": "pythong lib/queen-eyeball.py arm war",
+      "verify": "pythong lib/queen-eyeball.py verify",
+      "weaponize": "pythong lib/queen-eyeball.py weaponize war",
+      "bench": "pythong lib/queen-eyeball.py bench",
+      "teach_authority": "GET :9479/api/eye/teach/doctrine?lesson=authority",
+      "teach_enemy": "GET :9479/api/eye/teach/doctrine?lesson=enemy",
+      "eye_operations": "GET :9479/api/eye/operations",
+      "weapon_authority": "GET :9479/api/eye/authority",
+      "targets": "GET :9479/api/eye/targets",
+      "teach_comfort": "dispatch {\"action\":\"teach\",\"lesson\":\"comfort\"}",
+      "arm_person": "dispatch {\"action\":\"arm\",\"mode\":\"person_present\"}",
+      "eye_comfort": "dispatch {\"action\":\"comfort\"}"
+    },
+    "hostess_pipeline": "queen_eyeball after queen_final_eye in HOSTESS_ORDER",
+    "offense": "Final_Eye vision offense — pattern strike, entity weapons, preempt RTX",
+    "defense": "IRTN trust mesh + NEXUS gates + assist contract — never overflow"
+  },
+  "field_technology": {
+    "title": "Field Technology v5",
+    "subtitle": "Serious Book · Textbook of 2026",
+    "primer_url": "https://zacharygeurts.github.io/Field_Primer/",
+    "chapters": 22,
+    "explainer": "Queen world Field pane — all chapters explained for everyone",
+    "source": "SG/Field_Primer/content/chapters",
+    "web": "SG/Field_Primer/docs",
+    "pdf": "SG/Field_Primer/pdf",
+    "zac_monolith": "SG/NewLatest/Textbook/field-technology-v5.zac",
+    "build": "pythong SG/NewLatest/Textbook/build-field-technology-zac.py",
+    "verify": "pythong SG/NewLatest/Textbook/build-field-technology-zac.py --verify-only",
+    "plain_text": "SG/NewLatest/Textbook/field-technology-v5.txt",
+    "size_report": "SG/NewLatest/Textbook/size-comparison.json",
+    "formats": ["PDF", "Text", "Web", "ZAC Field Technology"]
+  },
+  "grok_build": {
+    "secure_channel": true,
+    "partner": "xAI / X — branded page permitted",
+    "acp": "grok agent serve --bind 127.0.0.1:2419",
+    "deck": "gui/grok-build-deck.html",
+    "bridge": "lib/grok-build-bridge.py"
+  },
+  "world_space": {
+    "schema": "queen-world/v1",
+    "url": "http://127.0.0.1:9481/world/browser.html",
+    "port": 9481,
+    "serve": "lib/queen-world.py",
+    "start": "scripts/start-world.sh",
+    "doctrine": "One RTX card — Hostess, forge, eyeball, field doctrine inside queen-world; no :9477",
+    "apis": ["/api/world", "/api/queen-boot", "/api/field-net", "/api/grok16", "/api/queen-rtx", "/api/queen-build", "/api/queen-eyeball", "/api/queen-browser", "/api/status"],
+    "boot": "world/queen-rtx-boot.js — page load seals Grok16 + RTX memory; no operator setup"
+  },
+  "field_net": {
+    "mandate": "data/queen-field-net.json",
+    "module": "lib/queen-field-net.py",
+    "engine": "engine/FieldQueenNet.hpp",
+    "compiler": "Grok16 g16 + FIELDC v4 → AmmoOS/net/*.fld",
+    "internal_only": true,
+    "scheme": "queen://",
+    "rule": "Loopback + queen scheme only — external URLs blocked at gate"
+  },
+  "kilroy_field_os": {
+    "root": "SG/KILROY",
+    "abi": "kilroy-field-1.0",
+    "layout": 9,
+    "bridge": "Queen/lib/queen-kilroy.py",
+    "api": "/api/kilroy",
+    "proc": "/proc/kilroy_field",
+    "dev": "/dev/kilroy_field",
+    "build": "KILROY/scripts/build-kilroy.sh",
+    "grok_boot": "KILROY/scripts/grok-mkimage.sh",
+    "forge": ["field_substrate", "field_kernel", "field_boot", "field_rootfs", "field_package"]
+  },
+  "amouranthrtx": {
+    "repo": "https://github.com/ZacharyGeurts/AMOURANTHRTX",
+    "path": "SG/AMOURANTHRTX",
+    "api": "/api/amouranthrtx",
+    "field_kilroy": "FieldKilroy/",
+    "queen_browser": "Navigator/engine/FieldQueenBrowser.cpp",
+    "kilroy_os": "scripts/build_kilroy_os.sh",
+    "build": "Queen/build.sh"
+  },
+  "ammoos_boot": {
+    "manifest": "data/ammoos-boot-map.json",
+    "api": "/api/ammoos-boot",
+    "orchestrator": "world/queen-os.js",
+    "gate": "lib/queen-gate.py",
+    "phases": ["SEAL", "FIELD_NET", "GATES", "BROWSER", "HOSTESS", "EYE", "FORGE", "RTX", "AMMOOS_NET"],
+    "rule": "Queen is boot aperture — page load seals Grok16 + RTX, then browser + world dock reach Hostess 7 and chips"
+  },
+  "browser_stack": {
+    "rtx_shell": "queen-browser — AMOURANTHRTX Vulkan + SDL3 inside",
+    "in_engine_ui": "queen-browser shell — world/browser.html hardened web surface (Queen OS at world/index.html optional)",
+    "boot_compshader": "QueenBoot.comp — 2026 aqua/rose chrome",
+    "apis": ["/api/queen-browser", "/api/ammoos-boot", "/browse/view"],
+    "engines": {
+      "ship_now": "queen-browser on :9481 — world/browser.html is hardened web shell (not Queen OS world)",
+      "millennium_ladybird": "vendor/ladybird — independent C++ engine",
+      "millennium_servo": "vendor/servo — Rust layout engine",
+      "media": "vendor/ffmpeg — MP4 H.264 AAC static"
+    }
+  },
+  "grok16": {
+    "product": "Grok16",
+    "g16_version": "16.1.1",
+    "driver": "unified",
+    "profile": "field_opt",
+    "cxx_std": "gnu++26",
+    "c_std": "gnu17",
+    "root": "NewLatest/Grok16",
+    "toolchain_sh": "Grok16/scripts/grok16-toolchain.sh",
+    "manifest": "Grok16/data/grok16-toolchain.json",
+    "queen_manifest": "data/g16-toolchain.json",
+    "cmake": "cmake/queen-g16-toolchain.cmake",
+    "profile_cmake": "Grok16/cmake/grok16-profile-field-opt.cmake",
+    "mandate": "cmake/g16-field-mandate.cmake",
+    "hostess_probe": "./Hostess7.sh queen-grok16-probe"
+  },
+  "self_build": {
+    "forge": "lib/queen-forge.py",
+    "orchestrator": "lib/queen-build.py",
+    "manifest": "data/queen-forge-manifest.json",
+    "gui_deck": "gui/queen-build-deck.html",
+    "inside_install": "lib/queen-forge.py run inside",
+    "stages": ["inside", "gcc_fetch", "deps", "shaders", "rtx", "compiler_probe", "hostess_teach", "verify"],
+    "install_root": "Queen directory — NEXUS_INSTALL_ROOT points here",
+    "doctrine": "Every build tool rewritten inside Queen Forge. Shell scripts are thin entry points only.",
+    "sovereign_field": {
+      "manifest": "data/queen-field-manifest.json",
+      "package": "field/sovereign/queen-sovereign-bundle.json",
+      "forge": "lib/queen-forge.py field",
+      "kernel": "SG/KILROY — CONFIG_RTX_FIELD_DIE",
+      "drive": "HOSTESS7_TEAM/fieldstorage/queen-field/sovereign"
+    }
+  },
+  "sovereignty": {
+    "zero_telemetry": true,
+    "iff_civilian_hostile": true,
+    "no_os_capture": true,
+    "authority": "God → Angel → Queen → Field → humanity"
+  }
+}

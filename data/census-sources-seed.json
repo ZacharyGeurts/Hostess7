@@ -1,0 +1,96 @@
+{
+  "schema": "nexus-census-sources/v1",
+  "motto": "Free public government records — census geographies, open geocoders, international open data.",
+  "updated": "2026-06-23",
+  "sources": [
+    {
+      "id": "us_census_geocoder",
+      "country": "US",
+      "label": "US Census Bureau Geocoder",
+      "category": "census",
+      "public": true,
+      "auth": "none",
+      "coverage": "US, Puerto Rico, Island Areas — address geocode + geography lookup",
+      "endpoints": {
+        "oneline": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress",
+        "address": "https://geocoding.geo.census.gov/geocoder/locations/address",
+        "geographies_address": "https://geocoding.geo.census.gov/geocoder/geographies/address",
+        "geographies_coordinates": "https://geocoding.geo.census.gov/geocoder/geographies/coordinates"
+      },
+      "benchmark": "4",
+      "vintage": "4"
+    },
+    {
+      "id": "us_census_acs",
+      "country": "US",
+      "label": "US Census ACS 5-year (population & income)",
+      "category": "census",
+      "public": true,
+      "auth": "api_key_optional",
+      "env_key": "NEXUS_CENSUS_API_KEY",
+      "coverage": "ACS tract/county/place when API key configured",
+      "endpoint": "https://api.census.gov/data/2022/acs/acs5",
+      "variables": ["NAME", "B01003_001E", "B19013_001E", "B25077_001E"]
+    },
+    {
+      "id": "osm_nominatim",
+      "country": "INT",
+      "label": "OpenStreetMap Nominatim",
+      "category": "geocode",
+      "public": true,
+      "auth": "none",
+      "coverage": "Worldwide address geocode fallback",
+      "endpoint": "https://nominatim.openstreetmap.org/search"
+    },
+    {
+      "id": "ca_statcan_geocoder",
+      "country": "CA",
+      "label": "Statistics Canada — geography via Nominatim + StatCan open",
+      "category": "census",
+      "public": true,
+      "auth": "none",
+      "coverage": "Canada addresses via Nominatim; open StatCan boundary services",
+      "endpoint": "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/index-eng.cfm"
+    },
+    {
+      "id": "uk_ons",
+      "country": "GB",
+      "label": "UK ONS Open Geography Portal",
+      "category": "census",
+      "public": true,
+      "auth": "none",
+      "coverage": "UK postcode/place open geography",
+      "endpoint": "https://geoportal.statistics.gov.uk/"
+    },
+    {
+      "id": "eu_eurostat",
+      "country": "EU",
+      "label": "Eurostat regional statistics",
+      "category": "census",
+      "public": true,
+      "auth": "none",
+      "coverage": "EU NUTS regions — open JSON API",
+      "endpoint": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data"
+    },
+    {
+      "id": "au_abs",
+      "country": "AU",
+      "label": "Australian Bureau of Statistics",
+      "category": "census",
+      "public": true,
+      "auth": "none",
+      "coverage": "Australia geocode via Nominatim; ABS open data catalog",
+      "endpoint": "https://www.abs.gov.au/statistics"
+    },
+    {
+      "id": "nz_stats",
+      "country": "NZ",
+      "label": "Stats NZ",
+      "category": "census",
+      "public": true,
+      "auth": "none",
+      "coverage": "New Zealand geocode via Nominatim; open government data",
+      "endpoint": "https://www.stats.govt.nz/"
+    }
+  ]
+}

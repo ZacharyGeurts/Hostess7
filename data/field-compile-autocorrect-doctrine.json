@@ -1,0 +1,38 @@
+{
+  "schema": "field-compile-autocorrect-doctrine/v1",
+  "title": "Compile autocorrect — safe fixes only, never guess",
+  "motto": "We know programming languages — autocorrect tons when certainty is absolute; otherwise alert and keep running.",
+  "policy": {
+    "min_confidence_to_apply": 1.0,
+    "max_rounds": 3,
+    "verify_after_each_fix": true,
+    "revert_if_not_improved": true,
+    "never_guess": true,
+    "continue_on_failure": true
+  },
+  "module": "lib/field-compile-autocorrect.py",
+  "g16": {
+    "version": "5.1.0",
+    "compiler": "Grok16/lib/g16-universal-compiler.py",
+    "profile": "g16_field_opt"
+  },
+  "api": "/api/compile-autocorrect",
+  "integrations": [
+    "Grok16/lib/g16-universal-compiler.py",
+    "AmmoCode/server/ammocode-stack-serve.py",
+    "AmmoCode/lib/editor.js",
+    "lib/threat-panel-http.py"
+  ],
+  "human_explanations": "data/compile-error-human-explanations.json",
+  "alert_layout": {
+    "sections": ["summary", "applied_fixes", "remaining_errors", "warnings", "suggestions", "human_explanation", "emulator_series"],
+    "collect_all_errors": true,
+    "human_explanation_at_end": true,
+    "severity_colors": {
+      "error": "#f4a4a0",
+      "warning": "#e8c468",
+      "note": "#9aaa8c",
+      "fixed": "#3dd68c"
+    }
+  }
+}

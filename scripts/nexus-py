@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# NEXUS field Python — pythong / gpy-16 from SG tree (works under sudo).
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SG="$(cd "$ROOT/.." && pwd)"
+export SG_ROOT="${SG_ROOT:-$SG}"
+export QUEEN_ROOT="${QUEEN_ROOT:-$SG/NewLatest/Queen}"
+export PYTHONG_ROOT="${PYTHONG_ROOT:-$SG/PythonG}"
+export GPY16_ROOT="${GPY16_ROOT:-$SG/GrokPy}"
+for PYTHONG in \
+  "${NEXUS_PYTHONG:-}" \
+  "${PYTHONG:-}" \
+  "${PYTHONG_ROOT}/bin/pythong" \
+  "${GPY16_ROOT}/bin/gpy-16" \
+  "${SG}/GrokPy/bin/grokpy" \
+  "${QUEEN_ROOT}/scripts/pythong"; do
+  if [[ -n "${PYTHONG}" && -x "${PYTHONG}" ]]; then
+    exec "${PYTHONG}" "$@"
+  fi
+done
+echo "nexus-py: pythong not found — run PythonG/scripts/consolidate.sh" >&2
+exit 127

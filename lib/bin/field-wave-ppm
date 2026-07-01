@@ -1,0 +1,7 @@
+#!/bin/sh
+# field-wave-ppm — ported dongle ppm calibration
+for c in rtl_test /usr/bin/rtl_test; do
+  command -v "$c" >/dev/null 2>&1 && exec "$c" "$@"
+done
+echo "field-wave-ppm: backend missing" >&2
+exit 127

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Library Bookshelf — Dewey Shelves</title>
+  <link rel="stylesheet" href="/assets/field-foundation.css" />
+  <link rel="stylesheet" href="/assets/field-nav-spine.css?v=1" />
+  <link rel="stylesheet" href="/assets/field-ironclad-taskbar.css?v=1" />
+  <link rel="stylesheet" href="/assets/field-library-bookshelf.css?v=1" />
+</head>
+<body class="bsb-body">
+  <header class="bsb-header">
+    <div>
+      <h1>Library Bookshelf</h1>
+      <div class="bsb-sub">Search your book · browse Dewey shelves · pull a volume · open to read</div>
+    </div>
+    <div class="bsb-toolbar">
+      <input type="search" id="bsb-search" placeholder="Search title, author, Dewey call number…" aria-label="Search library" autocomplete="off" />
+      <button type="button" class="bsb-btn" id="bsb-browse-btn">Browse shelves</button>
+    </div>
+  </header>
+  <div class="bsb-stats" id="bsb-stats">Loading library…</div>
+
+  <main class="bsb-main">
+    <section id="bsb-lobby" class="bsb-view" aria-label="Search and Dewey shelves">
+      <div class="bsb-search-hits" id="bsb-search-hits" hidden></div>
+      <div class="bsb-dewey-grid" id="bsb-dewey-grid"></div>
+      <div class="bsb-empty" id="bsb-lobby-empty" hidden>No books match your search.</div>
+    </section>
+
+    <section id="bsb-shelf-view" class="bsb-view" hidden aria-label="Bookshelf">
+      <div class="bsb-breadcrumb" id="bsb-breadcrumb"></div>
+      <div class="bsb-shelf-nav">
+        <h2 id="bsb-shelf-title">Bookshelf</h2>
+        <div class="bsb-shelf-pager" id="bsb-shelf-pager"></div>
+      </div>
+      <div class="bsb-shelf-room">
+        <div class="bsb-bookcase" id="bsb-bookcase" role="list" aria-label="Books on shelf"></div>
+      </div>
+      <div class="bsb-pulled" id="bsb-pulled">
+        <div class="bsb-empty">Click a spine to pull a book from the shelf.</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/h7-reader.js"></script>
+  <script src="/assets/field-library-bookshelf.js?v=1"></script>
+  <script src="/assets/ironclad-bus.js?v=1" defer></script>
+  <script src="/assets/field-ironclad-taskbar.js?v=1" defer></script>
+  <script src="/assets/field-nav-spine.js?v=1" defer></script>
+</body>
+</html>

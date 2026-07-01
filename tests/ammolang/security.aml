@@ -1,0 +1,78 @@
+# security — migrated from run-tests.sh
+@profile fastest
+@verbose clean
+@motto "security stack tests · AmmoLang assert"
+
+suite security ·
+  group entropy high (random)
+    assert script:entropy_high
+  group entropy low (text)
+    assert script:entropy_low
+  group shadow tamper detection
+    assert script:shadow_tamper
+  group vigil calm mode
+    assert script:vigil_modes
+  group whitelist pipewire
+    assert shell:nexus_is_whitelisted_process "pipewire" "/usr/bin/pipewire"
+  group device path whitelist
+    assert shell:nexus_is_whitelisted_device_path "/dev/input/event0"
+  group self-defense sign/verify
+    assert script:self_defense_sign_verify
+  group ultra-stealth intervals
+    assert script:ultra_stealth_intervals
+  group predictive record
+    assert script:predictive_record
+  group network lockdown noop when disabled
+    assert script:network_lockdown_disabled
+  group network purge skips client packages
+    assert script:network_purge_skips_clients
+  group threat vector catalog
+    assert script:threat_vector_catalog
+  group packet oracle parse
+    assert script:packet_parse_line
+  group packet field module
+    assert script:packet_field_module
+  group connection gatekeeper json
+    assert script:gatekeeper_json
+  group connection gatekeeper suggestions
+    assert script:gatekeeper_suggestions
+  group connection gatekeeper youtube
+    assert script:gatekeeper_youtube
+  group connection gatekeeper email
+    assert script:gatekeeper_email
+  group gatekeeper safe touch policy
+    assert script:gatekeeper_touch_policy
+  group gatekeeper strict enforce in+out
+    assert file:lib/gatekeeper-enforce.sh
+    assert file:lib/packet-permission.py
+    assert grep:lib/firewall-sentinel.sh:nexus_firewall_permit_flow
+    assert grep:lib/firewall-sentinel.sh:nexus_firewall_block_flow
+    assert grep:lib/firewall-sentinel.sh:permit_flow_out
+    assert grep:lib/connection-gatekeeper.py:flow_policy
+    assert grep:lib/packet-dpi.py:segment_block
+    assert grep:config/nexus.conf:NEXUS_PACKET_PERMISSION
+    assert grep:panel/threat-panel.html:Packet permission
+  group host attack map module
+    assert script:host_attack_module
+  group panel host attack UI
+    assert script:panel_host_attack_ui
+  group field attack kit module
+    assert script:field_attack_kit_module
+  group panel field attack kit UI
+    assert script:panel_field_attack_kit_ui
+  group gatekeeper ipv6 direction fields
+    assert script:gatekeeper_ipv6_direction
+  group gatekeeper trust rank
+    assert script:gatekeeper_trust_rank
+  group firewall trust authorize
+    assert script:firewall_trust_roundtrip
+  group firewall parse threat ip
+    assert script:firewall_parse_ip
+  group firewall private ip detect
+    assert shell:nexus_firewall_is_private_ip "192.168.1.1"
+  group threat panel json publish
+    assert script:threat_panel_json
+  group packet dpi module
+    assert script:packet_dpi_module
+  group predictive meld
+    assert script:predictive_meld

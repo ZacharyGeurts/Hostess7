@@ -1,0 +1,59 @@
+{
+  "schema": "hostess7-ocr-control/v1",
+  "title": "Hostess 7 OS OCR control — Angel commands vision across the field",
+  "motto": "One commander, every chamber — Final_Eye feeds the brain; plate meld seals the path.",
+  "commander": "hostess7",
+  "authority": "data/hostess7-supreme-authority.json",
+  "system_control": "lib/hostess7-system-control.py",
+  "module": "lib/hostess7-ocr-control.py",
+  "final_eye": "data/final-eye-plate-doctrine.json",
+  "output_format": "h7/7",
+  "canonical_bridge": "lib/final-eye-ocr-core.py",
+  "cli_bridge": "lib/final-eye-h7-ocr.py",
+  "h7_module": "lib/field-h7-format.py",
+  "plate_meld": {
+    "doctrine": "data/eye-ear-plate-doctrine.json",
+    "module": "lib/eye-ear-plate.py",
+    "sense_meld": "lib/field-sense-package-meld.py"
+  },
+  "chambers": [
+    {"id": "calculator", "module": "lib/hostess7-calculator.py", "doctrine": "data/hostess7-calculator-ocr-doctrine.json"},
+    {"id": "biology", "module": "lib/hostess7-biology.py", "doctrine": "data/hostess7-biology-ocr-doctrine.json"},
+    {"id": "engineering", "module": "lib/hostess7-engineering.py", "doctrine": "data/hostess7-engineering-ocr-doctrine.json"},
+    {"id": "combat", "module": "lib/hostess7-combat.py", "doctrine": "data/hostess7-combat-ocr-doctrine.json"},
+    {"id": "mos", "module": "lib/hostess7-mos.py", "doctrine": "data/hostess7-mos-ocr-doctrine.json"},
+    {"id": "programming", "module": "lib/hostess7-programming.py", "doctrine": "data/hostess7-programming-ocr-doctrine.json"},
+    {"id": "g16", "module": "lib/hostess7-g16.py", "doctrine": "data/hostess7-g16-ocr-doctrine.json"},
+    {"id": "codecraft", "module": "lib/hostess7-codecraft.py", "doctrine": "data/hostess7-codecraft-ocr-doctrine.json"},
+    {"id": "geography", "module": "lib/hostess7-geography-training.py", "doctrine": "data/hostess7-geography-ocr-doctrine.json"},
+    {"id": "music", "module": "lib/hostess7-music-training.py", "doctrine": "data/hostess7-music-ocr-doctrine.json"},
+    {"id": "imaging", "module": "lib/hostess7-imaging.py", "doctrine": "data/hostess7-imaging-ocr-doctrine.json"},
+    {"id": "sense", "module": "lib/hostess7-sense-training.py", "doctrine": "data/hostess7-sense-ocr-doctrine.json"},
+    {"id": "reality_physics", "module": "lib/hostess7-reality-physics-training.py", "doctrine": "data/hostess7-reality_physics-ocr-doctrine.json"}
+  ],
+  "os_surfaces": [
+    {"id": "final_eye", "bridge": "lib/final-eye-ocr-core.py", "port": 9479},
+    {"id": "eyeball", "bridge": "Queen/lib/queen-eyeball.py"},
+    {"id": "panel_validate", "script": "scripts/panel-ocr-validate.py"},
+    {"id": "sense_meld", "api": "/api/sense-package/meld"},
+    {"id": "ironclad_search", "api": "/api/ironclad/secure-api/search"}
+  ],
+  "actions": {
+    "status": "Full OS OCR posture — chambers, Final_Eye, brain corpora",
+    "ingest_all": "Ingest every chamber from Final_Eye + Hostess7 brain feeds",
+    "train_all": "Train every chamber on ingested OCR corpora",
+    "ingest": "Per-chamber ingest (body.chamber)",
+    "train": "Per-chamber train (body.chamber)",
+    "final_eye": "Dispatch Final_Eye / eyeball (body.subaction)",
+    "plate_meld": "Seal eye-ear plate + sense package meld",
+    "ocr_image": "OCR a file path on disk (body.path)"
+  },
+  "api": {
+    "gate": "/api/hostess7/ocr",
+    "dispatch": "/api/hostess7/ocr/dispatch",
+    "status": "/api/hostess7/ocr/status",
+    "ingest_all": "/api/hostess7/ocr/ingest-all",
+    "train_all": "/api/hostess7/ocr/train-all"
+  },
+  "g16": {"version": "5.1.0", "profile": "g16_field_opt"}
+}

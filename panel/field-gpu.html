@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-surface="settings" data-field-surface="gpu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#040508" />
+  <meta name="color-scheme" content="dark" />
+  <title>Queen GPU Settings</title>
+  <link rel="icon" href="/assets/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="stylesheet" href="/assets/field-queen-theme.css?v=qf1" />
+  <link rel="stylesheet" href="/assets/field-shell-dock.css?v=2" />
+  <link rel="stylesheet" href="/assets/field-gpu-control.css?v=2" />
+</head>
+<body>
+  <div class="fg-root">
+    <header class="fsd-dock fg-dock qf-dock" aria-label="Queen field dock">
+      <div class="fsd-dock-left" id="fsd-dock-left"></div>
+      <div class="fsd-dock-right" id="fsd-dock-right"></div>
+    </header>
+
+    <div class="fg-body">
+      <aside class="fg-vendors" id="fg-vendors" aria-label="GPU vendors"></aside>
+
+      <main class="fg-main" id="fg-main">
+        <div class="fg-head">
+          <div>
+            <h1 id="fg-title">Queen GPU</h1>
+            <p class="fg-sub" id="fg-subtitle">Detect everything · fan monitors · vendor readouts</p>
+          </div>
+          <span class="fg-tray-pill" id="fg-detect-pill">…</span>
+          <select class="fg-select" id="fg-gpu-select" aria-label="Select video card"></select>
+        </div>
+
+        <section class="fg-hero">
+          <div class="fg-card-visual" id="fg-card-visual"></div>
+          <div class="fg-readout-grid" id="fg-readouts"></div>
+        </section>
+
+        <section class="fg-fans" id="fg-fans" aria-label="Fan monitors"></section>
+        <section>
+          <h3 style="margin:0 0 10px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg-blue)">Detected adapters</h3>
+          <div class="fg-gpu-list" id="fg-gpu-list"></div>
+        </section>
+      </main>
+
+      <aside class="fg-aside" aria-label="Legacy and unknown GPUs">
+        <h3>Legacy · Voodoo &amp; more</h3>
+        <div class="fg-legacy-list" id="fg-legacy-list"></div>
+        <div class="fg-hue-row">
+          <label class="fg-sub" for="fg-hue">Color wheel hue (unknown GPU)</label>
+          <input type="range" id="fg-hue" min="0" max="360" value="142" />
+        </div>
+      </aside>
+    </div>
+  </div>
+  <script src="/assets/field-shell-dock.js?v=1" defer></script>
+  <script src="/assets/field-gpu-control.js?v=1" defer></script>
+</body>
+</html>

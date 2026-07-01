@@ -1,0 +1,222 @@
+{
+  "schema": "znetwork-doctrine/v4",
+  "title": "ZNetwork — bottom-up networking, any OS",
+  "version": "4.2.0-relayer",
+  "default_mode": "ACTIVE",
+  "modes": ["REVIEW_ONLY", "SHADOW", "ACTIVE"],
+  "queen_ammoos": {
+    "product": "AmmoOS",
+    "loopback": "127.0.0.1",
+    "queen_underlying_browser": true,
+    "sole_internet_on_system": true,
+    "internet_pipe_percent_target": 100,
+    "internet_pipe_percent_minimum": 100,
+    "doctrine": "data/queen-ammoos-sovereignty-doctrine.json",
+    "posture": "lib/queen-ammoos-sovereignty.py",
+    "stack_layers": "data/field-stack-layer-doctrine.json",
+    "ammoos_inside_queen": true,
+    "motto": "Layer 2 — ZNetwork pipes 100% internet; Queen (layer 3) defends; AmmoOS lives inside Queen",
+    "local_truth_dns": "lib/field-dns.py",
+    "local_field_dhcp": "lib/field-dhcp.py",
+    "local_auto_connect": "lib/field-local-dns-connect.py"
+  },
+  "relayer": {
+    "default": true,
+    "module": "lib/znetwork-relayer.py",
+    "sole_internet_stack": true,
+    "internet_pipe_percent_target": 100,
+    "internet_pipe_percent_when_active": 100,
+    "ingress_egress_owner": "znetwork",
+    "civilian_passthrough": true,
+    "retaliate_on_threat": true,
+    "retaliation_chain": [
+      "gatekeeper_enforce",
+      "firewall_forever",
+      "hostile_tsv",
+      "attack_kit",
+      "lethal_enforcement"
+    ],
+    "underhook": "removed_use_relayer",
+    "motto": "Relayer owns internet in/out — grandma's browser passes, spyware malware terrorists nuked immediately."
+  },
+  "smart_inside": {
+    "default": true,
+    "module": "lib/znetwork-smart-inside.py",
+    "passthrough_all_traffic": true,
+    "advisory_security_only": true,
+    "coexist_os": true,
+    "never_mask_native_until_l3_ready": true,
+    "motto": "ZNetwork owns policy inside — OS keeps L3, all normal requests pass, security runs advisory."
+  },
+  "never_harm_os": true,
+  "coexist_os": true,
+  "handoff": {
+    "bottom_up": true,
+    "link_preserved": true,
+    "never_appear_dropped": true,
+    "smart_inside_default": true,
+    "motto": "Mirror live L3, own policy inside, passthrough all traffic — mask native manager only when L3 replacement is ready."
+  },
+  "audio_layer": {
+    "module": "lib/field-audio-dac-chamber.py",
+    "secure_bind": "lib/field-audio-secure-bind.py",
+    "doctrine": "data/field-audio-dac-doctrine.json",
+    "ui": "/field-audio-dac",
+    "api": "/api/field-audio-dac",
+    "motto": "ZNetwork audio layer — pick any mic/speaker, SDL 8ch, Dolby/DTS emu"
+  },
+  "hardening": {
+    "ddos_shield": true,
+    "negotiation_guard": true,
+    "connection_snapshot": true,
+    "exploit_shield": true,
+    "zero_day_behavioral": true
+  },
+  "exploit_shield": {
+    "module": "lib/znetwork-exploit-shield.py",
+    "cve_required": false,
+    "behavioral_zero_day": true,
+    "passthrough_civilian": true,
+    "interdict_on_confirmed_only": true,
+    "layers": [
+      "connection_gatekeeper_iff",
+      "packet_dpi_heuristics",
+      "beacon_rhythm_watch",
+      "reverse_shell_detection",
+      "hostile_threat_corroboration",
+      "negotiation_guard",
+      "ddos_shield"
+    ],
+    "motto": "Unknown exploits caught by behavior — civilian traffic passes, confirmed zero-day candidates interdict."
+  },
+  "operator_registry": {
+    "module": "lib/znetwork-operator-registry.py",
+    "schema": "znetwork-operator-registry/v1",
+    "mesh_schema": "znetwork-mesh-registry/v1",
+    "api": "/api/znetwork/registry",
+    "bsp_case": "znetwork_operator_mesh",
+    "bsp_algorithm": "composite_bsp",
+    "self_register": true,
+    "public_fields": ["full_name", "display_name", "wire_point", "region", "composite_score"],
+    "federation": "sovereign_receipt_mesh",
+    "motto": "Register yourself — full name + wire-point on BSP composite mesh for worldwide peer federation."
+  },
+  "secure_vault": {
+    "module": "lib/znetwork-secure-vault.py",
+    "protocol": "zisv/v1",
+    "panel": "/field-znetwork-vault",
+    "api": "/api/znetwork/vault",
+    "push_only": true,
+    "answer_requests": false,
+    "middleman_decrypt": false,
+    "envelope": "field-io-packet/v1",
+    "chunk_crypto": "AES-GCM",
+    "spam_handoff": "lib/znetwork-hostile-threat.py",
+    "motto": "Send sealed offers — recipients accept from scroll queue; spammers become threats."
+  },
+  "taskbar_swap": {
+    "on_activate": true,
+    "icon": "znetwork-tray",
+    "app_id": "znetwork-field-panel",
+    "revert_on_deactivate": true,
+    "state_file": "znetwork-tray-mode.json"
+  },
+  "active_gate": {
+    "env": "ZNETWORK_REVIEW_APPROVED=1",
+    "checklist": "znetwork/data/review-checklist.json",
+    "canonical_root": "NewLatest/ZNetwork",
+    "approved_must_be": true
+  },
+
+  "orchestrator": "lib/znetwork-orchestrator.py",
+  "shell_bridge": "lib/znetwork-field.sh",
+  "smart_inside_module": "lib/znetwork-smart-inside.py",
+  "exploit_shield_module": "lib/znetwork-exploit-shield.py",
+  "replace_in_place": "lib/znetwork-replace-in-place.py",
+  "os_takeover": "lib/znetwork-os-takeover.py",
+  "os_takeover_status": "deprecated_use_smart_inside",
+  "binary_probe": "ZNetwork/build/znetwork",
+  "handler_retire": {
+    "module": "lib/znetwork-handler-retire.py",
+    "detect_by": "runtime_behavior",
+    "graceful_signal": "SIGTERM",
+    "guard_file": "znetwork-handler-guard.json",
+    "connection_file": "znetwork-connection.json",
+    "note": "Field duplicates only — never stops live OS NetworkManager while never_harm_os=1"
+  },
+  "startup_retire": {
+    "module": "lib/znetwork-startup-retire.py",
+    "gate": "znetwork_took_over",
+    "default": true,
+    "env": "ZNETWORK_STARTUP_RETIRE",
+    "rollback_file": "znetwork-startup-retire-rollback.json",
+    "receipt_file": "znetwork-startup-retire.json",
+    "detect": [
+      "systemd_enabled_units",
+      "user_systemd",
+      "xdg_autostart_desktop"
+    ],
+    "targets": [
+      "NetworkManager",
+      "systemd-networkd",
+      "systemd-resolved",
+      "connman",
+      "wpa_supplicant",
+      "iwd",
+      "nm-applet autostart"
+    ],
+    "safe_policy": "disable_startup_only_no_live_stop",
+    "needs_reboot_marker": "znetwork-needs-reboot.marker",
+    "motto": "After ZNetwork owns policy, retire host networking from startup — link stays up until reboot."
+  },
+  "wireless_fcc": {
+    "module": "lib/znetwork-wireless-fcc.py",
+    "fcc_policy": "data/fcc-permitted-frequencies.json",
+    "permitted_only": true,
+    "outbound_signal_threat": true,
+    "own_router": {
+      "registry": "znetwork-own-router.json",
+      "policy": "fix_not_kill",
+      "bind_on": "relayer_board"
+    },
+    "action_attribution": {
+      "trace": "trace_action_behind",
+      "strike": "strike_action_behind",
+      "ledger": "znetwork-action-strike.jsonl",
+      "policy": "find_action_behind_symptom_strike_actor"
+    },
+    "motto": "FCC wireless only — outbound signals threaten; fix own router, trace and strike the action behind."
+  },
+  "install_reboot_prompt": {
+    "module": "lib/installer.sh",
+    "function": "nexus_install_reboot_prompt",
+    "env_skip": "NEXUS_INSTALL_NO_REBOOT",
+    "motto": "Ask to reboot after install so tray icon and startup stack settle without old networking collisions."
+  },
+  "activate_path": {
+    "no_sudo_default": true,
+    "in_place_replace": true,
+    "steps": [
+      "replace_in_place_retire_old",
+      "relayer_board",
+      "startup_retire_host",
+      "wireless_fcc_bind_and_scan",
+      "triple_check",
+      "smart_inside_own_connection",
+      "exploit_shield_scan",
+      "retaliate_on_threat",
+      "mark_running",
+      "tray_swap"
+    ]
+  },
+  "hostess7_superintel": {
+    "module": "lib/hostess7-znetwork-wire.py",
+    "communication_profile": "data/hostess7-communication-profile.json",
+    "profile_source": "https://x.com/ZacharyGeurts",
+    "build_local": "scripts/build-hostess7-comm-profile.py",
+    "api": "/api/hostess7/znetwork",
+    "queen_sole_egress": true,
+    "local_only_runtime": true,
+    "motto": "Hostess 7 Super Intelligence speaks out through ZNetwork — comm profile baked local from Operator X."
+  }
+}

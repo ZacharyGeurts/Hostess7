@@ -1,0 +1,31 @@
+{
+  "schema": "hostess7-speaking-training-doctrine/v1",
+  "title": "Speaking training — Exploring Speaking X + Final Mouth",
+  "motto": "Read every language book — phonetics, IPA, dictionary — then speak through Final Mouth FCC-safe for humans and animals.",
+  "module": "lib/hostess7-speaking-training.py",
+  "final_mouth": {
+    "root": "Final_Mouth",
+    "mouthball": "Queen/lib/queen-mouthball.py",
+    "neural": "Final_Mouth/zocr_neural_assist.py",
+    "spectrum": "Final_Mouth/data/vocal-spectrum.json",
+    "fcc_acoustic": "data/final-mouth-fcc-acoustic.json"
+  },
+  "exploring_speaking": {
+    "doctrine": "data/exploring-speaking-doctrine.json",
+    "shelf": "library/dewey/400-education",
+    "pattern": "exploring_speaking_{iso6393}"
+  },
+  "lessons": [
+    {"id": "phonetics_read", "label": "Read IPA from Exploring Speaking book"},
+    {"id": "lemma_speak", "label": "Speak dictionary lemma through glottis"},
+    {"id": "human_spoken_word", "label": "Human intelligibility band — FCC acoustic safe"},
+    {"id": "animal_call", "label": "Animal audience bands — dog, cat, horse, bird"},
+    {"id": "hieroglyph_translit", "label": "Hieroglyph transliteration → spoken gloss"},
+    {"id": "thought_voice_speak", "label": "Thought → voice hemisphere → Final Mouth speak"}
+  ],
+  "pass_threshold": 0.75,
+  "default_mode": "speaking",
+  "default_audience": "human",
+  "ironclad_citation": "ironclad:knowledge:2",
+  "truth_gate": "lib/h7-library-truth.py"
+}

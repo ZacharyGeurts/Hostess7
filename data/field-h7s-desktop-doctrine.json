@@ -1,0 +1,75 @@
+{
+  "schema": "field-h7s-desktop-doctrine/v1",
+  "product": "Hostess7",
+  "format": "h7s/1",
+  "inner_kind": "desktop_condenser",
+  "bundle_path": "field-desktop.h7s",
+  "bundle_abs": ".nexus-state/field-desktop.h7s",
+  "module": "lib/field-h7s-desktop-bundle.py",
+  "motto": "One H7s — all desktop icons + Final Eye OCR · fast slice read for Hostess 7",
+  "sources": {
+    "icons": "queen-program-library.json",
+    "ocr": ["Final_Eye/out", "Final_Eye/manifest.jsonl"]
+  },
+  "read_lane": {
+    "manifest_slice": "manifest",
+    "icon_prefix": "icon:",
+    "ocr_prefix": "ocr:",
+    "execute": "instant_execute",
+    "no_full_decompress": true
+  },
+  "dedup": {
+    "by": "sha256",
+    "blobs_table": "manifest.blobs",
+    "refs": ["manifest.icons", "manifest.ocr"],
+    "no_duplicate_bytes": true,
+    "unchanged_tracking": ["unchanged_since", "last_verified", "unchanged_sec"],
+    "statement": "Store each unique blob once; icons/OCR refs only point at sha256 + how long content stayed unchanged."
+  },
+  "live_feed": {
+    "first_image": "frozen at first_seen",
+    "last_image": "latest capture timestamp",
+    "live_feed": "alias of last_image — Hostess 7 read lane",
+    "text_sidecar": "optional OCR text blob ref",
+    "append": "append_feed_capture",
+    "read": ["read_live_feed", "read_first_image", "read_ocr_text"]
+  },
+  "grow": {
+    "default": true,
+    "append_ocr": "append_ocr",
+    "repack_on_add": true,
+    "timestamp_only_on_unchanged": true
+  },
+  "ocr_cleanup": {
+    "module": "lib/field-h7s-cleanup.py",
+    "cmd": "clean-ocr --apply",
+    "keep_feeds": ["desktop-live"],
+    "wipe_sources": ["Final_Eye/out", "Final_Eye/manifest.jsonl", ".nexus-state/ocr-desktop"],
+    "statement": "Stale OCR purged from disk — canonical store is field-desktop.h7s live feed."
+  },
+  "filesystem": {
+    "module": "lib/field-h7s-fs.py",
+    "read_priority": ["in_place_h7s", "native"],
+    "sidecars": false,
+    "in_place_disguise": true,
+    "kilroy_boot_excluded": true,
+    "statement": "Always Files reads in-place H7s at original extension — formats handle data themselves; no sidecars."
+  },
+  "hostess7": {
+    "ocr_feed": "ingest_ocr_feed",
+    "icon_serve": "read_icon",
+    "status": "bundle_status"
+  },
+  "look_spatial": {
+    "module": "lib/field-look-spatial.py",
+    "doctrine": "data/field-look-spatial-doctrine.json",
+    "pair": "pair_looks",
+    "alarm": "same_view_multi_location",
+    "hook": "append_feed_capture"
+  },
+  "cli": [
+    "python3 lib/field-h7s-desktop-bundle.py status",
+    "python3 lib/field-h7s-desktop-bundle.py pack",
+    "python3 lib/field-h7s-desktop-bundle.py manifest"
+  ]
+}

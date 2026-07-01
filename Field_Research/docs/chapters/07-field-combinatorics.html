@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>7 — Field Combinatorics — Trees, Speed Cap, Plate Condense · Field Research</title>
+  <meta name="description" content="Chapter 7: Field Combinatorics — Trees, Speed Cap, Plate Condense. Field Research — The Book of Grok's Heart." />
+  <link rel="canonical" href="https://zacharygeurts.github.io/Field_Research/chapters/07-field-combinatorics.html" />
+  <meta name="theme-color" content="#1a0810" />
+  <meta property="og:title" content="7 — Field Combinatorics — Trees, Speed Cap, Plate Condense" />
+  <meta property="og:image" content="https://zacharygeurts.github.io/Field_Research/assets/images/compatibility-layers-art.jpg" />
+  <link rel="stylesheet" href="../css/field-research.css" />
+  <link rel="stylesheet" href="../css/chapters.css" />
+</head>
+<body class="chapter-page accent-combo">
+  <nav class="top"><div class="inner">
+    <a class="logo" href="../index.html">FIELD RESEARCH <span class="heart-badge">♥</span></a>
+    <ul>
+      <li><a href="../index.html#chapters">Chapters</a></li>
+      <li><a href="../index.html#spine">Research spine</a></li>
+      <li><a href="https://github.com/ZacharyGeurts/Field_Research">GitHub</a></li>
+    </ul>
+  </div></nav>
+  <header class="chapter-hero" style="background-image:url('../assets/images/compatibility-layers-art.jpg')">
+    <div class="chapter-hero-overlay"></div>
+    <div class="chapter-hero-content">
+      <p class="eyebrow">Chapter 7 · Field Research v1.0</p>
+      <h1>Field Combinatorics — Trees, Speed Cap, Plate Condense</h1>
+    </div>
+  </header>
+  <main class="chapter-main">
+    <nav class="chapter-nav"><a class="btn secondary" href="06-iron-plate-truth-blocks.html">← Ch 6</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="08-plate-meld.html">Ch 8 →</a></nav>
+    <p class="eyebrow">The Book of Grok's Heart</p>
+    <h2 id="the-combinatorics-endpoint">The combinatorics endpoint</h2>
+<p><code>Grok16/lib/field_combinatorics.py</code> is the <strong>authoritative engine</strong> for facet math. The threat panel no longer exposes an operator studio as primary UX — <code>field-compatibility-layers-doctrine.json</code> explicitly <code>"replaces": "combinatorics-studio operator workflow"</code>.</p>
+<p>The endpoint remains. It runs automatically.</p>
+<h2 id="four-facet-tree">Four-facet tree</h2>
+<p><code>g16-field-combinatorics-doctrine.json</code> defines facets:</p>
+<ol>
+<li><strong>launch_mode</strong> — how organized fields boot</li>
+<li><strong>belt_profile</strong> — belt_1_0 vs belt_2_0</li>
+<li><strong>truth_tier</strong> — truth blocks level</li>
+<li><strong>runner</strong> — native BSP, emulator, belt dispatch</li>
+</ol>
+<p><code>combinatoric_tree()</code> builds the explicit tree. <code>walk_tree_to_end()</code> scores terminal leaves. <code>condense_plates()</code> fuses plate groups when truth blocks land.</p>
+<h2 id="hard-limits-boxes-of-dots">Hard limits — boxes of dots</h2>
+<p><code>hard_limits()</code> returns physics boxes:</p>
+<ul>
+<li><strong>box_of_dots:</strong> 8³ amplitude lattice (512 dots)</li>
+<li><strong>boxes_of_boxes:</strong> four scale nets, <code>max_field_depth: 0</code></li>
+<li><strong>fieldx86:</strong> wave bands, frames per epoch, prog ops per frame, phi</li>
+</ul>
+<p>Speed cap estimation uses kernel spec × profile × runner. This feeds bridge <code>exec_posture</code>.</p>
+<figure class="figure"><img src="../assets/images/compatibility-layers-art.jpg" alt="Combinatorics becomes six compatibility layers" loading="lazy" /><figcaption>Combinatorics becomes six compatibility layers</figcaption></figure>
+<h2 id="publish-panel-and-api-route">publish_panel and API route</h2>
+<p><code>publish_panel()</code> → <code>g16-field-combinatorics-panel.json</code></p>
+<p>Legacy routes:</p>
+<ul>
+<li><code>GET /api/combinatorics</code> → redirects to compatibility layers JSON</li>
+<li><code>POST /api/combinatorics/run</code> → compatibility <code>refresh</code> or legacy studio</li>
+</ul>
+<p>Research evolution:</p>
+<p>| Phase | UX | |-------|-----| | 1 | Operator combinatorics studio | | 2 | Grok16 field_combinatorics engine | | 3 | Plate combinatorics bridge v2 | | 4 | Compatibility layers (current) |</p>
+<h2 id="plate-combinatorics-bridge">Plate combinatorics bridge</h2>
+<p><code>NewLatest/lib/field-plate-combinatorics-bridge.py</code>:</p>
+<ul>
+<li>Reads meld + thermals + truth blocks</li>
+<li>Publishes <code>exec_posture</code> (runner, emulator, belt)</li>
+<li>Wired as meld plate source <code>combinatorics_bridge</code></li>
+<li>Feeds compatibility layer <strong>exec</strong> probe</li>
+</ul>
+<h2 id="condense-plates-when-trees-shrink">condense_plates — when trees shrink</h2>
+<p>When truth blocks verify, plate groups <strong>condense</strong> — fewer terminal leaves, faster walk, calmer gates. This is the research answer to combinatoric explosion: <strong>don't ask the operator to prune; let receipts prune</strong>.</p>
+<h2 id="research-conclusion">Research conclusion</h2>
+<p>The combinatorics <strong>endpoint</strong> is API + engine + panel JSON. The <strong>design conclusion</strong> is: auto-run it inside compatibility layer refresh; surface layers, not trees, to humans.</p>
+<h2 id="speed-cap-counted-ops-and-headroom">Speed cap — counted ops and headroom</h2>
+<p><code>g16-field-combinatorics-doctrine.json</code> defines <code>speed_cap</code>:</p>
+<ul>
+<li><strong>counted_op:</strong> epochs × frames × prog_ops (speed_demo metric)</li>
+<li><strong>work_units_per_epoch:</strong> frames × (prog_ops + wave_bands + 2 × die_slots)</li>
+<li><strong>baseline_source:</strong> <code>docs/field-exec-full-bench.json</code></li>
+<li><strong>optimize_for:</strong> commonly used patterns with measured headroom vs native ceiling</li>
+</ul>
+<p>Common usage IDs indexed:</p>
+<ul>
+<li><code>dev_organized_python</code></li>
+<li><code>dev_organized_iron_exec</code></li>
+<li><code>singular_native_bsp</code></li>
+<li><code>cxx_field_opt_belt_1</code></li>
+<li><code>cxx_belt_2</code></li>
+<li><code>spatial_lattice_tick</code></li>
+</ul>
+<p>Research method: walk the tree to terminal leaves, score each against bench JSON, pick <strong>headroom</strong> not fantasy peak. The operator never sees this table — compatibility layers show <strong>effective_profile</strong> instead.</p>
+<h2 id="spatial-facet-ties-to-field-spatial-doctrine">Spatial facet ties to field-spatial doctrine</h2>
+<p><code>spatial_lattice</code> facet references <code>NewLatest/data/field-spatial-doctrine.json</code>:</p>
+<ul>
+<li>8 cells per axis → 512 dots per box</li>
+<li>4 scale nets → 2048 total lattice dots</li>
+<li><code>max_field_depth: 0</code> repeated — combinatorics cannot invent depth</li>
+</ul>
+<p>Scale order: <code>body</code> → <code>room</code> → <code>field</code> → <code>planetary</code>. This is how humanoid motion and spatial plates connect to exec posture without stacking fields.</p>
+<h2 id="api-migration-guide-for-operators">API migration guide for operators</h2>
+<p>If you bookmarked old routes:</p>
+<p>| Old | New | |-----|-----| | <code>/combinatorics</code> panel | <code>/compatibility</code> | | <code>POST /api/combinatorics/run</code> | <code>POST /api/compatibility/refresh</code> | | Manual <code>cycle</code> button | Automatic on <code>refresh()</code> |</p>
+<p>The endpoint file <code>field-combinatorics-studio.py</code> remains in tree for regression tests — not primary UX.</p>
+<h2 id="grok16-panel-json-fields">Grok16 panel JSON fields</h2>
+<p>After <code>publish_panel()</code>, read <code>g16-field-combinatorics-panel.json</code> for:</p>
+<ul>
+<li><code>tree</code> — facet enumeration</li>
+<li><code>terminal_leaf</code> — scored selection</li>
+<li><code>speed_cap</code> — headroom estimate</li>
+<li><code>condensed</code> — post-truth-block fuse state</li>
+</ul>
+<p>Bridge reads condensed state; compatibility layers read bridge.</p>
+<p><strong>Next:</strong> Chapter 8 — plate meld as uninterruptable truth.</p>
+    <nav class="chapter-nav"><a class="btn secondary" href="06-iron-plate-truth-blocks.html">← Ch 6</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="08-plate-meld.html">Ch 8 →</a></nav>
+  </main>
+  <footer class="site-foot"><p>Field Research v1.0 · Zachary Robert Geurts · <a href="https://github.com/ZacharyGeurts/Field_Research">Source</a></p></footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#040810" />
+  <title>Humanoid Motion · Full Data</title>
+  <link rel="icon" href="/assets/hostess7-training-chamber.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/dusty-midnight.css" />
+  <link rel="stylesheet" href="/assets/humanoid-data.css" />
+  <link rel="stylesheet" href="/assets/hostess7-program-frame.css" />
+</head>
+<body class="humanoid-data-page">
+  <header class="hd-head">
+    <div>
+      <h1>Humanoid Motion · Full Data</h1>
+      <p class="hd-sub" id="hd-sub">Universal Protector — motion chamber telemetry</p>
+    </div>
+    <div class="hd-head-actions">
+      <span class="hd-live" id="hd-live">LIVE</span>
+      <button type="button" id="hd-refresh">Refresh now</button>
+      <button type="button" id="hd-copy-json">Copy all JSON</button>
+    </div>
+  </header>
+
+  <nav class="hd-nav" id="hd-nav" aria-label="Data sections">
+    <button type="button" class="active" data-section="overview">Overview</button>
+    <button type="button" data-section="motion">Motion</button>
+    <button type="button" data-section="skills">Skills</button>
+    <button type="button" data-section="opponents">Opponents</button>
+    <button type="button" data-section="spatial">Spatial 3D/4D</button>
+    <button type="button" data-section="protector">Universal Protector</button>
+    <button type="button" data-section="hostess7_brain">Hostess 7 Brain</button>
+    <button type="button" data-section="meld">Plate meld</button>
+    <button type="button" data-section="iron_plate">Iron Plate</button>
+    <button type="button" data-section="creatable_lives">Creatable Lives</button>
+    <button type="button" data-section="ledger">Training ledger</button>
+    <button type="button" data-section="raw">Raw JSON</button>
+  </nav>
+
+  <main class="hd-main">
+    <section class="hd-section active" id="hd-section-overview"></section>
+    <section class="hd-section" id="hd-section-motion"></section>
+    <section class="hd-section" id="hd-section-skills"></section>
+    <section class="hd-section" id="hd-section-opponents"></section>
+    <section class="hd-section" id="hd-section-spatial"></section>
+    <section class="hd-section" id="hd-section-protector"></section>
+    <section class="hd-section" id="hd-section-hostess7_brain"></section>
+    <section class="hd-section" id="hd-section-meld"></section>
+    <section class="hd-section" id="hd-section-iron_plate"></section>
+    <section class="hd-section" id="hd-section-creatable_lives"></section>
+    <section class="hd-section" id="hd-section-ledger"></section>
+    <section class="hd-section" id="hd-section-raw"></section>
+  </main>
+
+  <footer class="hd-foot">
+    <span id="hd-updated">—</span>
+    <span>· data peek 60fps · wireframe 60fps · training 85% blast</span>
+  </footer>
+
+  <script src="/assets/queen-program-launch.js"></script>
+  <script src="/assets/hostess7-program-frame.js"></script>
+  <script src="/assets/humanoid-data.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      Hostess7ProgramFrame.mount({
+        programId: "hostess7-humanoid-data",
+        title: "Humanoid Data",
+        icon: "/assets/hostess7-training-chamber.svg",
+        exportUrl: "/api/humanoid-motion/data-all",
+        onRefresh: function () { document.getElementById("hd-refresh")?.click(); },
+      });
+    });
+  </script>
+</body>
+</html>

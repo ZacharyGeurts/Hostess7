@@ -1,0 +1,77 @@
+{
+  "schema": "field-polkit-doctrine/v1",
+  "title": "NEXUS Field Polkit — OS-native elevation, fail closed",
+  "motto": "UAC-style Allow, then polkit auth once. No arbitrary pkexec bash.",
+  "policy": {
+    "arbitrary_pkexec_bash": false,
+    "pkexec_bridge_only": true,
+    "bootstrap_once": true,
+    "inactive_session": "auth_admin_no_keep",
+    "remote_session": "deny_or_reauth",
+    "audit_log": "/var/lib/nexus-shield/pkexec-audit.jsonl"
+  },
+  "actions": [
+    {
+      "id": "com.nexus.field.bootstrap",
+      "verb": "run-install",
+      "role": "first_install_before_policy_shipped",
+      "keep": false
+    },
+    {
+      "id": "com.nexus.field.install",
+      "verb": "run-install",
+      "role": "full_system_install",
+      "exec_path": "/usr/local/lib/nexus-shield/lib/nexus-pkexec-bridge.sh"
+    },
+    {
+      "id": "com.nexus.field.update",
+      "verb": "run-update",
+      "role": "github_update_apply",
+      "exec_path": "/usr/local/lib/nexus-shield/lib/nexus-pkexec-bridge.sh"
+    },
+    {
+      "id": "com.nexus.field.harden",
+      "verb": "run-harden",
+      "role": "cpu_sysctl_firewall_hardening",
+      "keep": false
+    },
+    {
+      "id": "com.nexus.field.service",
+      "verb": "run-service",
+      "role": "nexus_genius_systemd_control",
+      "keep": false
+    },
+    {
+      "id": "com.nexus.field.underlay",
+      "verb": "run-underlay",
+      "role": "tristate_installer_commit_wrdt_reboot",
+      "keep": false
+    },
+    {
+      "id": "com.nexus.field.freeze",
+      "verb": "run-freeze",
+      "role": "host_os_freeze_thaw_acpi",
+      "keep": false
+    },
+    {
+      "id": "com.nexus.field.znetwork",
+      "verb": "run-znetwork",
+      "role": "znetwork_root_gate_linux_windows",
+      "keep": true,
+      "note": "Pol checks Linux root / Windows admin before ZNetwork activate"
+    }
+  ],
+  "ship_paths": [
+    "install/polkit/com.nexus.field.policy",
+    "install/polkit/49-com.nexus.field.rules",
+    "lib/nexus-pkexec-bridge.sh",
+    "lib/nexus-polkit.sh"
+  ],
+  "not_allowed": [
+    "pkexec_bash_c",
+    "pkexec_env_bash",
+    "world_writable_bridge",
+    "polkit_action_without_bridge",
+    "elevation_without_gui_confirm_on_desktop"
+  ]
+}

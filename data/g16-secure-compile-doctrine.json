@@ -1,0 +1,55 @@
+{
+  "schema": "g16-secure-compile-doctrine/v1",
+  "title": "G16 secure compile & run — protect AmmoOS, Hostess 7, and field stack",
+  "motto": "Every user language compiles and runs inside a sealed chamber — Grok16 compiles everything, no third-party toolchains.",
+  "module": "lib/g16-secure-chamber.py",
+  "security": "Grok16/lib/g16-code-security.py",
+  "chamber": "lib/field-legacy-isolation-chamber.py",
+  "policy": {
+    "mandatory_chamber": true,
+    "freeze_underlying_os": false,
+    "security_hold": true,
+    "gate_before_compile": true,
+    "gate_before_run": true,
+    "no_direct_host_exec": true,
+    "protect_ammoos": true,
+    "protect_hostess7": true,
+    "protect_grok16_bin": true,
+    "g16_only": true,
+    "no_third_party": true
+  },
+  "languages": {
+    "compiled": "all — Grok16/data/grok16-languages.json via g16-lang-lower.py",
+    "scripted": "all lowered to C++ then compiled by bin/g16",
+    "legacy": "all lowered to C++ then compiled by bin/g16",
+    "all_grok16": "Grok16/data/grok16-languages.json"
+  },
+  "drivers": {
+    "default": {"compile": "g16", "run": "g16", "chamber": true, "lower": "lang→cxx→g16"},
+    "java": {"compile": "g16", "run": "g16", "chamber": true, "lower": "java→cxx"},
+    "kotlin": {"compile": "g16", "run": "g16", "chamber": true, "lower": "kotlin→cxx"},
+    "javascript": {"compile": "g16", "run": "g16", "chamber": true, "lower": "js→cxx"},
+    "typescript": {"compile": "g16", "run": "g16", "chamber": true, "lower": "ts→cxx"},
+    "python": {"compile": "g16", "run": "g16", "chamber": true, "lower": "py→cxx"},
+    "pascal": {"compile": "g16", "run": "g16", "chamber": true, "lower": "pas→cxx"},
+    "turbo_pascal": {"compile": "g16", "run": "g16", "chamber": true, "lower": "pas→cxx"},
+    "fortran": {"compile": "g16", "run": "g16", "chamber": true, "lower": "f90→cxx"},
+    "cobol": {"compile": "g16", "run": "g16", "chamber": true, "lower": "cob→cxx"},
+    "rust": {"compile": "g16", "run": "g16", "chamber": true, "lower": "rs→cxx"},
+    "go": {"compile": "g16", "run": "g16", "chamber": true, "lower": "go→cxx"},
+    "zig": {"compile": "g16", "run": "g16", "chamber": true, "lower": "zig→cxx"},
+    "ruby": {"compile": "g16", "run": "g16", "chamber": true, "lower": "rb→cxx"},
+    "perl": {"compile": "g16", "run": "g16", "chamber": true, "lower": "pl→cxx"},
+    "php": {"compile": "g16", "run": "g16", "chamber": true, "lower": "php→cxx"},
+    "lua": {"compile": "g16", "run": "g16", "chamber": true, "lower": "lua→cxx"}
+  },
+  "forbidden_run_prefixes": [
+    "NewLatest/AmmoCode",
+    "NewLatest/Hostess7",
+    "Grok16/bin",
+    "/usr/bin",
+    "/bin",
+    "/sbin"
+  ],
+  "g16": {"version": "5.1.0", "profile": "ai_agent", "host_toolchain": false}
+}

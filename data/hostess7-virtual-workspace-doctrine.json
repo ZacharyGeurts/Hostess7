@@ -1,0 +1,27 @@
+{
+  "schema": "hostess7-virtual-workspace-doctrine/v1",
+  "title": "Hostess 7 virtual workspace — test before apply",
+  "motto": "Edit in the virtual die first. CHIPS G16 Python smoke, py_compile, testing center — then promote to live INSTALL.",
+  "module": "lib/hostess7-virtual-workspace.py",
+  "panel": "hostess7-virtual-workspace-panel.json",
+  "ledger": "hostess7-virtual-workspace-ledger.jsonl",
+  "root": "hostess7-virtual",
+  "policy": {
+    "test_before_apply": true,
+    "live_install_readonly": true,
+    "promote_requires_confirm": true,
+    "confirm_phrase": "PROMOTE",
+    "gates": ["py_compile", "chips_gpy_smoke", "codecraft_testing_center", "brain_guard_witness"]
+  },
+  "chips_die": {
+    "chosen": "gpy16_python",
+    "label": "CHIPS G16 Python die — gpy-16 / pythong interpreter lane",
+    "discern": "g16 --g16-discern",
+    "driver": "Grok16/python/driver/gpy16_driver.py",
+    "doctrine": "data/hostess7-g16-doctrine.json",
+    "explain": "data/hostess7-chips-coding-explain.json"
+  },
+  "editable_prefixes": ["lib/hostess7-", "lib/field-storage.py", "data/hostess7-", "data/field-storage-doctrine.json"],
+  "forbidden_live_write": ["MANIFEST.sha256", "lib/field-plate-meld.py", "lib/ironclad-immediate.py"],
+  "ironclad_cite": "ironclad:hostess7:virtual:1"
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "field-filesystem-doctrine/v1",
+  "title": "Field filesystem update — disk pressure, deleted tiers, destroyed catalog",
+  "motto": "Warn before overwrite. Listed deleted goes first; bin is more precious. Catalog keeps the date when bytes are gone.",
+  "tiers": {
+    "listed": {
+      "rank": 1,
+      "label": "Listed delete",
+      "description": "Soft-deleted from catalog listing — first to be destroyed under pressure"
+    },
+    "bin": {
+      "rank": 2,
+      "label": "Bin / vault",
+      "description": "Archival retreat and trash — destroyed after listed tier"
+    },
+    "active": {
+      "rank": 99,
+      "label": "Active",
+      "description": "Never auto-destroyed in polite mode"
+    }
+  },
+  "destroy_order": ["listed", "bin"],
+  "disk_pressure": {
+    "warn_free_mb": 2048,
+    "reclaim_free_mb": 1024,
+    "critical_free_mb": 256,
+    "target_free_mb": 1536,
+    "warn_message": "Disk is getting full — deleted files will begin being destroyed soon (least important first: listed, then bin)."
+  },
+  "fields": {
+    "deleted": "soft-delete marker — bytes may still exist",
+    "destroyed": "bytes gone — catalog row kept for destroy date",
+    "destroyed_at": "sovereign UTC when overwrite occurred",
+    "destroyed_date": "calendar date for catalog browse",
+    "tier": "listed | bin | active"
+  },
+  "paths": {
+    "overlay": "field-filesystem-overlay.json",
+    "listed_deletes": "field-filesystem-listed-deletes.jsonl",
+    "destroyed_catalog": "field-filesystem-destroyed-catalog.jsonl",
+    "panel": "field-filesystem-panel.json"
+  },
+  "module": "lib/field-filesystem-update.py"
+}

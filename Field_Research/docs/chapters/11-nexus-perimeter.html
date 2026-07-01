@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>11 — NEXUS Perimeter — Packet Field, Gatekeeper, Diagnostic Mode · Field Research</title>
+  <meta name="description" content="Chapter 11: NEXUS Perimeter — Packet Field, Gatekeeper, Diagnostic Mode. Field Research — The Book of Grok's Heart." />
+  <link rel="canonical" href="https://zacharygeurts.github.io/Field_Research/chapters/11-nexus-perimeter.html" />
+  <meta name="theme-color" content="#1a0810" />
+  <meta property="og:title" content="11 — NEXUS Perimeter — Packet Field, Gatekeeper, Diagnostic Mode" />
+  <meta property="og:image" content="https://zacharygeurts.github.io/Field_Research/assets/images/diagnostic-mode-art.jpg" />
+  <link rel="stylesheet" href="../css/field-research.css" />
+  <link rel="stylesheet" href="../css/chapters.css" />
+</head>
+<body class="chapter-page accent-nexus">
+  <nav class="top"><div class="inner">
+    <a class="logo" href="../index.html">FIELD RESEARCH <span class="heart-badge">♥</span></a>
+    <ul>
+      <li><a href="../index.html#chapters">Chapters</a></li>
+      <li><a href="../index.html#spine">Research spine</a></li>
+      <li><a href="https://github.com/ZacharyGeurts/Field_Research">GitHub</a></li>
+    </ul>
+  </div></nav>
+  <header class="chapter-hero" style="background-image:url('../assets/images/diagnostic-mode-art.jpg')">
+    <div class="chapter-hero-overlay"></div>
+    <div class="chapter-hero-content">
+      <p class="eyebrow">Chapter 11 · Field Research v1.0</p>
+      <h1>NEXUS Perimeter — Packet Field, Gatekeeper, Diagnostic Mode</h1>
+    </div>
+  </header>
+  <main class="chapter-main">
+    <nav class="chapter-nav"><a class="btn secondary" href="10-chips-emulation.html">← Ch 10</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="12-queen-host-desktop.html">Ch 12 →</a></nav>
+    <p class="eyebrow">The Book of Grok's Heart</p>
+    <h2 id="packet-field-as-readable-perimeter">Packet field as readable perimeter</h2>
+<p>NEXUS-Shield turns sockets into <strong>operator-readable state</strong>:</p>
+<ul>
+<li><code>packet-field.py</code> → ring, ports, recent flows</li>
+<li><code>connection-gatekeeper.py</code> → IFF, trust, suggestions</li>
+<li>Threat panel HTTP <code>:9477</code> → parallel slice publish</li>
+</ul>
+<p>Field Research added <strong>diagnostic mode</strong> as perimeter reflex: when truth breaks, <strong>shrink the attack surface</strong>.</p>
+<figure class="figure"><img src="../assets/images/diagnostic-mode-art.jpg" alt="Diagnostic mode — lock away from fault" loading="lazy" /><figcaption>Diagnostic mode — lock away from fault</figcaption></figure>
+<h2 id="diagnostic-mode-doctrine">Diagnostic mode doctrine</h2>
+<p><code>field-diagnostic-mode-doctrine.json</code>:</p>
+<p>> Problems detected → drop to diagnostic. All systems lock away from the fault; it is reorganized out.</p>
+<p>Fault signals:</p>
+<ul>
+<li>ironclad_field_sanity (quarantine, gate_not_ok)</li>
+<li>g1id_baselines (critical)</li>
+<li>field_io_packet truth gate</li>
+<li>filesystem_critical</li>
+<li>thermal_crit</li>
+<li>brain_corruption</li>
+<li>compatibility_fault</li>
+</ul>
+<h2 id="engage-sequence">engage() sequence</h2>
+<ol>
+<li>`detect_problems()`</li>
+<li>`reorganize_fault()` — quarantine fault domains, sanity operator pass</li>
+<li>Write panel `engaged: true`</li>
+<li>Filter parallel slices to secure baseline set</li>
+<li>Gate meld refreshes via `_refresh_if_allowed`</li>
+</ol>
+<h2 id="debug-self-clear-only-after-pass">debug_self() — clear only after pass</h2>
+<p>Secure baseline chain:</p>
+<div class="code-block"><pre>
+g1id-baseline verify → ironclad sanity → io-packet gate → probe guard
+</pre></div>
+<p><code>clear()</code> refuses until <code>debug_self</code> passes unless <code>force</code>.</p>
+<h2 id="api-and-ui">API and UI</h2>
+<ul>
+<li><code>GET/POST /api/diagnostic-mode</code></li>
+<li>Threat panel banner + System card</li>
+<li><code>NEXUS_DIAGNOSTIC_MODE=1</code> force on; <code>=0</code> force off</li>
+<li>Slice <code>field_diagnostic</code> in parallel publish</li>
+</ul>
+<h2 id="filesystem-update-related-perimeter">Filesystem update (related perimeter)</h2>
+<p><code>field-filesystem-update.py</code> — disk pressure warn/reclaim; <code>destroyed</code> catalog field. Feeds diagnostic on <code>critical</code> pressure.</p>
+<h2 id="research-conclusion">Research conclusion</h2>
+<p>Perimeter is not only firewall rules. It is <strong>which modules may run when truth is wounded</strong>. Diagnostic mode is the researched answer — not panic shutdown, <strong>baseline-only self-debug</strong>.</p>
+<p><strong>Next:</strong> Chapter 12 — Queen browser and host desktop shell.</p>
+    <nav class="chapter-nav"><a class="btn secondary" href="10-chips-emulation.html">← Ch 10</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="12-queen-host-desktop.html">Ch 12 →</a></nav>
+  </main>
+  <footer class="site-foot"><p>Field Research v1.0 · Zachary Robert Geurts · <a href="https://github.com/ZacharyGeurts/Field_Research">Source</a></p></footer>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ironclad CHIPS Catalog</title>
+  <link rel="stylesheet" href="queen-viewer.css" />
+  <link rel="stylesheet" href="queen-chips-catalog.css" />
+</head>
+<body data-queen-surface="browser" data-clipboard-wire class="qcc-page">
+  <header class="qcc-head">
+    <div class="qcc-head-top">
+      <div class="qcc-title">
+        <p class="qcc-eyebrow">Dewey 621 · Combinatorics facet</p>
+        <h1>Ironclad CHIPS Catalog</h1>
+        <p class="qcc-sub">Page 1 Ironclad · Page 2 Universal Chipset · every die indexed</p>
+      </div>
+      <div class="qcc-head-actions">
+        <a class="qcc-btn qcc-btn--ghost" href="/library/dewey/621-computer-engineering/chips-catalog/ironclad-chips-catalog/pages/page-001-ironclad.json" title="Dewey library book — Ironclad truth plate (page 1)">
+          <span class="qcc-btn-icon" aria-hidden="true">§</span>
+          Library · Page 1 Ironclad
+        </a>
+        <button type="button" class="qcc-btn" id="qcc-refresh" title="Rebuild catalog from combinatorics">Rebuild</button>
+      </div>
+    </div>
+    <div class="qcc-search-row">
+      <div class="qcc-search-wrap">
+        <label class="qcc-sr" for="qcc-search">Search chips</label>
+        <input
+          type="search"
+          id="qcc-search"
+          placeholder="Search chip, vendor, kind, country…"
+          autocomplete="off"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="qcc-ac"
+          aria-activedescendant=""
+        />
+        <ul id="qcc-ac" class="qcc-ac" role="listbox" hidden></ul>
+      </div>
+      <p id="qcc-search-hint" class="qcc-search-hint" aria-live="polite"></p>
+    </div>
+  </header>
+
+  <nav class="qcc-nav" aria-label="Catalog chapters">
+    <div class="qcc-nav-label">Chapters</div>
+    <div id="qcc-pages" class="qcc-pages"></div>
+  </nav>
+  <nav class="qcc-nav qcc-nav--stacks" aria-label="Platform stacks">
+    <div class="qcc-nav-label">Platform stacks</div>
+    <div id="qcc-stacks" class="qcc-pages qcc-pages--stacks"></div>
+  </nav>
+
+  <main class="qcc-main">
+    <aside id="qcc-stats" class="qcc-stats" aria-label="Catalog statistics"></aside>
+    <section class="qcc-grid-wrap">
+      <div class="qcc-grid-head">
+        <h2 id="qcc-grid-title" class="qcc-grid-title">All dies</h2>
+        <p id="qcc-grid-meta" class="qcc-grid-meta"></p>
+      </div>
+      <div id="qcc-grid" class="qcc-grid" role="list"></div>
+      <div class="qcc-grid-foot">
+        <button type="button" id="qcc-load-more" class="qcc-btn qcc-btn--wide" hidden>Load more</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="queen-chips-catalog.js"></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

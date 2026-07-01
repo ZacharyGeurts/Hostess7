@@ -1,0 +1,92 @@
+{
+  "schema": "g1-geometric-identity/v1",
+  "format": "g1id",
+  "kind": "this_one",
+  "updated": "2026-06-26T23:21:23Z",
+  "thermal": {
+    "policy": "cold_only",
+    "hot_forbidden": true,
+    "never_build_under_heat": true
+  },
+  "plate": {
+    "preserved": true,
+    "canonical_hash": "df82e0ec4ad9168d5499416d20911b8f6574f5d2e547ca66f3dcfeacc2d7c402",
+    "immutable": true,
+    "realized": true,
+    "citation": "ironclad:place:2"
+  },
+  "hardening": {
+    "this_one_sealed": true,
+    "that_one_forbidden": true,
+    "dimensions_locked": 3,
+    "t_forbidden": true,
+    "citation": "ironclad:spatial_existence:1"
+  },
+  "meld_inputs": {
+    "citation": "ironclad:meld:2",
+    "policy": "sovereign_time_only",
+    "sovereign_time": {
+      "source": "lib/sovereign-time.py",
+      "clock": "lib/sovereign-clock.py",
+      "schema": "sovereign-time-meld-input/v1",
+      "linear_ns": 1782516083483929144,
+      "derived_utc": "2026-06-26T23:21:23Z",
+      "sealed": true,
+      "synced": false,
+      "never_desync": true,
+      "immutable_linear": true,
+      "witness_only": true,
+      "not_geometry_t": true,
+      "citation": "ironclad:g1id:2"
+    }
+  },
+  "self": {
+    "id": "operator-this-one",
+    "label": "Operator — this one geometric baseline",
+    "kind": "this_one",
+    "geometry": {
+      "dimensions": 3,
+      "units": "m",
+      "centroid": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.86
+      },
+      "extents": {
+        "x": 0.45,
+        "y": 0.28,
+        "z": 1.72
+      },
+      "proportions": {
+        "x_to_y": 1.607143,
+        "y_to_z": 0.162791,
+        "x_to_z": 0.261628
+      },
+      "aabb": {
+        "min": {
+          "x": -0.225,
+          "y": -0.14,
+          "z": 0.0
+        },
+        "max": {
+          "x": 0.225,
+          "y": 0.14,
+          "z": 1.72
+        }
+      }
+    }
+  },
+  "baseline": {
+    "immoveable": true,
+    "role": "secure_anchor",
+    "amendment_forbidden": true,
+    "rewrite_forbidden": true,
+    "mode_bits": "0444",
+    "citation": "ironclad:g1id:2"
+  },
+  "integrity": {
+    "payload_hash": "72d721cd4b41867bf13c8942d5c91fc36c2467b52ab4a61d22f28d193c6210f0",
+    "sealed_at": "2026-06-26T23:21:23Z",
+    "algorithm": "sha256"
+  }
+}

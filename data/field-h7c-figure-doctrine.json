@@ -1,0 +1,13 @@
+{
+  "schema": "field-h7c-figure-doctrine/v1",
+  "module": "lib/field-h7c-figure-compress.py",
+  "motto": "Field plate snap → lossless palette PNG → meld cache — smaller H7c figures, same pixels, fast decode.",
+  "lossless": true,
+  "plate_keys": ["cover", "syntax", "op_map", "memory", "compile", "types"],
+  "chain": [
+    {"id": "plate_snap", "feeds": "field_plate_rgb"},
+    {"id": "palette", "feeds": "lossless_p_png"},
+    {"id": "meld", "state": "field-h7c-figure-meld.json", "feeds": "dedupe_blobs"}
+  ],
+  "fallback": "zlib9_idat"
+}

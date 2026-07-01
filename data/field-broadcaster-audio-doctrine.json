@@ -1,0 +1,29 @@
+{
+  "schema": "field-broadcaster-audio/v1",
+  "title": "Broadcaster audio chain — field physics before speakers",
+  "motto": "Clean voltage on the wire: echo killed, static gated, dB shaped — then sound leaves.",
+  "chain": [
+    {"id": "input_gain_db", "label": "Input trim", "default_db": 0, "range_db": [-24, 12]},
+    {"id": "highpass", "label": "Rumble cut", "default_hz": 80, "slope": "12dB/oct", "physics": "field_lowcut — remove infrasonic pressure before gate"},
+    {"id": "noise_gate", "label": "Noise gate", "threshold_db": -42, "attack_ms": 3, "release_ms": 120, "physics": "entropy gate — silence below trust floor"},
+    {"id": "echo_cancel", "label": "Echo cancel", "engine": "pipewire_echo_cancel", "fallback": "speex_aec", "physics": "sovereign AEC — reference mic cancels room reflection"},
+    {"id": "static_suppress", "label": "Static filter", "engine": "rnnoise_opt", "fallback": "spectral_subtract", "physics": "repeat-field inspect — hiss and crackle before cochlea"},
+    {"id": "compressor", "label": "Voice glue", "ratio": 2.5, "threshold_db": -18, "makeup_db": 2},
+    {"id": "output_gain_db", "label": "Output level", "default_db": 0, "range_db": [-24, 6]},
+    {"id": "limiter", "label": "Peak limiter", "ceiling_db": -1.0, "physics": "ironclad peak — never clip the operator"}
+  ],
+  "defaults": {
+    "echo_cancel": false,
+    "noise_gate": false,
+    "static_filter": false,
+    "input_gain_db": 0,
+    "output_gain_db": 0,
+    "monitor": false
+  },
+  "pipewire_modules": {
+    "echo_cancel": "libpipewire-module-echo-cancel",
+    "filter_chain": "libpipewire-module-filter-chain"
+  },
+  "ironclad_ref": "Final_Ear/data/ear-truth-filter.json",
+  "combinatorics_gate": "thermal_entropy_gate — defer heavy RNNoise when hot"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "field-shell-dock-doctrine/v2",
+  "title": "Field shell dock — Start · Files · Terminal · Queen Browser · Broadcaster",
+  "motto": "Start + four pins. Lock in Start menu. Sovereign tray.",
+  "g16": {
+    "profile": "field_opt",
+    "poll_ms_fast": 2500,
+    "handshake_every_n": 4
+  },
+  "dock_icons": [
+    {"id": "start", "label": "Start", "exec": "/field", "glyph": "start"},
+    {"id": "files", "label": "Files", "exec": "http://127.0.0.1:9481/world/queen-files.html", "glyph": "folder"},
+    {"id": "terminal", "label": "Terminal", "exec": "http://127.0.0.1:9481/world/?dock=terminal", "glyph": "terminal", "badge": false},
+    {"id": "browser", "label": "Queen Browser", "exec": "http://127.0.0.1:9481/world/browser.html", "glyph": "browser"},
+    {"id": "broadcaster", "label": "Broadcaster", "exec": "/field-broadcaster", "glyph": "broadcast", "live": true}
+  ],
+  "bookmarks_seed": [
+    {"id": "command", "title": "Command Center", "url": "/command"},
+    {"id": "broadcaster", "title": "Broadcaster", "url": "/field-broadcaster"},
+    {"id": "lock", "title": "Lock", "url": "/field-lock"},
+    {"id": "gpu", "title": "GPU Control", "url": "/field-gpu"},
+    {"id": "popcorn", "title": "Popcorn", "url": "/field-popcorn"},
+    {"id": "ammoos-update", "title": "Software Update Manager", "url": "/ammoos-update-os"}
+  ],
+  "time_formats": [
+    {"id": "long", "label": "Saturday, June 27, 03:35"},
+    {"id": "short", "label": "Jun 27 · 03:35"},
+    {"id": "iso", "label": "2026-06-27T03:35:00Z"},
+    {"id": "sovereign", "label": "Sovereign · ns precision"}
+  ],
+  "default_time_format": "short",
+  "poll_ms": 2500
+}

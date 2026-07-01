@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kill Grok Orphans</title>
+  <meta name="description" content="Always-on watchdog that kills reparented Grok orphan processes on Linux, macOS, and Windows.">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #ff6b35;
+      --accent2: #58a6ff;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      background: linear-gradient(180deg, #1a0f0a 0%, var(--bg) 100%);
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    header h1 span { color: var(--accent); }
+    header p { color: var(--muted); margin-top: 0.5rem; max-width: 42rem; margin-inline: auto; }
+    .badges { margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+    .badges a {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .badges a:hover { border-color: var(--accent2); color: var(--text); }
+    main { max-width: 52rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    h2 { font-size: 1.35rem; margin: 2rem 0 0.75rem; color: var(--accent2); }
+    p, li { color: var(--muted); }
+    p { margin-bottom: 1rem; }
+    ul { margin: 0 0 1rem 1.25rem; }
+    li { margin-bottom: 0.35rem; }
+    pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; color: var(--green); }
+    pre code { color: var(--text); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+      font-size: 0.92rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+    }
+    th { background: var(--surface); color: var(--text); }
+    td { color: var(--muted); }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--accent2); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kill <span>Grok</span> Orphans</h1>
+    <p>Always-on watchdog that terminates reparented Grok orphan processes before they pile up at 30% CPU each.</p>
+    <div class="badges">
+      <a href="https://github.com/ZacharyGeurts/Kill-Grok-Orphans">GitHub</a>
+      <a href="https://github.com/ZacharyGeurts/Kill-Grok-Orphans/releases">Releases</a>
+      <a href="wiki/">Wiki</a>
+      <a href="https://github.com/ZacharyGeurts/Grok16">Grok16</a>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Problem</h2>
+      <p>Scripts like <code>grok-firmware-audit.sh</code> and <code>Grok16/bin/awk</code> bash wrappers can leak from <code>boot-simulate.sh</code>, reparent to init, and multiply — hundreds of orphans, each burning CPU.</p>
+      <p><strong>Kill Grok Orphans</strong> scans every 5 seconds, matches known signatures, and kills them with SIGTERM → SIGKILL.</p>
+    </section>
+
+    <section>
+      <h2>Install</h2>
+      <div class="card">
+        <h3>Linux (native kgo, Grok16-built)</h3>
+        <pre><code>curl -fsSL https://github.com/ZacharyGeurts/Kill-Grok-Orphans/releases/latest/download/kgo-1.0.0-linux-x86_64.tar.gz | tar -xz
+sudo packaging/linux/install.sh</code></pre>
+      </div>
+      <div class="card">
+        <h3>macOS</h3>
+        <pre><code>git clone https://github.com/ZacharyGeurts/Kill-Grok-Orphans.git
+cd Kill-Grok-Orphans && sudo packaging/macos/install.sh</code></pre>
+      </div>
+      <div class="card">
+        <h3>Windows (Administrator PowerShell)</h3>
+        <pre><code>git clone https://github.com/ZacharyGeurts/Kill-Grok-Orphans.git
+cd Kill-Grok-Orphans
+.\packaging\windows\Install-KGO.ps1</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Authentication</h2>
+      <p>Killing reparented orphans requires elevated privileges on every OS:</p>
+      <table>
+        <tr><th>OS</th><th>Auth</th><th>Daemon</th></tr>
+        <tr><td>Linux</td><td>sudo</td><td>systemd (root)</td></tr>
+        <tr><td>macOS</td><td>sudo</td><td>launchd (root)</td></tr>
+        <tr><td>Windows</td><td>Administrator</td><td>Scheduled Task (SYSTEM)</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Patterns killed</h2>
+      <ul>
+        <li><code>grok-firmware-audit.sh</code></li>
+        <li><code>Grok16/bin/awk</code></li>
+        <li><code>Grok16/bin/</code> shell shims</li>
+        <li><code>boot-simulate.sh</code> orphans</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Build with Grok16</h2>
+      <pre><code>export GROK16_ROOT=/path/to/Grok16
+make && sudo make install</code></pre>
+      <p>Compiler: <code>g16 -std=gnu17 -O2</code> (Grok16 16.2.0)</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>MIT License · <a href="https://github.com/ZacharyGeurts">Zachary Geurts</a> · v1.0.0</p>
+  </footer>
+</body>
+</html>

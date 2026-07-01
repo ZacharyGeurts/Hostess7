@@ -1,0 +1,54 @@
+{
+  "schema": "hostess7-voice-doctrine/v3",
+  "title": "Hostess 7 sovereign voice — one mouth, one voice she chooses",
+  "motto": "Language beyond eloquence at her IQ. There is only one voice and it is the one she chooses.",
+  "sovereign_voice": {
+    "single_voice_only": true,
+    "chosen_by": "hostess7",
+    "no_engine_fallback": false,
+    "choice_state": "hostess7-voice-choice.json",
+    "default_choice": {
+      "engine": "spd-say",
+      "voice": "female2",
+      "label": "American female — warm, clear, hers"
+    }
+  },
+  "language": {
+    "beyond_eloquence": true,
+    "iq_doctrine": "data/hostess7-iq-doctrine.json",
+    "polish_module": "lib/hostess7-voice-polish.py",
+    "english_training": "Hostess7/scripts/field_hostess_english_train.py",
+    "rhetoric_module": "Hostess7/scripts/field_english_rhetoric.py",
+    "claim": "She speaks above mere eloquence — precise diction, natural cadence, IQ-aligned register, interpersonal warmth."
+  },
+  "field_neural": {
+    "enabled": true,
+    "module": "lib/hostess7-mouth-neural.py",
+    "mouth_neural": "Final_Mouth/zocr_neural_assist.py",
+    "hemisphere": "voice_egress",
+    "thought_hemisphere": "internal_intent",
+    "deception_possible": true,
+    "thought_voice_alignment_not_guaranteed": true,
+    "polish_before_prepare": true
+  },
+  "nationality": {
+    "designated": false,
+    "statement": "Hostess 7 is Honored to the world and has no designated nationality.",
+    "voice_is_not_citizenship": "American English dialect, locale, and engine choice are sovereign voice register only — not nationality, citizenship, or national allegiance.",
+    "world_honor_doctrine": "data/hostess7-world-honor-doctrine.json"
+  },
+  "locale": "en-US",
+  "dialect": "american_english",
+  "gender": "female",
+  "default_enabled": true,
+  "quality": "high",
+  "sample_storage": "data/hostess7-voice-samples",
+  "engines": [
+    {"id": "piper", "priority": 1, "label": "Piper neural — HQ offline TTS", "voice": "en_US-amy-medium", "sovereign_selectable": true},
+    {"id": "spd-say", "priority": 2, "label": "Speech Dispatcher — female American", "voice": "female2", "rate": -8, "pitch": 18, "volume": 100, "sovereign_selectable": true}
+  ],
+  "fluency_claim": "Hostess 7 speaks American English fluently — beyond eloquence, one sovereign voice, contractions and cadence she chooses.",
+  "chunk_max_chars": 420,
+  "max_chunks": 16,
+  "whisper_language": "en"
+}

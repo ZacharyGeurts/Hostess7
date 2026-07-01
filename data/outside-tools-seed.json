@@ -1,0 +1,197 @@
+{
+  "schema": "outside-tools-seed/v1",
+  "motto": "NEXUS is the firewall — operator-initiated egress only. ASM-fast probes, no shell deps, every session logged and lawful.",
+  "hardening": {
+    "engine_primary": "asm",
+    "engine_fallback": "socket",
+    "shell_deps": false,
+    "max_output_bytes": 4000,
+    "rate_limit_per_min": 20
+  },
+  "role": "egress_gate",
+  "legal_notice": "Use only on systems and networks you are authorized to access. NEXUS logs every session for operator accountability.",
+  "legal_framework": [
+    {
+      "citation": "18 U.S.C. § 1030(a)(2)(C)",
+      "title": "Computer Fraud and Abuse Act",
+      "requirement": "No exceeding authorized access to obtain information from protected computers.",
+      "nexus_application": "Outside tab requires explicit operator connect — no automated outbound scanning or credential stuffing."
+    },
+    {
+      "citation": "18 U.S.C. § 1030(a)(5)(A)",
+      "title": "Computer Fraud and Abuse Act",
+      "requirement": "Knowingly causing damage to protected computers.",
+      "nexus_application": "Harm-class ports (C2/shell relay ranges) blocked unless operator force-override with audit log."
+    },
+    {
+      "citation": "47 U.S.C. § 222",
+      "title": "Communications Act — CPNI",
+      "requirement": "Protect customer proprietary network information.",
+      "nexus_application": "Session transcripts stay on local field drive; no third-party relay of probe output."
+    },
+    {
+      "citation": "RFC 4253",
+      "title": "SSH Transport Layer Protocol",
+      "requirement": "Encrypted transport for remote shell and port forwarding.",
+      "nexus_application": "SSH probe uses BatchMode handshake only — no password automation; firewall permits ip:22 egress on operator action."
+    },
+    {
+      "citation": "RFC 8314",
+      "title": "Cleartext Considered Obsolete",
+      "requirement": "Use TLS for email submission and retrieval where available.",
+      "nexus_application": "SMTP/IMAP/POP3 tools default to TLS ports (587, 993, 995); cleartext flagged in UI."
+    },
+    {
+      "citation": "RFC 7230",
+      "title": "HTTP/1.1 Message Syntax",
+      "requirement": "Well-formed HTTP requests over TCP.",
+      "nexus_application": "HTTPS preferred; HTTP probe is HEAD-only with connect timeout — no payload injection."
+    }
+  ],
+  "tools": [
+    {
+      "id": "ssh",
+      "label": "SSH · Secure Shell",
+      "port": 22,
+      "proto": "tcp",
+      "secure": true,
+      "rfc": "RFC 4253",
+      "hint": "Encrypted remote shell. Provide username for handshake probe; use your terminal for interactive session after permit.",
+      "fields": ["host", "port", "username"],
+      "probe": "ssh",
+      "asm": "ssh"
+    },
+    {
+      "id": "telnet",
+      "label": "Telnet · Legacy terminal",
+      "port": 23,
+      "proto": "tcp",
+      "secure": false,
+      "rfc": "RFC 854",
+      "hint": "Cleartext — use only on trusted lab gear. Banner grab only; no credential send.",
+      "fields": ["host", "port"],
+      "probe": "banner",
+      "asm": "banner"
+    },
+    {
+      "id": "smtp",
+      "label": "SMTP · Mail submit",
+      "port": 587,
+      "proto": "tcp",
+      "secure": true,
+      "rfc": "RFC 5321",
+      "hint": "Submission with STARTTLS on 587. EHLO banner probe only.",
+      "fields": ["host", "port"],
+      "probe": "smtp_starttls",
+      "asm": "smtp"
+    },
+    {
+      "id": "smtp_plain",
+      "label": "SMTP · Cleartext (25)",
+      "port": 25,
+      "proto": "tcp",
+      "secure": false,
+      "rfc": "RFC 5321",
+      "hint": "Legacy MTA port — cleartext. Operator warning shown.",
+      "fields": ["host", "port"],
+      "probe": "smtp",
+      "asm": "smtp"
+    },
+    {
+      "id": "imap",
+      "label": "IMAP · TLS (993)",
+      "port": 993,
+      "proto": "tcp",
+      "secure": true,
+      "rfc": "RFC 3501",
+      "hint": "IMAPS — openssl handshake probe.",
+      "fields": ["host", "port"],
+      "probe": "tls",
+      "asm": "tls"
+    },
+    {
+      "id": "pop3",
+      "label": "POP3 · TLS (995)",
+      "port": 995,
+      "proto": "tcp",
+      "secure": true,
+      "rfc": "RFC 1939",
+      "hint": "POP3S — openssl handshake probe.",
+      "fields": ["host", "port"],
+      "probe": "tls",
+      "asm": "tls"
+    },
+    {
+      "id": "https",
+      "label": "HTTPS · Web",
+      "port": 443,
+      "proto": "tcp",
+      "secure": true,
+      "rfc": "RFC 8446",
+      "hint": "TLS web reachability — HEAD request only.",
+      "fields": ["host", "port", "path"],
+      "probe": "https",
+      "asm": "tls"
+    },
+    {
+      "id": "http",
+      "label": "HTTP · Web (cleartext)",
+      "port": 80,
+      "proto": "tcp",
+      "secure": false,
+      "rfc": "RFC 7230",
+      "hint": "Cleartext HTTP — HEAD only. Prefer HTTPS.",
+      "fields": ["host", "port", "path"],
+      "probe": "http",
+      "asm": "http"
+    },
+    {
+      "id": "dns",
+      "label": "DNS · UDP query",
+      "port": 53,
+      "proto": "udp",
+      "secure": false,
+      "rfc": "RFC 1035",
+      "hint": "External resolver probe — use Truth DNS on loopback for normal resolution.",
+      "fields": ["host", "port"],
+      "probe": "dns",
+      "asm": "dns"
+    },
+    {
+      "id": "ntp",
+      "label": "NTP · Time sync",
+      "port": 123,
+      "proto": "udp",
+      "secure": false,
+      "rfc": "RFC 5905",
+      "hint": "UDP reachability — ntpdate-style probe if available.",
+      "fields": ["host", "port"],
+      "probe": "udp",
+      "asm": "udp"
+    },
+    {
+      "id": "ftp",
+      "label": "FTP · File transfer",
+      "port": 21,
+      "proto": "tcp",
+      "secure": false,
+      "rfc": "RFC 959",
+      "hint": "Banner grab only — cleartext control channel.",
+      "fields": ["host", "port"],
+      "probe": "banner",
+      "asm": "banner"
+    },
+    {
+      "id": "custom",
+      "label": "Custom · TCP/UDP port",
+      "port": 0,
+      "proto": "tcp",
+      "secure": false,
+      "rfc": "Operator-defined",
+      "hint": "Specify host, port, and protocol. Harm-class ports require force override.",
+      "fields": ["host", "port", "proto"],
+      "probe": "tcp",
+      "asm": "tcp"
+    }
+  ]
+}

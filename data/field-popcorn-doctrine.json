@@ -1,0 +1,74 @@
+{
+  "schema": "field-popcorn-doctrine/v1",
+  "title": "Popcorn — Black Cadillac theatre player",
+  "motto": "Find everything. Play it. Pause it. Luxury in the dark.",
+  "palette": {
+    "base": "#050508",
+    "panel": "#0c0c12",
+    "velvet": "#12121a",
+    "green": "#3fb950",
+    "pink": "#f472b6",
+    "chrome": "#c8d0e0",
+    "dim": "#6e7681"
+  },
+  "policy": {
+    "scan_on_open": true,
+    "max_files": 4000,
+    "max_depth": 10,
+    "follow_symlinks": false,
+    "mobile_long_press_ms": 480,
+    "thumb_preview": true,
+    "smart_thumbnails": true,
+    "thumb_modes": ["viewing", "custom"],
+    "resume_position": true,
+    "library_thumb_min_px": 280,
+    "vr_enabled": true,
+    "pinch_zoom": true,
+    "tilt_rotation": true
+  },
+  "codec_doctrine": "field-media-codec-doctrine.json",
+  "scan_roots": [
+    "~/Videos",
+    "~/Movies",
+    "~/Music",
+    "~/Pictures",
+    "~/Downloads",
+    "~/Desktop",
+    "~/Desktop/SG"
+  ],
+  "extensions": {
+    "video": [
+      "mp4", "mkv", "avi", "mov", "webm", "ogv", "flv", "wmv", "m4v",
+      "mpg", "mpeg", "ts", "m2ts", "vob", "3gp", "divx", "f4v", "nut"
+    ],
+    "audio": [
+      "mp3", "flac", "wav", "ogg", "opus", "m4a", "aac", "wma", "aiff", "aif",
+      "mod", "xm", "s3m", "it", "med", "mid", "midi", "ape", "wv", "oga"
+    ],
+    "image": [
+      "jpg", "jpeg", "png", "gif", "webp", "bmp", "tga", "pcx", "tif", "tiff",
+      "svg", "ico", "avif", "heic", "heif", "xcf", "psd", "ppm", "pgm", "pbm"
+    ]
+  },
+  "inspector": "field-media-inspector-doctrine.json",
+  "ellie_fier": "field-ellie-fier-doctrine.json",
+  "generation_sources": [
+    "grok", "openai", "midjourney", "stable_diffusion", "adobe_firefly",
+    "google_imagen", "runway", "leonardo", "camera", "unknown"
+  ],
+  "routes": {
+    "panel": "/field-popcorn",
+    "api": "/api/field-popcorn",
+    "stream": "/api/field-popcorn/stream",
+    "inspect": "/api/field-popcorn/inspect",
+    "details": "/api/field-popcorn/details",
+    "ellie_fier": "/api/field-ellie-fier"
+  },
+  "controls": {
+    "space": "play_pause",
+    "double_click": "zoom_toggle",
+    "long_press": "mobile_menu",
+    "right_click_bar": "seek_context",
+    "arrows": "seek_step"
+  }
+}

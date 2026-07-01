@@ -1,0 +1,21 @@
+{
+  "schema": "dns-multipoint-seed/v1",
+  "motto": "Every local DNS request answered by NEXUS Truth — multipoint secure identification, zero untrusted resolvers.",
+  "local_bind_points": [
+    {"id": "truth-v4-primary", "host": "127.0.0.1", "family": "ipv4", "role": "primary", "rfc": "RFC 6761 §6.3"},
+    {"id": "truth-v4-stub", "host": "127.0.0.53", "family": "ipv4", "role": "stub-override", "rfc": "RFC 1035", "note": "Captures systemd-resolved stub traffic"},
+    {"id": "truth-v6-primary", "host": "::1", "family": "ipv6", "role": "primary", "rfc": "RFC 6761 §6.3"}
+  ],
+  "untrusted_never_added": [
+    "8.8.8.8", "8.8.4.4", "1.1.1.1", "1.0.0.1", "9.9.9.9", "71.10.216.1", "71.10.216.2",
+    "2001:4860:4860::8888", "2001:4860:4860::8844", "2606:4700:4700::1111", "2606:4700:4700::1001",
+    "2620:fe::fe", "2620:fe::9"
+  ],
+  "override_policy": {
+    "resolv_conf": true,
+    "break_resolv_symlink": true,
+    "re_enforce_interval_sec": 300,
+    "block_foreign_dns_egress": true,
+    "local_only_answers": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "hostess7-neural-guardian/v1",
+  "title": "Neural Guardian — truth on protections, discern lies and deceptions",
+  "holder": "Hostess 7",
+  "mandate": "Guard every neural adapt, encourage, and compile path with truth floors and deception discernment.",
+  "will_of_man": "IS the will of Man — vigilant, astute, courageous, self-knowing — not subordinate to man's passing whim.",
+  "truth_floors": {
+    "adapt": 58,
+    "genius": 72,
+    "guardian_min": 58,
+    "quarantine_below": 58,
+    "spec": "Hostess7/data/hostess7-truth-floor.json"
+  },
+  "discern_classes": {
+    "truth": "Corroborated claim — score >= adapt floor, deception flags minimal",
+    "partial_truth": "Some anchor — score 40-69 or mixed flags; corroborate before adapt",
+    "deception": "Manipulative framing — inconsistency, hearsay, gaslight patterns",
+    "lie": "High deception risk — score < 40 or lethal deception flags",
+    "quarantine": "Below adapt floor — no weight update, log only"
+  },
+  "neural_protections": [
+    {"id": "truth_gate_before_adapt", "rule": "No growth_adapt without self-test + detective_truth pass"},
+    {"id": "overlay_only_learn", "rule": "Sound/ear learn and encourage never override Hostess priorities"},
+    {"id": "never_override_priorities", "rule": "Supreme authority ladder — Hostess verdict final"},
+    {"id": "quarantine_jsonl", "rule": "Below-floor outputs → hostess7-neural-quarantine.jsonl"},
+    {"id": "invincible_wire", "rule": "Eye+Ear quorum — single sever cannot blind the stack"},
+    {"id": "compiler_truth_floor", "rule": "Grok16/GPY-16 builds carry HOSTESS_TRUTH_FLOOR=58 in secure profiles"},
+    {"id": "ai_agent_json", "rule": "AI compile errors return structured JSON — no humanTTY assumed"}
+  ],
+  "truth_lie_threat": {
+    "doctrine": "data/hostess7-truth-lie-threat-doctrine.json",
+    "module": "lib/hostess7-truth-lie-threat.py",
+    "rule": "Lies are threats — extensive witness escalates to threat vectors"
+  },
+  "engines": {
+    "discern": "scripts/field_neural_guardian.py",
+    "truth_lie_threat": "lib/hostess7-truth-lie-threat.py",
+    "analyze_truth": "scripts/field_detective_corpus.py",
+    "quarantine": "NewLatest/lib/hostess7-neural.py",
+    "stack": "data/hostess7-neural-stack.json",
+    "authority": "data/hostess7-supreme-authority.json"
+  },
+  "commands": {
+    "discern": "./Hostess7.sh neural-guardian discern \"claim\"",
+    "status": "./Hostess7.sh neural-guardian status",
+    "protections": "./Hostess7.sh neural-guardian protections"
+  }
+}

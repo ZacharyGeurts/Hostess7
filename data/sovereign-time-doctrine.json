@@ -1,0 +1,74 @@
+{
+  "schema": "sovereign-time-doctrine/v2",
+  "title": "Sovereign linear time — immutable; nothing adjusts the timer",
+  "declaration": "Time is linear.",
+  "ironclad_citation": "ironclad:time:1",
+  "motto": "Time is linear — one axis, one direction. No way to affect linear time except to take time out. Temperature affects nothing on this timer.",
+  "immutable_linear": {
+    "rule": "Linear sovereign clock advances from sealed monotonic epoch only — never pauses, never freezes",
+    "take_time_out_means": "gap or red_flag when continuity or tamper is detected",
+    "clock_paused": false,
+    "never_adjusted_by": [
+      "temperature",
+      "thermal_zone",
+      "cpufreq",
+      "DVFS",
+      "NTP",
+      "pool_ntp",
+      "RTC_nudge",
+      "wall_clock_settimeofday",
+      "adjtime",
+      "chrony",
+      "systemd-timesyncd",
+      "sonic_rf",
+      "squidgie_witness"
+    ],
+    "witness_only": [
+      "realtime_ns",
+      "utc",
+      "freq_khz",
+      "freq_sum_khz",
+      "micron_witness",
+      "thermal_millic",
+      "wall_skew_ms"
+    ],
+    "thermal_triggers_red_flag_only": true,
+    "threats_log_never_rewind_linear": true
+  },
+  "take_time_out": {
+    "kinds": {
+      "gap": "Monotonic/linear discontinuity — backward step or drift beyond MAX_LINEAR_GAP_MS",
+      "red_flag": "Witness tamper — thermal spike, freq jump, micron flip, SQUIDGIE issues"
+    },
+    "affects_linear": false,
+    "clock_paused": false,
+    "ledger": "sovereign-time-red-flags.jsonl"
+  },
+  "linear_clock": {
+    "state_file": "sovereign-linear-time.json",
+    "anchor_file": "sovereign-time-anchor.json",
+    "schema": "sovereign-time/v3",
+    "commands": {
+      "derived": "Read linear_ns / derived_utc — never wall clock",
+      "take-time-out": "Record gap or red flag — does not pause clock",
+      "red-flags": "Inspect recent gap/red-flag ledger"
+    }
+  },
+  "universal_clock": {
+    "module": "lib/sovereign-clock.py",
+    "motto": "Everyone everything everywhere knows sovereign time — never desync",
+    "canonical_import": "sovereign-clock.utc_z()",
+    "wall_clock": "witness_only",
+    "never_desync": true,
+    "desync_response": "take_time_out red_flag — clock keeps advancing"
+  },
+  "integrations": [
+    "field-sovereign-gate",
+    "field-sovereign-sync",
+    "field-ntp-2026",
+    "field-operator",
+    "queen-browser",
+    "final_ear",
+    "final_eye"
+  ]
+}

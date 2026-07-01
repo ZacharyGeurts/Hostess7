@@ -1,0 +1,48 @@
+{
+  "schema": "field-timeshift-doctrine/v1",
+  "title": "Field drive — sovereign index, TimeShift, soft archival",
+  "motto": "Every file has a place in time. We index once, know exactly now, and step back without heat.",
+  "indexer": {
+    "algorithm": "flat_sorted_path_index",
+    "acceleration": "256_bucket_basename_prefix",
+    "lookup": "binary_search_lower_bound",
+    "prefetch": "single_pass_scan_then_sort",
+    "module": "lib/field-drive-indexer.py"
+  },
+  "sovereign_time": {
+    "authoritative": "sovereign-clock linear ns",
+    "history": "field-drive-index/history.jsonl",
+    "per_file": ["indexed_at_ns", "mtime_ns", "sovereign_ns"]
+  },
+  "timeshift": {
+    "module": "lib/field-timeshift.py",
+    "checkpoints_dir": "field-timeshift/checkpoints",
+    "rollback": "non_destructive_restore",
+    "host_bridge": "timeshift-gtk optional — field receipts remain audit spine"
+  },
+  "soft_delete": {
+    "policy": "archival_retreat",
+    "never_unlink": true,
+    "vault": "field-soft-vault",
+    "tombstone": "field-soft-vault/tombstones.jsonl",
+    "eaten_ledger": "field-soft-vault/eaten.jsonl",
+    "statement": "Hard delete produces heat from another's work. We vault, timestamp, and leave lineage intact."
+  },
+  "valuable_values": {
+    "schema": "field-valuable-values/v1",
+    "module": "lib/field-soft-value.py",
+    "settings": "data/field-valuable-values.json",
+    "overrides": "field-valuable-values.override.json",
+    "reclaim_order": "lowest_value_first_then_oldest",
+    "polite": true,
+    "statement": "Settable per file type. Under disk pressure, eat less valuable soft vault bytes first — smoothly, with eaten ledger."
+  },
+  "filesystem_update": {
+    "module": "lib/field-filesystem-update.py",
+    "doctrine": "data/field-filesystem-doctrine.json",
+    "destroy_order": ["listed", "bin"],
+    "destroyed_field": "destroyed",
+    "catalog_only_after_destroy": true,
+    "statement": "Warn as disk fills. Listed deletes overwrite before bin. Catalog keeps destroyed date when bytes are gone."
+  }
+}

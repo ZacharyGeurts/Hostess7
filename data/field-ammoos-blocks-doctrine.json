@@ -1,0 +1,219 @@
+{
+  "schema": "field-ammoos-blocks-doctrine/v1",
+  "title": "AmmoOS block — nested CHIPs, codecs, and field surfaces",
+  "motto": "One sovereign AmmoOS stack holds every child block; thermal gate before publish.",
+  "module": "lib/field-ammoos-blocks.py",
+  "panel": "field-ammoos-blocks-panel.json",
+  "product": "AmmoOS",
+  "thermal": {
+    "min_headroom_pct_full": 20,
+    "min_headroom_pct_light": 15,
+    "blocked_levels": ["crit", "storm"],
+    "never_build_under_heat": true,
+    "defer_on_heat": true,
+    "cache_last_good": true
+  },
+  "block_tiers": {
+    "child": {"label": "AmmoOS child surface block"},
+    "family": {"label": "Grouped child blocks (CHIPs family, codecs family)"},
+    "stack": {"label": "AmmoOS root — holds all children"}
+  },
+  "children": [
+    {
+      "id": "chips",
+      "label": "CHIPS",
+      "family": "compute",
+      "tier": "child",
+      "thermal_ops": 8,
+      "kernels": ["ironclad:chips:core", "combinatorics", "die", "emulator"],
+      "module": "lib/field-chips-core.py",
+      "doctrine": "data/field-chips-core-doctrine.json",
+      "panel_state": "field-chips-core-panel.json",
+      "battery_state": "field-chips-core.json",
+      "api": "/api/chips/core",
+      "surface": "/world/queen-chips-cores.html"
+    },
+    {
+      "id": "chips_plate_stack",
+      "label": "CHIPS plate stack",
+      "family": "compute",
+      "tier": "child",
+      "thermal_ops": 4,
+      "kernels": ["plate_stack", "ironclad_chips"],
+      "module": "lib/field-chips-plate-stack.py",
+      "panel_state": "field-chips-plate-stack-panel.json",
+      "battery_state": "field-chips-plate-stack.json"
+    },
+    {
+      "id": "codecs",
+      "label": "Video codecs",
+      "family": "media",
+      "tier": "child",
+      "thermal_ops": 10,
+      "kernels": ["ironclad:video-codec:1", "straight_pipe", "combinatorics", "vcodec"],
+      "module": "lib/field-video-codec-battery.py",
+      "pipe_module": "lib/field-video-codec-pipe.py",
+      "doctrine": "data/field-video-codec-battery-doctrine.json",
+      "panel_state": "field-video-codec-battery-panel.json",
+      "battery_state": "field-video-codec-battery.json",
+      "api": "/api/video-codec/battery"
+    },
+    {
+      "id": "thermal_manager",
+      "label": "Thermal Manager",
+      "family": "safety",
+      "tier": "child",
+      "thermal_ops": 4,
+      "kernels": ["field_thermal_guard", "thermal_governor", "landauer", "final_eye_ocr"],
+      "module": "lib/field-thermal-manager-block.py",
+      "doctrine": "data/field-thermal-manager-block-doctrine.json",
+      "panel_state": "field-thermal-manager-block-panel.json",
+      "battery_state": "field-thermal-manager-block.json",
+      "api": "/api/field-thermal-manager-block",
+      "surface": "/world/queen-thermal-manager.html"
+    },
+    {
+      "id": "rtx_canvas",
+      "label": "RTX CANVAS renderer",
+      "family": "hardware",
+      "tier": "child",
+      "thermal_ops": 6,
+      "kernels": ["field_gpu_dispatch", "canvas_comp", "field_surface", "field_thermal_guard"],
+      "module": "lib/field-rtx-canvas-block.py",
+      "doctrine": "data/field-rtx-canvas-block-doctrine.json",
+      "panel_state": "field-rtx-canvas-block-panel.json",
+      "battery_state": "field-rtx-canvas-block.json",
+      "api": "/api/field-rtx-canvas-block",
+      "technology": "AMOURANTHRTX",
+      "is_gui": false
+    },
+    {
+      "id": "display",
+      "label": "Display settings",
+      "family": "shell",
+      "tier": "child",
+      "thermal_ops": 4,
+      "kernels": ["screenspace", "resolution_ladder", "submicron", "16k"],
+      "module": "lib/field-display-settings.py",
+      "doctrine": "data/field-display-settings-doctrine.json",
+      "panel_state": "field-display-settings-panel.json",
+      "api": "/api/field-display-settings",
+      "surface": "/field-display-settings"
+    },
+    {
+      "id": "audio",
+      "label": "Queen audio",
+      "family": "sense",
+      "tier": "child",
+      "thermal_ops": 5,
+      "kernels": ["pipewire", "secure_bind", "hardware_audio"],
+      "module": "lib/field-audio-settings.py",
+      "panel_state": "field-audio-settings-panel.json",
+      "api": "/api/field-audio-settings",
+      "surface": "/field-audio-settings"
+    },
+    {
+      "id": "final_ear",
+      "label": "Final Ear",
+      "family": "sense",
+      "tier": "child",
+      "thermal_ops": 5,
+      "kernels": ["queen_earball", "final_ear", "hostess7_bridge", "final_eye_ocr"],
+      "module": "lib/field-final-ear-block.py",
+      "doctrine": "data/field-final-ear-block-doctrine.json",
+      "panel_state": "field-final-ear-block-panel.json",
+      "battery_state": "field-final-ear-block.json",
+      "api": "/api/field-final-ear-block",
+      "surface": "/world/queen-final-ear-manager.html"
+    },
+    {
+      "id": "final_mouth",
+      "label": "Final Mouth",
+      "family": "sense",
+      "tier": "child",
+      "thermal_ops": 5,
+      "kernels": ["queen_mouthball", "final_mouth", "gvc1", "final_eye_ocr"],
+      "module": "lib/field-final-mouth-block.py",
+      "doctrine": "data/field-final-mouth-block-doctrine.json",
+      "panel_state": "field-final-mouth-block-panel.json",
+      "battery_state": "field-final-mouth-block.json",
+      "api": "/api/field-final-mouth-block",
+      "surface": "/world/queen-final-mouth-manager.html"
+    },
+    {
+      "id": "shell_dock",
+      "label": "Shell dock",
+      "family": "shell",
+      "tier": "child",
+      "thermal_ops": 3,
+      "kernels": ["taskbar", "startbar", "dock"],
+      "module": "lib/field-shell-dock.py",
+      "panel_state": "field-shell-dock-panel.json",
+      "api": "/api/field-shell-dock"
+    },
+    {
+      "id": "host_desktop",
+      "label": "C2 host desktop",
+      "family": "shell",
+      "tier": "child",
+      "thermal_ops": 6,
+      "kernels": ["nexus_c2", "start_menu", "field_apps"],
+      "module": "lib/field-host-desktop.py",
+      "panel_state": "field-host-desktop.json",
+      "api": "/api/field-host-desktop"
+    },
+    {
+      "id": "thermal_guard",
+      "label": "Thermal guard",
+      "family": "safety",
+      "tier": "child",
+      "thermal_ops": 2,
+      "kernels": ["landauer", "headroom", "incremental_redata"],
+      "module": "lib/field-thermal-guard.py",
+      "doctrine": "data/field-thermal-guard-doctrine.json",
+      "panel_state": "field-thermal-guard.json",
+      "api": "/api/field-thermal-guard"
+    },
+    {
+      "id": "gpu",
+      "label": "GPU control",
+      "family": "hardware",
+      "tier": "child",
+      "thermal_ops": 4,
+      "kernels": ["voodoo2", "color_wheel", "thermal"],
+      "module": "lib/field-gpu-control.py",
+      "panel_state": "field-gpu-control-panel.json",
+      "surface": "/field-gpu"
+    },
+    {
+      "id": "popcorn",
+      "label": "Popcorn media",
+      "family": "media",
+      "tier": "child",
+      "thermal_ops": 5,
+      "kernels": ["library", "stream", "gvc1"],
+      "module": "lib/field-popcorn.py",
+      "panel_state": "field-popcorn-panel.json",
+      "surface": "/field-popcorn"
+    }
+  ],
+  "families": [
+    {"id": "compute", "label": "CHIPS & combinatorics", "children": ["chips", "chips_plate_stack"]},
+    {"id": "media", "label": "Codecs & playback", "children": ["codecs", "popcorn"]},
+    {"id": "shell", "label": "Desktop & display", "children": ["display", "shell_dock", "host_desktop"]},
+    {"id": "sense", "label": "Audio & I/O", "children": ["audio", "final_ear", "final_mouth"]},
+    {"id": "hardware", "label": "Hardware control", "children": ["gpu", "rtx_canvas"]},
+    {"id": "safety", "label": "Thermal & guard", "children": ["thermal_guard", "thermal_manager"]}
+  ],
+  "stack": {
+    "id": "ammoos",
+    "label": "AmmoOS root block",
+    "min_children": 3,
+    "min_held": 2,
+    "min_total_bytes": 8000
+  },
+  "api": {
+    "status": "/api/field-ammoos-blocks",
+    "publish": "/api/field-ammoos-blocks/publish"
+  }
+}

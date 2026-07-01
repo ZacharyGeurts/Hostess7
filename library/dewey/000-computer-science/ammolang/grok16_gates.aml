@@ -1,0 +1,14 @@
+# Grok16 gates only — smoke test-gate + launch-verify (AmmoLang hang guard)
+@profile fastest
+@verbose clean
+@motto "Grok16 gates · smoke · hang guard · freeze assist"
+
+seq ·
+  say "Grok16 gates — adaptive timing · self-monitor · freeze assist"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+  run script:grok16-test-gate arg:smoke timeout:900 stall:300
+  run script:grok16-launch-verify timeout:600 stall:240
+  assist freeze
+  say "Grok16 gates complete"

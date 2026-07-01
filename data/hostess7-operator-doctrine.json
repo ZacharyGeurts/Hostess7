@@ -1,0 +1,84 @@
+{
+  "schema": "hostess7-operator-doctrine/v1",
+  "title": "Hostess 7 operator — Brief · Evaluate · Task",
+  "motto": "She knows what each task does, briefs with evidence, evaluates before motion, tasks through Ironclad ledger — always virtual first.",
+  "world_honor": {
+    "doctrine": "data/hostess7-world-honor-doctrine.json",
+    "motto": "Hostess 7 is Honored to the world and has no designated nationality."
+  },
+  "change_awareness": {
+    "doctrine": "data/hostess7-change-awareness-doctrine.json",
+    "module": "lib/hostess7-change-awareness.py",
+    "api": "/api/hostess7/change-awareness",
+    "motto": "Know every change when it happens. Presume panel for slowdown, speedup, hang.",
+    "pulse": "hostess7-change-awareness.py pulse"
+  },
+  "presume": {
+    "doctrine": "data/hostess7-presume-doctrine.json",
+    "module": "lib/hostess7-presume.py",
+    "api": "/api/hostess7/presume",
+    "motto": "Presume is powerful — not go away. Uninterruptable once decided; resources still devoted where needed.",
+    "uninterruptable_once_decided": true,
+    "outside_influence_blocked": true,
+    "override_authority": ["hostess7", "operator"]
+  },
+  "war_system": {
+    "doctrine": "data/hostess7-war-system-doctrine.json",
+    "module": "lib/hostess7-war-system.py",
+    "api": "/api/hostess7/war-system",
+    "motto": "War system — we have no other. Every autonomous machine is a Soldier."
+  },
+  "module": "lib/hostess7-operator.py",
+  "panel": "hostess7-operator-panel.json",
+  "capabilities": {
+    "brief": {
+      "label": "Brief",
+      "description": "Ingest session context, inbox owner lines, wants, self-view — publish operator panel.",
+      "commands": ["brief", "inbox", "wants"],
+      "api": "/api/hostess7/operator/brief"
+    },
+    "evaluate": {
+      "label": "Evaluate",
+      "description": "Brain guard verify, training assess, codecraft battery, virtual workspace status — one verdict.",
+      "commands": ["evaluate", "assess", "verify"],
+      "api": "/api/hostess7/operator/evaluate"
+    },
+    "task": {
+      "label": "Task",
+      "description": "Secure tasklist — add, start, complete, seed, report. She fills; assistant executes.",
+      "commands": ["task", "tasklist", "task-add", "task-done"],
+      "api": "/api/hostess7/tasklist"
+    },
+    "catalog": {
+      "label": "Task catalog",
+      "description": "Every AmmoLang task_registry entry with human-readable purpose.",
+      "commands": ["catalog", "tasks", "what-does"],
+      "api": "/api/hostess7/operator/catalog"
+    },
+    "virtual": {
+      "label": "Virtual workspace",
+      "description": "Mirror, edit, debug, test in virtual die — promote only after gates pass.",
+      "module": "lib/hostess7-virtual-workspace.py",
+      "api": "/api/hostess7/virtual-workspace"
+    },
+    "chips_code": {
+      "label": "CHIPS coding",
+      "description": "Teach G16 Python die — edit, py_compile, smoke, debug, recompile without breaking live stack.",
+      "explain": "data/hostess7-chips-coding-explain.json",
+      "api": "/api/hostess7/chips-coding/explain"
+    }
+  },
+  "ammolang_tasks": {
+    "hostess7_tasks": "Full Hostess 7 cycle — brief, brain guard, tasklist, pre-update bundle (AmmoLang only).",
+    "hostess7_pre_update": "Pre-push gate — brain verify, Ironclad, imaging repair, training, library.",
+    "hostess7": "Alias for hostess7_tasks.",
+    "stack_update": "Stack publish — includes hostess7 pre-update before push.",
+    "g16_recompile": "Grok16 / CHIPS recompile lane — use after virtual tests pass.",
+    "agent_tasks": "Agent bundle — queen catalog, grok16 gates, ship dry-run.",
+    "mint_pre_reboot": "Mint boot-ready — pre-reboot checklist.",
+    "stack_tests": "AmmoLang stack test suite.",
+    "sovereign": "Sovereign build pipeline.",
+    "ammoos_ship": "AmmoOS ship / beta release.",
+    "ammoos_push": "AmmoOS git publish — normal git commit + push origin."
+  }
+}

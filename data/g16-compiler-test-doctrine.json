@@ -1,0 +1,39 @@
+{
+  "schema": "g16-compiler-test-doctrine/v1",
+  "title": "G16 compiler test harness — halt, issues, CHIPs compatibility",
+  "module": "lib/g16-compiler-test-harness.py",
+  "motto": "Every language — compile + interp — halt on critical, issue ledger, CHIPs field_opt gate",
+  "halt_on": ["security_block", "g16_missing", "chips_gate_fail"],
+  "issue_severity": {
+    "halt": ["security_block", "g16_missing", "chips_gate_fail"],
+    "critical": ["compile_fail", "interp_fail", "run_fail"],
+    "warn": ["missing_exploring_book", "missing_sample", "slow_compile", "missing_explaining_book"],
+    "info": ["gate_only", "skipped"]
+  },
+  "chips": {
+    "manifest": "Queen/data/chips-g16-manifest.json",
+    "profile": "field_opt",
+    "health_state": ".nexus-state/g16-chips-lang-health.json",
+    "ironclad_facet": "g16_lang_health",
+    "compatible_runners": ["native_bsp", "emulator", "python"]
+  },
+  "books": {
+    "explaining_shelf": "library/dewey/000-computer-science/explaining_{lang}",
+    "exploring_shelf": "library/dewey/000-computer-science/exploring_{lang}",
+    "generator": "lib/field-combinatronic-visuals.py"
+  },
+  "slow_compile_ms": 30000,
+  "gate_only_langs": [
+    "shell", "plaintext", "sql", "verilog", "linux", "economics",
+    "html", "css", "json", "yaml", "markdown", "toml", "xml",
+    "dockerfile", "makefile", "cmake", "glsl", "graphql", "ini",
+    "log", "diff", "scss", "powershell", "vbscript", "cobol_copy",
+    "wat", "wasm"
+  ],
+  "compiler_drivers": [
+    "g16-cc", "g16-cxx", "g16-as", "g16-gfortran", "g16-rust", "g16-go", "g16-zig",
+    "g16-gdc", "g16-gnat", "g16-objc", "g16-qbasic", "g16-fpc", "g16-aml"
+  ],
+  "interp_required_drivers": ["g16-interp", "gpy-16"],
+  "interp_only_langs": ["ammolang", "field"]
+}

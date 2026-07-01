@@ -1,0 +1,58 @@
+{
+  "schema": "hostess7-book-maker/v1",
+  "title": "Hostess 7 Book Maker — author studio",
+  "motto": "Every book indexed — author, written date, timestamps on titles, full information index per volume.",
+  "module": "lib/hostess7-book-maker.py",
+  "panel": "panel/hostess7-book-maker.html",
+  "panel_route": "/hostess7-book-maker.html",
+  "authors": {
+    "hostess7": {
+      "id": "hostess7",
+      "display": "Hostess 7",
+      "role": "Field intelligence · self-author",
+      "default_co_author": "Grok (xAI)"
+    },
+    "grok": {
+      "id": "grok",
+      "display": "Grok",
+      "role": "xAI author · compiler lineage",
+      "default_co_author": "Hostess 7"
+    },
+    "operator": {
+      "id": "operator",
+      "display": "ZacharyGeurts",
+      "role": "Operator · owner"
+    }
+  },
+  "index_module": "lib/field-book-information-index.py",
+  "index_file": "book-information-index.json",
+  "title_timestamp_format": "{title} · {written_at}",
+  "required_metadata": [
+    "title",
+    "author",
+    "written_date",
+    "written_at",
+    "dewey",
+    "shelf",
+    "format",
+    "ein",
+    "owner"
+  ],
+  "outputs_per_book": [
+    "book.json",
+    "book-manifest.json",
+    "book-information-index.json",
+    "{book_id}.h7c"
+  ],
+  "api": [
+    "/api/hostess7/book-maker",
+    "/api/hostess7/book-maker/authors",
+    "/api/hostess7/book-maker/pack",
+    "/api/hostess7/book-maker/index"
+  ],
+  "integrations": {
+    "dewey_index": "lib/field-dewey-index.py",
+    "library_bridge": "lib/h7-library-bridge.py",
+    "exploring_self": "lib/field-exploring-hostess7.py"
+  }
+}

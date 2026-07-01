@@ -1,0 +1,34 @@
+{
+  "schema": "field-ammolang-agent-doctrine/v1",
+  "title": "Agent entry — AmmoLang universal boundary",
+  "motto": "Everything runs through AmmoLang — script, compiler, Python, Hostess 7, unknown. Presume · hang guard · freeze assist.",
+  "policy": {
+    "entry_only": "lib/ammolang-run.sh",
+    "wrapper": "scripts/aml.sh",
+    "boundary": "lib/field-ammolang-boundary.py",
+    "universal_aml": "universal_boundary",
+    "progress_sec": 60,
+    "progress_panel": ".nexus-state/ammolang-release-progress.json",
+    "build_log": ".nexus-state/field-ammolang-build.log",
+    "never_bypass": "Do not invoke scripts, compilers, or python directly — route via ammolang-run.sh. AML_BUILD=0 only for emergencies.",
+    "newlatest": "Run ./lib/ammolang-run.sh ensure_protection after adding scripts. All .sh in NewLatest get boundary shims."
+  },
+  "default_env": {
+    "AML_BUILD": "1",
+    "AML_PROGRESS": "1",
+    "AML_PROGRESS_MIN": "60",
+    "AML_GITHUB_TRANSPORT": "mcp_secure"
+  },
+  "watch": [
+    "tail -f .nexus-state/field-ammolang-build.log",
+    "watch -n30 cat .nexus-state/ammolang-release-progress.json"
+  ],
+  "tasks": {
+    "ship": "ammoos_ship",
+    "beta3": "ammoos_ship",
+    "release": "ammoos_push",
+    "agent": "agent_tasks",
+    "github": "github_mcp",
+    "gates": "grok16_gates"
+  }
+}

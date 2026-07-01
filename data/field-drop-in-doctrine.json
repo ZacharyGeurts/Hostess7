@@ -1,0 +1,38 @@
+{
+  "schema": "field-drop-in-doctrine/v1",
+  "title": "Forceful drop-in — defield · redata · secure wire · F9 browser",
+  "motto": "Drop in hard. No secondary fields. Redata clean. Own protocols with legacy ears open. F9 is Queen.",
+  "phases": ["force_drop_in", "defield_gate", "redata", "secure_network", "ready"],
+  "policy": {
+    "forceful_drop_in": true,
+    "defield_required": true,
+    "redata_incremental": true,
+    "secure_network_before_browser": true,
+    "hotkey": "F9",
+    "hotkey_pre_defield": "tristate_installer",
+    "hotkey_post_secure": "queen_sovereign_browser",
+    "peer_devices": true,
+    "display_open": true
+  },
+  "protocols": {
+    "managed": ["field_net", "znetwork_shadow", "sovereign_sync"],
+    "legacy_compat": ["http", "https", "dns", "tcp", "tls", "websocket"]
+  },
+  "redata": {
+    "module": "field-drive-converter.py",
+    "tech": "WRDT1/WRZC1",
+    "requires_defield": true
+  },
+  "browser": {
+    "engine": "queen-browser",
+    "shell": "/world/browser.html",
+    "port": 9481,
+    "panel_port": 9477,
+    "start_surface": "/field",
+    "command_surface": "/command",
+    "os_inside": true,
+    "self_contained": true,
+    "underlay_drop_rise": true,
+    "no_os_wm_hooks": true
+  }
+}

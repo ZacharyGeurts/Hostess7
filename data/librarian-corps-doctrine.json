@@ -1,0 +1,53 @@
+{
+  "schema": "librarian-corps-doctrine/v1",
+  "title": "How NEXUS catalogs and dispenses",
+  "lessons": [
+    {
+      "id": "dewey_classify",
+      "summary": "Classify every upload with Dewey Decimal — subject map, keyword rules, then shelf folder textbooks/dewey/{class}/.",
+      "steps": ["read title/subject/text sample", "match dewey-decimal-map subjects or keyword_rules", "write H7 pack with dewey + dewey_label meta", "touch fingerprint for micro-sig sync"]
+    },
+    {
+      "id": "catalog_build",
+      "summary": "Build catalog from field drive — scan H7, enrich bibliography, Dewey shelves, war ascertain, atlas passages.",
+      "steps": ["fingerprint unchanged → serve snapshot", "else scan books + build bibliography.jsonl", "dewey_shelves + war_shelves", "save catalog_snapshot.json"]
+    },
+    {
+      "id": "dispense_page",
+      "summary": "Dispense reading — paginate source text at PAGE_CHARS, route to librarian by Dewey range.",
+      "steps": ["resolve book on field drive", "load source text", "paginate", "record dispense lesson for owning librarian"]
+    },
+    {
+      "id": "nexus_file_catalog",
+      "summary": "NEXUS install tree catalog — every release file hashed with role + description for incremental updates.",
+      "steps": ["walk install tree with pack-release exclusions", "sha256 + role prefix + docstring description", "write data/nexus-file-catalog.json", "diff for incremental apply"]
+    },
+    {
+      "id": "upload_pack",
+      "summary": "Upload plain text → pack H7 → Dewey folder — panel POST /api/library/upload.",
+      "steps": ["validate title + text", "classify dewey", "write_h7 to dewey dir", "touch_book + librarian learn"]
+    },
+    {
+      "id": "book_knowledge",
+      "summary": "Every librarian knows every book — title, author, Dewey, description synced to book-knowledge.json.",
+      "steps": ["catalog build harvests all books", "sync_book_knowledge per book", "librarians learn book_knowledge event", "GET /api/library/knowledge"]
+    },
+    {
+      "id": "issue_reader",
+      "summary": "Librarian issues secure full-page reader — local session token, bookmarks, layout, progress restore.",
+      "steps": ["POST /api/library/reader/issue", "H7Reader.openSecure with session", "bookmarks + themes + line height", "progress saved on page change"]
+    },
+    {
+      "id": "lie_librarian",
+      "summary": "Lie Librarian — Ironclad Deception Index. Foundation for Autonomous Warfare: every LIKELY_FALSE claim per book, operational assessments.",
+      "steps": [
+        "scan_book_lies via h7-lie-librarian.py",
+        "store all_lies_index + lies_index on book.json",
+        "classify LIKELY_FALSE / UNVERIFIED — verify before fielding",
+        "build_catalog at STATE/h7-lie-librarian-catalog.json",
+        "route lies_index / truth_questionable events to vera_lies",
+        "GET /api/library/lie-librarian?book= / search= / build=1"
+      ]
+    }
+  ]
+}

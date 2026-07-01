@@ -1,0 +1,31 @@
+{
+  "schema": "field-lang-manuals-doctrine/v1",
+  "title": "Programming language manuals — H7c with embedded figures",
+  "module": "lib/field-lang-manual-reader.py",
+  "generator": "lib/field-combinatronic-visuals.py",
+  "shelf": "library/dewey/000-computer-science/explaining_{lang_id}",
+  "format": "h7c/3",
+  "embedded_figures": ["cover", "syntax", "op_map"],
+  "figure_syntax": "![alt](h7fig:id)",
+  "readers": {
+    "gui": {
+      "panel": "panel/field-lang-manuals.html",
+      "route": "/field-lang-manuals",
+      "engine": "H7Reader.openSecure"
+    },
+    "text": {
+      "cli": "field-lang-manual-reader.py text <lang_id>",
+      "api": "/api/lang-manuals/{lang_id}/text"
+    }
+  },
+  "api": [
+    "/api/lang-manuals",
+    "/api/lang-manuals/{lang_id}",
+    "/api/lang-manuals/{lang_id}/text",
+    "/api/lang-manuals/{lang_id}/figure/{figure_id}"
+  ],
+  "generate": {
+    "all": "field-lang-manual-reader.py generate all",
+    "one": "field-combinatronic-visuals.py book {lang_id}"
+  }
+}

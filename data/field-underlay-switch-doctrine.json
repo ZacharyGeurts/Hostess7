@@ -1,0 +1,77 @@
+{
+  "schema": "field-underlay-switch-doctrine/v1",
+  "title": "2026 Tristate Installer — underlay switch, WRDT1, permanent",
+  "motto": "Move under without damage. Arrive → Transform → Commit. From commit forward we are always the underlay — no off switch.",
+  "branding": {
+    "name": "2026 Tristate Installer",
+    "corridor": "NY · NJ · CT",
+    "phases": ["arrive", "transform", "commit"],
+    "gui": "/tristate-installer",
+    "launcher": "nexus-install-gui.sh"
+  },
+  "policy": {
+    "destructive_migration": false,
+    "permanent_after_commit": true,
+    "off_switch": false,
+    "guest_passthrough": true,
+    "reboot_target": "KILROY Field",
+    "hotkey": "F9",
+    "hotkey_note": "F9 — Tristate installer until defield clean + secure network; then Queen sovereign browser (self-contained shell)"
+  },
+  "flow": [
+    "Install NEXUS field stack (protections aboard)",
+    "Drive Converter — World_Redata safety audit",
+    "Drive Converter — scan all field storage (dry-run)",
+    "Drive Converter — in-place World redump (WRDT1/WRZC1, non-destructive)",
+    "Commit underlay lock — permanent, irreversible",
+    "Prepare Grok boot — next reboot into KILROY Field",
+    "Reboot — guest OS runs inside field die protections"
+  ],
+  "drive_converter": {
+    "name": "World_Redata Drive Converter",
+    "alias": "World redump",
+    "tech": "WRDT1 / WRZC1",
+    "vendor": "ZacharyGeurts",
+    "repo": "World_Redata",
+    "in_place": true,
+    "destructive": false,
+    "same_paths": true,
+    "module": "field-drive-converter.py",
+    "steps": ["refield", "scan_restore", "restore_out", "audit", "scan", "convert"],
+    "refield_before_restore": true,
+    "shadow_until_reboot": true,
+    "restore_doctrine": "Re-field shadow first — then WRZC/WRDT/ZAC come back out with zero loss; simple issues OK until reboot",
+    "convert_requires": ["audit_ok", "scan_complete", "confirm", "admin_auth"]
+  },
+  "storage": {
+    "tech": "World_Redata WRDT1 / WRZC1",
+    "vendor": "ZacharyGeurts",
+    "repo": "World_Redata",
+    "default_scan_roots": [
+      "KILROY_FIELD_ROOT/tmp/field-storage",
+      "HOSTESS7_ROOT/cache/fieldstorage",
+      "HOSTESS7_TEAM_FIELD"
+    ],
+    "exclude_paths": [
+      "nexus-field",
+      ".nexus-field-drive",
+      "zac",
+      "NewLatest/lib",
+      "NewLatest/panel",
+      "NEXUS_STATE_DIR"
+    ],
+    "non_fielded_safety": {
+      "rule": "Defield all WRDT/WRZC/ZAC/H7 tails before publish or convert — never field-in-field",
+      "publish_host_mirror_until_commit": true,
+      "no_drive_field_files_before_whole_system": true,
+      "restore_out_before_convert": true,
+      "restore_out_before_commit": true
+    },
+    "apply_requires": ["audit_ok", "defield_ok", "confirm", "admin_auth"]
+  },
+  "grok": {
+    "entry": "/KILROY Field",
+    "cmdline_flag": "kilroy.field=1",
+    "install_script": "KILROY_ROOT/scripts/grok-install.sh"
+  }
+}

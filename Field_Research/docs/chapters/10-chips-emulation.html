@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>10 — CHIPS — Field-Native Silicon Emulation · Field Research</title>
+  <meta name="description" content="Chapter 10: CHIPS — Field-Native Silicon Emulation. Field Research — The Book of Grok's Heart." />
+  <link rel="canonical" href="https://zacharygeurts.github.io/Field_Research/chapters/10-chips-emulation.html" />
+  <meta name="theme-color" content="#1a0810" />
+  <meta property="og:title" content="10 — CHIPS — Field-Native Silicon Emulation" />
+  <meta property="og:image" content="https://zacharygeurts.github.io/Field_Research/assets/images/grok16-forge-art.jpg" />
+  <link rel="stylesheet" href="../css/field-research.css" />
+  <link rel="stylesheet" href="../css/chapters.css" />
+</head>
+<body class="chapter-page accent-chips">
+  <nav class="top"><div class="inner">
+    <a class="logo" href="../index.html">FIELD RESEARCH <span class="heart-badge">♥</span></a>
+    <ul>
+      <li><a href="../index.html#chapters">Chapters</a></li>
+      <li><a href="../index.html#spine">Research spine</a></li>
+      <li><a href="https://github.com/ZacharyGeurts/Field_Research">GitHub</a></li>
+    </ul>
+  </div></nav>
+  <header class="chapter-hero" style="background-image:url('../assets/images/grok16-forge-art.jpg')">
+    <div class="chapter-hero-overlay"></div>
+    <div class="chapter-hero-content">
+      <p class="eyebrow">Chapter 10 · Field Research v1.0</p>
+      <h1>CHIPS — Field-Native Silicon Emulation</h1>
+    </div>
+  </header>
+  <main class="chapter-main">
+    <nav class="chapter-nav"><a class="btn secondary" href="09-compatibility-layers.html">← Ch 9</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="11-nexus-perimeter.html">Ch 11 →</a></nav>
+    <p class="eyebrow">The Book of Grok's Heart</p>
+    <h2 id="field-native-silicon-emulation">Field-native silicon emulation</h2>
+<p>Compatibility layer 4 (<strong>CHIPS / emu</strong>) exposes retro cores behind gates — not as desktop shader toys, but as <strong>FieldChip BSP</strong> routed through Queen Webbrowser.</p>
+<h2 id="manifest-and-registry">Manifest and registry</h2>
+<p><code>Queen/data/chips-g16-manifest.json</code> — hot paths:</p>
+<ul>
+<li>6502, 68000, Z80, YM2612, …</li>
+<li>Built with <code>CHIPS_G16_ACCURATE=1</code> + g16 <code>field_opt</code></li>
+</ul>
+<p><code>queen-game-room.json</code> platform registry:</p>
+<ul>
+<li><strong>Active:</strong> NES, SNES, Genesis, SMS, Atari 2600</li>
+<li><strong>Scaffold:</strong> C64, Apple II, Amiga, PS1, N64, …</li>
+</ul>
+<p><code>queen-chips.py</code> orchestrates; engine lives under <code>AMOURANTHRTX/Navigator/engine/CHIPS/</code>.</p>
+<h2 id="why-chips-is-layer-4-not-layer-1">Why CHIPS is layer 4, not layer 1</h2>
+<p>Research ordering:</p>
+<ol>
+<li>Substrate must pin linux/KILROY first</li>
+<li>Exec must know belt/runner posture</li>
+<li>Program interop must wire toolchain</li>
+<li>Web compat must cage legacy HTML</li>
+<li><strong>Then</strong> emulation — because emu <strong>rides</strong> exec posture and GPU fabric</li>
+</ol>
+<p>Putting CHIPS at layer 1 inverted dependencies and broke gatekeeper assumptions.</p>
+<h2 id="g16-accurate-path">G16 accurate path</h2>
+<p>CHIPS compiles through Grok16 field_opt profile — same forge as native belt, different runner facet. Combinatorics <code>runner: emulator</code> selects this path.</p>
+<h2 id="queen-browser-only">Queen browser only</h2>
+<p><code>field-host-desktop-doctrine.json</code>: NEXUS host desktop — programs as windows, <strong>Queen browser only</strong> for web surface. CHIPS renders inside browser gates when <code>QUEEN_READY</code>.</p>
+<h2 id="bsp-rewrite-note">BSP rewrite note</h2>
+<p>Inventory shows CHIPS BSP rewrite planned — manifest scaffolds exist. Label scaffolds <span class="tag impl">Implemented</span> registry; not every core <span class="tag meta">Metaphor</span> "shippable game parity."</p>
+<h2 id="research-conclusion">Research conclusion</h2>
+<p>CHIPS is how <strong>Grok's heart meets silicon memory</strong> — childhood machines as field citizens, not orphans. Layer 4 honors that without skipping substrate or exec.</p>
+<p><strong>Next:</strong> Chapter 11 — NEXUS perimeter and diagnostic mode.</p>
+    <nav class="chapter-nav"><a class="btn secondary" href="09-compatibility-layers.html">← Ch 9</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="11-nexus-perimeter.html">Ch 11 →</a></nav>
+  </main>
+  <footer class="site-foot"><p>Field Research v1.0 · Zachary Robert Geurts · <a href="https://github.com/ZacharyGeurts/Field_Research">Source</a></p></footer>
+</body>
+</html>

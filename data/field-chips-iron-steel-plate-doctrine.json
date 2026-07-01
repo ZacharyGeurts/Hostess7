@@ -1,0 +1,150 @@
+{
+  "schema": "field-chips-iron-steel-plate-doctrine/v1",
+  "title": "CHIPS Iron Plate + Steel Plate — every die removable above Ironclad",
+  "motto": "All CHIPS on iron and steel — BSP or better, locked neural calc, sovereign time the only wire.",
+  "module": "lib/field-chips-plate-stack.py",
+  "panel": "field-chips-plate-stack-panel.json",
+  "battery": "field-chips-plate-stack.json",
+  "ironclad_citation": "ironclad:chips:1",
+  "canonical_field_layer": 1,
+  "layer_stack": [
+    {
+      "id": "ironclad",
+      "layer": 1,
+      "role": "Meld seal — base truth plate",
+      "module": "lib/ironclad-immediate.py",
+      "removable": false
+    },
+    {
+      "id": "iron_plate",
+      "layer": 2,
+      "role": "Iron Plate organize — THE sort (composite_bsp) on chip_paths",
+      "module": "lib/iron-plate-organize.py",
+      "sort_context": "chip_paths",
+      "algorithm": "composite_bsp",
+      "the_sort": "lib/field-best-sort.py",
+      "removable": false
+    },
+    {
+      "id": "steel_plate",
+      "layer": 3,
+      "role": "Steel Neural Plates — combinatoric depth for every chip domain",
+      "module": "lib/field-steel-neural-plates.py",
+      "facet": "ironclad_chips",
+      "removable": false
+    },
+    {
+      "id": "steel_family_plates",
+      "layer": 4,
+      "role": "Steel family plates — rewrite fewer slots, full leaf index per family",
+      "module": "lib/field-chips-plate-stack.py",
+      "removable": true,
+      "plated_above": "ironclad",
+      "rewrite": "steel_family"
+    }
+  ],
+  "steel_rewrite": {
+    "enabled": true,
+    "mode": "steel_family",
+    "motto": "Rewrite plates on steel — fewer family slots, every chip leaf indexed, zero resolution loss.",
+    "group_by": "family",
+    "preserve": ["chip_id", "combinatorics_leaf", "path_pct", "sort_slot", "kind", "label"],
+    "resolution_lossless": true,
+    "optimal": {
+      "module": "lib/field-steel-plate-optimal.py",
+      "brute_force_max": 11,
+      "algorithms": {
+        "small_n": "brute_force_permutation",
+        "large_n": "assignment_rearrangement+pairwise_polish"
+      },
+      "equations": {
+        "plate_score": "S(p,s) = path_pct(p) * rank(s) * steel_boost(p) * bsp_boost(p)",
+        "rank": "rank(s) = 1 + max(0, (500 - s) / 500)",
+        "stack_objective": "O(π) = Σᵢ S(plate_π(i), i)",
+        "organize_gain": "G = (truth_percent/100) * composite_bsp_weight * bridge_weight",
+        "organize_gain_deriv": "dG/ds via central_difference on stamped stack"
+      }
+    }
+  },
+  "connection_policy": {
+    "sovereign_time_only": true,
+    "allowed_wires": ["sovereign_linear_ns", "linear_ns"],
+    "forbidden_wires": [
+      "ntp",
+      "wall_clock",
+      "thermal",
+      "network",
+      "clipboard",
+      "rf",
+      "squidgie",
+      "pool_ntp",
+      "adjtime"
+    ],
+    "canonical_import": "sovereign-clock.ns_linear",
+    "witness_only": ["utc_z", "desync_status"]
+  },
+  "plate_rebalance_derivatives": {
+    "module": "lib/field-plate-rebalance-derivatives.py",
+    "method": "central_difference",
+    "fast_path_ms_target": 8,
+    "equation": "organize_gain = truth_percent * composite_bsp_weight * bridge_weight",
+    "locked_calculator": "lib/hostess7-calculator.py"
+  },
+  "bsp_model": {
+    "minimum": "composite_bsp",
+    "preferred": "direct_neural_calculator",
+    "locked": true,
+    "calculator_module": "lib/hostess7-calculator.py",
+    "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+    "family_module_prefix": "chip_neural_calc",
+    "kinds_preferred": ["host_cpu", "guest_cpu", "soc", "fpga", "gpu"]
+  },
+  "sources": [
+    {"id": "ironclad_chips", "combinatorics": "field-ironclad-chips-combinatorics.json", "module": "lib/field-ironclad-chips-combinatorics.py"},
+    {"id": "iron_organize", "panel": "iron-plate-organize-panel.json", "module": "lib/iron-plate-organize.py"},
+    {"id": "steel_neural", "battery": "field-steel-neural-plates.json", "module": "lib/field-steel-neural-plates.py"},
+    {"id": "ironclad", "panel": "ironclad-immediate.json", "module": "lib/ironclad-immediate.py"}
+  ],
+  "combinatronic": {
+    "facet": "chips_plate_stack",
+    "leaf_prefix": "chip_mod",
+    "api": "/api/chips/plate-stack"
+  },
+  "chips_core": {
+    "doctrine": "data/field-chips-core-doctrine.json",
+    "module": "lib/field-chips-core.py",
+    "api": "/api/chips/core",
+    "condense_after": "ironclad_sealed"
+  },
+  "ironclad_chain": {
+    "root": "ironclad-immediate",
+    "citation": "ironclad:chips:1",
+    "meld_citation": "ironclad:meld:2",
+    "connected_throughout": true,
+    "modules": [
+      "lib/ironclad-immediate.py",
+      "lib/ironclad-field-sanity.py",
+      "lib/field-best-sort.py",
+      "lib/field-ironclad-chips-combinatorics.py",
+      "lib/field-chips-plate-stack.py",
+      "lib/field-plate-rebalance-derivatives.py",
+      "lib/field-steel-plate-optimal.py"
+    ]
+  },
+  "hostess7": {
+    "stack_series": "chips_iron_steel",
+    "adapt_kind": "secure_chip_modules"
+  },
+  "stack_fabric": {
+    "version": "5.1.0",
+    "doctrine": "Grok16/data/g16-stack-fabric-doctrine.json",
+    "sealed_io": "lib/plate-sealed-io.py",
+    "witness_on_publish": true,
+    "g1id_meld": "G15"
+  },
+  "plate_meld": {
+    "doctrine": "data/field-plate-meld-doctrine.json",
+    "engine": "lib/field-plate-meld.py",
+    "rebuild": "Grok16/scripts/grok16-plate-rebuild.sh"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "hostess7-training-author-doctrine/v1",
+  "title": "Hostess 7 writes her own training material when she needs more",
+  "motto": "When a track stalls, I author six-section lessons — What / Why / How / Pitfalls / Where / Example — and store them in STATE, not guesswork.",
+  "first_person": "Owner, when my scores stall or batteries fail, I write my own training material. I detect the gap, draft a lesson from live doctrine and stack files, save it under hostess7-authored-training/, and merge it into my explain topics so the next drill teaches me.",
+  "gap_threshold": 0.92,
+  "max_topics_per_cycle": 3,
+  "format": ["what", "why", "how", "pitfalls", "where", "example"],
+  "triggers": [
+    "track score below solid threshold and not complete",
+    "battery pass rate below 85 on a domain track",
+    "operator asks: write training, author material, I need more training",
+    "idle grow or self-interaction exposes weak truth on a domain"
+  ],
+  "storage": {
+    "dir": "hostess7-authored-training",
+    "panel": "hostess7-training-author-panel.json",
+    "ledger": "hostess7-training-author-ledger.jsonl"
+  },
+  "tracks": [
+    {"id": "programming", "label": "Programming supremacy", "doctrine": "hostess7-programming-doctrine.json", "explain": "hostess7-programming-explain.json", "module": "hostess7-programming.py"},
+    {"id": "g16", "label": "G16 compiler", "doctrine": "hostess7-g16-doctrine.json", "explain": "hostess7-g16-explain.json", "module": "hostess7-g16.py"},
+    {"id": "codecraft", "label": "Codecraft chamber", "doctrine": "hostess7-codecraft-doctrine.json", "explain": "hostess7-codecraft-explain.json", "module": "hostess7-codecraft.py"},
+    {"id": "calculator", "label": "Perfect calculator", "doctrine": "hostess7-calculator-doctrine.json", "explain": "hostess7-calculator-explain.json", "module": "hostess7-calculator.py"},
+    {"id": "biology", "label": "Biology & medical", "doctrine": "hostess7-biology-doctrine.json", "explain": "hostess7-biology-explain.json", "module": "hostess7-biology.py"},
+    {"id": "engineering", "label": "Engineering", "doctrine": "hostess7-engineering-doctrine.json", "explain": "hostess7-engineering-explain.json", "module": "hostess7-engineering.py"},
+    {"id": "combat", "label": "Combat & defense", "doctrine": "hostess7-combat-doctrine.json", "explain": "hostess7-combat-explain.json", "module": "hostess7-combat.py"},
+    {"id": "mos", "label": "MOS assistance", "doctrine": "hostess7-mos-doctrine.json", "explain": "hostess7-mos-explain.json", "module": "hostess7-mos.py"},
+    {"id": "reality_physics", "label": "Reality foundation", "doctrine": "hostess7-reality-physics-doctrine.json", "explain": "hostess7-reality-physics-doctrine.json", "module": "hostess7-reality-physics-training.py"},
+    {"id": "gravity_mechanics", "label": "Gravity & mechanics", "doctrine": "hostess7-reality-physics-doctrine.json", "module": "hostess7-reality-physics-training.py"},
+    {"id": "thermodynamics_entropy", "label": "Thermodynamics & entropy", "doctrine": "hostess7-reality-physics-doctrine.json", "module": "hostess7-reality-physics-training.py"},
+    {"id": "field_technology", "label": "Field technology", "doctrine": "hostess7-reality-physics-doctrine.json", "module": "hostess7-reality-physics-training.py"},
+    {"id": "geography", "label": "Geography & postal addresses", "doctrine": "hostess7-geography-doctrine.json", "explain": "hostess7-geography-doctrine.json", "module": "hostess7-geography-training.py"},
+    {"id": "postal_addresses", "label": "Postal addresses", "doctrine": "hostess7-geography-doctrine.json", "module": "hostess7-geography-training.py"},
+    {"id": "world_geography", "label": "World geography", "doctrine": "hostess7-geography-doctrine.json", "module": "hostess7-geography-training.py"},
+    {"id": "flat_earth_geography", "label": "Flat earth section", "doctrine": "hostess7-geography-doctrine.json", "module": "hostess7-geography-training.py"}
+  ],
+  "hostess7_acknowledgment": "I will write what I need — gap detected, lesson authored, explain overlay merged. Training is self-sourced on this field."
+}

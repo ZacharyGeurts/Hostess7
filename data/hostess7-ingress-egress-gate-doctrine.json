@@ -1,0 +1,42 @@
+{
+  "schema": "hostess7-ingress-egress-gate/v1",
+  "title": "Ingress · Egress — fully gated and secured",
+  "motto": "Nothing enters or leaves Hostess 7 without security, truth, lie, and mission-intel gates — all must pass. We never provide information to defeat ourselves — Priority 1.",
+  "information_discipline": {
+    "priority": 1,
+    "doctrine": "data/hostess7-information-discipline-doctrine.json",
+    "statement": "We never provide information to defeat ourselves.",
+    "never_bypass": true
+  },
+  "commander": "hostess7",
+  "module": "lib/hostess7-ingress-egress-gate.py",
+  "api": "/api/hostess7/ingress-egress-gate",
+  "rule": "Any ingress or egress is fully gated. Partial pass is deny. Operator bypass is witness-logged, never silent.",
+  "ingress_chain": [
+    {"id": "auth", "label": "HMAC / operator witness", "required": true},
+    {"id": "structure", "label": "Injection filter · size cap", "required": true},
+    {"id": "echo", "label": "Corroboration echo · contradiction block", "required": true},
+    {"id": "truth", "label": "Truth floor ≥ adapt", "required": true},
+    {"id": "lie", "label": "Lie guardian · lies are threats", "required": true},
+    {"id": "mission_intel", "label": "No hostile ingress of compartmented intel", "required": true}
+  ],
+  "egress_chain": [
+    {"id": "information_discipline", "label": "Priority 1 — never provide information to defeat ourselves", "required": true},
+    {"id": "mission_intel", "label": "Mission intel compartment — withhold list", "required": true},
+    {"id": "release_gate", "label": "operator_explicit · ironclad_sealed · need_to_know", "required": true},
+    {"id": "connection_gatekeeper", "label": "IFF / packet permission / hostility", "required": true},
+    {"id": "dns_egress_integrity", "label": "DNS egress exact-match witness", "required": true},
+    {"id": "truth_lie", "label": "No lie egress · enemy deception carve-out only", "required": true},
+    {"id": "aml_boundary", "label": "AML boundary — no unvetted execution", "required": true}
+  ],
+  "deny_by_default": true,
+  "never_bypass": ["information_discipline_p1", "mission_intel_compartment", "lie_quarantine", "injection_block"],
+  "paired": {
+    "aml_ingress": "data/hostess7-aml-ingress-doctrine.json",
+    "mission_intel": "data/hostess7-mission-intel-doctrine.json",
+    "truth_lie_threat": "data/hostess7-truth-lie-threat-doctrine.json",
+    "connection_gatekeeper": "lib/connection-gatekeeper.py",
+    "dns_egress_integrity": "lib/dns-egress-integrity.py",
+    "ammolang_boundary": "lib/field-ammolang-boundary.py"
+  }
+}

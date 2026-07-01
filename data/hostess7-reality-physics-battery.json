@@ -1,0 +1,30 @@
+{
+  "schema": "hostess7-reality-physics-battery/v1",
+  "title": "Reality physics evaluation battery",
+  "batteries": {
+    "gravity": [
+      {"id": "free_fall_1s", "query": "free fall distance 1 second earth gravity", "kind": "kinematic", "params": {"t_s": 1.0}, "expected_m": 4.903325},
+      {"id": "energy_conservation", "query": "energy conservation drop 2m earth gravity", "kind": "energy", "params": {"h_m": 2.0}, "expected_v_m_s": 6.26449},
+      {"id": "weight_68kg", "query": "weight force 68 kg earth gravity", "kind": "force", "params": {"mass_kg": 68.0}, "expected_n": 666.8522},
+      {"id": "projectile_peak", "query": "vertical toss 5 m/s peak height", "kind": "projectile", "params": {"v0_m_s": 5.0}, "expected_h_m": 1.2755}
+    ],
+    "thermodynamics": [
+      {"id": "landauer_300k", "query": "Landauer limit joules per bit at 300K", "kind": "landauer", "params": {"temp_k": 300.0}, "expected_j": 2.87e-21},
+      {"id": "first_law_closed", "query": "first law closed system delta U zero", "kind": "first_law", "params": {"q_in_j": 100.0, "w_out_j": 100.0}, "expected_delta_u": 0.0},
+      {"id": "carnot_efficiency", "query": "Carnot efficiency hot 500K cold 300K", "kind": "carnot", "params": {"th_k": 500.0, "tc_k": 300.0}, "expected_eta": 0.4},
+      {"id": "thermal_headroom", "query": "field thermal guard headroom present", "kind": "live_thermal", "params": {}, "expected_min_headroom_pct": 0.0}
+    ],
+    "entropy": [
+      {"id": "shannon_uniform_4", "query": "Shannon entropy uniform 4 symbols", "kind": "shannon", "params": {"symbols": 4}, "expected_bits": 2.0},
+      {"id": "shannon_certain", "query": "Shannon entropy certain outcome", "kind": "shannon", "params": {"symbols": 1}, "expected_bits": 0.0},
+      {"id": "second_law_isolated", "query": "second law isolated entropy non-decreasing", "kind": "second_law", "params": {"delta_s": 0.01}, "expected_ok": true},
+      {"id": "field_entropy_norm", "query": "field physics entropy norm bounded", "kind": "live_entropy", "params": {}, "expected_max": 1.0}
+    ],
+    "field_technology": [
+      {"id": "landauer_doctrine", "query": "thermal guard doctrine Landauer constant", "kind": "doctrine_landauer", "params": {}, "expected_j": 2.87e-21},
+      {"id": "joules_per_op", "query": "field joules per op positive", "kind": "live_joules", "params": {}, "expected_min": 1e-12},
+      {"id": "incremental_redata", "query": "incremental redata policy enforced", "kind": "policy", "params": {}, "expected": true},
+      {"id": "fabric_entropy_slot", "query": "field fabric entropy slot mapped", "kind": "fabric_map", "params": {}, "expected_slot": "entropy"}
+    ]
+  }
+}

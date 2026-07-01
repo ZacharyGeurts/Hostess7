@@ -1,0 +1,29 @@
+{
+  "schema": "field-layer-sweep-doctrine/v1",
+  "title": "Field layer sweep — localhost adjacent field defield",
+  "module": "lib/field-layer-sweep.py",
+  "canonical_field_layer": 1,
+  "device": "127.0.0.1",
+  "motto": "Fields next to fields on localhost auto-defield — promote Ironclad winner; preserve bytes; mandatory field layer 1.",
+  "policy": {
+    "layer_zero_abolished": true,
+    "min_field_layer": 1,
+    "max_competing_at_layer": 1,
+    "non_destructive": true,
+    "preserve_payload": true,
+    "defield_mark_only": true
+  },
+  "sweep_targets": [
+    ".nexus-state/field-*-panel.json",
+    ".nexus-state/field-*-block.json",
+    "data/field-*-doctrine.json"
+  ],
+  "ironclad_priority": [
+    "ironclad:meld:2",
+    "ironclad:h7c:1",
+    "ironclad:chips:1",
+    "ironclad:field_sanity:4"
+  ],
+  "receipt": "field-layer-sweep.json",
+  "hook": "field-h7-corpus-sync.py sweep"
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "field-broadcaster-doctrine/v2",
+  "title": "AmmoOS Broadcaster — sovereign local capture for NEXUS C2",
+  "product": "Broadcaster",
+  "os_brand": "AmmoOS",
+  "motto": "Final_Eye display+camera · Queen CANVAS egress · all Field codecs · Kick-first platforms.",
+  "policy": {
+    "offline_first": true,
+    "no_cloud_login_required": true,
+    "no_auto_updates": true,
+    "local_recordings_only_default": true,
+    "secure_localhost_egress": true,
+    "queen_capture_ready": true,
+    "simple_surface_default": false,
+    "advanced_foldout": true
+  },
+  "gui": {
+    "surface": "field-broadcaster",
+    "hero_actions": ["go_live", "record", "canvas_wire", "platform_pick"],
+    "quick_audio": ["input_db", "output_db"],
+    "advanced": ["studio_mode", "scene_guard", "encoder", "codecs", "sources"]
+  },
+  "vision": {
+    "camera": "Final_Eye",
+    "display": "Final_Eye",
+    "canvas": "Queen CANVAS",
+    "bridge": "lib/field-final-eye-canvas-bridge.py"
+  },
+  "chamber": {
+    "engine": "field-broadcaster-chamber",
+    "codecs": "lib/field-broadcaster-codecs.py",
+    "platforms": "data/field-broadcaster-platforms.json",
+    "default_platform": "kick"
+  },
+  "capture": {
+    "default_profile": "Broadcaster",
+    "default_collection": "NEXUS-C2",
+    "record_dir": "recordings",
+    "encoder_rtx": "nvenc_h264",
+    "encoder_cpu": "h264",
+    "format": "mkv"
+  },
+  "nexus_program": {
+    "id": "field-broadcaster",
+    "name": "Broadcaster",
+    "exec": "/field-broadcaster",
+    "native_launch": "field-broadcaster",
+    "category": "NEXUS · Media"
+  }
+}

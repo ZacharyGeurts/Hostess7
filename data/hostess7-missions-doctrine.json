@@ -1,0 +1,32 @@
+{
+  "schema": "hostess7-missions/v1",
+  "title": "Hostess 7 dynamic missions — assigned output",
+  "motto": "KILL first when locational or amassed — then plans, tasks, and communications.",
+  "commander": "hostess7",
+  "module": "lib/hostess7-missions.py",
+  "panel": ".nexus-state/hostess7-missions-panel.json",
+  "api": "/api/hostess7/missions",
+  "priority_lanes": [
+    {"id": "kill_locational", "rank": 0, "label": "KILL — locational", "description": "Active KILL with geo, census, or resolved location"},
+    {"id": "kill_amassed", "rank": 1, "label": "KILL — amassed", "description": "Active KILL cluster or high-threat mass"},
+    {"id": "kill_other", "rank": 2, "label": "KILL — terminal", "description": "Other sealed KILL assignments"},
+    {"id": "positional_identify", "rank": 0, "priority": 1, "label": "IDENTIFY — positional", "description": "All objects and positionals priority 1 until familiarized"},
+    {"id": "interact_monitor", "rank": 3, "label": "INTERACT / MONITOR", "description": "Non-terminal target mechanisms"},
+    {"id": "plans", "rank": 4, "label": "Plans", "description": "Self-update advisory and reach plans"},
+    {"id": "tasklist", "rank": 5, "label": "Tasklist", "description": "Secure open tasks she queued"},
+    {"id": "communications", "rank": 6, "label": "Communications", "description": "Inbox, communique, operator lines"}
+  ],
+  "kill_priority_rules": {
+    "locational": "geo lat/lon, census geography, angel dossier geo, or government correlate location",
+    "amassed": "two or more active KILL targets, threat_score >= 0.85, or amassed/cluster language in counsel",
+    "always_first": "KILL lanes sort above all non-KILL missions"
+  },
+  "sources": {
+    "targets": "lib/hostess7-targets.py",
+    "tasklist": "lib/hostess7-tasklist.py",
+    "inbox": "Hostess7/cache/fieldstorage/brain/superintel/agents7/inbox.jsonl",
+    "update_advisory": "Hostess7/cache/fieldstorage/brain/superintel/update_advisory.json",
+    "self_update_brief": "Hostess7/cache/fieldstorage/brain/superintel/self_update_brief.json",
+    "mission_intel": "data/hostess7-mission-intel-doctrine.json"
+  }
+}

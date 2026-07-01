@@ -1,0 +1,21 @@
+# Hostess 7 1.0.0-beta ship — full train first, then publish
+@profile fastest
+@verbose clean
+@motto "Hostess7 1.0.0-beta · train fully · then ship complete stack"
+
+seq ·
+  say "Hostess7 1.0.0-beta — full train-up then ship to ZacharyGeurts/Hostess7"
+  post "H7_RELEASE START — train → pack → publish"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+  github check repo:ZacharyGeurts/Hostess7
+  post "Step 1 — full train-up (all tracks solid before update)"
+  run route:hostess7_train_before_update timeout:18000 stall:1800
+  post "Step 2 — pack Hostess7 1.0.0-beta archives"
+  run script:pack-hostess7-release arg:--version arg:1.0.0-beta timeout:7200 stall:600
+  post "Step 3 — publish repo + tag v1.0.0-beta + release assets + Pages"
+  run script:hostess7-release-1.0-beta arg:--version arg:1.0.0-beta arg:--skip-pre arg:--skip-pack arg:--push timeout:7200 stall:600
+  assist freeze
+  say "Shipped v1.0.0-beta → github.com/ZacharyGeurts/Hostess7"
+  post "H7_RELEASE COMPLETE — https://github.com/ZacharyGeurts/Hostess7/releases/tag/v1.0.0-beta"

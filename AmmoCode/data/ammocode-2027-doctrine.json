@@ -1,0 +1,52 @@
+{
+  "schema": "ammocode-2027-doctrine/v1",
+  "title": "AmmoCode — THE compiler GUI for 2027",
+  "version": "4.9.0",
+  "distro_version": "5.0.0",
+  "upload_version": "4.9.0",
+  "motto": "Invite-only collaboration · hardened rewrite · combinatorics under the hood",
+  "compiler_gui": {
+    "positioning": "THE compiler GUI for 2027",
+    "telemetry": false,
+    "transparent_security": true,
+    "operator_combinatorics": false,
+    "background_combinatorics": true
+  },
+  "collaboration": {
+    "invite_only": true,
+    "no_connection_without_invite": true,
+    "ip_friend_list": true,
+    "voice_chat": true,
+    "text_chat": true,
+    "cursor_personas": true,
+    "max_guests": 8,
+    "collab_port": 9556,
+    "network_mesh": true,
+    "http_tunnel": true,
+    "polite_discovery": true
+  },
+  "memory_vault": {
+    "enabled": true,
+    "doctrine": "data/ammocode-memory-vault-doctrine.json",
+    "runtime_tax": 0,
+    "no_leak": true,
+    "four_slot_codec": true
+  },
+  "security": {
+    "hardened_rewrite": true,
+    "combinatorics_rewrite": true,
+    "memory_vault": true,
+    "ddos_guard": true,
+    "rate_limit_per_minute": 120,
+    "max_body_bytes": 524288,
+    "max_connections_per_ip": 12,
+    "block_duration_seconds": 300
+  },
+  "rewrite": {
+    "passes": ["registry", "combinatorics", "harden"],
+    "harden_rules": [
+      {"id": "strip-eval-equiv", "pattern": "\\b(?:eval|Function)\\s*\\(", "action": "block"},
+      {"id": "require-const", "langs": ["javascript", "typescript"], "pattern": "\\bvar\\s+", "rewrite": "const "}
+    ]
+  }
+}

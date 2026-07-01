@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" data-ammocode-theme="ammo_emerald">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AmmoCode — G16 in your browser tab</title>
+  <meta name="description" content="Every compiler ever. Java, JavaScript, Python, and every file type — secured, transparent, in any browser tab." />
+  <link rel="stylesheet" href="assets/syntax.css" />
+  <link rel="stylesheet" href="assets/themes.css" />
+  <link rel="stylesheet" href="assets/editor.css" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:* ws://127.0.0.1:* ws://localhost:*; media-src 'self' blob:; object-src 'none'; base-uri 'self'" />
+</head>
+<body class="ac ac-browser-tab" data-telemetry="off" data-ac-theme="ammo_emerald">
+  <iframe id="ac-frame" src="index.html?tab=1" title="AmmoCode editor" style="border:0;width:100%;height:100vh;display:block"></iframe>
+  <script src="lib/browser-tab.js"></script>
+  <script>
+    AmmoCodeBrowserTab.boot().then(function (r) {
+      var f = document.getElementById("ac-frame");
+      if (f && f.contentWindow) {
+        f.addEventListener("load", function () {
+          try {
+            f.contentWindow.AmmoCodeG16 && f.contentWindow.AmmoCodeG16.config({ apiBase: r.apiBase, browserTab: true });
+          } catch (_) {}
+        });
+      }
+    });
+  </script>
+</body>
+</html>

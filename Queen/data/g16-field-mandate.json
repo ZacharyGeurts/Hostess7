@@ -1,0 +1,260 @@
+{
+  "ok": true,
+  "mandate_id": "G16_FIELD_SAFETY_MANDATE_v1",
+  "rule": "Safety mandatory; luxury I/O forbidden; slow path triggers restructure not shortcuts",
+  "rust_parallel": "Ownership via bounds+checks; no unchecked syscalls; fortify+RELRO like compile-time borrow",
+  "wrdt_core": [
+    {
+      "block": "core/endian",
+      "files": [
+        "include/wrdt/core/endian.hh"
+      ],
+      "role": "Shared LE load/store \u2014 WRDT + WRZC reuse (was duplicated)",
+      "verdict": "core",
+      "present": [
+        "include/wrdt/core/endian.hh"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "core/safe_io",
+      "files": [
+        "include/wrdt/core/safe_io.hh",
+        "src/core/safe_io.cc"
+      ],
+      "role": "Bounded mmap read, secure_zero \u2014 replaces ifstream luxury",
+      "verdict": "core",
+      "present": [
+        "include/wrdt/core/safe_io.hh",
+        "src/core/safe_io.cc"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "core.hh",
+      "files": [
+        "include/wrdt/core.hh"
+      ],
+      "role": "Mandate entry \u2014 single include for field engine sources",
+      "verdict": "core",
+      "present": [
+        "include/wrdt/core.hh"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "field_g16",
+      "files": [
+        "include/wrdt/field_g16.hh"
+      ],
+      "role": "G16 contracts, hot/cold attrs, magic section",
+      "verdict": "core",
+      "present": [
+        "include/wrdt/field_g16.hh"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "bytes",
+      "files": [
+        "include/wrdt/bytes.hh"
+      ],
+      "role": "Bytes alias + string_view helpers",
+      "verdict": "core",
+      "present": [
+        "include/wrdt/bytes.hh"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "sha256",
+      "files": [
+        "include/wrdt/sha256.hh",
+        "src/sha256.cc"
+      ],
+      "role": "Lossless proof digest",
+      "verdict": "core",
+      "present": [
+        "include/wrdt/sha256.hh",
+        "src/sha256.cc"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "snap",
+      "files": [
+        "include/wrdt/snap.hh",
+        "src/snap.cc"
+      ],
+      "role": "Vigilant in-place snap \u2014 pin, flock, mmap, rollback",
+      "verdict": "core",
+      "present": [
+        "include/wrdt/snap.hh",
+        "src/snap.cc"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "wrdt",
+      "files": [
+        "include/wrdt/wrdt.hh",
+        "src/wrdt.cc"
+      ],
+      "role": "WRDT1 envelope",
+      "verdict": "core",
+      "present": [
+        "include/wrdt/wrdt.hh",
+        "src/wrdt.cc"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "wrzc",
+      "files": [
+        "include/wrdt/wrzc.hh",
+        "src/wrzc.cc"
+      ],
+      "role": "WRZC1 disguise envelope",
+      "verdict": "core",
+      "present": [
+        "include/wrdt/wrzc.hh",
+        "src/wrzc.cc"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "zac7",
+      "files": [
+        "include/wrdt/zac7.hh",
+        "src/zac7.cc"
+      ],
+      "role": "ZAC7 tar+zlib shard",
+      "verdict": "core",
+      "pending": "Align tar layout with Python zac_single.py",
+      "present": [
+        "include/wrdt/zac7.hh",
+        "src/zac7.cc"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "cli",
+      "files": [
+        "src/cli.cc"
+      ],
+      "role": "world-redata operator surface",
+      "verdict": "tool",
+      "present": [
+        "src/cli.cc"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "test_roundtrip",
+      "files": [
+        "tests/test_roundtrip.cc"
+      ],
+      "role": "Parity gate executable",
+      "verdict": "test",
+      "present": [
+        "tests/test_roundtrip.cc"
+      ],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "block": "field_io",
+      "files": [
+        "include/wrdt/field_io.hh",
+        "src/field_io.cc"
+      ],
+      "role": "Merged into core/safe_io",
+      "verdict": "removed",
+      "present": [],
+      "missing": [
+        "include/wrdt/field_io.hh",
+        "src/field_io.cc"
+      ],
+      "ok": true
+    },
+    {
+      "block": "field_security",
+      "files": [
+        "include/wrdt/field_security.hh"
+      ],
+      "role": "Merged into core/safe_io",
+      "verdict": "removed",
+      "present": [],
+      "missing": [
+        "include/wrdt/field_security.hh"
+      ],
+      "ok": true
+    }
+  ],
+  "queen_forge": [
+    {
+      "file": "lib/forge/compiler_tools.py",
+      "verdict": "core",
+      "role": "G16 toolchain single path",
+      "ok": true,
+      "path": "/home/default/Desktop/SG/NewLatest/Queen/lib/forge/compiler_tools.py"
+    },
+    {
+      "file": "scripts/g16-toolchain.sh",
+      "verdict": "core",
+      "role": "g16 install/rebuild/status",
+      "ok": true,
+      "path": "/home/default/Desktop/SG/NewLatest/Queen/scripts/g16-toolchain.sh"
+    },
+    {
+      "file": "cmake/g16-field-mandate.cmake",
+      "verdict": "core",
+      "role": "Mandatory hardening for all G16 targets",
+      "ok": true,
+      "path": "/home/default/Desktop/SG/NewLatest/Queen/cmake/g16-field-mandate.cmake"
+    },
+    {
+      "file": "cmake/queen-g16-toolchain.cmake",
+      "verdict": "core",
+      "role": "CMake compiler pins",
+      "ok": true,
+      "path": "/home/default/Desktop/SG/NewLatest/Queen/cmake/queen-g16-toolchain.cmake"
+    },
+    {
+      "file": "data/g16-toolchain.json",
+      "verdict": "core",
+      "role": "Live toolchain manifest",
+      "ok": true,
+      "path": "/home/default/Desktop/SG/NewLatest/Queen/data/g16-toolchain.json"
+    }
+  ],
+  "reuse_blocks": [
+    "core/endian",
+    "core/safe_io",
+    "core.hh",
+    "field_g16",
+    "bytes",
+    "sha256",
+    "snap",
+    "wrdt",
+    "wrzc",
+    "zac7"
+  ],
+  "next_restructure": [
+    "zac7 \u2194 zac_single.py tar parity (WRZC cross-lang)",
+    "Optional: in-memory snap path to isolate CPU from disk for profiling",
+    "Full G16 3-stage bootstrap before compiler push"
+  ],
+  "verdict": "MANDATE OK"
+}

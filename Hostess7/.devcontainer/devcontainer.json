@@ -1,0 +1,21 @@
+{
+  "name": "Hostess7",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {},
+  "postCreateCommand": "pip install -r requirements.txt && ./Hostess7.sh zac-restore 2>/dev/null || true",
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "Hostess7 Web",
+      "onAutoForward": "openBrowser"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "field-rtx-sovereign/v1",
+  "title": "Queen Full Field RTX — no vendor drivers forever (doctrine)",
+  "motto": "SPIR-V stable ABI. FieldGpuDispatch owns the card. libvulkan retires.",
+  "doctrine": "Queen holds the field GPU path: one SPIR-V stack for NVIDIA RTX, Intel Arc LE, and AMD. Vendor kernel drivers are a bootstrap bridge only — FieldGpuDispatch + FieldSurface replace libvulkan and SDL3 as the chip layer matures. Operator sets QUEEN_FIELD_GPU=1; gate field_gpu_dispatch is held forever.",
+  "vulkan_os_doctrine": "NewLatest/data/vulkan-os-doctrine.json",
+  "kilroy_vulkan": "profile name only — KILROY kernel has no libvulkan; war mode uses g16 vulkan_rtx compile profile",
+  "phases": {
+    "now": {
+      "gpu": "Vulkan bridge (FieldGpuDispatch::VulkanBridge) — minimal loader to submit SPIR-V",
+      "surface": "SDL3 → FieldSurface migration",
+      "shaders": "retired — CHIPS/cores route through Queen Webbrowser (no desktop comp shader boot)"
+    },
+    "forever": {
+      "gpu": "FieldGpuDispatch pure — direct field socket to RTX without libvulkan",
+      "surface": "FieldSurface pure — in-engine framebuffer, no OS compositor hook",
+      "drivers": "none required on operator OS — Queen exe carries field layer"
+    }
+  },
+  "display": {
+    "width": 3840,
+    "height": 2160,
+    "refresh_hz": 120,
+    "label": "4K @ 120fps"
+  },
+  "env": {
+    "QUEEN_FIELD_GPU": "1",
+    "QUEEN_FIELD_GPU_READY": "set when pure path green",
+    "QUEEN_FIELD_SURFACE": "1",
+    "QUEEN_DISPLAY_REFRESH": "120",
+    "AMOURANTHRTX_FORCED_VENDOR": "0x10DE RTX · 0x8086 Arc LE",
+    "QUEEN_GPU_INDEX": "0 or 1 dual Arc LE"
+  },
+  "gates_held": ["field_gpu_dispatch", "field_surface", "rtx_all_vendors", "in_process_ui_only"],
+  "amouranthrtx": {
+    "repo": "https://github.com/ZacharyGeurts/AMOURANTHRTX",
+    "path": "SG/AMOURANTHRTX",
+    "engine": "Navigator + FieldKilroy + FieldQueenBrowser",
+    "queen_entry": "Queen/engine/queen-main.cpp",
+    "build": "Queen/build.sh → queen-forge.py run rtx",
+    "kilroy_os": "scripts/build_kilroy_os.sh all",
+    "field_kilroy_qa": "scripts/field_kilroy.sh qa"
+  },
+  "field_kernel": {
+    "product": "KILROY Field OS",
+    "path": "SG/KILROY",
+    "abi": "kilroy-field-1.0",
+    "layout": 9,
+    "substrate": "SG/compat/linux-7.1.1",
+    "image": "build/bzImage",
+    "boot": "build/grok-kilroy.img",
+    "proc": "/proc/kilroy_field",
+    "dev": "/dev/kilroy_field",
+    "config": "CONFIG_RTX_FIELD_DIE=y",
+    "forge_tools": ["field_substrate", "field_kernel", "field_boot", "field_rootfs", "field_package"],
+    "queen_api": "/api/kilroy"
+  },
+  "one_field": {
+    "package": "field/sovereign",
+    "manifest": "field/sovereign/queen-sovereign-bundle.json",
+    "forge": "lib/queen-forge.py field",
+    "publish": "lib/queen-forge.py run field_publish"
+  },
+  "note": "Today queen-browser still links Vulkan for bootstrap; doctrine and gates are held — pure field path is the retirement target, not optional."
+}

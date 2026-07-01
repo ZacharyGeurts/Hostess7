@@ -1,0 +1,288 @@
+{
+  "schema": "field-eye-threat-doctrine/v1",
+  "title": "Final_Eye threat registry — every eye hazard tracked and reported to Hostess 7",
+  "motto": "Paint, radiation, laser, flash, chemical, RF — recognize before hostile becomes permanent. Eyes report to Hostess 7; prevention before permanency.",
+  "module": "lib/field-eye-threat-chamber.py",
+  "api": "/api/field-eye-threat",
+  "ironclad_cite": "ironclad:eye_threat:1",
+  "hostess7": {
+    "consumer": "Hostess7",
+    "growth_kind": "eye_threat_alert",
+    "sense_lane": "eye",
+    "corroborate_before_lethal": true,
+    "report_on": ["detect", "prevent", "hostile_entry"]
+  },
+  "hostile_environment": {
+    "rule": "When brought into hostile — all catalog threats arm tracking; auto-prevent when corroborated",
+    "triggers": ["hostile_flag", "threat_posterity_blocked", "operator_declares_hostile", "go_live_blocked"],
+    "prevention_default": true,
+    "truth_before_permanency": true
+  },
+  "categories": [
+    {"id": "laser_optical", "label": "Laser & high-intensity light", "priority": "critical"},
+    {"id": "radiation", "label": "Radiation — UV, ionizing, mmWave", "priority": "critical"},
+    {"id": "chemical_paint", "label": "Paint, chemical splash, obscurants", "priority": "high"},
+    {"id": "flash_strobe", "label": "Flash, strobe, dazzle", "priority": "high"},
+    {"id": "thermal", "label": "Thermal bloom & IR overload", "priority": "high"},
+    {"id": "rf_em", "label": "RF jam & EM vision interference", "priority": "high"},
+    {"id": "physical", "label": "Projectile, debris, abrasion", "priority": "medium"},
+    {"id": "digital_path", "label": "Vision-path lies & weave attacks", "priority": "high"},
+    {"id": "hostile_proximity", "label": "Hostile environment entry", "priority": "critical"}
+  ],
+  "threats": [
+    {
+      "id": "laser_direct",
+      "label": "Directed laser (405–1550 nm)",
+      "category": "laser_optical",
+      "hostile": true,
+      "signatures": ["narrow_beam", "saturated_channel", "retinal_line", "wavelength_bands_405_1550"],
+      "prevent": ["trip_capture", "laser_corridor_slice", "kill_switch"],
+      "weapon": "laser_corridor_slice",
+      "anatomy_book": "eye",
+      "h7_message": "Directed laser on vision path — capture tripped, Hostess 7 notified."
+    },
+    {
+      "id": "laser_scatter",
+      "label": "Laser scatter / indirect dazzle",
+      "category": "laser_optical",
+      "hostile": true,
+      "signatures": ["diffuse_bloom", "specular_ring", "halo_saturation"],
+      "prevent": ["whiteout_reject", "limiter", "trip_capture"],
+      "weapon": "laser_corridor_slice",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "laser_dazzle",
+      "label": "Laser dazzle / pointer swarm",
+      "category": "laser_optical",
+      "hostile": true,
+      "signatures": ["multi_spot", "tracking_spots", "contrast_collapse"],
+      "prevent": ["pattern_strike", "trip_capture"],
+      "weapon": "laser_corridor_slice",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "radiation_uv",
+      "label": "UV radiation overload",
+      "category": "radiation",
+      "hostile": true,
+      "signatures": ["uv_spectrum_spike", "corneal_stress_proxy", "snow_blind_pattern"],
+      "prevent": ["limiter", "silent_capture", "hold_vault"],
+      "weapon": "thermal_strike",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "radiation_ionizing",
+      "label": "Ionizing radiation indicator",
+      "category": "radiation",
+      "hostile": true,
+      "signatures": ["sensor_anomaly", "frame_static_bursts", "equipment_alarm_correlate"],
+      "prevent": ["kill_switch", "hold_vault", "preserve_cascade"],
+      "weapon": "hardware_destroy_trip",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "radiation_mmw",
+      "label": "Millimeter-wave / directed RF heating",
+      "category": "radiation",
+      "hostile": true,
+      "signatures": ["thermal_breach", "rf_correlate", "skin_proxy_warmth"],
+      "prevent": ["rf_jam_slice", "thermal_strike"],
+      "weapon": "thermal_strike",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "hostile_paint",
+      "label": "Hostile paint / spray obscurant",
+      "category": "chemical_paint",
+      "hostile": true,
+      "signatures": ["sudden_occlusion", "color_blob_growth", "lens_contamination_pattern"],
+      "prevent": ["silent_capture", "failover", "pattern_strike"],
+      "weapon": "pattern_strike",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "chemical_splash",
+      "label": "Chemical splash toward face/eyes",
+      "category": "chemical_paint",
+      "hostile": true,
+      "signatures": ["fluid_trajectory", "cornea_haze_proxy", "splash_geometry"],
+      "prevent": ["kill_switch", "trip_capture", "hold_vault"],
+      "weapon": "trip_capture",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "corrosive_mist",
+      "label": "Corrosive mist / aerosol",
+      "category": "chemical_paint",
+      "hostile": true,
+      "signatures": ["diffuse_haze", "edge_softening", "irritant_correlate"],
+      "prevent": ["hold_vault", "limiter"],
+      "weapon": "pattern_strike",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "smoke_obscurant",
+      "label": "Smoke / obscurant cloud",
+      "category": "chemical_paint",
+      "hostile": false,
+      "signatures": ["contrast_floor", "particle_swirl", "range_cutoff"],
+      "prevent": ["silent_capture", "infrared_fallback"],
+      "weapon": "preempt_rtx",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "flash_bang",
+      "label": "Flash-bang / photic shock",
+      "category": "flash_strobe",
+      "hostile": true,
+      "signatures": ["full_frame_saturation", "ms_whiteout", "no_flash_violation"],
+      "prevent": ["no_flash", "whiteout_reject", "kill_switch"],
+      "weapon": "laser_corridor_slice",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "strobe_attack",
+      "label": "Strobe / flicker attack",
+      "category": "flash_strobe",
+      "hostile": true,
+      "signatures": ["periodic_flicker", "epilepsy_band_hz", "alternating_frames"],
+      "prevent": ["joule_throttle", "pattern_strike", "limiter"],
+      "weapon": "moire_kill",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "whiteout",
+      "label": "Whiteout saturation",
+      "category": "flash_strobe",
+      "hostile": true,
+      "signatures": ["luminance_clip", "histogram_peak_white"],
+      "prevent": ["whiteout_reject", "trip_capture"],
+      "weapon": "laser_corridor_slice",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "thermal_breach",
+      "label": "Thermal bloom overload",
+      "category": "thermal",
+      "hostile": true,
+      "signatures": ["hotspot_bloom", "sensor_clip", "heat_corridor"],
+      "prevent": ["thermal_strike", "limiter"],
+      "weapon": "thermal_strike",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "thermal_ir_bloom",
+      "label": "IR bloom / sensor wash",
+      "category": "thermal",
+      "hostile": true,
+      "signatures": ["ir_saturation", "ghosting_trails"],
+      "prevent": ["preserve_cascade", "limiter"],
+      "weapon": "thermal_strike",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "rf_jam",
+      "label": "RF jam on vision telemetry",
+      "category": "rf_em",
+      "hostile": true,
+      "signatures": ["stream_stall", "csi_spoof", "wifi_lie"],
+      "prevent": ["rf_jam_slice", "wifi_lie_reject"],
+      "weapon": "rf_jam_slice",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "em_pulse_vision",
+      "label": "EM pulse vision disruption",
+      "category": "rf_em",
+      "hostile": true,
+      "signatures": ["frame_drop_burst", "sensor_reset", "timing_gap"],
+      "prevent": ["entropy_fold", "preempt_rtx"],
+      "weapon": "hardware_destroy_trip",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "projectile_eye",
+      "label": "Projectile toward eyes",
+      "category": "physical",
+      "hostile": true,
+      "signatures": ["inbound_object", "trajectory_face", "motion_blob_fast"],
+      "prevent": ["kill_switch", "trip_vision"],
+      "weapon": "trip_vision",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "debris_strike",
+      "label": "Debris / abrasion hazard",
+      "category": "physical",
+      "hostile": true,
+      "signatures": ["particle_impact", "scratch_pattern", "sand_storm_proxy"],
+      "prevent": ["silent_capture", "hold_vault"],
+      "weapon": "pattern_strike",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "hostile_proximity",
+      "label": "Hostile environment entry",
+      "category": "hostile_proximity",
+      "hostile": true,
+      "signatures": ["operator_hostile_flag", "threat_posterity", "scene_guard_block"],
+      "prevent": ["full_catalog_arm", "report_hostess7"],
+      "weapon": "vigilance_forward",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "provenance_mismatch",
+      "label": "Frame provenance lie",
+      "category": "digital_path",
+      "hostile": true,
+      "signatures": ["hash_mismatch", "timestamp_skew", "source_tamper"],
+      "prevent": ["autokill_certain", "trip_vision"],
+      "weapon": "autokill_certain",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "grid_jam",
+      "label": "Grid jam weave",
+      "category": "digital_path",
+      "hostile": true,
+      "signatures": ["grid_overlay", "periodic_interference"],
+      "prevent": ["grid_jam_sever", "pattern_strike"],
+      "weapon": "grid_jam_sever",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "moire_weave",
+      "label": "Moire weave attack",
+      "category": "digital_path",
+      "hostile": true,
+      "signatures": ["beat_frequency", "aliasing_bands"],
+      "prevent": ["moire_kill", "pattern_strike"],
+      "weapon": "moire_kill",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "weaponized_interference",
+      "label": "Weaponized vision interference",
+      "category": "digital_path",
+      "hostile": true,
+      "signatures": ["hostile_waveform", "assault_burst", "coordinated_jam"],
+      "prevent": ["hardware_destroy_trip", "hell_rip"],
+      "weapon": "hardware_destroy_trip",
+      "anatomy_book": "eye"
+    },
+    {
+      "id": "trust_breach",
+      "label": "Trust mesh breach",
+      "category": "digital_path",
+      "hostile": true,
+      "signatures": ["seal_fail", "mesh_desync"],
+      "prevent": ["trust_strike", "hell_rip"],
+      "weapon": "hell_rip",
+      "anatomy_book": "eye"
+    }
+  ],
+  "anatomy_crosslink": "data/hostess7-anatomy-books-index.json",
+  "entity_eyeball": "Final_Eye/data/entity-eyeball.json",
+  "equipment_protection": "Final_Eye/data/eye-equipment-protection.json"
+}

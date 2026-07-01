@@ -1,0 +1,22 @@
+{
+  "schema": "field-look-spatial-doctrine/v1",
+  "motto": "Different looks pair across places — same view at two locations alarms.",
+  "module": "lib/field-look-spatial.py",
+  "ironclad": "lib/ironclad-spatial-existence.py",
+  "view_key": "image_sha256",
+  "location_key": "feed_id",
+  "pair_rule": "Distinct locations may pair different looks — never the same view twice.",
+  "alarm": {
+    "id": "same_view_multi_location",
+    "severity": "high",
+    "citation": "ironclad:spatial_existence:2",
+    "statement": "One view cannot occupy two places — that one is ventriloquism until reheard."
+  },
+  "registry": ".nexus-state/field-look-spatial-registry.json",
+  "alarms": ".nexus-state/field-look-spatial-alarms.jsonl",
+  "cli": [
+    "python3 lib/field-look-spatial.py status",
+    "python3 lib/field-look-spatial.py pair loc_a loc_b",
+    "python3 lib/field-look-spatial.py scan"
+  ]
+}

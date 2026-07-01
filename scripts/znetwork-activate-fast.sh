@@ -1,0 +1,1 @@
+ZNetwork/scripts/znetwork-activate-fast.sh

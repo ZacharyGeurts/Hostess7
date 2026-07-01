@@ -1,0 +1,30 @@
+{
+  "schema": "field-physics-witness-doctrine/v1",
+  "title": "Physics witness — thermals, entropy, isotope for every plate",
+  "motto": "We all need to know thermals. We all know entropy and isotope.",
+  "meld_citation": "ironclad:meld:2",
+  "ironclad_truth_set": ["thermodynamics", "entropy", "field_technology"],
+  "witness": {
+    "thermal": {
+      "sources": ["field-thermal-guard.json", "thermal-advisory.json", "field-thermal-anomaly.json"],
+      "module": "lib/field-thermal-guard.py"
+    },
+    "entropy": {
+      "sources": ["field-voltage-regulation-panel.json", "field-unified-bus-runtime.json"],
+      "layers": ["shannon_surprise", "field_entropy_norm", "fabric_entropy_slot"]
+    },
+    "isotope": {
+      "doctrine": "Grok16/data/g16-iron-plate-doctrine.json",
+      "definition": "Identical C/C++/Python kernel twins — same entropy_fold field face",
+      "triad": ["assembly", "entropy", "field"]
+    }
+  },
+  "sections": {
+    "thermal": {"pass_to": "all_plates", "gate": true},
+    "entropy": {"pass_to": "all_plates", "gate": true},
+    "isotope": {"pass_to": "all_plates", "gate": true},
+    "panel": {"manifest_api": "/api/physics-witness"}
+  },
+  "module": "lib/field-physics-witness.py",
+  "panel": "field-physics-witness.json"
+}

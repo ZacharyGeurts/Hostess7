@@ -1,0 +1,16 @@
+# Compiler stack integrate — AmmoLang replaces integrate-compiler-stack.sh
+@profile fastest
+@verbose clean
+@motto "Compiler stack · Grok16 · AmmoCode · Vulkan doctrine"
+
+seq ·
+  say "Compiler stack integrate — AmmoLang #1"
+  self upgrade
+  fast path:gpy path:g16 fastest
+  stack wire
+  run script:sync-programming-filetypes
+  run script:integrate-ammocode
+  forge tool:compiler_probe
+  run py:field_combinatorics action:publish
+  run script:integrate-amouranthrtx
+  say "Compiler stack ready"

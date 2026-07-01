@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>4 — Grok16 Forge — From GCC to the Unified g16 Driver · Field Research</title>
+  <meta name="description" content="Chapter 4: Grok16 Forge — From GCC to the Unified g16 Driver. Field Research — The Book of Grok's Heart." />
+  <link rel="canonical" href="https://zacharygeurts.github.io/Field_Research/chapters/04-grok16-forge.html" />
+  <meta name="theme-color" content="#1a0810" />
+  <meta property="og:title" content="4 — Grok16 Forge — From GCC to the Unified g16 Driver" />
+  <meta property="og:image" content="https://zacharygeurts.github.io/Field_Research/assets/images/grok16-forge-art.jpg" />
+  <link rel="stylesheet" href="../css/field-research.css" />
+  <link rel="stylesheet" href="../css/chapters.css" />
+</head>
+<body class="chapter-page accent-forge">
+  <nav class="top"><div class="inner">
+    <a class="logo" href="../index.html">FIELD RESEARCH <span class="heart-badge">♥</span></a>
+    <ul>
+      <li><a href="../index.html#chapters">Chapters</a></li>
+      <li><a href="../index.html#spine">Research spine</a></li>
+      <li><a href="https://github.com/ZacharyGeurts/Field_Research">GitHub</a></li>
+    </ul>
+  </div></nav>
+  <header class="chapter-hero" style="background-image:url('../assets/images/grok16-forge-art.jpg')">
+    <div class="chapter-hero-overlay"></div>
+    <div class="chapter-hero-content">
+      <p class="eyebrow">Chapter 4 · Field Research v1.0</p>
+      <h1>Grok16 Forge — From GCC to the Unified g16 Driver</h1>
+    </div>
+  </header>
+  <main class="chapter-main">
+    <nav class="chapter-nav"><a class="btn secondary" href="03-thermodynamics-entropy.html">← Ch 3</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="05-single-fabric-belt.html">Ch 5 →</a></nav>
+    <p class="eyebrow">The Book of Grok's Heart</p>
+    <h2 id="from-gcc-16-2-to-one-driver-named-g16">From GCC 16.2 to one driver named g16</h2>
+<p>Grok16 began as a question: *Can we own the full compile chain for field-native execution without forking reality?*</p>
+<p>The answer shipped as:</p>
+<div class="code-block"><pre>
+vendor/gcc (16.2.0) → build/gcc → bin/g16 (unified driver)
+    → libexec/grok16/{g16-cc, g16-cxx, g16-ld-bfd}
+</pre></div>
+<p>The unified driver <strong>discerns</strong> C, C++, Python, and ASM. <code>g++16</code> is a symlink. One entry point; many faces — like iron plate triad (assembly → entropy → field).</p>
+<figure class="figure"><img src="../assets/images/grok16-forge-art.jpg" alt="Grok16 forge — unified die on the anvil" loading="lazy" /><figcaption>Grok16 forge — unified die on the anvil</figcaption></figure>
+<h2 id="self-host-chain-and-release-3-0">Self-host chain and release 3.0</h2>
+<p><code>RELEASE-3.0.md</code> and <code>wiki/Speed-Bench.md</code> document the release chain:</p>
+<ul>
+<li><code>test-battery-release</code></li>
+<li><code>test-battery-belt</code></li>
+<li>Versioned <code>SPEED-BENCH-REPORT.md</code></li>
+</ul>
+<p>Research receipt (reference host): C++ <code>belt_2_0</code> ~85M ops/s; host <code>g++</code> ~87M ops/s; Python interpreter ~0.7–0.8M ops/s. Dev default is <strong>uncompiled normal speed</strong> per <code>field-exec-uncompiled-doctrine.json</code>.</p>
+<h2 id="integration-consumers">Integration consumers</h2>
+<p><code>grok16-integrate.sh</code> wires:</p>
+<ul>
+<li>NewLatest/Queen (RTX build, g16+ninja)</li>
+<li>World_Redata <code>field_g16.hh</code> (gnu++26)</li>
+<li>ZOCR field compiler</li>
+<li>PythonG / Final_Ear</li>
+</ul>
+<p>Field Research treats Grok16 as <strong>infrastructure</strong>, not a side project. Compatibility layer 2 (Program interop) references <code>pythong_tools.py</code> and Queen↔NEXUS jump.</p>
+<h2 id="compiler-sense-profiles-before-compile">Compiler sense — profiles before compile</h2>
+<p><code>g16-compiler-sense-doctrine.json</code> defines the ladder:</p>
+<p><code>field_opt</code> → <code>expert</code> → <code>heavy</code> → <code>forever</code></p>
+<p><code>g16-compiler-sense-plate.py</code> reads meld + bridge posture. Plate meld bench doctrine records: meld helps <strong>profile selection</strong> (−413 ms compile when sense picks expert over static <code>belt_2_0</code>), not raw ELF throughput.</p>
+<h2 id="safety-gates-on-the-forge">Safety gates on the forge</h2>
+<p><code>grok16-single-fabric-doctrine.json</code> lists gates:</p>
+<ul>
+<li><code>g16-field-mandate</code></li>
+<li><code>g16-ironclad-sanity</code></li>
+<li><code>field-depth-singularizer</code></li>
+<li><code>queen-field-sanity</code></li>
+<li><code>sovereign-linear-time</code></li>
+</ul>
+<p>No gate passed → no release binary trusted. Diagnostic mode includes <code>g1id-baseline.py</code> and <code>ironclad-field-sanity.py</code> in secure baseline scripts.</p>
+<h2 id="research-conclusion">Research conclusion</h2>
+<p>The forge produces <strong>one driver</strong> that speaks field dialects. Combinatorics chooses <strong>which dialect face</strong> (belt, runner, emulator). Compatibility layers <strong>pre-bake</strong> the stack so the operator rides, not cranks.</p>
+<p><strong>Next:</strong> Chapter 5 — single fabric and belt_2_0 knowing.</p>
+    <nav class="chapter-nav"><a class="btn secondary" href="03-thermodynamics-entropy.html">← Ch 3</a> <a class="btn secondary" href="../index.html">Home</a> <a class="btn" href="05-single-fabric-belt.html">Ch 5 →</a></nav>
+  </main>
+  <footer class="site-foot"><p>Field Research v1.0 · Zachary Robert Geurts · <a href="https://github.com/ZacharyGeurts/Field_Research">Source</a></p></footer>
+</body>
+</html>

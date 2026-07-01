@@ -1,0 +1,26 @@
+{
+  "schema": "queen-launch-singular-field/v1",
+  "title": "Launch chambers on the singular field — depth 0, auto plane convert, trim excess",
+  "motto": "Chamber folders are fields on one amplitude. Auto-convert to plane; trim everything not on the belt.",
+  "policy": {
+    "field_depth": 0,
+    "single_plane": true,
+    "auto_convert": true,
+    "trim_excess": true,
+    "prefer_native_sibling": true,
+    "cache_plane_runners": true
+  },
+  "trim": {
+    "pass": ["classify", "strip", "dedupe", "flatten"],
+    "strip_suffixes": [".md", ".markdown", ".txt", ".rst", ".pdf", ".html", ".css", ".json", ".yml", ".yaml", ".toml", ".lock", ".log"],
+    "strip_names": ["README", "LICENSE", "CHANGELOG", "CONTRIBUTING", ".gitignore", ".editorconfig"],
+    "keep_suffixes": [".py", ".pyw", ".gpy", ".c", ".cpp", ".cxx", ".cc", ".h", ".hpp", ".comp", ".sh", ".cmake"],
+    "keep_names": ["CMakeLists.txt", "Makefile"]
+  },
+  "plane": {
+    "profile_default": "belt_2_0",
+    "host_fallback": true,
+    "g16_root_env": "GROK16_ROOT",
+    "citation": "ironclad:field_sanity:5"
+  }
+}

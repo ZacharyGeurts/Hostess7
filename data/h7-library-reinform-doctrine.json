@@ -1,0 +1,44 @@
+{
+  "schema": "h7-library-reinform-doctrine/v1",
+  "title": "Library reinformation — overlap, corrections, Deception Index",
+  "motto": "Evaluate overlap without losing information; reinform with Ironclad and Hostess 7 corrections; index deception claims at the back with page numbers for Autonomous Warfare corpus gate.",
+  "module": "lib/h7-library-reinform.py",
+  "pagination_module": "lib/h7-library-pagination.py",
+  "page_chars": 3200,
+  "env_page_chars": "NEXUS_H7_PAGE_CHARS",
+  "overlap": {
+    "exact_sha256": "identical text — cross-reference, never delete",
+    "sample_shingle": "near-duplicate via 32-token shingles on first 4000 chars",
+    "policy": "preserve_all_books_add_refs"
+  },
+  "reinform": {
+    "sources": ["ironclad", "hostess7", "field-h7c-correct"],
+    "ledger_file": "corrections-ledger.jsonl",
+    "book_json_fields": ["revision", "text_sha256", "lies_index", "overlap_refs", "reinform_updated"]
+  },
+  "biggest_lies": {
+    "header": "## Deception Index (Ironclad — Autonomous Warfare)",
+    "max_entries": 24,
+    "min_lie_score": 40,
+    "rank_by": "lie_score = (100 - truth_score) + 12 * flag_count",
+    "verdicts": ["questionable", "unknown"]
+  },
+  "cli": [
+    "python3 lib/h7-library-reinform.py overlap [--limit N]",
+    "python3 lib/h7-library-reinform.py lies <book_id>",
+    "python3 lib/h7-library-reinform.py reinform <book_id> [--apply]",
+    "python3 lib/h7-library-reinform.py reinform-all [--limit N] [--apply]",
+    "python3 lib/h7-library-reinform.py panel <book_id>"
+  ],
+  "api": [
+    "/api/library/overlap",
+    "/api/library/lies?book=",
+    "/api/library/corrections?book=",
+    "/api/library/pagination?book=",
+    "/api/library/reinform?book=",
+    "/api/library/lie-librarian",
+    "/api/library/lie-librarian?book=",
+    "/api/library/lie-librarian/search?q="
+  ],
+  "lie_librarian": "data/h7-lie-librarian-doctrine.json"
+}

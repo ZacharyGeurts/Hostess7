@@ -1,0 +1,88 @@
+{
+  "schema": "nexus-fcc-permitted-freq-v1",
+  "authority": "FCC Part 15 unlicensed ISM / UNII (US)",
+  "motto": "Permitted spectrum only. Everything else is hostile — shoot to kill on the wire.",
+  "bands": [
+    {
+      "id": "2.4ghz_wifi",
+      "label": "2.4 GHz ISM WiFi",
+      "freq_mhz_min": 2401,
+      "freq_mhz_max": 2473,
+      "channels": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      "notes": "US WiFi channels 1–11 only; 12–14 not permitted"
+    },
+    {
+      "id": "5ghz_unii1",
+      "label": "5 GHz UNII-1",
+      "freq_mhz_min": 5150,
+      "freq_mhz_max": 5250,
+      "channels": [36, 40, 44, 48],
+      "notes": "Indoor / low-power UNII-1"
+    },
+    {
+      "id": "5ghz_unii2a",
+      "label": "5 GHz UNII-2A",
+      "freq_mhz_min": 5250,
+      "freq_mhz_max": 5350,
+      "channels": [52, 56, 60, 64],
+      "notes": "DFS required"
+    },
+    {
+      "id": "5ghz_unii2c",
+      "label": "5 GHz UNII-2C",
+      "freq_mhz_min": 5470,
+      "freq_mhz_max": 5725,
+      "channels": [100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144],
+      "notes": "DFS required"
+    },
+    {
+      "id": "5ghz_unii3",
+      "label": "5 GHz UNII-3",
+      "freq_mhz_min": 5725,
+      "freq_mhz_max": 5850,
+      "channels": [149, 153, 157, 161, 165],
+      "notes": "Outdoor-capable UNII-3"
+    },
+    {
+      "id": "6ghz_unii5",
+      "label": "6 GHz UNII-5",
+      "freq_mhz_min": 5925,
+      "freq_mhz_max": 6425,
+      "channels": [],
+      "notes": "WiFi 6E low band — freq-range match"
+    },
+    {
+      "id": "6ghz_unii6",
+      "label": "6 GHz UNII-6",
+      "freq_mhz_min": 6425,
+      "freq_mhz_max": 6525,
+      "channels": [],
+      "notes": "WiFi 6E mid band — freq-range match"
+    },
+    {
+      "id": "6ghz_unii7",
+      "label": "6 GHz UNII-7",
+      "freq_mhz_min": 6525,
+      "freq_mhz_max": 6875,
+      "channels": [],
+      "notes": "WiFi 6E extended — freq-range match"
+    },
+    {
+      "id": "6ghz_unii8",
+      "label": "6 GHz UNII-8",
+      "freq_mhz_min": 6875,
+      "freq_mhz_max": 7125,
+      "channels": [],
+      "notes": "WiFi 6E high band — freq-range match"
+    }
+  ],
+  "forbidden_channel_examples": {
+    "2.4ghz": [12, 13, 14],
+    "5ghz_out_of_band": [34, 38, 42, 46, 50, 54, 58, 62, 68, 96, 98, 146, 147, 148, 170]
+  },
+  "enforcement": {
+    "shoot_to_kill": true,
+    "passive_detect_only": true,
+    "lawful_response": ["disconnect_our_station", "firewall_block", "autokill_strike_certain", "hardware_destroy"]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "field-font-doctrine/v1",
+  "title": "Field Font Format (FFNT) — SDF atlas + properties + secured clipboard editor",
+  "motto": "Amouranth Bold Professional — point sizes, letter-by-letter, copy to secured clipboard.",
+  "format": "field-font-ffnt/v1",
+  "module": "lib/field-font-kit.py",
+  "panel": "field-font-editor.html",
+  "default_font": "data/field-font-amouranth-bold.json",
+  "sdf_atlas_dir": "panel/assets/fonts",
+  "point_sizes": [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48, 64, 72],
+  "clipboard": {
+    "copy_glyph": "secured_vault",
+    "copy_font": "secured_vault",
+    "scheme": "standard",
+    "historic_ring": true
+  },
+  "editor": {
+    "modes": ["letter", "selection", "whole_font"],
+    "properties_flyout": true,
+    "live_sdf_preview": true
+  }
+}

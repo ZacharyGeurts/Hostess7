@@ -1,0 +1,48 @@
+{
+  "schema": "field-steel-neural-plates-doctrine/v1",
+  "title": "Steel Neural Plates — deep combinatoric connection management",
+  "motto": "Steel holds depth — every domain a plate, every plate wired neural-deep across the combinatoric base.",
+  "product": "AmmoOS",
+  "module": "lib/field-steel-neural-plates.py",
+  "panel": "field-steel-neural-plates-panel.json",
+  "battery": "field-steel-neural-plates.json",
+  "connection_depth_max": 4,
+  "steel_weight_base": 1.0,
+  "neural_weights": {
+    "same_facet": 0.22,
+    "shared_key": 0.28,
+    "cross_domain": 0.18,
+    "matrix_adjacency": 0.15,
+    "universal_edge": 0.25,
+    "depth_decay": 0.12,
+    "coolness": 0.10
+  },
+  "plate_sources": [
+    {"id": "chips", "combinatorics": "field-ironclad-chips-combinatorics.json", "leaf_key": "combinatorics_leaves", "facet": "ironclad_chips", "bridge_keys": ["chip_id", "family", "mame_device"]},
+    {"id": "programs", "battery": "field-program-combinatronic.json", "leaf_key": "combinatorics_leaves", "facet": "program_combinatronic", "bridge_keys": ["lang", "canonical", "runner"]},
+    {"id": "files", "battery": "field-file-formats-table.json", "leaf_key": "formats", "facet": "file_formats", "bridge_keys": ["family", "id", "extensions"]},
+    {"id": "library", "battery": "field-extensive-library.json", "leaf_key": "devices", "facet": "extensive_library", "bridge_keys": ["id", "family", "platform"]},
+    {"id": "cpu", "battery": "field-cpu-library.json", "leaf_key": "entries", "facet": "cpu_library", "bridge_keys": ["id", "family", "arch", "vendor"]},
+    {"id": "universal", "battery": "field-g16-universal-combinatronic.json", "leaf_key": "combinatorics_leaves", "facet": "g16_universal", "bridge_keys": ["source_leaf", "sub_facet", "canonical"]},
+    {"id": "matrix", "battery": "field-combinamatrix.json", "leaf_key": "cells", "facet": "combinamatrix", "bridge_keys": ["id", "facet", "source"]},
+    {"id": "growth", "battery": "field-combinatronics-growth.json", "leaf_key": "combinatorics_leaves", "facet": "growth", "bridge_keys": ["facet", "path", "ext"]},
+    {"id": "sequence", "battery": "field-combinatorics-sequence.json", "leaf_key": "sequence", "facet": "sequence", "bridge_keys": ["id", "facet", "canonical"]},
+    {"id": "spider", "battery": "field-combinatronic-spider-wire.json", "leaf_key": "lanes", "facet": "spider_wire", "bridge_keys": ["instruction", "band", "isa"]}
+  ],
+  "cross_bridges": [
+    {"from": "chips", "to": "cpu", "via": ["family", "id"], "kind": "chip_cpu"},
+    {"from": "chips", "to": "programs", "via": ["canonical"], "kind": "isa_lang", "use_universal": true},
+    {"from": "chips", "to": "universal", "via": ["id"], "kind": "chip_universal"},
+    {"from": "programs", "to": "universal", "via": ["id"], "kind": "prog_universal"},
+    {"from": "files", "to": "library", "via": ["family"], "kind": "format_library"},
+    {"from": "matrix", "to": "universal", "via": ["id", "facet"], "kind": "matrix_universal"},
+    {"from": "growth", "to": "sequence", "via": ["facet"], "kind": "growth_sequence"},
+    {"from": "spider", "to": "universal", "via": ["isa"], "kind": "spider_universal"},
+    {"from": "sequence", "to": "programs", "via": ["canonical"], "kind": "sequence_program"}
+  ],
+  "hostess7": {
+    "stack_series": "steel_neural_plates",
+    "adapt_kind": "combinatronic_depth"
+  },
+  "api": "/api/steel-neural-plates"
+}

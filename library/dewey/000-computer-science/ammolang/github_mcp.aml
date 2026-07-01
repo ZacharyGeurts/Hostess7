@@ -1,0 +1,13 @@
+# AmmoLang secure GitHub MCP — default transport, richer than TCP/IP
+@profile fastest
+@verbose clean
+@motto "GitHub MCP · repo side + Pages site · scoped auth"
+
+seq ·
+  say "AmmoLang GitHub lane — secure MCP default (not raw TCP)"
+  self upgrade
+  fast path:gpy fastest
+  github check repo:ZacharyGeurts/AmmoOS
+  github site repo:Grok16
+  github fetch repo:ZacharyGeurts/AmmoOS path:data/ammoos-version.json ref:main
+  say "GitHub side: https://github.com/ZacharyGeurts · Pages: https://zacharygeurts.github.io/AmmoOS/"

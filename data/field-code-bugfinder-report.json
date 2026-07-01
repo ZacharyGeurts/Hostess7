@@ -1,0 +1,264 @@
+{
+  "schema": "field-code-bugfinder-report/v1",
+  "title": "SG Workspace — Code Bug Report",
+  "generated_at": "2026-06-27T07:30:40Z",
+  "tool": "NewLatest/lib/field-code-bugfinder.py",
+  "ironclad": {
+    "sealed": true,
+    "verdict": "GREEN",
+    "truth_percent": 100.0,
+    "citation": "ironclad:{book}:{verse}"
+  },
+  "executive_summary": {
+    "areas_scanned": 9,
+    "total_files_scanned": 227,
+    "actionable_heuristic_findings": 5,
+    "confirmed_truth_bugs": 0,
+    "truth_suspects_noise": 322,
+    "known_false_positives_cpp_exec": 10,
+    "top_patterns": {
+      "eval_exec": 3,
+      "shell_true": 2
+    }
+  },
+  "scan_matrix": [
+    {
+      "target": "GIMP-Field/lib",
+      "file_count": 1,
+      "claims": 4,
+      "heuristics": 2,
+      "heuristic_actionable": 0,
+      "bugs_reported": 2,
+      "compares_per_sec": 1622.2,
+      "verdicts": {
+        "bug": 0,
+        "suspect": 2,
+        "clear": 0,
+        "investigate": 12
+      }
+    },
+    {
+      "target": "Grok16/forge",
+      "file_count": 17,
+      "claims": 41,
+      "heuristics": 1,
+      "heuristic_actionable": 0,
+      "bugs_reported": 24,
+      "compares_per_sec": 1703.0,
+      "verdicts": {
+        "bug": 0,
+        "suspect": 24,
+        "clear": 0,
+        "investigate": 104
+      }
+    },
+    {
+      "target": "Grok16/lib",
+      "file_count": 48,
+      "claims": 135,
+      "heuristics": 1,
+      "heuristic_actionable": 0,
+      "bugs_reported": 13,
+      "compares_per_sec": 1422.9,
+      "verdicts": {
+        "bug": 0,
+        "suspect": 13,
+        "clear": 0,
+        "investigate": 115
+      }
+    },
+    {
+      "target": "Grok16/python",
+      "file_count": 14,
+      "claims": 21,
+      "heuristics": 3,
+      "heuristic_actionable": 3,
+      "bugs_reported": 32,
+      "compares_per_sec": 1685.7,
+      "verdicts": {
+        "bug": 0,
+        "suspect": 29,
+        "clear": 0,
+        "investigate": 54
+      }
+    },
+    {
+      "target": "KeePass-Field",
+      "file_count": 2,
+      "claims": 1,
+      "heuristics": 0,
+      "heuristic_actionable": 0,
+      "bugs_reported": 2,
+      "compares_per_sec": 1177.9,
+      "verdicts": {
+        "bug": 0,
+        "suspect": 2,
+        "clear": 0,
+        "investigate": 2
+      }
+    },
+    {
+      "target": "NewLatest/Queen/lib",
+      "file_count": 48,
+      "claims": 242,
+      "heuristics": 45,
+      "heuristic_actionable": 0,
+      "bugs_reported": 20,
+      "compares_per_sec": 2079.1,
+      "verdicts": {
+        "bug": 0,
+        "suspect": 20,
+        "clear": 0,
+        "investigate": 108
+      }
+    },
+    {
+      "target": "NewLatest/lib",
+      "file_count": 48,
+      "claims": 127,
+      "heuristics": 15,
+      "heuristic_actionable": 0,
+      "bugs_reported": 26,
+      "compares_per_sec": 1314.2,
+      "verdicts": {
+        "bug": 0,
+        "suspect": 26,
+        "clear": 0,
+        "investigate": 102
+      }
+    },
+    {
+      "target": "NewLatest/lib/field-wave-engine.py",
+      "file_count": 1,
+      "claims": 14,
+      "heuristics": 2,
+      "heuristic_actionable": 2,
+      "bugs_reported": 23,
+      "compares_per_sec": 1643.0,
+      "verdicts": {
+        "bug": 0,
+        "suspect": 21,
+        "clear": 0,
+        "investigate": 32
+      }
+    },
+    {
+      "target": "OBS-Field",
+      "file_count": 48,
+      "claims": 43,
+      "heuristics": 28,
+      "heuristic_actionable": 10,
+      "bugs_reported": 34,
+      "compares_per_sec": 2044.2,
+      "verdicts": {
+        "bug": 0,
+        "suspect": 24,
+        "clear": 0,
+        "investigate": 94
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "FIND-001",
+      "severity": "high",
+      "pattern": "eval_exec",
+      "file": "Grok16/python/driver/gpy16_driver.py",
+      "line": 95,
+      "code": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "recommendation": "Remove eval/exec on untrusted input (Python only).",
+      "disposition": "by_design",
+      "note": "GPY-16 interpreter driver — expected exec of compiled field Python"
+    },
+    {
+      "id": "FIND-002",
+      "severity": "high",
+      "pattern": "eval_exec",
+      "file": "Grok16/python/driver/gpy16_driver.py",
+      "line": 101,
+      "code": "exec(compile(code, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "recommendation": "Remove eval/exec on untrusted input (Python only).",
+      "disposition": "by_design",
+      "note": "GPY-16 interpreter driver — expected exec of compiled field Python"
+    },
+    {
+      "id": "FIND-003",
+      "severity": "high",
+      "pattern": "eval_exec",
+      "file": "Grok16/python/driver/gpy16_driver.py",
+      "line": 208,
+      "code": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "recommendation": "Remove eval/exec on untrusted input (Python only).",
+      "disposition": "by_design",
+      "note": "GPY-16 interpreter driver — expected exec of compiled field Python"
+    },
+    {
+      "id": "FIND-004",
+      "severity": "high",
+      "pattern": "shell_true",
+      "file": "NewLatest/lib/field-wave-engine.py",
+      "line": 327,
+      "code": "proc = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=seconds + 12)",
+      "recommendation": "Audit cmd construction; prefer argv list without shell=True.",
+      "disposition": "fixed",
+      "note": "Replaced shell pipe with subprocess.Popen argv chain (fm → sox → wav)"
+    },
+    {
+      "id": "FIND-005",
+      "severity": "high",
+      "pattern": "shell_true",
+      "file": "NewLatest/lib/field-wave-engine.py",
+      "line": 378,
+      "code": "proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)",
+      "recommendation": "Audit cmd construction; prefer argv list without shell=True.",
+      "disposition": "fixed",
+      "note": "Replaced shell pipe with subprocess.Popen argv chain (fm → play)"
+    }
+  ],
+  "false_positives": {
+    "cpp_qt_exec_count": 10,
+    "cpp_qt_exec_sample": [
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/auth-oauth.cpp",
+        "line": 77
+      },
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/auth-oauth.cpp",
+        "line": 81
+      },
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/auth-oauth.hpp",
+        "line": 26
+      },
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/auth-restream.cpp",
+        "line": 228
+      },
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/auth-restream.cpp",
+        "line": 247
+      },
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/auth-twitch.cpp",
+        "line": 464
+      },
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/auth-twitch.cpp",
+        "line": 480
+      },
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/auth-youtube.cpp",
+        "line": 324
+      },
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/auth-youtube.cpp",
+        "line": 327
+      },
+      {
+        "file": "OBS-Field/upstream/obs-studio/UI/frontend-plugins/decklink-captions/decklink-captions.cpp",
+        "line": 143
+      }
+    ],
+    "truth_docstring_noise_count": 322
+  }
+}

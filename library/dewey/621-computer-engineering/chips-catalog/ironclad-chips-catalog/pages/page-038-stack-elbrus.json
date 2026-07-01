@@ -1,0 +1,26 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 38,
+  "slug": "stack-elbrus",
+  "title": "Elbrus MCST Platform Stack",
+  "body": "# Elbrus MCST Platform Stack\n\n**Platform stack:** `pc_elbrus` · **Era:** 2001–2026 · **Vendor:** MCST · **Count:** 8\n\nE2K VLIW architecture with **Elbrus-8CB (2018)** eight-core server die, DDR4 MC, PCIe switch, and x86 binary translation layer.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: pc_elbrus` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **Elbrus E2K System Hub** (MCST, 64-bit) — E2K on-chip ring + memory hub — VLIW host\n- **Elbrus DDR4 MC** (MCST, 64-bit) — 4-channel DDR4 memory controller — Elbrus-8CB\n- **Elbrus PCIe Switch** (MCST, 64-bit) — PCIe gen3 switch — server expansion\n- **Elbrus I/O Hub** (MCST, 64-bit) — SATA USB Ethernet south — MCST platform\n- **Elbrus x86 Translator** (MCST, 64-bit) — Binary translation layer — x86 guest on VLIW host\n\n## Catalog ids\n\nThe `chip_ids` array holds all **8** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: pc_elbrus · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "elbrus_8cb",
+    "glue_elbrus_ddr_mc",
+    "glue_elbrus_pcie_switch",
+    "glue_elbrus_x86_trans",
+    "nb_elbrus_e2k_hub",
+    "ru_elbrus_8cb",
+    "ru_elbrus_e2k",
+    "sb_elbrus_io_hub"
+  ],
+  "chip_count": 8,
+  "kind": "platform_stack",
+  "family": "domestic",
+  "platform_stack": "pc_elbrus",
+  "era": "2001–2026",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/thumbs/elbrus_8cb.png",
+  "thumb": "/world/assets/combinatronic/chips/thumbs/elbrus_8cb.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

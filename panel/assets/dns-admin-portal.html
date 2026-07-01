@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:*; frame-ancestors 'none'; base-uri 'self'" />
+  <meta name="referrer" content="no-referrer" />
+  <title>Hostess 7 · DNS Engineer Admin</title>
+  <style>
+    :root {
+      --bg: #000;
+      --panel: #0a0a0a;
+      --text: #fff;
+      --meta: #999;
+      --accent: #4de88a;
+      --warn: #ff8a9a;
+      --border: #333;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-monospace, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 20px 22px 56px; }
+    .hero {
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;
+      padding: 20px 22px; margin-bottom: 16px;
+      border: 1px solid var(--border); border-radius: 12px;
+      background: linear-gradient(135deg, #000, #001408);
+    }
+    .hero h1 { margin: 0 0 6px; font-size: 1.5rem; letter-spacing: 0.04em; }
+    .hero .eyebrow { color: var(--accent); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 8px; }
+    .hero .motto { color: var(--meta); font-size: 0.9rem; margin: 0; max-width: 40rem; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg); font-size: 0.72rem; min-width: 80px;
+    }
+    .pill span { display: block; color: var(--meta); text-transform: uppercase; font-size: 0.6rem; }
+    .pill strong { font-size: 0.95rem; }
+    .pill.ok strong { color: var(--accent); }
+    .pill.bad strong { color: var(--warn); }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .card h2 {
+      font-size: 0.82rem; margin: 0 0 12px;
+      color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    label { display: block; font-size: 0.78rem; color: var(--meta); margin-bottom: 4px; }
+    input, textarea, select {
+      width: 100%;
+      background: #000;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+    button {
+      background: #000;
+      color: #fff;
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    button:hover { border-color: #666; }
+    button.secondary { background: #000; color: var(--accent); border-color: var(--accent); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .port-hint { font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; }
+    .upfront { margin: 0; padding-left: 1.2rem; color: #ddd; font-size: 0.88rem; }
+    .upfront li { margin-bottom: 8px; }
+    .love { color: var(--accent); font-style: italic; margin-top: 14px; }
+    .hidden { display: none !important; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+    th { color: var(--meta); font-weight: 600; font-size: 0.72rem; text-transform: uppercase; }
+    code { background: #000; padding: 2px 6px; border-radius: 4px; font-size: 0.78rem; border: 1px solid #222; }
+    .chip {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em;
+      background: #0a2010; color: var(--accent); border: 1px solid #2a5040;
+    }
+    .chip-warn { background: #201010; color: var(--warn); border-color: #5a2830; }
+    .ops {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px; margin-bottom: 14px;
+    }
+    .ops .stat {
+      padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: #000;
+    }
+    .ops .stat span { display: block; font-size: 0.62rem; color: var(--meta); text-transform: uppercase; }
+    .ops .stat strong { font-size: 1.15rem; color: var(--accent); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .alerts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .alert { padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: #000; font-size: 0.84rem; }
+    .alert.bad { border-color: #5a2830; color: #ffb8c8; }
+    .alert.ok { border-color: #2a5040; color: var(--accent); }
+    .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .tabs button { padding: 8px 14px; font-size: 0.82rem; min-height: auto; }
+    .tabs button.active { border-color: var(--accent); color: var(--accent); }
+    .table-wrap { overflow: auto; max-height: 380px; }
+    .err { color: var(--warn); margin-top: 8px; }
+    .check-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+    .check-row input { width: auto; margin: 4px 0 0; }
+    .kv { display: grid; grid-template-columns: 130px 1fr; gap: 6px 10px; font-size: 0.84rem; }
+    .kv dt { color: var(--meta); margin: 0; }
+    .kv dd { margin: 0; }
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body data-front-hook="nexus">
+  <div class="wrap" data-admin-shield="1" data-front-hook="nexus">
+    <header class="hero" id="page-hero">
+      <div>
+        <p class="eyebrow">Hostess 7 · DNS Engineer Admin</p>
+        <h1 id="hero-title">Information only — no remote controls</h1>
+        <p class="motto" id="motto">Ports 7 · 77 · 777 — everything upfront so you can end the call fast.</p>
+      </div>
+      <div class="hero-pills" id="hero-pills"></div>
+    </header>
+
+    <section id="login-view" class="card">
+      <h2>Engineer login</h2>
+      <p class="port-hint" id="port-hint">Tired engineer? Your passkey can be the port number you're on.</p>
+      <div class="grid-2">
+        <div>
+          <label for="username">Username</label>
+          <input id="username" autocomplete="username" placeholder="engineer · hostess · field" />
+          <label for="passkey">Passkey</label>
+          <input id="passkey" type="password" autocomplete="current-password" placeholder="7 · 77 · 777 — or lucky7 / double77 / triple7" />
+        </div>
+        <div>
+          <label for="port">Port</label>
+          <select id="port">
+            <option value="7">7 — lucky7</option>
+            <option value="77">77 — double77</option>
+            <option value="777" selected>777 — triple7</option>
+          </select>
+          <div class="check-row">
+            <input type="checkbox" id="equipment-enable" checked />
+            <label for="equipment-enable" style="margin:0">Enable MDF/IDF equipment room reporting (recommended)</label>
+          </div>
+        </div>
+      </div>
+      <button type="button" id="login-btn">Log in — full DNS intelligence</button>
+      <p class="err hidden" id="login-err"></p>
+    </section>
+
+    <section id="dash-view" class="hidden">
+      <div class="alerts" id="dash-alerts"></div>
+      <div class="ops" id="stats-bar"></div>
+
+      <article class="card" id="welcome-card">
+        <h2 id="welcome-headline">Engineer briefing</h2>
+        <ul class="upfront" id="upfront-list"></ul>
+        <p class="love" id="love-note"></p>
+      </article>
+
+      <div class="grid-2">
+        <article class="card">
+          <h2>Truth Resolver · operations</h2>
+          <dl class="kv" id="resolver-panel"></dl>
+        </article>
+        <article class="card">
+          <h2>Multipoint secure ID</h2>
+          <div class="table-wrap" id="multipoint-panel"></div>
+        </article>
+      </div>
+
+      <article class="card">
+        <h2>Internet field · WHOLE + LOCAL NOW</h2>
+        <div id="internet-summary" class="meta" style="margin-bottom:10px"></div>
+        <div class="table-wrap" id="internet-panel"></div>
+      </article>
+
+      <article class="card">
+        <h2>Recent queries</h2>
+        <div class="table-wrap" id="recent-panel"></div>
+      </article>
+
+      <nav class="tabs" id="ref-tabs">
+        <button type="button" class="active" data-tab="rfc">RFC matrix</button>
+        <button type="button" data-tab="legal">Legal</button>
+        <button type="button" data-tab="roots">Roots</button>
+        <button type="button" data-tab="peers">Field peers</button>
+        <button type="button" data-tab="legacy">Legacy gear</button>
+      </nav>
+      <article class="card">
+        <div class="table-wrap" id="ref-panel"></div>
+      </article>
+
+      <article class="card">
+        <h2>Equipment room · MDF/IDF checklist</h2>
+        <div id="checklist"></div>
+        <label for="report-notes">Room notes (stored locally — information only)</label>
+        <textarea id="report-notes" rows="3" placeholder="MDF patch panel row 4, legacy BIND forwarder retired…"></textarea>
+        <button type="button" id="report-btn">Submit equipment room report</button>
+      </article>
+
+      <button type="button" class="secondary" id="logout-btn">Log out</button>
+    </section>
+  </div>
+  <script src="/assets/front-hook.js"></script>
+  <script src="/assets/hardware-wire.js"></script>
+  <script src="/assets/clipboard-wire.js"></script>
+  <script src="/assets/admin-window-shield.js"></script>
+  <script>
+(function () {
+  "use strict";
+  let dnsDoc = null;
+  let activeTab = "rfc";
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+  }
+  async function api(path, opts) {
+    const res = await fetch(path, Object.assign({ credentials: "same-origin" }, opts || {}));
+    const data = await res.json().catch(function () { return {}; });
+    return { res: res, data: data };
+  }
+  function detectPort() {
+    const p = parseInt(location.port, 10);
+    if ([7, 77, 777].indexOf(p) >= 0) {
+      $("port").value = String(p);
+      $("passkey").placeholder = String(p) + " — or mnemonic from welcome";
+    }
+  }
+  async function loadWelcome() {
+    const { data } = await api("/api/welcome");
+    if (data.mnemonic) $("port-hint").textContent = "On port " + data.port + ": " + data.mnemonic;
+    if (data.login_hint) $("motto").textContent = data.login_hint + " — no remote controls.";
+  }
+  function renderHero(dns) {
+    const br = dns.engineer_briefing || {};
+    const run = dns.running;
+    $("hero-title").innerHTML = run
+      ? '<span style="color:#4de88a">RUNNING</span> · Truth Resolver'
+      : '<span style="color:#ff8a9a">STOPPED</span> · Truth Resolver';
+    $("hero-pills").innerHTML = [
+      ["Status", run ? "LIVE" : "DOWN", run ? "ok" : "bad"],
+      ["Planetary", dns.planetary_security_level || "—", ""],
+      ["Internet", (dns.internet_recognized || 0) + "/" + (dns.internet_slots || 0), ""],
+      ["RFC", (br.quick_facts?.rfc_enforced || 0) + "/" + (br.quick_facts?.rfc_total || 0), ""]
+    ].map(function (t) {
+      return "<div class='pill " + (t[2] || "") + "'><span>" + esc(t[0]) + "</span><strong>" + esc(t[1]) + "</strong></div>";
+    }).join("");
+  }
+  function renderAlerts(dns) {
+    const alerts = dns.engineer_briefing?.alerts || [];
+    const el = $("dash-alerts");
+    if (!alerts.length) {
+      el.innerHTML = dns.running
+        ? "<div class='alert ok'>Resolver posture OK — engineer checks passed.</div>"
+        : "";
+      return;
+    }
+    el.innerHTML = alerts.map(function (a) {
+      return "<div class='alert bad'><strong>" + esc(a.title) + "</strong><br>" + esc(a.detail) +
+        (a.action ? "<br><code>" + esc(a.action) + "</code>" : "") + "</div>";
+    }).join("");
+  }
+  function renderUpfront(w) {
+    $("upfront-list").innerHTML = (w.dns_upfront || []).map(function (line) {
+      return "<li>" + esc(line) + "</li>";
+    }).join("");
+    $("love-note").textContent = w.love_note || "";
+    if (w.headline) $("welcome-headline").textContent = w.headline;
+  }
+  function renderStats(dns) {
+    const st = dns.stats || {};
+    const br = dns.engineer_briefing?.quick_facts || {};
+    $("stats-bar").innerHTML = [
+      ["Queries", st.queries || 0],
+      ["Cache hits", st.cache_hits || 0],
+      ["Blocked", st.blocked || 0],
+      ["Errors", st.errors || 0],
+      ["Internet", (dns.internet_recognized || 0) + " live"],
+      ["Blocklist", dns.blocklist_domains || 0],
+      ["Multipoint", br.multipoint_points || 0],
+      ["Foreign", br.foreign_blocked || 0]
+    ].map(function (p) {
+      return "<div class='stat'><span>" + esc(p[0]) + "</span><strong>" + esc(String(p[1])) + "</strong></div>";
+    }).join("");
+  }
+  function renderResolver(dns) {
+    const pol = dns.resolver_policy || {};
+    const resolv = dns.resolv || {};
+    const rows = [
+      ["Listeners", (dns.listeners || []).join(" · ")],
+      ["Trace", pol.no_shortcut_public_dns ? "dig +trace from root" : "—"],
+      ["resolv.conf", (resolv.nameservers || []).join(" ") + (resolv.nexus_truth_enforced ? " ✓ NEXUS" : " ⚠ foreign")],
+      ["resolv IPv4", ((resolv.ipv4_nameservers || []).join(" ") || "—") + (resolv.ipv4_truth_enforced === false ? " ⚠ foreign" : resolv.ipv4_nameservers?.length ? " ✓ NEXUS" : "")],
+      ["resolv IPv6", ((resolv.ipv6_nameservers || []).join(" ") || "—") + (resolv.ipv6_truth_enforced === false ? " ⚠ foreign" : resolv.ipv6_nameservers?.length ? " ✓ NEXUS" : "")],
+      ["Planetary", dns.planetary_security_level || "—"],
+      ["DoT/DoH", pol.dot_doh_bypass || "blocked"],
+      ["PID", dns.engineer_briefing?.quick_facts?.pid || dns.pid || "—"],
+      ["Started", dns.stats?.started_at || "—"]
+    ];
+    $("resolver-panel").innerHTML = rows.map(function (r) {
+      return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>";
+    }).join("");
+  }
+  function renderMultipoint(dns) {
+    const pts = dns.identification_points || dns.multipoint_identity?.identification_points || [];
+    if (!pts.length) { $("multipoint-panel").innerHTML = "<p>No points.</p>"; return; }
+    $("multipoint-panel").innerHTML = "<table><thead><tr><th>ID</th><th>Listener</th><th>Role</th><th>FP</th></tr></thead><tbody>" +
+      pts.map(function (p) {
+        return "<tr><td><strong>" + esc(p.id) + "</strong></td><td><code>" + esc(p.listener || p.address) + "</code></td><td>" +
+          esc(p.role) + "</td><td><code>" + esc(String(p.secure_fingerprint || "").slice(0, 16)) + "…</code></td></tr>";
+      }).join("") + "</tbody></table>";
+  }
+  function renderInternet(dns) {
+    const inf = dns.internet_field || {};
+    $("internet-summary").innerHTML = "<strong>" + (inf.total_slots || 0) + "</strong> slots · " +
+      "<strong style='color:#4de88a'>" + (inf.recognized_slots || 0) + "</strong> recognized · " +
+      (inf.coverage_pct || 0) + "% coverage · WHOLE timeline in field storage";
+    const rows = (inf.entries || []).slice(0, 80);
+    $("internet-panel").innerHTML = rows.length ? "<table><thead><tr><th>TLD</th><th>Domain</th><th>%</th><th>Status</th></tr></thead><tbody>" +
+      rows.map(function (e) {
+        return "<tr><td><code>." + esc(e.tld) + "</code></td><td>" + esc(e.domain) + "</td><td>" + esc(e.strength) + "</td><td>" +
+          (e.recognized ? "<span class='chip'>live</span>" : "silent") + "</td></tr>";
+      }).join("") + "</tbody></table>" : "<p>No internet field — refresh from main panel.</p>";
+  }
+  function renderRecent(dns) {
+    const rows = dns.recent_queries || [];
+    $("recent-panel").innerHTML = rows.length ? "<table><thead><tr><th>Time</th><th>Name</th><th>Answers</th></tr></thead><tbody>" +
+      rows.map(function (r) {
+        return "<tr><td>" + esc((r.ts || "").slice(11, 19)) + "</td><td><strong>" + esc(r.qname) + "</strong></td><td>" +
+          (r.answers || []).map(function (a) { return "<code>" + esc(a) + "</code>"; }).join(" ") + "</td></tr>";
+      }).join("") + "</tbody></table>" : "<p>No queries cached yet.</p>";
+  }
+  function renderTable(rows, cols) {
+    if (!rows.length) return "<p>No data.</p>";
+    return "<table><thead><tr>" + cols.map(function (c) { return "<th>" + esc(c.label) + "</th>"; }).join("") +
+      "</tr></thead><tbody>" + rows.map(function (r) {
+        return "<tr>" + cols.map(function (c) {
+          return "<td>" + (c.render ? c.render(r) : esc(r[c.key])) + "</td>";
+        }).join("") + "</tr>";
+      }).join("") + "</tbody></table>";
+  }
+  function renderRefTab(dns, equip) {
+    if (activeTab === "rfc") {
+      return renderTable(dns.rfc_matrix || [], [
+        { key: "rfc", label: "RFC" },
+        { key: "section", label: "§" },
+        { key: "compliance", label: "Status", render: function (r) {
+          return "<span class='chip" + (r.compliance === "enforced" ? "" : "-warn") + "'>" + esc(r.compliance) + "</span>";
+        }},
+        { key: "nexus_control", label: "Control" }
+      ]);
+    }
+    if (activeTab === "legal") {
+      return renderTable(dns.legal_framework || [], [
+        { key: "citation", label: "Citation" },
+        { key: "title", label: "Instrument" },
+        { key: "nexus_application", label: "Application" }
+      ]);
+    }
+    if (activeTab === "roots") {
+      return renderTable(dns.root_servers || [], [
+        { key: "letter", label: "Root", render: function (r) { return "." + esc(r.letter); }},
+        { key: "hostname", label: "Host" },
+        { key: "ipv4", label: "IPv4" },
+        { key: "operator", label: "Op" }
+      ]);
+    }
+    if (activeTab === "peers") {
+      return renderTable(equip.field_dns_peers || [], [
+        { key: "id", label: "ID" },
+        { key: "host", label: "Host" },
+        { key: "port", label: "Port" },
+        { key: "stack", label: "Stack" }
+      ]);
+    }
+    return renderTable(dns.legacy_dns_equipment || equip.legacy_dns_equipment || [], [
+      { key: "vendor", label: "Vendor" },
+      { key: "era", label: "Era" },
+      { key: "interop", label: "Interop" },
+      { key: "notes", label: "Notes" }
+    ]);
+  }
+  function renderDash(dns, equip) {
+    dnsDoc = dns;
+    renderHero(dns);
+    renderAlerts(dns);
+    renderStats(dns);
+    renderResolver(dns);
+    renderMultipoint(dns);
+    renderInternet(dns);
+    renderRecent(dns);
+    $("ref-panel").innerHTML = renderRefTab(dns, equip);
+    const checks = equip.mdf_idf_checklist || [];
+    $("checklist").innerHTML = checks.map(function (c, i) {
+      return "<div class='check-row'><input type='checkbox' id='chk" + i + "' " +
+        (c.default_on !== false ? "checked" : "") + " /><label for='chk" + i + "'>" +
+        esc(c.item) + (c.rfc ? " <code>" + esc(c.rfc) + "</code>" : "") + "</label></div>";
+    }).join("");
+  }
+  document.querySelectorAll("#ref-tabs [data-tab]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      activeTab = btn.dataset.tab;
+      document.querySelectorAll("#ref-tabs [data-tab]").forEach(function (b) {
+        b.classList.toggle("active", b === btn);
+      });
+      if (dnsDoc) api("/api/equipment-room").then(function (r) {
+        $("ref-panel").innerHTML = renderRefTab(dnsDoc, r.data);
+      });
+    });
+  });
+  async function afterLogin(welcome) {
+    $("login-view").classList.add("hidden");
+    $("dash-view").classList.remove("hidden");
+    if (welcome) renderUpfront(welcome);
+    const dns = (await api("/api/dns")).data;
+    const equip = (await api("/api/equipment-room")).data;
+    renderDash(dns, equip);
+  }
+  $("login-btn").addEventListener("click", async function () {
+    $("login-err").classList.add("hidden");
+    const body = {
+      username: $("username").value.trim(),
+      passkey: $("passkey").value.trim(),
+      port: parseInt($("port").value, 10),
+      accept_equipment_room: $("equipment-enable").checked
+    };
+    const { res, data } = await api("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      $("login-err").textContent = data.error || "Login failed";
+      $("login-err").classList.remove("hidden");
+      return;
+    }
+    await afterLogin(data.welcome);
+  });
+  $("logout-btn").addEventListener("click", async function () {
+    await api("/api/logout", { method: "POST", body: "{}" });
+    $("dash-view").classList.add("hidden");
+    $("login-view").classList.remove("hidden");
+  });
+  $("report-btn").addEventListener("click", async function () {
+    const checks = [];
+    document.querySelectorAll("#checklist input[type=checkbox]").forEach(function (el) {
+      if (el.checked) checks.push({ item: el.nextElementSibling.textContent, checked: true });
+    });
+    const { res, data } = await api("/api/equipment-room/report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ checklist: checks, notes: $("report-notes").value, room: "MDF/IDF" })
+    });
+    alert(res.ok ? (data.message || "Report saved. Thank you!") : (data.error || "Report failed"));
+  });
+  detectPort();
+  loadWelcome();
+  api("/api/session").then(function (r) {
+    if (r.data.authenticated) afterLogin();
+  });
+})();
+  </script>
+</body>
+</html>

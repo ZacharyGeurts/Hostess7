@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen Browser — AmmoOS stack</title>
+  <link rel="stylesheet" href="https://zacharygeurts.github.io/ZacharyGeurts/releases.css" />
+  <style>
+    .hero { text-align: center; margin: 2rem 0; }
+    .hero img { border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.45); }
+    nav a { margin-right: 1rem; }
+    table { margin-top: 1rem; }
+  </style>
+  <style>
+    .github-chrome-top,.github-chrome-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1rem;padding:.55rem .85rem;margin:0 0 1rem;border-radius:8px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35)}
+    .github-chrome-bottom{margin:2rem 0 0}.github-repo-primary{font-weight:700;color:#4ade80;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="github-chrome-top"><a class="github-repo-primary" href="https://github.com/ZacharyGeurts/Queen">→ GitHub: ZacharyGeurts/Queen</a><span><a href="https://github.com/ZacharyGeurts/AmmoOS">AmmoOS</a> · <a href="https://zacharygeurts.github.io/ZacharyGeurts/stack.html">Stack</a></span></div>
+  <h1>Queen Browser</h1>
+  <p class="meta">Secured shell on <code>:9481</code> — AmmoOS field OS inside the Start tab. Part of the <a href="https://zacharygeurts.github.io/ZacharyGeurts/stack.html">AmmoOS stack</a>.</p>
+  <nav>
+    <a href="https://github.com/ZacharyGeurts/Queen">Repo</a>
+    <a href="https://github.com/ZacharyGeurts/AmmoOS">AmmoOS</a>
+    <a href="https://zacharygeurts.github.io/AmmoOS/queen-browser.html">AmmoOS manual</a>
+    <a href="https://zacharygeurts.github.io/ZacharyGeurts/stack.html">Stack hub</a>
+  </nav>
+  <div class="hero">
+    <p><strong>Taskbar icon</strong> — <code>ammoos-field.png</code> / Queen start menu</p>
+    <img src="../assets/queen-taskbar-icon.png" alt="Queen AmmoOS taskbar icon" width="128" height="128" />
+  </div>
+  <h2>Surfaces</h2>
+  <table>
+    <tr><th>URL</th><th>Role</th></tr>
+    <tr><td><code>http://127.0.0.1:9481/world/browser.html</code></td><td>Queen Browser</td></tr>
+    <tr><td><code>http://127.0.0.1:9481/world/queen-game-room.html</code></td><td>Game Room</td></tr>
+    <tr><td><code>http://127.0.0.1:9477/field</code></td><td>AmmoOS desktop (embedded in Start tab)</td></tr>
+  </table>
+  <h2>Install</h2>
+  <pre><code>git clone https://github.com/ZacharyGeurts/AmmoOS.git
+cd AmmoOS && ./scripts/wire-stack.sh
+./Queen/scripts/run-queen.sh</code></pre>
+  <div class="github-chrome-bottom"><a class="github-repo-primary" href="https://github.com/ZacharyGeurts/Queen">→ GitHub: ZacharyGeurts/Queen</a><span>Queen Browser · AmmoOS 2.0.0-beta4</span></div>
+</body>
+</html>

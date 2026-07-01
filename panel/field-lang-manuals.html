@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Programming Language Manuals — Hostess 7</title>
+  <link rel="stylesheet" href="/assets/field-foundation.css" />
+  <script src="/assets/h7-reader.js"></script>
+  <style>
+    :root { --accent: #5eead4; --bg: #0a1018; --card: #121a28; --text: #d8e0ec; --muted: #8899aa; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Georgia, "Times New Roman", serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    header { padding: 1.25rem 1.5rem; border-bottom: 1px solid #1e2a3a; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+    h1 { margin: 0; font-size: 1.35rem; font-weight: 600; }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+    .toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    input[type="search"] { padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #2a3a50; background: #0d1520; color: var(--text); min-width: 220px; }
+    button { cursor: pointer; border: 1px solid #2a4a60; background: #152030; color: var(--text); padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.85rem; }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    button.primary { background: #0d3d38; border-color: var(--accent); color: var(--accent); }
+    main { display: grid; grid-template-columns: 320px 1fr; min-height: calc(100vh - 88px); }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+    .sidebar { border-right: 1px solid #1e2a3a; overflow-y: auto; max-height: calc(100vh - 88px); }
+    .lang-list { list-style: none; margin: 0; padding: 0.5rem; }
+    .lang-item { display: block; width: 100%; text-align: left; padding: 0.65rem 0.75rem; margin-bottom: 4px; border-radius: 8px; border: 1px solid transparent; background: transparent; color: var(--text); }
+    .lang-item:hover, .lang-item.active { background: var(--card); border-color: #2a4058; }
+    .lang-item .title { font-weight: 600; display: block; }
+    .lang-item .meta { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .content { padding: 1.25rem 1.5rem; overflow-y: auto; }
+    .text-view { white-space: pre-wrap; font-family: "Consolas", "Liberation Mono", monospace; font-size: 0.88rem; line-height: 1.5; background: #0d1218; border: 1px solid #1e2a3a; border-radius: 8px; padding: 1rem; max-height: calc(100vh - 200px); overflow: auto; }
+    .text-view h1, .text-view h2, .text-view h3 { font-family: Georgia, serif; color: var(--accent); }
+    .fig { max-width: 100%; border-radius: 8px; margin: 1rem 0; border: 1px solid #2a3a50; }
+    .empty { color: var(--muted); padding: 2rem; text-align: center; }
+    .badge { display: inline-block; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #1a3040; color: var(--accent); margin-left: 6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Programming Language Manuals</h1>
+      <div class="sub">H7c books with embedded figures · GUI secure reader or plain text</div>
+    </div>
+    <div class="toolbar">
+      <input type="search" id="search" placeholder="Filter languages…" aria-label="Filter languages" />
+      <button type="button" id="btn-text" disabled>Text view</button>
+      <button type="button" id="btn-gui" class="primary" disabled>GUI reader</button>
+      <button type="button" id="btn-regen" title="Regenerate selected manual">Regenerate</button>
+    </div>
+  </header>
+  <main>
+    <aside class="sidebar">
+      <ul class="lang-list" id="lang-list"></ul>
+    </aside>
+    <section class="content" id="content">
+      <div class="empty">Select a language manual from the list.</div>
+    </section>
+  </main>
+  <script>
+    (function () {
+      const listEl = document.getElementById("lang-list");
+      const contentEl = document.getElementById("content");
+      const searchEl = document.getElementById("search");
+      const btnText = document.getElementById("btn-text");
+      const btnGui = document.getElementById("btn-gui");
+      const btnRegen = document.getElementById("btn-regen");
+      let catalog = [];
+      let selected = null;
+      let mode = "preview";
+
+      function esc(s) {
+        return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+
+      function renderList(filter) {
+        const q = (filter || "").trim().toLowerCase();
+        listEl.innerHTML = "";
+        catalog.filter((m) => {
+          if (!q) return true;
+          return (m.label + m.lang_id + m.title).toLowerCase().includes(q);
+        }).forEach((m) => {
+          const li = document.createElement("li");
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "lang-item" + (selected && selected.lang_id === m.lang_id ? " active" : "");
+          btn.innerHTML = `<span class="title">${esc(m.label)}</span><span class="meta">${esc(m.lang_id)}${m.ready ? "" : " · missing"}</span>`;
+          btn.addEventListener("click", () => selectManual(m));
+          li.appendChild(btn);
+          listEl.appendChild(li);
+        });
+      }
+
+      function renderMarkdown(text, figures) {
+        const figs = figures || {};
+        let html = esc(text);
+        html = html.replace(/^### (.+)$/gm, "<h3>$1</h3>");
+        html = html.replace(/^## (.+)$/gm, "<h2>$1</h2>");
+        html = html.replace(/^# (.+)$/gm, "<h1>$1</h1>");
+        html = html.replace(/!\[([^\]]*)\]\(h7fig:([a-zA-Z0-9_.-]+)\)/g, (_, alt, id) => {
+          const f = figs[id];
+          if (f && f.data_url) return `<figure><img class="fig" src="${f.data_url}" alt="${esc(alt || id)}" /><figcaption>${esc(alt || id)}</figcaption></figure>`;
+          return `<p><em>[figure: ${esc(id)}]</em></p>`;
+        });
+        html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+        html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        return html;
+      }
+
+      async function loadPreview(m) {
+        contentEl.innerHTML = "<div class='empty'>Loading manual…</div>";
+        const res = await fetch(`/api/lang-manuals/${encodeURIComponent(m.lang_id)}`, { cache: "no-store" });
+        const doc = await res.json();
+        if (!doc.ok) {
+          contentEl.innerHTML = `<div class='empty'>${esc(doc.error || "load failed")}</div>`;
+          return;
+        }
+        contentEl.innerHTML = `<div class="text-view">${renderMarkdown(doc.text, doc.figures)}</div>`;
+      }
+
+      async function loadText(m) {
+        const res = await fetch(`/api/lang-manuals/${encodeURIComponent(m.lang_id)}/text`, { cache: "no-store" });
+        const text = await res.text();
+        contentEl.innerHTML = `<pre class="text-view">${esc(text)}</pre>`;
+      }
+
+      function selectManual(m) {
+        selected = m;
+        btnText.disabled = !m.ready;
+        btnGui.disabled = !m.ready;
+        renderList(searchEl.value);
+        if (mode === "text") loadText(m);
+        else loadPreview(m);
+      }
+
+      btnText.addEventListener("click", () => {
+        mode = "text";
+        if (selected) loadText(selected);
+      });
+      btnGui.addEventListener("click", () => {
+        if (!selected || !window.H7Reader) return;
+        H7Reader.openSecure(selected.book_id, {
+          id: selected.book_id,
+          title: selected.title,
+          format: "h7c",
+          description: `${selected.label} programming language manual with embedded figures.`,
+        }, { secure: true });
+      });
+      btnRegen.addEventListener("click", async () => {
+        if (!selected) return;
+        btnRegen.disabled = true;
+        await fetch(`/api/lang-manuals/${encodeURIComponent(selected.lang_id)}/generate`, { method: "POST" });
+        btnRegen.disabled = false;
+        await loadCatalog();
+        selectManual(selected);
+      });
+      searchEl.addEventListener("input", () => renderList(searchEl.value));
+
+      async function loadCatalog() {
+        const res = await fetch("/api/lang-manuals", { cache: "no-store" });
+        const doc = await res.json();
+        catalog = doc.manuals || [];
+        renderList();
+      }
+      loadCatalog();
+    })();
+  </script>
+</body>
+</html>

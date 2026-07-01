@@ -1,0 +1,34 @@
+{
+  "schema": "queen-boot-mandate/v1",
+  "title": "Queen Field Boot — Hostess drive patterns inside Queen",
+  "motto": "Login · rebuild · reboot yourself. ZAC restore when brain shards present.",
+  "hostess_patterns": {
+    "zac_restore": "../Hostess7/scripts/field_zac.py restore",
+    "self_update": "../Hostess7/scripts/field_hostess_updates.py",
+    "team_sync": "../Hostess7/scripts/field_team_drive.py sync",
+    "on": "../Hostess7/Hostess7.sh on"
+  },
+  "boot_sequence": [
+    "install_inside",
+    "grok_login_check",
+    "zac_restore_optional",
+    "rebuild_core",
+    "verify",
+    "reboot_queen_browser"
+  ],
+  "login": {
+    "grok_auth": "~/.grok/auth.json",
+    "oauth": "grok login --oauth",
+    "device_headless": "grok login --device-auth",
+    "secure_channel_required": true
+  },
+  "rebuild": {
+    "orchestrator": "lib/queen-build.py",
+    "command": "run-all"
+  },
+  "reboot": {
+    "launcher": "scripts/run-queen.sh",
+    "binary": "build/rtx/bin/Linux/queen-browser",
+    "flags": ["--sovereign", "--queen"]
+  }
+}

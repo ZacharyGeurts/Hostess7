@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen Terminal</title>
+  <link rel="stylesheet" href="queen-styles.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-gnu-terminal.css" data-queen-theme="1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:*; frame-src 'self' http://127.0.0.1:* https:; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
+  <style>
+    html, body { margin: 0; height: 100%; background: #040a06; }
+    #qgt-embed-root { height: 100%; min-height: 320px; }
+  </style>
+</head>
+<body>
+  <div id="qgt-embed-root"></div>
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+  <script src="queen-gnu-terminal.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(location.search);
+      const cwd = params.get("cwd") || "";
+      void globalThis.QueenGnuTerminal?.mount(document.getElementById("qgt-embed-root"), {
+        layout: params.get("layout") || "tabs",
+        miniview: params.get("miniview") !== "0",
+        minibrowser: params.get("mini") !== "0",
+      })?.then(() => {
+        if (cwd) return globalThis.QueenGnuTerminal?.runCommand?.(`cd ${cwd.replace(/"/g, '\\"')}`);
+      });
+    });
+  </script>
+</body>
+</html>
