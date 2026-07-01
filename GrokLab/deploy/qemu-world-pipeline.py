@@ -32,10 +32,11 @@ RSYNC_LOG_PATH = Path(
 )
 SSH_KEY = os.environ.get("GROK_LAB_SSH_KEY", str(DEPLOY / "world-ssh" / "id_ed25519"))
 NL = Path(os.environ.get("NEXUS_INSTALL_ROOT", str(DEPLOY.parent.parent)))
-VERIFY_SEC = int(os.environ.get("WORLD_PIPELINE_VERIFY_SEC", "240"))
+VERIFY_QUICK_ATTEMPTS = int(os.environ.get("WORLD_PIPELINE_VERIFY_QUICK_ATTEMPTS", "3"))
 REBOOT_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_REBOOT_SSH_SEC", "180"))
 DEPLOY_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_DEPLOY_SSH_SEC", "180"))
-CHECK_BOOT_SEC = int(os.environ.get("WORLD_PIPELINE_CHECK_BOOT_SEC", "200"))
+CHECK_KICK_SEC = int(os.environ.get("WORLD_PIPELINE_CHECK_KICK_SEC", "15"))
+CHECK_ROUND_PAUSE_SEC = int(os.environ.get("WORLD_PIPELINE_CHECK_ROUND_PAUSE_SEC", "5"))
 CHECK_MAX_ROUNDS = int(os.environ.get("WORLD_PIPELINE_CHECK_MAX_ROUNDS", "100"))
 DEPLOY_SETTLE_SEC = int(os.environ.get("WORLD_PIPELINE_DEPLOY_SETTLE_SEC", "2"))
 MAX_DEPLOY_ATTEMPTS = int(os.environ.get("WORLD_PIPELINE_MAX_DEPLOY_ATTEMPTS", "8"))
@@ -415,61 +416,59 @@ def _tree_ok(port: int) -> bool:
     return chk.returncode == 0
 
 
-def _trigger_panel_boot(
+def _kick_services(
     port: int,
     *,
     slot: int | None = None,
     nid: str | None = None,
+    wait: bool = False,
 ) -> None:
+    """Fire-and-forget service kick during rotate START pass (do not wait for panel)."""
     ensure = "/opt/ammoos/ammoos/NewLatest/GrokLab/deploy/world-node-panel-ensure.sh"
-    boot = "/opt/ammoos/ammoos/NewLatest/GrokLab/deploy/world-node-c2-kilroy-boot.sh"
-    label = f"slot {slot} boot {nid} :{port}" if slot is not None else f"boot :{port}"
-    _log(f"{label} — starting c2/kilroy + panel (up to {CHECK_BOOT_SEC}s)")
-    _run(
-        _ssh_cmd(
-            port,
-            f"sudo systemctl start nexus-c2-kilroy.service 2>/dev/null; "
-            f"sudo systemctl start nexus-panel.service 2>/dev/null; "
-            f"test -x {ensure} && GROK_LAB_WORLD_NODE=1 AML_BUILD=0 bash {ensure} 2>&1 | tail -5 || "
-            f"(test -x {boot} && AML_BUILD=0 bash {boot} 2>&1 | tail -5) || true",
-            connect_timeout=15,
-        ),
-        timeout=CHECK_BOOT_SEC,
+    label = f"slot {slot} start {nid}" if slot is not None else "start"
+    _log(f"{label} :{port} — kick c2/panel (move on, verify later)")
+    cmd = _ssh_cmd(
+        port,
+        "sudo systemctl start nexus-c2-kilroy.service 2>/dev/null; "
+        "sudo systemctl start nexus-panel.service 2>/dev/null; "
+        f"test -x {ensure} && GROK_LAB_WORLD_NODE=1 AML_BUILD=0 "
+        f"nohup bash {ensure} >/tmp/panel-ensure.log 2>&1 </dev/null & "
+        "sleep 1; true",
+        connect_timeout=8,
     )
+    if wait:
+        _run(cmd, timeout=CHECK_KICK_SEC)
+    else:
+        subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
-def _verify_panel(
+def _verify_panel_quick(
     port: int,
-    timeout: int | None = None,
     *,
     slot: int | None = None,
     nid: str | None = None,
 ) -> bool:
-    limit = timeout if timeout is not None else VERIFY_SEC
-    attempts = max(1, limit // 5)
-    boot_nudged = False
+    """Short panel probe during VERIFY pass — retry next round if not ready."""
+    attempts = max(1, VERIFY_QUICK_ATTEMPTS)
     prefix = f"slot {slot} verify {nid}" if slot is not None else "verify"
+    last_code = "000"
     for i in range(attempts):
         r = _run(
             _ssh_cmd(
                 port,
                 "curl -sf -o /dev/null -w '%{http_code}' "
                 "http://127.0.0.1:9477/field 2>/dev/null || echo 000",
-                connect_timeout=8,
+                connect_timeout=6,
             ),
-            timeout=25,
+            timeout=15,
         )
-        code = (r.stdout or "").strip() or "000"
-        if code == "200":
-            _log(f"{prefix} :{port} — panel 200 ({i + 1}/{attempts})")
+        last_code = (r.stdout or "").strip() or "000"
+        if last_code == "200":
+            _log(f"{prefix} :{port} — panel 200")
             return True
-        if i == 0 or (i + 1) % 4 == 0:
-            _log(f"{prefix} :{port} — waiting panel http={code} ({i + 1}/{attempts})")
-        if not boot_nudged and i >= 2:
-            boot_nudged = True
-            _trigger_panel_boot(port, slot=slot, nid=nid)
-        time.sleep(5)
-    _log(f"{prefix} :{port} — panel not ready after {attempts} attempts")
+        if i + 1 < attempts:
+            time.sleep(5)
+    _log(f"{prefix} :{port} — http={last_code}, retry next round")
     return False
 
 
@@ -576,8 +575,8 @@ def _slot_worker_deploy(slot: int) -> None:
             time.sleep(5)
 
 
-def _slot_worker_check(slot: int) -> None:
-    """Check pass: launch staged node, verify panel online, provision or retry next round."""
+def _slot_worker_check_start(slot: int) -> None:
+    """Rotate START: launch → SSH → kick services → stop VM → next (no panel wait)."""
     port = SLOTS[slot]["port"]
     while True:
         node = _pop_next(_check_queue)
@@ -588,48 +587,97 @@ def _slot_worker_check(slot: int) -> None:
         nid = node["id"]
         try:
             _set_slot(slot, state="check_launch", node=node)
-            _log(f"slot {slot} check {nid} ({node.get('city', node['region'])})")
+            _log(f"slot {slot} start {nid} ({node.get('city', node['region'])})")
 
             if not _launch_node(slot, port, node):
                 with _lock:
                     _check_queue.append(node)
-                time.sleep(5)
+                time.sleep(3)
                 continue
 
             _set_slot(slot, state="check_ssh", node=node)
             if not _wait_ssh(port, timeout=REBOOT_SSH_SEC):
-                _log(f"slot {slot} CHECK SSH TIMEOUT {nid} — retry next round")
+                _log(f"slot {slot} START SSH TIMEOUT {nid} — retry next round")
                 _stop_vm(nid)
                 continue
 
-            _set_slot(slot, state="check_verify", node=node)
-            _log(f"slot {slot} check_verify {nid} :{port} — boot + panel (up to {VERIFY_SEC}s)")
-            _trigger_panel_boot(port, slot=slot, nid=nid)
-            verified = _verify_panel(port, slot=slot, nid=nid)
-            tree_ok = _tree_ok(port)
-            if not tree_ok:
-                _log(f"slot {slot} tree missing {nid} :{port}")
-
-            if tree_ok and verified:
-                _mark_provisioned(nid)
-                tgt = _target()
-                _log(f"slot {slot} ONLINE {nid} — {len(_provisioned_ids())}/{tgt}")
-            elif not tree_ok:
-                _log(f"slot {slot} CHECK FAIL {nid} — tree missing, back to deploy queue")
+            if not _tree_ok(port):
+                _log(f"slot {slot} START FAIL {nid} — tree missing, back to deploy")
                 _unstage(nid)
                 with _lock:
                     _queue.append(node)
-            else:
-                _log(f"slot {slot} CHECK NOT READY {nid} — retry next round from top")
+                _stop_vm(nid)
+                continue
+
+            _set_slot(slot, state="check_start", node=node)
+            _kick_services(port, slot=slot, nid=nid, wait=True)
+            tgt = _target()
+            _log(
+                f"slot {slot} STARTED {nid} — services kicked, moving on "
+                f"({len(_pending_check_ids())} await verify, {len(_provisioned_ids())}/{tgt} online)"
+            )
 
             _stop_vm(nid)
             _set_slot(slot, state="idle", node=None)
             time.sleep(1)
 
         except Exception as exc:  # noqa: BLE001
-            _log(f"slot {slot} CHECK UNHANDLED {nid} {exc}")
+            _log(f"slot {slot} START UNHANDLED {nid} {exc}")
             _stop_vm(nid)
-            time.sleep(5)
+            time.sleep(3)
+
+
+def _slot_worker_check_verify(slot: int) -> None:
+    """Rotate VERIFY: launch → SSH → quick panel probe → ONLINE or retry next round."""
+    port = SLOTS[slot]["port"]
+    while True:
+        node = _pop_next(_check_queue)
+        if node is None:
+            _set_slot(slot, state="idle", node=None)
+            return
+
+        nid = node["id"]
+        try:
+            _set_slot(slot, state="check_launch", node=node)
+            _log(f"slot {slot} verify {nid} ({node.get('city', node['region'])})")
+
+            if not _launch_node(slot, port, node):
+                with _lock:
+                    _check_queue.append(node)
+                time.sleep(3)
+                continue
+
+            _set_slot(slot, state="check_ssh", node=node)
+            if not _wait_ssh(port, timeout=REBOOT_SSH_SEC):
+                _log(f"slot {slot} VERIFY SSH TIMEOUT {nid} — retry next round")
+                _stop_vm(nid)
+                continue
+
+            _set_slot(slot, state="check_verify", node=node)
+            _kick_services(port, slot=slot, nid=nid, wait=False)
+            tree_ok = _tree_ok(port)
+            verified = _verify_panel_quick(port, slot=slot, nid=nid) if tree_ok else False
+
+            if tree_ok and verified:
+                _mark_provisioned(nid)
+                tgt = _target()
+                _log(f"slot {slot} ONLINE {nid} — {len(_provisioned_ids())}/{tgt}")
+            elif not tree_ok:
+                _log(f"slot {slot} VERIFY FAIL {nid} — tree missing, back to deploy")
+                _unstage(nid)
+                with _lock:
+                    _queue.append(node)
+            else:
+                _log(f"slot {slot} VERIFY PENDING {nid} — retry next round")
+
+            _stop_vm(nid)
+            _set_slot(slot, state="idle", node=None)
+            time.sleep(1)
+
+        except Exception as exc:  # noqa: BLE001
+            _log(f"slot {slot} VERIFY UNHANDLED {nid} {exc}")
+            _stop_vm(nid)
+            time.sleep(3)
 
 
 def _run_slot_pool(worker: Callable[[int], None], label: str) -> None:
@@ -641,28 +689,44 @@ def _run_slot_pool(worker: Callable[[int], None], label: str) -> None:
         t.join()
 
 
+def _run_check_sweep(worker: Callable[[int], None], label: str) -> None:
+    _init_check_queue_from_top()
+    pending = len(_check_queue)
+    if not pending:
+        return
+    with _lock:
+        _state["phase"] = "check"
+        _state["pending_check"] = pending
+    _log(f"=== {label} — {pending} nodes from top ===")
+    _run_slot_pool(worker, label)
+
+
 def _run_check_loop() -> None:
-    """Sweep staged nodes from top of manifest until all online or max rounds."""
+    """Rotate cycle: START all staged (kick + move on), then VERIFY sweep; repeat until online."""
     round_num = 0
     while _pending_check_ids():
         round_num += 1
         if round_num > CHECK_MAX_ROUNDS:
             _log(f"check loop stopped after {CHECK_MAX_ROUNDS} rounds — {_len_pending()} still offline")
             break
-        _init_check_queue_from_top()
-        pending = len(_check_queue)
-        if not pending:
-            break
         with _lock:
             _state["check_round"] = round_num
-        _log(f"=== check round {round_num} — {pending} nodes from top ===")
-        _run_slot_pool(_slot_worker_check, f"check round {round_num}")
+            _state["mode"] = "rotate-check"
+
+        _run_check_sweep(_slot_worker_check_start, f"round {round_num} START")
+
+        if not _pending_check_ids():
+            break
+
+        time.sleep(CHECK_ROUND_PAUSE_SEC)
+        _run_check_sweep(_slot_worker_check_verify, f"round {round_num} VERIFY")
+
         done = len(_provisioned_ids())
         tgt = _target()
         still = len(_pending_check_ids())
-        _log(f"=== end round {round_num} — {done}/{tgt} online, {still} awaiting check ===")
+        _log(f"=== end round {round_num} — {done}/{tgt} online, {still} awaiting verify ===")
         if still:
-            time.sleep(5)
+            time.sleep(CHECK_ROUND_PAUSE_SEC)
 
 
 def _len_pending() -> int:
@@ -688,7 +752,7 @@ def run_check_only() -> dict[str, Any]:
         {
             "schema": "grok-lab-qemu-pipeline/v3",
             "running": True,
-            "mode": "check-only",
+            "mode": "rotate-check",
             "phase": "check",
             "slots": SLOTS,
             "pending_deploy": len(stragglers),
