@@ -213,6 +213,7 @@
         );
       })
       .join("");
+    if (global.FieldShellContext?.wireAllFrames) global.FieldShellContext.wireAllFrames();
   }
 
   function syncTaskbar() {
@@ -757,6 +758,7 @@
   function onMessage(ev) {
     const msg = ev.data;
     if (!msg || typeof msg !== "object") return;
+    if (global.FieldShellContext?.onIframeMessage?.(ev, function () { return state.windows; })) return;
     if (msg.type === "nexus:launch") {
       if (msg.url) {
         launch({ id: msg.id || "program", name: msg.name || "Program", exec: msg.url }, { newWindow: !!msg.newWindow });
@@ -941,10 +943,16 @@
     launch: launch,
     launchView: launchView,
     focus: focusWindow,
+    focusWindow: focusWindow,
     minimize: minimizeWindow,
+    minimizeWindow: minimizeWindow,
     close: closeWindow,
+    closeWindow: closeWindow,
     toggle: toggleWindow,
     showDesktop: showDesktop,
+    getWindow: function (id) {
+      return state.windows.find(function (w) { return w.id === id; });
+    },
     openStartProperties: openStartProperties,
     openDisplaySettings: openDisplaySettings,
     openDesktopContext: openDesktopContext,

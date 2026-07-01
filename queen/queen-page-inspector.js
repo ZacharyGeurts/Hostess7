@@ -46,7 +46,7 @@
       if (doc.getElementById("queen-page-agent")) return true;
       const s = doc.createElement("script");
       s.id = "queen-page-agent";
-      s.src = `${location.origin}/world/queen-page-agent.js`;
+      s.src = "queen-page-agent.js";
       s.async = false;
       doc.documentElement.appendChild(s);
       return true;

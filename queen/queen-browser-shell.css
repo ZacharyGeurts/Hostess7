@@ -540,3 +540,44 @@ body.qw-browser-shell .qb-viewport .qb-tab-panes {
   border: none;
   background: #fff;
 }
+
+.qb-shell-ctx {
+  position: fixed;
+  z-index: 2147483645;
+  min-width: 200px;
+  background: rgba(10, 18, 14, 0.98);
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  padding: 4px;
+  display: none;
+  font: 12px/1.35 system-ui, sans-serif;
+  color: #e8f2ea;
+}
+
+.qb-shell-ctx.open {
+  display: block;
+}
+
+.qb-shell-ctx button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 7px 10px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  border-radius: 4px;
+}
+
+.qb-shell-ctx button:hover {
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.qb-shell-ctx hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 4px 0;
+}

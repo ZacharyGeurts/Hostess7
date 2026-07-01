@@ -80,6 +80,20 @@
     if (path === "/api/nexus-c2") {
       return jsonResponse(await loadStatic("/api/nexus-c2.json"));
     }
+    if (path === "/api/queen-browser") {
+      if (method === "POST") return okStub({ saved: true, lane: "pages-queen-browser" });
+      return jsonResponse(await loadStatic("/api/queen-browser.json"));
+    }
+    if (path === "/api/queen-boot") {
+      return jsonResponse(await loadStatic("/api/queen-boot.json"));
+    }
+    if (path === "/api/queen-page-shields") {
+      if (method === "POST") return okStub({ stored: true, shields: true });
+      return jsonResponse(await loadStatic("/api/queen-page-shields.json"));
+    }
+    if (path === "/api/github-secure") {
+      return jsonResponse(await loadStatic("/api/github-secure.json"));
+    }
     if (path === "/api/field-c2-bookmarks" && method === "POST") {
       return okStub({ stored: true });
     }

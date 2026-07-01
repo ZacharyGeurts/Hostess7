@@ -542,11 +542,28 @@
     }
   }
 
-  function onShellMessage(ev) {
-    if (ev.origin !== location.origin && !isLoopbackOrigin(ev.origin)) return;
+  function onAmmoOsMessage(ev) {
     const data = ev.data;
-    if (!data || typeof data !== "object" || data.type !== "queen:shell") return;
+    if (!data || typeof data !== "object") return;
+    if (data.type === "nexus:history") {
+      if (data.dir === "back") $("qb-back")?.click();
+      else if (data.dir === "forward") $("qb-forward")?.click();
+      return;
+    }
+    if (data.type !== "queen:shell") return;
     const action = data.action;
+    if (action === "reload") {
+      $("qb-reload")?.click();
+      return;
+    }
+    if (action === "inspector") {
+      $("qpi-inspect-btn")?.click();
+      return;
+    }
+    if (action === "new_tab" && !data.url) {
+      globalThis.QueenOS?.browser?.newTab?.(startUrl());
+      return;
+    }
     if (!SHELL_ACTIONS.has(action)) return;
     if (action === "attach_tab") {
       attachTab(data.tab_id);
@@ -609,9 +626,96 @@
     } catch (_) {}
   }
 
-  function wireSecurity() {
-    window.addEventListener("message", onShellMessage);
-    window.addEventListener("message", onDesktopMessage);
+  function ensureShellCtx() {
+    let el = document.getElementById("qb-shell-ctx");
+    if (el) return el;
+    el = document.createElement("div");
+    el.id = "qb-shell-ctx";
+    el.className = "qb-shell-ctx";
+    el.setAttribute("role", "menu");
+    el.setAttribute("aria-label", "Queen browser menu");
+    document.body.appendChild(el);
+    document.addEventListener("click", () => el.classList.remove("open"), true);
+    return el;
+  }
+
+  function openShellContext(x, y, meta) {
+    const menu = ensureShellCtx();
+    const items = [
+      { id: "back", label: "Back" },
+      { id: "forward", label: "Forward" },
+      { id: "reload", label: "Reload" },
+      { id: "new-tab", label: "New tab" },
+      { sep: true },
+      { id: "inspector", label: "Page inspector" },
+      { id: "bookmarks", label: "Bookmarks hub" },
+      { id: "gates", label: "Gate manifest" },
+      { sep: true },
+      { id: "desktop", label: "Show AmmoOS desktop" },
+    ];
+    if (meta?.href) {
+      items.splice(4, 0, { id: "open-link", label: "Open link in new tab" });
+    }
+    menu.innerHTML = items
+      .map((it) => {
+        if (it.sep) return "<hr />";
+        return `<button type="button" data-qctx="${esc(it.id)}">${esc(it.label)}</button>`;
+      })
+      .join("");
+    menu.style.left = `${Math.min(x, innerWidth - 220)}px`;
+    menu.style.top = `${Math.min(y, innerHeight - 300)}px`;
+    menu.classList.add("open");
+    menu.onclick = (ev) => {
+      const btn = ev.target.closest("[data-qctx]");
+      if (!btn) return;
+      ev.stopPropagation();
+      menu.classList.remove("open");
+      const act = btn.dataset.qctx;
+      if (act === "back") $("qb-back")?.click();
+      else if (act === "forward") $("qb-forward")?.click();
+      else if (act === "reload") $("qb-reload")?.click();
+      else if (act === "new-tab") globalThis.QueenOS?.browser?.newTab?.(startUrl());
+      else if (act === "inspector") $("qpi-inspect-btn")?.click();
+      else if (act === "bookmarks") $("qb-bookmarks-flyout-btn")?.click();
+      else if (act === "gates") $("qb-gates")?.click();
+      else if (act === "open-link" && meta?.href) globalThis.QueenOS?.browser?.newTab?.(meta.href);
+      else if (act === "desktop") {
+        try {
+          parent.postMessage({ type: "nexus:minimize" }, "*");
+        } catch (_) {}
+        globalThis.QueenOS?.browser?.navigate?.(`${panelBase()}/field`);
+      }
+    };
+  }
+
+  function wireShellContext() {
+    document.addEventListener(
+      "contextmenu",
+      (e) => {
+        if (e.target.closest(".qb-viewport, .qb-frame, iframe")) return;
+        if (e.target.closest(".qb-shell-ctx, .qpa-context-menu, .qb-bookmarks-flyout")) return;
+        if (!e.target.closest(".qb-chrome, .qb-row, .qb-tabs, .qb-bookmarks, .qb-humans-ai, .qb-gate-strip, .qb-brand-strip")) {
+          if (!e.target.closest("body")) return;
+          if (e.target.closest(".qb-viewport")) return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        const link = e.target.closest?.("a[href]");
+        openShellContext(e.clientX, e.clientY, { href: link?.href || "", zone: "chrome" });
+      },
+      true,
+    );
+  }
+
+  function onShellMessage(ev) {
+    if (ev.origin !== location.origin && !isLoopbackOrigin(ev.origin)) return;
+    onAmmoOsMessage(ev);
+    const data = ev.data;
+    if (!data || typeof data !== "object" || data.type !== "queen:shell") return;
+    const action = data.action;
+    if (["reload", "inspector"].includes(action)) return;
+    if (action === "new_tab" && !data.url) return;
+    if (!SHELL_ACTIONS.has(action)) return;
     document.addEventListener("securitypolicyviolation", (e) => {
       const status = $("qb-status");
       if (status) status.textContent = `CSP blocked: ${e.blockedURI || e.violatedDirective}`;
@@ -836,6 +940,7 @@
     ensureViewport();
     bindTabChrome();
     wireSecurity();
+    wireShellContext();
     wireKeyboard();
     wireZNetworkHooks();
     wireStartButton();
@@ -856,5 +961,6 @@
     toggleViewportFullscreen,
     cycleTabs,
     decorateTabsRender,
+    openShellContext,
   };
 })();
