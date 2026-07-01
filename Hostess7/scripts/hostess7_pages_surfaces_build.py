@@ -146,6 +146,9 @@ def _pages_url(path: str) -> str:
     path = path.strip()
     if not path:
         return PAGES_BASE + "/"
+    base = PAGES_BASE.rstrip("/")
+    if path == base or path.startswith(base + "/"):
+        return path
     if path.startswith("http://127.0.0.1:9481"):
         return path.replace("http://127.0.0.1:9481", PAGES_BASE).replace("/world/", "/queen/")
     if path.startswith("http://127.0.0.1:9477"):
@@ -205,7 +208,7 @@ def _patch_queen_browser_app(app: dict[str, Any]) -> None:
     app["c2_embedded"] = True
     app.pop("standalone_queen", None)
     app.pop("open_via", None)
-    for field in ("exec", "url", "launch_url"):
+    for field in ("url", "launch_url"):
         if field in app and app[field]:
             app[field] = _pages_url(str(app[field]))
 
