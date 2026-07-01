@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hostess7"
+version = "1.0.7e"
+description = "Hostess 7 — sovereign field brain (embeddable)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0-or-later" }
+authors = [{ name = "Zachary Geurts", email = "gzac5314@gmail.com" }]
+dependencies = ["Flask>=3.0,<4"]
+
+[project.optional-dependencies]
+voice = []
+dev = ["ruff>=0.4", "pytest>=8"]
+
+[project.scripts]
+hostess7-boot = "hostess7.boot:main"
+hostess7-web = "hostess7.web_entry:main"
+hostess7-core = "hostess7.core:main"
+hostess7-daemon = "hostess7.daemon:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"

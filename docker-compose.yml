@@ -1,0 +1,30 @@
+services:
+  hostess7:
+    build: .
+    image: hostess7:1.0.7h
+    container_name: hostess7
+    restart: unless-stopped
+    ports:
+      - "${HOSTESS7_WEB_PORT:-8080}:8080"
+    environment:
+      HOSTESS7_ROOT: /opt/hostess7
+      HOSTESS7_BRAIN_STATE: /var/lib/hostess7/state
+      HOSTESS7_WEB_PORT: "8080"
+      HOSTESS7_LOW_POWER: "${HOSTESS7_LOW_POWER:-0}"
+      HOSTESS7_LICENSE_MODE: war
+      HOSTESS7_DAEMON_INTERVAL: "${HOSTESS7_DAEMON_INTERVAL:-300}"
+    volumes:
+      - hostess7-state:/var/lib/hostess7/state
+      - hostess7-brain:/opt/hostess7/cache/fieldstorage
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+volumes:
+  hostess7-state:
+  hostess7-brain:

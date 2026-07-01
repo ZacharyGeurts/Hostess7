@@ -1,0 +1,46 @@
+name: Hostess7 CI
+
+on:
+  push:
+    branches: [main, master, gh-pages]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package + dev deps
+        run: |
+          pip install -e ".[dev]"
+          pip install -r requirements.txt
+
+      - name: Ruff
+        run: ruff check src/hostess7 scripts/hostess7_web.py scripts/hostess7_boot.py scripts/hostess7_tasks.py || true
+
+      - name: Package import smoke
+        run: python -c "import hostess7; print(hostess7.__version__)"
+
+      - name: Cohesion module smoke
+        run: python -m hostess7.cohesion iq
+
+      - name: QA subset
+        run: |
+          python scripts/qa_brain_hemisphere_test.py || true
+          python scripts/qa_intelligence_flow_test.py || true
+
+      - name: Shellcheck dispatcher
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+          shellcheck -e SC1091 Hostess7.sh scripts/install-hostess7-embed.sh scripts/pack-hostess7-embed.sh || true
+
+      - name: Docker build smoke
+        run: |
+          docker build -t hostess7:ci .
+          docker run --rm hostess7:ci python -c "import hostess7; print('ok')"

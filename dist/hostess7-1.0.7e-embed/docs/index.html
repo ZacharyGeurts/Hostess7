@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hostess 7 — Boot Terminal</title>
+  <meta name="description" content="GitHub Pages boot terminal — run ./Hostess7.sh boot locally, then open 127.0.0.1 surfaces." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:* https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="term-header">
+    <span class="term-logo">H7</span>
+    <div>
+      <h1>Hostess 7 Boot Terminal</h1>
+      <p class="term-sub">GitHub Pages = boot only · live UI on <code>127.0.0.1</code></p>
+    </div>
+    <nav class="term-actions">
+      <button type="button" class="btn primary" id="codespaces-btn">Codespaces boot</button>
+      <a class="btn ghost" href="https://github.com/ZacharyGeurts/Hostess7" target="_blank" rel="noopener">Repo</a>
+    </nav>
+  </header>
+
+  <main class="term-main">
+    <section class="terminal" aria-label="Hostess 7 boot console">
+      <div id="term-out" class="term-out" role="log" aria-live="polite"></div>
+      <form id="term-form" class="term-input-row" autocomplete="off">
+        <label for="term-in" class="term-prompt" id="term-prompt">hostess7@pages:~$</label>
+        <input id="term-in" type="text" spellcheck="false" aria-label="Boot terminal command" />
+      </form>
+    </section>
+
+    <aside class="surfaces" id="surfaces" hidden>
+      <h2>Loopback surfaces (your browser)</h2>
+      <p class="surfaces-note">Open these after <code>./Hostess7.sh boot</code> completes on your machine.</p>
+      <ul id="surface-list" class="surface-list"></ul>
+    </aside>
+  </main>
+
+  <footer class="term-foot">
+    <span>v<span id="ver">1.0.7e</span></span>
+    <span>·</span>
+    <span id="posture">war-ready</span>
+    <span>·</span>
+    <span>sovereign time — no wall timers</span>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

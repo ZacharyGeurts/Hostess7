@@ -1,0 +1,201 @@
+{
+  "schema": "hostess7-field-stack/v1",
+  "title": "SG Field Stack — how everything works",
+  "updated": "2026-06-29",
+  "motto": "KILROY is 127.0.0.1 on any computer — security, Field Tech speed, storage — guest untouched. F9 hook overrides everyone.",
+  "policy": {
+    "kilroy_is_pc_core": true,
+    "kilroy_kernel_first": true,
+    "kilroy_self_defensive": true,
+    "kill_tech_in_kernel_substrate": true,
+    "znetwork_absorbed": true,
+    "one_field_whole_device": true,
+    "field_one_module": "lib/field-one.py",
+    "guest_os_loads_normally": true,
+    "guest_os_field_grant": true,
+    "grub_touched_only_on_commit": true,
+    "host_mirror_not_nested_team": true,
+    "grandma_safe_passthrough": true,
+    "no_hardcoded_passwords": true,
+    "updates_periodic_not_continuous": true,
+    "kilroy_is_loopback": true,
+    "loopback_authority": "127.0.0.1"
+  },
+  "loopback": {
+    "doctrine": "data/kilroy-loopback-doctrine.json",
+    "module": "lib/kilroy-loopback.py",
+    "marker": "kilroy-loopback.json",
+    "boons": {
+      "security": "C2 panel + truth DNS + field protections on loopback",
+      "field_tech_speed": "loopback-first services — no cloud hop",
+      "storage_space": "field-drive mirror expands storage without reformat"
+    }
+  },
+  "boot_order": [
+    "kilroy_kernel",
+    "unified_device_field",
+    "underlay",
+    "guest_os"
+  ],
+  "surfaces": {
+    "queen": {"role": "web_browser", "url": "http://127.0.0.1:9481/world/browser.html"},
+    "ammoos": {"role": "normal_desktop", "url": "http://127.0.0.1:9477/field"}
+  },
+  "boot_services": {
+    "doctrine": "data/kilroy-boot-services.json",
+    "module": "lib/kilroy-boot-services.py",
+    "dhcp_table": "data/field-dhcp-seed.json",
+    "preconfigure_on_kernel_boot": true
+  },
+  "f9_stack": {
+    "hotkey": "F9",
+    "sovereign_override": true,
+    "hook": "lib/field-underlay-hotkey.py",
+    "doctrine": "data/f9-sovereign-hook-doctrine.json",
+    "boot_order": ["kilroy", "ammoos_desktop"],
+    "module": "lib/field-queen-browser-open.py",
+    "motto": "F9 built-in overrides everyone — we got the hook",
+    "queen": "web browser only",
+    "ammoos": "normal desktop on F9"
+  },
+  "layers": {
+    "kilroy_kernel": {
+      "role": "pc_core_syscall_network_defense_offense",
+      "module": "lib/kilroy-core.sh",
+      "proc": "/proc/kilroy_field",
+      "dev": "/dev/kilroy_field",
+      "userspace_graft_when_not_live": true,
+      "self_defensive": {
+        "always_on": true,
+        "guest_cannot_disable": true,
+        "layers": [
+          "4-slot tamper verify (TIME/MEMORY/THERMO/CONTEXT)",
+          "NEXUS behavioral guard (amortized at syscall boundary)",
+          "rtx_slots_tamper_action → task abort on slot corruption",
+          "consumer-safe syscall whitelist",
+          "/proc/kilroy_field/security telemetry"
+        ],
+        "motto": "KILROY defends itself at the Field Die — not a userspace daemon the guest can kill."
+      },
+      "nexus_c2": {
+        "role": "field_tech_monitoring_panel",
+        "inside_kilroy": true,
+        "theme": "black_emerald_rose_2026",
+        "palette": "black_green_pink",
+        "panel": "http://127.0.0.1:9477/field",
+        "command": "http://127.0.0.1:9477/command",
+        "module": "lib/threat-panel.sh",
+        "marker": "kilroy-nexus-c2.json",
+        "monitoring": "all_out_field_tech"
+      },
+      "network_lane": {
+        "absorbed_from": "znetwork",
+        "implementation": "lib/znetwork-field.sh",
+        "marker": "kilroy-net-lane.json",
+        "kernel_future": "netlink_field slots 16-19 on unified field bus"
+      },
+      "kill_tech_anchor": [
+        "field-attack-kit.py",
+        "pest-arsenal.sh",
+        "lethal-enforcement.py",
+        "kill-codes.py",
+        "planetary-observer.py",
+        "znetwork-relayer.py"
+      ],
+      "note": "KILROY is the PC core — boots the machine, loads Mint/Windows normally inside the field grant. Today userspace graft until bzImage boots."
+    },
+    "unified_device_field": {
+      "role": "one_envelope_whole_device",
+      "module": "lib/field-unified-device.py",
+      "domains": ["storage", "ram", "motherboard", "voltage", "fcc", "kilroy_kernel"]
+    },
+    "underlay": {
+      "role": "guest_substrate_passthrough",
+      "committed": false,
+      "hotkey": "lib/field-underlay-hotkey.py",
+      "f9_sovereign_override": true,
+      "rule": "Host stays boss until Tristate commit; F9 hook overrides host shortcuts"
+    },
+    "guest_os": {
+      "role": "incumbent_linux_mint_windows",
+      "load": "normal_desktop_after_kilroy_boot",
+      "grant": "HostPassthrough ABI — unmodified binaries"
+    }
+  },
+  "deprecated": {
+    "znetwork_layer": "Absorbed into KILROY network lane — not a separate boot layer",
+    "nexus_c2_layer": "NEXUS C2 panel absorbed into KILROY PC core — not a separate boot layer"
+  },
+  "field_drive": {
+    "live_root": ".nexus-field-drive",
+    "state": ".nexus-field-drive/nexus-field/state",
+    "publish": "lib/field-drive-system.py publish",
+    "rule": "Host mirror on checkout; no nested nexus-field on TEAM drive; WRDT/redata tails cleared before physical fielding"
+  },
+  "systemd": {
+    "early": {
+      "unit": "nexus-field-early.service",
+      "script": "scripts/nexus-field-early-boot.sh",
+      "before": "display-manager",
+      "marker": "field-underlay-early.json"
+    },
+    "genius": {
+      "unit": "nexus-genius.service",
+      "exec": "lib/nexus-daemon.sh",
+      "must_be_executable": true,
+      "env": ["NEXUS_TRAINING_VIEWER_BOOT=0", "ZNETWORK_FAST=1"]
+    }
+  },
+  "setup": {
+    "mint_boot_ready": "scripts/field-mint-boot-ready.sh",
+    "sudo": "interactive or cached — never hardcoded in repo"
+  },
+  "update_process": {
+    "motto": "KILROY is self-defensive always-on; stack updates are periodic operator lanes — never continuous auto-mutation of the kernel.",
+    "kilroy_kernel": {
+      "chain": "Field .fld → gen-field-stack.sh → kilroy-become-substrate.sh → build-kilroy.sh → grok-mkimage.sh",
+      "recompile": "scripts/field-recompile.sh after field stack change",
+      "frequency": "occasional — when Field Die, physics, or security slots change",
+      "verify": "cat /proc/kilroy_field/security · ./scripts/test-all.sh"
+    },
+    "nexus_userspace": {
+      "panel": "/ammoos-update-os",
+      "apply": "lib/nexus-update-apply.sh",
+      "lock": "lib/nexus-update-lock.sh",
+      "mint_refresh": "scripts/field-mint-boot-ready.sh",
+      "frequency": "as needed — genius layer, panel, protections"
+    },
+    "ammoos_stack": {
+      "doctrine": "data/ammoos-update-doctrine.json",
+      "apply": "lib/ammoos-update-inplace.py",
+      "motto": "preflight · lock · apply · never break a running field"
+    },
+    "hostess7": {
+      "advisory": "./Hostess7.sh updates",
+      "stack_refresh": "./Hostess7.sh stack-learn",
+      "nexus": "./Hostess7.sh nexus update --apply (HOSTESS7_EXEC=1)"
+    },
+    "rule": "Self-defense runs inside KILROY without updates. Updates refresh images and userspace — they do not replace tamper verify; they ship improved verify rules."
+  },
+  "health_checks": [
+    "systemctl is-active nexus-field-early.service nexus-genius.service",
+    "curl -sf http://127.0.0.1:9477/field",
+    "curl -sf http://127.0.0.1:9481/api/status",
+    "pythong lib/field-unified-device.py json"
+  ],
+  "hostess7_commands": [
+    "./Hostess7.sh stack-learn",
+    "./Hostess7.sh stack status",
+    "./Hostess7.sh nexus status",
+    "./Hostess7.sh sg-hub"
+  ],
+  "scripts_registry": "NewLatest/data/field-scripts-registry.json",
+  "stack_router": "NewLatest/scripts/stack.sh",
+  "kilroy_bzimage": {
+    "required_for_live_kernel": true,
+    "required_for_mint_reboot_today": false,
+    "build": "NewLatest/scripts/field-kilroy-bzimage.sh build",
+    "status": "NewLatest/scripts/field-kilroy-bzimage.sh status",
+    "output": "NewLatest/KILROY/build/bzImage"
+  }
+}

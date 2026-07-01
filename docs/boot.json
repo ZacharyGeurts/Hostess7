@@ -1,0 +1,43 @@
+{
+  "name": "Hostess 7",
+  "version": "1.0.7h",
+  "posture": "war-ready",
+  "war_ready": true,
+  "demo": false,
+  "boot_command": "./Hostess7.sh boot",
+  "steps": [
+    "zac-restore",
+    "stack-learn",
+    "on",
+    "web-start"
+  ],
+  "boot_order": [
+    "kilroy_kernel",
+    "unified_device_field",
+    "underlay",
+    "guest_os"
+  ],
+  "web_port": 8080,
+  "pages_url": "https://zacharygeurts.github.io/Hostess7/",
+  "pages_role": "live_brain",
+  "pages_note": "GitHub io runs full Hostess7 package (static API + brain corpus). Codespaces for live agents.",
+  "codespaces": "https://github.com/codespaces/new?hide_repo_select=true&repo=ZacharyGeurts/Hostess7",
+  "repo": "https://github.com/ZacharyGeurts/Hostess7",
+  "surfaces": {
+    "hostess7": "http://127.0.0.1:8080/",
+    "panel": "http://127.0.0.1:9477/field",
+    "queen": "http://127.0.0.1:9481/world/browser.html",
+    "training": "http://127.0.0.1:9488/"
+  },
+  "api": {
+    "status": "/api/status",
+    "ask": "/api/ask",
+    "sovereign_time": "/api/sovereign-time"
+  },
+  "sovereign_time": {
+    "policy": "No wall timers \u2014 sovereign linear clock only",
+    "refresh": "visibilitychange and focus \u2014 never setInterval",
+    "wait": "hostess7_sovereign_wait.py via hostess7-presume"
+  },
+  "brain": true
+}
