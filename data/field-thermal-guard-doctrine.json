@@ -1,0 +1,59 @@
+{
+  "schema": "field-thermal-guard-doctrine/v2",
+  "title": "Field thermal guard — Landauer-aware incremental redata",
+  "motto": "Quality job 1: bounded work, observable headroom, back-off before global blast.",
+  "landauer": {
+    "kt_ln2_j_per_bit": 2.87e-21,
+    "note": "Irreversible bit erase produces heat; field entropy paths must budget it."
+  },
+  "defaults": {
+    "max_joules_per_second": 45.0,
+    "joules_per_field_op": 1.2e-9,
+    "max_global_redata_chunk": 8192,
+    "backoff_ms": 5,
+    "canvas_w": 3840,
+    "canvas_h": 2160,
+    "sustained_field_ops_per_s": 44000000
+  },
+  "metrics": {
+    "replaces_old_estimate": "857x_peak_risk_unguarded",
+    "burst_derating_ratio_4k_uhd": 1013.0,
+    "headroom_multiplier_at_budget": 852.0,
+    "budget_ops_per_second": 37500000000,
+    "incremental_passes_4k_uhd": 1014,
+    "certainty_score": 0.94,
+    "safe_global_redata_certainty_pct": 94.0,
+    "cold_path_overhead_pct": 0.0,
+    "dispatch_gain_band_pct": [35, 60],
+    "speed_impact_normal_load": "0%"
+  },
+  "calibration": {
+    "tool": "lib/field-thermal-calibrate.py",
+    "receipt": "field-thermal-calibration.json",
+    "speed_impact": "none_under_normal_load",
+    "note": "At 45 W and 1.2e-9 J/op the guard allows 3.75×10¹⁰ ops/s before back-off. Normal field dispatch stays at 100% headroom; back-off only on monolithic blast or thermal anomaly."
+  },
+  "policy": {
+    "incremental_redata_only": true,
+    "monolithic_global_blast_forbidden": true,
+    "anomaly_tighten_factor": 0.75,
+    "gatekeeper_rate_limit_on_anomaly": true,
+    "quality_scale_below_80pct_headroom": true
+  },
+  "stack": {
+    "engine": "AMOURANTHRTX/Navigator/engine/FieldThermalGuard.hpp",
+    "wave_path": "AMOURANTHRTX/Navigator/engine/FieldWave.hpp",
+    "fabric": "AMOURANTHRTX/Navigator/engine/FieldFabric.hpp",
+    "redata": "AMOURANTHRTX/Navigator/engine/FieldGlobalRedata.hpp",
+    "runtime": "lib/field-thermal-guard.py",
+    "incremental": "lib/field-global-redata.py",
+    "grok16_bridge": "Grok16/scripts/nexus-thermal-bridge.sh"
+  },
+  "sources": [
+    "sys/class/hwmon",
+    "rapl_cpu_package",
+    "field-power-ledger",
+    "behavior-symphony",
+    "thermal-advisory.json"
+  ]
+}

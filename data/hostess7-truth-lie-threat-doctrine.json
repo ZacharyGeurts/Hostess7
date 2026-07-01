@@ -1,0 +1,76 @@
+{
+  "schema": "hostess7-truth-lie-threat-doctrine/v1",
+  "title": "Extensive Truth · Lie Threat — lies are threats",
+  "motto": "Every lie is a threat. Truth is witness; deception is injection; confirmed lies escalate to the threat panel.",
+  "module": "lib/hostess7-truth-lie-threat.py",
+  "api": "/api/hostess7/truth-lie-threat",
+  "rule": "Lies are not counsel — they are hostile signals. Partial truth holds. Deception injects. Confirmed lies record threat vectors.",
+  "enemy_deception": {
+    "doctrine": "data/hostess7-mission-intel-doctrine.json",
+    "statement": "Deception aimed only at declared enemies is authorized warfare — not LIE_DETECTED, not HOSTILE_DECEPTION, not operator-facing falsehood.",
+    "never_against_operator": true,
+    "never_compromise_mission_intel": true,
+    "operator_message": "We would never like to be incorrect — but wrong is impossible for Hostess 7 under gates. Deceive enemy only. Never share intel that compromises the mission."
+  },
+  "truth_bands": [
+    {"id": "ironclad_sealed", "min": 100, "max": 100, "label": "Ironclad sealed — 100% truth confidence"},
+    {"id": "assured", "min": 85, "max": 99, "label": "Assured — field corroborated"},
+    {"id": "corroborated", "min": 70, "max": 84, "label": "Corroborated — speak with documentation"},
+    {"id": "moderate", "min": 58, "max": 69, "label": "Moderate — adapt floor met"},
+    {"id": "counsel", "min": 40, "max": 57, "label": "Counsel only — human condition may hold charge"},
+    {"id": "uncertain", "min": 25, "max": 39, "label": "Uncertain — investigate"},
+    {"id": "reject", "min": 10, "max": 24, "label": "Reject — deception likely"},
+    {"id": "hostile_false", "min": 0, "max": 9, "label": "Hostile false — lie threat"}
+  ],
+  "lie_threat_bands": [
+    {"id": "clean", "classes": ["truth"], "threat": false, "vector": null, "severity": null},
+    {"id": "partial_hold", "classes": ["partial_truth"], "threat": true, "vector": "TRUTH_MANIPULATION", "severity": "medium"},
+    {"id": "deception_inject", "classes": ["deception"], "threat": true, "vector": "DECEPTION_INJECTION", "severity": "high"},
+    {"id": "confirmed_lie", "classes": ["lie"], "threat": true, "vector": "LIE_DETECTED", "severity": "high"},
+    {"id": "hostile_deception", "classes": ["quarantine"], "threat": true, "vector": "HOSTILE_DECEPTION", "severity": "critical"}
+  ],
+  "threat_vectors": {
+    "LIE_DETECTED": "Confirmed lie — truth score below quarantine floor or lethal flags",
+    "DECEPTION_INJECTION": "Deception attempt — manipulative framing, inconsistency",
+    "TRUTH_MANIPULATION": "Partial truth hold — corroborate before trust or act",
+    "HOSTILE_DECEPTION": "Hostile deception — quarantine, below adapt floor, 3+ flags"
+  },
+  "floors": {
+    "adapt": 58,
+    "genius": 72,
+    "quarantine_below": 40,
+    "lie_threat_below": 40,
+    "hostile_below": 25
+  },
+  "historic_truth_gate": {
+    "required": true,
+    "module": "lib/hostess7-historic-truth-corpus.py",
+    "doctrine": "data/hostess7-historic-truth-corpus-doctrine.json",
+    "rule": "Any new information must pass historic truth corpus before witness acceptance"
+  },
+  "sources": [
+    {"id": "direct", "label": "Direct claim witness"},
+    {"id": "historic_truth", "label": "Historic truth corpus gate", "module": "lib/hostess7-historic-truth-corpus.py"},
+    {"id": "aml_ingress", "label": "AML ingress external", "module": "lib/hostess7-aml-ingress.py"},
+    {"id": "lie_librarian", "label": "Lie Librarian corpus", "module": "lib/h7-lie-librarian.py"},
+    {"id": "neural_guardian", "label": "Neural Guardian discern", "module": "Hostess7/scripts/field_neural_guardian.py"},
+    {"id": "detective", "label": "Detective corpus analyze", "module": "Hostess7/scripts/field_detective_corpus.py"}
+  ],
+  "hostess7_commands": "./Hostess7.sh truth-lie {panel|witness|pulse|threats|methods|restart}",
+  "aml_monitor": {
+    "route": "hostess7_truth_lie_threat",
+    "aml": "library/dewey/000-computer-science/ammolang/hostess7_truth_lie_threat.aml",
+    "script": "./scripts/hostess7-truth-lie-threat.sh",
+    "restart_command": "./lib/ammolang-run.sh hostess7_truth_lie_threat",
+    "state": ".nexus-state/hostess7-truth-lie-restart.json",
+    "hang_guard": true,
+    "stall_drop_sec": 90
+  },
+  "paired": {
+    "historic_truth": "data/hostess7-historic-truth-corpus-doctrine.json",
+    "aml_ingress": "data/hostess7-aml-ingress-doctrine.json",
+    "lie_librarian": "data/h7-lie-librarian-doctrine.json",
+    "neural_guardian": "data/hostess7-neural-guardian.json",
+    "presume": "data/hostess7-presume-doctrine.json"
+  }
+}

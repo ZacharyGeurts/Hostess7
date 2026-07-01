@@ -1,0 +1,25 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 37,
+  "slug": "stack-loongson",
+  "title": "Loongson Platform Stack",
+  "body": "# Loongson Platform Stack\n\n**Platform stack:** `pc_loongson` · **Era:** 2002–2026 · **Vendor:** Loongson · **Count:** 7\n\nMIPS (**2K, 2002**) through LoongArch **3A5000 (2020)** and **7A1000 bridge** — sovereign Chinese CPU with IOMMU, LPC, and PCIe root.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: pc_loongson` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **Loongson 7A1000 Bridge** (Loongson, 64-bit) — 7A northbridge — PCIe3 SATA USB — 3A5000 pairing\n- **Loongson 3A DDR MC** (Loongson, 64-bit) — On-die/off-chip DDR4 memory controller — 3A series\n- **Loongson 2K1000 SoC Hub** (Loongson, 64-bit) — 2K embedded south — GMAC SATA USB LPC\n- **Loongson IOMMU** (Loongson, 64-bit) — DMA address translation — LoongArch platform IOMMU\n- **Loongson LPC Controller** (Loongson, 64-bit) — LPC bus — Super I/O and legacy ISA path\n- **Loongson PCIe Root Complex** (Loongson, 64-bit) — PCIe root ports — 7A/3A platform expansion\n- **Loongson CPUCFG Glue** (Loongson, 64-bit) — CPUCFG feature regs — LA464/LA664 always-with\n\n## Catalog ids\n\nThe `chip_ids` array holds all **7** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: pc_loongson · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "glue_loongson_cpucfg",
+    "glue_loongson_iommu",
+    "glue_loongson_lpc",
+    "glue_loongson_pcie_root",
+    "nb_loongson_ls3a_ddr",
+    "nb_loongson_ls7a",
+    "sb_loongson_ls2k"
+  ],
+  "chip_count": 7,
+  "kind": "platform_stack",
+  "family": "domestic",
+  "platform_stack": "pc_loongson",
+  "era": "2002–2026",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

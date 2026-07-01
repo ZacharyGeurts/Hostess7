@@ -1,0 +1,91 @@
+{
+  "schema": "field-h7c-doctrine/v1",
+  "module": "lib/field-h7c-compression.py",
+  "acronym": "H7c",
+  "expands_to": "Hostess 7 Condenser",
+  "magic_v1": "H7C\\x01",
+  "magic_v2": "H7C\\x02",
+  "magic_v3": "H7C\\x03",
+  "magic_v4": "H7C\\x04",
+  "format_v1": "h7c/1",
+  "format_v2": "h7c/2",
+  "format_v3": "h7c/3",
+  "format_v4": "h7c/4",
+  "canonical_field_layer": 1,
+  "motto": "H7c (Hostess 7 Condenser) — lossless combinatronic condenser; small optimizer autoplates, spider-wires, recondenses until balance; rapid-connects G16 universal.",
+  "balance_target": 0.97,
+  "rebalance_on_open": true,
+  "rebalance_policy": {
+    "method": "incremental_memory_first",
+    "gate": "header_stale_or_unbalanced",
+    "adopt_if": "smaller_or_balance_gain_without_size_blowup",
+    "snap_suffix": ".h7c.snap.tmp",
+    "statement": "Rebalance on open from memory — steel neural plates + universal neural wired; snap-replace only when smaller or balance improves."
+  },
+  "block_wrapper": {
+    "schema": "h7c-ironclad-block/v1",
+    "format": "h7c/4",
+    "field_layer": 1,
+    "ironclad_module": "lib/ironclad-immediate.py",
+    "statement": "h7c/4 block wraps h7c/1–3 inner bytes unchanged — decompress peels block; no payload mutation.",
+    "backward_compatible": true
+  },
+  "steel_neural_plates": {
+    "module": "lib/field-steel-neural-plates.py",
+    "wire_weight": 0.42,
+    "deep_path_limit": 32
+  },
+  "universal_neural": {
+    "module": "lib/field-universal-neural.py",
+    "state": "field-universal-neural-state.json",
+    "teach_on_optimal": true
+  },
+  "h7b_brain_storage": {
+    "doctrine": "data/field-h7b-brain-doctrine.json",
+    "module": "lib/field-h7b-brain-storage.py",
+    "format": "h7b/3",
+    "note": "H7B/3 is brain pattern storage; h7b/1–2 remain library books; h7c nests h7b for prose."
+  },
+  "lossless": true,
+  "layers_v1": ["facet_bands", "leaf_indices", "h7b_nested", "balance_table"],
+  "layers_v2": [
+    "facet_bands",
+    "leaf_indices",
+    "small_optimizer",
+    "autoplate",
+    "spider_wire",
+    "recondense",
+    "universal_rapid",
+    "h7b_nested",
+    "balance_table"
+  ],
+  "layers_v4": ["ironclad_block", "inner_h7c_v1_v3"],
+  "optimizer": {
+    "max_cycles": 8,
+    "recondense_line_cap": 64,
+    "spider_adjacent_weight": 0.72,
+    "spider_cross_facet_weight": 0.38,
+    "balance_target": 0.97,
+    "universal_rapid": {
+      "enabled": true,
+      "battery": "field-g16-universal-combinatronic.json",
+      "package_schema": "h7c-universal-rapid/v1",
+      "spider_weight": 0.55,
+      "connection_hint_limit": 32,
+      "facet_sub_map": {
+        "code": "program_combinatronic",
+        "prose": "ironclad_chips",
+        "heading": "ironclad_chips"
+      }
+    }
+  },
+  "corrects": {
+    "module": "lib/field-h7c-correct.py",
+    "manifest": "field-h7c-correct-manifest.json",
+    "page_corrects_header": "## Corrects",
+    "canonical_field_layer": 1,
+    "repack_block": true,
+    "statement": "Page-wise corrections append ## Corrects only when edits apply; lossless h7c/4 block repack."
+  },
+  "api": ["/api/h7c", "/api/h7c/pack", "/api/h7c/unpack", "/api/h7c/optimize", "/api/h7c/block", "/api/h7c/correct"]
+}

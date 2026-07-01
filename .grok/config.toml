@@ -1,0 +1,29 @@
+# Private GitHub MCP — local stdio + ZacharyGeurts gh token (~/.config/sg/github-mcp.env)
+# Setup: ./scripts/github-mcp-private-setup.sh
+
+[mcp_servers.grok_com_github]
+command = "/home/default/Desktop/SG/NewLatest/scripts/github-mcp-stdio.sh"
+args = []
+enabled = true
+startup_timeout_sec = 30
+tool_timeout_sec = 300
+
+[mcp_servers.grok_com_github.tool_timeouts]
+push_files = 600
+create_or_update_file = 600
+get_file_contents = 120
+
+[mcp_servers.github_read]
+command = "/home/default/Desktop/SG/NewLatest/scripts/github-mcp-stdio.sh"
+args = ["read"]
+enabled = true
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+
+[mcp_servers.grok16]
+command = "python3"
+args = ["/home/default/Desktop/SG/Grok16/mcp/grok16_mcp_server.py"]
+env = { GROK16_ROOT = "/home/default/Desktop/SG/Grok16", G16_PREFIX = "/home/default/Desktop/SG/Grok16" }
+enabled = true
+startup_timeout_sec = 30
+tool_timeout_sec = 300

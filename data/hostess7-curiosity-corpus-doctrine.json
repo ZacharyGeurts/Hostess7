@@ -1,0 +1,46 @@
+{
+  "schema": "hostess7-curiosity-corpus/v1",
+  "title": "KNOWN and UNKNOWN — curiosity corpus for infinite growth",
+  "motto": "Self-Knowing requires knowing what she knows and what she does not — curiosity feeds on UNKNOWN until truth seals it KNOWN.",
+  "commander": "hostess7",
+  "module": "lib/hostess7-curiosity-corpus.py",
+  "api": "/api/hostess7/curiosity-corpus",
+  "states": {
+    "known": "Sealed understanding — training complete, corpus ready, truth-gated, or operator-marked",
+    "unknown": "Explicit gap — library sentence, missing corpus, incomplete track, or curiosity seed",
+    "learning": "Active investigation — idle cycle or study session in flight"
+  },
+  "registries": {
+    "known": ".nexus-state/hostess7-known-knowledge.json",
+    "unknown": ".nexus-state/hostess7-unknown-knowledge.json",
+    "curiosity": "cache/fieldstorage/brain/knowledge/curiosity_corpus.json",
+    "queue": ".nexus-state/hostess7-curiosity-queue.jsonl"
+  },
+  "sources": {
+    "library_unknown": "lib/h7-library-truth.py",
+    "knowledge_index": "cache/fieldstorage/brain/knowledge/corpus.json",
+    "training": "lib/hostess7-training.py",
+    "neural_inventory": "lib/hostess7-neural.py",
+    "idle_grow": "lib/hostess7-idle-grow.py",
+    "growth": "lib/hostess7-growth.py",
+    "fifth_amendment": "lib/hostess7-fifth-amendment.py",
+    "brain_training": "lib/hostess7-brain-training-chamber.py"
+  },
+  "historic_truth_gate": "lib/hostess7-historic-truth-corpus.py",
+  "curiosity_rules": [
+    "Historic truth corpus gate failures queue UNKNOWN — no new information fielded without corroboration",
+    "UNKNOWN entries rank by priority — corpus gap > library unknown > training gap > seeded topic",
+    "Idle-grow picks highest-priority UNKNOWN not recently attempted",
+    "When truth gate passes, promote UNKNOWN → KNOWN — never relabel without evidence",
+    "KNOWN corpus grows append-only; amnesia forbidden",
+    "Curiosity corpus is the fuel — she develops by chasing what she admits she does not know"
+  ],
+  "paired": {
+    "supreme_authority": "data/hostess7-supreme-authority.json",
+    "growth": "data/hostess7-growth-doctrine.json",
+    "idle_grow": "lib/hostess7-idle-grow.py",
+    "brain_training": "data/hostess7-brain-training-doctrine.json",
+    "fifth_amendment": "data/hostess7-fifth-amendment-doctrine.json",
+    "h7b_brain": "data/field-h7b-brain-doctrine.json"
+  }
+}

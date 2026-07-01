@@ -1,0 +1,9 @@
+# Boot simulation — preempt KILROY reboot blockers
+@profile fastest
+@verbose clean
+
+seq ·
+  say "Boot simulation — ESP · grok.conf · panel+queen"
+  assist hang
+  run script:impl/boot-simulate timeout:120 stall:45
+  assist freeze

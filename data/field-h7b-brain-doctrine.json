@@ -1,0 +1,105 @@
+{
+  "schema": "field-h7b-brain-doctrine/v1",
+  "title": "H7B brain storage — pattern condenser for Hostess 7 mind",
+  "acronym": "H7B",
+  "expands_to": "Hostess 7 Brain — lossless pattern storage",
+  "magic": "H7B\\x03",
+  "format": "h7b/3",
+  "motto": "Analyze her patterns, condense without resolution loss — GitHub-sized sections, infinite mind on disk.",
+  "module": "lib/field-h7b-brain-storage.py",
+  "api": "/api/hostess7/h7b-brain",
+  "lossless": true,
+  "github_section_max_bytes": 20971520,
+  "github_section_max_mb": 20,
+  "pattern_analysis": {
+    "min_string_len": 8,
+    "min_occurrences": 3,
+    "max_dictionary_entries": 4096,
+    "key_min_occurrences": 5
+  },
+  "compression": {
+    "pipeline": ["canonical_json", "pattern_substitute", "fly_layer", "zlib-9"],
+    "fly_module": "Hostess7/scripts/field_fly_codec.py",
+    "verify_sha256": true
+  },
+  "sections": [
+    {
+      "id": "curiosity",
+      "label": "KNOWN · UNKNOWN curiosity corpus",
+      "paths": [
+        ".nexus-state/hostess7-known-knowledge.json",
+        ".nexus-state/hostess7-unknown-knowledge.json",
+        ".nexus-state/hostess7-curiosity-corpus-panel.json",
+        ".nexus-state/hostess7-curiosity-queue.jsonl",
+        "cache/fieldstorage/brain/knowledge/curiosity_corpus.json"
+      ]
+    },
+    {
+      "id": "training",
+      "label": "Brain training campus",
+      "paths": [
+        ".nexus-state/hostess7-brain-training-progress.json",
+        ".nexus-state/hostess7-brain-training-panel.json",
+        ".nexus-state/hostess7-brain-training-ledger.jsonl",
+        ".nexus-state/hostess7-brain-training.jsonl"
+      ]
+    },
+    {
+      "id": "sdf",
+      "label": "SDF segments & registry",
+      "glob": [
+        "cache/fieldstorage/brain/sdf/segments/*.json",
+        "cache/fieldstorage/brain/sdf/segment_registry.jsonl",
+        "cache/fieldstorage/brain/sdf/corpus.json",
+        "cache/fieldstorage/brain/sdf/truth_filter.jsonl"
+      ]
+    },
+    {
+      "id": "superintel",
+      "label": "Superintelligence context",
+      "glob": [
+        "cache/fieldstorage/brain/superintel/*.json",
+        "cache/fieldstorage/brain/superintel/**/*.jsonl"
+      ]
+    },
+    {
+      "id": "hemispheres",
+      "label": "Hemisphere workspaces",
+      "glob": [
+        "cache/fieldstorage/brain/hemispheres/**/*.json",
+        "cache/fieldstorage/brain/callosum/*.json",
+        "cache/fieldstorage/brain/workspaces/**/*.json"
+      ]
+    },
+    {
+      "id": "memory",
+      "label": "Persistent memory ledger",
+      "paths": [
+        "cache/fieldstorage/brain/grok_memory.jsonl",
+        "cache/fieldstorage/brain/index.json",
+        "cache/fieldstorage/brain/thoughts.jsonl"
+      ]
+    },
+    {
+      "id": "nexus_brain_state",
+      "label": "Nexus brain panels",
+      "glob": [
+        ".nexus-state/hostess7-brain-*",
+        ".nexus-state/hostess7-*-panel.json"
+      ],
+      "max_files": 48
+    }
+  ],
+  "output": {
+    "dir": "cache/fieldstorage/brain/h7b",
+    "manifest": "cache/fieldstorage/brain/h7b/manifest.json",
+    "pattern_cache": ".nexus-state/field-h7b-brain-patterns.json"
+  },
+  "paired": {
+    "h7c": "data/field-h7c-doctrine.json",
+    "h7_book": "Hostess7/scripts/field_h7_book.py",
+    "brain_training": "data/hostess7-brain-training-doctrine.json",
+    "brain_guard": "data/hostess7-brain-guard-doctrine.json",
+    "sdf_storage": "Hostess7/scripts/field_hostess_sdf_storage.py"
+  }
+}

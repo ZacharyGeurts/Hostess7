@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Queen field Python — pythong only (GrokPy bootstrap chain)
+set -euo pipefail
+QUEEN="$(cd "$(dirname "$0")/.." && pwd)"
+SG="$(cd "$QUEEN/../.." && pwd)"
+export SG_ROOT="${SG_ROOT:-$SG}"
+for PYTHONG in \
+  "${GPY16:-}" \
+  "${SG}/GrokPy/bin/gpy-16" \
+  "${PYTHONG:-}" \
+  "${SG}/PythonG/bin/pythong" \
+  "${SG}/GrokPy/bin/grokpy" \
+  "${QUEEN}/scripts/pythong"; do
+  if [[ -n "${PYTHONG}" && -x "${PYTHONG}" ]]; then
+    exec "${PYTHONG}" "$@"
+  fi
+done
+echo "queen-py: pythong not found — run PythonG/scripts/consolidate.sh" >&2
+exit 127

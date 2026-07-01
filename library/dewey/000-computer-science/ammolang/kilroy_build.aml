@@ -1,0 +1,8 @@
+# KILROY bzImage — full build
+@profile fastest
+@verbose clean
+
+seq ·
+  assist hang
+  run script:impl/field-kilroy-bzimage arg:build timeout:3600 stall:300
+  assist freeze

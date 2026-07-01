@@ -1,0 +1,3996 @@
+{
+  "schema": "field-chips-plate-stack-panel/v1",
+  "updated": "2026-06-26T22:35:10Z",
+  "ok": true,
+  "motto": "All CHIPS on iron and steel — BSP or better, locked neural calc, sovereign time the only wire.",
+  "counts": {
+    "chips": 974,
+    "modules": 138,
+    "indexed_chips": 974,
+    "families": 138,
+    "neural_calc_modules": 138,
+    "by_bsp_model": {
+      "composite_bsp": 59,
+      "direct_neural_calculator": 79
+    },
+    "compression_ratio": 7.06,
+    "resolution_lossless": true
+  },
+  "connection_policy": {
+    "sovereign_time_only": true,
+    "wire": {
+      "wire": "sovereign_linear_ns",
+      "linear_ns": 1782513309154708718,
+      "utc": "2026-06-26T22:35:09Z",
+      "policy": "sovereign_time_only",
+      "allowed_wires": [
+        "sovereign_linear_ns",
+        "linear_ns"
+      ],
+      "forbidden_wires": [
+        "ntp",
+        "wall_clock",
+        "thermal",
+        "network",
+        "clipboard",
+        "rf",
+        "squidgie",
+        "pool_ntp",
+        "adjtime"
+      ],
+      "desync": {
+        "schema": "sovereign-desync/v1",
+        "synced": false,
+        "never_desync_policy": true,
+        "authoritative": "sovereign_linear",
+        "witness": "wall_realtime_ns",
+        "skew_ms": 202853468.693,
+        "max_desync_ms": 250.0,
+        "sovereign_ns": 1782513309154829142,
+        "wall_ns": 1782716162623522063,
+        "red_flag_active": false,
+        "gap_count": 0,
+        "red_flag_count": 0,
+        "clock_paused": false,
+        "temperature_affects_linear": false
+      }
+    },
+    "gated_modules": 138,
+    "total_modules": 138,
+    "all_gated": true
+  },
+  "layers": {
+    "ironclad": {
+      "grounded": true,
+      "truth_percent": 100.0
+    },
+    "iron_plate": {
+      "algorithm": "composite_bsp",
+      "context": "chip_paths",
+      "layer": "iron_plate",
+      "the_sort": true,
+      "schema": "field-best-sort/v1",
+      "singleton": true,
+      "field_unique_best": true,
+      "always_best_sort": true,
+      "one_best_ever": true,
+      "statement": "field_one_best_ever",
+      "meld_citation": "ironclad:meld:2",
+      "power_sort": null,
+      "n": 974,
+      "count": 974,
+      "applied": true,
+      "ironclad_connected": true,
+      "truth_percent": null,
+      "ironclad_grounded": false
+    },
+    "steel_plate": {
+      "layer": "steel_plate",
+      "domain": "chips",
+      "plate_live": true,
+      "member_count": 24,
+      "cross_wired": 0,
+      "connection_depth": {
+        "max": 4,
+        "achieved": 0,
+        "mean_hops": 0.0,
+        "deep_path_count": 0
+      },
+      "wires": {
+        "intra": 48,
+        "cross": 0,
+        "matrix": 0,
+        "total": 48
+      }
+    },
+    "steel_family_plates": {
+      "layer": "steel_family_plates",
+      "mode": "steel_family",
+      "family_plate_count": 138,
+      "indexed_chips": 974,
+      "chip_count": 974,
+      "compression_ratio": 7.06,
+      "resolution_lossless": true,
+      "steel_domain": "chips",
+      "cross_wired": 0,
+      "optimal": {
+        "algorithm": "assignment_rearrangement",
+        "optimal": true,
+        "exhaustive": false,
+        "objective_score": 230.380427,
+        "elapsed_ms": 0.096,
+        "n": 138,
+        "proof": "rearrangement_inequality",
+        "pairwise_polish": {
+          "algorithm": "brute_force_pairwise_swap",
+          "optimal": false,
+          "exhaustive": false,
+          "pairwise_swaps": 1115,
+          "rounds": 2,
+          "objective_score": 230.380427,
+          "elapsed_ms": 704.57,
+          "n": 138
+        },
+        "equations": {
+          "plate_score": "S(p,s) = path_pct(p) * rank(s) * steel_boost(p) * bsp_boost(p)",
+          "rank": "rank(s) = 1 + max(0, (500 - s) / 500)",
+          "steel_boost": "steel_boost(p) = 1.12 if steel_member else 1.0",
+          "bsp_boost": "bsp_boost(p) = 1.08 if bsp_model == direct_neural_calculator else 1.0",
+          "stack_objective": "O(π) = Σᵢ S(plate_π(i), i)",
+          "organize_gain": "G = (truth_percent/100) * composite_bsp_weight * bridge_weight",
+          "organize_gain_deriv": "dG/ds = (truth/100) * d(composite_bsp_weight)/ds * bridge_weight + ...",
+          "rearrangement": "O maximal when plate weights wᵢ = path_pct·steel_boost·bsp_boost and slot ranks rank(s) are similarly sorted (rearrangement inequality)"
+        }
+      },
+      "equations": {
+        "plate_score": "S(p,s) = path_pct(p) * rank(s) * steel_boost(p) * bsp_boost(p)",
+        "rank": "rank(s) = 1 + max(0, (500 - s) / 500)",
+        "steel_boost": "steel_boost(p) = 1.12 if steel_member else 1.0",
+        "bsp_boost": "bsp_boost(p) = 1.08 if bsp_model == direct_neural_calculator else 1.0",
+        "stack_objective": "O(π) = Σᵢ S(plate_π(i), i)",
+        "organize_gain": "G = (truth_percent/100) * composite_bsp_weight * bridge_weight",
+        "organize_gain_deriv": "dG/ds = (truth/100) * d(composite_bsp_weight)/ds * bridge_weight + ...",
+        "rearrangement": "O maximal when plate weights wᵢ = path_pct·steel_boost·bsp_boost and slot ranks rank(s) are similarly sorted (rearrangement inequality)"
+      },
+      "organize_gain": 1.0,
+      "truth_percent": 100.0
+    }
+  },
+  "bsp_model": {
+    "minimum": "composite_bsp",
+    "preferred": "direct_neural_calculator",
+    "locked": true,
+    "calculator_module": "lib/hostess7-calculator.py",
+    "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+    "family_module_prefix": "chip_neural_calc",
+    "kinds_preferred": [
+      "host_cpu",
+      "guest_cpu",
+      "soc",
+      "fpga",
+      "gpu"
+    ]
+  },
+  "sample_modules": [
+    {
+      "id": "steel_plate:fpu_weitek",
+      "plate_kind": "steel_family",
+      "chip_id": "weitek_1167",
+      "label": "Steel fpu_weitek",
+      "family": "fpu_weitek",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:fpu_weitek",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 137,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "weitek_1167",
+          "combinatorics_leaf": "chip:fpu_weitek:weitek_1167",
+          "path_pct": 0.01,
+          "sort_slot": 848,
+          "kind": "coprocessor",
+          "label": "Weitek 1167",
+          "steel_family_slot": 137
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.01,
+      "sort_slot": 137,
+      "slot": 137,
+      "iron_slot": 848,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:fpu_weitek",
+        "family": "fpu_weitek",
+        "chip_id": "weitek_1167",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "21bf51584e5223e815a315f0",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.019331,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -2.2e-05,
+      "marginal_gain": -0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_8088",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_pc_8088_glue",
+      "label": "Steel cpu_companion_pc_8088",
+      "family": "cpu_companion_pc_8088",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_8088",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 131,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "nb_pc_8088_glue",
+          "combinatorics_leaf": "chip:cpu_companion_pc_8088:nb_pc_8088_glue",
+          "path_pct": 0.01,
+          "sort_slot": 830,
+          "kind": "chipset",
+          "label": "PC/XT Glue Logic",
+          "steel_family_slot": 131
+        },
+        {
+          "chip_id": "sb_pc_8088_io",
+          "combinatorics_leaf": "chip:cpu_companion_pc_8088:sb_pc_8088_io",
+          "path_pct": 0.01,
+          "sort_slot": 966,
+          "kind": "southbridge",
+          "label": "PC/XT I/O Channel",
+          "steel_family_slot": 131
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.02,
+      "sort_slot": 131,
+      "slot": 131,
+      "iron_slot": 830,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_8088",
+        "family": "cpu_companion_pc_8088",
+        "chip_id": "nb_pc_8088_glue",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "1a2bafa72bc881017e819065",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.038931,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -4.5e-05,
+      "marginal_gain": -1e-06
+    },
+    {
+      "id": "steel_plate:intel_risc",
+      "plate_kind": "steel_family",
+      "chip_id": "intel_i860",
+      "label": "Steel intel_risc",
+      "family": "intel_risc",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:intel_risc",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 132,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "intel_i860",
+          "combinatorics_leaf": "chip:intel_risc:intel_i860",
+          "path_pct": 0.01,
+          "sort_slot": 844,
+          "kind": "coprocessor",
+          "label": "Intel i860",
+          "steel_family_slot": 132
+        },
+        {
+          "chip_id": "intel_i960",
+          "combinatorics_leaf": "chip:intel_risc:intel_i960",
+          "path_pct": 0.01,
+          "sort_slot": 845,
+          "kind": "coprocessor",
+          "label": "Intel i960",
+          "steel_family_slot": 132
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.02,
+      "sort_slot": 132,
+      "slot": 132,
+      "iron_slot": 844,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:intel_risc",
+        "family": "intel_risc",
+        "chip_id": "intel_i860",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "afa258ed1bb5f875ae0243e3",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.038886,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -4.5e-05,
+      "marginal_gain": -1e-06
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_286",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_intel_82284",
+      "label": "Steel cpu_companion_pc_286",
+      "family": "cpu_companion_pc_286",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_286",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 133,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "nb_intel_82284",
+          "combinatorics_leaf": "chip:cpu_companion_pc_286:nb_intel_82284",
+          "path_pct": 0.01,
+          "sort_slot": 926,
+          "kind": "northbridge",
+          "label": "Intel 82284 Clock",
+          "steel_family_slot": 133
+        },
+        {
+          "chip_id": "sb_intel_82288_at",
+          "combinatorics_leaf": "chip:cpu_companion_pc_286:sb_intel_82288_at",
+          "path_pct": 0.01,
+          "sort_slot": 950,
+          "kind": "southbridge",
+          "label": "Intel 82288 AT Bus",
+          "steel_family_slot": 133
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.02,
+      "sort_slot": 133,
+      "slot": 133,
+      "iron_slot": 926,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_286",
+        "family": "cpu_companion_pc_286",
+        "chip_id": "nb_intel_82284",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "4d5a41feb1b2fb14368414b9",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.038842,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -4.5e-05,
+      "marginal_gain": -1e-06
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_386",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_intel_82385",
+      "label": "Steel cpu_companion_pc_386",
+      "family": "cpu_companion_pc_386",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_386",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 134,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "nb_intel_82385",
+          "combinatorics_leaf": "chip:cpu_companion_pc_386:nb_intel_82385",
+          "path_pct": 0.01,
+          "sort_slot": 927,
+          "kind": "northbridge",
+          "label": "Intel 82385 Cache Controller",
+          "steel_family_slot": 134
+        },
+        {
+          "chip_id": "sb_intel_82380",
+          "combinatorics_leaf": "chip:cpu_companion_pc_386:sb_intel_82380",
+          "path_pct": 0.01,
+          "sort_slot": 955,
+          "kind": "southbridge",
+          "label": "Intel 82380 SBIC",
+          "steel_family_slot": 134
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.02,
+      "sort_slot": 134,
+      "slot": 134,
+      "iron_slot": 927,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_386",
+        "family": "cpu_companion_pc_386",
+        "chip_id": "nb_intel_82385",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "2918193522b95675c9d79811",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.038797,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -4.5e-05,
+      "marginal_gain": -1e-06
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_pentium",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_intel_430fx",
+      "label": "Steel cpu_companion_pc_pentium",
+      "family": "cpu_companion_pc_pentium",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_pentium",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 128,
+      "steel_rewrite": true,
+      "chip_count": 3,
+      "leaves": [
+        {
+          "chip_id": "nb_intel_430fx",
+          "combinatorics_leaf": "chip:cpu_companion_pc_pentium:nb_intel_430fx",
+          "path_pct": 0.01,
+          "sort_slot": 922,
+          "kind": "northbridge",
+          "label": "Intel 430FX Triton",
+          "steel_family_slot": 128
+        },
+        {
+          "chip_id": "nb_intel_430vx",
+          "combinatorics_leaf": "chip:cpu_companion_pc_pentium:nb_intel_430vx",
+          "path_pct": 0.01,
+          "sort_slot": 923,
+          "kind": "northbridge",
+          "label": "Intel 430VX",
+          "steel_family_slot": 128
+        },
+        {
+          "chip_id": "sb_intel_piix3",
+          "combinatorics_leaf": "chip:cpu_companion_pc_pentium:sb_intel_piix3",
+          "path_pct": 0.01,
+          "sort_slot": 953,
+          "kind": "southbridge",
+          "label": "Intel 82371SB PIIX3",
+          "steel_family_slot": 128
+        }
+      ],
+      "indexed_chips": 3,
+      "path_pct": 0.03,
+      "sort_slot": 128,
+      "slot": 128,
+      "iron_slot": 922,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_pentium",
+        "family": "cpu_companion_pc_pentium",
+        "chip_id": "nb_intel_430fx",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "4811aa757b07453ff938b56c",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.058598,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -6.7e-05,
+      "marginal_gain": -2e-06
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_amd_k8",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_amd_rd580",
+      "label": "Steel cpu_companion_pc_amd_k8",
+      "family": "cpu_companion_pc_amd_k8",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_amd_k8",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 122,
+      "steel_rewrite": true,
+      "chip_count": 4,
+      "leaves": [
+        {
+          "chip_id": "nb_amd_rd580",
+          "combinatorics_leaf": "chip:cpu_companion_pc_amd_k8:nb_amd_rd580",
+          "path_pct": 0.01,
+          "sort_slot": 917,
+          "kind": "northbridge",
+          "label": "AMD RD580 CrossFire",
+          "steel_family_slot": 122
+        },
+        {
+          "chip_id": "sb_amd_sb600",
+          "combinatorics_leaf": "chip:cpu_companion_pc_amd_k8:sb_amd_sb600",
+          "path_pct": 0.01,
+          "sort_slot": 945,
+          "kind": "southbridge",
+          "label": "AMD SB600",
+          "steel_family_slot": 122
+        },
+        {
+          "chip_id": "sb_amd_sb700",
+          "combinatorics_leaf": "chip:cpu_companion_pc_amd_k8:sb_amd_sb700",
+          "path_pct": 0.01,
+          "sort_slot": 946,
+          "kind": "southbridge",
+          "label": "AMD SB700",
+          "steel_family_slot": 122
+        },
+        {
+          "chip_id": "sb_amd_sb850",
+          "combinatorics_leaf": "chip:cpu_companion_pc_amd_k8:sb_amd_sb850",
+          "path_pct": 0.01,
+          "sort_slot": 947,
+          "kind": "southbridge",
+          "label": "AMD SB850",
+          "steel_family_slot": 122
+        }
+      ],
+      "indexed_chips": 4,
+      "path_pct": 0.04,
+      "sort_slot": 122,
+      "slot": 122,
+      "iron_slot": 917,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_amd_k8",
+        "family": "cpu_companion_pc_amd_k8",
+        "chip_id": "nb_amd_rd580",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "1a176d11b2c899c07bf06cb9",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.078669,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -9e-05,
+      "marginal_gain": -4e-06
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_amd_am5",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_amd_x670e",
+      "label": "Steel cpu_companion_pc_amd_am5",
+      "family": "cpu_companion_pc_amd_am5",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_amd_am5",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 123,
+      "steel_rewrite": true,
+      "chip_count": 4,
+      "leaves": [
+        {
+          "chip_id": "nb_amd_x670e",
+          "combinatorics_leaf": "chip:cpu_companion_pc_amd_am5:nb_amd_x670e",
+          "path_pct": 0.01,
+          "sort_slot": 918,
+          "kind": "northbridge",
+          "label": "AMD X670E chipset",
+          "steel_family_slot": 123
+        },
+        {
+          "chip_id": "sb_amd_b650",
+          "combinatorics_leaf": "chip:cpu_companion_pc_amd_am5:sb_amd_b650",
+          "path_pct": 0.01,
+          "sort_slot": 942,
+          "kind": "southbridge",
+          "label": "AMD B650 chipset",
+          "steel_family_slot": 123
+        },
+        {
+          "chip_id": "sb_amd_fch",
+          "combinatorics_leaf": "chip:cpu_companion_pc_amd_am5:sb_amd_fch",
+          "path_pct": 0.01,
+          "sort_slot": 943,
+          "kind": "southbridge",
+          "label": "AMD FCH Fusion Hub",
+          "steel_family_slot": 123
+        },
+        {
+          "chip_id": "sb_amd_prom21",
+          "combinatorics_leaf": "chip:cpu_companion_pc_amd_am5:sb_amd_prom21",
+          "path_pct": 0.01,
+          "sort_slot": 944,
+          "kind": "southbridge",
+          "label": "AMD PROM21 X670E south",
+          "steel_family_slot": 123
+        }
+      ],
+      "indexed_chips": 4,
+      "path_pct": 0.04,
+      "sort_slot": 123,
+      "slot": 123,
+      "iron_slot": 918,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_amd_am5",
+        "family": "cpu_companion_pc_amd_am5",
+        "chip_id": "nb_amd_x670e",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "e4fa2ecee6b6d19b4365674a",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.078579,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -9e-05,
+      "marginal_gain": -4e-06
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_pentium4",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_intel_82845",
+      "label": "Steel cpu_companion_pc_pentium4",
+      "family": "cpu_companion_pc_pentium4",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_pentium4",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 124,
+      "steel_rewrite": true,
+      "chip_count": 4,
+      "leaves": [
+        {
+          "chip_id": "nb_intel_82845",
+          "combinatorics_leaf": "chip:cpu_companion_pc_pentium4:nb_intel_82845",
+          "path_pct": 0.01,
+          "sort_slot": 929,
+          "kind": "northbridge",
+          "label": "Intel 82845 MCH",
+          "steel_family_slot": 124
+        },
+        {
+          "chip_id": "nb_intel_865pe",
+          "combinatorics_leaf": "chip:cpu_companion_pc_pentium4:nb_intel_865pe",
+          "path_pct": 0.01,
+          "sort_slot": 930,
+          "kind": "northbridge",
+          "label": "Intel 865PE MCH",
+          "steel_family_slot": 124
+        },
+        {
+          "chip_id": "sb_intel_ich5",
+          "combinatorics_leaf": "chip:cpu_companion_pc_pentium4:sb_intel_ich5",
+          "path_pct": 0.01,
+          "sort_slot": 960,
+          "kind": "southbridge",
+          "label": "Intel ICH5 (82801EB)",
+          "steel_family_slot": 124
+        },
+        {
+          "chip_id": "sb_intel_ich7",
+          "combinatorics_leaf": "chip:cpu_companion_pc_pentium4:sb_intel_ich7",
+          "path_pct": 0.01,
+          "sort_slot": 961,
+          "kind": "southbridge",
+          "label": "Intel ICH7 (82801GB)",
+          "steel_family_slot": 124
+        }
+      ],
+      "indexed_chips": 4,
+      "path_pct": 0.04,
+      "sort_slot": 124,
+      "slot": 124,
+      "iron_slot": 929,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_pentium4",
+        "family": "cpu_companion_pc_pentium4",
+        "chip_id": "nb_intel_82845",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "19f80e86630abbaca23841ab",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.07849,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -9e-05,
+      "marginal_gain": -4e-06
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_core2",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_intel_p35",
+      "label": "Steel cpu_companion_pc_core2",
+      "family": "cpu_companion_pc_core2",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_core2",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 125,
+      "steel_rewrite": true,
+      "chip_count": 4,
+      "leaves": [
+        {
+          "chip_id": "nb_intel_p35",
+          "combinatorics_leaf": "chip:cpu_companion_pc_core2:nb_intel_p35",
+          "path_pct": 0.01,
+          "sort_slot": 931,
+          "kind": "northbridge",
+          "label": "Intel P35 MCH",
+          "steel_family_slot": 125
+        },
+        {
+          "chip_id": "nb_intel_x48",
+          "combinatorics_leaf": "chip:cpu_companion_pc_core2:nb_intel_x48",
+          "path_pct": 0.01,
+          "sort_slot": 932,
+          "kind": "northbridge",
+          "label": "Intel X48 MCH",
+          "steel_family_slot": 125
+        },
+        {
+          "chip_id": "sb_intel_ich10",
+          "combinatorics_leaf": "chip:cpu_companion_pc_core2:sb_intel_ich10",
+          "path_pct": 0.01,
+          "sort_slot": 958,
+          "kind": "southbridge",
+          "label": "Intel ICH10 (82801JI)",
+          "steel_family_slot": 125
+        },
+        {
+          "chip_id": "sb_intel_ich9",
+          "combinatorics_leaf": "chip:cpu_companion_pc_core2:sb_intel_ich9",
+          "path_pct": 0.01,
+          "sort_slot": 962,
+          "kind": "southbridge",
+          "label": "Intel ICH9 (82801IR)",
+          "steel_family_slot": 125
+        }
+      ],
+      "indexed_chips": 4,
+      "path_pct": 0.04,
+      "sort_slot": 125,
+      "slot": 125,
+      "iron_slot": 931,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_core2",
+        "family": "cpu_companion_pc_core2",
+        "chip_id": "nb_intel_p35",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "53d0d8f69a2e8171c54ae7ba",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0784,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -9e-05,
+      "marginal_gain": -4e-06
+    },
+    {
+      "id": "steel_plate:cpu_companion_retro_z80",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_z80_dart",
+      "label": "Steel cpu_companion_retro_z80",
+      "family": "cpu_companion_retro_z80",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_retro_z80",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 119,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "glue_z80_dart",
+          "combinatorics_leaf": "chip:cpu_companion_retro_z80:glue_z80_dart",
+          "path_pct": 0.04,
+          "sort_slot": 654,
+          "kind": "pio",
+          "label": "Zilog Z80 DART",
+          "steel_family_slot": 119
+        },
+        {
+          "chip_id": "glue_z80_ctc",
+          "combinatorics_leaf": "chip:cpu_companion_retro_z80:glue_z80_ctc",
+          "path_pct": 0.01,
+          "sort_slot": 841,
+          "kind": "chipset",
+          "label": "Zilog Z80 CTC",
+          "steel_family_slot": 119
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.05,
+      "sort_slot": 119,
+      "slot": 119,
+      "iron_slot": 654,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_retro_z80",
+        "family": "cpu_companion_retro_z80",
+        "chip_id": "glue_z80_dart",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "05d7592cfa9d2bca73fe38fa",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.098672,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000112,
+      "marginal_gain": -6e-06
+    },
+    {
+      "id": "steel_plate:semi_analog",
+      "plate_kind": "steel_family",
+      "chip_id": "ana_ad7528",
+      "label": "Steel semi_analog",
+      "family": "semi_analog",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:semi_analog",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 112,
+      "steel_rewrite": true,
+      "chip_count": 10,
+      "leaves": [
+        {
+          "chip_id": "ana_ad7528",
+          "combinatorics_leaf": "chip:semi_analog:ana_ad7528",
+          "path_pct": 0.01,
+          "sort_slot": 794,
+          "kind": "analog",
+          "label": "AD7528 Dual 8-bit DAC",
+          "steel_family_slot": 112
+        },
+        {
+          "chip_id": "ana_adc0804",
+          "combinatorics_leaf": "chip:semi_analog:ana_adc0804",
+          "path_pct": 0.01,
+          "sort_slot": 795,
+          "kind": "analog",
+          "label": "ADC0804 8-bit successive-approx ADC",
+          "steel_family_slot": 112
+        },
+        {
+          "chip_id": "ana_adc0816",
+          "combinatorics_leaf": "chip:semi_analog:ana_adc0816",
+          "path_pct": 0.01,
+          "sort_slot": 796,
+          "kind": "analog",
+          "label": "ADC0816 8-bit 16-channel MUX ADC",
+          "steel_family_slot": 112
+        },
+        {
+          "chip_id": "ana_dac0832",
+          "combinatorics_leaf": "chip:semi_analog:ana_dac0832",
+          "path_pct": 0.01,
+          "sort_slot": 797,
+          "kind": "analog",
+          "label": "DAC0832 8-bit multiplying DAC",
+          "steel_family_slot": 112
+        },
+        {
+          "chip_id": "ana_lm324",
+          "combinatorics_leaf": "chip:semi_analog:ana_lm324",
+          "path_pct": 0.01,
+          "sort_slot": 798,
+          "kind": "analog",
+          "label": "LM324 Quad op-amp",
+          "steel_family_slot": 112
+        },
+        {
+          "chip_id": "ana_lm358",
+          "combinatorics_leaf": "chip:semi_analog:ana_lm358",
+          "path_pct": 0.01,
+          "sort_slot": 799,
+          "kind": "analog",
+          "label": "LM358 Dual op-amp",
+          "steel_family_slot": 112
+        },
+        {
+          "chip_id": "ana_max232",
+          "combinatorics_leaf": "chip:semi_analog:ana_max232",
+          "path_pct": 0.01,
+          "sort_slot": 800,
+          "kind": "analog",
+          "label": "MAX232 RS-232 line driver/receiver",
+          "steel_family_slot": 112
+        },
+        {
+          "chip_id": "ana_ne555",
+          "combinatorics_leaf": "chip:semi_analog:ana_ne555",
+          "path_pct": 0.01,
+          "sort_slot": 801,
+          "kind": "analog",
+          "label": "NE555 Timer",
+          "steel_family_slot": 112
+        },
+        {
+          "chip_id": "ana_tl072",
+          "combinatorics_leaf": "chip:semi_analog:ana_tl072",
+          "path_pct": 0.01,
+          "sort_slot": 802,
+          "kind": "analog",
+          "label": "TL072 Low-noise JFET op-amp",
+          "steel_family_slot": 112
+        },
+        {
+          "chip_id": "ana_lm741",
+          "combinatorics_leaf": "chip:semi_analog:ana_lm741",
+          "path_pct": 0.01,
+          "sort_slot": 803,
+          "kind": "analog",
+          "label": "μA741 General-purpose op-amp",
+          "steel_family_slot": 112
+        }
+      ],
+      "indexed_chips": 10,
+      "path_pct": 0.1,
+      "sort_slot": 112,
+      "slot": 112,
+      "iron_slot": 794,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:semi_analog",
+        "family": "semi_analog",
+        "chip_id": "ana_ad7528",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "0db9b137e209897770db78e7",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.198912,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000224,
+      "marginal_gain": -2.2e-05
+    },
+    {
+      "id": "steel_plate:elbrus",
+      "plate_kind": "steel_family",
+      "chip_id": "elbrus_8cb",
+      "label": "Steel elbrus",
+      "family": "elbrus",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:elbrus",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 104,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "elbrus_8cb",
+          "combinatorics_leaf": "chip:elbrus:elbrus_8cb",
+          "path_pct": 0.1,
+          "sort_slot": 317,
+          "kind": "host_cpu",
+          "label": "Elbrus-8CB",
+          "steel_family_slot": 104
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.1,
+      "sort_slot": 104,
+      "slot": 104,
+      "iron_slot": 317,
+      "bsp_model": "direct_neural_calculator",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:elbrus",
+        "family": "elbrus",
+        "chip_id": "elbrus_8cb",
+        "model": "direct_neural_calculator",
+        "locked": true,
+        "lock_hash": "f8fda34d4b09b3ea0cb99a2f",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.21676,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000242,
+      "marginal_gain": -2.4e-05
+    },
+    {
+      "id": "steel_plate:sh4",
+      "plate_kind": "steel_family",
+      "chip_id": "hitachi_sh7750",
+      "label": "Steel sh4",
+      "family": "sh4",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:sh4",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 105,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "hitachi_sh7750",
+          "combinatorics_leaf": "chip:sh4:hitachi_sh7750",
+          "path_pct": 0.1,
+          "sort_slot": 319,
+          "kind": "host_cpu",
+          "label": "Hitachi SH-4 SH7750",
+          "steel_family_slot": 105
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.1,
+      "sort_slot": 105,
+      "slot": 105,
+      "iron_slot": 319,
+      "bsp_model": "direct_neural_calculator",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:sh4",
+        "family": "sh4",
+        "chip_id": "hitachi_sh7750",
+        "model": "direct_neural_calculator",
+        "locked": true,
+        "lock_hash": "872365de514ade90341a6c38",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.216518,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000242,
+      "marginal_gain": -2.4e-05
+    },
+    {
+      "id": "steel_plate:powerpc",
+      "plate_kind": "steel_family",
+      "chip_id": "ibm_powerpc_601",
+      "label": "Steel powerpc",
+      "family": "powerpc",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:powerpc",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 106,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "ibm_powerpc_601",
+          "combinatorics_leaf": "chip:powerpc:ibm_powerpc_601",
+          "path_pct": 0.1,
+          "sort_slot": 320,
+          "kind": "host_cpu",
+          "label": "IBM PowerPC 601",
+          "steel_family_slot": 106
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.1,
+      "sort_slot": 106,
+      "slot": 106,
+      "iron_slot": 320,
+      "bsp_model": "direct_neural_calculator",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:powerpc",
+        "family": "powerpc",
+        "chip_id": "ibm_powerpc_601",
+        "model": "direct_neural_calculator",
+        "locked": true,
+        "lock_hash": "252854b318e3486413b31b0f",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.216276,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000242,
+      "marginal_gain": -2.4e-05
+    },
+    {
+      "id": "steel_plate:loongarch",
+      "plate_kind": "steel_family",
+      "chip_id": "loongson_3a5000",
+      "label": "Steel loongarch",
+      "family": "loongarch",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:loongarch",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 107,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "loongson_3a5000",
+          "combinatorics_leaf": "chip:loongarch:loongson_3a5000",
+          "path_pct": 0.1,
+          "sort_slot": 351,
+          "kind": "host_cpu",
+          "label": "Loongson 3A5000",
+          "steel_family_slot": 107
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.1,
+      "sort_slot": 107,
+      "slot": 107,
+      "iron_slot": 351,
+      "bsp_model": "direct_neural_calculator",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:loongarch",
+        "family": "loongarch",
+        "chip_id": "loongson_3a5000",
+        "model": "direct_neural_calculator",
+        "locked": true,
+        "lock_hash": "2163335eb6c109d7e5b86f43",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.216035,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000242,
+      "marginal_gain": -2.4e-05
+    },
+    {
+      "id": "steel_plate:x86_nexgen",
+      "plate_kind": "steel_family",
+      "chip_id": "nexgen_nx586",
+      "label": "Steel x86_nexgen",
+      "family": "x86_nexgen",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:x86_nexgen",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 108,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "nexgen_nx586",
+          "combinatorics_leaf": "chip:x86_nexgen:nexgen_nx586",
+          "path_pct": 0.1,
+          "sort_slot": 367,
+          "kind": "host_cpu",
+          "label": "NexGen Nx586",
+          "steel_family_slot": 108
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.1,
+      "sort_slot": 108,
+      "slot": 108,
+      "iron_slot": 367,
+      "bsp_model": "direct_neural_calculator",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:x86_nexgen",
+        "family": "x86_nexgen",
+        "chip_id": "nexgen_nx586",
+        "model": "direct_neural_calculator",
+        "locked": true,
+        "lock_hash": "4163a4c829c323a21b95db91",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.215793,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000242,
+      "marginal_gain": -2.4e-05
+    },
+    {
+      "id": "steel_plate:x86_transmeta",
+      "plate_kind": "steel_family",
+      "chip_id": "transmeta_crusoe_tm5600",
+      "label": "Steel x86_transmeta",
+      "family": "x86_transmeta",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:x86_transmeta",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 109,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "transmeta_crusoe_tm5600",
+          "combinatorics_leaf": "chip:x86_transmeta:transmeta_crusoe_tm5600",
+          "path_pct": 0.1,
+          "sort_slot": 382,
+          "kind": "host_cpu",
+          "label": "Transmeta Crusoe TM5600",
+          "steel_family_slot": 109
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.1,
+      "sort_slot": 109,
+      "slot": 109,
+      "iron_slot": 382,
+      "bsp_model": "direct_neural_calculator",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:x86_transmeta",
+        "family": "x86_transmeta",
+        "chip_id": "transmeta_crusoe_tm5600",
+        "model": "direct_neural_calculator",
+        "locked": true,
+        "lock_hash": "3cdd61ba0ccbc6032f20e625",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.215551,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000242,
+      "marginal_gain": -2.4e-05
+    },
+    {
+      "id": "steel_plate:cpu_companion_console_snes",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_snes_smp",
+      "label": "Steel cpu_companion_console_snes",
+      "family": "cpu_companion_console_snes",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_console_snes",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 89,
+      "steel_rewrite": true,
+      "chip_count": 6,
+      "leaves": [
+        {
+          "chip_id": "glue_snes_smp",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_smp",
+          "path_pct": 0.08,
+          "sort_slot": 435,
+          "kind": "sound",
+          "label": "Sony S-SMP (SPC700)",
+          "steel_family_slot": 89
+        },
+        {
+          "chip_id": "glue_snes_ppu",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_ppu",
+          "path_pct": 0.08,
+          "sort_slot": 494,
+          "kind": "video",
+          "label": "SNES PPU (S-PPU)",
+          "steel_family_slot": 89
+        },
+        {
+          "chip_id": "glue_snes_cic",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_cic",
+          "path_pct": 0.01,
+          "sort_slot": 833,
+          "kind": "chipset",
+          "label": "SNES CIC Lockout",
+          "steel_family_slot": 89
+        },
+        {
+          "chip_id": "glue_snes_wram",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_wram",
+          "path_pct": 0.01,
+          "sort_slot": 834,
+          "kind": "chipset",
+          "label": "SNES WRAM Controller",
+          "steel_family_slot": 89
+        },
+        {
+          "chip_id": "glue_snes_sa1",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_sa1",
+          "path_pct": 0.01,
+          "sort_slot": 878,
+          "kind": "glue",
+          "label": "Nintendo SA-1 Coprocessor",
+          "steel_family_slot": 89
+        },
+        {
+          "chip_id": "glue_snes_5a22",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_5a22",
+          "path_pct": 0.01,
+          "sort_slot": 879,
+          "kind": "glue",
+          "label": "Ricoh 5A22 CPU Glue",
+          "steel_family_slot": 89
+        }
+      ],
+      "indexed_chips": 6,
+      "path_pct": 0.2,
+      "sort_slot": 89,
+      "slot": 89,
+      "iron_slot": 435,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_console_snes",
+        "family": "cpu_companion_console_snes",
+        "chip_id": "glue_snes_smp",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "d2553c731f83c46b1cfc7c9a",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.408128,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000448,
+      "marginal_gain": -9e-05
+    },
+    {
+      "id": "steel_plate:cpu_companion_console_ps1",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_ps1_spu",
+      "label": "Steel cpu_companion_console_ps1",
+      "family": "cpu_companion_console_ps1",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_console_ps1",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 90,
+      "steel_rewrite": true,
+      "chip_count": 6,
+      "leaves": [
+        {
+          "chip_id": "glue_ps1_spu",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_spu",
+          "path_pct": 0.08,
+          "sort_slot": 436,
+          "kind": "sound",
+          "label": "Sony SPU",
+          "steel_family_slot": 90
+        },
+        {
+          "chip_id": "glue_ps1_gpu",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_gpu",
+          "path_pct": 0.08,
+          "sort_slot": 502,
+          "kind": "video",
+          "label": "Sony GPU (GP0/GP1)",
+          "steel_family_slot": 90
+        },
+        {
+          "chip_id": "glue_ps1_bios_rom",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_bios_rom",
+          "path_pct": 0.01,
+          "sort_slot": 831,
+          "kind": "chipset",
+          "label": "PS1 BIOS ROM Interface",
+          "steel_family_slot": 90
+        },
+        {
+          "chip_id": "glue_ps1_dma",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_dma",
+          "path_pct": 0.01,
+          "sort_slot": 832,
+          "kind": "chipset",
+          "label": "PS1 MDEC/DMA Glue",
+          "steel_family_slot": 90
+        },
+        {
+          "chip_id": "glue_ps1_cdrom",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_cdrom",
+          "path_pct": 0.01,
+          "sort_slot": 838,
+          "kind": "chipset",
+          "label": "Sony CD-ROM Controller",
+          "steel_family_slot": 90
+        },
+        {
+          "chip_id": "glue_ps1_cxd8530",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_cxd8530",
+          "path_pct": 0.01,
+          "sort_slot": 882,
+          "kind": "glue",
+          "label": "Sony CXD8530 CPU+Glue",
+          "steel_family_slot": 90
+        }
+      ],
+      "indexed_chips": 6,
+      "path_pct": 0.2,
+      "sort_slot": 90,
+      "slot": 90,
+      "iron_slot": 436,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_console_ps1",
+        "family": "cpu_companion_console_ps1",
+        "chip_id": "glue_ps1_spu",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "7a1cdca3cdaad08af3d30094",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.40768,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000448,
+      "marginal_gain": -9e-05
+    },
+    {
+      "id": "steel_plate:world_philippines",
+      "plate_kind": "steel_family",
+      "chip_id": "ph_motorola_clark_z80",
+      "label": "Steel world_philippines",
+      "family": "world_philippines",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:world_philippines",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 76,
+      "steel_rewrite": true,
+      "chip_count": 3,
+      "leaves": [
+        {
+          "chip_id": "ph_motorola_clark_z80",
+          "combinatorics_leaf": "chip:world_philippines:ph_motorola_clark_z80",
+          "path_pct": 0.13,
+          "sort_slot": 146,
+          "kind": "guest_cpu",
+          "label": "Motorola Clark Z80",
+          "steel_family_slot": 76
+        },
+        {
+          "chip_id": "ph_ionics_ems_ctrl",
+          "combinatorics_leaf": "chip:world_philippines:ph_ionics_ems_ctrl",
+          "path_pct": 0.06,
+          "sort_slot": 587,
+          "kind": "soc",
+          "label": "Ionics EMS SiP controller",
+          "steel_family_slot": 76
+        },
+        {
+          "chip_id": "ph_philcomsat_modem",
+          "combinatorics_leaf": "chip:world_philippines:ph_philcomsat_modem",
+          "path_pct": 0.03,
+          "sort_slot": 722,
+          "kind": "network",
+          "label": "Philcomsat modem ASIC",
+          "steel_family_slot": 76
+        }
+      ],
+      "indexed_chips": 3,
+      "path_pct": 0.22,
+      "sort_slot": 76,
+      "slot": 76,
+      "iron_slot": 146,
+      "bsp_model": "direct_neural_calculator",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:world_philippines",
+        "family": "world_philippines",
+        "chip_id": "ph_motorola_clark_z80",
+        "model": "direct_neural_calculator",
+        "locked": true,
+        "lock_hash": "93c78d297f1c1421f0d2f31f",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.491775,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000532,
+      "marginal_gain": -0.000117
+    },
+    {
+      "id": "steel_plate:world_vietnam",
+      "plate_kind": "steel_family",
+      "chip_id": "vn_fpt_asic",
+      "label": "Steel world_vietnam",
+      "family": "world_vietnam",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:world_vietnam",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 77,
+      "steel_rewrite": true,
+      "chip_count": 4,
+      "leaves": [
+        {
+          "chip_id": "vn_fpt_asic",
+          "combinatorics_leaf": "chip:world_vietnam:vn_fpt_asic",
+          "path_pct": 0.06,
+          "sort_slot": 573,
+          "kind": "soc",
+          "label": "FPT Semiconductor ASIC",
+          "steel_family_slot": 77
+        },
+        {
+          "chip_id": "vn_viettel_vs839",
+          "combinatorics_leaf": "chip:world_vietnam:vn_viettel_vs839",
+          "path_pct": 0.06,
+          "sort_slot": 637,
+          "kind": "soc",
+          "label": "Viettel VS839",
+          "steel_family_slot": 77
+        },
+        {
+          "chip_id": "vn_vinasic_mcu",
+          "combinatorics_leaf": "chip:world_vietnam:vn_vinasic_mcu",
+          "path_pct": 0.06,
+          "sort_slot": 638,
+          "kind": "soc",
+          "label": "VinASIC embedded MCU",
+          "steel_family_slot": 77
+        },
+        {
+          "chip_id": "vn_silicon_pipe_ctrl",
+          "combinatorics_leaf": "chip:world_vietnam:vn_silicon_pipe_ctrl",
+          "path_pct": 0.04,
+          "sort_slot": 653,
+          "kind": "pio",
+          "label": "Silicon Pipe USB controller",
+          "steel_family_slot": 77
+        }
+      ],
+      "indexed_chips": 4,
+      "path_pct": 0.22,
+      "sort_slot": 77,
+      "slot": 77,
+      "iron_slot": 573,
+      "bsp_model": "direct_neural_calculator",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:world_vietnam",
+        "family": "world_vietnam",
+        "chip_id": "vn_fpt_asic",
+        "model": "direct_neural_calculator",
+        "locked": true,
+        "lock_hash": "f9338126e477629a64d65602",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.491243,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000532,
+      "marginal_gain": -0.000117
+    },
+    {
+      "id": "steel_plate:cpu_companion_console_n64",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_n64_ai",
+      "label": "Steel cpu_companion_console_n64",
+      "family": "cpu_companion_console_n64",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_console_n64",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 71,
+      "steel_rewrite": true,
+      "chip_count": 6,
+      "leaves": [
+        {
+          "chip_id": "glue_n64_ai",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_ai",
+          "path_pct": 0.08,
+          "sort_slot": 426,
+          "kind": "sound",
+          "label": "N64 Audio Interface (AI)",
+          "steel_family_slot": 71
+        },
+        {
+          "chip_id": "glue_n64_vi",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_vi",
+          "path_pct": 0.08,
+          "sort_slot": 480,
+          "kind": "video",
+          "label": "N64 Video Interface (VI)",
+          "steel_family_slot": 71
+        },
+        {
+          "chip_id": "glue_n64_rdp",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_rdp",
+          "path_pct": 0.08,
+          "sort_slot": 484,
+          "kind": "video",
+          "label": "Nintendo RDP",
+          "steel_family_slot": 71
+        },
+        {
+          "chip_id": "glue_n64_mi",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_mi",
+          "path_pct": 0.01,
+          "sort_slot": 829,
+          "kind": "chipset",
+          "label": "N64 MIPS Interface (MI)",
+          "steel_family_slot": 71
+        },
+        {
+          "chip_id": "glue_n64_rcp",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_rcp",
+          "path_pct": 0.01,
+          "sort_slot": 876,
+          "kind": "glue",
+          "label": "Nintendo RCP",
+          "steel_family_slot": 71
+        },
+        {
+          "chip_id": "glue_n64_rsp",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_rsp",
+          "path_pct": 0.01,
+          "sort_slot": 877,
+          "kind": "glue",
+          "label": "Nintendo RSP",
+          "steel_family_slot": 71
+        }
+      ],
+      "indexed_chips": 6,
+      "path_pct": 0.27,
+      "sort_slot": 71,
+      "slot": 71,
+      "iron_slot": 426,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_console_n64",
+        "family": "cpu_companion_console_n64",
+        "chip_id": "glue_n64_ai",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "dcf46dafd1dc6989eedfda01",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.561859,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000605,
+      "marginal_gain": -0.000163
+    },
+    {
+      "id": "steel_plate:nintendo64",
+      "plate_kind": "steel_family",
+      "chip_id": "nintendo_cpu_nus",
+      "label": "Steel nintendo64",
+      "family": "nintendo64",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:nintendo64",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 98,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "nintendo_cpu_nus",
+          "combinatorics_leaf": "chip:nintendo64:nintendo_cpu_nus",
+          "path_pct": 0.13,
+          "sort_slot": 151,
+          "kind": "guest_cpu",
+          "label": "NEC VR4300 CPU-NUS",
+          "steel_family_slot": 98
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.13,
+      "sort_slot": 98,
+      "slot": 98,
+      "iron_slot": 151,
+      "bsp_model": "direct_neural_calculator",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:nintendo64",
+        "family": "nintendo64",
+        "chip_id": "nintendo_cpu_nus",
+        "model": "direct_neural_calculator",
+        "locked": true,
+        "lock_hash": "6295a28034bb482121c15163",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1782513309154708718,
+          "utc": "2026-06-26T22:35:09Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": false,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 202853468.693,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1782513309154829142,
+            "wall_ns": 1782716162623522063,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1782513309154708718,
+        "utc": "2026-06-26T22:35:09Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": false,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 202853468.693,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1782513309154829142,
+          "wall_ns": 1782716162623522063,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.283675,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": -0.000718,
+      "marginal_gain": -9.3e-05
+    }
+  ],
+  "neural_calc_module_count": 138,
+  "family_counts": {
+    "fpu_weitek": 1,
+    "cpu_companion_pc_8088": 1,
+    "intel_risc": 1,
+    "cpu_companion_pc_286": 1,
+    "cpu_companion_pc_386": 1,
+    "cpu_companion_pc_pentium": 1,
+    "cpu_companion_pc_amd_k8": 1,
+    "cpu_companion_pc_amd_am5": 1,
+    "cpu_companion_pc_pentium4": 1,
+    "cpu_companion_pc_core2": 1,
+    "cpu_companion_retro_z80": 1,
+    "semi_analog": 1,
+    "elbrus": 1,
+    "sh4": 1,
+    "powerpc": 1,
+    "loongarch": 1
+  },
+  "plate_rebalance_derivatives": {
+    "ok": true,
+    "meta": {
+      "method": "central_difference",
+      "count": 138,
+      "elapsed_ms": 0.085,
+      "fast_path": true,
+      "fast_path_ms_target": 8,
+      "cache_hit": false,
+      "the_sort_rebalance": true,
+      "fingerprint": "6f16a82cb8a8c5349a7a",
+      "symbolic_seal": {
+        "equation": "organize_gain = truth_percent * composite_bsp_weight * bridge_weight",
+        "variable": "slot",
+        "method": "product_rule",
+        "result": "d(organize_gain)/d(slot) = truth_percent * d(composite_bsp_weight)/d(slot) * bridge_weight + truth_percent * composite_bsp_weight * d(bridge_weight)/d(slot) + d(truth_percent)/d(slot) * composite_bsp_weight * bridge_weight",
+        "locked": true,
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_witness": "0",
+        "calculator_method": "diff"
+      },
+      "elapsed_ms_total": 1.414,
+      "top_marginal": [
+        {
+          "chip_id": "weitek_1167",
+          "d_score_d_slot": -2.2e-05,
+          "plate_score": 0.019331
+        },
+        {
+          "chip_id": "nb_pc_8088_glue",
+          "d_score_d_slot": -4.5e-05,
+          "plate_score": 0.038931
+        },
+        {
+          "chip_id": "intel_i860",
+          "d_score_d_slot": -4.5e-05,
+          "plate_score": 0.038886
+        },
+        {
+          "chip_id": "nb_intel_82284",
+          "d_score_d_slot": -4.5e-05,
+          "plate_score": 0.038842
+        },
+        {
+          "chip_id": "nb_intel_82385",
+          "d_score_d_slot": -4.5e-05,
+          "plate_score": 0.038797
+        },
+        {
+          "chip_id": "nb_intel_430fx",
+          "d_score_d_slot": -6.7e-05,
+          "plate_score": 0.058598
+        },
+        {
+          "chip_id": "nb_amd_rd580",
+          "d_score_d_slot": -9e-05,
+          "plate_score": 0.078669
+        },
+        {
+          "chip_id": "nb_amd_x670e",
+          "d_score_d_slot": -9e-05,
+          "plate_score": 0.078579
+        }
+      ]
+    },
+    "organize_gain_derivative": -2.2e-05,
+    "super_quick": true,
+    "symbolic_seal": {
+      "equation": "organize_gain = truth_percent * composite_bsp_weight * bridge_weight",
+      "variable": "slot",
+      "method": "product_rule",
+      "result": "d(organize_gain)/d(slot) = truth_percent * d(composite_bsp_weight)/d(slot) * bridge_weight + truth_percent * composite_bsp_weight * d(bridge_weight)/d(slot) + d(truth_percent)/d(slot) * composite_bsp_weight * bridge_weight",
+      "locked": true,
+      "calculator": "lib/hostess7-calculator.py",
+      "calculator_witness": "0",
+      "calculator_method": "diff"
+    }
+  },
+  "elapsed_ms": 81.27,
+  "combinatronic": true,
+  "fast_path": true
+}

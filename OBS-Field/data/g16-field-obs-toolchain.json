@@ -1,0 +1,36 @@
+{
+  "schema": "g16-field-obs-toolchain/v1",
+  "product": "Field OBS",
+  "os_brand": "AmmoOS",
+  "updated": "2026-06-27T00:00:00Z",
+  "g16_version": "16.2.0",
+  "cxx_std_default": "gnu++26",
+  "c_std_default": "gnu17",
+  "default_profile": "field_opt",
+  "rtx_profile": "queen_rtx",
+  "field_mandate": "G16_FIELD_SAFETY_MANDATE_v1",
+  "prefix": "OBS-Field/prefix",
+  "binary": "OBS-Field/prefix/bin/obs",
+  "grok16_prefix": "Grok16",
+  "grok16_toolchain": "Grok16/cmake/grok16-toolchain.cmake",
+  "g16_cmake_overlay": "OBS-Field/cmake/g16-field-obs.cmake",
+  "build_script": "OBS-Field/build-field-obs.sh",
+  "configure_script": "OBS-Field/forge/configure-field-obs-g16.sh",
+  "clone_script": "OBS-Field/forge/clone-upstream.sh",
+  "upstream": {
+    "path": "OBS-Field/upstream/obs-studio",
+    "ref": "30.0.2",
+    "remote": "https://github.com/obsproject/obs-studio.git"
+  },
+  "cmake_options": {
+    "ENABLE_UI": "ON",
+    "ENABLE_SCRIPTING": "OFF",
+    "LINUX_PORTABLE": "ON",
+    "BUILD_FOR_DISTRIBUTION": "OFF"
+  },
+  "bridge": "NewLatest/lib/field-obs.py",
+  "routes": {
+    "panel": "/field-obs",
+    "api": "/api/field-obs"
+  }
+}

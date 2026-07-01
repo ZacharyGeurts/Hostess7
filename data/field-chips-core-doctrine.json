@@ -1,0 +1,24 @@
+{
+  "schema": "field-chips-core-doctrine/v1",
+  "title": "CHIPS core — condense scattered CHIP layers after Ironclad",
+  "motto": "After Ironclad seals, every die folds into one CHIPS core — ironclad_chips + plate_stack → chips_core.",
+  "module": "lib/field-chips-core.py",
+  "panel": "field-chips-core-panel.json",
+  "core": "field-chips-core.json",
+  "facet": "chips_core",
+  "ironclad_citation": "ironclad:chips:core",
+  "condense_after": "ironclad_sealed",
+  "sources": [
+    {"id": "ironclad_chips", "battery": "field-ironclad-chips-combinatorics.json", "module": "lib/field-ironclad-chips-combinatorics.py"},
+    {"id": "chips_plate_stack", "battery": "field-chips-plate-stack.json", "module": "lib/field-chips-plate-stack.py"},
+    {"id": "ironclad", "panel": "ironclad-immediate.json", "module": "lib/ironclad-immediate.py"}
+  ],
+  "queen_surface": "/world/queen-chips-cores.html",
+  "api": "/api/chips/core",
+  "ironclad_chain": {
+    "root": "ironclad-immediate",
+    "citation": "ironclad:chips:core",
+    "connected_throughout": true,
+    "condense_trigger": "ironclad_sealed"
+  }
+}

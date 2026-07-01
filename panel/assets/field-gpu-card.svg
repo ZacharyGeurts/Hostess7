@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" role="img" aria-label="Video card illustration">
+  <defs>
+    <linearGradient id="pcb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a2332"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3fb950"/>
+      <stop offset="45%" stop-color="#58a6ff"/>
+      <stop offset="70%" stop-color="#f472b6"/>
+      <stop offset="100%" stop-color="#f85149"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect x="24" y="36" width="432" height="128" rx="12" fill="url(#pcb)" stroke="url(#accent)" stroke-width="2"/>
+  <rect x="40" y="52" width="200" height="96" rx="6" fill="#0a0c10" stroke="#3fb950" stroke-width="1.5" opacity="0.9"/>
+  <rect x="52" y="64" width="176" height="72" rx="4" fill="#12151f"/>
+  <g fill="#3fb950" opacity="0.35">
+    <rect x="60" y="72" width="24" height="56" rx="2"/>
+    <rect x="92" y="72" width="24" height="56" rx="2"/>
+    <rect x="124" y="72" width="24" height="56" rx="2"/>
+    <rect x="156" y="72" width="24" height="56" rx="2"/>
+    <rect x="188" y="72" width="24" height="56" rx="2"/>
+  </g>
+  <circle cx="360" cy="100" r="42" fill="none" stroke="url(#accent)" stroke-width="3" filter="url(#glow)"/>
+  <circle cx="360" cy="100" r="28" fill="#0a0c10" stroke="#58a6ff" stroke-width="2"/>
+  <path d="M360 72v20M360 108v20M332 100h20M368 100h20" stroke="#f472b6" stroke-width="3" stroke-linecap="round"/>
+  <rect x="260" y="140" width="160" height="12" rx="3" fill="#1f2937"/>
+  <rect x="260" y="140" width="100" height="12" rx="3" fill="url(#accent)" opacity="0.8"/>
+  <text x="40" y="28" fill="#8b949e" font-family="system-ui,sans-serif" font-size="11" letter-spacing="0.12em">FIELD GPU · PCIE</text>
+</svg>

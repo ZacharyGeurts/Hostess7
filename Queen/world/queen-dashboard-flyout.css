@@ -1,0 +1,179 @@
+/* Dashboard taskbar flyout — hover above chrome / desktop taskbar */
+
+.qdf-anchor {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.qdf-btn {
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #3ecf8e;
+  background: rgba(6, 16, 12, 0.9);
+  border: 1px solid rgba(62, 207, 142, 0.35);
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: default;
+  user-select: none;
+}
+
+.qdf-btn:hover,
+.qdf-anchor.qdf-open .qdf-btn {
+  color: #f472b6;
+  border-color: rgba(244, 114, 182, 0.45);
+  box-shadow: 0 0 10px rgba(62, 207, 142, 0.2);
+}
+
+.qdf-flyout {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 3500;
+  width: min(92vw, 720px);
+  max-height: min(70vh, 520px);
+  display: none;
+  flex-direction: column;
+  background: #020403;
+  border: 1px solid rgba(62, 207, 142, 0.35);
+  border-radius: 10px;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(62, 207, 142, 0.06);
+  overflow: hidden;
+}
+
+.qdf-anchor.qdf-open .qdf-flyout {
+  display: flex;
+}
+
+.qdf-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.2);
+  background: linear-gradient(180deg, #0a120e, #06100c);
+  font-size: 12px;
+}
+
+.qdf-head strong {
+  color: #3ecf8e;
+  letter-spacing: 0.05em;
+}
+
+.qdf-g16 {
+  margin-left: auto;
+  font-size: 10px;
+  color: #7a9a88;
+  max-width: 45%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.qdf-g16.ok { color: #3ecf8e; }
+.qdf-g16.bad { color: #f87171; }
+
+.qdf-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: #7a9a88;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.12);
+}
+
+.qdf-toolbar select,
+.qdf-toolbar button {
+  font: inherit;
+  font-size: 11px;
+  color: #e8f2ea;
+  background: #0f1a14;
+  border: 1px solid rgba(62, 207, 142, 0.25);
+  border-radius: 5px;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.qdf-grid {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+  align-content: start;
+}
+
+.qdf-grid[data-cols="auto"] {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.qdf-grid[data-cols="1"] { grid-template-columns: 1fr; }
+.qdf-grid[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
+.qdf-grid[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+.qdf-grid[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
+
+.qdf-tile {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  min-height: 100px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #0a120e;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color 0.12s, transform 0.12s;
+}
+
+.qdf-tile:hover {
+  border-color: rgba(62, 207, 142, 0.45);
+  transform: translateY(-1px);
+}
+
+.qdf-tile iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
+  background: #0a120e;
+}
+
+.qdf-tile-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 4px 6px;
+  font-size: 10px;
+  color: #e8f2ea;
+  background: linear-gradient(transparent, rgba(2, 4, 3, 0.92));
+  pointer-events: none;
+}
+
+.qdf-foot {
+  padding: 6px 10px 8px;
+  font-size: 10px;
+  color: #7a9a88;
+  border-top: 1px solid rgba(62, 207, 142, 0.12);
+}
+
+.qdf-foot a {
+  color: #3ecf8e;
+  text-decoration: none;
+}
+
+.qdf-foot a:hover { color: #f472b6; }
+
+/* Desktop taskbar variant */
+.qd-taskbar .qdf-anchor {
+  margin-left: 6px;
+}
+
+.qd-taskbar .qdf-flyout {
+  left: auto;
+  right: 48px;
+}

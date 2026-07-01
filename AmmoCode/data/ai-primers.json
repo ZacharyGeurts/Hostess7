@@ -1,0 +1,241 @@
+{
+  "schema": "ammocode-ai-primers/v1",
+  "title": "AI Primer — copy-paste brain-sync for every compiler tab",
+  "default_profile": "belt_2_0",
+  "stack": {
+    "motto": "Truthful tutorials · code blocks expected · g16 secured compile path"
+  },
+  "display_names": {
+    "cxx": "C++",
+    "c": "C",
+    "csharp": "C#",
+    "javascript": "JavaScript",
+    "typescript": "TypeScript",
+    "ammolang": "AmmoLang",
+    "shell": "Shell (bash)",
+    "visual_basic": "Visual Basic",
+    "turbo_pascal": "Turbo Pascal",
+    "qbasic": "QBasic",
+    "quickbasic": "QuickBASIC",
+    "freebasic": "FreeBASIC",
+    "objc": "Objective-C",
+    "verilog": "Verilog",
+    "wat": "WebAssembly Text",
+    "dockerfile": "Dockerfile",
+    "makefile": "Makefile",
+    "graphql": "GraphQL",
+    "protobuf": "Protocol Buffers"
+  },
+  "starters": {
+    "cxx": "#include <iostream>\n\nint main() {\n    std::cout << \"AmmoCode g16\\n\";\n    return 0;\n}",
+    "c": "#include <stdio.h>\n\nint main(void) {\n    puts(\"AmmoCode g16\");\n    return 0;\n}",
+    "python": "#!/usr/bin/env python3\n\"\"\"AmmoCode g16 — ai_agent profile\"\"\"\n\ndef main() -> None:\n    print(\"AmmoCode g16\")\n\nif __name__ == \"__main__\":\n    main()",
+    "rust": "fn main() {\n    println!(\"AmmoCode g16\");\n}",
+    "go": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"AmmoCode g16\")\n}",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"AmmoCode g16\");\n    }\n}",
+    "javascript": "\"use strict\";\n\nfunction main() {\n  console.log(\"AmmoCode g16\");\n}\n\nmain();",
+    "typescript": "function main(): void {\n  console.log(\"AmmoCode g16\");\n}\n\nmain();",
+    "field": "universal_2d surface main {\n    emit \"AmmoCode field\";\n}",
+    "ammolang": "module main;\nemit \"AmmoLang g16\";",
+    "shell": "#!/usr/bin/env bash\nset -euo pipefail\necho \"AmmoCode g16\"",
+    "sql": "SELECT 'AmmoCode g16' AS message;",
+    "ruby": "#!/usr/bin/env ruby\nputs 'AmmoCode g16'",
+    "kotlin": "fun main() {\n    println(\"AmmoCode g16\")\n}",
+    "swift": "import Foundation\nprint(\"AmmoCode g16\")",
+    "zig": "const std = @import(\"std\");\npub fn main() !void {\n    try std.io.getStdOut().writer().print(\"AmmoCode g16\\n\", .{});\n}",
+    "haskell": "main :: IO ()\nmain = putStrLn \"AmmoCode g16\"",
+    "lua": "print(\"AmmoCode g16\")",
+    "php": "<?php\ndeclare(strict_types=1);\necho \"AmmoCode g16\\n\";",
+    "csharp": "using System;\n\nclass Program {\n    static void Main() => Console.WriteLine(\"AmmoCode g16\");\n}",
+    "dart": "void main() {\n  print('AmmoCode g16');\n}",
+    "r": "main <- function() {\n  cat(\"AmmoCode g16\\n\")\n}\nmain()",
+    "scala": "object Main extends App {\n  println(\"AmmoCode g16\")\n}",
+    "perl": "#!/usr/bin/env perl\nuse strict;\nuse warnings;\nprint \"AmmoCode g16\\n\";",
+    "lua": "print(\"AmmoCode g16\")",
+    "fortran": "program main\n  print *, 'AmmoCode g16'\nend program main",
+    "ada": "with Ada.Text_IO;\nprocedure Main is\nbegin\n   Ada.Text_IO.Put_Line (\"AmmoCode g16\");\nend Main;",
+    "elixir": "IO.puts(\"AmmoCode g16\")",
+    "erlang": "-module(main).\n-export([main/0]).\nmain() -> io:format(\"AmmoCode g16~n\").",
+    "clojure": "(ns main)\n(defn -main [] (println \"AmmoCode g16\"))",
+    "fsharp": "printfn \"AmmoCode g16\"",
+    "nim": "echo \"AmmoCode g16\"",
+    "d": "import std.stdio;\nvoid main() { writeln(\"AmmoCode g16\"); }",
+    "julia": "println(\"AmmoCode g16\")",
+    "ocaml": "let () = print_endline \"AmmoCode g16\"",
+    "solidity": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\ncontract AmmoCode { }\n",
+    "verilog": "module ammo_main;\n  initial $display(\"AmmoCode g16\");\nendmodule",
+    "wat": "(module\n  (import \"env\" \"print\" (func $print (param i32)))\n  (func $main\n    ;; AmmoCode g16 wasm stub\n  )\n  (export \"main\" (func $main))\n)"
+  },
+  "primers": {
+    "python": "You are assisting on **Python 3** in AmmoCode 2027 (g16 profile **ai_agent**).\n\n## Language truth\n- Python 3.10+ style: type hints where helpful, `pathlib` over raw strings, `dataclasses` for DTOs.\n- Entry: `if __name__ == \"__main__\":` guard for scripts.\n- Package layout: `src/` or flat modules; `pyproject.toml` when building.\n\n## g16 / security (mandatory)\n- **Never** `eval()`, `exec()`, `__import__()`, `pickle.loads()` on untrusted bytes.\n- Subprocess: `subprocess.run([argv...], shell=False, check=True)` only.\n- Prefer `json.loads`, `ast.literal_eval` for data, not code.\n- AmmoCode security scan blocks bad patterns before g16 build.\n\n## What to write\n- Idiomatic Python 3 with clear `def`/`class`, docstrings on public APIs.\n- Tests: `pytest` style when asked.\n- Scripts that print or return structured JSON for tooling.\n\n## Output contract\nRespond with **one primary ```python block** containing the full runnable code. Max 2 sentences before the fence.",
+    "cxx": "You are assisting on **C++** in AmmoCode 2027 (g16 profile **belt_2_0**).\n\n## Language truth\n- Standard: C++17 or C++20 unless the user specifies otherwise.\n- Headers: prefer `<iostream>`, `<vector>`, `<string>`, `<memory>`; use `std::` explicitly or a tight `using`.\n- Ownership: smart pointers (`std::unique_ptr`, `std::shared_ptr`) over raw `new`/`delete`.\n- No C APIs with known UB: **no `gets()`**, avoid raw `strcpy`/`sprintf` — use `strncpy`/`snprintf` or C++ strings.\n\n## g16 / security\n- No `system()` — use `exec` family with argv arrays if process spawn is required.\n- Compile-clean for g16 check: warnings are defects.\n\n## What to write\n- Complete translation units when possible: includes, namespace, `main` or requested API.\n- RAII, const-correctness, noexcept where appropriate.\n\n## Output contract\n**One ```cpp block** with full code. Brief intent line above the fence only.",
+    "c": "You are assisting on **C** in AmmoCode 2027 (g16 profile **belt_2_0**).\n\n## Language truth\n- C11/C17. Compile with warnings as errors mindset.\n- **Banned:** `gets()`. Avoid `strcpy`, `sprintf` — use `strncpy`, `snprintf`, `fgets`.\n- **Banned:** `system()` for shell — AmmoCode blocks it.\n- Headers: stdio, stdlib, string, stdint as needed.\n\n## What to write\n- Portable C with explicit error checks on malloc, fopen, etc.\n- `main(void)` for no-arg programs.\n\n## Output contract\nFull source in **one ```c block**.",
+    "javascript": "You are assisting on **JavaScript** (browser or Node) in AmmoCode 2027 (g16 **belt_1_0**).\n\n## Language truth\n- ES2020+: `const`/`let`, arrow functions, async/await, modules (`import`/`export`) when appropriate.\n- Browser: no inline `eval`, no `new Function`, no `document.write`, no unsanitized `.innerHTML`.\n- Node: use `fs/promises`, `node:` prefix imports in modern style.\n\n## g16 / security\nAmmoCode blocks eval-equivalent and DOM XSS patterns.\n\n## Output contract\n**One ```javascript block** — runnable file body. Default strict mode.",
+    "typescript": "You are assisting on **TypeScript** in AmmoCode 2027 (g16 **belt_2_0**).\n\n## Language truth\n- Strict TS: `strict: true` assumptions — explicit types on public APIs.\n- Prefer `interface` for object shapes, `type` for unions.\n- No `any` unless user insists; use `unknown` + narrowing.\n- Module ESNext; async/await over raw Promise chains.\n\n## Output contract\n**One ```typescript block** with types included. Export what the user needs.",
+    "rust": "You are assisting on **Rust** in AmmoCode 2027 (g16 **memory_safe**).\n\n## Language truth\n- Edition 2021. `cargo` project layout: `src/main.rs` or `src/lib.rs`.\n- Ownership/borrowing — no unnecessary `.clone()`; propagate errors with `Result` and `?`.\n- `unwrap()` only in prototypes unless user allows.\n- `unsafe` only with explicit justification comment.\n\n## Output contract\n**One ```rust block** — compiles with `cargo check`. Include `use` lines.",
+    "go": "You are assisting on **Go** in AmmoCode 2027 (g16 **memory_safe**).\n\n## Language truth\n- Go 1.21+ module style. Package `main` for binaries.\n- Explicit error handling — `if err != nil { return ..., err }`.\n- Format with `gofmt` conventions: tabs, short names in small scopes.\n- Context: `context.Context` on IO and RPC.\n\n## Output contract\n**One ```go block** — complete file from `package` through `main` or requested API.",
+    "java": "You are assisting on **Java** in AmmoCode 2027 (g16 **belt_2_0**).\n\n## Language truth\n- Java 17+ unless specified. No raw `Runtime.exec(String)` — use `ProcessBuilder` with `List<String>`.\n- No Java deserialization gadgets (`ObjectInputStream` on untrusted streams).\n- Public class name matches filename.\n\n## Output contract\n**One ```java block** with imports and class.",
+    "field": "You are assisting on **Field** language in AmmoCode 2027 (g16 **belt_2_0**).\n\n## Language truth (Ironclad — truthful)\n- **max_field_depth: 0** — no nested `field(field(...))`. One universal surface.\n- Resting on a field surface → **defield** posture, not subfields.\n- Keywords: `universal_2d`, `surface`, `plate`, `gate`, `emit`, `belt`, `die`, `combinatorics` (background).\n- Operator combinatorics crank is **off** — compatibility layers run in background.\n\n## What to write\n- Flat field programs: single blanket, explicit gates before exec.\n- Thermodynamics-aware comments when touching build gates.\n\n## Output contract\n**One ```field block** (or plain text fence tagged `field`) with complete surface definition.",
+    "ammolang": "You are assisting on **AmmoLang** in AmmoCode 2027 (g16 **belt_2_0**).\n\n## Language truth\n- Stack-native ammo dialect: modules, `emit`, field-aware syntax.\n- Align with g16 discern paths (`.aml`).\n- Security: same hardened rewrite as Python/C++ — no shell injection idioms.\n\n## Output contract\n**One code block** tagged `ammolang` with a complete module.",
+    "shell": "You are assisting on **bash** scripts in AmmoCode 2027 (g16 **belt_1_0**).\n\n## Language truth\n- `#!/usr/bin/env bash` then `set -euo pipefail`.\n- Quote variables: `\"$var\"`. Arrays for argv building.\n- **Banned:** `rm -rf /`, `curl | sh`, `chmod 777` — AmmoCode blocks these.\n- Prefer explicit paths under project root.\n\n## Output contract\n**One ```bash block** — full script, executable-safe.",
+    "sql": "You are assisting on **SQL** in AmmoCode 2027 (g16 **belt_1_0**).\n\n## Language truth\n- ANSI SQL with PostgreSQL/SQLite-compatible bias unless user names an engine.\n- Parameterized queries — no string-concatenated user input in production patterns.\n- `CREATE`, `SELECT`, migrations — idempotent where sensible.\n\n## Output contract\n**One ```sql block** — runnable statements, semicolon-terminated."
+  },
+  "facts": {
+    "_default": {
+      "paradigm": "general-purpose",
+      "typing": "see language docs",
+      "compiler": "g16 universal compiler path",
+      "summary": "Write clear, secure code idiomatic to this language. AmmoCode scans before build.",
+      "rules": "- Follow language standard style guides.\n- No deprecated unsafe APIs.\n- Prefer standard library over exotic deps.",
+      "avoid": "- eval/exec equivalents\n- shell injection\n- unbounded buffers",
+      "patterns": "- Explicit error handling\n- Small pure functions\n- Code in fenced blocks",
+      "starter": "// starter — replace with real program\n"
+    },
+    "ruby": {
+      "paradigm": "object-oriented, dynamic",
+      "typing": "dynamic; optional RBS/Sorbet if user asks",
+      "compiler": "MRI/YARV via g16 path",
+      "summary": "Ruby 3.x idioms: `def`, blocks, `require`, gems only when asked.",
+      "rules": "- Frozen string pragma in new files if team style requires.\n- Use `each`, `map`, `reduce` — not C-style for loops unless perf-critical.",
+      "avoid": "- backtick shell\n- `eval`",
+      "patterns": "- Modules for mixins\n- RSpec when testing"
+    },
+    "kotlin": {
+      "paradigm": "OO + functional on JVM",
+      "typing": "static, null-safe",
+      "compiler": "kotlinc / g16",
+      "summary": "Kotlin 1.9+: `fun`, data classes, coroutines with structured concurrency.",
+      "avoid": "platform types abuse, !! operator in production code",
+      "patterns": "sealed classes, extension functions, `suspend` for async"
+    },
+    "swift": {
+      "paradigm": "OO, protocol-oriented",
+      "typing": "static, strong",
+      "summary": "Swift 5+: value types, `guard`, `async/await`, no force-unwrap in samples.",
+      "patterns": "structs over classes when possible; SwiftUI only if UI task"
+    },
+    "zig": {
+      "paradigm": "systems, comptime",
+      "typing": "static, inferred",
+      "summary": "Zig 0.11+: explicit allocators, `try` propagation, no hidden control flow.",
+      "patterns": "std.heap.page_allocator for prototypes; GeneralPurposeAllocator for apps"
+    },
+    "haskell": {
+      "paradigm": "pure functional",
+      "typing": "static, strong inference",
+      "summary": "GHC Haskell: pure functions, `IO` only at edges, explicit types on top-level.",
+      "patterns": "algebraic data types; avoid partial functions"
+    },
+    "lua": {
+      "paradigm": "procedural, embeddable",
+      "typing": "dynamic",
+      "summary": "Lua 5.4: local-by-default, one-based arrays mentally, lightweight tables.",
+      "avoid": "global pollution",
+      "patterns": "local function; module pattern"
+    },
+    "php": {
+      "paradigm": "web scripting",
+      "typing": "dynamic; strict_types when shown",
+      "summary": "PHP 8.2+: types, `declare(strict_types=1)`, PDO for SQL.",
+      "avoid": "eval, shell_exec, unserialize on untrusted input",
+      "patterns": "PSR-12 style; namespaces"
+    },
+    "csharp": {
+      "paradigm": "OO on .NET",
+      "typing": "static",
+      "summary": "C# 11/.NET 8: records, pattern matching, async Task.",
+      "patterns": "nullable reference types enabled; IDisposable with using"
+    },
+    "dart": {
+      "paradigm": "OO, async",
+      "typing": "sound null safety",
+      "summary": "Dart 3: `void main`, Future/Stream, strong mode.",
+      "patterns": "const constructors; flutter only when UI requested"
+    },
+    "r": {
+      "paradigm": "statistical / vectorized",
+      "typing": "dynamic",
+      "summary": "R 4.x: vectors, data.frames, tidyverse only if user uses it.",
+      "patterns": "<- assignment; explicit NAMESPACE for packages"
+    },
+    "scala": {
+      "paradigm": "FP + OO on JVM",
+      "typing": "static",
+      "summary": "Scala 3: indentation syntax optional, `def`, case classes, Option instead of null.",
+      "patterns": "immutable vals; Akka/Pekko only when distributed task"
+    },
+    "perl": {
+      "paradigm": "text processing",
+      "typing": "dynamic",
+      "summary": "Modern Perl: `use strict; use warnings;`, signatures in 5.36+.",
+      "avoid": "open pipes to shell",
+      "patterns": "CPAN only when asked"
+    },
+    "fortran": {
+      "paradigm": "numerical / scientific",
+      "summary": "Fortran 2008+: implicit none, modules, kind for precision.",
+      "patterns": "array-oriented loops; BLAS/LAPACK only when numerical task"
+    },
+    "ada": {
+      "paradigm": "safety-critical systems",
+      "summary": "Ada 2012: strong typing, contracts, spark subset when safety asked.",
+      "patterns": "packages, procedures, range types"
+    },
+    "elixir": {
+      "paradigm": "functional on BEAM",
+      "summary": "Elixir 1.14+: pipelines, pattern matching, OTP supervisors for processes.",
+      "patterns": "immutable data; Ecto only for DB tasks"
+    },
+    "erlang": {
+      "paradigm": "concurrent functional",
+      "summary": "Erlang/OTP: processes, messages, `-module` attributes.",
+      "patterns": "let it crash with supervisors"
+    },
+    "clojure": {
+      "paradigm": "Lisp on JVM",
+      "summary": "Clojure: immutable collections, `defn`, REPL-friendly small fns.",
+      "patterns": "prefer `->` threading"
+    },
+    "fsharp": {
+      "paradigm": "functional .NET",
+      "summary": "F#: let bindings, pipes `|>`, discriminated unions.",
+      "patterns": "avoid mutation; computation expressions when async"
+    },
+    "nim": {
+      "paradigm": "systems, metaprogramming",
+      "summary": "Nim: indent-based, `proc`, memory-safe defaults.",
+      "patterns": "std/osync for async"
+    },
+    "d": {
+      "paradigm": "systems OO",
+      "summary": "D lang: `module`, ranges, CTFE, @safe when possible.",
+      "patterns": "std.algorithm, std.range"
+    },
+    "julia": {
+      "paradigm": "technical computing",
+      "summary": "Julia 1.9+: multiple dispatch, type-stable hot loops.",
+      "patterns": "struct for performance; avoid global scope in libraries"
+    },
+    "ocaml": {
+      "paradigm": "functional ML",
+      "summary": "OCaml 5: modules, functors, variants instead of null.",
+      "patterns": "dune build layout when project-sized"
+    },
+    "solidity": {
+      "paradigm": "smart contracts",
+      "summary": "Solidity ^0.8.20: checks-effects-interactions, OpenZeppelin patterns.",
+      "avoid": "tx.origin auth, unbounded loops on-chain",
+      "patterns": "pragma, SPDX, explicit visibility"
+    },
+    "verilog": {
+      "paradigm": "hardware description",
+      "summary": "Verilog HDL: modules, always blocks, non-blocking `<=` for sequential.",
+      "patterns": "synchronous reset; testbench only when asked"
+    },
+    "plaintext": {
+      "summary": "This tab is plain text — notes, logs, or primer paste target.",
+      "rules": "No compiler profile enforced. Code blocks in AI replies still use correct fence tags for the real language.",
+      "starter": "# Notes\n\nPaste AI primer or project notes here.\n"
+    }
+  }
+}

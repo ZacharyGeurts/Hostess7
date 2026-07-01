@@ -1,0 +1,58 @@
+{
+  "schema": "field-ammolang-mcp-layer/v1",
+  "title": "AmmoLang secure GitHub MCP transport",
+  "motto": "MCP-first · gh-scoped auth · richer than TCP/IP — GitHub site + repo side in one lane.",
+  "default_transport": "mcp_secure",
+  "fallback_order": ["mcp_secure", "gh_cli", "tcp"],
+  "mcp_layer": "data/ammoos-mcp-layer.json",
+  "grok_mcp_server": "grok_com_github",
+  "stdio": "scripts/github-mcp-stdio.sh",
+  "env_file": "~/.config/sg/github-mcp.env",
+  "owner": "ZacharyGeurts",
+  "module": "lib/field-github-mcp-transport.py",
+  "informative_fields": [
+    "transport",
+    "auth_mode",
+    "latency_ms",
+    "rate_limit_remaining",
+    "repo.full_name",
+    "repo.description",
+    "repo.stargazers_count",
+    "release.tag_name",
+    "release.published_at",
+    "site.pages_url",
+    "site.wiki_url",
+    "site.html_url",
+    "summary_lines"
+  ],
+  "github_sites": {
+    "AmmoOS": {
+      "repo": "ZacharyGeurts/AmmoOS",
+      "pages": "https://zacharygeurts.github.io/AmmoOS/",
+      "wiki": null
+    },
+    "Grok16": {
+      "repo": "ZacharyGeurts/Grok16",
+      "pages": "https://zacharygeurts.github.io/Grok16/",
+      "wiki": "https://github.com/ZacharyGeurts/Grok16/wiki"
+    },
+    "Queen": {
+      "repo": "ZacharyGeurts/Queen",
+      "pages": "https://zacharygeurts.github.io/Queen/",
+      "wiki": null
+    },
+    "Kill-Grok-Orphans": {
+      "repo": "ZacharyGeurts/Kill-Grok-Orphans",
+      "pages": "https://zacharygeurts.github.io/Kill-Grok-Orphans/",
+      "wiki": "https://github.com/ZacharyGeurts/Kill-Grok-Orphans/wiki"
+    },
+    "stack_hub": {
+      "repo": "ZacharyGeurts/docs",
+      "pages": "https://zacharygeurts.github.io/ZacharyGeurts/stack.html",
+      "wiki": null
+    }
+  },
+  "verbs": ["check", "fetch", "site", "releases", "repos"],
+  "script_route": "github_mcp",
+  "entry_aml": "library/dewey/000-computer-science/ammolang/github_mcp.aml"
+}

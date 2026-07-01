@@ -1,0 +1,19 @@
+/**
+ * AmmoOS desktop only — +25% UI (125%). Queen Browser iframes are separate documents.
+ */
+html[data-ammoos-desktop="1"].fds-scaled,
+html[data-ammoos-desktop="1"] {
+  --ammo-ui-boost: 1.25;
+}
+
+html[data-ammoos-desktop="1"] .nfs-shell-window iframe {
+  /* Queen runs at native scale inside its own document */
+  transform: none;
+}
+
+html[data-ammoos-desktop="1"] .fsb-root,
+html[data-ammoos-desktop="1"] .nfs-desktop,
+html[data-ammoos-desktop="1"] #fsb-mount,
+html[data-ammoos-desktop="1"] .c2tm-root {
+  font-size: inherit;
+}

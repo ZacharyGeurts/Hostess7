@@ -1,0 +1,27 @@
+{
+  "schema": "hostess7-hand-doctrine/v1",
+  "title": "Hostess 7 hand dexterity — fingers, grips, manipulation",
+  "motto": "Hands as skilled as thought — every finger receipted, every grip intentional.",
+  "fingers": ["thumb", "index", "middle", "ring", "pinky"],
+  "segments": {
+    "thumb": ["cmc", "mcp", "ip"],
+    "default": ["mcp", "pip", "dip"]
+  },
+  "grips": {
+    "open": {"label": "Open hand", "description": "Full extension — ready to perceive or grasp"},
+    "power": {"label": "Power grip", "description": "Cylindrical grasp — tools, handles, weapons training"},
+    "precision": {"label": "Precision grip", "description": "Tip-to-tip — stylus, needle, fine control"},
+    "pinch": {"label": "Pinch", "description": "Thumb-index — small objects, chips, connectors"},
+    "tripod": {"label": "Tripod", "description": "Thumb-index-middle — writing, typing, delicate hold"},
+    "hook": {"label": "Hook", "description": "Finger flex without thumb — carry bag, pull strap"},
+    "lateral": {"label": "Lateral pinch", "description": "Thumb against index lateral — plate, card, tab"},
+    "sphere": {"label": "Sphere", "description": "Curved enclosure — ball, orb, rounded tool"}
+  },
+  "primitives": [
+    "open", "close", "point", "wave", "rotate_wrist", "supinate", "pronate",
+    "precision_aim", "power_squeeze", "release"
+  ],
+  "proficiency_floor": 0.72,
+  "master_floor": 0.95,
+  "train_tick_gain": 0.018
+}

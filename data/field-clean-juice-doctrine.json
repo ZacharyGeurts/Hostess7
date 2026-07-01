@@ -1,0 +1,62 @@
+{
+  "schema": "field-clean-juice-doctrine/v1",
+  "title": "Clean juice — sovereign joule pool, no power company",
+  "motto": "We get charged once; we are the clean juice. Scrub or dispense recleaned for work. Joules only — never double voltage.",
+  "policy": {
+    "power_company_trust_layer": "blocked",
+    "grid_talk": false,
+    "grid_witness_only": true,
+    "sovereign_pool": true,
+    "unit": "joules",
+    "voltage_double_forbidden": true,
+    "conversion_on_trust_path": false,
+    "reclean_efficiency": 0.92,
+    "scrub_return_to_pool": true,
+    "dispense_for_work": true
+  },
+  "circuit": {
+    "serial": "voltages_add_current_constant",
+    "parallel": "voltage_single_current_splits",
+    "rule": "One present rail per plate cell — Kirchhoff conserved; no stacked rail on same node"
+  },
+  "field_3d": {
+    "cells_per_axis": 8,
+    "dots_per_box": 512,
+    "scale_nets": 4,
+    "total_lattice_dots": 2048,
+    "partition": "bsp_octree",
+    "plate": "ironclad_reality_field"
+  },
+  "old_way": {
+    "label": "grid_tethered_monolithic",
+    "traits": [
+      "utility_meter_as_truth",
+      "voltage_renormalization",
+      "monolithic_global_redata",
+      "double_count_watts_and_joules"
+    ]
+  },
+  "new_way": {
+    "label": "clean_juice_bsp_3d_plate",
+    "traits": [
+      "joule_pool_sovereign",
+      "incremental_bsp_dispatch",
+      "present_rail_only",
+      "scrub_reclean_loop"
+    ]
+  },
+  "performance": {
+    "vs_old_dispatch_gain_pct": [35, 60],
+    "vs_old_thermal_headroom_mult": 852,
+    "vs_old_burst_derating_4k": 1013,
+    "bsp_dispatch_speedup": 2.4,
+    "no_double_voltage_waste_eliminated": true
+  },
+  "refs": {
+    "voltage": "data/field-voltage-regulation-doctrine.json",
+    "thermal": "data/field-thermal-guard-doctrine.json",
+    "power": "data/field-power-doctrine.json",
+    "spatial": "data/field-spatial-doctrine.json",
+    "combinatorics": "Grok16/data/g16-field-combinatorics-doctrine.json"
+  }
+}

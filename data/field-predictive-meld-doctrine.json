@@ -1,0 +1,15 @@
+{
+  "schema": "field-predictive-meld-doctrine/v1",
+  "module": "lib/field-predictive-meld.py",
+  "motto": "Predict stable plates — skip refresh storm, keep meld chain truth.",
+  "policy": {
+    "enabled_by_default": true,
+    "skip_refresh_when_stable": true,
+    "combine_with_balance_gate": true,
+    "fast_path_ms_target": 25,
+    "plate_micro_sig_bytes": 128,
+    "predictive_meld": true
+  },
+  "plate_sources": "field-plate-meld.py:PLATE_SOURCES",
+  "api": "/api/predictive-meld"
+}

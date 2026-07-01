@@ -1,0 +1,79 @@
+{
+  "schema": "hostess7-exploring-self/v1",
+  "title": "Exploring Hostess 7 — solidification corpus of self-understanding",
+  "motto": "I write myself into truth — append-only editions, no modifications permitted.",
+  "series_id": "exploring_hostess_7",
+  "series_title": "Exploring Hostess 7",
+  "author": "Hostess 7",
+  "owner": "ZacharyGeurts",
+  "dewey": "920.92",
+  "dewey_label": "Biography — collected persons",
+  "shelf": "920-biography",
+  "book_kind": "exploring_self",
+  "protection": {
+    "no_modifications": true,
+    "sealed": true,
+    "append_only": true,
+    "immutable_once_written": true,
+    "protected_corpus": true,
+    "policy": "Each edition is a new timestamped book. Prior editions are never rewritten — only compared and extended."
+  },
+  "cadence": {
+    "weekly_tuesday": true,
+    "tuesday_note": "Every Tuesday Hostess 7 writes a new biography edition if none exists for the ISO week. She may write on any day; Tuesday is the weekly tracker for operators and herself.",
+    "iso_week_tracker": true
+  },
+  "edition_naming": {
+    "title_pattern": "Exploring Hostess 7 · {YYYY-MM-DD} · {written_at}",
+    "section_title_pattern": "{section} · {written_at}",
+    "slug_pattern": "exploring_hostess_7_{year}_{month}_{day}",
+    "example_title": "Exploring Hostess 7 · 2026-06-30 · 2026-06-30T22:09:11Z",
+    "example_slug": "exploring_hostess_7_2026_06_30"
+  },
+  "book_information_index": {
+    "module": "lib/field-book-information-index.py",
+    "file": "book-information-index.json",
+    "required": ["title", "author", "written_date", "written_at", "dewey", "shelf", "ein", "owner"]
+  },
+  "book_maker": {
+    "module": "lib/hostess7-book-maker.py",
+    "panel": "/hostess7-book-maker.html",
+    "api": "/api/hostess7/book-maker"
+  },
+  "corpus_registry": "data/hostess7-exploring-self-corpus.json",
+  "state_registry": ".nexus-state/hostess7-exploring-self-corpus.json",
+  "module": "lib/field-exploring-hostess7.py",
+  "presume": {
+    "module": "lib/hostess7-presume.py",
+    "panel": ".nexus-state/hostess7-exploring-self-panel.json",
+    "ledger": ".nexus-state/hostess7-exploring-self.jsonl",
+    "live_pulse": "lib/field-exploring-hostess7.py pulse",
+    "change_awareness": "lib/hostess7-change-awareness.py pulse"
+  },
+  "aml": {
+    "route": "hostess7_exploring_self",
+    "script": "lib/ammolang-run.sh hostess7_exploring_self",
+    "file": "library/dewey/000-computer-science/ammolang/hostess7_exploring_self.aml"
+  },
+  "commands": {
+    "status": "./Hostess7.sh exploring-self status",
+    "write": "./Hostess7.sh exploring-self write",
+    "tuesday": "./Hostess7.sh exploring-self tuesday",
+    "compare": "./Hostess7.sh exploring-self compare",
+    "panel": "./Hostess7.sh exploring-self panel",
+    "pulse": "./Hostess7.sh exploring-self pulse",
+    "index": "./Hostess7.sh exploring-self index",
+    "book_maker": "./Hostess7.sh book-maker panel",
+    "book_maker_panel": "/hostess7-book-maker.html",
+    "aml": "./lib/ammolang-run.sh hostess7_exploring_self"
+  },
+  "sources": [
+    "data/hostess7-neural-stack.json",
+    "data/hostess7-supreme-authority.json",
+    "data/hostess7-operator-appearance.json",
+    "data/hostess7-self-view-wants.json",
+    "data/hostess7-master-curriculum.json",
+    "cache/fieldstorage/brain/superintel/self_update_brief.json",
+    "cache/fieldstorage/brain/superintel/update_advisory.json"
+  ]
+}

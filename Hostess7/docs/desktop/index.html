@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" data-ammoos-desktop="1" data-front-hook="nexus" data-ammoos-theme="nexus-military-v8">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-ammoos-scale.css" />
+  <script src="/Hostess7/pages-ammoos-scale.js"></script>
+  <script src="/Hostess7/assets/field-desktop-scale-propagate.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#040508" />
+  <meta name="color-scheme" content="dark" />
+  <title>AmmoOS 2.0 — Field Desktop</title>
+  <meta name="description" content="AmmoOS desktop — program icons, taskbar, fullscreen field programs." />
+  <link rel="icon" href="/Hostess7/assets/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="stylesheet" href="/Hostess7/assets/ammoos-c2-themes.css?v=at1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-host-desktop.css?v=hd4" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-monitor-dashboard.css?v=6" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-desktop-scale.css?v=2" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-startbar.css?v=5" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-ironclad-taskbar.css?v=1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-monster-monitor.css?v=2" />
+  <link rel="stylesheet" href="/Hostess7/assets/nexus-field-shell.css?v=hd14" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-c2-task-manager.css?v=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://127.0.0.1:* https://127.0.0.1:*; frame-src 'self' https://duckduckgo.com; object-src 'none'; base-uri 'self'" />
+  <style>
+    html, body {
+      margin: 0; padding: 0; overflow: hidden;
+      width: 100%; height: 100%;
+      width: 100dvw; height: 100dvh;
+      background: #1a1624;
+    }
+    .hd-desktop--solo {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .hd-monitor.hd-monitor--hidden { display: none !important; }
+    #hd-toast {
+      position: fixed; bottom: 52px; left: 50%; transform: translateX(-50%);
+      padding: 8px 14px; border-radius: 8px; background: rgba(12, 14, 22, 0.95);
+      border: 1px solid rgba(255,255,255,0.1); color: #eef4ff; font: 13px system-ui, sans-serif;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 9200;
+    }
+    #hd-toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="hd-desktop hd-desktop--solo" id="hd-desktop" role="main" aria-label="AmmoOS desktop">
+    <div class="hd-loading" id="hd-loading">Loading programs…</div>
+    <div class="hd-wall-label" id="hd-wall-label">AmmoOS 2.0</div>
+    <div class="hd-icons" id="hd-icons" aria-label="Desktop programs"></div>
+  </div>
+  <main class="hd-monitor hd-monitor--hidden" id="hd-monitor" aria-label="Six tool displays" hidden></main>
+  <div id="fsb-mount" aria-live="polite"></div>
+  <div id="c2tm-mount" aria-live="polite"></div>
+  <div id="hd-toast" role="status" aria-live="polite"></div>
+  <script src="/Hostess7/assets/front-hook.js?v=cc8" defer></script>
+  <script src="/Hostess7/assets/field-desktop-scale.js?v=2" defer></script>
+  <script src="/Hostess7/assets/field-desktop-scale-propagate.js?v=1" defer></script>
+  <script src="/Hostess7/assets/queen-icon-engine.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-monitor-dashboard.js?v=4" defer></script>
+  <script src="/Hostess7/assets/ironclad-bus.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-ironclad-taskbar.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-startbar.js?v=5" defer></script>
+  <script src="/Hostess7/assets/field-shell-context.js?v=1" defer></script>
+  <script src="/Hostess7/assets/nexus-field-shell.js?v=hd14" defer></script>
+  <script src="/Hostess7/assets/field-c2-task-manager.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-monster-monitor.js?v=2" defer></script>
+  <script src="/Hostess7/assets/field-cad-rescue.js?v=1" defer></script>
+  <script src="/Hostess7/assets/ammoos-theme-engine.js?v=at1" defer></script>
+  <script src="/Hostess7/assets/field-host-desktop.js?v=hd14" defer></script>
+  <script src="/Hostess7/pages-field-boot.js"></script>
+</body>
+</html>

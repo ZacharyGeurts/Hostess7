@@ -1,0 +1,46 @@
+{
+  "schema": "queen-field-manifest/v1",
+  "title": "Queen Sovereign Field — one secure package",
+  "motto": "Field Kernel + Queen browser + gates + Grok secure channel — sealed in one field.",
+  "forge_pipeline": "lib/queen-forge.py field",
+  "package_root": "field/sovereign",
+  "sg_root": "/home/default/Desktop/SG",
+  "kilroy_root": "SG/KILROY",
+  "substrate": "SG/linux-kernel/linux-7.1.1",
+  "field_storage_env": "HOSTESS7_TEAM_FIELD",
+  "layout": {
+    "kernel/bzImage": "KILROY Field Kernel 7.1.1-kilroy",
+    "boot/grok-kilroy.img": "Grok secure boot (replaces GRUB chain)",
+    "rootfs/": "Busybox production rootfs — LABEL=KILROY_FIELD",
+    "queen/": "queen-browser + GUI + brain + forge",
+    "secure/": "gates, grok-build, RTX sovereign doctrine",
+    "queen-sovereign-bundle.json": "sealed sovereign bundle — no field file",
+    "paths.json": "SG + drive resolution snapshot"
+  },
+  "tools": [
+    "field_substrate",
+    "field_kernel",
+    "field_boot",
+    "field_rootfs",
+    "rtx",
+    "field_package",
+    "field_publish"
+  ],
+  "field_order": [
+    "inside",
+    "field_substrate",
+    "field_kernel",
+    "field_boot",
+    "field_rootfs",
+    "rtx",
+    "field_package",
+    "verify"
+  ],
+  "cmdline": "root=/dev/ram0 rw init=/init console=ttyS0 kilroy.field=1 grok.security=strict",
+  "secure": {
+    "proc_kilroy_field": "/proc/kilroy_field",
+    "dev_kilroy_field": "/dev/kilroy_field",
+    "grok_build_secure": true,
+    "gates": "field-queen-gates-seed.json"
+  }
+}

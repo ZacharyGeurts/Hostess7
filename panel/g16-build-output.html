@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grok16 Build Output — Language Test Matrix</title>
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --panel: #11151c;
+      --border: #2a3344;
+      --text: #c8d4e0;
+      --muted: #6b7a8f;
+      --accent: #5eead4;
+      --green: #4ade80;
+      --pink: #f472b6;
+      --warn: #fbbf24;
+      --err: #f87171;
+      --mono: "JetBrains Mono", "Consolas", "Liberation Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--mono);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #141a24 0%, var(--panel) 100%);
+    }
+    h1 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+    }
+    .sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+    .stats {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-left: auto;
+      font-size: 0.8rem;
+    }
+    .stat strong { color: var(--accent); }
+    .stat.pass strong { color: var(--green); }
+    .stat.fail strong { color: var(--err); }
+    .toolbar { display: flex; gap: 0.5rem; }
+    button {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: #1a2230;
+      color: var(--text);
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.78rem;
+    }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    button.primary { border-color: var(--green); color: var(--green); }
+    #output {
+      flex: 1;
+      overflow: auto;
+      padding: 0.75rem 1rem 2rem;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .line { margin: 0; padding: 1px 0; }
+    .line--meta { color: var(--accent); }
+    .line--build { color: var(--text); }
+    .line--ok { color: var(--green); }
+    .line--err { color: var(--err); }
+    .line--warn { color: var(--warn); }
+    .line--summary { color: var(--pink); font-weight: 600; }
+    .line--raw { color: var(--muted); }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1em;
+      background: var(--accent);
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    footer {
+      padding: 0.5rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Grok16 Build Output</h1>
+      <div class="sub">Secure chamber · compile · run — every language · full build log</div>
+    </div>
+    <div class="stats" id="stats">
+      <span class="stat">langs <strong id="stat-total">—</strong></span>
+      <span class="stat">done <strong id="stat-done">0</strong></span>
+      <span class="stat pass">pass <strong id="stat-pass">0</strong></span>
+      <span class="stat fail">fail <strong id="stat-fail">0</strong></span>
+      <span class="stat">state <strong id="stat-state">idle</strong></span>
+    </div>
+    <div class="toolbar">
+      <button type="button" id="btn-start" class="primary">Run matrix</button>
+      <button type="button" id="btn-clear">Clear</button>
+      <button type="button" id="btn-scroll" aria-pressed="true">Auto-scroll</button>
+    </div>
+  </header>
+  <main id="output" role="log" aria-live="polite" aria-label="Grok16 build process output"></main>
+  <footer id="footer">Waiting for build stream…</footer>
+  <script src="/assets/g16-build-output.js"></script>
+</body>
+</html>

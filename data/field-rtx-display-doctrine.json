@@ -1,0 +1,60 @@
+{
+  "schema": "field-rtx-display/v1",
+  "title": "Field RTX display technology — OS shaders, not GUI",
+  "motto": "CANVAS.comp dispatches the field die. Demo raymarches live in demos/ only.",
+  "product": "AMOURANTHRTX",
+  "role": "display_technology",
+  "is_gui": false,
+  "stack_layer": {
+    "id": "ammoos_desktop",
+    "label": "AmmoOS desktop display",
+    "order": 3,
+    "above": "kilroy",
+    "below": "queen",
+    "owner": "AmmoOS",
+    "module": "Queen/lib/queen-canvas-renderer.py"
+  },
+  "os_shaders": {
+    "default": "CANVAS",
+    "dispatch": "CANVAS.comp",
+    "modules": [
+      {"id": "CANVAS", "file": "Navigator/shaders/compute/CANVAS.comp", "role": "FieldSocket dispatcher — analog field computer, push constants, thermo binding 2"},
+      {"id": "x86", "file": "Navigator/shaders/compute/x86.comp", "role": "Field Die guest CPU — programs and emulators"},
+      {"id": "aos_load", "file": "Navigator/shaders/compute/aos_load.comp", "role": "AmmoOS boot load stage"},
+      {"id": "energy", "file": "Navigator/shaders/compute/energy.comp", "role": "Thermo / energy envelope spine"}
+    ],
+    "engines": [
+      "Navigator/engine/Pipeline.hpp",
+      "Navigator/engine/FieldFabric.hpp",
+      "Navigator/engine/FieldThermalGuard.hpp",
+      "Navigator/engine/FieldRtxFieldAbs.hpp",
+      "Navigator/engine/FieldGpuLaunch.hpp",
+      "Navigator/engine/FieldRtxDrivers.hpp"
+    ],
+    "layout_version": 5,
+    "field_socket_bindings": [0, 1, 2, 8, 9, 10, 11, 12, 13, 14]
+  },
+  "demo_shaders": {
+    "demos_only": true,
+    "directory": "demos/shaders/compute",
+    "zip_archive": "demos/",
+    "env_gate": "AMOURANTHRTX_DEMO",
+    "never_os_boot": true,
+    "modules": [
+      "Amouranth", "Flowers", "Frosted", "GreenWaves", "RetroRTX",
+      "Mandelbulb3D", "Mandelbulb3Ddiamond", "Mandelbrot",
+      "Birthstones", "Birthstones2", "Birthstones3",
+      "NamcoTribute", "NintendoTribute", "Nick", "Pearls", "Tag",
+      "MiasBalls", "MiaMakesMusic", "FuShiShi", "Breakblocks"
+    ]
+  },
+  "queen_backend": {
+    "renderer": "queen-canvas-renderer",
+    "default_canvas_env": "QUEEN_CANVAS_SHADER",
+    "default_value": "CANVAS",
+    "desktop_comp_shader": false,
+    "operator_surface": "AmmoOS desktop (/field) — AMOURANTHRTX chip layer; Queen Browser is standalone sibling"
+  },
+  "fabric_map": "data/amouranthrtx-field-fabric-map.json",
+  "sovereign": "data/field-rtx-sovereign.json"
+}

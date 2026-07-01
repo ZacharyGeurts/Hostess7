@@ -1,0 +1,92 @@
+{
+  "schema": "field-broadcaster-platforms/v1",
+  "title": "AmmoOS Broadcaster — preconfigured streaming destinations",
+  "motto": "One-click platform posture — paste stream key, go live. No cloud login required.",
+  "default_platform": "kick",
+  "protocols": ["rtmp", "rtmps"],
+  "platforms": [
+    {
+      "id": "kick",
+      "label": "Kick",
+      "brand": "Kick",
+      "color": "#53fc18",
+      "rtmp_url": "rtmp://fa723fc1b171.global-contribute.live-video.net/app",
+      "rtmp_url_alt": "rtmp://ingest.kick.com/live",
+      "stream_key_hint": "Creator Dashboard → Settings → Stream → Stream Key",
+      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2},
+      "docs": "https://help.kick.com/en/articles/7066931-how-to-stream-on-kick-com"
+    },
+    {
+      "id": "twitch",
+      "label": "Twitch",
+      "brand": "Twitch",
+      "color": "#9146ff",
+      "rtmp_url": "rtmp://live.twitch.tv/app",
+      "stream_key_hint": "Creator Dashboard → Settings → Stream",
+      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 6000, "keyframe_sec": 2}
+    },
+    {
+      "id": "youtube",
+      "label": "YouTube Live",
+      "brand": "YouTube",
+      "color": "#ff0000",
+      "rtmp_url": "rtmp://a.rtmp.youtube.com/live2",
+      "stream_key_hint": "YouTube Studio → Go Live → Stream settings",
+      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2}
+    },
+    {
+      "id": "facebook",
+      "label": "Facebook Live",
+      "brand": "Facebook",
+      "color": "#1877f2",
+      "rtmp_url": "rtmps://live-api-s.facebook.com:443/rtmp",
+      "stream_key_hint": "Live Producer → Streaming software setup",
+      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4000, "keyframe_sec": 2}
+    },
+    {
+      "id": "rumble",
+      "label": "Rumble",
+      "brand": "Rumble",
+      "color": "#85c742",
+      "rtmp_url": "rtmp://rumble.com/live",
+      "stream_key_hint": "Rumble Studio → Live → Stream URL + Key",
+      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2}
+    },
+    {
+      "id": "trovo",
+      "label": "Trovo",
+      "brand": "Trovo",
+      "color": "#19c56f",
+      "rtmp_url": "rtmp://livepush.trovo.live/live",
+      "stream_key_hint": "Trovo Creator → Stream Key",
+      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2}
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram Live",
+      "brand": "Instagram",
+      "color": "#e1306c",
+      "rtmp_url": "rtmps://live-upload.instagram.com:443/rtmp",
+      "stream_key_hint": "Instagram professional dashboard stream key",
+      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 3500, "keyframe_sec": 2}
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn Live",
+      "brand": "LinkedIn",
+      "color": "#0a66c2",
+      "rtmp_url": "rtmp://rtmp.linkedin.com:1935/live",
+      "stream_key_hint": "LinkedIn Live setup stream URL",
+      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 3000, "keyframe_sec": 2}
+    },
+    {
+      "id": "custom",
+      "label": "Custom RTMP",
+      "brand": "Custom",
+      "color": "#38bdf8",
+      "rtmp_url": "",
+      "stream_key_hint": "Full RTMP URL or server + stream key",
+      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2}
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "hostess7-biology-mutable-paths/v1",
+  "title": "Hostess 7 biology & training — seal-exempt mutable paths",
+  "updated": "2026-06-30",
+  "motto": "Signed and sealed protects release executables and the protective shell — never Hostess 7 biology, brain expansion, training, or runtime need.",
+  "policy": {
+    "seal_scope": "built_executables_and_protective_shell_only",
+    "never_lock": true,
+    "never_integrity_fail": true,
+    "never_tamper_restore": true,
+    "training_unblocked": true,
+    "brain_expansion_unblocked": true,
+    "biology_internal_unblocked": true
+  },
+  "mutable_prefixes": [
+    ".nexus-state",
+    ".nexus-field-drive",
+    "cache",
+    "state",
+    "Hostess7/cache",
+    "Hostess7/zac",
+    "Hostess7/data/runtime",
+    "Queen/cache",
+    "hostess7-training-viewer/runtime"
+  ],
+  "mutable_segments": [
+    "fieldstorage",
+    "team_staging",
+    "training",
+    "brain",
+    "biology",
+    "ingest",
+    "solidify",
+    "agents7"
+  ],
+  "mutable_basenames": [
+    "hostess7-full-train-progress.json",
+    "nexus-executable-seal.json"
+  ],
+  "mutable_basename_patterns": [
+    "hostess7-*-panel.json"
+  ],
+  "executable_seal_roots": [
+    "bin",
+    "lib/bin",
+    "PythonG/bin",
+    "Grok16/bin",
+    "Queen/bin",
+    "KILROY/bin",
+    "Hostess7/bin"
+  ],
+  "protective_shell_roots": [
+    "lib",
+    "bin",
+    "panel",
+    "config"
+  ]
+}

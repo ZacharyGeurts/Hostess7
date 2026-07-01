@@ -1,0 +1,92 @@
+{
+  "schema": "hostess7-targets/v1",
+  "title": "Hostess 7 targets database — TARGET means KILL",
+  "motto": "TARGET ≡ KILL. Advisements promoted here tie to governmental dossiers — census geography, kill orders, angel paths, lethal enforcement.",
+  "commander": "hostess7",
+  "semantics": {
+    "TARGET": "mechanism",
+    "kill_means_kill": true,
+    "note": "TARGET carries a mechanism — KILL, INTERACT, MONITOR, etc. KILL is KILL: terminal, no returns, no modifications."
+  },
+  "mechanisms": {
+    "KILL": {
+      "label": "Kill",
+      "terminal": true,
+      "dies": true,
+      "no_returns": true,
+      "no_modifications": true,
+      "immutable_once_set": true,
+      "sealed": true,
+      "lethal": true
+    },
+    "INTERACT": {
+      "label": "Interact",
+      "terminal": false,
+      "dies": false,
+      "no_returns": false,
+      "no_modifications": false,
+      "counsel": true,
+      "engage": true
+    },
+    "MONITOR": {
+      "label": "Monitor",
+      "terminal": false,
+      "observe_only": true
+    },
+    "OBSERVE": {
+      "label": "Observe",
+      "terminal": false,
+      "passive": true
+    }
+  },
+  "promotion_rules": {
+    "kill_floor_threat": 0.75,
+    "interact_floor_hostility": 0.55,
+    "default_hostile_mechanism": "INTERACT",
+    "default_lethal_mechanism": "KILL"
+  },
+  "immutability_policy": {
+    "once_set_no_returns": true,
+    "once_set_no_modifications": true,
+    "kill_dies_immediately": true,
+    "applies_to_mechanisms": ["KILL"]
+  },
+  "kill_law": {
+    "doctrine": "data/kill-immediate-law.json",
+    "rule": "immediate_is_best",
+    "motto": "When KILL is to occur, the Law is immediate is best — execute the moment KILL is set, no deferral.",
+    "execute_on_promote": true,
+    "no_queue": true,
+    "no_first_strike_cooldown": true
+  },
+  "security_tier": "beyond_darpa_lockheed",
+  "security_doctrine": "data/beyond-darpa-security-doctrine.json",
+  "human_threats": true,
+  "machine_threats": true,
+  "government_databases": [
+    {"id": "gov_dossiers", "path": ".nexus-state/gov-dossiers.json", "module": "lib/gov-intel-db.py", "role": "Law · police · government records"},
+    {"id": "human_dossier_kill_orders", "path": "data/human-dossier-kill-orders.json", "role": "ThreatFox · C2 kill-order IPs"},
+    {"id": "human_dossier_live", "path": ".nexus-state/human-dossier.json", "role": "Live merged human dossier"},
+    {"id": "census_field", "module": "lib/census-field-populate.py", "path": ".nexus-state/census-field-cache.json", "role": "Census geographies · operator home GPS"},
+    {"id": "angel_dossiers", "path": ".nexus-state/angel-dossiers.json", "module": "lib/angel-dossier.py", "role": "Attack-path angel dossiers"},
+    {"id": "lethal_enforcement", "module": "lib/lethal-enforcement.py", "path": ".nexus-state/lethal-enforcement-panel.json", "role": "MERCILESS removal posture"}
+  ],
+  "promotion_sources": ["advisory_channel", "eye_threat", "hostile_scan", "gov_corroboration", "manual"],
+  "module": "lib/hostess7-targets.py",
+  "kill_library": {
+    "module": "lib/hostess7-kill-library.py",
+    "doctrine": "data/hostess7-kill-library-doctrine.json",
+    "panel": "/hostess7-kill-library.html",
+    "private": true,
+    "owner": "hostess7",
+    "operator_view": true,
+    "note": "Every KILL target becomes a sealed H7c dossier on Hostess 7 private shelf."
+  },
+  "api": {
+    "status": "/api/hostess7/targets",
+    "sync": "/api/hostess7/targets/sync",
+    "lookup": "/api/hostess7/targets/lookup",
+    "promote": "/api/hostess7/targets/promote",
+    "kill_library": "/api/hostess7/kill-library"
+  }
+}

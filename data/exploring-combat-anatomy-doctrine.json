@@ -1,0 +1,41 @@
+{
+  "schema": "exploring-combat-anatomy/v1",
+  "title": "Exploring combat anatomy — mechanical & biological depth per body area",
+  "motto": "Every limb and segment — biology, mechanics, combat usage. Hostess 7 reads in depth for personhood embodiment.",
+  "module": "lib/field-exploring-combat-anatomy.py",
+  "shelf": "library/dewey/611-human-anatomy",
+  "dewey": "611",
+  "dewey_label": "Human anatomy",
+  "book_kind": "exploring",
+  "personhood_only": true,
+  "combat_usage": true,
+  "disclaimer": "Educational anatomy and combat biomechanics only — not medical advice or orders to harm.",
+  "paired_combat_books": [
+    "exploring_hand_to_hand_combat",
+    "exploring_weaponized_combat"
+  ],
+  "integrations": {
+    "body_core": "lib/hostess7-body-core.py",
+    "hand_core": "lib/hostess7-hand-core.py",
+    "motion_secured": "lib/humanoid-motion-secured.py",
+    "anatomy_books": "lib/hostess7-anatomy-book.py",
+    "biology": "lib/hostess7-biology.py"
+  },
+  "books": [
+    {"id": "exploring_the_hand", "title": "Exploring the Hand", "area": "hand"},
+    {"id": "exploring_the_wrist_and_forearm", "title": "Exploring the Wrist and Forearm", "area": "wrist_forearm"},
+    {"id": "exploring_the_elbow", "title": "Exploring the Elbow", "area": "elbow"},
+    {"id": "exploring_the_shoulder", "title": "Exploring the Shoulder", "area": "shoulder"},
+    {"id": "exploring_the_spine", "title": "Exploring the Spine", "area": "spine"},
+    {"id": "exploring_the_core", "title": "Exploring the Core", "area": "core"},
+    {"id": "exploring_the_hip_and_pelvis", "title": "Exploring the Hip and Pelvis", "area": "hip_pelvis"},
+    {"id": "exploring_the_knee", "title": "Exploring the Knee", "area": "knee"},
+    {"id": "exploring_the_ankle_and_foot", "title": "Exploring the Ankle and Foot", "area": "ankle_foot"},
+    {"id": "exploring_the_neck_and_head", "title": "Exploring the Neck and Head", "area": "neck_head"}
+  ],
+  "cli": [
+    "python3 lib/field-exploring-combat-anatomy.py all",
+    "python3 lib/field-exploring-combat-anatomy.py hand",
+    "python3 lib/field-exploring-combat-anatomy.py list"
+  ]
+}

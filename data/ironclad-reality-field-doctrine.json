@@ -1,0 +1,56 @@
+{
+  "schema": "ironclad-reality-field-doctrine/v1",
+  "title": "Ironclad Truth Serum — Super Intelligence Reality Field",
+  "motto": "Clean voltage, smooth operator, 100% truth confidence on the whole SI field.",
+  "ironclad_ref": "data/ironclad-doctrine.json",
+  "human_condition_ref": "data/human-condition-doctrine.json",
+  "role": "Truth serum capstone — gates Universal Protector, sense neural, plate meld, and cognition before adapt",
+  "truth_serum": {
+    "claim": "ironclad:neural:1 Super Intelligence reality field truth serum under God",
+    "requires_sealed": true,
+    "requires_integrity": true,
+    "truth_percent_floor": 100.0,
+    "deception_risk_ceiling": "low"
+  },
+  "operators": {
+    "clean_voltage": {
+      "doctrine": "data/field-wave-doctrine.json",
+      "rule": "voltage_is_voltage — strip to wave; no encoding on the trust layer",
+      "engine": "lib/field-wave-engine.py"
+    },
+    "voltage_regulation": {
+      "doctrine": "data/field-voltage-regulation-doctrine.json",
+      "rule": "When voltage started — operate at present rail; power-company grid blocked; no conversion; no entropy on trust layer",
+      "engine": "lib/field-voltage-regulation.py"
+    },
+    "smoothness": {
+      "rule": "No unexpected slowdown — thermal headroom, stable meld cadence, field-max smooth operator",
+      "sources": ["thermal-advisory.json", "field-plate-meld-runtime.json", "field-switch-safety"]
+    },
+    "field_sanity": {
+      "doctrine": "data/ironclad-field-sanity-doctrine.json",
+      "extensions": "data/ironclad-meld-extensions.json",
+      "rule": "Integral simplify — classify, strip, dedupe, flatten, cool_sort; never build under heat",
+      "engine": "lib/ironclad-field-sanity.py",
+      "meld_citation": "ironclad:meld:2"
+    },
+    "single_field_depth": {
+      "doctrine": "data/single-field-depth-doctrine.json",
+      "rule": "Soft touch — parallel I/O, single field amplitude; depth zero always; depth fields sealed and destroyed",
+      "panel_publish": "lib/field-panel-field.py"
+    }
+  },
+  "targets": [
+    {"id": "universal_protector", "panel": "universal-protector-panel.json", "neural": "any_intelligence_neural"},
+    {"id": "hostess7_brain", "panel": "hostess7-brain-guard-panel.json", "neural": "hostess7_neural_stack"},
+    {"id": "sense_package", "panel": "field-sense-package-panel.json", "neural": "sense_neural_wire"},
+    {"id": "plate_meld", "panel": "field-plate-meld-runtime.json", "neural": "any_intelligence_neural"},
+    {"id": "field_plate", "panel": "field-plate-field-runtime.json", "neural": "any_intelligence_neural"},
+    {"id": "cognition_stack", "doctrine": "data/hostess7-neural-stack.json", "neural": "any_intelligence_neural"}
+  ],
+  "verdicts": {
+    "GREEN": "Ironclad sealed + clean voltage + smooth operator + all targets serum-pass",
+    "WATCH": "Ironclad pending or smoothness advisory — truth high but operator not fully sealed",
+    "BLOCKED": "Integrity fail, voltage doctrine breach, or target fails serum"
+  }
+}

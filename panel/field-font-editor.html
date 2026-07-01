@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Field Font Editor — Amouranth FFNT</title>
+  <link rel="stylesheet" href="/assets/field-font-editor.css" />
+</head>
+<body data-clipboard-wire data-hardware-wire>
+  <header class="ffe-head">
+    <h1>Amouranth Bold Professional</h1>
+    <p class="ffe-sub">FFNT · SDF atlas · secured clipboard · letter-by-letter</p>
+    <div class="ffe-head-actions">
+      <label>Point size <select id="ffe-point-size"></select></label>
+      <button type="button" id="ffe-copy-glyph">Copy glyph</button>
+      <button type="button" id="ffe-copy-font">Copy whole font</button>
+      <button type="button" id="ffe-refresh">Refresh</button>
+    </div>
+  </header>
+  <main class="ffe-main">
+    <section class="ffe-preview">
+      <canvas id="ffe-canvas" width="512" height="128"></canvas>
+      <pre id="ffe-props" class="ffe-props"></pre>
+    </section>
+    <section class="ffe-glyphs" id="ffe-glyphs"></section>
+  </main>
+  <script src="/assets/clipboard-wire.js"></script>
+  <script src="/assets/field-font-editor.js"></script>
+</body>
+</html>

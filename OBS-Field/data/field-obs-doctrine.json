@@ -1,0 +1,85 @@
+{
+  "schema": "field-obs-doctrine/v2",
+  "title": "Field OBS — sovereign local capture",
+  "product": "Field OBS",
+  "os_brand": "AmmoOS",
+  "motto": "No cloud login. Local record. NVENC when RTX permits. Readable UI every resolution. Built with g16 field_opt.",
+  "policy": {
+    "offline_first": true,
+    "no_cloud_login_required": true,
+    "no_auto_updates": true,
+    "only_bundled_plugins_default": true,
+    "safe_mode_available": true,
+    "local_recordings_only_default": true,
+    "no_rtmp_auto_connect": true,
+    "portable_config": true,
+    "queen_capture_ready": true
+  },
+  "field_mandate": {
+    "g16": "G16_FIELD_SAFETY_MANDATE_v1",
+    "default_profile": "field_opt",
+    "rtx_profile": "queen_rtx",
+    "rtx_gate_module": "Grok16/forge/rtx_gate.py"
+  },
+  "ui": {
+    "desktop_bump_pct": 10,
+    "default_ui_scale_pct": 110,
+    "min_ui_scale_pct": 85,
+    "max_ui_scale_pct": 200,
+    "rtx_reduce_default": true,
+    "rtx_reduce_factor": 0.92,
+    "doctrine": "data/field-obs-ui-tiers.json",
+    "qss": "themes/field-obs.qss"
+  },
+  "capture": {
+    "default_profile": "Field",
+    "default_collection": "Field-Queen",
+    "record_dir": "recordings",
+    "encoder_rtx": "ffmpeg_nvenc",
+    "encoder_cpu": "x264",
+    "format": "mkv"
+  },
+  "upstream": {
+    "path": "upstream/obs-studio",
+    "ref": "30.0.2",
+    "clone_script": "forge/clone-upstream.sh"
+  },
+  "build": {
+    "script": "build-field-obs.sh",
+    "configure_script": "forge/configure-field-obs-g16.sh",
+    "g16_cmake": "cmake/g16-field-obs.cmake",
+    "g16_toolchain": "data/g16-field-obs-toolchain.json",
+    "grok16_toolchain": "Grok16/cmake/grok16-toolchain.cmake",
+    "prefix": "prefix",
+    "binary": "prefix/bin/obs"
+  },
+  "platforms": {
+    "linux": {
+      "binary": [
+        "prefix/bin/obs",
+        "obs",
+        "/usr/bin/obs",
+        "/usr/local/bin/obs"
+      ],
+      "flatpak": "com.obsproject.Studio"
+    },
+    "darwin": {
+      "app": "/Applications/OBS.app/Contents/MacOS/obs"
+    },
+    "windows": {
+      "binary": [
+        "obs64.exe",
+        "C:\\\\Program Files\\\\obs-studio\\\\bin\\\\64bit\\\\obs64.exe"
+      ]
+    }
+  },
+  "harden_script": "forge/field-obs-harden.py",
+  "clone_script": "forge/clone-upstream.sh",
+  "nexus_program": {
+    "id": "field-obs",
+    "name": "Field OBS",
+    "exec": "/field-obs",
+    "category": "NEXUS · Tools",
+    "native_launch": "field-obs"
+  }
+}

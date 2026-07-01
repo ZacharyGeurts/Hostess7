@@ -1,0 +1,26 @@
+{
+  "schema": "ammocode-nondestructive/v1",
+  "title": "AmmoCode non-destructive doctrine",
+  "motto": "Never destructively modify itself or the outside world — read, edit in memory, export on purpose",
+  "rules": [
+    "No write_file / save_file / delete API — disk writes forbidden from server",
+    "Save = browser Export download only — operator chooses destination",
+    "Read path jail: home, SG, AmmoOS, /tmp",
+    "AmmoCode install tree is read-only for API — cannot overwrite server, data, or lib",
+    "g16_run blocked on AmmoCode tree and system paths — compile/run user projects only",
+    "Settings writes only ~/.config/ammocode and .nexus-state/ammocode",
+    "Defield markers only touch AmmoCode state dir — never foreign trees",
+    "Blocked API actions: write_file, save_file, delete_file, exec_shell, eval"
+  ],
+  "self_protected": [
+    "AmmoCode/",
+    "AmmoCode/server/",
+    "AmmoCode/data/",
+    "AmmoCode/lib/"
+  ],
+  "export_model": {
+    "method": "browser_download",
+    "overwrites_disk": false,
+    "operator_confirms_destination": true
+  }
+}

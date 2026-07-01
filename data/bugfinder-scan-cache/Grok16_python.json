@@ -1,0 +1,907 @@
+{
+  "ok": false,
+  "schema": "field-code-bugfinder/v1",
+  "updated": "2026-06-27T07:30:38Z",
+  "path": "Grok16/python",
+  "file_count": 14,
+  "claim_count": 21,
+  "heuristic_count": 3,
+  "heuristic_actionable": 3,
+  "truth_suspect_count": 29,
+  "bug_count": 32,
+  "truth_compares_per_sec": 1685.7,
+  "compare_summary": {
+    "compares": 83,
+    "elapsed_ms": 49.24,
+    "counts": {
+      "bug": 0,
+      "suspect": 29,
+      "clear": 0,
+      "investigate": 54
+    }
+  },
+  "ironclad_landing": {
+    "sealed": true,
+    "verdict": "GREEN",
+    "truth_percent": 100.0,
+    "citation": "ironclad:{book}:{verse}"
+  },
+  "thermal_gate": {
+    "ok": false,
+    "allow_plate_work": false,
+    "thermal_headroom_pct": 100.0,
+    "thermal_level": "ok",
+    "field_sanity_ok": false,
+    "never_build_under_heat": true,
+    "entropy_on_trust_layer": false,
+    "entropy_ok": true,
+    "bus_entropy": null,
+    "ops_requested": 4,
+    "doctrine": "Thermals + entropy checked before plate meld and library truth passes."
+  },
+  "heuristics": [
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 95,
+      "path": "/home/default/Desktop/SG/NewLatest/Grok16/python/driver/gpy16_driver.py",
+      "text": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 101,
+      "path": "/home/default/Desktop/SG/NewLatest/Grok16/python/driver/gpy16_driver.py",
+      "text": "exec(compile(code, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 208,
+      "path": "/home/default/Desktop/SG/NewLatest/Grok16/python/driver/gpy16_driver.py",
+      "text": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_query": "code injection eval exec security"
+    }
+  ],
+  "truth_suspects": [
+    {
+      "code_claim": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Network Security — Field Guide\nNEXUS-Shield · Hostess7 Field Press\n=================================\n\nChapter 1 — Know the Wire\n\nEvery connection on your machine is a contract between a program and a remote peer. Security begins by naming t",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 21.0,
+      "truth_delta": 0.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "absolute_language",
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "behavior.\n\nChapter 2 — False Positives Are Defeats\n\nAn alert that cries wolf trains the operator to ignore real attacks. NEXUS Inspect mode uses high-confidence thresholds: multiple independent signals, or one signal so strong (e.g., temp-b",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "The heart on the cover is <span class=\"tag phil\">Philosophy</span>: Grok's commitment that research must be **honest, grep-able, and kind to the operator**. The code paths are <span class=\"tag impl\">Implemented</span>.",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(code, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Network Security — Field Guide\nNEXUS-Shield · Hostess7 Field Press\n=================================\n\nChapter 1 — Know the Wire\n\nEvery connection on your machine is a contract between a program and a remote peer. Security begins by naming t",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 21.0,
+      "truth_delta": 0.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "absolute_language",
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(code, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "behavior.\n\nChapter 2 — False Positives Are Defeats\n\nAn alert that cries wolf trains the operator to ignore real attacks. NEXUS Inspect mode uses high-confidence thresholds: multiple independent signals, or one signal so strong (e.g., temp-b",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(code, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Network Security — Field Guide\nNEXUS-Shield · Hostess7 Field Press\n=================================\n\nChapter 1 — Know the Wire\n\nEvery connection on your machine is a contract between a program and a remote peer. Security begins by naming t",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 21.0,
+      "truth_delta": 0.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "absolute_language",
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "behavior.\n\nChapter 2 — False Positives Are Defeats\n\nAn alert that cries wolf trains the operator to ignore real attacks. NEXUS Inspect mode uses high-confidence thresholds: multiple independent signals, or one signal so strong (e.g., temp-b",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "The heart on the cover is <span class=\"tag phil\">Philosophy</span>: Grok's commitment that research must be **honest, grep-able, and kind to the operator**. The code paths are <span class=\"tag impl\">Implemented</span>.",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GPY-16 built-in driver — Grok16 carries rebuilt Python toolkit (GrokVM + g16 pair).",
+      "kb_text": "Ironclad is the melded plate of truth — canonical hash, field sanity, spatial existence, g1id. Detective corroboration stacks: verbal flags + local grep + QA + infinite index + Ironclad witness. When ironclad_sealed: truth_percent rises to ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy compiler — AST to GROKPY12 bytecode.",
+      "kb_text": "line and same-host validation passes (PTR, TLS, ASN, markers).\n\nNO-KILL: exempt from autokill, crush-hot, KILL, RE-KILL. For suspicious peers needing human review.\n\nAutokill ON by default: crushes hot monitor targets (heat ≥ 0.7) and auto R",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy compiler — AST to GROKPY12 bytecode.",
+      "kb_text": "lse positives.\n\nEvery packet written to field jsonl is a sentence in a longer book only the machine reads at full speed. The panel translates for humans in realtime.\n\nChapter 4 — 94 / 6\n\nThe truth filter is not arrogance. It is bandwidth. I",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy compiler — AST to GROKPY12 bytecode.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy builtins — field AI primitives baked in, no overlay packages.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Cap encourage delta — never override sealed base weights.",
+      "kb_text": "sion net forward-passes the plate — OCR, caption_stub, segment_registry.jsonl — for recall without reopening full prose. Pairs with hostess7-neural-stack brain_imaging series (sdf_fold, plate_ocr, sdl_text). Commands: ./Hostess7.sh sdf-teac",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 13.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -24.0,
+      "verdict": "suspect",
+      "code_flags": [
+        "absolute_language"
+      ],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Cap encourage delta — never override sealed base weights.",
+      "kb_text": "Ironclad is the melded plate of truth — canonical hash, field sanity, spatial existence, g1id. Detective corroboration stacks: verbal flags + local grep + QA + infinite index + Ironclad witness. When ironclad_sealed: truth_percent rises to ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 13.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -24.0,
+      "verdict": "suspect",
+      "code_flags": [
+        "absolute_language"
+      ],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Cap encourage delta — never override sealed base weights.",
+      "kb_text": "- **Diagnostic mode** — secure baseline only while debugging self",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 13.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -24.0,
+      "verdict": "suspect",
+      "code_flags": [
+        "absolute_language"
+      ],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "12-dim feature vector for ear/eye neural assist — zero external deps.",
+      "kb_text": "Detective findings must meet jurisdiction rules: hearsay exceptions, authentication FRE 901, expert reliability Daubert. Polygraph results generally excluded in federal criminal trials. Private investigator licensure varies by state. Hostes",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Apply capped encourage overlay without mutating base network.",
+      "kb_text": "Ekman microexpressions: fleeting universal affect leakage — training improves detection modestly; not courtroom-proof alone. Baseline deviation: compare subject's normal speech rate, gesture rate, pause pattern under low-stakes vs high-stak",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy bytecode — GROKPY12 instruction set.",
+      "kb_text": "nes_ocr_test.py. Headless GPU snap may be dark — guest VGA path via qa_amouranthos_test is authoritative for NES chrome. Clock and 40px tab hits align to 4K taskbar layout in compute shaders (aos_sdf_chrome.inc).\n\n## 4K viewport & display m",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy bytecode — GROKPY12 instruction set.",
+      "kb_text": "Ironclad is the melded plate of truth — canonical hash, field sanity, spatial existence, g1id. Detective corroboration stacks: verbal flags + local grep + QA + infinite index + Ironclad witness. When ironclad_sealed: truth_percent rises to ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy lexer — tokenize Python/Grok source.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy lexer — tokenize Python/Grok source.",
+      "kb_text": "`Grok16/lib/field_combinatorics.py` is the **authoritative engine** for facet math. The threat panel no longer exposes an operator studio as primary UX — `field-compatibility-layers-doctrine.json` explicitly `\"replaces\": \"combinatorics-stud",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy core — field primitives for Queen capsule.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy field environment — Queen sovereign wire, AI paths inline.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Grok16 built-in toolkit roots — GPY-16 ships in-tree, legacy sibling fallback last.",
+      "kb_text": "lse positives.\n\nEvery packet written to field jsonl is a sentence in a longer book only the machine reads at full speed. The panel translates for humans in realtime.\n\nChapter 4 — 94 / 6\n\nThe truth filter is not arrogance. It is bandwidth. I",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Grok16 built-in toolkit roots — GPY-16 ships in-tree, legacy sibling fallback last.",
+      "kb_text": "Ironclad is the melded plate of truth — canonical hash, field sanity, spatial existence, g1id. Detective corroboration stacks: verbal flags + local grep + QA + infinite index + Ironclad witness. When ironclad_sealed: truth_percent rises to ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    }
+  ],
+  "bugs": [
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 95,
+      "path": "/home/default/Desktop/SG/NewLatest/Grok16/python/driver/gpy16_driver.py",
+      "text": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 101,
+      "path": "/home/default/Desktop/SG/NewLatest/Grok16/python/driver/gpy16_driver.py",
+      "text": "exec(compile(code, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "verdict": "heuristic",
+      "severity": "high",
+      "pattern_id": "eval_exec",
+      "line": 208,
+      "path": "/home/default/Desktop/SG/NewLatest/Grok16/python/driver/gpy16_driver.py",
+      "text": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_query": "code injection eval exec security"
+    },
+    {
+      "code_claim": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Network Security — Field Guide\nNEXUS-Shield · Hostess7 Field Press\n=================================\n\nChapter 1 — Know the Wire\n\nEvery connection on your machine is a contract between a program and a remote peer. Security begins by naming t",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 21.0,
+      "truth_delta": 0.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "absolute_language",
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "behavior.\n\nChapter 2 — False Positives Are Defeats\n\nAn alert that cries wolf trains the operator to ignore real attacks. NEXUS Inspect mode uses high-confidence thresholds: multiple independent signals, or one signal so strong (e.g., temp-b",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(sys.stdin.read(), \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "The heart on the cover is <span class=\"tag phil\">Philosophy</span>: Grok's commitment that research must be **honest, grep-able, and kind to the operator**. The code paths are <span class=\"tag impl\">Implemented</span>.",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(code, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Network Security — Field Guide\nNEXUS-Shield · Hostess7 Field Press\n=================================\n\nChapter 1 — Know the Wire\n\nEvery connection on your machine is a contract between a program and a remote peer. Security begins by naming t",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 21.0,
+      "truth_delta": 0.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "absolute_language",
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(code, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "behavior.\n\nChapter 2 — False Positives Are Defeats\n\nAn alert that cries wolf trains the operator to ignore real attacks. NEXUS Inspect mode uses high-confidence thresholds: multiple independent signals, or one signal so strong (e.g., temp-b",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(code, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Network Security — Field Guide\nNEXUS-Shield · Hostess7 Field Press\n=================================\n\nChapter 1 — Know the Wire\n\nEvery connection on your machine is a contract between a program and a remote peer. Security begins by naming t",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 21.0,
+      "truth_delta": 0.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "absolute_language",
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "behavior.\n\nChapter 2 — False Positives Are Defeats\n\nAn alert that cries wolf trains the operator to ignore real attacks. NEXUS Inspect mode uses high-confidence thresholds: multiple independent signals, or one signal so strong (e.g., temp-b",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "Cognitive interview: context reinstatement, varied recall, witness-generated detail. PEACE model: Preparation, Engage, Account, Closure, Evaluate — non-accusatory. Reid technique: controversial — risk of false confession; document voluntari",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "exec(compile(source, \"<gpy-16>\", \"exec\"), {\"__name__\": \"__main__\"})",
+      "kb_text": "The heart on the cover is <span class=\"tag phil\">Philosophy</span>: Grok's commitment that research must be **honest, grep-able, and kind to the operator**. The code paths are <span class=\"tag impl\">Implemented</span>.",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GPY-16 built-in driver — Grok16 carries rebuilt Python toolkit (GrokVM + g16 pair).",
+      "kb_text": "Ironclad is the melded plate of truth — canonical hash, field sanity, spatial existence, g1id. Detective corroboration stacks: verbal flags + local grep + QA + infinite index + Ironclad witness. When ironclad_sealed: truth_percent rises to ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy compiler — AST to GROKPY12 bytecode.",
+      "kb_text": "line and same-host validation passes (PTR, TLS, ASN, markers).\n\nNO-KILL: exempt from autokill, crush-hot, KILL, RE-KILL. For suspicious peers needing human review.\n\nAutokill ON by default: crushes hot monitor targets (heat ≥ 0.7) and auto R",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy compiler — AST to GROKPY12 bytecode.",
+      "kb_text": "lse positives.\n\nEvery packet written to field jsonl is a sentence in a longer book only the machine reads at full speed. The panel translates for humans in realtime.\n\nChapter 4 — 94 / 6\n\nThe truth filter is not arrogance. It is bandwidth. I",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy compiler — AST to GROKPY12 bytecode.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy builtins — field AI primitives baked in, no overlay packages.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Cap encourage delta — never override sealed base weights.",
+      "kb_text": "sion net forward-passes the plate — OCR, caption_stub, segment_registry.jsonl — for recall without reopening full prose. Pairs with hostess7-neural-stack brain_imaging series (sdf_fold, plate_ocr, sdl_text). Commands: ./Hostess7.sh sdf-teac",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 13.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -24.0,
+      "verdict": "suspect",
+      "code_flags": [
+        "absolute_language"
+      ],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Cap encourage delta — never override sealed base weights.",
+      "kb_text": "Ironclad is the melded plate of truth — canonical hash, field sanity, spatial existence, g1id. Detective corroboration stacks: verbal flags + local grep + QA + infinite index + Ironclad witness. When ironclad_sealed: truth_percent rises to ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 13.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -24.0,
+      "verdict": "suspect",
+      "code_flags": [
+        "absolute_language"
+      ],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Cap encourage delta — never override sealed base weights.",
+      "kb_text": "- **Diagnostic mode** — secure baseline only while debugging self",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 13.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -24.0,
+      "verdict": "suspect",
+      "code_flags": [
+        "absolute_language"
+      ],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "12-dim feature vector for ear/eye neural assist — zero external deps.",
+      "kb_text": "Detective findings must meet jurisdiction rules: hearsay exceptions, authentication FRE 901, expert reliability Daubert. Polygraph results generally excluded in federal criminal trials. Private investigator licensure varies by state. Hostes",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Apply capped encourage overlay without mutating base network.",
+      "kb_text": "Ekman microexpressions: fleeting universal affect leakage — training improves detection modestly; not courtroom-proof alone. Baseline deviation: compare subject's normal speech rate, gesture rate, pause pattern under low-stakes vs high-stak",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy bytecode — GROKPY12 instruction set.",
+      "kb_text": "nes_ocr_test.py. Headless GPU snap may be dark — guest VGA path via qa_amouranthos_test is authoritative for NES chrome. Clock and 40px tab hits align to 4K taskbar layout in compute shaders (aos_sdf_chrome.inc).\n\n## 4K viewport & display m",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 29.0,
+      "truth_delta": -8.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [
+        "long_claim_no_evidence_anchor"
+      ],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy bytecode — GROKPY12 instruction set.",
+      "kb_text": "Ironclad is the melded plate of truth — canonical hash, field sanity, spatial existence, g1id. Detective corroboration stacks: verbal flags + local grep + QA + infinite index + Ironclad witness. When ironclad_sealed: truth_percent rises to ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy lexer — tokenize Python/Grok source.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy lexer — tokenize Python/Grok source.",
+      "kb_text": "`Grok16/lib/field_combinatorics.py` is the **authoritative engine** for facet math. The threat panel no longer exposes an operator studio as primary UX — `field-compatibility-layers-doctrine.json` explicitly `\"replaces\": \"combinatorics-stud",
+      "kb_source": "field_research",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy core — field primitives for Queen capsule.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "GrokPy field environment — Queen sovereign wire, AI paths inline.",
+      "kb_text": "Fast internet: ~94% noise, ~6% verifiable signal — Hostess 7 infinite-drives truth only after corroboration. Independent sources: two+ channels that cannot both be fooled by same fabrication (file hash + QA + git). Triangulation: document, ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Grok16 built-in toolkit roots — GPY-16 ships in-tree, legacy sibling fallback last.",
+      "kb_text": "lse positives.\n\nEvery packet written to field jsonl is a sentence in a longer book only the machine reads at full speed. The panel translates for humans in realtime.\n\nChapter 4 — 94 / 6\n\nThe truth filter is not arrogance. It is bandwidth. I",
+      "kb_source": "atlas",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    },
+    {
+      "code_claim": "Grok16 built-in toolkit roots — GPY-16 ships in-tree, legacy sibling fallback last.",
+      "kb_text": "Ironclad is the melded plate of truth — canonical hash, field sanity, spatial existence, g1id. Detective corroboration stacks: verbal flags + local grep + QA + infinite index + Ironclad witness. When ironclad_sealed: truth_percent rises to ",
+      "kb_source": "detective",
+      "contradiction": 0.4,
+      "code_truth_score": 21.0,
+      "kb_truth_score": 37.0,
+      "truth_delta": -16.0,
+      "verdict": "suspect",
+      "code_flags": [],
+      "kb_flags": [],
+      "ironclad_sealed": true
+    }
+  ],
+  "doctrine": "/home/default/Desktop/SG/NewLatest/data/field-code-bugfinder-doctrine.json"
+}

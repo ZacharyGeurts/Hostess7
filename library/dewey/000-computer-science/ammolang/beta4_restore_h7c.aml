@@ -1,0 +1,16 @@
+# Beta 4 H7c restore — combat · personhood · combinatronic langs
+@profile fastest
+@verbose clean
+@motto "Beta 4 restore H7c — bounded combinatronic batch"
+
+seq ·
+  say "Beta 4 H7c restore — AML stepped restore"
+  post "BETA4_RESTORE_H7C START"
+  run py:field-exploring-combat-anatomy action:all timeout:1200 stall:300
+  run py:field-exploring-combat-personhood action:all timeout:1200 stall:300
+  run py:field-beta4-ready action:combinatronic_restore args:--limit=48 timeout:3600 stall:600
+  run py:field-beta4-ready action:verify_hand timeout:120 stall:30
+  run py:hostess7-change-awareness action:pulse timeout:60 stall:30
+  assist freeze
+  say "Beta 4 H7c restore complete"
+  post "BETA4_RESTORE_H7C COMPLETE"

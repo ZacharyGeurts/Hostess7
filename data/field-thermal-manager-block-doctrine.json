@@ -1,0 +1,36 @@
+{
+  "schema": "field-thermal-manager-block/v1",
+  "title": "Thermal Manager — ironclad NEXUS C2 block",
+  "motto": "Landauer guard · governor · CANVAS thermo binding — one sealed block like CHIPS.",
+  "product": "AmmoOS",
+  "module": "lib/field-thermal-manager-block.py",
+  "panel_state": "field-thermal-manager-block-panel.json",
+  "battery_state": "field-thermal-manager-block.json",
+  "api": "/api/field-thermal-manager-block",
+  "surface": "/world/queen-thermal-manager.html",
+  "facet": "thermal_manager",
+  "ironclad_citation": "ironclad:thermal_manager:1",
+  "thermal": {
+    "min_headroom_pct": 15,
+    "blocked_levels": ["crit", "storm"],
+    "never_build_under_heat": true
+  },
+  "stack": {
+    "guard": "lib/field-thermal-guard.py",
+    "governor": "lib/thermal-governor.py",
+    "canvas": "Queen/lib/queen-canvas-renderer.py",
+    "ocr": "Final_Eye/zocr.py"
+  },
+  "ocr_expect": {
+    "surface_html": "Queen/world/queen-thermal-manager.html",
+    "needles": ["Thermal Manager", "NEXUS C2", "headroom", "Landauer", "qtm-gauge"]
+  },
+  "kernels": [
+    "field_thermal_guard",
+    "thermal_governor",
+    "landauer",
+    "headroom",
+    "queen_canvas",
+    "final_eye_ocr"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "field-sovereign-sync-doctrine/v1",
+  "title": "Sovereign sync — one clock, every section",
+  "motto": "Never misconstrue time. Never lose a cycle. Never lose data.",
+  "canonical_module": "lib/field-sovereign-sync.py",
+  "clock_source": "sovereign-clock.utc_z() — everyone everything everywhere; never desync",
+  "authoritative_module": "lib/sovereign-clock.py",
+  "never_desync": true,
+  "sections": {
+    "dns": {"gate": true, "stamp": true, "ledger": true},
+    "dhcp": {"gate": true, "stamp": true, "ledger": true},
+    "ntp": {"gate": true, "stamp": true, "ledger": true},
+    "sovereign": {"gate": true, "heartbeat_sec": 1},
+    "operator": {"sync_on_scan": true, "sync_on_board": true},
+    "refield": {"sync_on_refield": true},
+    "underlay": {"sync_on_commit": true},
+    "panel": {"manifest_api": "/api/sovereign-sync"},
+    "services": {"unified_panel": "field-services-2026.py"}
+  },
+  "redundancy": {
+    "primary": "NEXUS_STATE_DIR sovereign JSON state",
+    "mirror": "sovereign-redundant/*.json",
+    "backup": "sovereign-redundant/*.json.bak",
+    "ledgers_append_only": [
+      "sovereign-sync-ledger.jsonl",
+      "sovereign-cycle-ledger.jsonl",
+      "sovereign-time-receipts.jsonl",
+      "sovereign-time-red-flags.jsonl"
+    ],
+    "recover": "field-sovereign-sync.py recover"
+  },
+  "security_per_section": {
+    "policy": "Each section calls sync_section or utc(section) — no raw wall clock in receipts",
+    "threats_log_never_block_time": true,
+    "verdicts": ["USER_OK", "SQUIDGIE", "SONIC_RF"]
+  }
+}

@@ -1,0 +1,31 @@
+// NEXUS Field polkit rules — fail closed on inactive / remote sessions.
+polkit.addRule(function(action, subject) {
+    if (action.id.indexOf("com.nexus.field.") !== 0) {
+        return;
+    }
+    // Never allow passwordless elevation for field actions.
+    if (subject.isInGroup("nopasswdlogin")) {
+        return polkit.Result.AUTH_ADMIN;
+    }
+    // Inactive (locked screen / other seat): no credential cache reuse.
+    if (!subject.active) {
+        if (action.id === "com.nexus.field.install" ||
+            action.id === "com.nexus.field.update") {
+            return polkit.Result.AUTH_ADMIN;
+        }
+        return polkit.Result.AUTH_ADMIN;
+    }
+    // Remote / non-local sessions: always re-authenticate; bootstrap denied.
+    if (subject.local === false) {
+        if (action.id === "com.nexus.field.bootstrap") {
+            return polkit.Result.NO;
+        }
+        return polkit.Result.AUTH_ADMIN;
+    }
+    // Harden + service: never keep admin creds across calls.
+    if (action.id === "com.nexus.field.harden" ||
+        action.id === "com.nexus.field.service" ||
+        action.id === "com.nexus.field.bootstrap") {
+        return polkit.Result.AUTH_ADMIN;
+    }
+});

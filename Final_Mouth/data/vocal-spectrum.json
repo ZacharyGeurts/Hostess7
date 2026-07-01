@@ -1,0 +1,117 @@
+{
+  "schema": "zocr-vocal-spectrum/v1",
+  "mandate_id": "ZOCR_FIELD_VOICE_MANDATE_v1",
+  "engine": "glottis_v1",
+  "grok16_default_profile": "field_opt",
+  "doctrine": "Vocal spectrum — formant profiles from human speech to field TTS; Grok16 field_opt tuned",
+  "default_profile": "human_neutral",
+  "profiles": {
+    "human_neutral": {
+      "label": "Human neutral",
+      "class": "mammal",
+      "range_hz": [80, 8000],
+      "formants_hz": [500, 1500, 2500],
+      "pitch_hz": 120,
+      "equipment": ["vocal_fold", "oral_cavity"],
+      "teach": "Baseline speech — F1/F2/F3 for vowel identity, pitch for speaker."
+    },
+    "human_warm": {
+      "label": "Human warm",
+      "class": "mammal",
+      "range_hz": [90, 7500],
+      "formants_hz": [480, 1400, 2400],
+      "pitch_hz": 105,
+      "equipment": ["chest_resonance"],
+      "teach": "Lower pitch, rounded formants — comfort voice for Hostess 7."
+    },
+    "human_bright": {
+      "label": "Human bright",
+      "class": "mammal",
+      "range_hz": [100, 9000],
+      "formants_hz": [550, 1700, 2800],
+      "pitch_hz": 180,
+      "equipment": ["head_resonance"],
+      "teach": "Higher pitch — alert, tactical brief."
+    },
+    "synthetic_neutral": {
+      "label": "Synthetic neutral",
+      "class": "tts",
+      "range_hz": [80, 12000],
+      "formants_hz": [500, 1500, 2500],
+      "pitch_hz": 130,
+      "equipment": ["espeak", "piper"],
+      "teach": "Field TTS — verify lip sync when camera present."
+    },
+    "field_operator": {
+      "label": "Field operator",
+      "class": "operator",
+      "range_hz": [85, 6000],
+      "formants_hz": [520, 1550, 2600],
+      "pitch_hz": 115,
+      "equipment": ["headset_mic", "noise_gate"],
+      "teach": "Close-talk operator — truth filter binds to visible mouth."
+    },
+    "whisper": {
+      "label": "Whisper / breath",
+      "class": "obscure",
+      "range_hz": [200, 4000],
+      "formants_hz": [600, 1800, 0],
+      "pitch_hz": 0,
+      "equipment": ["breathy_noise"],
+      "teach": "Low energy — ventriloquism checks tighten."
+    },
+    "public_address": {
+      "label": "PA / megaphone",
+      "class": "room",
+      "range_hz": [100, 5000],
+      "formants_hz": [400, 1200, 2200],
+      "pitch_hz": 140,
+      "equipment": ["horn_driver", "compressor"],
+      "teach": "Distant speech — correlate bearing with ear DOA."
+    },
+    "bone_conduction_speak": {
+      "label": "Bone conduction speak",
+      "class": "obscure",
+      "range_hz": [150, 6000],
+      "formants_hz": [450, 1300, 2100],
+      "pitch_hz": 125,
+      "equipment": ["mastoid_emitter"],
+      "teach": "Skull path — bypass air phantom when authenticated."
+    },
+    "human_spoken_word": {
+      "label": "Human spoken word (FCC acoustic safe)",
+      "class": "mammal",
+      "audience": "human",
+      "range_hz": [85, 3400],
+      "formants_hz": [500, 1500, 2500],
+      "pitch_hz": 120,
+      "equipment": ["glottis_v1", "intelligibility_band"],
+      "teach": "Default egress — 300–3400 Hz intelligibility; F0 85–255 Hz; prioritize when talking to people."
+    },
+    "animal_dog_call": {
+      "label": "Canine call",
+      "class": "mammal",
+      "audience": "animal_dog",
+      "range_hz": [75, 6000],
+      "formants_hz": [400, 1200, 2800],
+      "pitch_hz": 180,
+      "equipment": ["glottis_v1"],
+      "teach": "Dog-directed speech — bark/whine band, short prosody."
+    },
+    "animal_cat_call": {
+      "label": "Feline call",
+      "class": "mammal",
+      "audience": "animal_cat",
+      "range_hz": [100, 8000],
+      "formants_hz": [550, 1800, 3500],
+      "pitch_hz": 220,
+      "equipment": ["glottis_v1"],
+      "teach": "Cat-directed — meow/chirp formants, gentle SPL."
+    }
+  },
+  "fcc_acoustic": "data/final-mouth-fcc-acoustic.json",
+  "spoken_word_first": true,
+  "default_audience": "human",
+  "visemes": ["rest", "aa", "ee", "oh", "ou", "mm", "ff", "th", "ss", "nn"],
+  "tts_engines": ["doctrine", "espeak", "piper", "browser_speech"]
+}

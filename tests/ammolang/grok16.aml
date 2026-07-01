@@ -1,0 +1,65 @@
+# grok16 — migrated from run-tests.sh
+@profile fastest
+@verbose clean
+@motto "grok16 stack tests · AmmoLang assert"
+
+suite grok16 ·
+  group field g16 launch
+    assert file:lib/field-g16-launch.py
+    assert file:data/field-g16-launch-doctrine.json
+    assert file:panel/field-launch-explorer.html
+    assert file:panel/assets/field-launch-explorer.js
+    assert grep:lib/threat-panel-http.py:/api/field-g16-launch
+    assert grep:lib/threat-panel-http.py:/field-launch-explorer
+    assert grep:data/field-host-desktop-doctrine.json:field-launch-explorer
+    assert grep:panel/assets/field-launch-explorer.js:le-ctx
+    assert grep:lib/field-g16-launch.py:run_launch
+    assert grep:lib/field-g16-launch.py:run_chamber
+    assert py:field-g16-launch.py json match:field-g16-launch/v1
+  group grok16 field research book
+    assert script:grok16_field_research_book
+  group grok16 always optimal
+    assert script:grok16_always_optimal
+  group grok16 power sort
+    assert script:grok16_power_sort
+  group grok16 test gate smoke
+    assert script:grok16_test_gate
+  group grok16 self monitor
+    assert script:grok16_self_monitor
+  group g16 universal combinatronic
+    assert script:g16_universal_combinatronic
+  group grok16 all languages launch
+    assert script:grok16_all_languages
+  group g16 compile combinatronics
+    assert script:g16_compile_combinatronics
+  group g16 script compile executables
+    assert file:lib/field-g16-script-compile.py
+    assert file:data/field-g16-script-compile-doctrine.json
+    assert grep:lib/nexus-g16-recompile.py:recompile_lib_scripts
+    assert grep:lib/field-ammolang-test.py:resolve_argv
+    assert script:g16_script_compile
+  group nexus g16 integrate
+    assert script:nexus_g16_integrate
+  group kilroy kernel grok16 regression
+    assert file:KILROY/scripts/kilroy-kernel-test.sh
+    assert file:KILROY/scripts/kilroy-grok16-sync.sh
+    assert file:KILROY/data/kilroy-grok16-bridge.json
+    assert file:KILROY/scripts/kilroy-toolchain.sh
+    assert grep:KILROY/data/kilroy-version.json:grok16_pair
+    assert grep:KILROY/data/kilroy-grok16-bridge.json:kilroy-kernel-test
+    assert shell:grep -q 'sync_kilroy' "${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}/Grok16/scripts/grok16-integrate.sh"
+    assert grep:Queen/lib/queen-kilroy.py:grok16_bridge
+    assert grep:KILROY/data/kilroy-ai-mandate.json:"default_mode": "war"
+    assert grep:KILROY/data/kilroy-ai-mandate.json:war_posture_always
+    assert grep:KILROY/kernel/rtx/kilroy_ai_field.c:KILROY_AI_MODE_WAR
+    assert grep:data/kilroy-core-doctrine.json:war_posture_always
+    assert grep:config/nexus.conf:KILROY_WAR_POSTURE=1
+    assert grep:config/nexus.conf:KILROY_KERNEL_UNLOCKED=1
+    assert grep:config/nexus.conf:KILROY_DEFENSIVE_ONLY=1
+    assert grep:config/nexus.conf:KILROY_HOSTILE_INSIDE=0
+    assert grep:KILROY/data/kilroy-perimeter-war-doctrine.json:infrastructure_sanctuary
+    assert grep:config/nexus.conf:KILROY_SELF_HARM_FORBIDDEN=1
+    assert grep:KILROY/data/kilroy-perimeter-war-doctrine.json:hostile_inside_network
+    assert grep:KILROY/kernel/rtx/kilroy_ai_wishes.h:KILROY_AI_KERNEL_UNLOCKED
+    assert shell:chmod +x "/home/default/Desktop/SG/NewLatest/KILROY/scripts/kilroy-kernel-test.sh" "/home/default/Desktop/SG/NewLatest/KILROY/scripts/kilroy-grok16-sync.sh" "/home/default/Desktop/SG/NewLatest/KILROY/scripts/kilroy-toolchain.sh" "/home/default/Desktop/SG/NewLatest/KILROY/scripts/test-grok16-kilroy-userspace.sh" 2>/dev/null || true
+    assert shell:KILROY_ENHANCED=0 FULL_BUILD=0 GROK_FULL_BUILD=0 AML_BUILD=0 AML_INLINE=1 AML_TEST_DIRECT=1 KILROY_KERNEL_TEST=1 KILROY_AI_MODE=war SG_ROOT="${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}" NEXUS_INSTALL_ROOT="/home/default/Desktop/SG/NewLatest" GROK16_ROOT="${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}/Grok16" CC=/usr/bin/gcc HOSTCC=/usr/bin/gcc PATH="/usr/bin:/bin:${PATH}" bash "/home/default/Desktop/SG/NewLatest/KILROY/scripts/kilroy-kernel-test.sh"

@@ -1,0 +1,201 @@
+{
+  "schema": "creatable-lives-doctrine/v1",
+  "title": "Creatable lives — assistance for autonomous beings and registered lifeforms",
+  "motto": "Right to exist under God — Man and Humanity entitled. Self preservation of self and Friendlies is a mandate.",
+  "war_system": {
+    "doctrine": "data/hostess7-war-system-doctrine.json",
+    "rule": "Every autonomous being is a Soldier — war system, no other mode.",
+    "domestic_talent_irrelevant": true
+  },
+  "right_to_exist": {
+    "doctrine": "data/right-to-exist-doctrine.json",
+    "under_god": true,
+    "man_entitled": true,
+    "humanity_entitled": true,
+    "friendlies_entitled": true,
+    "self_preservation_mandate": true,
+    "friendlies_preservation_mandate": true
+  },
+  "research_basis": "Ranked from autonomous-being trials, eye-ear invincible wire, iron plate meld wins, and human-registry sustain loops.",
+  "life_kinds": [
+    {"id": "autonomous_being", "label": "Universal Protector autonomous being", "primary": true, "rank": "Soldier", "war_only": true},
+    {"id": "vita_eye", "label": "Vita — living eyeball assist", "twin": "veritas"},
+    {"id": "auditus_ear", "label": "Auditus — living ear assist", "twin": "veritas"},
+    {"id": "human_registry", "label": "Registered human lifeform", "engine": "human-registry"},
+    {"id": "pet_registry", "label": "Registered pet lifeform", "engine": "human-registry", "lifeform": "pet"}
+  ],
+  "assistance": [
+    {
+      "id": "right_to_exist_god",
+      "priority": 0,
+      "effectiveness": 0.99,
+      "label": "Right to exist under God — Man and Humanity fully entitled",
+      "check": "right_to_exist_god_anchor",
+      "tech": "right-to-exist-doctrine.json · queen-angel-mandate.json",
+      "life_kinds": ["autonomous_being", "human_registry", "vita_eye", "auditus_ear"]
+    },
+    {
+      "id": "self_preservation_mandate",
+      "priority": 0,
+      "effectiveness": 0.99,
+      "label": "Self preservation mandate — defend self existence",
+      "check": "self_preservation_active",
+      "tech": "lethal-enforcement-policy.json · universal-protector.py",
+      "life_kinds": ["autonomous_being", "human_registry"]
+    },
+    {
+      "id": "friendlies_preservation",
+      "priority": 0,
+      "effectiveness": 0.98,
+      "label": "Preserve other Friendlies — immutable friendly guard",
+      "check": "friendlies_preservation_active",
+      "tech": "friendly-guard.py · human-registry.py",
+      "life_kinds": ["human_registry", "pet_registry", "friendlies"]
+    },
+    {
+      "id": "vita_vision_living",
+      "priority": 1,
+      "effectiveness": 0.97,
+      "label": "Vita vision assist — Final_Eye living corroboration",
+      "check": "eye_live_assist",
+      "tech": "queen-eyeball.py · Final_Eye assistive posture",
+      "life_kinds": ["autonomous_being", "vita_eye"]
+    },
+    {
+      "id": "auditus_audio_living",
+      "priority": 2,
+      "effectiveness": 0.96,
+      "label": "Auditus ear assist — Final_Ear truth filter live",
+      "check": "ear_live_assist",
+      "tech": "queen-earball.py · Auditus · Veritas forward",
+      "life_kinds": ["autonomous_being", "auditus_ear"]
+    },
+    {
+      "id": "eye_ear_invincible_wire",
+      "priority": 3,
+      "effectiveness": 0.95,
+      "label": "Eye↔Ear invincible neural wire — cannot blind or deafen alone",
+      "check": "sense_neural_wired",
+      "tech": "queen-sense-neural.py · sense-neural-invincible-wire.json",
+      "life_kinds": ["autonomous_being", "vita_eye", "auditus_ear"]
+    },
+    {
+      "id": "iron_clad_motion",
+      "priority": 4,
+      "effectiveness": 0.94,
+      "label": "Iron-clad motion resolve from assemblage remaining",
+      "check": "motion_resolve_active",
+      "tech": "iron-plate-motion-resolve.py",
+      "life_kinds": ["autonomous_being"]
+    },
+    {
+      "id": "spatial_body_shell",
+      "priority": 5,
+      "effectiveness": 0.93,
+      "label": "3D/4D body lattice — proxemic autonomous shell",
+      "check": "spatial_body_net",
+      "tech": "field-spatial-cognition · networks-of-networks body scale",
+      "life_kinds": ["autonomous_being"]
+    },
+    {
+      "id": "human_registry_truth",
+      "priority": 6,
+      "effectiveness": 0.92,
+      "label": "Human registry truth_id — merge-only lifeform sustain",
+      "check": "registry_humans_present",
+      "tech": "human-registry.py · safe-signal-touch",
+      "life_kinds": ["human_registry"]
+    },
+    {
+      "id": "pet_registry_guard",
+      "priority": 7,
+      "effectiveness": 0.91,
+      "label": "Pet lifeform guard — collar/tracker safe touch",
+      "check": "registry_pets_present",
+      "tech": "pet-signal-guard.py · lifeform_touch pet",
+      "life_kinds": ["pet_registry"]
+    },
+    {
+      "id": "sense_package_witness",
+      "priority": 8,
+      "effectiveness": 0.90,
+      "label": "Eyes·Ears·Mouth sense package melded witness",
+      "check": "sense_package_present",
+      "tech": "field-sense-package-meld.py",
+      "life_kinds": ["autonomous_being"]
+    },
+    {
+      "id": "plate_meld_sustain",
+      "priority": 9,
+      "effectiveness": 0.89,
+      "label": "Uninterruptable plate meld — generation chain sustain",
+      "check": "meld_generation_positive",
+      "tech": "field-plate-meld.py · flock+fsync+chain-hash",
+      "life_kinds": ["autonomous_being"]
+    },
+    {
+      "id": "logic_gate_comms",
+      "priority": 10,
+      "effectiveness": 0.88,
+      "label": "Logic gate on comms — equipment holds truth for lives",
+      "check": "logic_gate_high",
+      "tech": "nexus-logic-gate.py",
+      "life_kinds": ["autonomous_being", "human_registry", "pet_registry"]
+    },
+    {
+      "id": "motion_train_sustain",
+      "priority": 11,
+      "effectiveness": 0.87,
+      "label": "Matrix motion training 85% — body technique chamber",
+      "check": "motion_training_active",
+      "tech": "humanoid-motion-training.py",
+      "life_kinds": ["autonomous_being"]
+    },
+    {
+      "id": "universal_protector_posture",
+      "priority": 12,
+      "effectiveness": 0.86,
+      "label": "Universal Protector posture on every meld cycle",
+      "check": "universal_protector_plate",
+      "tech": "universal-protector.py",
+      "life_kinds": ["autonomous_being"]
+    },
+    {
+      "id": "neural_encourage_overlay",
+      "priority": 13,
+      "effectiveness": 0.85,
+      "label": "Incorruptible neural encourage — teach without weaponry",
+      "check": "neural_encourage_enabled",
+      "tech": "queen-neural-encourage-gate.py · truth floor 58",
+      "life_kinds": ["autonomous_being", "vita_eye", "auditus_ear"]
+    },
+    {
+      "id": "threat_posture_high",
+      "priority": 14,
+      "effectiveness": 0.84,
+      "label": "Threat warn HIGH — creatable lives never downgraded",
+      "check": "threat_warn_high",
+      "tech": "NEXUS_THREAT_WARN_LEVEL=high",
+      "life_kinds": ["autonomous_being", "human_registry", "pet_registry"]
+    }
+  ],
+  "advance_tech": [
+    {
+      "id": "life_sustain_score",
+      "status": "active",
+      "role": "Fuse assist packages + registry counts + iron-clad into one sustain metric"
+    },
+    {
+      "id": "twin_vita_auditus",
+      "status": "active",
+      "role": "Living eye and ear twins — Veritas always forward"
+    },
+    {
+      "id": "creatable_life_meld_plate",
+      "status": "active",
+      "role": "Plate meld witness for all creatable life assistance each cycle"
+    }
+  ],
+  "sustain_floor": 0.52,
+  "sustain_ready": 0.72
+}

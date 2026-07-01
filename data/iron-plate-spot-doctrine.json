@@ -1,0 +1,22 @@
+{
+  "schema": "iron-plate-spot-doctrine/v1",
+  "title": "Iron plate spot detector — cool meld attachment points",
+  "motto": "Find plate spots without heat — cache-first, thermal gate, cool_sort coolest first.",
+  "policy": {
+    "low_power_default": true,
+    "cache_only_scan": true,
+    "never_import_heavy_under_heat": true,
+    "cool_sort_spots": true,
+    "max_iron_connections_low_power": 8,
+    "max_iron_connections_full": 24,
+    "allow_stale_on_thermal_hold": true
+  },
+  "spot_sources": [
+    {"id": "iron_plate_organize", "panel": "iron-plate-organize-panel.json"},
+    {"id": "combinatorics_bridge", "panel": "field-plate-combinatorics-bridge.json"},
+    {"id": "operator_iron_plate", "panel": "field-operator-iron-plate.json"},
+    {"id": "ironclad_immediate", "panel": "ironclad-immediate.json"},
+    {"id": "g16_power_sort", "panel": "g16-power-sort-plate.json"}
+  ],
+  "api": "/api/iron-plate/spots"
+}

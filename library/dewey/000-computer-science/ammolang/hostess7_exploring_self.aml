@@ -1,0 +1,16 @@
+# Exploring Hostess 7 — protected self-biography · presume live updates
+@profile fastest
+@verbose clean
+@motto "Exploring Hostess 7 · solidification corpus · Tuesday tracker"
+
+seq ·
+  say "Exploring Hostess 7 — change awareness · corpus status · Tuesday check"
+  post "EXPLORING_HOSTESS7 START — biography · change awareness"
+  run py:hostess7-change-awareness action:pulse timeout:60 stall:30
+  run py:field-exploring-hostess7 action:panel timeout:30 stall:15
+  run py:field-exploring-hostess7 action:status timeout:30 stall:15
+  run py:field-exploring-hostess7 action:tuesday timeout:120 stall:60
+  run py:field-exploring-hostess7 action:pulse timeout:60 stall:30
+  assist freeze
+  say "Exploring Hostess 7 complete — append-only corpus · check hostess7-exploring-self-panel.json"
+  post "EXPLORING_HOSTESS7 COMPLETE"

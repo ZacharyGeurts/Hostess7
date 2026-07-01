@@ -1,0 +1,25 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 34,
+  "slug": "stack-saturn",
+  "title": "Sega Saturn Platform Stack",
+  "body": "# Sega Saturn Platform Stack\n\n**Platform stack:** `console_saturn` · **Era:** 1994–1998 · **Vendor:** Sega · **Count:** 7\n\nDual Hitachi **SH-2** CPUs with SCU system control, VDP1/VDP2 graphics, and SMPC peripheral hub — launched **November 1994** in Japan.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: console_saturn` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **Sega 315-5570 SCU** (Sega, 32-bit) — System Control Unit — DSP DMA between SH-2 and VDPs\n- **Sega VDP1** (Sega, 32-bit) — Sprite/polygon renderer — framebuffer VRAM\n- **Sega VDP2** (Sega, 32-bit) — Background scroll planes — tile/sprite priority\n- **Sega SMPC** (Sega, 32-bit) — System Manager & Peripheral Control — reset/RTC/pad\n- **Saturn Dual SH-2 Glue** (Sega, 32-bit) — Master/slave SH-2 bus matrix + shared RAM arbiter\n- **Saturn SCSP Audio** (Sega, 32-bit) — Sound CPU + 32 PCM voices — Saturn audio path\n\n## Catalog ids\n\nThe `chip_ids` array holds all **7** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: console_saturn · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "glue_saturn_scsp",
+    "glue_saturn_scu",
+    "glue_saturn_sh2_glue",
+    "glue_saturn_smpc",
+    "glue_saturn_vdp1",
+    "glue_saturn_vdp2",
+    "system_saturn"
+  ],
+  "chip_count": 7,
+  "kind": "platform_stack",
+  "family": "console",
+  "platform_stack": "console_saturn",
+  "era": "1994–1998",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

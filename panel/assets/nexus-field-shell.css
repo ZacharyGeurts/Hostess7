@@ -1,0 +1,317 @@
+/* NEXUS Field OS shell — borderless program windows, auto-hide taskbar */
+
+.nfs-root {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  pointer-events: none;
+}
+
+.nfs-win {
+  position: fixed;
+  inset: 0;
+  display: none;
+  pointer-events: auto;
+  background: #060806;
+}
+
+.nfs-win.active {
+  display: block;
+}
+
+.nfs-win.minimized {
+  display: none !important;
+}
+
+.nfs-win iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #060806;
+}
+
+.nfs-win--peek {
+  inset: 0 0 6px 0;
+}
+
+.hd-desktop {
+  padding-bottom: calc(var(--fsb-h, 44px) + 8px + env(safe-area-inset-bottom, 0));
+}
+
+.hd-monitor.hd-monitor--solo {
+  flex: none !important;
+  max-width: none !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+}
+
+html.nfs-taskbar-hidden .hd-desktop {
+  padding-bottom: 0;
+}
+
+html.nfs-taskbar-hidden .fsb-root {
+  transform: translateY(calc(100% - 3px));
+  transition: transform 0.22s ease;
+}
+
+html.nfs-taskbar-hidden.nfs-taskbar-peek .fsb-root,
+html.nfs-taskbar-hidden .fsb-root:hover,
+html.nfs-taskbar-hidden .fsb-menu.open ~ .fsb-root,
+html.nfs-taskbar-hidden .fsb-start[aria-expanded="true"] ~ .fsb-root {
+  transform: translateY(0);
+}
+
+html.nfs-taskbar-hidden .fsb-menu {
+  bottom: calc(10px + env(safe-area-inset-bottom, 0));
+}
+
+html.nfs-fullscreen-desktop,
+html.nfs-fullscreen-desktop body,
+html.nfs-kiosk,
+html.nfs-kiosk body {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+html.nfs-fullscreen-desktop .hd-desktop,
+html.nfs-kiosk .hd-desktop {
+  inset: 0;
+}
+
+html.nfs-fullscreen-desktop .nfs-win,
+html.nfs-kiosk .nfs-win {
+  inset: 0;
+}
+
+html.nfs-kiosk .fsb-root,
+html.nfs-kiosk .fsb-menu {
+  z-index: 9600;
+}
+
+.nfs-alt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+}
+
+.nfs-alt-overlay.open {
+  display: flex;
+}
+
+.nfs-alt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  max-width: min(92vw, 720px);
+  padding: 24px;
+}
+
+.nfs-alt-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 12px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: rgba(24, 28, 40, 0.92);
+  color: #eef4ff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.nfs-alt-card.active,
+.nfs-alt-card:hover {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.18);
+}
+
+.nfs-alt-card img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+/* Security hold — yield to host OS without freezing guest */
+html.field-yielded-to-host #hd-monitor,
+html.field-yielded-to-host #fsb-mount,
+html.field-yielded-to-host #c2tm-mount,
+html.field-yielded-to-host #nfs-root,
+html.field-yielded-to-host .nfs-alt-overlay {
+  opacity: 0;
+  pointer-events: none !important;
+  visibility: hidden;
+}
+
+html.field-yielded-to-host,
+html.field-yielded-to-host body {
+  background: transparent !important;
+}
+
+html.field-yielded-to-host #hd-toast {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nfs-yield-chip {
+  display: none;
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 100100;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 160, 200, 0.45);
+  background: linear-gradient(135deg, rgba(10, 14, 20, 0.92), rgba(61, 214, 140, 0.18));
+  color: #e8edf7;
+  font: 12px/1.2 system-ui, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+
+.nfs-yield-chip.open {
+  display: block;
+}
+
+.nfs-yield-chip:hover {
+  border-color: #3dd68c;
+  color: #3dd68c;
+}
+
+.nfs-props-modal,
+.nfs-display-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9400;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+}
+
+.nfs-props-modal.open,
+.nfs-display-modal.open {
+  display: flex;
+}
+
+.nfs-modal-panel {
+  width: min(440px, 94vw);
+  max-height: 82vh;
+  overflow: auto;
+  background: rgba(24, 28, 40, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 20px;
+  color: #eef4ff;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+}
+
+.nfs-modal-panel h2 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.nfs-modal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nfs-modal-row label {
+  color: #9aa8c0;
+}
+
+.nfs-modal-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.nfs-modal-actions button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #eef4ff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.nfs-modal-actions button.primary {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.25);
+}
+
+.nfs-desktop-ctx {
+  position: fixed;
+  z-index: 9100;
+  min-width: 200px;
+  background: rgba(24, 28, 40, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  padding: 4px;
+  display: none;
+  pointer-events: auto;
+}
+
+.nfs-desktop-ctx.open {
+  display: block;
+}
+
+.nfs-desktop-ctx button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: #eef4ff;
+  font: inherit;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nfs-desktop-ctx button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nfs-desktop-ctx button.danger {
+  color: #f87171;
+}
+
+.nfs-desktop-ctx button:disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.nfs-desktop-ctx hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 4px 0;
+}

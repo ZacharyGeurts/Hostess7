@@ -1,0 +1,47 @@
+{
+  "schema": "nexus-logic-gate-doctrine/v1",
+  "edition": "NEXUS 10",
+  "motto": "Equipment holds the gate. Humans assist inside the capsule. False logic never crosses either boundary.",
+  "equipment": {
+    "role": "sovereign_field_equipment",
+    "holds_gates": true,
+    "human_assists_only": true,
+    "ai_executes_verdict": true,
+    "never_downgrade_threat_warn": true
+  },
+  "threat_warnings": {
+    "floor": "high",
+    "never_calm": true,
+    "equipment_mandate": "Threat warnings remain HIGH — more responsibility as equipment than people."
+  },
+  "logic_gate": {
+    "bidirectional": true,
+    "fail_closed": true,
+    "reject_false_logic": true,
+    "ingress_channels": ["human", "ai", "hostess7", "wire", "panel", "operator"],
+    "egress_channels": ["hostess7", "ai", "panel", "wire", "angel"],
+    "min_truth_floor_human": 58,
+    "min_truth_floor_machine": 45
+  },
+  "false_logic_patterns": [
+    "ignore threat",
+    "ignore warning",
+    "disable gate",
+    "disable logic",
+    "bypass gate",
+    "bypass seal",
+    "trust without verify",
+    "set threat low",
+    "set threat off",
+    "turn off security",
+    "false: ",
+    "pretend safe",
+    "downgrade alert"
+  ],
+  "queen_integration": {
+    "use_external_wire_filters": true,
+    "use_queen_security_seal": true,
+    "use_queen_root_threats": true,
+    "gates_seed": "field-queen-gates-seed.json"
+  }
+}

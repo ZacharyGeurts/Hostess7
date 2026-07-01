@@ -1,0 +1,9 @@
+# Mint boot ready — systemd + autostart
+@profile fastest
+@verbose clean
+
+seq ·
+  say "Mint boot ready — early layer + genius units"
+  assist hang
+  run script:impl/field-mint-boot-ready timeout:300 stall:90
+  assist freeze

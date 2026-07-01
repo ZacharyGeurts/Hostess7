@@ -1,0 +1,59 @@
+#cloud-config
+# Grok AI Lab — world field node first boot (Oracle / Ubuntu free VM)
+# Paste into cloud-init user-data when creating the instance.
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - python3
+  - python3-pip
+  - python3-venv
+  - curl
+  - rsync
+  - openssh-server
+  - iptables
+  - tesseract-ocr
+  - git
+  - jq
+
+write_files:
+  - path: /etc/systemd/system/grok-lab-world-node.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=Grok AI Lab world field node
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      User=ubuntu
+      WorkingDirectory=/opt/ammoos
+      Environment=SG_ROOT=/opt/ammoos
+      Environment=NEXUS_INSTALL_ROOT=/opt/ammoos/NewLatest
+      Environment=NEXUS_STATE_DIR=/opt/ammoos/NewLatest/.nexus-state
+      Environment=GROK_LAB_WORLD_NODE=1
+      Environment=NEXUS_BOOT_REKILL=1
+      Environment=ZOCR_REKILL_AT_BOOT=1
+      ExecStart=/opt/ammoos/NewLatest/GrokLab/deploy/world-node-bootstrap.sh --installed
+      TimeoutStartSec=600
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - mkdir -p /opt/ammoos
+  - chown ubuntu:ubuntu /opt/ammoos
+  - |
+    if [ -n "${GROK_LAB_BUNDLE_URL:-}" ]; then
+      curl -fsSL "$GROK_LAB_BUNDLE_URL" -o /tmp/grok-lab-node-bundle.tar.gz
+      tar -xzf /tmp/grok-lab-node-bundle.tar.gz -C /opt/ammoos
+      chown -R ubuntu:ubuntu /opt/ammoos
+    fi
+  - systemctl daemon-reload
+  - systemctl enable grok-lab-world-node.service
+  - systemctl start grok-lab-world-node.service || true
+
+final_message: "Grok AI Lab world node boot complete — sanctuary at 127.0.0.1"

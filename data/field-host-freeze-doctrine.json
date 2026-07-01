@@ -1,0 +1,61 @@
+{
+  "schema": "field-host-freeze-doctrine/v1",
+  "title": "Host OS freeze — memory lock, sovereign resume, field draw isolated",
+  "motto": "Freeze the guest host in place; field slice keeps drawing; clock witnesses the gap on wake.",
+  "policy": {
+    "security_hold_default": true,
+    "freeze_underlying_os_when_running": false,
+    "yield_to_host_preferred": true,
+    "field_draw_isolated": true,
+    "host_guest_freezable": true,
+    "memory_lock_before_freeze": true,
+    "sovereign_gap_on_resume": true,
+    "acpi_custom_path": true,
+    "wave_shed_unchanged": true,
+    "power_ledger_witness_only": true
+  },
+  "modes": {
+    "soft": {
+      "label": "Soft freeze",
+      "description": "Cgroup freezer on host guest slice — nexus-field.slice keeps running",
+      "affects_field_draw": false,
+      "requires_root": true
+    },
+    "mem": {
+      "label": "Memory sleep",
+      "description": "ACPI S3 mem sleep — full host freeze with locked state stamp",
+      "affects_field_draw": true,
+      "requires_root": true
+    },
+    "disk": {
+      "label": "Disk close",
+      "description": "ACPI hibernate — seal host state to disk and power down",
+      "affects_field_draw": true,
+      "requires_root": true
+    }
+  },
+  "cgroups": {
+    "field_slice": "nexus-field.slice",
+    "host_slice": "nexus-host-guest.slice",
+    "shield_slice": "nexus-shield.slice"
+  },
+  "field_pids": [
+    "nexus-genius",
+    "threat-panel-http",
+    "nexus-daemon",
+    "queen-world",
+    "field-power-ledger"
+  ],
+  "state_files": [
+    "field-host-freeze.json",
+    "sovereign-linear-time.json",
+    "sovereign-time-pulse.json",
+    "field-power-ledger.json"
+  ],
+  "lives_with_us": [
+    "sovereign_time",
+    "field_power_ledger",
+    "field_perimeter_shield",
+    "nexus_shield_slice"
+  ]
+}

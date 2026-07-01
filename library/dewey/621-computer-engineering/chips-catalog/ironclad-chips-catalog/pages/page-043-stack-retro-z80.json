@@ -1,0 +1,25 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 43,
+  "slug": "stack-retro-z80",
+  "title": "Z80 Family Platform Stack",
+  "body": "# Z80 Family Platform Stack\n\n**Platform stack:** `retro_z80` · **Era:** 1976–1995 · **Vendor:** Zilog · **Count:** 7\n\nZ80 / Z180 systems — SMS, MSX, Spectrum, Game Boy, Game Gear.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: retro_z80` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **Zilog Z80 CTC** (Zilog, 8-bit) — Counter/timer chip — Z80 DMA path\n- **Zilog Z80 DART** (Zilog, 8-bit) — Dual UART — Z80 serial\n\n## Catalog ids\n\nThe `chip_ids` array holds all **7** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: retro_z80 · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "au_microbee_z80",
+    "glue_z80_ctc",
+    "glue_z80_dart",
+    "system_gamegear",
+    "system_msx",
+    "system_sms",
+    "system_spectrum"
+  ],
+  "chip_count": 7,
+  "kind": "platform_stack",
+  "family": "retro",
+  "platform_stack": "retro_z80",
+  "era": "1976–1995",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

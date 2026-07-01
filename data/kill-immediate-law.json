@@ -1,0 +1,27 @@
+{
+  "schema": "kill-immediate-law/v1",
+  "title": "KILL law — immediate is best",
+  "motto": "When KILL is to occur, the Law is immediate is best. No queue, no cooldown on first strike, no outside delay.",
+  "law": "immediate_is_best",
+  "rules": [
+    "The moment KILL is decided — registry, target promotion, kill code, or harm candidate — execute now.",
+    "Friendly guard and strike gate still apply; once allowed, fire without deferral.",
+    "RE-KILL may batch on cycle; first KILL is always immediate.",
+    "No operator second-guess window — counsel is before KILL, not after.",
+    "Hostess 7 witnesses every immediate KILL via change awareness."
+  ],
+  "applies_to": [
+    "hostess7-targets KILL mechanism",
+    "kill-codes execute",
+    "kill-detect harm candidates",
+    "field-attack-kit kill_target",
+    "lethal-enforcement execute"
+  ],
+  "forbidden_on_first_kill": ["queue", "delay", "cooldown", "batch_defer", "await_operator"],
+  "rekill_note": "Auto RE-KILL cooldown applies only to returners — not the first KILL.",
+  "module": "lib/kill-codes.py",
+  "doctrine_refs": [
+    "data/hostess7-targets-doctrine.json",
+    "data/lethal-enforcement-policy.json"
+  ]
+}

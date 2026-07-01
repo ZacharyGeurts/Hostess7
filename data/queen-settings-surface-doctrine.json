@@ -1,0 +1,65 @@
+{
+  "schema": "queen-settings-surface/v1",
+  "title": "Queen settings surface — always optimal, minimized",
+  "motto": "AmmoOS · 127.0.0.1 — Queen underlying, ZNetwork 100% pipe, best settings locked.",
+  "sovereignty": "data/queen-ammoos-sovereignty-doctrine.json",
+  "policy": {
+    "queen_underlying_browser": true,
+    "local_only_control": true,
+    "znetwork_internet_pipe_percent": 100,
+    "surface_locked": true,
+    "always_optimal": true,
+    "best_settings": "always_optimal",
+    "reject_panel_security_toggles": true,
+    "reject_shell_cosmetic_toggles": true,
+    "reject_audio_advanced": true
+  },
+  "operator_exposed": {
+    "shell": ["ui_scale", "ammoos_theme"],
+    "audio": ["default_sink", "default_source", "sink_volume", "source_volume", "sink_muted", "source_muted"],
+    "client_only": ["comfort_reading"]
+  },
+  "operator_panels": ["comfort", "ammoos_theme", "znetwork", "diagnostic", "audio_routing", "gpu_select"],
+  "ammoos_theme": {
+    "index": "/control-panel?tab=themes",
+    "engine": "lib/ammoos-theme-engine.py",
+    "api": "/api/ammoos-themes"
+  },
+  "locked_nexus_keys": [
+    "NEXUS_AI_SECURE_CHANNEL",
+    "QUEEN_AI_TELEMETRY_OK",
+    "NEXUS_PARANOIA_BLOCK",
+    "NEXUS_PARANOIA_MODE",
+    "NEXUS_FIREWALL_AUTO_BLOCK",
+    "NEXUS_AUTOSANITIZE",
+    "NEXUS_ADBLOCK",
+    "NEXUS_ADBLOCK_POLICY",
+    "NEXUS_ADBLOCK_RESPECT_POLICY",
+    "NEXUS_PANEL_AUTO_OPEN",
+    "NEXUS_CONNECTION_GATEKEEPER",
+    "NEXUS_PACKET_ORACLE",
+    "NEXUS_SHADOW_WATCH",
+    "NEXUS_ENTROPY_WATCH",
+    "NEXUS_BEHAVIOR_WATCH",
+    "NEXUS_PRIVACY_GUARD",
+    "NEXUS_SHUTDOWN_GUARD",
+    "NEXUS_HOSTESS7_CORROBORATE",
+    "NEXUS_ATTACK_KIT_AUTO_CRUSH",
+    "NEXUS_FIELD_AUTO_REKILL",
+    "NEXUS_GATEKEEPER_STRICT_TRUST",
+    "NEXUS_PACKET_PERMISSION"
+  ],
+  "locked_shell_keys": [
+    "taskbar_auto_hide",
+    "taskbar_peek",
+    "desktop_icon_size",
+    "theme_override",
+    "wallpaper",
+    "sort_desktop",
+    "show_desktop_icons",
+    "fullscreen_programs",
+    "fullscreen_desktop",
+    "alt_tab_enabled",
+    "queen_browser_only"
+  ]
+}

@@ -1,0 +1,23 @@
+# AmmoOS beta pipeline — AmmoLang replaces ammoos-beta-pipeline.sh
+@profile fastest
+@verbose clean
+@motto "Beta pipeline · wire · rebalance · meld · forge · verify"
+
+combinator observe {
+  source "ammoos"
+  source "queen"
+  source "grok16"
+}
+
+seq ·
+  say "AmmoLang beta pipeline — sovereign script router"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  stack wire
+  rebalance optimal
+  plate meld
+  program build
+  run py:field_combinatorics action:publish
+  forge pipeline:field_tech
+  verify launch
+  say "Beta pipeline complete — registry in .nexus-state"

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AmmoCode Stack — Grok16 editor</title>
+  <meta name="description" content="AmmoCode Stack — 243 filetypes, Run/Compile with G16, NewLatest integrated" />
+  <link rel="stylesheet" href="assets/stack.css" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:* http://localhost:*; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <div class="ac-stack">
+    <header class="ac-bar">
+      <strong>AmmoCode Stack</strong>
+      <span id="ac-g16">g16…</span>
+      <span id="ac-ext-count">…</span>
+      <button type="button" id="ac-open">Open</button>
+      <button type="button" id="ac-check">Check</button>
+      <button type="button" id="ac-compile">Compile G16</button>
+      <button type="button" id="ac-run">Run G16</button>
+      <label>Profile
+        <select id="ac-profile">
+          <option value="belt_2_0" selected>belt_2_0</option>
+          <option value="field_opt">field_opt</option>
+          <option value="vulkan_rtx">vulkan_rtx</option>
+          <option value="ammoos">ammoos</option>
+        </select>
+      </label>
+      <span class="ac-path" id="ac-path">no file</span>
+      <input type="file" id="ac-file" hidden />
+    </header>
+    <div class="ac-bar" style="padding-top:0;border:0">
+      <span>Language: <strong id="ac-lang">plaintext</strong></span>
+    </div>
+    <div class="ac-editor-wrap">
+      <pre class="ac-gutter" id="ac-gutter" aria-hidden="true">1</pre>
+      <textarea class="ac-editor" id="ac-editor" spellcheck="false" placeholder="// Open a file or pass ?file=/path on launch"></textarea>
+    </div>
+    <pre class="ac-out" id="ac-output"></pre>
+    <footer class="ac-status">
+      <span>Grok16 universal dispatch · loopback only</span>
+      <span>Legacy UI: index-legacy-2027.html</span>
+    </footer>
+  </div>
+  <script src="lib/stack-app.js"></script>
+</body>
+</html>

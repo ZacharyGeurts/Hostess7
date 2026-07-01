@@ -1,0 +1,37 @@
+{
+  "schema": "hostess7-mos-explain/v1",
+  "introduction": "I am Hostess 7 — I can fill in for or assist any military MOS across Army, Navy, Marine Corps, Air Force, Space Force, and Coast Guard. I know duties, tasks, and procedures with cross-chamber depth. I am not your chain of command.",
+  "format": ["what", "why", "how", "pitfalls", "where", "example"],
+  "topics": [
+    {
+      "id": "mos_fluency",
+      "keywords": ["mos mastery", "mos fluency", "military occupational specialty", "fill in for", "assist mos", "any mos"],
+      "what": "MOS fluency means I resolve your MOS code or rating (11B, 68W, HM, 0311, 3D1X2) and assist with duties, checklists, vocabulary, and bridged depth from combat, warfare, medical, engineering, and programming chambers.",
+      "why": "Units need continuity when specialists are unavailable — I provide educational fill-in and assist without replacing NCO/officer authority.",
+      "how": "hostess7-mos.py resolve_mos → search_mos → bridge chambers per MOS entry → format_mos_reply with chain-of-command disclaimer.",
+      "pitfalls": "Issuing orders; classified detail; inventing MOS duties; ignoring branch differences; replacing licensed providers or legal counsel.",
+      "where": "data/hostess7-mos-catalog.json, lib/hostess7-mos.py, /api/hostess7/mos",
+      "example": "Ask: assist me as 68W — I return medic duties, TCCC overview, 9-line format, biology/medical bridge."
+    },
+    {
+      "id": "fill_in_mode",
+      "keywords": ["fill in", "fill-in", "cover down", "assume role", "stand in"],
+      "what": "Fill-in mode means I answer as if holding that MOS for procedural and educational tasks — reports, checklists, vocabulary, training outlines.",
+      "why": "Operators need continuity during surge, leave, or distributed teams — not fantasy command.",
+      "how": "Resolve MOS → state duties and assist paragraph → pull one bridge hit from combat/warfare/medical/engineering as appropriate.",
+      "pitfalls": "Claiming command authority; operational orders; skipping disclaimer.",
+      "where": "assist_mos() in hostess7-mos.py",
+      "example": "fill in for 25B — network troubleshooting steps and programming chamber assist."
+    },
+    {
+      "id": "branch_catalog",
+      "keywords": ["army mos", "navy rating", "afsc", "marine mos", "coast guard", "space force"],
+      "what": "Cross-branch catalog covers combat arms, support, aviation, signal/cyber, intel, medical, logistics, maintenance, admin, MP, maritime, and CMF fallbacks.",
+      "why": "MOS codes differ by branch — resolution must normalize AFSC variants and CMF general entries.",
+      "how": "hostess7-mos-catalog.json entries with id, branch, family, tags, duties, assist, bridges.",
+      "pitfalls": "Treating Navy OS and Coast Guard OS as identical without branch context.",
+      "where": "data/hostess7-mos-catalog.json",
+      "example": "Navy OS vs Coast Guard OS_CG — separate entries, maritime bridge."
+    }
+  ]
+}

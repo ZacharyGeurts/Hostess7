@@ -1,0 +1,42 @@
+NEXUS-Shield Operator Manual
+Zachary Geurts · Army Specialist · Iraq War Veteran
+=================================================
+
+Chapter 1 — Panel Map
+
+Monitor: live connections scored by the gatekeeper. Trust forever for false alarms. Block day / block forever for harm candidates.
+
+Inspect: retro modem LEDs (PWR, CD, TX, RX, LAN, ALERT), deep packet translation, DPI heuristics with fail-closed alerts only.
+
+Host Attack: globe pins from monitor targets. Dossier with KILL, RE-KILL, NO-KILL, Check Online. Green online, red offline, yellow unchecked.
+
+Library: Hostess7 H7 field books — network security, this manual, AMOURANTHRTX biography volumes.
+
+Chapter 2 — KILL / RE-KILL / NO-KILL
+
+KILL: permanent firewall block in+out, dossier archived forever on field drive.
+
+RE-KILL: only when killed target returns online and same-host validation passes (PTR, TLS, ASN, markers).
+
+NO-KILL: exempt from autokill, crush-hot, KILL, RE-KILL. For suspicious peers needing human review.
+
+Autokill ON by default: crushes hot monitor targets (heat ≥ 0.7) and auto RE-KILL validated attackers.
+
+Chapter 3 — Packet Field
+
+Packet Oracle runs tcpdump each cycle. Records land in nexus-packets.jsonl on field storage. Panel shows English TX/RX lines. Inspect tab shows full translation and heuristic verdict per frame.
+
+Modem lights: TX blinks on outbound frames, RX on inbound, ALERT only when DPI confidence ≥ 0.92 with corroboration.
+
+Chapter 4 — Grok Heavy Intel
+
+Paste nexus-kill-intel JSON from Grok Heavy. Cursor validates, friendly-guards, executes KILL batch, updates globe.
+
+Chapter 5 — CLI
+
+nexus trust <ip> — authorize forever.
+Panel: https://127.0.0.1:9477/
+
+Intelligence is a bullet. Identify. Record. KILL.
+
+— End Operator Manual (field-expandable) —

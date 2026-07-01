@@ -1,0 +1,38 @@
+{
+  "schema": "field-switch-safety-doctrine/v1",
+  "title": "Field switch safety — painless conversion, no surprise slowdowns",
+  "motto": "Move under without damage. Conversion stays fast; cool via wave shed, not quota cuts.",
+  "policy": {
+    "non_destructive": true,
+    "no_grub_edit": true,
+    "no_kernel_cmdline_edit": true,
+    "guest_passthrough": true,
+    "no_unexpected_slowdown": true,
+    "quota_hold_until_crit": true,
+    "wave_shed_before_quota_cut": true,
+    "conversion_block_only_at_crit": true,
+    "final_technology": "marker-driven underlay — arrive, transform, commit; refresh path stays light"
+  },
+  "phases": {
+    "arrive": "always allowed",
+    "transform": "allowed unless thermal crit",
+    "commit": "allowed unless thermal crit or conversion check fails",
+    "reboot": "allowed unless thermal crit",
+    "wrdt_apply": "allowed unless thermal crit"
+  },
+  "hotspot": {
+    "advisory_sources": ["thermal_warn", "thermal_crit", "peak_delta_c", "wave_shed_warn"],
+    "mitigation": ["wave_shed", "capture_halt", "usb_autosuspend"],
+    "no_quota_cut_unless_crit": true
+  },
+  "non_fielded_safety": {
+    "rule": "No fielded files on drives before whole-system field — no nested nexus-field or zac hotspots",
+    "deny_rel_parts": ["nexus-field", ".nexus-field-drive", "zac"],
+    "publish_host_mirror": ".nexus-field-drive",
+    "publish_requires_defield": true,
+    "state_redirect_requires_commit": true,
+    "convert_requires_defield": true,
+    "commit_requires_defield": true,
+    "module": "lib/field-non-fielded-safety.py"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "field-ammolang-seed/v1",
+  "title": "AmmoLang combinator seed — AI operators compose here",
+  "motto": "SEQ · PAR · LEAF — every program is a combinatorics walk.",
+  "rank": 1,
+  "build_ops": {
+    "SAY": {"arity": 1, "label": "Verbose clean log line for AI operators", "emit": "say"},
+    "FORGE": {"arity": 1, "label": "Queen forge tool:ID or pipeline:NAME", "emit": "forge"},
+    "TEST": {"arity": 1, "label": "Compiler harness langs:all no_halt", "emit": "test"},
+    "FAST": {"arity": 1, "label": "Fastest execution profile path:g16|interp", "emit": "fast"},
+    "INVOKE": {"arity": 1, "label": "Invoke module:NAME action:VERB", "emit": "invoke"},
+    "CHIPS": {"arity": 1, "label": "CHIPs universal compiler ensure", "emit": "chips"},
+    "ENSURE": {"arity": 1, "label": "Ensure designs/wrappers written", "emit": "ensure"},
+    "GITHUB": {"arity": 1, "label": "Secure MCP GitHub check/fetch/site (not TCP)", "emit": "github"}
+  },
+  "combinators": {
+    "I": {"arity": 1, "label": "Identity — pass leaf through", "emit": "leaf"},
+    "K": {"arity": 2, "label": "Constant — bind value to leaf", "emit": "bind"},
+    "S": {"arity": 3, "label": "Substitute — apply combinator to two leaves", "emit": "apply"},
+    "SEQ": {"arity": -1, "label": "Sequence compose (·)", "emit": "seq", "symbol": "·"},
+    "PAR": {"arity": -1, "label": "Parallel combine (⊕)", "emit": "par", "symbol": "⊕"},
+    "LEAF": {"arity": 1, "label": "Reference combinatorics leaf by id", "emit": "leaf"},
+    "BOIL": {"arity": 3, "label": "Boil language command to canonical op", "emit": "boil"},
+    "GROW": {"arity": 0, "label": "Run whole-system growth scan", "emit": "grow"},
+    "SURFACE": {"arity": 1, "label": "Surface collapse at depth", "emit": "surface"},
+    "WIDTH": {"arity": 1, "label": "Set optimal compute width", "emit": "width"},
+    "WIRE": {"arity": 2, "label": "Spider wire lane assignment", "emit": "wire"},
+    "GAP": {"arity": 1, "label": "Fill detected combinatorics gap", "emit": "gap"},
+    "EXEC": {"arity": 1, "label": "Execute canonical op", "emit": "exec"},
+    "COMBINE": {"arity": 2, "label": "Combine two leaves", "emit": "combine"},
+    "BIND": {"arity": 2, "label": "Bind name to leaf", "emit": "bind"},
+    "COMBINATOR": {"arity": -1, "label": "Combinamatrix block — observe/pack/wire/score/universal/emit", "emit": "combinator"}
+  },
+  "combinamatrix_blocks": ["observe", "pack", "wire", "score", "universal", "emit"],
+  "directives": ["width", "grow", "product", "motto", "profile", "verbose", "build"],
+  "stdlib": [
+    "say \"AmmoLang #1\"",
+    "fast path:g16 compile:0 fastest",
+    "chips ensure",
+    "test langs:all no_halt",
+    "forge pipeline:field_tech",
+    "grow scan",
+    "surface collapse",
+    "gap fill all",
+    "wire ironclad outward",
+    "exec canonical:exec"
+  ],
+  "build_scripts": [
+    "library/dewey/000-computer-science/ammolang/sovereign_build.aml",
+    "library/dewey/000-computer-science/ammolang/compiler_harness.aml",
+    "library/dewey/000-computer-science/ammolang/queen_forge.aml"
+  ]
+}

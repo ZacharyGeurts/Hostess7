@@ -1,0 +1,418 @@
+{
+  "schema": "queen-game-room/v1",
+  "title": "Queen Game Room — escape from all other computing",
+  "motto": "Every golden-era system. Every format. One sovereign theater on your RTX card.",
+  "doctrine": "CHIPS header silicon + Grok16 g16 field_opt — fastest accurate emulators. Movie theater plays any container the browser decodes + GRKMF/GVC1 path.",
+  "layout": {
+    "theater_pct": 75,
+    "arcade_pct": 25,
+    "theme": "movie_theater_arcade"
+  },
+  "test_roms": "data/queen-test-roms.json",
+  "aspect": {
+    "default": "16/9",
+    "retro_4_3": "4/3",
+    "cinema": "2.39/1"
+  },
+  "systems": [
+    {
+      "id": "nes",
+      "label": "NES",
+      "era": "1983",
+      "cpu": "6502",
+      "status": "active",
+      "chips": "CHIPS/Nes",
+      "app_id": "Nes",
+      "ratio": "4/3",
+      "test_rom": "nestest.nes",
+      "catalog": "004-computers/nes"
+    },
+    {
+      "id": "snes",
+      "label": "Super Nintendo",
+      "era": "1990",
+      "cpu": "65816",
+      "status": "active",
+      "chips": "CHIPS/Snes",
+      "app_id": "Snes",
+      "ratio": "4/3",
+      "test_rom": "snes-test.smc",
+      "catalog": "004-computers/snes"
+    },
+    {
+      "id": "genesis",
+      "label": "Genesis / Mega Drive",
+      "era": "1988",
+      "cpu": "68000",
+      "status": "active",
+      "chips": "CHIPS/Genesis",
+      "app_id": "Genesis",
+      "ratio": "4/3",
+      "test_rom": "genesis-test.bin",
+      "catalog": "004-computers/genesis"
+    },
+    {
+      "id": "sms",
+      "label": "Master System",
+      "era": "1985",
+      "cpu": "Z80",
+      "status": "active",
+      "chips": "CHIPS/Sms",
+      "app_id": "Sms",
+      "ratio": "4/3",
+      "test_rom": "sms-test.sms",
+      "catalog": "004-computers/sms"
+    },
+    {
+      "id": "a2600",
+      "label": "Atari 2600",
+      "era": "1977",
+      "cpu": "6507",
+      "status": "active",
+      "chips": "CHIPS/Atari2600",
+      "app_id": "A2600",
+      "ratio": "4/3",
+      "test_rom": "a2600-test.a26",
+      "catalog": "004-computers/a2600"
+    },
+    {
+      "id": "coco",
+      "label": "TRS-80 Color Computer",
+      "era": "1980",
+      "cpu": "MC6809E",
+      "status": "scaffold",
+      "chips": "CHIPS/CoCo",
+      "app_id": "CoCo",
+      "ratio": "4/3",
+      "catalog": "004-computers/coco"
+    },
+    {
+      "id": "coco2",
+      "label": "TRS-80 Color Computer 2",
+      "era": "1983",
+      "cpu": "MC6809E",
+      "status": "scaffold",
+      "chips": "CHIPS/CoCo2",
+      "app_id": "CoCo2",
+      "ratio": "4/3",
+      "catalog": "004-computers/coco2"
+    },
+    {
+      "id": "coco3",
+      "label": "TRS-80 Color Computer 3",
+      "era": "1986",
+      "cpu": "MC6809E",
+      "status": "scaffold",
+      "chips": "CHIPS/CoCo3",
+      "app_id": "CoCo3",
+      "ratio": "4/3",
+      "catalog": "004-computers/coco3"
+    },
+    {
+      "id": "c64",
+      "label": "Commodore 64 (classic)",
+      "era": "1982",
+      "cpu": "6510",
+      "status": "scaffold",
+      "chips": "CHIPS/C64",
+      "app_id": "C64",
+      "ratio": "4/3",
+      "catalog": "004-computers/c64"
+    },
+    {
+      "id": "c64_ultimate",
+      "label": "Commodore 64 Ultimate",
+      "era": "2025",
+      "cpu": "FPGA Artix-7",
+      "status": "pair",
+      "chips": "pair/C64Ultimate",
+      "app_id": "C64U",
+      "ratio": "4/3",
+      "hardware": true,
+      "pair_id": "pair-c64-ultimate",
+      "site": "https://commodore.net/computer/",
+      "catalog": "004-computers/c64_ultimate",
+      "note": "New FPGA hardware — not classic 6510 breadbin; Grok16 stays on host"
+    },
+    {
+      "id": "apple2",
+      "label": "Apple II",
+      "era": "1977",
+      "cpu": "6502",
+      "status": "scaffold",
+      "chips": "CHIPS/Apple2",
+      "app_id": "Apple2",
+      "ratio": "4/3",
+      "catalog": "004-computers/apple2"
+    },
+    {
+      "id": "msx",
+      "label": "MSX",
+      "era": "1983",
+      "cpu": "Z80",
+      "status": "scaffold",
+      "chips": "CHIPS/Msx",
+      "app_id": "Msx",
+      "ratio": "4/3",
+      "catalog": "004-computers/msx"
+    },
+    {
+      "id": "spectrum",
+      "label": "ZX Spectrum",
+      "era": "1982",
+      "cpu": "Z80",
+      "status": "scaffold",
+      "chips": "CHIPS/Spectrum",
+      "app_id": "Spectrum",
+      "ratio": "4/3",
+      "catalog": "004-computers/spectrum"
+    },
+    {
+      "id": "gameboy",
+      "label": "Game Boy",
+      "era": "1989",
+      "cpu": "SM83",
+      "status": "scaffold",
+      "chips": "CHIPS/GameBoy",
+      "app_id": "GameBoy",
+      "ratio": "10/9",
+      "catalog": "004-computers/gameboy"
+    },
+    {
+      "id": "amiga",
+      "label": "Amiga",
+      "era": "1985",
+      "cpu": "68000",
+      "status": "scaffold",
+      "chips": "CHIPS/Amiga",
+      "app_id": "Amiga",
+      "ratio": "4/3",
+      "catalog": "004-computers/amiga"
+    },
+    {
+      "id": "ps1",
+      "label": "PlayStation",
+      "era": "1994",
+      "cpu": "R3000",
+      "status": "scaffold",
+      "chips": "CHIPS/PS1",
+      "app_id": "PS1",
+      "ratio": "4/3",
+      "catalog": "004-computers/ps1"
+    },
+    {
+      "id": "n64",
+      "label": "Nintendo 64",
+      "era": "1996",
+      "cpu": "VR4300",
+      "status": "scaffold",
+      "chips": "CHIPS/N64",
+      "app_id": "N64",
+      "ratio": "4/3",
+      "catalog": "004-computers/n64"
+    },
+    {
+      "id": "dreamcast",
+      "label": "Dreamcast",
+      "era": "1998",
+      "cpu": "SH-4",
+      "status": "scaffold",
+      "chips": "CHIPS/Dreamcast",
+      "app_id": "Dreamcast",
+      "ratio": "4/3",
+      "catalog": "004-computers/dreamcast"
+    },
+    {
+      "id": "dos",
+      "label": "DOS / PC",
+      "era": "1981",
+      "cpu": "x86",
+      "status": "active",
+      "chips": "FieldX86Die",
+      "app_id": "Dos",
+      "ratio": "4/3",
+      "catalog": "004-computers/dos"
+    },
+    {
+      "id": "neogeo",
+      "label": "Neo Geo",
+      "era": "1990",
+      "cpu": "68000",
+      "status": "scaffold",
+      "chips": "CHIPS/NeoGeo",
+      "app_id": "NeoGeo",
+      "ratio": "4/3",
+      "catalog": "004-computers/neogeo"
+    },
+    {
+      "id": "saturn",
+      "label": "Sega Saturn",
+      "era": "1994",
+      "cpu": "SH-2",
+      "status": "scaffold",
+      "chips": "CHIPS/Saturn",
+      "app_id": "Saturn",
+      "ratio": "4/3",
+      "catalog": "004-computers/saturn"
+    },
+    {
+      "id": "gamegear",
+      "label": "Game Gear",
+      "era": "1990",
+      "cpu": "Z80",
+      "status": "scaffold",
+      "chips": "CHIPS/GameGear",
+      "app_id": "GameGear",
+      "ratio": "10/9",
+      "catalog": "004-computers/gamegear"
+    },
+    {
+      "id": "pce",
+      "label": "PC Engine / TurboGrafx",
+      "era": "1987",
+      "cpu": "HuC6280",
+      "status": "scaffold",
+      "chips": "CHIPS/PCEngine",
+      "app_id": "PCEngine",
+      "ratio": "4/3",
+      "catalog": "004-computers/pce"
+    },
+    {
+      "id": "3do",
+      "label": "3DO",
+      "era": "1993",
+      "cpu": "ARM60",
+      "status": "scaffold",
+      "chips": "CHIPS/3DO",
+      "app_id": "3DO",
+      "ratio": "4/3",
+      "catalog": "004-computers/3do"
+    },
+    {
+      "id": "jaguar",
+      "label": "Atari Jaguar",
+      "era": "1993",
+      "cpu": "Tom/Jerry",
+      "status": "scaffold",
+      "chips": "CHIPS/Jaguar",
+      "app_id": "Jaguar",
+      "ratio": "4/3",
+      "catalog": "004-computers/jaguar"
+    },
+    {
+      "id": "cinema",
+      "label": "Cinema",
+      "era": "—",
+      "cpu": "—",
+      "status": "active",
+      "chips": "GRKMF/GVC1",
+      "app_id": "Cinema",
+      "ratio": "2.39/1",
+      "movie": true,
+      "catalog": "004-computers/cinema"
+    }
+  ],
+  "host_cpus": [
+    {
+      "id": "native",
+      "label": "Native host",
+      "vendor": "auto",
+      "note": "Pass-through — Ryzen / Arc LE"
+    },
+    {
+      "id": "cyrix_6x86",
+      "label": "Cyrix 6x86",
+      "vendor": "Cyrix",
+      "mhz": 133,
+      "note": "Classic Pentium rival — MMX path"
+    },
+    {
+      "id": "intel_pentium",
+      "label": "Pentium MMX",
+      "vendor": "Intel",
+      "mhz": 200
+    },
+    {
+      "id": "intel_pentium2",
+      "label": "Pentium II",
+      "vendor": "Intel",
+      "mhz": 350
+    },
+    {
+      "id": "amd_k6",
+      "label": "AMD K6-2",
+      "vendor": "AMD",
+      "mhz": 450
+    },
+    {
+      "id": "motorola_68000",
+      "label": "Motorola 68000",
+      "vendor": "Motorola",
+      "mhz": 8
+    },
+    {
+      "id": "z80_3_5",
+      "label": "Zilog Z80 @ 3.5 MHz",
+      "vendor": "Zilog",
+      "mhz": 3.5
+    },
+    {
+      "id": "mos_6502",
+      "label": "MOS 6502 @ 1.79 MHz",
+      "vendor": "MOS",
+      "mhz": 1.79
+    }
+  ],
+  "memory_profiles": [
+    {
+      "id": "stock",
+      "label": "Stock RAM",
+      "mb": 0
+    },
+    {
+      "id": "640k",
+      "label": "DOS 640K",
+      "mb": 0.625
+    },
+    {
+      "id": "4mb",
+      "label": "4 MB",
+      "mb": 4
+    },
+    {
+      "id": "16mb",
+      "label": "16 MB",
+      "mb": 16
+    },
+    {
+      "id": "64mb",
+      "label": "64 MB",
+      "mb": 64
+    },
+    {
+      "id": "128mb",
+      "label": "128 MB guest",
+      "mb": 128
+    }
+  ],
+  "movie_formats": [
+    "video/mp4",
+    "video/webm",
+    "video/ogg",
+    "video/x-matroska",
+    "video/quicktime",
+    "video/x-msvideo",
+    "video/mpeg",
+    "application/x-mpegURL"
+  ],
+  "grok16_profile": "field_opt",
+  "chips_root": "Navigator/engine/CHIPS/",
+  "launch": {
+    "isolation": "horizon7",
+    "doctrine": "Queen lives in isolation with Horizon 7 — AMOURANTHRTX ./linux.sh run, not a loopback port",
+    "rtx_binary": "build/bin/Linux/AMOURANTHRTX",
+    "linux_sh": "./linux.sh run",
+    "nes_qa": "./linux.sh nes-qa",
+    "programs_canvas_ready": "ProgramsCanvasReady"
+  }
+}

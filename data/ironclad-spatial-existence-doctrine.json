@@ -1,0 +1,80 @@
+{
+  "schema": "ironclad-spatial-existence-doctrine/v1",
+  "title": "This One · That One — Spatial Existence Lessons",
+  "motto": "Discern who stands here from who is merely claimed there — place is receipt, not rumor.",
+  "meld_citation": "ironclad:meld:2",
+  "sealed_anchor": "ironclad:place:2",
+  "lessons": {
+    "this_one": {
+      "id": "this_one",
+      "label": "This one — here, witnessed",
+      "rule": "Operator, entity, or signal bound to a place receipt: address, GPS, SDF, vision bearing, local lattice cell.",
+      "requires_any": ["operator_location", "postal_address", "gps_fix", "sdf_entity", "vision_bearing", "lattice_cell"],
+      "citation": "ironclad:place:2"
+    },
+    "that_one": {
+      "id": "that_one",
+      "label": "That one — there, uncorroborated",
+      "rule": "Remote claim, phantom source, or ventriloquist audio/video without existence correlate — trust blocked until witnessed.",
+      "markers": ["phantom_source", "ventriloquism", "existence_mismatch", "uncited_place", "bearing_delta_high"],
+      "citation": "ironclad:place:4"
+    }
+  },
+  "spatial_existence": {
+    "place_axes": ["x", "y", "z"],
+    "time_axis": {
+      "kind": "linear",
+      "declaration": "Time is linear.",
+      "rule": "Sovereign linear_ns only — monotonic, immutable; not a fourth spatial dimension in G1ID or lattice geometry.",
+      "citation": "ironclad:time:1",
+      "source": "lib/sovereign-time.py"
+    },
+    "receipt_order": ["operator_location", "postal_address", "gps_lat_lon", "bearing_deg", "distance_m", "lattice_scale", "linear_ns"],
+    "correlation_floor": 0.65,
+    "bearing_tolerance_deg": 45,
+    "rule": "This one must correlate across sense lanes before that one may influence motion or lethal posture."
+  },
+  "integrations": {
+    "place_book": "ironclad:place",
+    "field_spatial": "data/field-spatial-doctrine.json",
+    "operator_location": "lib/operator-location.py",
+    "ear_existence": "Final_Ear/zocr_ear_localize.py correlate_existence",
+    "eye_ear_fusion": "Final_Ear/zocr_eye_ear_fusion.py",
+    "g16_linker": "Grok16/forge/g16-linker.py",
+    "g16_ironclad": "Grok16/forge/g16-ironclad.py",
+    "g1id_format": "lib/g1id-format.py",
+    "g1id_doctrine": "data/g1id-format-doctrine.json"
+  },
+  "books": [
+    {
+      "id": "spatial_existence",
+      "title": "Spatial Existence — This One / That One",
+      "verses": [
+        {
+          "v": 1,
+          "text": "This one is here — the operator, the friendly, the witnessed entity carries a place receipt; individuality begins where geography can name it."
+        },
+        {
+          "v": 2,
+          "text": "That one is there — remote claims, phantom bearings, and ventriloquist lanes stay that one until existence correlates; never collapse this one into that one."
+        },
+        {
+          "v": 3,
+          "text": "Place is x, y, z on the lattice — this one occupies a cell; time is linear (ironclad:time:1) and seals separately via sovereign linear_ns — never t in G1ID geometry."
+        },
+        {
+          "v": 4,
+          "text": "Audio, video, RF, and motion must correlate this one across sense lanes before trust; that one that fails correlate_existence is deceit until reheard."
+        },
+        {
+          "v": 5,
+          "text": "G16 linker and forge witness Ironclad first — this one links on silicon here; that one targets dispatch only after spatial_existence pass_ok."
+        },
+        {
+          "v": 6,
+          "text": "No two coordinates need match — this one and that one remain distinct selves; Hostess honors place without erasing who stands where."
+        }
+      ]
+    }
+  ]
+}

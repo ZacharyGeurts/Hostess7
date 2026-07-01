@@ -1,0 +1,91 @@
+# ammolang — migrated from run-tests.sh
+@profile fastest
+@verbose clean
+@motto "ammolang stack tests · AmmoLang assert"
+
+suite ammolang ·
+  group combinatorics sequence ammolang
+    assert file:lib/field-combinatorics-sequence.py
+    assert file:lib/field-ammolang.py
+    assert file:data/field-ammolang-doctrine.json
+    assert file:library/dewey/000-computer-science/ammolang/boot_sequence.aml
+    assert grep:lib/g16-combinatronic-rebalance.py:sequence_build
+    assert grep:lib/g16-combinatronic-rebalance.py:ammolang_panel
+    assert grep:lib/threat-panel-http.py:/api/combinatorics/sequence
+    assert grep:lib/threat-panel-http.py:/api/ammolang
+    assert grep:Queen/lib/queen-world.py:/api/combinatorics/sequence
+    assert grep:Queen/world/queen-chips-cores.html:qcc-sequence
+    assert compile:library/dewey/000-computer-science/ammolang/boot_sequence.aml match:ammolang-ir
+    assert compile:library/dewey/000-computer-science/ammolang/combinamatrix_boot.aml match:"ok": true
+    assert grep:Grok16/data/grok16-languages.json:"ammolang"
+    assert py:field-program-combinatronic.py boil ammolang boil match:"canonical": "meta"
+    assert py:field-combinatorics-sequence.py build match:field-combinatorics-sequence
+  group ammolang script router
+    assert file:lib/ammolang-run.sh
+    assert file:lib/field-ammolang-build.py
+    assert file:library/dewey/000-computer-science/ammolang/beta_pipeline.aml
+    assert file:library/dewey/000-computer-science/ammolang/compiler_stack.aml
+    assert file:library/dewey/000-computer-science/ammolang/self_upgrade.aml
+    assert grep:data/field-ammolang-build-doctrine.json:script_routes
+    assert grep:data/field-ammolang-build-doctrine.json:beta_pipeline
+    assert grep:scripts/ammoos-beta-pipeline.sh:ammolang-run.sh
+    assert grep:scripts/integrate-compiler-stack.sh:ammolang-run.sh
+    assert compile:library/dewey/000-computer-science/ammolang/beta_pipeline.aml match:"ok": true
+    assert route:self_upgrade match:field-ammolang-build/v1
+    assert py:field-ammolang-build.py self-upgrade match:ammolang-self-upgrade/v1
+  group ammolang timing and grok16 ship
+    assert file:library/dewey/000-computer-science/ammolang/grok16_ship.aml
+    assert file:library/dewey/000-computer-science/ammolang/grok16_gates.aml
+    assert file:library/dewey/000-computer-science/ammolang/queen_catalog.aml
+    assert file:library/dewey/000-computer-science/ammolang/agent_tasks.aml
+    assert grep:data/field-ammolang-build-doctrine.json:"timing"
+    assert grep:data/field-ammolang-build-doctrine.json:slack_sec
+    assert grep:data/field-ammolang-build-doctrine.json:hang_freeze
+    assert grep:data/field-ammolang-build-doctrine.json:task_registry
+    assert grep:data/field-ammolang-build-doctrine.json:grok16_ship
+    assert grep:lib/field-ammolang-build.py:AML_INLINE
+    assert compile:library/dewey/000-computer-science/ammolang/grok16_ship.aml match:"ok": true
+    assert compile:library/dewey/000-computer-science/ammolang/agent_tasks.aml match:"ok": true
+    assert route:grok16_ship match:grok16_ship.aml
+    assert py:field-ammolang-build.py tasks match:agent_tasks
+    assert py:field-ammolang-build.py assist hang match:ammolang-hang-freeze-assist
+    assert file:.nexus-state/ammolang-timing-ledger.json
+    assert grep:.nexus-state/ammolang-timing-ledger.json:ammolang-timing/v1
+  group ammolang script audit sequential
+    assert file:lib/field-ammolang-script-audit.py
+    assert file:library/dewey/000-computer-science/ammolang/script_audit.aml
+    assert file:scripts/aml-script-audit-master.sh
+    assert grep:data/field-ammolang-build-doctrine.json:script_audit
+    assert compile:library/dewey/000-computer-science/ammolang/script_audit.aml match:"ok": true
+    assert py:field-ammolang-script-audit.py queue match:ammolang-script-audit
+    assert py:field-ammolang-script-audit.py status match:ammolang-script-audit-panel
+  group ammolang universal boundary
+    assert file:lib/field-ammolang-boundary.py
+    assert file:data/field-ammolang-boundary-doctrine.json
+    assert file:library/dewey/000-computer-science/ammolang/universal_boundary.aml
+    assert grep:data/field-ammolang-build-doctrine.json:universal_boundary
+    assert grep:data/field-ammolang-doctrine.json:boundary
+    assert grep:lib/field-ammolang-build.py:run_through_boundary
+    assert grep:lib/ammolang-run.sh:AML_BOUNDARY_TARGET
+    assert compile:library/dewey/000-computer-science/ammolang/universal_boundary.aml match:"ok": true
+    assert py:field-ammolang-boundary.py panel match:ammolang-boundary-panel
+    assert py:field-ammolang-boundary.py resolve match:ammolang-boundary-spec
+    assert py:field-ammolang-boundary.py scan match:field-ammolang-boundary-registry
+    assert script:ammolang_boundary_suite
+    assert file:library/dewey/000-computer-science/ammolang/ensure_protection.aml
+    assert grep:data/field-ammolang-build-doctrine.json:ensure_protection
+    assert grep:lib/field-ammolang-boundary.py:discover_shell_scripts
+    assert grep:lib/field-ammolang-boundary.py:wire-all
+    assert py:field-ammolang-boundary.py scan match:NewLatest
+  group ammolang github mcp transport
+    assert file:lib/field-github-mcp-transport.py
+    assert file:data/field-ammolang-mcp-layer.json
+    assert file:library/dewey/000-computer-science/ammolang/github_mcp.aml
+    assert grep:lib/ammolang-run.sh:AML_GITHUB_TRANSPORT
+    assert grep:data/field-ammolang-doctrine.json:mcp_github
+    assert grep:data/field-ammolang-build-doctrine.json:GITHUB
+    assert grep:data/ammoos-mcp-layer.json:ammolang_layer
+    assert compile:library/dewey/000-computer-science/ammolang/github_mcp.aml match:"ok": true
+    assert py:field-github-mcp-transport.py status match:field-ammolang-github-mcp/v1
+    assert route:github_mcp match:field-ammolang-build/v1
+    assert grep:lib/ammoos-update-inplace.py:field-github-mcp-transport

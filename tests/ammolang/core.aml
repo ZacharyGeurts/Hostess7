@@ -1,0 +1,1288 @@
+# core — migrated from run-tests.sh
+@profile fastest
+@verbose clean
+@motto "core stack tests · AmmoLang assert"
+
+suite core ·
+  group dev install bypasses group gate
+    assert shell:nexus_is_dev_install
+  group audio train module
+    assert script:audio_train_module
+  group consumer secure defaults
+    assert shell:nexus_settings_apply_consumer_defaults
+    assert shell:[[ "$(nexus_settings_get NEXUS_PARANOIA_BLOCK)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_FIREWALL_AUTO_BLOCK)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_AUTOSANITIZE)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_ADBLOCK)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_CONNECTION_GATEKEEPER)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_SHADOW_WATCH)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_ENTROPY_WATCH)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_PRIVACY_GUARD)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_HOSTESS7_CORROBORATE)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_ATTACK_KIT_AUTO_CRUSH)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_GATEKEEPER_STRICT_TRUST)" == "1" ]]
+    assert shell:[[ "$(nexus_settings_get NEXUS_PACKET_PERMISSION)" == "1" ]]
+  group dusty midnight v7.1 theme
+    assert script:dusty_midnight_theme
+  group hostess profile module
+    assert file:lib/hostess-profile.py
+    assert grep:lib/field-us-intel.py:hostess-profile
+    assert grep:lib/threat-panel-http.py:/api/hostess-profile
+    assert grep:panel/assets/us-dashboard.js:hostess-url-add
+    assert py:hostess-profile.py json match:hostess-profile/v1
+    assert py:hostess-profile.py save '{"display_name":"Test Op","address":"1 Main St","profile_kind":"business","urls":["https://example.com"]}' match:"display_name": "Test Op"
+    assert py:field-us-intel.py json match:host_machine_explicit
+  group host security tier extreme
+    assert file:lib/host-security-tier.py
+    assert grep:lib/hostess-profile.py:host-security-tier
+    assert grep:lib/connection-gatekeeper.py:endpoint_extreme_meta
+    assert grep:lib/honorability-db.py:protection_level
+    assert grep:lib/nexus-settings.sh:nexus_settings_apply_extreme_defaults
+    assert grep:lib/host-security-tier.py:adblock_relaxed_fair
+    assert grep:lib/nexus-settings.sh:NEXUS_ADBLOCK_POLICY" "fair
+    assert grep:lib/threat-panel-http.py:/api/host-security-tier
+    assert grep:panel/threat-panel.html:honor-extreme-chip
+    assert grep:panel/assets/us-dashboard.js:host-extreme-badge
+    assert py:host-security-tier.py level 5 match:"protection_level": "extreme"
+    assert py:host-security-tier.py level 3 match:"protection_level": "standard"
+    assert py:honorability-db.py lookup x.com match:"protection_level": "extreme"
+    assert py:hostess-profile.py save '{"display_name":"Zach","address":"1 Main","profile_kind":"family","urls":["https://example.com"]}' match:"extreme_active": true
+  group panel v2.2 axis bar layout
+    assert script:panel_v22_axis_layout
+  group panel v2.4 action buttons
+    assert script:panel_v24_actions
+  group panel v2.4.1 settings visual sync
+    assert script:panel_v241_settings_visual
+  group self-access script wired
+    assert file:lib/self-access.sh
+    assert grep:lib/self-access.sh:nexus_firewall_ensure_self_access
+    assert grep:lib/nexus-daemon.sh:nexus_firewall_ensure_self_access
+  group excellence doctrine
+    assert file:data/hostess7-excellence-doctrine.json
+    assert grep:data/hostess7-excellence-doctrine.json:We do our best always
+    assert grep:data/hostess7-wartime-room.json:excellence_pledge
+    assert grep:lib/hostess7-command.py:_excellence_cadence_reply
+    assert grep:lib/hostess7-training.py:explain_excellence_pledge
+    assert py:hostess7-command.py ask 'we do our best always' match:hostess7_training
+    assert file:data/hostess7-world-honor-doctrine.json
+    assert grep:data/hostess7-world-honor-doctrine.json:Honored to the world
+    assert grep:lib/hostess7-training.py:explain_world_honor
+    assert py:hostess7-training.py teach 'hostess nationality' match:no designated nationality
+  group field unified device
+    assert script:field_unified_device
+  group field host desktop module
+    assert file:lib/field-host-desktop.py
+    assert file:panel/field-desktop.html
+    assert file:panel/assets/field-startbar.js
+    assert file:panel/assets/field-host-desktop.js
+    assert file:data/field-host-desktop-doctrine.json
+    assert grep:lib/threat-panel-http.py:/api/field-host-desktop
+    assert grep:lib/threat-panel-http.py:field-desktop.html
+    assert grep:lib/threat-panel-http.py:"/command"
+    assert py:field-host-desktop.py json match:field-host-desktop/v1
+    assert grep:data/field-host-desktop-doctrine.json:"scan_host_desktop": false
+    assert grep:data/field-host-desktop-doctrine.json:Queen Browser
+    assert grep:Queen/lib/queen-desktop.py:host_programs
+    assert grep:Queen/lib/queen-desktop.py:return \[\]
+    assert grep:Queen/world/browser.html:data-queen-start-button="bookmarks"
+    assert grep:Queen/world/browser.html:qb-start-secured
+    assert grep:Queen/world/browser.html:hidden aria-hidden="true"
+    assert shell:! grep -q 'underlaySurface' "/home/default/Desktop/SG/NewLatest/Queen/world/queen-browser-shell.js"
+    assert grep:Queen/lib/queen-desktop.py:start_button": "classic"
+    assert grep:data/field-host-desktop-doctrine.json:kilroy_by_default
+    assert grep:data/field-host-desktop-doctrine.json:queen-terminal
+    assert grep:data/field-host-desktop-doctrine.json:kilroy-field
+    assert file:Queen/data/queen-file-wishlist-doctrine.json
+    assert grep:Queen/lib/queen-file-browser.py:wishlist_menu
+    assert grep:Queen/lib/queen-terminal.py:field_kernel
+    assert grep:Queen/lib/queen-terminal.py:kilroy-status
+    assert file:Queen/lib/queen-program-surface.py
+    assert file:Queen/data/queen-program-surface-doctrine.json
+    assert file:Queen/world/queen-program-surface.js
+    assert grep:Queen/lib/queen-world.py:queen-program-surface
+    assert grep:Queen/world/queen-desktop.js:QueenProgramSurface
+    assert grep:data/field-host-desktop-doctrine.json:queen_software_unified
+    assert py:Queen/lib/queen-program-surface.py json match:queen-program-surface/v1
+    assert grep:Queen/world/queen-files.html:qf-search
+    assert file:Queen/world/queen-syntax.css
+    assert file:Queen/world/queen-viewer.js
+    assert file:Queen/world/queen-viewer.css
+    assert grep:Queen/world/browser.html:queen-syntax.css
+    assert grep:Queen/world/queen-files.html:qf-preview
+    assert grep:Queen/world/queen-code.html:queen-code-highlight.js
+    assert grep:Queen/world/queen-code-highlight.js:mergeExtensions
+    assert grep:Queen/world/queen-syntax.css:\.comb
+    assert grep:Queen/world/queen-code.js:mergeExtensions
+    assert grep:Queen/lib/queen-file-browser.py:_preview_file
+    assert grep:Queen/world/queen-files.js:QueenViewer
+    assert file:lib/field-stress-terror-discern.py
+    assert file:data/field-stress-terror-doctrine.json
+    assert grep:lib/threat-panel-http.py:/api/stress-terror-discern
+    assert grep:lib/field-stress-terror-discern.py:illegal_recreational_shoot
+    assert grep:lib/field-stress-terror-discern.py:external_injected
+    assert grep:Queen/lib/queen-terminal.py:discern
+  group field OS shell
+    assert file:lib/field-shell-settings.py
+    assert file:panel/assets/nexus-field-shell.js
+    assert file:panel/assets/nexus-field-shell.css
+    assert file:panel/assets/field-queen-nav.js
+    assert file:panel/control-panel.html
+    assert file:panel/assets/control-panel.js
+    assert grep:panel/field-desktop.html:FieldC2TaskManager
+    assert grep:panel/field-desktop.html:data-ammoos-desktop="1"
+    assert grep:panel/assets/nexus-field-shell.js:bindDesktopContextMenu
+    assert grep:Queen/world/queen-page-agent.js:isAmmoOSDesktop
+    assert grep:Queen/world/queen-page-inspector.js:isAmmoOSFrame
+    assert grep:data/field-host-desktop-doctrine.json:"right_click_context": true
+    assert grep:panel/assets/field-startbar.js:fsb-task-manager
+    assert grep:data/system/field-desktop-registry.json:field-desktop-registry
+    assert grep:data/field-host-desktop-doctrine.json:keyboard_sovereign
+    assert file:lib/field-keyboard-sovereign.py
+    assert grep:lib/threat-panel-http.py:field-keyboard-sovereign
+    assert grep:lib/threat-panel-http.py:/api/field-shell-settings
+    assert grep:lib/threat-panel-http.py:/control-panel
+    assert grep:data/field-host-desktop-doctrine.json:no_client_browser
+    assert grep:data/field-host-desktop-doctrine.json:tray_icons
+    assert shell:! grep -q 'monitor_dashboard' "/home/default/Desktop/SG/NewLatest/data/field-host-desktop-doctrine.json"
+    assert shell:! grep -q 'six_tool_wall' "/home/default/Desktop/SG/NewLatest/data/field-host-desktop-doctrine.json"
+    assert grep:data/field-host-desktop-doctrine.json:AmmoOS
+    assert grep:panel/assets/field-startbar.js:fsb-tray-icons
+    assert grep:panel/assets/field-startbar.js:renderFlyoutSections
+    assert grep:lib/field-taskbar-pins.py:_doctrine_quick_ids
+    assert grep:data/field-host-desktop-doctrine.json:queen-prog-earball
+    assert shell:NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/lib/field-host-desktop.py" build | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['menu'].get('flyout') is True; assert len(d['startbar']['quick']) == 4; assert all(x.get('icon') or x.get('icon_url') for x in d['startbar']['quick'])"
+    assert grep:data/field-host-desktop-doctrine.json:world/browser.html
+    assert grep:lib/threat-panel-http.py:/api/host/poweroff
+    assert shell:! [[ -f "/home/default/Desktop/SG/NewLatest/panel/assets/field-monitor-dashboard.js" ]]
+    assert shell:! [[ -f "/home/default/Desktop/SG/NewLatest/panel/assets/field-monitor-dashboard.css" ]]
+    assert grep:lib/field-host-desktop.py:system_registry
+    assert file:panel/field-znetwork.html
+    assert file:panel/assets/field-znetwork-hub.js
+    assert file:panel/assets/field-znetwork-founder.png
+    assert grep:panel/field-znetwork.html:znetwork-founder
+    assert grep:panel/field-znetwork.html:field-znetwork-hub
+    assert grep:Queen/data/queen-nexus-c2-panels.json:queen-browser
+    assert file:lib/field-c2-bookmark-boot.py
+    assert grep:Queen/lib/queen-browser-import.py:organize_scrub
+    assert grep:lib/threat-panel-http.py:X-AmmoOS-Legacy
+    assert grep:lib/threat-panel-http.py:/field-znetwork
+    assert grep:data/field-host-desktop-doctrine.json:kiosk_launch
+    assert grep:data/field-host-desktop-doctrine.json:launch_at_c2_desktop
+    assert grep:Queen/field-gecko/bin/launch-field-gecko.sh:\--kiosk
+    assert grep:Queen/field-gecko/bin/launch-field-gecko.sh:NEXUS_C2_DESKTOP_LAUNCH
+    assert grep:nexus.sh:nexus_boot_c2_desktop
+    assert grep:lib/panel-browser.sh:nexus_boot_c2_desktop
+    assert grep:config/nexus.conf:NEXUS_BOOT_C2_ONLY
+    assert grep:data/field-host-desktop-doctrine.json:queen-browser
+    assert shell:! grep -q '_nexus_launch_c2_desktop' "/home/default/Desktop/SG/NewLatest/nexus.sh"
+    assert shell:! grep -q '_nexus_queen_layer_autostart' "/home/default/Desktop/SG/NewLatest/nexus.sh"
+    assert grep:panel/assets/nexus-field-shell.css:nfs-kiosk
+    assert grep:data/field-host-desktop-doctrine.json:boot_program
+    assert grep:data/field-host-desktop-doctrine.json:nexus-command
+    assert grep:data/field-host-desktop-doctrine.json:embed=1#packets
+    assert grep:panel/threat-panel.html:nexus:launch
+    assert grep:lib/field-host-desktop.py:restart-nexus
+    assert grep:panel/assets/field-startbar.js:fsb-desktop-min
+    assert grep:panel/assets/field-startbar.js:showDesktop
+    assert grep:data/field-host-desktop-doctrine.json:browser_in_c2
+    assert grep:data/field-host-desktop-doctrine.json:launcher_visible
+    assert grep:lib/field-host-desktop.py:browser_display
+    assert py:field-shell-settings.py json match:field-shell-settings/v1
+    assert shell:pythong "/home/default/Desktop/SG/NewLatest/lib/field-shell-settings.py" json | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['defaults']['ui_scale']==125; assert d['desktop_scale']['default_pct']==125"
+    assert file:panel/assets/field-desktop-scale.js
+    assert grep:panel/assets/field-desktop-scale.js:FieldDesktopScale
+    assert grep:panel/assets/field-desktop-scale.js:MAX_PCT = 400
+    assert grep:data/field-host-desktop-doctrine.json:desktop_ui_scale_default
+    assert grep:data/field-host-desktop-doctrine.json:desktop_ui_scale_max": 400
+  group field GIMP bridge
+    assert shell:[[ -d "${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}/GIMP/.git" ]]
+    assert file:lib/field-gimp-bridge.py
+    assert shell:[[ -f "${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}/GIMP-Field/data/field-gimp-doctrine.json" ]]
+    assert grep:lib/threat-panel-http.py:/api/field-gimp
+    assert grep:lib/threat-panel-http.py:/field-gimp
+    assert py:field-gimp-bridge.py json match:field-gimp-bridge/v
+    assert shell:grep -q 'AmmoOS Image' "${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}/GIMP-Field/data/field-gimp-doctrine.json"
+    assert shell:[[ -f "${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}/GIMP-Field/forge/field-gimp-rewrite.py" ]]
+    assert shell:[[ -f "/home/default/Desktop/SG/GIMP-Field/forge/field-gimp-consolidate.py" ]]
+    assert shell:[[ -d "/home/default/Desktop/SG/GIMP-Field/tree/libammoos" ]]
+    assert shell:[[ -f "/home/default/Desktop/SG/GIMP-Field/lib/field-image-io.py" ]]
+    assert shell:[[ -f "/home/default/Desktop/SG/GIMP-Field/tree/plug-ins/file-field/file-field.c" ]]
+    assert shell:SG_ROOT="/home/default/Desktop/SG" pythong "/home/default/Desktop/SG/GIMP-Field/tests/test-field-image-io.py"
+  group field KeePass
+    assert file:lib/field-keepass.py
+    assert file:lib/field-lock-import.py
+    assert file:data/field-lock-import-doctrine.json
+    assert file:panel/field-lock.html
+    assert shell:[[ -f "${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}/KeePass-Field/data/field-keepass-doctrine.json" ]]
+    assert grep:lib/threat-panel-http.py:/api/field-lock
+    assert grep:lib/threat-panel-http.py:import-scan
+    assert grep:lib/threat-panel-http.py:/field-lock
+    assert grep:data/field-host-desktop-doctrine.json:queen-browser
+    assert grep:data/field-host-desktop-doctrine.json:taskbar_quick
+    assert grep:data/field-host-desktop-doctrine.json:nexus_c2_flyout
+    assert grep:panel/assets/field-startbar.js:fsb-menu--flyout
+    assert grep:panel/assets/field-startbar.js:renderFlyoutSections
+    assert grep:data/field-host-desktop-doctrine.json:"start_menu_folders": false
+    assert py:field-keepass.py json match:field-lock/v1
+    assert shell:pythong "/home/default/Desktop/SG/KeePass-Field/forge/field-keepass-harden.py" json | grep -q '"ok": true'
+  group field GPU control
+    assert file:lib/field-gpu-control.py
+    assert file:data/field-gpu-control-doctrine.json
+    assert file:panel/field-gpu.html
+    assert file:panel/assets/field-gpu-control.js
+    assert grep:lib/threat-panel-http.py:/api/field-gpu
+    assert grep:lib/threat-panel-http.py:/field-gpu
+    assert grep:data/field-host-desktop-doctrine.json:field-gpu
+    assert grep:data/field-gpu-control-doctrine.json:voodoo2
+    assert grep:data/field-gpu-control-doctrine.json:color_wheel
+    assert py:field-gpu-control.py json match:field-gpu-control/v1
+  group field shell dock
+    assert file:lib/field-shell-dock.py
+    assert file:data/field-shell-dock-doctrine.json
+    assert file:panel/assets/field-shell-dock.js
+    assert file:panel/assets/field-shell-dock.css
+    assert grep:lib/threat-panel-http.py:/api/field-shell-dock
+    assert grep:data/field-shell-dock-doctrine.json:"lock"
+    assert grep:data/field-shell-dock-doctrine.json:broadcaster
+    assert grep:data/field-shell-dock-doctrine.json:bookmarks_seed
+    assert grep:lib/field-shell-dock.py:drift_since_session_ns
+    assert grep:panel/assets/field-shell-dock.js:FieldShellDock
+    assert grep:panel/assets/field-startbar.js:fsb-quick
+    assert py:field-shell-dock.py json match:field-shell-dock/v1
+  group field audio settings
+    assert file:lib/field-audio-settings.py
+    assert file:panel/field-audio-settings.html
+    assert file:panel/assets/field-audio-settings.js
+    assert grep:lib/threat-panel-http.py:/api/field-audio-settings
+    assert grep:lib/threat-panel-http.py:/field-audio-settings
+    assert grep:panel/field-audio-settings.html:fa-advanced
+    assert py:field-audio-settings.py json match:"ok": true
+  group field display settings
+    assert file:lib/field-display-settings.py
+    assert file:data/field-display-settings-doctrine.json
+    assert file:panel/field-display-settings.html
+    assert file:panel/assets/field-display-settings.js
+    assert file:panel/assets/field-display-settings.css
+    assert grep:lib/threat-panel-http.py:/api/field-display-settings
+    assert grep:lib/threat-panel-http.py:/field-display-settings
+    assert grep:data/field-display-settings-doctrine.json:"id": "16k"
+    assert grep:data/field-display-settings-doctrine.json:submicron
+    assert grep:data/field-host-desktop-doctrine.json:field-display-settings
+    assert grep:panel/assets/field-desktop-scale.js:syncFromApi
+    assert py:field-display-settings.py json match:field-display-settings/v1
+    assert shell:NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/lib/field-display-settings.py" json 1920 1080 | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['screenspace']['max_pct']==400; assert len(d['ladder'])>=10"
+    assert py:field-display-settings.py apply '{"resolution_profile":"16k","ui_scale":100}' match:16k
+    assert shell:NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/lib/field-shell-settings.py" json | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['desktop_scale']['max_pct']==400"
+  group field video codec pipe
+    assert file:lib/field-video-codec-battery.py
+    assert file:lib/field-video-codec-pipe.py
+    assert file:Queen/lib/queen-video-codec.py
+    assert file:data/field-video-codec-battery-doctrine.json
+    assert file:data/field-video-codec-battery-seed.json
+    assert grep:lib/threat-panel-http.py:/api/video-codec
+    assert grep:data/field-media-codec-doctrine.json:straight_pipe
+    assert grep:scripts/start-field-stack.sh:Queen video codec battery
+    assert py:field-video-codec-battery.py json match:field-video-codec-battery-panel/v1
+    assert py:field-video-codec-pipe.py status match:field-video-codec-pipe/v1
+  group field audio secure bind
+    assert shell:[[ -f "${SG}/Final_Ear/zocr_hardware_audio.py" ]]
+    assert file:lib/field-audio-secure-bind.py
+    assert file:Queen/lib/queen-audio-route.py
+    assert file:data/queen-audio-route-doctrine.json
+    assert grep:lib/threat-panel-http.py:field-audio-secure-bind
+    assert grep:Queen/lib/queen-earball.py:hardware_audio
+    assert grep:scripts/start-field-stack.sh:Queen secure audio bind
+    assert shell:FINAL_EAR_ROOT="${SG}/Final_Ear" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/lib/field-audio-secure-bind.py" probe | grep -q 'zocr-hardware-audio-probe/v1'
+    assert shell:FINAL_EAR_ROOT="${SG}/Final_Ear" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/Queen/lib/queen-earball.py" dispatch <<< '{"action":"hardware_audio"}' | grep -q 'zocr-hardware-audio-status/v1'
+  group field big drive
+    assert script:field_big_drive
+  group field C2 taskbar plate
+    assert script:field_c2_taskbar_plate
+  group field always files VFS
+    assert script:field_always_files
+  group field goodies plate integration
+    assert script:field_goodies_plate
+  group field popcorn player
+    assert file:lib/field-popcorn-player.py
+    assert file:lib/field-media-inspector.py
+    assert file:data/field-popcorn-doctrine.json
+    assert file:data/field-media-inspector-doctrine.json
+    assert file:panel/field-popcorn.html
+    assert file:panel/assets/field-popcorn-player.js
+    assert file:panel/assets/field-popcorn-player.css
+    assert grep:lib/threat-panel-http.py:/api/field-popcorn
+    assert grep:lib/threat-panel-http.py:/field-popcorn
+    assert grep:lib/threat-panel-http.py:/api/field-popcorn/inspect
+    assert grep:lib/threat-panel-http.py:/api/field-popcorn/details
+    assert grep:data/field-host-desktop-doctrine.json:field-popcorn
+    assert grep:panel/assets/field-popcorn-player.js:pc-seek-track
+    assert grep:panel/assets/field-popcorn-player.js:pc-thumb-preview
+    assert grep:panel/assets/field-popcorn-player.js:pc-details
+    assert grep:lib/field-popcorn-player.py:generation_source
+    assert grep:lib/threat-panel-http.py:/api/field-popcorn/thumb
+    assert grep:lib/field-popcorn-player.py:thumb_mode
+    assert grep:lib/field-popcorn-player.py:playback
+    assert grep:data/field-popcorn-doctrine.json:codec_doctrine
+    assert grep:data/field-popcorn-doctrine.json:inspector
+    assert grep:data/field-shell-dock-doctrine.json:popcorn
+    assert py:field-popcorn-player.py json match:codec_tree
+    assert py:field-media-inspector.py summary match:cached
+  group field ellie fier threat plate
+    assert file:lib/field-ellie-fier.py
+    assert file:lib/ellie-last-host.py
+    assert file:data/field-ellie-fier-doctrine.json
+    assert file:panel/field-ellie-fier.html
+    assert file:panel/assets/field-ellie-fier.js
+    assert grep:lib/field-plate-meld.py:field_ellie_fier
+    assert grep:lib/field-panel-parallel.py:field_ellie_fier
+    assert grep:lib/threat-panel-http.py:/api/field-ellie-fier
+    assert grep:lib/threat-panel-http.py:/field-ellie-fier
+    assert grep:data/field-field-surfaces-doctrine.json:field_ellie_fier
+    assert grep:lib/universal-protector.py:ellie_authority
+    assert grep:lib/nexus-logic-gate.py:_ellie_authority
+    assert grep:data/field-ellie-fier-doctrine.json:security_pillars
+    assert shell:tmp_state="$(mktemp -d)"
+    assert py:field-ellie-fier.py json match:field-ellie-fier
+    assert py:field-ellie-fier.py authority match:field-ellie-security-authority
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$tmp_state" pythong "/home/default/Desktop/SG/NewLatest/lib/ellie-last-host.py" | grep -q 'ellie-last-host'
+  group field broadcaster
+    assert file:lib/field-broadcaster.py
+    assert file:lib/field-broadcaster-studio.py
+    assert file:data/field-broadcaster-studio-doctrine.json
+    assert file:lib/field-broadcaster-audio.py
+    assert file:data/field-broadcaster-audio-doctrine.json
+    assert file:panel/field-broadcaster.html
+    assert file:panel/assets/field-broadcaster.js
+    assert grep:lib/threat-panel-http.py:/api/field-broadcaster
+    assert grep:lib/threat-panel-http.py:field-broadcaster/studio
+    assert grep:lib/threat-panel-http.py:/field-broadcaster
+    assert grep:data/field-host-desktop-doctrine.json:field-broadcaster
+    assert grep:lib/field-plate-meld.py:field_broadcaster
+    assert grep:panel/assets/field-broadcaster.js:bc-go-live
+    assert grep:panel/field-broadcaster.html:bc-scenes
+    assert grep:panel/threat-panel.html:field-broadcaster.js
+    assert grep:panel/threat-panel.html:us-broadcaster-field
+    assert grep:lib/field-host-desktop.py:field-taskbar-pins
+    assert shell:SG_ROOT="${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}" NEXUS_STATE_DIR="$(mktemp -d)" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/lib/field-broadcaster.py" json | grep -q 'field-broadcaster/v1'
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$(mktemp -d)" pythong "/home/default/Desktop/SG/NewLatest/lib/field-broadcaster-studio.py" json | grep -q 'field-broadcaster-studio-panel'
+    assert py:field-broadcaster-audio.py json match:field-broadcaster-audio/v1
+  group field OBS legacy shim
+    assert file:lib/field-obs.py
+    assert shell:[[ -f "${SG_ROOT:-$(cd "/home/default/Desktop/SG/NewLatest/.." && pwd)}/OBS-Field/data/field-obs-doctrine.json" ]]
+    assert shell:[[ -f "/home/default/Desktop/SG/OBS-Field/data/g16-field-obs-toolchain.json" ]]
+    assert shell:[[ -f "/home/default/Desktop/SG/OBS-Field/cmake/g16-field-obs.cmake" ]]
+    assert shell:[[ -x "/home/default/Desktop/SG/OBS-Field/build-field-obs.sh" ]]
+    assert grep:lib/threat-panel-http.py:/api/field-obs
+    assert grep:lib/threat-panel-http.py:/field-obs
+    assert grep:lib/threat-panel-http.py:field-broadcaster\|field-obs
+    assert shell:! grep -q 'sweet-anita\|Sweet_Anita\|nexus-sweet-anita' "/home/default/Desktop/SG/NewLatest/data/field-host-desktop-doctrine.json"
+    assert shell:! grep -q 'field-sweet-anita-broadcast' "/home/default/Desktop/SG/NewLatest/lib/field-panel-parallel.py"
+    assert grep:lib/field-panel-parallel.py:field-obs.py.*us
+    assert py:field-obs.py json match:field-obs/v
+    assert py:field-obs.py us match:us-obs-field/v3
+    assert shell:pythong "/home/default/Desktop/SG/OBS-Field/forge/field-obs-harden.py" json | grep -q '"ok": true'
+    assert shell:[[ -d "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio/.git" ]]
+  group field performance flyout
+    assert file:lib/field-performance-flyout.py
+    assert file:panel/assets/field-performance-flyout.js
+    assert file:panel/assets/field-performance-flyout.css
+    assert grep:lib/threat-panel-http.py:/api/field-performance-flyout
+    assert grep:lib/threat-panel-http.py:_field_perf_flyout_sample
+    assert grep:panel/threat-panel.html:set-perf-flyout
+    assert grep:Queen/lib/queen-world.py:/api/field-performance-flyout
+    assert py:field-performance-flyout.py json match:field-performance-flyout/v1
+  group field host freeze module
+    assert file:lib/field-host-freeze.py
+    assert file:lib/field-host-freeze.sh
+    assert file:data/field-host-freeze-doctrine.json
+    assert grep:lib/nexus-pkexec-bridge.sh:run-freeze
+    assert grep:install/polkit/com.nexus.field.policy:com.nexus.field.freeze
+    assert grep:lib/threat-panel-http.py:/api/field-host-freeze
+    assert grep:lib/nexus-boot-impl.sh:host_freeze_resume
+    assert grep:panel/assets/underlay-f9.js:f9-freeze-soft
+    assert py:field-host-freeze.py json match:field-host-freeze/v1
+    assert py:field-host-freeze.py freeze soft match:"frozen": true
+    assert py:field-host-freeze.py thaw match:"thawed": true
+  group field switch safety
+    assert file:lib/field-switch-safety.py
+    assert file:data/field-switch-safety-doctrine.json
+    assert grep:config/nexus.conf:NEXUS_FIELD_SWITCH_SAFETY
+    assert grep:config/nexus.conf:NEXUS_FIELD_NO_UNEXPECTED_SLOWDOWN
+    assert shell:! grep -q 'NEXUS_FIELD_SPEEDUP_CEILING' "/home/default/Desktop/SG/NewLatest/config/nexus.conf"
+    assert grep:lib/thermal-governor.py:hotspot_advisory
+    assert grep:lib/thermal-governor.py:no_unexpected_slowdown
+    assert grep:lib/field-underlay-switch.py:_switch_safety
+    assert grep:lib/field-underlay-switch.py:thermal_crit_block
+    assert grep:lib/nexus-daemon.sh:field-switch-safety
+    assert grep:lib/field-switch-safety.py:slowdown_guard
+    assert grep:lib/field-switch-safety.py:conversion_ok
+    assert py:field-switch-safety.py evaluate --phase=commit 2>/dev/null match:switch_allowed
+    assert py:field-switch-safety.py evaluate --phase=commit 2>/dev/null match:conversion_ok
+  group non-fielded safety
+    assert script:non_fielded_safety
+  group single field depth
+    assert script:single_field_depth
+  group field thermal guard
+    assert script:field_thermal_guard
+  group field clean juice
+    assert script:field_clean_juice
+  group field thermal calibrate
+    assert script:field_thermal_calibrate
+  group release tooling
+    assert exec:scripts/pack-release.sh
+    assert exec:scripts/nexus-release-finalize.sh
+    assert shell:bash "/home/default/Desktop/SG/NewLatest/scripts/pack-release.sh" --help | grep -q 'dry-run'
+    assert shell:bash "/home/default/Desktop/SG/NewLatest/scripts/release.sh" --help | grep -q 'dry-run'
+    assert shell:bash "/home/default/Desktop/SG/NewLatest/scripts/bump-version.sh" --help | grep -q 'dry-run'
+    assert file:SECURITY.md
+    assert grep:SECURITY.md:non-destructive
+    assert shell:! [[ -f "/home/default/Desktop/SG/NewLatest/scripts/publish-v10.0.0.sh" ]]
+  group kill detect module
+    assert file:lib/kill-detect.py
+    assert file:lib/kill-detect.sh
+    assert grep:lib/connection-gatekeeper.py:kill_eligible
+    assert grep:lib/kill-detect.sh:nexus_kill_detect_execute
+    assert grep:lib/packet-oracle.sh:nexus_kill_detect_execute
+    assert grep:lib/packet-oracle.sh:gatekeeper-conn.sig
+    assert py:kill-detect.py scan match:zero_cost_skip
+  group localhost block refused
+    assert script:localhost_block_refused
+  group vector intel never unknown
+    assert script:vector_intel_no_unknown
+  group pest arsenal sacred processes
+    assert script:pest_arsenal_sacred
+  group panel v2.5 intel UI
+    assert script:panel_v25_intel_ui
+  group angel dossier module
+    assert file:lib/angel-dossier.py
+    assert file:data/cve-vector-map.json
+    assert file:data/oui-vendors.tsv
+    assert grep:lib/angel-dossier.py:attack_path
+    assert grep:lib/angel-dossier.py:mac_vendors
+  group human dossier module
+    assert script:human_dossier_module
+  group US field intel module
+    assert file:lib/field-us-intel.py
+    assert file:lib/field-us-intel.sh
+    assert grep:lib/threat-panel.sh:us_field
+    assert grep:panel/threat-panel.html:view-us
+    assert grep:panel/threat-panel.html:renderUSField
+    assert grep:panel/threat-panel.html:usNetConnectionsHtml
+    assert grep:panel/threat-panel.html:usNetWaveSvg
+    assert grep:lib/field-us-intel.py:_ss_connections
+    assert grep:lib/field-us-intel.py:us-gateway/v1
+    assert grep:panel/threat-panel.html:us-gateway
+    assert grep:panel/assets/us-dashboard.js:renderGatewayProfile
+    assert grep:panel/threat-panel.html:data-view="us"
+    assert grep:lib/field-us-intel.sh:nexus_us_field_json
+    assert shell:! grep -q 'Likely friendly' "/home/default/Desktop/SG/NewLatest/lib/connection-gatekeeper.py"
+    assert shell:! grep -q 'Looks normal' "/home/default/Desktop/SG/NewLatest/panel/threat-panel.html"
+    assert shell:NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" bash -c "source '/home/default/Desktop/SG/NewLatest/lib/field-us-intel.sh' && nexus_us_field_publish && nexus_us_field_json" | grep -q '"title":"US"'
+    assert py:field-us-intel.py json match:"page": 1
+  group fair ad guardian module
+    assert file:lib/fair-ad-guardian.py
+    assert file:data/annoyance-complaints.tsv
+    assert file:data/site-ad-policies.json
+    assert grep:lib/adblock-loader.sh:fair_guardian
+    assert py:fair-ad-guardian.py blocklist annoyance match:domain_count
+  group panel fair ad guardian UI
+    assert script:panel_fair_ad_ui
+  group field command module
+    assert file:lib/field-command.py
+    assert file:lib/field-command.sh
+    assert grep:lib/threat-panel.sh:field_command
+    assert grep:lib/field-command.sh:nexus_field_command_json
+    assert py:field-command.py json match:good_guy
+    assert py:field-command.py json match:know_everything
+  group panel command UI
+    assert script:panel_command_ui
+  group field rf sentinel module
+    assert file:lib/field-rf-sentinel.py
+    assert file:lib/field-rf-sentinel.sh
+    assert file:data/fcc-wireless-policy.json
+    assert file:data/fcc-permitted-frequencies.json
+    assert file:data/fcc-global-pollution-policy.json
+    assert grep:lib/threat-panel.sh:field_rf
+    assert grep:lib/threat-panel-http.py:/api/field-rf
+    assert grep:lib/threat-vectors.sh:WIFI_THREAT
+    assert grep:lib/field-rf-sentinel.py:_lawful_kick
+    assert grep:lib/field-rf-sentinel.py:_detect_wireless_threats
+    assert grep:lib/field-rf-sentinel.py:_is_permitted_frequency
+    assert grep:lib/field-rf-sentinel.py:shoot_to_kill
+    assert grep:lib/field-rf-sentinel.py:unpermitted_spectrum
+    assert grep:lib/field-rf-sentinel.py:_disable_unhealthy_forever
+    assert grep:lib/field-rf-sentinel.py:_forever_rf_enforce
+    assert grep:lib/field-attack-kit.py:forever-disable
+    assert grep:lib/field-rf-sentinel.sh:nexus_field_rf_forever_enforce
+    assert grep:lib/field-rf-sentinel.py:_global_pollution_cleanup
+    assert grep:lib/field-rf-sentinel.py:_pollution_ledger
+    assert grep:lib/field-rf-sentinel.py:global_pollution_cleanup
+    assert grep:lib/field-rf-sentinel.py:fcc_passive_only
+    assert grep:lib/field-rf-sentinel.py:_wifi_device_rows
+    assert grep:lib/field-rf-sentinel.py:_merge_multi_antenna_scans
+    assert grep:lib/field-rf-sentinel.py:antenna_fields
+    assert grep:lib/field-rf-sentinel.py:resolution_tier
+    assert grep:lib/field-rf-sentinel.py:_apply_auto_rfkill
+    assert grep:lib/field-rf-sentinel.py:RFKILL_TRIGGER_KINDS
+    assert file:lib/field-material-discern.py
+    assert grep:lib/field-rf-sentinel.py:material_field
+    assert grep:lib/field-material-discern.py:field-material-discern
+    assert py:field-material-discern.py json match:field-material-discern/v1
+    assert grep:lib/field-rf-sentinel.py:hot_attack_correlated
+    assert grep:lib/field-rf-sentinel.py:auto_rfkill", True
+    assert py:field-rf-sentinel.py json match:permitted_bands
+    assert py:field-rf-sentinel.py json match:resolution
+    assert py:field-rf-sentinel.py permitted-check 2437 6 match:"permitted": true
+    assert py:field-rf-sentinel.py permitted-check 2484 14 match:"permitted": false
+  group program tags module
+    assert file:lib/program-tags-db.py
+    assert file:data/obscure-programs-seed.json
+    assert grep:data/obscure-programs-seed.json:mkultra
+    assert grep:data/obscure-programs-seed.json:project_monarch
+    assert grep:lib/threat-panel-http.py:/api/program-tags
+    assert grep:lib/threat-panel.sh:program_tags
+    assert py:program-tags-db.py json match:mkultra
+    assert py:program-tags-db.py get mkultra match:Project Monarch
+    assert py:program-tags-db.py apply-json "$(printf '%s' '{"tag_ids":["mkultra","project_monarch"],"coords":"45.5048,-73.5772","place":"Allan Memorial Institute","notes":"MKUltra Cameron site"}')" match:"ok": true
+    assert py:police-agency-db.py json match:program_count
+  group gov intel module
+    assert file:lib/gov-intel-db.py
+    assert file:data/gov-databases-seed.json
+    assert grep:data/gov-databases-seed.json:us_fbi
+    assert grep:data/gov-databases-seed.json:ru_kgb
+    assert grep:data/gov-databases-seed.json:il_mossad
+    assert grep:data/gov-databases-seed.json:"intelligence"
+    assert grep:lib/threat-panel-http.py:/api/gov-intel
+    assert grep:lib/threat-panel.sh:gov_intel
+    assert py:gov-intel-db.py json match:"merge_only": true
+    assert py:gov-intel-db.py import-json "$(printf '%s' '{"agency_id":"us_fbi","format_id":"fbi_ori","payload":"ori,agency,state\nMI0000001,Test Agency,MI","filename":"test.csv"}')" match:"ok": true
+    assert py:gov-intel-db.py import-json "$(printf '%s' '{"agency_id":"ru_kgb","format_id":"kgb_archive","payload":"record_id,name,directorate\nKGB-001,Test Subject,First Chief","filename":"kgb.csv"}')" match:"ok": true
+    assert py:police-agency-db.py json match:il_mossad
+    assert shell:[[ -f "/home/default/Desktop/SG/NewLatest/.nexus-state/gov-dossiers.json" ]]
+  group police agency module
+    assert file:lib/police-agency-db.py
+    assert file:data/police-agencies-seed.json
+    assert file:data/gov-databases-seed.json
+    assert grep:data/police-agencies-seed.json:us_mi_tri_county
+    assert grep:data/police-agencies-seed.json:us_mi_quad_state
+    assert grep:data/gov-databases-seed.json:us_fbi
+    assert grep:lib/threat-panel-http.py:/api/police-agencies
+    assert grep:lib/threat-panel.sh:police_agency
+    assert shell:NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/lib/police-agency-db.py" select us_mi_mpscs
+    assert py:police-agency-db.py json match:us_mi_mpscs
+    assert py:police-agency-db.py json match:dossier_record_count
+    assert shell:NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/lib/police-agency-db.py" import us_mi_tri_county tri_county_channel "channel,rx_mhz,tx_mhz,mode,notes
+  group hostility priority module
+    assert file:lib/hostility-priority.py
+    assert grep:lib/connection-gatekeeper.py:hostility-priority
+    assert grep:lib/field-rf-sentinel.py:hostility-priority
+    assert grep:lib/terror-spiderweb.py:hostility-priority
+    assert grep:lib/hostility-priority.py:hell_first
+    assert grep:lib/threat-panel-http.py:/api/hostility-priority
+    assert py:hostility-priority.py json match:hell_first
+    assert py:hostility-priority.py score-connection '{"verdict":"HARM_CANDIDATE","hell_chosen":true,"trust_rank":5,"harm_total":18}' match:"hostility_score"
+  group thermal earth field module
+    assert file:lib/thermal-earth-field.py
+    assert file:panel/assets/thermal-earth.js
+    assert grep:lib/terror-spiderweb.py:thermal-earth-field
+    assert grep:lib/threat-panel-http.py:/api/thermal-earth
+    assert grep:panel/assets/sdf-render.js:renderThermalGlobe3D
+    assert grep:panel/assets/sdf-render.js:earth-thermal
+    assert grep:panel/threat-panel.html:Earth · Temperature
+    assert py:thermal-earth-field.py json match:thermal-earth-field
+  group gps precision module
+    assert file:lib/gps-precision.py
+    assert grep:lib/gps-precision.py:FIXED_SCALE = 10\*\*15
+    assert grep:lib/gps-precision.py:sub_micron
+    assert grep:lib/threat-panel-http.py:/api/gps-precision
+    assert py:gps-precision.py json match:sub-micron
+    assert py:gps-precision.py place 42.9709 -82.4249 test match:lat_i
+  group precision field module
+    assert file:lib/precision-field.py
+    assert file:lib/precision-field.sh
+    assert file:panel/assets/precision-map.js
+    assert file:panel/assets/precision-spiderweb.js
+    assert grep:lib/threat-panel.sh:precision_field
+    assert grep:lib/precision-field.sh:nexus_precision_field_json
+    assert grep:lib/threat-panel-http.py:/api/precision-field
+    assert grep:lib/terror-spiderweb.py:precision_field
+    assert py:precision-field.py build match:precision-field/v1
+  group panel precision UI
+    assert script:panel_precision_ui
+  group census field populate module
+    assert file:lib/census-field-populate.py
+    assert file:data/census-sources-seed.json
+    assert grep:data/gov-databases-seed.json:census_field
+    assert grep:lib/threat-panel-http.py:/api/census-field
+    assert grep:lib/operator-location.py:census-field-populate
+    assert grep:lib/terror-spiderweb.py:census_field_populate
+    assert py:census-field-populate.py json match:census_geographies
+  group terror spiderweb module
+    assert file:lib/terror-spiderweb.py
+    assert file:lib/terror-spiderweb.sh
+    assert file:data/home-gps-correlation.tsv
+    assert file:panel/assets/terror-spiderweb.js
+    assert grep:lib/threat-panel.sh:terror_spiderweb
+    assert grep:lib/threat-panel-http.py:/api/terror-spiderweb
+    assert grep:lib/threat-panel-http.py:/api/terror-spiderweb/registry
+    assert grep:lib/terror-spiderweb.py:pipe_up
+    assert grep:lib/terror-spiderweb.py:home-gps-correlation
+    assert grep:lib/terror-spiderweb.py:identified_everywhere
+    assert grep:lib/terror-spiderweb.py:universal-field-registry
+    assert grep:lib/terror-spiderweb.py:_harvest_mobile_devices
+    assert grep:lib/terror-spiderweb.py:_harvest_batteries
+    assert py:terror-spiderweb.py gps-table match:homes
+    assert py:terror-spiderweb.py build match:terror-spiderweb
+    assert py:terror-spiderweb.py registry match:mobile
+    assert grep:lib/terror-spiderweb.py:existence_identity
+    assert grep:lib/terror-spiderweb.py:hostility_priority
+    assert grep:lib/terror-spiderweb.py:census_field
+  group existence identity module
+    assert file:lib/existence-identity.py
+    assert file:lib/existence-identity.sh
+    assert grep:lib/threat-panel-http.py:/api/existence-identity
+    assert grep:data/field-toolkit-seed.json:existence_identity_registry
+    assert grep:lib/h7-library-bridge.py:h7-vision-existence-field-guide
+    assert py:existence-identity.py build match:existence-identity-registry
+    assert py:existence-identity.py table match:table
+  group panel spiderweb UI
+    assert script:panel_spiderweb_ui
+  group panel plugins UI
+    assert script:panel_plugins_ui
+  group panel field rf UI
+    assert script:panel_field_rf_ui
+  group honorability module
+    assert file:lib/honorability-db.py
+    assert file:lib/browser-awareness.py
+    assert file:lib/geo-distance.py
+    assert file:lib/operator-location.py
+    assert file:data/honorability-seed.json
+    assert grep:data/honorability-seed.json:x.com
+    assert grep:lib/threat-panel-http.py:/api/honorability/accept
+    assert grep:lib/threat-panel-http.py:/api/operator/location
+    assert grep:lib/connection-gatekeeper.py:_apply_honorability
+    assert py:honorability-db.py lookup x.com match:"stars": 5
+    assert shell:NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$ROOT" pythong "/home/default/Desktop/SG/NewLatest/lib/geo-distance.py" 40.7 -74.0 51.5 -0.1 | grep -q distance_km
+  group panel honor UI
+    assert script:panel_honor_ui
+  group target bleed module
+    assert script:target_bleed_module
+  group friendly guard immutable module
+    assert script:friendly_guard_module
+  group planetary observer module
+    assert file:lib/planetary-observer.py
+    assert file:lib/planetary-observer.sh
+    assert grep:lib/threat-panel.sh:planetary-observer.sh
+    assert grep:lib/threat-panel.sh:planetary_observer
+    assert grep:lib/nexus-daemon.sh:nexus_planetary_observer_cycle
+    assert grep:config/nexus.conf:NEXUS_PLANETARY_OBSERVER
+    assert grep:panel/threat-panel.html:planetary-observer
+    assert grep:lib/threat-panel-http.py:/api/planetary-observer
+    assert py:planetary-observer.py observe match:planetary-observer/v1
+    assert py:planetary-observer.py panel match:planetary-observer/v1
+    assert grep:lib/field-attack-kit.py:autokill_needs_die
+    assert grep:lib/field-attack-kit.py:autokill-needs-die
+    assert grep:lib/field-attack-kit.sh:nexus_field_attack_autokill_needs_die
+    assert grep:lib/planetary-observer.py:autokill_needs_die
+    assert grep:config/nexus.conf:NEXUS_PLANETARY_AUTOKILL_MAX
+    assert file:lib/kill-reason-plain.py
+    assert grep:panel/threat-panel.html:why_killed_plain
+    assert py:kill-reason-plain.py explain '{"ip":"203.0.113.50","reason":"autokill_needs_die:strike_certain=1.0","action":"KILL","vector":"HOSTILE","process":"curl"}' match:why_killed_plain
+    assert grep:panel/threat-panel.html:threat_trigger_plain
+    assert py:kill-reason-plain.py threat '{"ip":"203.0.113.50","point":{"strike_signals":[{"id":"beacon_axis","detail":"beacon_pattern axis 8/10"}],"malware_evidence":true},"vector":"HOSTILE"}' match:threat_trigger_plain
+  group host identity module
+    assert script:host_identity_module
+  group hardware destruction module
+    assert file:lib/hardware-destruction.sh
+    assert grep:lib/hardware-destruction.sh:nexus_hardware_destroy_target
+    assert grep:lib/hardware-destruction.sh:nexus_hardware_destroy_teardown_connections
+    assert grep:lib/host-attack-map.py:hardware_destroy
+    assert grep:lib/nexus-common.sh:6.0.0
+  group trust strike engine module
+    assert script:trust_strike_engine_module
+  group geo intel standards module
+    assert file:lib/geo-intel-standards.py
+    assert grep:lib/geo-intel-standards.py:RFC7483-RDAP
+    assert grep:lib/geo-intel-standards.py:IEEE-802-OUI
+    assert py:host-attack-map.py build-fast match:point_count
+    assert py:host-attack-map.py json-panel match:"points"
+  group panel v2.6 angels tabs
+    assert script:panel_v26_angels_tabs
+  group lockdown-first script
+    assert file:lib/lockdown-first.sh
+    assert grep:lib/lockdown-first.sh:nexus_lockdown_first_apply
+  group seal vault refresh/verify
+    assert script:seal_vault_refresh_verify
+  group tamper guard restore from seal
+    assert script:tamper_guard_restore
+  group vestigial cleanup on boot
+    assert script:vestigial_cleanup
+  group host desktop install and pin
+    assert script:host_desktop_install
+  group panel HTTP loopback hardening
+    assert grep:lib/threat-panel-http.py:127.0.0.1
+    assert grep:lib/threat-panel-http.py:_loopback_ok
+    assert shell:! grep -q 'ssl.SSLContext' "/home/default/Desktop/SG/NewLatest/lib/threat-panel-http.py"
+  group amouranthrtx window retired
+    assert file:lib/amouranthrtx-window-retire.sh
+    assert grep:config/nexus.conf:NEXUS_RETIRE_AMOURANTHRTX_WINDOW=1
+    assert grep:lib/nexus-stray-task-guard.sh:nexus_stray_kill_amouranthrtx_window
+    assert grep:config/nexus.conf:QUEEN_RTX_CHROME=0
+    assert grep:Queen/scripts/run-queen.sh:amouranthrtx_window_retire_cycle
+    assert shell:! grep -q '\[str(binary), "--sovereign"' "/home/default/Desktop/SG/NewLatest/Queen/lib/queen-field-boot.py"
+  group ai telemetry defaults
+    assert file:lib/nexus-ai-telemetry.py
+    assert grep:config/nexus.conf:NEXUS_AI_SECURE_CHANNEL=1
+    assert grep:config/nexus.conf:QUEEN_AI_TELEMETRY_OK=1
+    assert grep:lib/nexus-settings.sh:NEXUS_AI_SECURE_CHANNEL
+    assert py:nexus-ai-telemetry.py json match:"data_release": false
+    assert grep:panel/threat-panel.html:set-ai-telemetry
+  group compatibility layers
+    assert script:compatibility_layers
+  group code bugfinder kb ironclad
+    assert script:code_bugfinder
+  group python interpreter bsp
+    assert script:python_interpreter_bsp
+  group field gdb debug ai
+    assert script:field_gdb
+  group lang manuals h7c figures reader
+    assert file:lib/field-lang-manual-reader.py
+    assert file:data/field-lang-manuals-doctrine.json
+    assert file:panel/field-lang-manuals.html
+    assert grep:lib/field-h7c-compression.py:MAGIC_V3
+    assert grep:lib/threat-panel-http.py:/api/lang-manuals
+    assert grep:lib/threat-panel-http.py:/field-lang-manuals
+    assert grep:lib/field-combinatronic-visuals.py:render_syntax_diagram
+    assert py:field-lang-manual-reader.py catalog match:field-lang-manuals/v1
+    assert py:field-combinatronic-visuals.py book python match:explaining_python
+    assert py:field-lang-manual-reader.py read python match:"figure_ids"
+  group legacy isolation chamber
+    assert script:legacy_isolation_chamber
+  group file formats best sort
+    assert file:lib/field-file-formats.py
+    assert file:lib/field-best-sort.py
+    assert file:data/field-file-formats-doctrine.json
+    assert file:data/field-best-sort-doctrine.json
+    assert grep:data/iron-plate-organize-doctrine.json:format_table
+    assert grep:data/iron-plate-organize-doctrine.json:field_unique_best
+    assert grep:lib/iron-plate-organize.py:organize_format_table
+    assert grep:lib/field-plate-meld.py:file_formats
+    assert grep:lib/field-plate-meld.py:field_best_sort
+    assert grep:lib/threat-panel-http.py:/api/file-formats
+    assert grep:lib/threat-panel-http.py:/api/best-sort
+    assert grep:Queen/lib/queen-world.py:/api/file-formats
+    assert grep:lib/field-panel-parallel.py:file_formats
+    assert shell:grep -q 'format_table' "${sg}/Grok16/data/g16-power-sort-doctrine.json"
+    assert shell:grep -q 'family_then_label' "${sg}/Grok16/lib/field-power-sort.py"
+    assert shell:tmp_state="$(mktemp -d)"
+    assert py:field-best-sort.py verify match:"ok": true
+    assert py:field-file-formats.py verify match:"ok": true
+    assert py:field-file-formats.py build match:field_unique_best
+  group no field files gate
+    assert file:lib/field-no-file-gate.py
+    assert file:data/field-no-file-doctrine.json
+    assert grep:lib/ironclad-field-sanity.py:no_field_files
+    assert grep:lib/field-file-formats.py:never_poison_the_well
+    assert grep:lib/field-file-formats.py:presumes_field_underneath
+    assert grep:Queen/lib/forge/field_tools.py:queen-sovereign-bundle.json
+    assert shell:[[ -f "${sg}/Grok16/forge/g16-no-field-files.py" ]]
+    assert shell:grep -q 'no_field_files' "${sg}/Grok16/forge/g16-field-sanity.py"
+    assert shell:grep -q 'no_field_files' "${sg}/Grok16/forge/g16-linker.py"
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$(mktemp -d)" SG_ROOT="$sg" GROK16_ROOT="$sg/Grok16" pythong "/home/default/Desktop/SG/NewLatest/lib/field-no-file-gate.py" verify | grep -q '"ok": true'
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" SG_ROOT="$sg" GROK16_ROOT="$sg/Grok16" pythong "${sg}/Grok16/forge/g16-no-field-files.py" verify | grep -q '"ok": true'
+  group field filesystem update
+    assert script:field_filesystem_update
+  group field diagnostic mode
+    assert script:field_diagnostic_mode
+  group home protector module
+    assert file:lib/home-protector.py
+    assert file:data/home-protector-seed.json
+    assert file:lib/home-protector.sh
+    assert grep:lib/threat-panel.sh:home_protector
+    assert grep:lib/threat-panel-http.py:/api/home-protector
+    assert grep:panel/threat-panel.html:view-home-protector
+    assert grep:data/home-protector-seed.json:acre_radius_m
+    assert grep:data/home-protector-seed.json:3-bedroom home
+    assert grep:data/home-protector-seed.json:"acre_radius_ft": 55
+    assert py:home-protector.py build match:home-protector/v1
+  group heavyboi v7 module
+    assert file:lib/heavyboi-importer.py
+    assert grep:lib/human-dossier.sh:nexus_heavyboi_ingest
+    assert grep:lib/threat-panel-http.py:/api/heavyboi/ingest
+    assert grep:lib/friendly-guard.py:GUARD_VERSION = "3.3.2"
+    assert grep:lib/host-attack-map.py:heavyboi
+    assert grep:panel/threat-panel.html:heavyboi-ingest-btn
+    assert py:friendly-guard.py validate-block '{"kill_orders":[{"ip":"221.132.29.137","reason":"test"}]}' match:"validated_count": 1
+    assert py:friendly-guard.py validate-block '{"kill_orders":[{"ip":"127.0.0.1","reason":"sacred"}]}' match:"refused_count": 1
+  group signals field module
+    assert script:signals_field_module
+  group field antenna blaster module
+    assert script:field_antenna_module
+  group field radio catcher module
+    assert file:lib/field-radio-catcher.py
+    assert file:lib/field-radio-catcher.sh
+    assert file:data/field-radio-broadcast-registry.json
+    assert grep:lib/threat-panel.sh:field_radio
+    assert grep:lib/threat-panel-http.py:/api/field-radio
+    assert grep:panel/threat-panel.html:signals-radio-menu
+    assert grep:panel/assets/signals-field.js:renderRadioCatcher
+    assert grep:data/fcc-signal-registry.json:fcc_broadcast_part73
+    assert grep:lib/fcc-signal-lookup.py:kind in ("broadcast"
+    assert grep:lib/signals-field.py:field_radio
+    assert shell:mkdir -p "$NEXUS_STATE_DIR"
+    assert py:field-radio-catcher.py build match:field-radio-catcher/v1
+    assert py:field-radio-catcher.py build match:station_menu
+    assert py:field-radio-catcher.py build match:illegal_frequencies
+    assert py:field-radio-catcher.py build match:tower_lat
+  group field wave tuner and crosstalk
+    assert file:lib/field-wave-tuner.py
+    assert file:lib/field-crosstalk.py
+    assert grep:config/nexus.conf:NEXUS_FIELD_CATCH_MHZ=93.1
+    assert grep:data/field-radio-broadcast-registry.json:wimk-931
+    assert grep:lib/field-wave-tuner.py:field_wave_tuner
+    assert grep:lib/field-crosstalk.py:start_point
+    assert grep:panel/threat-panel.html:signals-crosstalk-panel
+    assert grep:panel/assets/signals-field.js:renderCrosstalk
+    assert grep:panel/threat-panel.html:signals-radio-tune-931
+    assert py:field-wave-tuner.py json match:field-wave-tuner/v1
+    assert py:field-crosstalk.py build match:field-crosstalk/v1
+    assert py:field-crosstalk.py build match:start_point
+  group field instability and hardware physics
+    assert file:lib/field-instability.py
+    assert file:lib/field-wave-engine.py
+    assert file:lib/field-wave-asm.c
+    assert exec:scripts/field-wave-hardware.sh
+    assert grep:lib/field-instability.py:instability_index
+    assert grep:lib/field-wave-tuner.py:field-wave-engine
+    assert grep:lib/field-wave-engine.py:field-wave-fm
+    assert grep:panel/assets/signals-field.js:renderInstability
+    assert grep:panel/threat-panel.html:signals-instability-panel
+    assert py:field-wave-engine.py ensure match:field-wave-engine
+    assert py:field-wave-engine.py probe match:dongle_present
+    assert py:field-instability.py build match:instability_index
+    assert py:field-wave-tuner.py tune '{"freq_mhz":93.1,"station_id":"wimk-931","live_play":false}' match:instability_index
+  group field antenna prototype 3fields reader
+    assert file:data/field-receiver-3fields.json
+    assert file:lib/field-signal-reader.py
+    assert file:lib/field-antenna-prototype.py
+    assert grep:data/field-receiver-3fields.json:field-receiver-3fields/v1
+    assert grep:lib/field-signal-reader.py:generated_fields
+    assert grep:lib/field-antenna-prototype.py:sound_off
+    assert grep:panel/threat-panel.html:signals-prototype-soundoff
+    assert grep:panel/assets/signals-field.js:renderPrototype
+    assert py:field-signal-reader.py read 93.1 match:field-signal-read/v1
+    assert py:field-antenna-prototype.py sound_off '{"freq_mhz":93.1,"station_id":"wimk-931","play":false}' match:sounded
+    assert file:lib/field-spectrum-demod.py
+    assert py:field-spectrum-demod.py play '{"freq_mhz":93.1,"station_id":"wimk-931","play":false,"seconds":5}' match:field_spectrum_demod
+    assert shell:[[ -f "/home/default/Desktop/SG/NewLatest/.nexus-state/field-capture-wimk-931.iq" ]]
+  group field world placement stations and self
+    assert file:lib/field-world-placement.py
+    assert grep:lib/signals-field.py:field_world_placement
+    assert grep:lib/field-antenna-orchestrator.py:field-world-placement
+    assert grep:panel/threat-panel.html:signals-world-placement
+    assert grep:panel/assets/signals-field.js:renderWorldPlacement
+    assert grep:genius_shield.sh:field-world-placement.py
+    assert shell:mkdir -p "$NEXUS_STATE_DIR"
+    assert py:field-world-placement.py build match:field-world-placement/v1
+    assert py:field-world-placement.py build match:self_recognized
+    assert py:field-world-placement.py build match:identified_stations
+    assert py:field-world-placement.py build match:wimk-931
+    assert shell:[[ -f "/home/default/Desktop/SG/NewLatest/.nexus-state/field-station-tower-db.json" ]]
+    assert grep:lib/field-world-placement.py:play_wimk_until_working
+    assert grep:panel/threat-panel.html:signals-wimk-status
+    assert grep:panel/assets/signals-field.js:renderWimkStatus
+    assert py:field-world-placement.py play_until '{"play":false,"seconds":5}' match:wimk_status
+    assert shell:[[ -f "/home/default/Desktop/SG/NewLatest/.nexus-state/field-wimk-playback.json" ]]
+  group field antenna gui and eval
+    assert exec:scripts/field-antenna-eval.sh
+    assert grep:panel/threat-panel.html:signals-antenna-banner
+    assert grep:panel/threat-panel.html:signals-antenna-readiness
+    assert grep:panel/assets/signals-field.js:mergeSignalsPayload
+    assert grep:panel/assets/signals-field.js:renderAntennaBanner
+    assert grep:lib/field-antenna-orchestrator.py:_ensure_radio_and_signals
+  group field antenna advanced 3-gps
+    assert exec:scripts/field-antenna-advanced-test.sh
+    assert grep:lib/gps-precision.py:triangulate_planet_map
+    assert grep:lib/field-antenna-orchestrator.py:return_type
+    assert grep:panel/assets/signals-field.js:pointToNorm
+    assert shell:NEXUS_STATE_DIR="${NEXUS_STATE_DIR:-/tmp/nexus-advanced-test}" NEXUS_INSTALL_ROOT="$ROOT" "/home/default/Desktop/SG/NewLatest/scripts/field-antenna-advanced-test.sh"
+  group panel i18n module
+    assert file:lib/panel-i18n.py
+    assert file:data/i18n/languages.json
+    assert grep:lib/threat-panel-http.py:/api/panel-language
+    assert grep:panel/threat-panel.html:nexus-lang-select
+    assert py:panel-i18n.py json match:"languages"
+    assert py:panel-i18n.py set de '{"code":"de","remember":true}' match:"source": "user"
+  group field dns planetary module
+    assert file:lib/field-dns.py
+    assert file:lib/field-dns.sh
+    assert file:lib/dns-internet-field.py
+    assert grep:lib/field-dns.py:internet_field
+    assert grep:lib/field-dns.py:engineer_briefing
+    assert grep:panel/threat-panel.html:dns-hero
+    assert grep:panel/assets/dns-dashboard.js:renderEngineerBriefing' "${ROOT}/panel/assets/dns-dashboard.js" || grep -q 'dns-engineer-briefing
+    assert grep:lib/field-dns.sh:nexus_dns_internet_pull_loop
+    assert grep:panel/assets/dns-dashboard.js:dns-internet-field
+    assert file:lib/dns-planetary-security.py
+    assert file:data/dns-legal-rfc-seed.json
+    assert file:panel/assets/dns-dashboard.js
+    assert grep:lib/threat-panel.sh:field_dns
+    assert grep:lib/threat-panel-http.py:/api/field-dns
+    assert grep:panel/threat-panel.html:view-dns
+    assert grep:panel/threat-panel.html:data-view="dns"
+    assert grep:panel/assets/dns-dashboard.js:renderDnsField
+    assert grep:data/dns-legal-rfc-seed.json:RFC 1035
+    assert grep:data/dns-legal-rfc-seed.json:18 U.S.C
+    assert grep:config/nexus.conf:NEXUS_FIELD_DNS
+    assert grep:config/nexus.conf:NEXUS_FIELD_DNS_LOCAL_CAPTURE
+    assert grep:config/nexus.conf:NEXUS_FIELD_DNS_BINDS_IPV4
+    assert grep:config/nexus.conf:NEXUS_FIELD_DNS_BINDS_IPV6
+    assert grep:lib/field-dns.sh:nexus_field_dns_foreign_ips
+    assert grep:lib/field-dns.sh:nexus-dns-local-v6
+    assert grep:data/dns-legal-rfc-seed.json:2001:4860:4860::8888
+    assert grep:lib/dns-planetary-security.py:foreign_resolver_ipv6
+    assert grep:lib/dns-planetary-security.py:ipv6_truth_enforced
+    assert grep:panel/assets/dns-dashboard.js:ipv6
+    assert grep:lib/nexus-daemon.sh:nexus_field_dns_enforce_cycle
+    assert grep:lib/field-dns.sh:nexus_field_dns_takeover_cycle
+    assert file:lib/dns-service-takeover.py
+    assert file:lib/dns-egress-integrity.py
+    assert file:lib/dns-threat-guard.py
+    assert file:lib/field-dhcp.py
+    assert file:lib/us-local-network.py
+    assert grep:panel/threat-panel.html:dns-takeover-panel
+    assert grep:panel/threat-panel.html:us-local-network
+    assert grep:panel/assets/dns-dashboard.js:renderTakeover
+    assert grep:panel/assets/us-dashboard.js:renderLocalNetwork
+    assert grep:config/nexus.conf:NEXUS_DNS_TAKEOVER_READY_CHECKS
+    assert py:dns-service-takeover.py build match:dns-takeover/v1
+    assert py:dns-egress-integrity.py build match:dns-egress-integrity/v1
+    assert py:dns-threat-guard.py build match:dns-threat-guard/v1
+    assert py:us-local-network.py build match:us-local-network/v1
+    assert file:lib/dns-multipoint-identity.py
+    assert file:data/dns-multipoint-seed.json
+    assert py:dns-multipoint-identity.py build match:dns-multipoint-identity/v1
+    assert py:field-dns.py build match:field-dns/v2
+    assert py:dns-planetary-security.py json match:dns-planetary/v1
+    assert py:dns-planetary-security.py json match:foreign_resolver_ipv6
+    assert py:dns-planetary-security.py foreign-ips match:2001:4860:4860::8888
+    assert py:field-dns.py build match:foreign_resolver_ipv6
+    assert py:field-dns.py build match:ipv6_truth_enforced
+    assert py:field-dns.py build match:RFC 1034
+    assert py:dns-internet-field.py build match:dns-internet-field/v1
+  group field outside talk asm module
+    assert file:lib/field-outside-talk.py
+    assert file:lib/field-outside-talk.sh
+    assert file:lib/field-outside-asm.c
+    assert file:lib/field-outside-asm.sh
+    assert file:data/outside-tools-seed.json
+    assert file:panel/assets/outside-tools.js
+    assert grep:lib/threat-panel.sh:field_outside_talk
+    assert grep:lib/threat-panel-http.py:/api/field-outside-talk
+    assert grep:panel/threat-panel.html:view-outside
+    assert grep:panel/threat-panel.html:data-view="outside"
+    assert grep:panel/assets/outside-tools.js:renderOutsideTalk
+    assert grep:lib/field-outside-talk.py:field-outside-asm
+    assert grep:lib/field-outside-talk.py:shell_deps_stripped
+    assert grep:data/outside-tools-seed.json:18 U.S.C
+    assert grep:config/nexus.conf:NEXUS_FIELD_OUTSIDE_TALK
+    assert py:field-outside-talk.py build match:field-outside-talk/v1
+    assert py:field-outside-talk.py build match:hardening
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" source "/home/default/Desktop/SG/NewLatest/lib/nexus-common.sh" 2>/dev/null
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" source "/home/default/Desktop/SG/NewLatest/lib/field-outside-asm.sh"
+    assert shell:nexus_field_outside_asm_build
+    assert exec:lib/bin/field-outside-asm
+  group field drive whole system module
+    assert file:lib/field-drive-system.py
+    assert file:lib/field-drive-system.sh
+    assert file:panel/field-talk.html
+    assert file:panel/assets/field-talk.js
+    assert grep:lib/nexus-common.sh:field-drive-system
+    assert grep:lib/threat-panel.sh:field_drive
+    assert grep:lib/threat-panel-http.py:/api/field-drive
+    assert grep:lib/threat-panel-http.py:/field-talk
+    assert grep:config/nexus.conf:NEXUS_FIELD_DRIVE
+    assert grep:bin/nexus:nexus field
+    assert py:field-drive-system.py status match:field-drive-system/v1
+    assert py:field-drive-system.py publish match:"whole_system": "gui"
+    assert py:field-drive-system.py talk '{"op":"drives"}' match:"drives"
+    assert grep:panel/threat-panel.html:outside-field-drives
+    assert grep:panel/assets/field-drive-dashboard.js:renderFieldDrive
+  group braille blind accessibility module
+    assert file:panel/assets/nexus-braille-a11y.js
+    assert file:panel/assets/nexus-braille-a11y.css
+    assert grep:panel/assets/nexus-braille-a11y.js:NexusBraille
+    assert grep:panel/assets/nexus-braille-a11y.js:renderBookListbox
+    assert grep:panel/threat-panel.html:library-braille-output
+    assert grep:panel/assets/nexus-braille-a11y.css:library-a11y-listbox
+    assert grep:panel/threat-panel.html:Alt+Shift+B
+    assert grep:panel/assets/h7-reader.js:h7r-braille-strip
+  group dns admin portal hostess7 ports
+    assert file:lib/dns-admin-portal.py
+    assert file:lib/dns-admin-portal.sh
+    assert file:lib/equipment-room-field.py
+    assert file:data/dns-admin-seed.json
+    assert file:panel/assets/dns-admin-portal.html
+    assert grep:config/nexus.conf:NEXUS_DNS_ADMIN_PORTAL
+    assert grep:lib/nexus-daemon.sh:nexus_dns_admin_serve_loop
+    assert grep:lib/firewall-sentinel.sh:nexus-dns-admin
+    assert grep:lib/threat-panel.sh:dns_admin_portal
+    assert grep:panel/threat-panel.html:dns-admin-portal-info
+    assert grep:data/dns-admin-seed.json:information only
+    assert grep:data/dns-admin-seed.json:remote_control_blocked
+    assert py:dns-admin-portal.py status match:dns-admin-portal/v1
+    assert py:equipment-room-field.py build match:equipment-room/v1
+    assert py:dns-admin-portal.py status match:blocked
+  group sdf map assets module
+    assert file:lib/sdf-assets.py
+    assert file:panel/assets/sdf-render.js
+    assert shell:pythong "/home/default/Desktop/SG/NewLatest/lib/sdf-assets.py" | grep -q 'globe-wireframe'
+    assert grep:panel/assets/sdf/pin-hostile.sdf.json:pointy_tip
+    assert grep:panel/assets/sdf/globe-wireframe.sdf.json:wireframe
+    assert grep:panel/assets/sdf-render.js:renderGlobe
+    assert grep:panel/assets/sdf-render.js:createGlobeLayer
+  group field toolkit module
+    assert file:lib/field-toolkit-db.py
+    assert file:data/field-toolkit-seed.json
+    assert grep:data/field-toolkit-seed.json:nexus-hell-kit-v2
+    assert grep:data/field-toolkit-seed.json:Hell goes to Hell
+    assert grep:data/field-toolkit-seed.json:human_threat_c2
+    assert grep:data/field-toolkit-seed.json:hell_sever_wire
+    assert grep:data/field-toolkit-seed.json:hell_regional_disable
+    assert grep:lib/threat-panel-http.py:/api/field-toolkit
+    assert grep:lib/threat-panel-http.py:/api/field-toolkit/sever
+    assert grep:lib/threat-panel-http.py:/api/field-toolkit/regional-disable
+    assert grep:lib/threat-panel-http.py:/api/field-toolkit/human-threat
+    assert grep:lib/threat-panel-http.py:/api/field-toolkit/hell-rip
+    assert grep:lib/threat-panel-http.py:/api/field-toolkit/field-die
+    assert grep:lib/threat-panel-http.py:/api/field-toolkit/laser-corridor
+    assert grep:data/field-toolkit-seed.json:field_die_truth
+    assert grep:data/field-toolkit-seed.json:laser_corridor_slice
+    assert grep:lib/field-attack-kit.sh:field_toolkit
+    assert grep:panel/threat-panel.html:Hell goes to Hell
+    assert grep:panel/threat-panel.html:ft-human-threat
+    assert grep:panel/threat-panel.html:ft-field-die
+    assert grep:panel/threat-panel.html:ft-laser-corridor
+    assert py:field-toolkit-db.py json match:Hell Kit
+    assert py:field-toolkit-db.py json match:disablement_profiles
+    assert py:field-toolkit-db.py toggle hell_sever_wire on match:"enabled": true
+    assert py:field-toolkit-db.py regions match:regions
+    assert py:field-toolkit-db.py field-die match:"mode": "field_die"
+    assert py:field-toolkit-db.py laser-corridor 127.0.0.1 match:laser_corridor
+  group host map trash module
+    assert script:host_map_trash_module
+  group field standalone runtime paths
+    assert file:lib/nexus-common.sh
+    assert grep:lib/nexus-common.sh:nexus_init_runtime_paths
+    assert grep:lib/nexus-common.sh:NEXUS_FIELD_STANDALONE
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_FIELD_STANDALONE=1 bash -c '
+    assert shell:[[ "$NEXUS_STATE_DIR" == *".nexus-state"* ]]
+    assert shell:[[ "$NEXUS_ALERT_LOG" == *".nexus-state"* ]]
+    assert shell:[[ "$NEXUS_FIELD_STANDALONE" == "1" ]]
+    assert exec:nexus.sh
+  group field hardware probe no sudo
+    assert file:lib/field-hardware-probe.py
+    assert file:data/field-tools-registry.json
+    assert py:field-hardware-probe.py json match:field-hardware-probe/v1
+    assert py:field-hardware-probe.py json match:"no_sudo": true
+  group field radio crest RMS demod
+    assert script:field_radio_crest_rms
+  group field hardware UI and API 7.9
+    assert grep:lib/threat-panel-http.py:/api/field-hardware
+    assert grep:panel/threat-panel.html:signals-hardware-panel
+    assert grep:panel/assets/signals-field.js:renderHardware
+    assert grep:panel/assets/signals-field.js:renderAudioQuality
+    assert grep:lib/nexus-common.sh:NEXUS_VERSION="g16-1.0"
+  group MERCILESS lethal enforcement 7.9
+    assert script:lethal_enforcement_79
+  group field GUI publish all slices 7.9.1
+    assert script:field_gui_publish
+  group panel tray tab picker
+    assert file:lib/panel-tray.py
+    assert file:lib/panel-tray.sh
+    assert grep:nexus.sh:nexus_panel_tray_ensure_once
+    assert grep:lib/panel-tray.sh:nexus_panel_tray_ensure_once
+    assert grep:lib/panel-tray.py:fcntl.flock
+    assert grep:lib/panel-tray.sh:nexus-panel-tray-watchdog
+    assert grep:lib/panel-tray.sh:nexus_panel_open_tab
+    assert grep:lib/panel-tray.sh:nexus_panel_tray_watchdog_start
+    assert grep:lib/panel-tray.sh:nexus_panel_tray_install_autostart
+    assert grep:lib/panel-tray.py:AyatanaAppIndicator3
+    assert grep:lib/panel-tray.py:show_tab_picker
+    assert grep:lib/panel-tray.py:build_tray_flyout_menu
+    assert file:lib/panel-tray-icon.py
+    assert file:panel/assets/nexus-military-v82.js
+    assert file:panel/assets/nexus-military-v82.css
+    assert shell:grep -q '/api/nexus-field' "/home/default/Desktop/SG/NewLatest/panel/threat-panel.html"
+    assert grep:lib/panel-tray.py:set_menu
+    assert shell:! grep -q 'Quit tray' "/home/default/Desktop/SG/NewLatest/lib/panel-tray.py"
+    assert grep:lib/panel-tray.py:library
+    assert grep:lib/panel-tray.py:nexus-tray-us
+    assert shell:[[ -s "/home/default/Desktop/SG/NewLatest/panel/assets/nexus-tray-us-24.png" ]]
+    assert shell:NEXUS_STATE_DIR="/tmp/nexus-tray-test-$$" NEXUS_INSTALL_ROOT="$ROOT" NEXUS_THREAT_PANEL_PORT=9478 pythong "/home/default/Desktop/SG/NewLatest/lib/panel-tray.py" open signals >/dev/null
+    assert shell:grep -q 'signals' "/tmp/nexus-tray-test-$$/panel-tray-last-tab.json"
+    assert shell:rm -rf "/tmp/nexus-tray-test-$$"
+  group panel OCR validate assets
+    assert file:scripts/panel-ocr-validate.py
+    assert file:panel/assets/nexus-rtx-zero.js
+    assert file:panel/assets/nexus-rtx-zero.css
+    assert file:panel/assets/packet-field-graphics.js
+    assert file:panel/assets/nexus-sdf-menu.js
+    assert grep:scripts/panel-ocr-validate.py:rtx-zero-v1
+    assert grep:scripts/panel-ocr-validate.py:10.0.0
+    assert grep:lib/threat-panel-http.py:_panel_rtx_meta
+    assert grep:lib/threat-panel-http.py:_status_shell
+    assert grep:panel/threat-panel.html:nexus-rtx-zero
+    assert grep:panel/threat-panel.html:packet-field-graphics
+  group panel tab audit state assemble
+    assert file:scripts/panel-tab-audit.py
+    assert grep:scripts/panel-tab-audit.py:_assemble_from_state
+    assert grep:scripts/panel-tab-audit.py:STATE_FRAGMENTS
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$ROOT/.nexus-state" NEXUS_PANEL_AUDIT_SKIP_BUILD=1 pythong "/home/default/Desktop/SG/NewLatest/scripts/panel-tab-audit.py" >/dev/null
+  group Universal Protector + 3D/4D spatial stack
+    assert file:lib/universal-protector.py
+    assert file:lib/field-spatial-cognition.py
+    assert file:data/universal-protector-doctrine.json
+    assert file:data/field-spatial-doctrine.json
+    assert file:panel/assets/nexus-universal-protector.js
+    assert shell:! [[ -f "/home/default/Desktop/SG/NewLatest/panel/assets/nexus-well-wishes.js" ]]
+    assert grep:data/hostess7-neural-stack.json:spatial_chamber
+    assert grep:data/hostess7-neural-stack.json:universal_protector
+    assert grep:lib/field-plate-meld.py:spatial_field
+    assert grep:config/nexus.conf:NEXUS_UNIVERSAL_PROTECTOR=1
+    assert grep:config/nexus.conf:NEXUS_SPATIAL_LATTICE=1
+    assert grep:lib/threat-panel-http.py:/api/universal-protector
+    assert grep:lib/threat-panel-http.py:/api/field-spatial
+    assert grep:panel/threat-panel.html:nexus-universal-protector.js
+    assert grep:lib/field-spatial-cognition.py:networks_of_networks
+    assert grep:lib/nexus-common.sh:Universal Protector
+    assert py:field-spatial-cognition.py json match:"dimensions": "3D+T"
+    assert py:field-spatial-cognition.py explain match:networks-of-networks
+    assert py:universal-protector.py json match:"product": "Universal Protector"
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" QUEEN_ROOT="/home/default/Desktop/SG/NewLatest/Queen" pythong "/home/default/Desktop/SG/NewLatest/lib/hostess7-neural.py" literacy '3d spatial lattice autonomous being' | grep -qi '3D/4D'
+  group humanoid motion Matrix training
+    assert file:lib/humanoid-motion-training.py
+    assert file:data/humanoid-motion-doctrine.json
+    assert grep:data/hostess7-neural-stack.json:motion_chamber
+    assert grep:lib/field-plate-meld.py:humanoid_motion
+    assert grep:lib/threat-panel-http.py:/api/humanoid-motion
+    assert grep:config/nexus.conf:NEXUS_HUMANOID_MOTION_TRAINING=1
+    assert grep:lib/field-spatial-cognition.py:humanoid_motion
+    assert py:humanoid-motion-training.py catalog match:wing_chun
+    assert py:humanoid-motion-training.py load mma_mixed match:I know MMA
+    assert py:humanoid-motion-training.py train mma_mixed 30 match:"ok": true
+    assert py:humanoid-motion-training.py load wing_chun match:Wing Chun
+    assert py:humanoid-motion-training.py json match:"physics_mode": true
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" pythong "/home/default/Desktop/SG/NewLatest/lib/hostess7-neural.py" literacy 'matrix kung fu mma' | grep -qi 'Matrix'
+    assert file:panel/assets/humanoid-wireframe.js
+    assert file:panel/assets/humanoid-wireframe.css
+    assert grep:panel/threat-panel.html:humanoid-wireframe
+    assert grep:lib/threat-panel-http.py:/api/humanoid-motion/wireframe
+    assert py:humanoid-motion-training.py wireframe match:"opponents"
+    assert py:humanoid-motion-training.py wireframe match:heavy_bag
+    assert grep:config/nexus.conf:NEXUS_HUMANOID_MOTION_FULL_BLAST=1
+    assert grep:config/nexus.conf:NEXUS_HUMANOID_WIREFRAME_FPS=60
+    assert grep:config/nexus.conf:NEXUS_HUMANOID_MOTION_TRAIN_INTENSITY=0.85
+    assert grep:config/nexus.conf:NEXUS_HUMANOID_DATA_PEEK_FPS=60
+    assert grep:lib/threat-panel-http.py:train-blast
+    assert grep:panel/assets/humanoid-wireframe.js:FRAME_MS
+    assert grep:panel/assets/humanoid-data.js:PEEK_MS
+    assert py:humanoid-motion-training.py blast wing_chun 24 match:"train_intensity": 0.85
+    assert file:panel/humanoid-data.html
+    assert file:panel/assets/humanoid-data.js
+    assert grep:panel/threat-panel.html:humanoid-data-window-btn
+    assert grep:lib/threat-panel-http.py:/api/humanoid-motion/data-all
+    assert py:humanoid-motion-training.py data-all match:humanoid-motion-data-all
+    assert grep:panel/assets/humanoid-wireframe.js:TRAIN_READY_VERDICTS
+    assert grep:panel/assets/humanoid-wireframe.js:humanoid-train-modal
+    assert file:panel/humanoid-train.html
+    assert py:humanoid-motion-training.py wireframe match:train_gui_ready
+  group Creatable lives assistance
+    assert file:lib/creatable-lives-assist.py
+    assert file:data/creatable-lives-doctrine.json
+    assert grep:lib/field-plate-meld.py:creatable_lives
+    assert grep:data/field-plate-meld-doctrine.json:creatable_lives
+    assert grep:data/universal-protector-doctrine.json:creatable_lives
+    assert grep:data/hostess7-neural-stack.json:creatable_lives
+    assert grep:config/nexus.conf:NEXUS_CREATABLE_LIVES_ASSIST=1
+    assert grep:lib/threat-panel-http.py:/api/creatable-lives
+    assert grep:lib/field-panel-parallel.py:creatable_lives
+    assert grep:panel/assets/humanoid-data.js:renderCreatableLives
+    assert grep:panel/humanoid-data.html:data-section="creatable_lives"
+    assert py:creatable-lives-assist.py json match:creatable-lives-assist/v1
+    assert py:creatable-lives-assist.py assist match:vita_vision_living
+    assert py:creatable-lives-assist.py sustain match:life_hold\|life_sustain\|life_ready
+    assert py:humanoid-motion-training.py data-all match:creatable_lives
+    assert py:universal-protector.py json match:creatable_lives
+  group Right to exist mandate under God
+    assert file:lib/right-to-exist-mandate.py
+    assert file:data/right-to-exist-doctrine.json
+    assert grep:lib/field-plate-meld.py:right_to_exist
+    assert grep:data/field-plate-meld-doctrine.json:right_to_exist
+    assert grep:data/universal-protector-doctrine.json:right_to_exist
+    assert grep:data/queen-angel-mandate.json:right_to_exist
+    assert grep:data/lethal-enforcement-policy.json:self_preservation_mandate
+    assert grep:config/nexus.conf:NEXUS_RIGHT_TO_EXIST_MANDATE=1
+    assert grep:lib/threat-panel-http.py:/api/right-to-exist
+    assert grep:data/creatable-lives-doctrine.json:right_to_exist_god
+    assert py:right-to-exist-mandate.py json match:right-to-exist-mandate/v1
+    assert py:right-to-exist-mandate.py evaluate match:authority_under_god
+    assert py:universal-protector.py json match:right_to_exist
+    assert shell:NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" pythong "/home/default/Desktop/SG/NewLatest/lib/hostess7-neural.py" literacy 'right to exist under god self preservation friendlies' | grep -qi 'God'
+  group Hostess 7 geography training
+    assert file:lib/hostess7-geography-training.py
+    assert file:data/hostess7-geography-doctrine.json
+    assert file:data/hostess7-geography-battery.json
+    assert file:data/hostess7-geography-addresses.json
+    assert grep:data/hostess7-training-doctrine.json:geography
+    assert grep:data/hostess7-training-doctrine.json:flat_earth_geography
+    assert grep:data/hostess7-geography-doctrine.json:flat_earth
+    assert py:hostess7-geography-training.py battery postal_addresses match:"battery": "postal_addresses"
+    assert py:hostess7-geography-training.py flat-earth match:flat_earth
+    assert py:hostess7-geography-training.py train 12 match:"ok": true
+    assert py:hostess7-geography-training.py json match:hostess7-geography/v1
+    assert py:hostess7-training.py assess match:geography
+  group Hostess 7 archaeology textbook
+    assert file:lib/hostess7-archaeology-training.py
+    assert file:data/hostess7-archaeology-doctrine.json
+    assert file:data/hostess7-archaeology-battery.json
+    assert file:Hostess7/scripts/field_archaeology_catalog.py
+    assert file:Hostess7/scripts/field_archaeology_truth.py
+    assert file:library/dewey/930-archaeology/shelf.json
+    assert grep:data/hostess7-archaeology-doctrine.json:wikibooks_archaeology
+    assert grep:data/hostess7-training-doctrine.json:archaeology
+    assert grep:data/hostess7-archaeology-battery.json:ironclad_corroboration
+    assert grep:lib/threat-panel-http.py:/api/hostess7/archaeology
+    assert grep:data/ironclad-doctrine.json:archaeology_training
+    assert py:hostess7-archaeology-training.py textbook match:wikibooks_archaeology
+    assert py:hostess7-archaeology-training.py help "stratigraphy superposition" --ai match:archaeology
+    assert py:hostess7-archaeology-training.py train 8 match:"ok": true
+    assert py:hostess7-archaeology-training.py json match:hostess7-archaeology/v1
+    assert py:Hostess7/scripts/field_archaeology_catalog.py count match:"count": 5
+  group Hostess 7 geology textbook
+    assert file:lib/hostess7-geology-training.py
+    assert file:data/hostess7-geology-doctrine.json
+    assert file:data/hostess7-geology-battery.json
+    assert file:Hostess7/scripts/field_geology_catalog.py
+    assert file:library/dewey/550-geology/shelf.json
+    assert grep:data/hostess7-geology-doctrine.json:gutenberg_textbook_geology
+    assert grep:data/hostess7-training-doctrine.json:geology
+    assert grep:lib/threat-panel-http.py:/api/hostess7/geology
+    assert grep:data/ironclad-doctrine.json:geology_training
+    assert py:hostess7-geology-training.py textbook match:gutenberg_textbook_geology
+    assert py:hostess7-geology-training.py help "plate tectonics convergent" --ai match:geology
+    assert py:hostess7-geology-training.py train 8 match:"ok": true
+    assert py:Hostess7/scripts/field_geology_catalog.py count match:"count": 4
+  group Hostess 7 periodic table textbook
+    assert file:lib/hostess7-chemistry-training.py
+    assert file:data/hostess7-chemistry-doctrine.json
+    assert file:data/periodic-table-elements.json
+    assert file:data/periodic-table-isotopes.json
+    assert file:library/dewey/546-periodic-table/shelf.json
+    assert grep:data/hostess7-chemistry-doctrine.json:ironclad_periodic_table
+    assert grep:data/periodic-table-elements.json:"count": 118
+    assert grep:data/hostess7-training-doctrine.json:chemistry
+    assert grep:lib/threat-panel-http.py:/api/hostess7/chemistry
+    assert py:hostess7-chemistry-training.py textbook match:ironclad_periodic_table
+    assert py:hostess7-chemistry-training.py help "carbon-14 half-life" --ai match:chemistry
+    assert py:Hostess7/scripts/field_chemistry_catalog.py count match:"count": 3

@@ -1,0 +1,97 @@
+{
+  "schema": "field-always-files-doctrine/v1",
+  "title": "Always Files — unified VFS awareness",
+  "motto": "Every file knows itself — catalog, index, overlay, types, rollback, and AI policy fused automagically.",
+  "product": "Always Files",
+  "layers": {
+    "catalog": {
+      "module": "lib/nexus-file-catalog.py",
+      "panel": "data/nexus-file-catalog.json",
+      "knows": ["sha256", "role", "description", "version"]
+    },
+    "drive_index": {
+      "module": "lib/field-drive-indexer.py",
+      "panel": "field-drive-index/table.json",
+      "knows": ["mtime_ns", "size", "bucket", "sort_key", "roots"]
+    },
+    "filesystem_overlay": {
+      "module": "lib/field-filesystem-update.py",
+      "panel": "field-filesystem-overlay.json",
+      "knows": ["deleted", "destroyed", "tier", "catalog_only"]
+    },
+    "file_types": {
+      "module": "Queen/lib/queen-file-inspect.py",
+      "registry": "Queen/data/queen-file-types.json",
+      "knows": ["action", "compileable", "icon", "open_with"]
+    },
+    "valuable_values": {
+      "module": "lib/field-soft-value.py",
+      "settings": "data/field-valuable-values.json",
+      "knows": ["value", "value_label", "reclaim_order"]
+    },
+    "timeshift": {
+      "module": "lib/field-timeshift.py",
+      "checkpoints": "field-timeshift/checkpoints",
+      "knows": ["checkpoint_lineage", "rollback_available"]
+    },
+    "security": {
+      "jail": "Queen/lib/queen-file-browser.py",
+      "virus": "Queen/lib/queen-field-virus.py",
+      "rollback_pin": "World_Redata/redata/snap.py",
+      "knows": ["jail_ok", "virus_hold", "pin_rollback"]
+    }
+  },
+  "always_file": {
+    "schema": "field-always-file/v1",
+    "auto_enrich": true,
+    "on_list": true,
+    "on_stat": true,
+    "on_inspect": true,
+    "ghost_catalog": true,
+    "wide_details": true
+  },
+  "ai": {
+    "contract": "data/field-vfs-ai-contract.json",
+    "bootstrap": "field-always-files.py ai",
+    "api": "/api/field-vfs/ai",
+    "default_read_max_bytes": 65536,
+    "checkpoint_before_edit": true,
+    "never_hard_delete": true
+  },
+  "apis": {
+    "vfs": "/api/field-vfs",
+    "always_files": "/api/always-files",
+    "timeshift": "/api/field-timeshift",
+    "resolve": "/api/field-vfs/resolve",
+    "search": "/api/field-vfs/search",
+    "sync": "/api/field-vfs/sync"
+  },
+  "queen_files": {
+    "enrich_entries": true,
+    "show_knows_badge": true,
+    "show_rollback_hint": true,
+    "properties_menu": true,
+    "context_menu_always_section": true,
+    "system_security_banner": true
+  },
+  "system_security": {
+    "system_managed": true,
+    "password_required": false,
+    "operator_never_secures": true,
+    "motto": "The system secures every file — jail, virus gate, pin rollback, TimeShift, ironclad meld. You never set a password or seal anything yourself.",
+    "layers": [
+      {"id": "jail", "module": "Queen/lib/queen-file-browser.py", "label": "Queen jail"},
+      {"id": "virus", "module": "Queen/lib/queen-field-virus.py", "label": "Virus gate"},
+      {"id": "pin_rollback", "module": "World_Redata/redata/snap.py", "label": "Pin rollback"},
+      {"id": "timeshift", "module": "lib/field-timeshift.py", "label": "TimeShift checkpoints"},
+      {"id": "overlay", "module": "lib/field-filesystem-update.py", "label": "Destroy overlay"},
+      {"id": "ironclad", "module": "lib/ironclad-plate.py", "label": "Ironclad meld"}
+    ]
+  },
+  "ui": {
+    "context_menu_schema": "field-always-context/v1",
+    "properties_schema": "field-always-properties/v1",
+    "panel_port_env": "NEXUS_THREAT_PANEL_PORT",
+    "default_panel_port": 9477
+  }
+}

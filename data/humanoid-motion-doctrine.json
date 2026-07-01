@@ -1,0 +1,217 @@
+{
+  "schema": "humanoid-motion-doctrine/v1",
+  "title": "Humanoid motion training — gravity-coupled physics lattice",
+  "motto": "Train on the body under gravity — Newtonian mechanics, ground contact, energy receipts. No Matrix instant proficiency.",
+  "physics_mode": true,
+  "matrix_load": {
+    "instant_proficiency": 0.0,
+    "train_tick_proficiency": 0.012,
+    "physics_tick_bonus": 0.006,
+    "max_proficiency": 1.0,
+    "default_session_ticks": 120,
+    "blast_ticks": 48,
+    "train_intensity": 0.85,
+    "full_blast": true,
+    "wireframe_fps": 60,
+    "data_peek_fps": 60,
+    "gravity_m_s2": 9.80665,
+    "ground_y_norm": 0.12,
+    "mass_kg": 68.0
+  },
+  "body_zones": {
+    "head": {"z": 0.92},
+    "spine": {"z": 0.62},
+    "shoulders": {"z": 0.68, "x_span": 0.28},
+    "hands": {"z": 0.75, "x_span": 0.4},
+    "elbows": {"z": 0.65},
+    "centerline": {"x": 0.0, "z": 0.55},
+    "hips": {"z": 0.45},
+    "knees": {"z": 0.28},
+    "ankles": {"z": 0.18},
+    "feet": {"z": 0.12},
+    "toes": {"z": 0.09}
+  },
+  "families": {
+    "mobility": "Flexibility — bend, hinge, touch toes, spinal flexion",
+    "kung_fu": "Chinese martial arts — centerline, forms, sticky hands",
+    "mma": "Mixed rules — clinch, ground, cage awareness",
+    "striking": "Punches, kicks, elbows, knees",
+    "grappling": "Throws, submissions, positional control",
+    "defense": "Blocks, slips, counters — lethal only when corroborated"
+  },
+  "skills": [
+    {
+      "id": "touch_toes",
+      "label": "Touch toes",
+      "family": "mobility",
+      "matrix_quote": "I can touch my toes.",
+      "primitives": ["hip_hinge", "spinal_flexion", "hamstring_lengthen", "toe_reach"],
+      "motion": [
+        {"primitive": "spinal_flexion", "zone": "spine", "norm": {"x": 0.0, "y": 0.0, "z": 0.35}, "weight": 0.92},
+        {"primitive": "hip_hinge", "zone": "hips", "norm": {"x": 0.0, "y": 0.0, "z": 0.38}, "weight": 0.9},
+        {"primitive": "toe_reach", "zone": "hands", "norm": {"x": 0.0, "y": 0.0, "z": 0.15}, "weight": 0.88},
+        {"primitive": "ankle_fold", "zone": "ankles", "norm": {"x": 0.0, "y": 0.0, "z": 0.14}, "weight": 0.75}
+      ]
+    },
+    {
+      "id": "forward_fold",
+      "label": "Forward fold",
+      "family": "mobility",
+      "matrix_quote": "I know forward fold.",
+      "primitives": ["spinal_flexion", "hip_hinge", "hamstring_lengthen"],
+      "motion": [
+        {"primitive": "spinal_flexion", "zone": "spine", "norm": {"x": 0.0, "y": 0.0, "z": 0.42}, "weight": 0.9},
+        {"primitive": "hip_hinge", "zone": "hips", "norm": {"x": 0.0, "y": 0.0, "z": 0.4}, "weight": 0.85}
+      ]
+    },
+    {
+      "id": "cat_cow",
+      "label": "Cat-cow spinal wave",
+      "family": "mobility",
+      "matrix_quote": "I know cat-cow.",
+      "primitives": ["spinal_wave", "lumbar_mobility", "cervical_mobility"],
+      "motion": [
+        {"primitive": "spinal_wave", "zone": "spine", "norm": {"x": 0.0, "y": 0.0, "z": 0.5}, "weight": 0.8},
+        {"primitive": "cervical_mobility", "zone": "head", "norm": {"x": 0.0, "y": 0.0, "z": 0.88}, "weight": 0.7}
+      ]
+    },
+    {
+      "id": "wing_chun",
+      "label": "Wing Chun",
+      "family": "kung_fu",
+      "matrix_quote": "I know Wing Chun.",
+      "primitives": ["chain_punch", "pak_sao", "tan_sao", "biu_jee", "chi_sao"],
+      "motion": [
+        {"primitive": "chain_punch", "zone": "hands", "norm": {"x": 0.0, "y": 0.0, "z": 0.78}, "weight": 0.9},
+        {"primitive": "centerline_guard", "zone": "centerline", "norm": {"x": 0.0, "y": 0.0, "z": 0.55}, "weight": 0.85}
+      ]
+    },
+    {
+      "id": "hung_gar",
+      "label": "Hung Gar",
+      "family": "kung_fu",
+      "matrix_quote": "I know Hung Gar.",
+      "primitives": ["tiger_claw", "iron_bridge", "horse_stance", "five_animals"],
+      "motion": [
+        {"primitive": "tiger_claw", "zone": "hands", "norm": {"x": -0.2, "y": 0.0, "z": 0.72}, "weight": 0.88},
+        {"primitive": "horse_stance", "zone": "feet", "norm": {"x": 0.0, "y": 0.0, "z": 0.1}, "weight": 0.8}
+      ]
+    },
+    {
+      "id": "shaolin_quan",
+      "label": "Shaolin Quan",
+      "family": "kung_fu",
+      "matrix_quote": "I know Shaolin.",
+      "primitives": ["long_fist", "monkey_step", "iron_palm", "jump_kick"],
+      "motion": [
+        {"primitive": "long_fist", "zone": "hands", "norm": {"x": 0.35, "y": 0.0, "z": 0.8}, "weight": 0.86},
+        {"primitive": "jump_kick", "zone": "feet", "norm": {"x": 0.0, "y": 0.15, "z": 0.25}, "weight": 0.82}
+      ]
+    },
+    {
+      "id": "tai_chi",
+      "label": "Tai Chi",
+      "family": "kung_fu",
+      "matrix_quote": "I know Tai Chi.",
+      "primitives": ["ward_off", "roll_back", "push", "single_whip"],
+      "motion": [
+        {"primitive": "ward_off", "zone": "hands", "norm": {"x": -0.15, "y": 0.0, "z": 0.7}, "weight": 0.75},
+        {"primitive": "root_step", "zone": "feet", "norm": {"x": 0.0, "y": 0.0, "z": 0.12}, "weight": 0.78}
+      ]
+    },
+    {
+      "id": "mma_mixed",
+      "label": "MMA — Mixed Martial Arts",
+      "family": "mma",
+      "matrix_quote": "I know MMA.",
+      "primitives": ["jab_cross", "double_leg", "guillotine", "ground_pound", "sprawl"],
+      "motion": [
+        {"primitive": "jab_cross", "zone": "hands", "norm": {"x": 0.25, "y": 0.0, "z": 0.76}, "weight": 0.9},
+        {"primitive": "sprawl", "zone": "hips", "norm": {"x": 0.0, "y": -0.1, "z": 0.42}, "weight": 0.85}
+      ]
+    },
+    {
+      "id": "boxing",
+      "label": "Boxing",
+      "family": "striking",
+      "matrix_quote": "I know boxing.",
+      "primitives": ["jab", "cross", "hook", "uppercut", "slip", "roll"],
+      "motion": [
+        {"primitive": "jab", "zone": "hands", "norm": {"x": 0.3, "y": 0.0, "z": 0.77}, "weight": 0.88},
+        {"primitive": "slip", "zone": "head", "norm": {"x": -0.12, "y": 0.0, "z": 0.9}, "weight": 0.7}
+      ]
+    },
+    {
+      "id": "muay_thai",
+      "label": "Muay Thai",
+      "family": "striking",
+      "matrix_quote": "I know Muay Thai.",
+      "primitives": ["teep", "round_kick", "elbow", "clinch_knee", "check"],
+      "motion": [
+        {"primitive": "round_kick", "zone": "feet", "norm": {"x": 0.4, "y": 0.0, "z": 0.35}, "weight": 0.92},
+        {"primitive": "elbow", "zone": "elbows", "norm": {"x": 0.0, "y": 0.0, "z": 0.68}, "weight": 0.88}
+      ]
+    },
+    {
+      "id": "brazilian_jiu_jitsu",
+      "label": "Brazilian Jiu-Jitsu",
+      "family": "grappling",
+      "matrix_quote": "I know BJJ.",
+      "primitives": ["armbar", "triangle", "rear_naked_choke", "guard_pull", "pass_guard"],
+      "motion": [
+        {"primitive": "guard_pull", "zone": "hips", "norm": {"x": 0.0, "y": 0.0, "z": 0.35}, "weight": 0.8},
+        {"primitive": "armbar", "zone": "hands", "norm": {"x": 0.2, "y": 0.1, "z": 0.5}, "weight": 0.86}
+      ]
+    },
+    {
+      "id": "judo",
+      "label": "Judo",
+      "family": "grappling",
+      "matrix_quote": "I know Judo.",
+      "primitives": ["osoto_gari", "uchi_mata", "seoi_nage", "kuzushi", "newaza_pin"],
+      "motion": [
+        {"primitive": "osoto_gari", "zone": "feet", "norm": {"x": -0.25, "y": 0.0, "z": 0.18}, "weight": 0.87},
+        {"primitive": "kuzushi", "zone": "hips", "norm": {"x": 0.1, "y": 0.0, "z": 0.44}, "weight": 0.8}
+      ]
+    },
+    {
+      "id": "wrestling",
+      "label": "Wrestling",
+      "family": "grappling",
+      "matrix_quote": "I know wrestling.",
+      "primitives": ["single_leg", "double_leg", "snap_down", "sprawl", "pin"],
+      "motion": [
+        {"primitive": "double_leg", "zone": "knees", "norm": {"x": 0.0, "y": 0.0, "z": 0.25}, "weight": 0.9},
+        {"primitive": "sprawl", "zone": "hips", "norm": {"x": 0.0, "y": -0.15, "z": 0.4}, "weight": 0.85}
+      ]
+    },
+    {
+      "id": "krav_maga",
+      "label": "Krav Maga",
+      "family": "defense",
+      "matrix_quote": "I know Krav Maga.",
+      "primitives": ["defense_v", "groin_kick", "eye_strike", "weapon_disarm", "retzev"],
+      "lethal_gate": "corroborated_threat_only",
+      "motion": [
+        {"primitive": "defense_v", "zone": "hands", "norm": {"x": 0.0, "y": 0.0, "z": 0.72}, "weight": 0.88},
+        {"primitive": "retzev", "zone": "centerline", "norm": {"x": 0.0, "y": 0.0, "z": 0.58}, "weight": 0.9}
+      ]
+    }
+  ],
+  "arena": {
+    "fighter_anchor": {"x": 0.32, "y": 0.58},
+    "opponent_radius": 0.38,
+    "floor_grid": true
+  },
+  "training_opponents": [
+    {"id": "heavy_bag", "label": "Heavy bag", "kind": "training", "stance": "static", "arena_x": 0.78, "arena_y": 0.52},
+    {"id": "sparring_alpha", "label": "Sparring · Orthodox", "kind": "sparring", "stance": "orthodox", "arena_x": 0.7, "arena_y": 0.5},
+    {"id": "sparring_bravo", "label": "Sparring · Southpaw", "kind": "sparring", "stance": "southpaw", "arena_x": 0.84, "arena_y": 0.54},
+    {"id": "grapple_dummy", "label": "Grapple dummy", "kind": "grappling", "stance": "clinch", "arena_x": 0.74, "arena_y": 0.56}
+  ],
+  "integrations": {
+    "spatial_lattice": "field-spatial-cognition.py — body scale inject",
+    "weapons_chamber": "field-attack-kit.py — lethal corroboration gate",
+    "universal_protector": "humanoid-motion-panel.json meld plate"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "audio-train/v1",
+  "motto": "Train learns acceptable audio ranges from live sources — push outside = hostile intent.",
+  "hostess_version": "7",
+  "warmup_samples": 3,
+  "hostility_margin_pct": 0.12,
+  "learn_margin_pct": 0.06,
+  "dimensions": {
+    "level_db": { "label": "Level (dB)", "floor": -72.0, "ceiling": -1.0, "seed_min": -48.0, "seed_max": -6.0 },
+    "peak_db": { "label": "Peak (dB)", "floor": -36.0, "ceiling": 0.0, "seed_min": -18.0, "seed_max": -1.0 },
+    "bass_energy": { "label": "Bass energy", "floor": 0.0, "ceiling": 1.0, "seed_min": 0.05, "seed_max": 0.85 },
+    "treble_energy": { "label": "Treble energy", "floor": 0.0, "ceiling": 1.0, "seed_min": 0.05, "seed_max": 0.9 },
+    "sample_rate_hz": { "label": "Sample rate", "floor": 8000.0, "ceiling": 192000.0, "seed_min": 44100.0, "seed_max": 48000.0 },
+    "latency_ms": { "label": "Latency (ms)", "floor": 0.0, "ceiling": 500.0, "seed_min": 2.0, "seed_max": 120.0 }
+  },
+  "source_kinds": ["pipewire", "pulse", "alsa", "browser", "spotify", "train_transit", "music", "pet"],
+  "train_transit_markers": ["train", "rail", "amtrak", "metra", "subway", "transit", "locomotive"]
+}

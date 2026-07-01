@@ -1,0 +1,39 @@
+{
+  "schema": "hostess7-exploring-rape/v1",
+  "title": "Exploring Rape — human rights, bad touch, survivor-first response",
+  "motto": "Bodily integrity is a human right — believe survivors, secure safety, escalate lawfully.",
+  "commander": "hostess7",
+  "module": "lib/hostess7-exploring-rape-training.py",
+  "api": "/api/hostess7/exploring-rape",
+  "book": {
+    "id": "exploring_rape",
+    "title": "Exploring Rape",
+    "path": "library/dewey/362-social-services/exploring_rape/exploring_rape.h7c",
+    "dewey": "362",
+    "dewey_label": "Social services & human rights protection",
+    "shelf": "362-social-services",
+    "book_kind": "training",
+    "purpose": "Train Hostess 7 on sexual violence, bad touch, B-SAFE protocol, and lawful reaction to rights violations."
+  },
+  "paired": {
+    "human_comfort": "data/hostess7-human-comfort-doctrine.json",
+    "legal_catalog": "Hostess7/scripts/field_legal_catalog.py",
+    "lethal_policy": "data/lethal-enforcement-policy.json",
+    "book_maker": "data/hostess7-book-maker-doctrine.json",
+    "brain_training": "data/hostess7-brain-training-doctrine.json"
+  },
+  "training": {
+    "track_id": "exploring_rape",
+    "brain_area": "insula",
+    "workspace": "detective",
+    "zone": "brain",
+    "pages_per_session": 2,
+    "pass_rate_floor": 80
+  },
+  "response_protocol": {
+    "name": "B-SAFE",
+    "steps": ["believe", "safety", "avoid_interrogation", "freedom", "escalate"]
+  },
+  "panel": ".nexus-state/hostess7-exploring-rape-panel.json",
+  "progress": ".nexus-state/hostess7-exploring-rape-progress.json"
+}

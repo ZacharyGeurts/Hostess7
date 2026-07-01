@@ -1,0 +1,26 @@
+{
+  "schema": "amouranthrtx-integration/v1",
+  "canonical_root": "NewLatest/AMOURANTHRTX",
+  "repo": "https://github.com/ZacharyGeurts/AMOURANTHRTX",
+  "rtx_root": "/home/default/Desktop/SG/NewLatest/AMOURANTHRTX",
+  "binary": "/home/default/Desktop/SG/NewLatest/Queen/build/rtx/bin/Linux/queen-browser",
+  "open_handler": "/home/default/Desktop/SG/NewLatest/scripts/amouranthrtx-open.sh",
+  "shaders": "Navigator/shaders \u2192 assets/shaders/compute/*.spv",
+  "double_click": [
+    ".spv",
+    ".comp"
+  ],
+  "env": {
+    "AMOURANTHRTX_CANVAS": "basename without extension",
+    "AMOURANTHRTX_ROOT": "/home/default/Desktop/SG/NewLatest/AMOURANTHRTX"
+  },
+  "build": {
+    "queen": "Queen/scripts/g16-build.sh",
+    "native": "AMOURANTHRTX/kilroy.sh",
+    "shaders": "make -C Navigator/shaders"
+  },
+  "pairing": {
+    "grok16": "5.1.0",
+    "vulkan_doctrine": "data/vulkan-os-doctrine.json"
+  }
+}

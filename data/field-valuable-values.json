@@ -1,0 +1,68 @@
+{
+  "schema": "field-valuable-values/v1",
+  "title": "Valuable value settings — polite vault reclamation under disk pressure",
+  "motto": "When space is tight, we eat the least valuable first — smoothly, with lineage intact.",
+  "scale": {
+    "min": 0,
+    "max": 100,
+    "labels": {
+      "disposable": 10,
+      "cache": 25,
+      "draft": 40,
+      "standard": 50,
+      "work": 70,
+      "precious": 85,
+      "sovereign": 95
+    }
+  },
+  "default_value": 50,
+  "reclaim_floor": 60,
+  "disk_pressure": {
+    "warn_free_mb": 2048,
+    "reclaim_free_mb": 1024,
+    "critical_free_mb": 256,
+    "target_free_mb": 1536,
+    "polite": true,
+    "batch_limit": 32,
+    "warn_message": "Disk is getting full — deleted files will begin being destroyed soon (listed first, then bin)."
+  },
+  "tier_rank": {
+    "listed": 1,
+    "bin": 2,
+    "active": 99
+  },
+  "by_type": {
+    "binary": {"value": 12, "label": "disposable"},
+    "archive": {"value": 22, "label": "cache"},
+    "json": {"value": 35, "label": "draft"},
+    "markdown": {"value": 38, "label": "draft"},
+    "html": {"value": 30, "label": "draft"},
+    "css": {"value": 32, "label": "draft"},
+    "javascript": {"value": 55, "label": "standard"},
+    "typescript": {"value": 58, "label": "standard"},
+    "shell": {"value": 62, "label": "work"},
+    "python": {"value": 72, "label": "work"},
+    "cpp": {"value": 78, "label": "work"},
+    "rust": {"value": 76, "label": "work"},
+    "go": {"value": 74, "label": "work"},
+    "glsl_comp": {"value": 80, "label": "precious"},
+    "fld": {"value": 82, "label": "precious"},
+    "launch": {"value": 88, "label": "precious"},
+    "code_chamber": {"value": 86, "label": "precious"},
+    "spirv": {"value": 84, "label": "precious"},
+    "image": {"value": 45, "label": "standard"},
+    "video": {"value": 28, "label": "cache"},
+    "audio": {"value": 42, "label": "standard"},
+    "cmake": {"value": 68, "label": "work"}
+  },
+  "by_extension": {
+    ".tmp": {"value": 5, "label": "disposable"},
+    ".log": {"value": 18, "label": "disposable"},
+    ".pyc": {"value": 8, "label": "disposable"},
+    ".o": {"value": 10, "label": "disposable"},
+    ".a": {"value": 14, "label": "disposable"},
+    ".cache": {"value": 15, "label": "disposable"},
+    ".bak": {"value": 20, "label": "cache"},
+    ".swp": {"value": 12, "label": "disposable"}
+  }
+}

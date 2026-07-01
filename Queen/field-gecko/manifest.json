@@ -1,0 +1,41 @@
+{
+  "schema": "queen-browser-engine/v1",
+  "name": "Queen Browser",
+  "product": "AmmoOS",
+  "theme": "black_emerald_rose_2026",
+  "branding": {
+    "palette": "black · emerald · rose",
+    "shell": "standalone",
+    "favicon": "panel/assets/ammoos-field-48.png",
+    "wordmark": "world/assets/branding/ammoos-wordmark.svg",
+    "crown_surprise": "world/assets/branding/queen-crown-surprise.svg",
+    "user_guide": "world/queen-browser-guide.html"
+  },
+  "license": "MPL-2.0",
+  "engine": "queen-field-gecko",
+  "surface": "standalone-web",
+  "comp_shader_boot": false,
+  "telemetry": false,
+  "search": {
+    "provider": "DuckDuckGo",
+    "homepage": "https://duckduckgo.com/",
+    "search_url": "https://duckduckgo.com/?q=%s"
+  },
+  "g16": {
+    "toolchain": "Grok16 g16",
+    "profile": "field_opt",
+    "build_target": "queen-browser",
+    "note": "Queen Browser — standalone web, DuckDuckGo home/search"
+  },
+  "shell_url": "https://duckduckgo.com/",
+  "startup_tabs": [
+    {"role": "browser", "title": "Queen Browser", "url": "https://duckduckgo.com/", "pinned": true}
+  ],
+  "profile_dir": "profile",
+  "binary_candidates": [
+    "bin/queen-browser",
+    "bin/queen-field-engine"
+  ],
+  "engine_launcher": "bin/launch-field-gecko.sh",
+  "note": "Queen Field Engine only — operator UI is always Queen Browser"
+}

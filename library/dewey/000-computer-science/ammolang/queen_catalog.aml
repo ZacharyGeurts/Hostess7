@@ -1,0 +1,16 @@
+# Queen Game Room + CHIPS catalog — publish all systems (hang guard)
+@profile fastest
+@verbose clean
+@motto "Queen catalog · 26 systems · CHIPS stacks · Dewey books"
+
+seq ·
+  say "Queen catalog publish — adaptive timing · hang guard"
+  self upgrade
+  fast path:gpy compile:0 fastest
+  assist hang
+  run py:field-chips-catalog action:library-book-build
+  run py:field-chips-catalog action:publish
+  run py:field-chips-catalog action:verify
+  run py:field-ironclad-chips-combinatorics action:publish
+  say "Queen Game Room catalog lanes refreshed"
+  assist freeze

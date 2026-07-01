@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="ammoos-update">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050508" />
+  <title>Software Update Manager</title>
+  <link rel="stylesheet" href="/assets/field-shell-dock.css?v=1" />
+  <link rel="stylesheet" href="/assets/ammoos-update-os.css?v=1" />
+</head>
+<body>
+  <div class="au-root" id="au-root">
+    <header class="fsd-dock au-dock" aria-label="Field dock">
+      <div class="fsd-dock-left" id="fsd-dock-left"></div>
+      <div class="fsd-dock-right" id="fsd-dock-right"></div>
+    </header>
+
+    <main class="au-app">
+      <header class="au-head">
+        <div class="au-brand">
+          <h1>Software Update Manager</h1>
+          <p class="au-tagline" id="au-tagline">AmmoOS · GitHub · safe in-place updates</p>
+        </div>
+        <div class="au-head-actions">
+          <button type="button" class="au-btn secondary" id="au-check" title="Check GitHub">Check for updates</button>
+          <button type="button" class="au-btn primary" id="au-apply" disabled title="Apply update">Apply update</button>
+        </div>
+      </header>
+
+      <section class="au-status-card" id="au-status-card" aria-live="polite">
+        <div class="au-status-main">
+          <span class="au-status-label">Installed</span>
+          <strong class="au-status-version" id="au-current">—</strong>
+        </div>
+        <div class="au-status-arrow" id="au-arrow" hidden aria-hidden="true">→</div>
+        <div class="au-status-main" id="au-latest-wrap" hidden>
+          <span class="au-status-label">Available</span>
+          <strong class="au-status-version au-status-new" id="au-latest">—</strong>
+        </div>
+        <p class="au-status-detail" id="au-status-detail">Checking…</p>
+      </section>
+
+      <section class="au-safety" id="au-safety" aria-label="Safety preflight">
+        <h2>Safety checks</h2>
+        <ul class="au-safety-list" id="au-safety-list"></ul>
+      </section>
+
+      <section class="au-components" aria-label="Stack components">
+        <h2>Stack components</h2>
+        <div class="au-table-wrap">
+          <table class="au-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Local</th>
+                <th>GitHub</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="au-components-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="au-notes" id="au-notes-section" hidden>
+        <h2>Release notes</h2>
+        <pre class="au-notes-body" id="au-notes"></pre>
+      </section>
+
+      <section class="au-log" aria-label="Update log">
+        <h2>Update log <button type="button" class="au-btn tiny" id="au-log-refresh">Refresh</button></h2>
+        <pre class="au-log-body" id="au-log">—</pre>
+      </section>
+    </main>
+  </div>
+  <script src="/assets/field-shell-dock.js?v=1" defer></script>
+  <script src="/assets/ammoos-update-os.js?v=1" defer></script>
+</body>
+</html>

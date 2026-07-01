@@ -1,0 +1,26 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 33,
+  "slug": "stack-ps1",
+  "title": "PlayStation Platform Stack",
+  "body": "# PlayStation Platform Stack\n\n**Platform stack:** `console_ps1` · **Era:** 1994–2006 · **Vendor:** Sony · **Count:** 8\n\nLSI **R3000A** @ 33.8 MHz with CXD8530 glue, GPU, SPU, and CD-ROM controller — launched **December 1994** in Japan.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: console_ps1` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **Sony CXD8530 CPU+Glue** (Sony, 32-bit) — R3000A + bus glue — PlayStation main SoC path\n- **Sony GPU (GP0/GP1)** (Sony, 32-bit) — Geometry transform + raster — VRAM DMA companion\n- **Sony SPU** (Sony, 32-bit) — Sound Processing Unit — 24 voices ADPCM reverb\n- **Sony CD-ROM Controller** (Sony, 32-bit) — Disc DMA + subchannel — PS1 storage glue\n- **PS1 MDEC/DMA Glue** (Sony, 32-bit) — MDEC video decode + root DMA controller\n- **PS1 BIOS ROM Interface** (Sony, 32-bit) — KSEG1 ROM + expansion port decode\n\n## Catalog ids\n\nThe `chip_ids` array holds all **8** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: console_ps1 · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "glue_ps1_bios_rom",
+    "glue_ps1_cdrom",
+    "glue_ps1_cxd8530",
+    "glue_ps1_dma",
+    "glue_ps1_gpu",
+    "glue_ps1_spu",
+    "mame_r3000",
+    "system_ps1"
+  ],
+  "chip_count": 8,
+  "kind": "platform_stack",
+  "family": "console",
+  "platform_stack": "console_ps1",
+  "era": "1994–2006",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/thumbs/mame_r3000.png",
+  "thumb": "/world/assets/combinatronic/chips/thumbs/mame_r3000.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

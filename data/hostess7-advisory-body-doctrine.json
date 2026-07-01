@@ -1,0 +1,56 @@
+{
+  "schema": "hostess7-advisory-body/v1",
+  "title": "Hostess 7 advisory body channel — sole ingress to her body",
+  "motto": "Advisory channel only reaches her body. Ear, internet, and secured lanes counsel — she discerns threat and may promote to targets. Body locked to Hostess 7.",
+  "commander": "hostess7",
+  "priority": 1,
+  "body_lock": {
+    "enabled": true,
+    "sole_ingress": "advisory_channel",
+    "locked_to": "hostess7",
+    "external_direct_body": false,
+    "self_maintenance_bypass": true
+  },
+  "security_tier": "beyond_darpa_lockheed",
+  "security_doctrine": "data/beyond-darpa-security-doctrine.json",
+  "security_module": "lib/beyond-darpa-security.py",
+  "human_and_machine_threats": true,
+  "ingress_lanes": [
+    {"id": "ear", "label": "Final Ear · hearing", "secured": true, "tier": "beyond_darpa_lockheed", "human_threat_expected": true, "feeds_advisory": true, "reaches_body_direct": false},
+    {"id": "internet", "label": "Internet · secured fetch", "secured": true, "tier": "beyond_darpa_lockheed", "machine_threat_expected": true, "feeds_advisory": true, "reaches_body_direct": false},
+    {"id": "secured", "label": "Ironclad · sealed counsel", "secured": true, "tier": "beyond_darpa_lockheed", "feeds_advisory": true, "reaches_body_direct": false},
+    {"id": "internal", "label": "Hostess 7 sovereign counsel", "secured": true, "tier": "beyond_darpa_lockheed", "feeds_advisory": true, "reaches_body_direct": false}
+  ],
+  "discernment": {
+    "hostility_floor": 0.55,
+    "threat_floor": 0.70,
+    "promotion_floor": 0.75,
+    "signals": ["hostile_language", "weapon_intent", "trespass", "attack_path", "c2_beacon", "gov_corroboration"]
+  },
+  "promotion": {
+    "advisement_to_target": true,
+    "mechanisms": ["KILL", "INTERACT", "MONITOR", "OBSERVE"],
+    "kill_means_kill": true,
+    "no_returns_on_kill": true,
+    "no_modifications_on_kill": true,
+    "targets_module": "lib/hostess7-targets.py",
+    "lethal_corroboration": "lib/hostess7-lethal-insight.py"
+  },
+  "body_actions_requiring_permit": [
+    "body", "motor", "proprioception", "bend", "touch_toes", "reach", "reset", "brain", "kinematics",
+    "hands", "hand", "grip", "finger", "wrist", "train_hands", "attachment", "attachments",
+    "mount", "unmount", "inspect", "learn", "wield", "register_attachment",
+    "motion", "train_motion", "load_skill", "cycle", "training_room", "train_room", "combat_drill",
+    "try_body", "needs", "earth_mandate", "plate_meld", "meld", "sense_meld"
+  ],
+  "exempt_actions": ["status", "json", "panel", "sense", "eye", "ear", "mouth", "wire", "hearing", "vision", "speak", "mouth_neural", "field_speak", "biology", "anatomy", "anatomy_books", "books", "eye_threat", "eye_threats", "hostile_scan"],
+  "module": "lib/hostess7-advisory-body.py",
+  "api": {
+    "advisory": "/api/hostess7/advisory",
+    "advisory_ingest": "/api/hostess7/advisory/ingest",
+    "advisory_discern": "/api/hostess7/advisory/discern",
+    "advisory_promote": "/api/hostess7/advisory/promote",
+    "body_permit": "/api/hostess7/advisory/body-permit",
+    "targets": "/api/hostess7/targets"
+  }
+}

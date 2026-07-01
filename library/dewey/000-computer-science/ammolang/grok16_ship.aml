@@ -1,0 +1,17 @@
+# Grok16 ship readiness — integrate, gates, release dry-run (no GitHub push)
+@profile fastest
+@verbose clean
+@motto "Grok16 ship · 5.2.0 · gates · release dry-run"
+
+seq ·
+  say "Grok16 ship readiness — adaptive timing · hang guard · freeze assist"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+  run script:grok16-integrate
+  run script:grok16-toolchain arg:status
+  run script:grok16-test-gate arg:smoke
+  run script:grok16-launch-verify
+  run script:grok16-release arg:5.2.0 arg:--no-gh
+  assist freeze
+  say "Grok16 ship dry-run complete — inspect Grok16/dist for artifacts"

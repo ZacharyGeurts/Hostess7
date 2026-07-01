@@ -1,0 +1,91 @@
+{
+  "schema": "field-chips-catalog-doctrine/v1",
+  "title": "Field Chips Catalog — library book of every die",
+  "motto": "Page 1 Ironclad truth · Page 2 universal chipset · every kind a chapter — dates, thumbs, detail.",
+  "module": "lib/field-chips-catalog.py",
+  "panel": "field-chips-catalog-panel.json",
+  "cache": "field-chips-catalog.json",
+  "curation": "data/field-chips-catalog-curation.json",
+  "ironclad": {
+    "module": "lib/field-ironclad-chips-combinatorics.py",
+    "combinatorics": "field-ironclad-chips-combinatorics.json",
+    "doctrine": "data/field-ironclad-chips-combinatorics-doctrine.json"
+  },
+  "companion_seed": "data/field-cpu-companion-seed.json",
+  "visuals": {
+    "doctrine": "data/field-combinatronic-visuals-doctrine.json",
+    "catalog": "data/field-combinatronic-chip-catalog.json",
+    "thumb_pattern": "/world/assets/combinatronic/chips/{chip_id}.png",
+    "thumb_fallback": "/world/assets/combinatronic/chips/generic_die.png"
+  },
+  "library_fields": [
+    "id", "label", "vendor", "kind", "family", "source",
+    "bits", "mhz", "era", "status",
+    "mfg_date_start", "mfg_date_end", "discontinued",
+    "socket", "package", "pins", "country",
+    "combinatorics_leaf", "thumb_url", "thumb_available", "detail_image_url",
+    "imprint", "body_color", "path_pct", "band",
+    "curated", "curator_note", "featured",
+    "companion_role", "platform_stack", "always_with",
+    "mame_device", "platforms", "note", "page", "chapter"
+  ],
+  "chapters": [
+    {"page": 1, "id": "ironclad_truth", "title": "Ironclad Truth", "layout": "index", "description": "Every die grounded on Ironclad — 974 combinatorics leaves off truth plate."},
+    {"page": 2, "id": "universal_chipset", "title": "Universal Chipset", "layout": "featured", "filter": {"source": "cpu_companion", "family": "cpu_companion_universal"}, "description": "North/south bridge glue, PIC, DMA, RTC, Super I/O — always-with-CPU companions."},
+    {"page": 3, "id": "host_cpu", "title": "Host CPUs", "layout": "grid", "filter": {"kind": "host_cpu"}},
+    {"page": 4, "id": "guest_cpu", "title": "Guest CPUs", "layout": "grid", "filter": {"kind": "guest_cpu"}},
+    {"page": 5, "id": "soc", "title": "SoCs", "layout": "grid", "filter": {"kind": "soc"}},
+    {"page": 6, "id": "northbridge", "title": "Northbridges", "layout": "grid", "filter": {"kind": "northbridge"}},
+    {"page": 7, "id": "southbridge", "title": "Southbridges", "layout": "grid", "filter": {"kind": "southbridge"}},
+    {"page": 8, "id": "chipset", "title": "Chipsets", "layout": "grid", "filter": {"kind": "chipset"}},
+    {"page": 9, "id": "super_io", "title": "Super I/O", "layout": "grid", "filter": {"kind": "super_io"}},
+    {"page": 10, "id": "mame_device", "title": "MAME Devices", "layout": "grid", "filter": {"kind": "mame_device"}},
+    {"page": 11, "id": "video", "title": "Video", "layout": "grid", "filter": {"kind": "video"}},
+    {"page": 12, "id": "sound", "title": "Sound", "layout": "grid", "filter": {"kind": "sound"}},
+    {"page": 13, "id": "gpu", "title": "GPUs", "layout": "grid", "filter": {"kind": "gpu"}},
+    {"page": 14, "id": "memory", "title": "Memory", "layout": "grid", "filter": {"kind": "memory"}},
+    {"page": 15, "id": "logic", "title": "Logic", "layout": "grid", "filter": {"kind": "logic"}},
+    {"page": 16, "id": "network", "title": "Network", "layout": "grid", "filter": {"kind": "network"}},
+    {"page": 17, "id": "dsp", "title": "DSP", "layout": "grid", "filter": {"kind": "dsp"}},
+    {"page": 18, "id": "fpga", "title": "FPGA", "layout": "grid", "filter": {"kind": "fpga"}},
+    {"page": 19, "id": "analog", "title": "Analog", "layout": "grid", "filter": {"kind": "analog"}},
+    {"page": 20, "id": "fab", "title": "Fab", "layout": "grid", "filter": {"kind": "fab"}},
+    {"page": 21, "id": "chips_hot", "title": "CHIPS Hot Paths", "layout": "grid", "filter": {"kind": "chips_hot"}},
+    {"page": 22, "id": "isa_platform", "title": "ISA Platforms", "layout": "grid", "filter": {"kind": "isa_platform"}},
+    {"page": 23, "id": "coprocessor", "title": "Coprocessors", "layout": "grid", "filter": {"kind": "coprocessor"}},
+    {"page": 24, "id": "arcade_asic", "title": "Arcade ASICs", "layout": "grid", "filter": {"kind": "arcade_asic"}},
+    {"page": 25, "id": "glue", "title": "Glue Logic", "layout": "grid", "filter": {"kind": "glue"}},
+    {"page": 26, "id": "pio", "title": "PIO", "layout": "grid", "filter": {"kind": "pio"}},
+    {"page": 27, "id": "fdc", "title": "FDC", "layout": "grid", "filter": {"kind": "fdc"}},
+    {"page": 28, "id": "mmu", "title": "MMU", "layout": "grid", "filter": {"kind": "mmu"}},
+    {"page": 29, "id": "console_snes", "title": "SNES Platform Stack", "layout": "grid", "filter": {"platform_stack": "console_snes"}, "description": "Ricoh 5A22, dual PPU, SPC700 audio sub-system."},
+    {"page": 30, "id": "console_ps1", "title": "PlayStation Platform Stack", "layout": "grid", "filter": {"platform_stack": "console_ps1"}, "description": "R3000A, GPU, SPU, CD-ROM glue."},
+    {"page": 31, "id": "zhaoxin", "title": "Zhaoxin / VIA KX Stack", "layout": "grid", "filter": {"platform_stack": "pc_zhaoxin_kx"}, "description": "Centaur/VIA through KX-7000 domestic x86."},
+    {"page": 32, "id": "loongson", "title": "Loongson Platform Stack", "layout": "grid", "filter": {"platform_stack": "pc_loongson"}, "description": "MIPS through LoongArch 3A5000 + 7A1000 bridge."},
+    {"page": 33, "id": "elbrus", "title": "Elbrus MCST Stack", "layout": "grid", "filter": {"platform_stack": "pc_elbrus"}, "description": "E2K VLIW Elbrus-8CB server stack."},
+    {"page": 34, "id": "arm_soc", "title": "ARM SoC Stack", "layout": "grid", "filter": {"platform_stack": "arm_soc_template"}, "description": "Mobile SoC PMIC, GIC, DDRC companion template."}
+  ],
+  "api": {
+    "catalog": "/api/chips/catalog",
+    "search": "/api/chips/catalog/search",
+    "autocomplete": "/api/chips/catalog/autocomplete",
+    "detail": "/api/chips/catalog/detail",
+    "pages": "/api/chips/catalog/pages",
+    "library_book": "/api/chips/catalog/library-book",
+    "panel": "/api/chips/catalog/panel",
+    "thumb": "/world/assets/combinatronic/chips/{chip_id}.png"
+  },
+  "queen_surface": "/world/queen-chips-catalog.html",
+  "detail_surface": "/world/queen-chips-detail.html?id={chip_id}",
+  "wiring": [
+    {"path": "lib/threat-panel-http.py", "role": "api", "routes": ["/api/chips/catalog"]},
+    {"path": "Queen/lib/queen-world.py", "role": "api", "routes": ["/api/chips/catalog"]},
+    {"path": "lib/field-panel-parallel.py", "role": "panel", "cmd": "chips_catalog"}
+  ],
+  "cli": ["build", "publish", "search", "detail", "pages", "library-book", "autocomplete", "panel", "verify"],
+  "ironclad": {
+    "secure_api": "/api/ironclad/secure-api",
+    "sort_context": "chip_catalog",
+    "singleton": true
+  }
+}

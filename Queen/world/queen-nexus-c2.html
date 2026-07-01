@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026" class="nexus-military-v8">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AmmoOS C2</title>
+  <link rel="stylesheet" href="queen-styles.css" />
+  <link rel="stylesheet" href="queen-nexus-c2.css" />
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+</head>
+<body data-queen-surface="nexus-c2">
+  <div class="qnc2-shell" id="qnc2-window">
+    <header class="qnc2-bar">
+      <span class="qnc2-title">AmmoOS C2</span>
+      <span class="qnc2-g16" id="qnc2-g16">G16…</span>
+      <label class="qnc2-cols">Columns
+        <select id="qnc2-cols">
+          <option value="auto">Auto</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </label>
+      <button type="button" id="qnc2-reload">Reload catalog</button>
+      <button type="button" id="qnc2-clear">Clear</button>
+      <button type="button" class="qnc2-styles" data-queen-styles-open title="Styles">◈</button>
+      <span class="qnc2-status" id="qnc2-status" aria-live="polite"></span>
+    </header>
+    <main class="qnc2-canvas-wrap" id="qnc2-canvas">
+      <div class="qnc2-grid" id="qnc2-grid" data-cols="auto"></div>
+      <div class="qnc2-empty" id="qnc2-empty">
+        <strong>Programmatic C2</strong>
+        <span>Panels load from doctrine — drag programs in · double-click fullscreen</span>
+      </div>
+    </main>
+    <div class="qnc2-fs-layer" id="qnc2-fs-layer" hidden>
+      <div class="qnc2-fs-panel" id="qnc2-fs-panel"></div>
+      <p class="qnc2-fs-hint">Double-click to return to C2 grid</p>
+    </div>
+  </div>
+  <script src="queen-nexus-c2.js"></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

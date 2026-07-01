@@ -1,0 +1,112 @@
+{
+  "schema": "grok-lab-world-nodes/v1",
+  "updated": "2026-06-30",
+  "motto": "The world is our defensive perimeter \u2014 one sovereign node per home/VM",
+  "operator": {
+    "name": "field-operator",
+    "home_node": "node-local"
+  },
+  "nodes": [
+    {
+      "id": "node-local",
+      "region": "local",
+      "provider": "sovereign-host",
+      "role": "home_sanctuary",
+      "ssh": "",
+      "enabled": true,
+      "note": "This machine \u2014 loopback only, no SSH deploy"
+    },
+    {
+      "id": "node-qemu-us-phoenix",
+      "region": "us-phoenix-1",
+      "provider": "qemu-free",
+      "role": "field_node",
+      "ssh": "ubuntu@127.0.0.1",
+      "ssh_port": 2222,
+      "ssh_key": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519",
+      "enabled": true,
+      "tunnel": "ssh -N -L 19477:127.0.0.1:9477 -p 2222 -i /home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519 ubuntu@127.0.0.1"
+    },
+    {
+      "id": "node-qemu-eu-frankfurt",
+      "region": "eu-frankfurt-1",
+      "provider": "qemu-free",
+      "role": "field_node",
+      "ssh": "ubuntu@127.0.0.1",
+      "ssh_port": 2223,
+      "ssh_key": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519",
+      "enabled": true,
+      "tunnel": "ssh -N -L 19478:127.0.0.1:9477 -p 2223 -i /home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519 ubuntu@127.0.0.1"
+    },
+    {
+      "id": "node-qemu-ap-tokyo",
+      "region": "ap-tokyo-1",
+      "provider": "qemu-free",
+      "role": "field_node",
+      "ssh": "ubuntu@127.0.0.1",
+      "ssh_port": 2224,
+      "ssh_key": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519",
+      "enabled": true,
+      "tunnel": "ssh -N -L 19479:127.0.0.1:9477 -p 2224 -i /home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519 ubuntu@127.0.0.1"
+    },
+    {
+      "id": "node-qemu-ap-sydney",
+      "region": "ap-sydney-1",
+      "provider": "qemu-free",
+      "role": "field_node",
+      "ssh": "ubuntu@127.0.0.1",
+      "ssh_port": 2225,
+      "ssh_key": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519",
+      "enabled": true,
+      "tunnel": "ssh -N -L 19480:127.0.0.1:9477 -p 2225 -i /home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519 ubuntu@127.0.0.1"
+    },
+    {
+      "id": "node-qemu-sa-saopaulo",
+      "region": "sa-saopaulo-1",
+      "provider": "qemu-free",
+      "role": "field_node",
+      "ssh": "ubuntu@127.0.0.1",
+      "ssh_port": 2226,
+      "ssh_key": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519",
+      "enabled": true,
+      "tunnel": "ssh -N -L 19481:127.0.0.1:9477 -p 2226 -i /home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519 ubuntu@127.0.0.1"
+    },
+    {
+      "id": "node-qemu-ap-mumbai",
+      "region": "ap-mumbai-1",
+      "provider": "qemu-free",
+      "role": "field_node",
+      "ssh": "ubuntu@127.0.0.1",
+      "ssh_port": 2227,
+      "ssh_key": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519",
+      "enabled": true,
+      "tunnel": "ssh -N -L 19482:127.0.0.1:9477 -p 2227 -i /home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519 ubuntu@127.0.0.1"
+    },
+    {
+      "id": "node-qemu-uk-london",
+      "region": "uk-london-1",
+      "provider": "qemu-free",
+      "role": "field_node",
+      "ssh": "ubuntu@127.0.0.1",
+      "ssh_port": 2228,
+      "ssh_key": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519",
+      "enabled": true,
+      "tunnel": "ssh -N -L 19483:127.0.0.1:9477 -p 2228 -i /home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519 ubuntu@127.0.0.1"
+    },
+    {
+      "id": "node-qemu-ca-montreal",
+      "region": "ca-montreal-1",
+      "provider": "qemu-free",
+      "role": "field_node",
+      "ssh": "ubuntu@127.0.0.1",
+      "ssh_port": 2229,
+      "ssh_key": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519",
+      "enabled": true,
+      "tunnel": "ssh -N -L 19484:127.0.0.1:9477 -p 2229 -i /home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519 ubuntu@127.0.0.1"
+    }
+  ],
+  "qemu": {
+    "launched": true,
+    "ssh_key": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/world-ssh/id_ed25519"
+  }
+}

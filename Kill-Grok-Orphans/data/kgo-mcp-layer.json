@@ -1,0 +1,20 @@
+{
+  "schema": "kgo-mcp-layer/v1",
+  "version": "1.1.0",
+  "title": "Kill Grok Orphans GitHub MCP integration layer",
+  "description": "Private stdio MCP for ZacharyGeurts repos — drives KGO multi-platform release from SG/Kill-Grok-Orphans.",
+  "setup": "../NewLatest/scripts/github-mcp-private-setup.sh",
+  "stdio": "../NewLatest/scripts/github-mcp-stdio.sh",
+  "env_file": "~/.config/sg/github-mcp.env",
+  "binary": "~/.local/bin/github-mcp-server",
+  "toolsets": ["repos", "pull_requests"],
+  "publish_flow": [
+    "scripts/build-all-platforms.sh",
+    "scripts/kgo-release.sh --push"
+  ],
+  "repos": {
+    "Kill-Grok-Orphans": "https://github.com/ZacharyGeurts/Kill-Grok-Orphans",
+    "Grok16": "https://github.com/ZacharyGeurts/Grok16",
+    "AmmoOS": "https://github.com/ZacharyGeurts/AmmoOS"
+  }
+}

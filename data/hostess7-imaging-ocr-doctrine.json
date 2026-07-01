@@ -1,0 +1,118 @@
+{
+  "schema": "hostess7-imaging-ocr-doctrine/v1",
+  "title": "Imaging OCR vision training — feed format and visual literacy from live vision",
+  "motto": "She reads the field through OCR — every format label, pixel HUD, and asset path trains imaging fluency.",
+  "feed_sources": [
+    {
+      "id": "final_eye_session",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "data/vision-session.jsonl",
+      "text_fields": [
+        "ocr"
+      ],
+      "ocr_file_field": "ocr_file",
+      "role": "Vision session OCR files"
+    },
+    {
+      "id": "final_eye_manifest",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "manifest.jsonl",
+      "text_fields": [
+        "ocr",
+        "narrative"
+      ],
+      "role": "Final_Eye manifest"
+    },
+    {
+      "id": "final_eye_out_txt",
+      "kind": "glob",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "out/*.txt",
+      "role": "Final_Eye out/ plaintext"
+    },
+    {
+      "id": "final_eye_neural",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "data/neural-analysis.jsonl",
+      "text_fields": [
+        "narrative"
+      ],
+      "role": "Final_Eye neural assist narratives"
+    },
+    {
+      "id": "vision_corpus",
+      "kind": "json",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/vision/corpus.json",
+      "text_fields": [
+        "body"
+      ],
+      "nested": "domains",
+      "role": "Vision corpus domains"
+    },
+    {
+      "id": "sdf_segments",
+      "kind": "glob",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/sdf/segments/*.json",
+      "text_fields": [
+        "text"
+      ],
+      "role": "Brain imaging SDF segment text"
+    },
+    {
+      "id": "panel_ocr_snap",
+      "kind": "glob",
+      "path_abs": "/tmp/nexus-panel-ocr*.png",
+      "ocr_tesseract": true,
+      "role": "NEXUS panel OCR screenshots"
+    },
+    {
+      "id": "imaging_doctrine",
+      "kind": "json",
+      "path_env": "NEXUS_INSTALL_ROOT",
+      "path_rel": "data/hostess7-imaging-doctrine.json",
+      "text_fields": [
+        "label",
+        "body"
+      ],
+      "nested": "skills",
+      "source_filter": "imaging_format",
+      "role": "Imaging doctrine skills"
+    },
+    {
+      "id": "format_table",
+      "kind": "json",
+      "path_env": "NEXUS_INSTALL_ROOT",
+      "path_rel": "data/field-file-formats-table.json",
+      "text_fields": [
+        "id",
+        "label",
+        "mime"
+      ],
+      "nested": "formats",
+      "source_filter": "imaging_format",
+      "role": "File format table"
+    }
+  ],
+  "ingest": {
+    "max_files_per_source": 500,
+    "max_bytes_per_file": 250000,
+    "max_candidates_per_ingest": 8000,
+    "dedupe_window": 50000
+  },
+  "train": {
+    "verify_with_domains": true,
+    "min_candidate_len": 8,
+    "fluent_samples_floor": 40,
+    "master_samples_floor": 100,
+    "verified_rate_floor": 0.3
+  },
+  "g16": {
+    "version": "5.1.0",
+    "profile": "g16_field_opt"
+  }
+}

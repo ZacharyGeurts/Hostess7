@@ -1,0 +1,67 @@
+{
+  "schema": "hostess7-biology-explain/v1",
+  "introduction": "I am Hostess 7 — I hold full educational understanding of biology, especially human biology and medicine. I synthesize from structured domains and the Hostess7 medical corpus. I am not your doctor; this is not diagnosis or treatment.",
+  "format": ["what", "why", "how", "pitfalls", "where", "example"],
+  "topics": [
+    {
+      "id": "biology_fluency",
+      "keywords": ["biology mastery", "biology fluency", "human biology", "medical knowledge", "life sciences", "anatomy physiology"],
+      "what": "Biology fluency means I answer from structured domains — cell biology, genetics, evolution, human anatomy and physiology, microbiology, immunology, neuroscience — plus medical corpus bridge for clinical depth.",
+      "why": "Operators need trustworthy life-science and medical education on the field — guessing pathways or dosing breaks trust and can harm.",
+      "how": "hostess7-biology.py search_biology scores domains and field_medical_corpus; battery verifies expected domain hits; OCR ingest trains on vision text.",
+      "pitfalls": "Diagnosing personal symptoms; omitting emergency disclaimer; outdated trial names without corpus refresh; reading binary .h7 as plaintext.",
+      "where": "lib/hostess7-biology.py, Hostess7/scripts/field_medical_corpus.py, Command ask + /api/hostess7/biology",
+      "example": "Ask: how does the heart pump blood — I return cardiovascular physiology with educational disclaimer."
+    },
+    {
+      "id": "cell_biology",
+      "keywords": ["cell", "mitochondria", "membrane", "organelle", "ATP", "cytoskeleton"],
+      "what": "Cell biology covers structure, membranes, organelles, metabolism, and division — the unit of life.",
+      "why": "Molecular and medical explanations anchor on cellular mechanisms — cancer, infection, and pharmacology all route through cells.",
+      "how": "Domain corpus + OCR training on textbook and vision captures mentioning organelles and pathways.",
+      "pitfalls": "Confusing prokaryote vs eukaryote organelles; oversimplifying membrane transport.",
+      "where": "search_biology category cell_biology",
+      "example": "what is the function of mitochondria → oxidative phosphorylation and ATP production"
+    },
+    {
+      "id": "human_anatomy",
+      "keywords": ["anatomy", "skeleton", "muscle", "organ", "bone", "histology", "tissue"],
+      "what": "Human anatomy — gross structure of organ systems, skeletal and muscular frameworks, and tissue organization.",
+      "why": "Clinical and physiology questions require spatial grounding — where structures sit and how they connect.",
+      "how": "OpenStax anatomy manifest index + human_anatomy domain + medical foundations overlap.",
+      "pitfalls": "Left-right confusion; naming homologous structures across species without qualification.",
+      "where": "human_anatomy domain, openstax_anatomy manifest entry",
+      "example": "organs of the digestive system → mouth, esophagus, stomach, small intestine, large intestine, liver, pancreas, gallbladder"
+    },
+    {
+      "id": "human_physiology",
+      "keywords": ["physiology", "cardiovascular", "respiratory", "renal", "endocrine", "digestion", "homeostasis"],
+      "what": "Human physiology — how organ systems function together to maintain homeostasis.",
+      "why": "Medical education separates structure (anatomy) from function (physiology); both are required for literacy.",
+      "how": "human_physiology domain + medical specialty domains (cardiology, pulmonology, nephrology, endocrine).",
+      "pitfalls": "Treating lab values as diagnosis without clinical context; ignoring compensatory mechanisms.",
+      "where": "human_physiology domain + field_medical_corpus specialties",
+      "example": "gas exchange in the lungs → alveolar diffusion, ventilation-perfusion matching"
+    },
+    {
+      "id": "medical_bridge",
+      "keywords": ["medicine", "clinical", "diagnosis", "treatment", "doctor", "hospital", "pharmacology", "emergency"],
+      "what": "Medical bridge routes clinical queries to field_medical_corpus — specialties, emergencies, pharmacology, evidence medicine.",
+      "why": "Human biology and medicine overlap; the corpus holds clinician roles, triage, and guideline-aware educational synthesis.",
+      "how": "search_biology merges biology domains with search_medical(); emergencies prioritize emergency domain.",
+      "pitfalls": "Personal medical advice; delaying 911 for chest pain or stroke; citing trials without educational framing.",
+      "where": "Hostess7/scripts/field_medical_corpus.py, medical infinite drive",
+      "example": "stroke symptoms FAST → Face, Arm, Speech, Time — call emergency services immediately"
+    },
+    {
+      "id": "ocr_vision_training",
+      "keywords": ["ocr biology", "vision training biology", "medical ocr", "textbook ocr", "zocr biology"],
+      "what": "OCR vision training feeds biology think tank from ZOCR, Final_Eye, vision corpus, SDF segments, medical corpus, and textbook manifest.",
+      "why": "Operators capture anatomy diagrams, textbook pages, and clinic notes — biology must train on real field text.",
+      "how": "ocr-ingest extracts biology candidates · ocr-train verifies against domain tags and medical corpus.",
+      "pitfalls": "Training on binary .h7 garbage; skipping medical corpus refresh; no disclaimer on clinical OCR snippets.",
+      "where": "data/hostess7-biology-ocr-doctrine.json, STATE hostess7-biology-ocr-corpus.json",
+      "example": "ocr-ingest then ocr-train — verified_count rises as vision captures grow"
+    }
+  ]
+}

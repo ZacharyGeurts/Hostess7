@@ -1,0 +1,18 @@
+# AmmoLang Compiler Harness — test all 79 Grok16 languages
+# Fastest path: skip combinatorics-at-compile, run native BSP lanes first.
+
+@profile fastest
+@verbose clean
+@motto "Compiler harness · 79/79 · AmmoLang orchestrates"
+
+combinator observe {
+  source "grok16"
+  source "chips"
+}
+
+seq ·
+  say "Compiler harness start — AmmoLang #1 dispatch"
+  fast path:gpy path:g16 compile:0 fastest
+  chips ensure
+  test langs:all no_halt
+  say "Compiler harness done — see .nexus-state/g16-compiler-test.json"

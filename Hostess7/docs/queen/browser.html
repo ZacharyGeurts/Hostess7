@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026">
+<head>
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <script src="/Hostess7/pages-queen-hardening.js"></script>
+  <base href="/Hostess7/" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KILROY</title>
+  <link rel="canonical" href="/Hostess7/queen/browser.html" />
+  <style>
+    html,body{margin:0;background:#020403;color:#e8f2ea;font:14px system-ui,sans-serif}
+  </style>
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+  <script src="queen-theme-2026.js" data-queen-theme="1"></script>
+  <link rel="stylesheet" href="queen-modern.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-styles.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-world.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-browser-shell.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-bookmarks-flyout.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-page-inspector.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-branding.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-syntax.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-viewer.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="field-performance-flyout.css" />
+  <link rel="stylesheet" href="queen-dashboard-flyout.css" />
+  <link rel="icon" href="/Hostess7/assets/ammoos-field-48.png" type="image/png" sizes="48x48" />
+  <link rel="apple-touch-icon" href="/Hostess7/assets/ammoos-field-256.png" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+</head>
+<body data-pages-runtime="1" class="qw qw-browser-shell" data-queen-surface="browser" data-queen-theme="black_emerald_rose_2026" data-queen-start="/Hostess7/queen/kilroy-home.html" data-queen-command="/Hostess7/command" data-nexus-panel-port="9477" data-media-egress="locked" data-hardware-wire="queen-browser" data-front-hook="1" data-queen-boot-os="0" data-queen-start-button="bookmarks" data-znetwork-hooks="1">
+  <script>
+    (function () {
+      try {
+        if (new URLSearchParams(location.search).get("benchmark") === "1") {
+          document.body.dataset.queenBenchmark = "1";
+          localStorage.setItem("queen_benchmark", "1");
+        }
+      } catch (_) {}
+    })();
+  </script>
+  <div id="qm-threat-bar" class="qm-threat-bar" role="toolbar" aria-label="Root threats"></div>
+
+  <main class="qb-viewport" id="qb-viewport">
+    <iframe class="qb-frame" id="qb-frame" title="KILROY home" src="kilroy-home.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation allow-popups-to-escape-sandbox"></iframe>
+  </main>
+
+  <header class="qb-chrome" id="qb-chrome" aria-label="Queen browser">
+    <div class="qb-row qb-row--tabs">
+      <div class="qb-tabs" id="qb-tabs" role="tablist"></div>
+      <button type="button" class="qb-icon-btn" id="qb-new-tab" title="New tab (Ctrl+T)" aria-label="New tab">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#new-tab"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn qb-chrome-min-btn" id="qb-chrome-min" title="Minimize browser bar" aria-label="Minimize browser bar" aria-pressed="false">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#minimize"/></svg>
+      </button>
+    </div>
+    <div class="qb-row qb-row--nav">
+      <div class="qb-bookmarks-hub" id="qb-bookmarks-hub">
+        <button type="button" class="qb-icon-btn qb-bookmarks-flyout-btn" id="qb-bookmarks-flyout-btn" title="Bookmarks — navigate everywhere" aria-label="Bookmarks hub" aria-expanded="false" aria-haspopup="true">
+          <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#bookmarks"/></svg>
+        </button>
+        <aside class="qb-bookmarks-flyout" id="qb-bookmarks-flyout" role="dialog" aria-label="Bookmarks hub" hidden>
+          <div class="qb-bookmarks-flyout-head">KILROY · ZNetwork · everywhere</div>
+          <input type="search" class="qb-bookmarks-search" id="qb-bookmarks-search" placeholder="Search bookmarks…" autocomplete="off" />
+          <div class="qbf-recent-list" id="qbf-recent-list" aria-label="Recently visited"></div>
+          <div class="qbf-tree-list" id="qbf-tree-list" aria-label="Bookmark folders"></div>
+        </aside>
+      </div>
+      <button type="button" class="qb-icon-btn" id="qb-back" title="Back" aria-label="Back">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#back"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-forward" title="Forward" aria-label="Forward">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#forward"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-reload" title="Reload (Ctrl+R)" aria-label="Reload">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#reload"/></svg>
+      </button>
+      <div class="qb-start-pill" id="qb-start-pill" data-mode="classic" role="group" aria-label="Start menu">
+        <button type="button" class="qb-start-half qb-start-half--classic" id="qb-start-classic" title="Programs — secondary start" aria-label="Classic start">
+          <svg class="qb-ico qb-ico--start" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#start"/></svg>
+        </button>
+        <button type="button" class="qb-start-half qb-start-half--secured" id="qb-start-secured" title="Secured start — host OS programs inside Queen" aria-label="Secured host start" hidden aria-hidden="true" tabindex="-1">
+          <span class="qb-start-host-glyph" aria-hidden="true">⊞</span>
+        </button>
+        <button type="button" class="qb-icon-btn qb-start-btn qb-start-btn--full" id="qb-start" title="Start — full boot OS menu" aria-label="Start menu" hidden>
+          <svg class="qb-ico qb-ico--start" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#start"/></svg>
+        </button>
+      </div>
+      <button type="button" class="qb-icon-btn" id="qb-underlay-drop" title="Drop underlay beneath host desktop" aria-label="Drop underlay" hidden aria-hidden="true" tabindex="-1">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#drop"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-underlay-rise" title="Rise field OS surface" aria-label="Rise field OS" hidden aria-hidden="true" tabindex="-1">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#rise"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-fullscreen" title="Fullscreen (F11 · Alt+Enter)" aria-label="Fullscreen">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#fullscreen"/></svg>
+      </button>
+      <input type="url" class="qb-url" id="qb-url" placeholder="Search or enter address — ZNetwork held" spellcheck="false" />
+      <button type="button" class="qb-btn qb-btn--go" id="qb-go">Go</button>
+      <button type="button" class="qb-compat-pill" id="qb-compat-pill" title="Web compat — auto secures legacy">auto</button>
+      <button type="button" class="qb-gate-pill" id="qb-gate-pill" title="Queen gate verdict">…</button>
+      <button type="button" class="qb-icon-btn" id="qb-proxy" title="Queen proxy fallback" aria-label="Queen proxy">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#proxy"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn qpi-toggle" id="qpi-inspect-btn" title="Page inspector — right-click ads to block (Ctrl+Shift+I)" aria-label="Page inspector">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#inspect"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-styles" title="Styles — themes, fonts, widgets" aria-label="Styles">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#styles"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-gates" title="Gate manifest" aria-label="Gate manifest">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#gates"/></svg>
+      </button>
+    </div>
+    <div class="qb-row qb-row--humans-ai" aria-label="Humans and AI local assist">
+      <div class="qb-humans-ai" id="qb-humans-ai">
+        <span class="qb-ha-who qb-ha-who--human" id="qb-ha-who" title="Human operator — you hold authority">Human</span>
+        <span class="qb-ha-tip" id="qb-ha-tip" title="Local IT guidance — no cloud">Loading local assist…</span>
+        <span class="qb-ha-vector" id="qb-ha-vector" aria-label="Contact vector"></span>
+        <button type="button" class="qb-ha-help" id="qb-ha-help" title="Queen Browser user guide">?</button>
+      </div>
+    </div>
+    <div class="qb-row qb-row--bookmarks">
+      <nav class="qb-bookmarks" id="qb-bookmarks" aria-label="Bookmarks"></nav>
+      <span class="qb-brand-strip">
+        <img class="qb-brand-avatar" src="/Hostess7/assets/ammoos-field-48.png" alt="" width="28" height="28" />
+        <span>KILROY</span>
+      </span>
+      <span class="qb-security-strip" id="qb-security-strip" title="KILROY · ZNetwork hooks everything · Queen Browser shell">KILROY · ZNetwork · Queen</span>
+      <div class="qb-import-chip" id="qb-import-chip" title="Secure import — click to re-sweep · Shift+click = default browser">
+        <span class="qb-import-label">IMPORT</span>
+        <span class="qb-import-detail" id="qb-import-detail">Securing…</span>
+      </div>
+      <div class="qb-update-chip" title="NXF GitHub release update when online">
+        <button type="button" class="qb-update-btn" id="qb-update-btn">…</button>
+        <span class="qb-update-detail" id="qb-update-detail">Checking…</span>
+      </div>
+      <div class="qb-gate-strip" id="qb-gate-strip"></div>
+    </div>
+    <p class="qb-status" id="qb-status" aria-live="polite"></p>
+  </header>
+
+  <aside class="qb-start-menu" id="qb-start-menu" role="dialog" aria-label="Start menu" aria-hidden="true" hidden>
+    <div class="qb-start-menu-head">
+      <input type="search" class="qb-start-search" id="qb-start-search" placeholder="Find a program…" autocomplete="off" />
+    </div>
+    <div class="qb-start-menu-body" id="qb-start-menu-body"></div>
+  </aside>
+
+  <aside class="qb-gate-drawer" id="qb-gate-drawer">
+    <h2>Gates · hold all</h2>
+    <div id="qb-gate-drawer-body"></div>
+    <section class="qb-debug-panel" aria-label="Debug">
+      <h3>Debug</h3>
+      <label class="qb-debug-item"><input type="checkbox" id="qb-perf-flyout" /> Performance Flyout</label>
+    </section>
+  </aside>
+
+  <button type="button" class="qb-chrome-restore" id="qb-chrome-restore" hidden
+    title="Restore Queen browser bar — hover to peek · click to expand"
+    aria-label="Restore browser bar">
+    <img src="assets/branding/queen-chrome-restore.svg" width="16" height="16" alt="" />
+  </button>
+
+  <script src="queen-front-hook.js"></script>
+  <script src="queen-media-egress.js" data-queen-theme="1"></script>
+  <script src="queen-root-threats.js" defer></script>
+  <script src="queen-branding.js" defer></script>
+  <script src="queen-stack-layer.js" defer></script>
+  <script src="queen-humans-ai.js" defer></script>
+  <script src="queen-page-inspector.js" defer></script>
+  <script src="queen-bookmarks-flyout.js" defer></script>
+  <script src="queen-bookmarks-bar.js" defer></script>
+  <script src="queen-browser-shell.js" defer></script>
+  <script src="queen-chrome-dock.js" defer></script>
+  <script src="queen-field-engine.js" defer></script>
+  <script src="queen-field-sanity.js" defer></script>
+  <script src="queen-update.js" defer></script>
+  <script src="queen-import.js" defer></script>
+  <script src="field-performance-flyout.js" defer></script>
+  <script src="queen-dashboard-flyout.js" defer></script>
+  <script src="queen-icon-engine.js" defer></script>
+  <script src="queen-ai-surface.js" defer></script>
+  <script src="queen-os.js" defer></script>
+</body>
+</html>

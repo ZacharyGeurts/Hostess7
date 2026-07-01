@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#060806" />
+  <meta name="color-scheme" content="dark" />
+  <title>Underlay F9 — NEXUS Field Command</title>
+  <!-- NEXUS-Shield v10.4.0 underlay-f9 -->
+  <link rel="stylesheet" href="/assets/underlay-f9.css?v=f9" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* https://127.0.0.1:*; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <div class="f9-app" id="f9-app">
+    <header class="f9-header">
+      <div class="f9-mark">
+        <strong>Underlay F9</strong>
+        <span>Full field command · black green brown</span>
+      </div>
+      <div class="f9-status-bar">
+        <span class="f9-chip" id="f9-chip-gen"><b>GEN</b> —</span>
+        <span class="f9-chip" id="f9-chip-ironclad"><b>IRON</b> —</span>
+        <span class="f9-chip" id="f9-chip-verdict"><b>FW</b> —</span>
+        <span class="f9-chip" id="f9-chip-die"><b>DIE</b> —</span>
+        <span class="f9-chip" id="f9-chip-bus"><b>BUS</b> —</span>
+        <span class="f9-chip" id="f9-chip-sovereign"><b>TIME</b> —</span>
+      </div>
+      <div class="f9-actions">
+        <button type="button" class="f9-btn f9-btn--green" id="f9-meld">MELD</button>
+        <button type="button" class="f9-btn" id="f9-refresh">REFRESH</button>
+      </div>
+    </header>
+
+    <p class="f9-doctrine">
+      <em>Bottom up so nothing sits below us.</em>
+      Guest OS inside protections · KILROY Field Die owns syscall truth · BIOS witness only ·
+      <kbd>F9</kbd> underlay sector
+    </p>
+
+    <div class="f9-body">
+      <nav class="f9-nav" aria-label="Field sectors">
+        <button type="button" class="active" data-sector="command"><span class="f9-nav-icon">◆</span>Command</button>
+        <button type="button" data-sector="underlay"><span class="f9-nav-icon">⬡</span>Underlay</button>
+        <button type="button" data-sector="die"><span class="f9-nav-icon">▣</span>Field Die</button>
+        <button type="button" data-sector="sense"><span class="f9-nav-icon">◎</span>Sense Stack</button>
+        <button type="button" data-sector="meld"><span class="f9-nav-icon">⬢</span>Plate Meld</button>
+        <button type="button" data-sector="firmware"><span class="f9-nav-icon">▤</span>Firmware</button>
+        <button type="button" data-sector="network"><span class="f9-nav-icon">◎</span>Network</button>
+        <button type="button" data-sector="sovereign"><span class="f9-nav-icon">⌖</span>Sovereign</button>
+        <button type="button" data-sector="cycle"><span class="f9-nav-icon">↻</span>Cycle</button>
+      </nav>
+
+      <main class="f9-main">
+        <section class="f9-sector active" data-sector="command">
+          <h2>Command Post</h2>
+          <p class="f9-lead">Unified field posture — meld generation, underlay phase, gatekeeper wire. Built from scratch on the F9 toolkit: bus pack, plate fuse, kernel witness, firmware strip.</p>
+          <div class="f9-grid" id="f9-command-grid"></div>
+        </section>
+
+        <section class="f9-sector" data-sector="underlay">
+          <h2>Secure Underlay</h2>
+          <p class="f9-lead">Drop-in replacement — incumbent OS as guest. Vision assist, gatekeeper envelope, no destructive migration.</p>
+          <div id="f9-underlay-body"></div>
+        </section>
+
+        <section class="f9-sector" data-sector="die">
+          <h2>Field Die · KILROY</h2>
+          <p class="f9-lead">linux-7.1.1 melded in-place — bzImage witness until Grok boot brings /proc/kilroy_field live.</p>
+          <div id="f9-die-body"></div>
+        </section>
+
+        <section class="f9-sector" data-sector="sense">
+          <h2>Sense Package</h2>
+          <p class="f9-lead">Final Eye · Final Ear · Final Mouth · World Redata · Hostess7 — melded and protected in one clean envelope. Brain data witnessed read-only (best-of TEAM/cache); no relocate, no destructive merge.</p>
+          <div id="f9-sense-body"></div>
+        </section>
+
+        <section class="f9-sector" data-sector="meld">
+          <h2>Plate Meld</h2>
+          <p class="f9-lead">Uninterruptable fused truth — flock, fsync, chain-hash across iron plate, bus, kernel, firmware.</p>
+          <div id="f9-meld-body"></div>
+        </section>
+
+        <section class="f9-sector" data-sector="firmware">
+          <h2>BIOS &amp; Firmware</h2>
+          <p class="f9-lead">Threat scan and safe software strip — flash_chip false forever. BIOS gaps documented, never silent.</p>
+          <div id="f9-firmware-body"></div>
+        </section>
+
+        <section class="f9-sector" data-sector="network">
+          <h2>Network Field</h2>
+          <p class="f9-lead">Port DDoS shield, packet deinterlace, connectivity laws — wave view at the edge.</p>
+          <div id="f9-network-body"></div>
+        </section>
+
+        <section class="f9-sector" data-sector="sovereign">
+          <h2>Sovereign Time</h2>
+          <p class="f9-lead">Sealed cycle, redundant mirrors — operator perimeter for clocks and pulse.</p>
+          <div id="f9-sovereign-body"></div>
+        </section>
+
+        <section class="f9-sector" data-sector="cycle">
+          <h2>Operator Cycle</h2>
+          <p class="f9-lead">Manual meld trigger — same chain the daemon runs each vigil tick. Host freeze locks memory, suspends the guest OS (soft cgroup or ACPI mem/disk), and witnesses sovereign clock on resume without disturbing field draw on soft freeze.</p>
+          <div id="f9-cycle-body"></div>
+        </section>
+      </main>
+
+      <aside class="f9-bus" aria-label="data_bus 64">
+        <div class="f9-bus-head">data_bus[64]</div>
+        <div class="f9-bus-grid" id="f9-bus-grid"></div>
+      </aside>
+    </div>
+
+    <footer class="f9-foot">
+      <span>NEXUS-Shield v10.4.0 · panel_build underlay-f9</span>
+      <span>tick <span id="f9-foot-tick">—</span> · press <kbd>F9</kbd> for underlay</span>
+    </footer>
+  </div>
+
+  <div class="f9-toast" id="f9-toast" role="status"></div>
+  <script src="/assets/underlay-f9.js?v=f9" defer></script>
+</body>
+</html>

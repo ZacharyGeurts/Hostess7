@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="znetwork-vault">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZNetwork Secure Vault · AmmoOS</title>
+  <link rel="icon" href="/assets/znetwork-tray-24.png" type="image/png" />
+  <link rel="stylesheet" href="/assets/field-znetwork-vault.css?v=2" />
+</head>
+<body>
+  <div class="zv-root">
+    <header class="zv-head">
+      <img src="/assets/znetwork-tray-24.png" alt="" width="28" height="28" />
+      <div>
+        <h1>ZNetwork Secure Vault</h1>
+        <p class="zv-sub">ZISV/v1 — push-only offers, scrollable accept queue, no middleman decrypt</p>
+      </div>
+      <span class="zv-pill" id="zv-pill">LOADING</span>
+    </header>
+
+    <section class="zv-card zv-register" id="zv-register-card">
+      <h2>ZNetwork registry — register yourself</h2>
+      <p class="zv-policy" style="margin-top:0">Enter the worldwide mesh with sovereign receipt + BSP composite score. Full name binds to your wire-point.</p>
+      <div id="zv-registered-view" class="zv-hidden">
+        <div class="zv-row"><span>Full name</span><span id="zv-reg-full">—</span></div>
+        <div class="zv-row"><span>Display</span><span id="zv-reg-display">—</span></div>
+        <div class="zv-row"><span>Region</span><span id="zv-reg-region">—</span></div>
+        <div class="zv-row"><span>BSP composite</span><span id="zv-reg-score">—</span></div>
+        <div class="zv-row"><span>Operator ID</span><span class="zv-wire" id="zv-reg-id">—</span></div>
+      </div>
+      <form id="zv-register-form" class="zv-register-form" autocomplete="name">
+        <div class="zv-grid zv-grid--register">
+          <div class="zv-field">
+            <label for="zv-full-name">Full legal name</label>
+            <input id="zv-full-name" name="full_name" type="text" required maxlength="120" placeholder="Given Family" />
+          </div>
+          <div class="zv-field">
+            <label for="zv-given">Given name</label>
+            <input id="zv-given" name="given_name" type="text" maxlength="60" placeholder="Optional if full name set" />
+          </div>
+          <div class="zv-field">
+            <label for="zv-family">Family name</label>
+            <input id="zv-family" name="family_name" type="text" maxlength="60" />
+          </div>
+          <div class="zv-field">
+            <label for="zv-display">Display name</label>
+            <input id="zv-display" name="display_name" type="text" maxlength="64" placeholder="Public label" />
+          </div>
+          <div class="zv-field">
+            <label for="zv-region">Region / country</label>
+            <input id="zv-region" name="region" type="text" maxlength="80" placeholder="e.g. United States" />
+          </div>
+          <div class="zv-field">
+            <label for="zv-locale">Locale</label>
+            <input id="zv-locale" name="locale" type="text" maxlength="16" value="en" />
+          </div>
+        </div>
+        <div class="zv-field">
+          <label for="zv-bio">Public bio (optional)</label>
+          <textarea id="zv-bio" name="public_bio" rows="2" maxlength="280" placeholder="Short public note for peers"></textarea>
+        </div>
+        <button type="submit" class="zv-btn zv-btn--ok" id="zv-register-btn">Register on ZNetwork mesh</button>
+      </form>
+    </section>
+
+    <div class="zv-grid">
+      <section class="zv-card">
+        <h2>Your wire-point</h2>
+        <div class="zv-row"><span>Token</span><span class="zv-wire" id="zv-wire">—</span></div>
+        <div class="zv-row"><span>Threats blocked</span><span id="zv-threats">0</span></div>
+        <div class="zv-row"><span>Outbound queued</span><span id="zv-outbound">0</span></div>
+        <div class="zv-actions">
+          <button type="button" class="zv-btn" id="zv-rotate">Rotate wire-point</button>
+        </div>
+        <p class="zv-policy">
+          ZNetwork never answers inbound requests. Share your wire-point with trusted peers only.
+          Traffic carries field-io sealed envelopes — not decryptable by relays.
+        </p>
+      </section>
+
+      <section class="zv-card">
+        <h2>Send sealed offer</h2>
+        <div class="zv-field">
+          <label for="zv-recipient">Recipient wire-point</label>
+          <input id="zv-recipient" type="text" placeholder="znwp-…" autocomplete="off" spellcheck="false" />
+        </div>
+        <div class="zv-field">
+          <label for="zv-label">Your display label (optional)</label>
+          <input id="zv-label" type="text" placeholder="Operator name" maxlength="64" />
+        </div>
+        <div class="zv-field">
+          <label for="zv-file">Media or data file</label>
+          <input id="zv-file" type="file" />
+        </div>
+        <button type="button" class="zv-btn zv-btn--ok" id="zv-send">Seal &amp; push offer</button>
+      </section>
+    </div>
+
+    <section class="zv-card" style="margin-top:12px">
+      <h2>Mesh directory — BSP composite sorted</h2>
+      <div class="zv-queue" id="zv-mesh">
+        <p class="zv-empty">Loading mesh…</p>
+      </div>
+    </section>
+
+    <section class="zv-card" style="margin-top:12px">
+      <h2>Inbound queue — accept or reject</h2>
+      <div class="zv-queue" id="zv-queue">
+        <p class="zv-empty">Loading queue…</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="zv-toast" id="zv-toast" role="status" aria-live="polite"></div>
+  <script src="/assets/field-znetwork-vault.js?v=2" defer></script>
+</body>
+</html>

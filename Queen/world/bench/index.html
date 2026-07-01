@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen Bench · Speedometer</title>
+  <style>
+    body { margin: 0; font: 15px system-ui, sans-serif; background: #020403; color: #e8f2ea; padding: 24px; }
+    h1 { margin: 0 0 8px; font-size: 1.4rem; }
+    p { color: #9ab0a4; max-width: 52rem; line-height: 1.5; }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+    a.btn {
+      display: inline-block; padding: 10px 16px; border-radius: 8px;
+      background: #0d4f3c; color: #e8f2ea; text-decoration: none; font-weight: 600;
+    }
+    a.btn:hover { background: #127a5a; }
+    code { background: #0e1118; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body data-queen-benchmark="1">
+  <h1>Queen Benchmark Lane</h1>
+  <p>
+    Run Speedometer in <strong>top-level Field Gecko</strong> for real scores — not the iframe shell.
+    Benchmark mode disables NEXUS Jump tax, field-sanity classify, proxy, and background flyout polling.
+  </p>
+  <div class="row">
+    <a class="btn" href="https://browserbench.org/Speedometer3.0/" target="_top" rel="noopener">Speedometer 3.0 (top-level)</a>
+    <a class="btn" href="https://browserbench.org/JetStream2.2/" target="_top" rel="noopener">JetStream 2.2 (top-level)</a>
+    <a class="btn" href="https://browserbench.org/MotionMark1.3.1/" target="_top" rel="noopener">MotionMark 1.3.1 (top-level)</a>
+    <a class="btn" href="/world/browser.html?benchmark=1" target="_top">Queen shell · benchmark mode</a>
+  </div>
+  <p>CLI: <code>QUEEN_BENCHMARK_MODE=1 ./Queen/scripts/run-benchmark.sh</code></p>
+</body>
+</html>

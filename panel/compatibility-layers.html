@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-surface="settings">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#040508" />
+  <meta name="color-scheme" content="dark" />
+  <title>Compatibility Layers · Queen</title>
+  <link rel="icon" href="/assets/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="stylesheet" href="/assets/field-queen-theme.css?v=qf1" />
+  <link rel="stylesheet" href="/assets/compatibility-layers.css?v=cl2" />
+</head>
+<body>
+  <div class="cl-wrap">
+    <a class="cl-back" href="/command?embed=1#system">← Queen settings</a>
+    <header class="cl-hero">
+      <div>
+        <h1>Compatibility Layers</h1>
+        <p class="cl-tagline">
+          Efficient stack from substrate to surface — combinatorics runs itself.
+          No manual tree walks; layers sync on refresh.
+        </p>
+      </div>
+      <span class="cl-badge" id="cl-badge">Auto stack</span>
+    </header>
+
+    <section class="cl-stack" id="cl-stack" aria-label="Compatibility layer stack"></section>
+
+    <div class="cl-effective" id="cl-effective">
+      <h2>Effective profile</h2>
+      <div class="cl-effective-grid" id="cl-effective-grid"></div>
+    </div>
+
+    <div class="cl-actions">
+      <button type="button" class="primary" id="cl-sync">Sync all layers</button>
+      <button type="button" id="cl-deep">Deep refresh</button>
+      <button type="button" id="cl-reload">Reload status</button>
+    </div>
+
+    <section class="cl-log-wrap">
+      <h2>Sync log</h2>
+      <pre class="cl-log" id="cl-log" aria-live="polite"></pre>
+    </section>
+  </div>
+  <script src="/assets/compatibility-layers.js"></script>
+</body>
+</html>

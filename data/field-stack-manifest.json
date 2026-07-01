@@ -1,0 +1,327 @@
+{
+  "schema": "nexus-field-stack-manifest/v1",
+  "title": "NewLatest Field Stack",
+  "version": "10.0.0-field",
+  "rule": "Layered stack: hardware (no break) \u2192 KILROY PC core (ZNetwork absorbed) \u2192 AmmoOS desktop (AMOURANTHRTX) \u2192 Queen standalone browser — weapons under Hostess 7",
+  "hostess7_weapons_defense": {
+    "commander": "hostess7",
+    "armed": true,
+    "active": true,
+    "module": "lib/hostess7-weapons-defense.py",
+    "doctrine": "data/hostess7-weapons-defense-doctrine.json",
+    "api": "/api/hostess7/weapons-defense"
+  },
+  "stack_layer_doctrine": "data/field-stack-layer-doctrine.json",
+  "stack_order": [
+    "hardware",
+    "nexus_c2",
+    "kilroy",
+    "ammoos",
+    "queen"
+  ],
+  "ammoos_inside_queen": false,
+  "queen_standalone_browser": true,
+  "kilroy_znetwork_absorbed": true,
+  "ammoos_desktop_rtx": "AMOURANTHRTX",
+  "install_root": "SG/NewLatest",
+  "layers": {
+    "queen": {
+      "root": "NewLatest/Queen",
+      "role": "Sovereign RTX field browser \u2014 every core, gates held",
+      "world_port": 9481,
+      "binary": "build/rtx/bin/Linux/queen-browser"
+    },
+    "nexus": {
+      "root": "NewLatest",
+      "role": "Security \u00b7 egress gatekeeper \u00b7 trust strike \u00b7 host attack \u00b7 DNS truth",
+      "panel_port": 9477
+    },
+    "final_eye": {
+      "root": "NewLatest/Final_Eye",
+      "version": "1.3.0",
+      "codename": "heaven-hell-ops",
+      "role": "Assist tenant \u2014 vision offense, entity weapons, IRTN mesh",
+      "port": 9479
+    },
+    "final_ear": {
+      "root": "SG/Final_Ear",
+      "version": "1.0.0",
+      "codename": "auditus-gac1",
+      "role": "Audio offense \u2014 truth filter, GAC1, eye-ear fusion",
+      "bridge": "Queen/lib/queen-earball.py"
+    },
+    "world_redata": {
+      "root": "SG/World_Redata",
+      "port": 9478,
+      "formats": [
+        "WRDT1",
+        "WRZC1",
+        "ZAC7"
+      ],
+      "role": "Lossless redata envelopes \u2014 drive converter, in-place snap"
+    },
+    "sense_package": {
+      "doctrine": "data/field-sense-package-doctrine.json",
+      "meld": "lib/field-sense-package-meld.py",
+      "api": "/api/sense-package",
+      "role": "Unified meld + protect \u2014 eye, ear, zocr, redata, Hostess7 brain (witness read-only)"
+    },
+    "obs_field_stack": {
+      "root": "SG/OBS-FieldVoiceFilter",
+      "install": "OBS-FieldVoiceFilter/install.sh",
+      "runtime_status": "data/field-obs-stack.json",
+      "threat_ledger": "data/threat-ledger.jsonl",
+      "posterity_doctrine": "data/field-security-posterity-doctrine.json",
+      "api": "/api/obs-threat-posterity",
+      "role": "OBS Scene Guard \u2014 one filter on scene; prune legacy filters; spiderweb down tree"
+    },
+    "grok16": {
+      "root": "NewLatest/Grok16",
+      "distro_version": "5.1.0",
+      "tag": "v5.1.0",
+      "g16_version": "16.2.0",
+      "stack_fabric": "Grok16/data/g16-stack-fabric-doctrine.json",
+      "build": "g16 + Ninja (Queen/scripts/g16-build.sh)",
+      "profiles": [
+        "field_opt",
+        "vulkan_rtx",
+        "ai",
+        "ammoos",
+        "znetwork_wire",
+        "single_fabric",
+        "queen_rtx"
+      ],
+      "integrate": "scripts/grok16-integrate.sh",
+      "role": "Field compiler @ gnu++26 \u2014 primary toolchain"
+    },
+    "ammocode": {
+      "root": "NewLatest/AmmoCode",
+      "distro_version": "6.0.0",
+      "upload_version": "6.0.0",
+      "codename": "Stack",
+      "port": 9555,
+      "url": "http://127.0.0.1:9555/",
+      "serve": "AmmoCode/server/ammocode-stack-serve.py",
+      "open_handler": "scripts/sg-code-open.sh",
+      "filetypes_db": "NewLatest/data/field-programming-filetypes.json",
+      "extension_count": 243,
+      "language_count": 107,
+      "binary": "dist/ammocode",
+      "integrate": "scripts/integrate-ammocode.sh",
+      "doctrine": "AmmoCode/data/ammocode-field-doctrine.json",
+      "g16_pair": "Grok16/data/g16-ammocode-field-doctrine.json",
+      "role": "Stack editor \u2014 243 filetypes, G16 run/compile, no direct Vulkan"
+    },
+    "amouranthrtx": {
+      "root": "NewLatest/AMOURANTHRTX",
+      "repo": "https://github.com/ZacharyGeurts/AMOURANTHRTX",
+      "license": "GPL-3.0-or-commercial",
+      "binary": "build/bin/Kilroy/AMOURANTHRTX",
+      "queen_binary": "Queen/build/rtx/bin/Linux/queen-browser",
+      "integrate": "scripts/integrate-amouranthrtx.sh",
+      "open_handler": "scripts/amouranthrtx-open.sh",
+      "shaders": "Navigator/shaders \u2192 assets/shaders/compute/*.spv",
+      "double_click": [
+        ".spv",
+        ".comp"
+      ],
+      "build": [
+        "Queen/scripts/g16-build.sh",
+        "AMOURANTHRTX/kilroy.sh"
+      ],
+      "role": "Vulkan field die \u2014 games, x86.comp canvas, double-click SPIR-V/compute shaders"
+    },
+    "vulkan_os": {
+      "doctrine": "data/vulkan-os-doctrine.json",
+      "rtx_sovereign": "Queen/data/field-rtx-sovereign.json",
+      "queen_owns": "FieldGpuDispatch + SPIR-V",
+      "amouranthrtx_owns": "Vulkan 1.4 field die",
+      "kilroy_owns": "kernel only \u2014 no libvulkan",
+      "grok16_owns": "vulkan_rtx compile profile only",
+      "role": "One Vulkan stack \u2014 Queen dispatch, AMOURANTHRTX engine, KILROY kernel without GPU API"
+    },
+    "hostess7": {
+      "root": "SG/Hostess7",
+      "brain_witness": "lib/field-sense-package-meld.py",
+      "brain_sync": "lib/field-brain-sync.sh",
+      "noti_bridge": "lib/hostess7-noti.py",
+      "system_control": "lib/hostess7-system-control.py",
+      "ocr_control": "lib/hostess7-ocr-control.py",
+      "ocr_api": "/api/hostess7/ocr",
+      "role": "Forever Watchguard Angel \u2014 full system + OS OCR control; brain melded onto sense stack; read-only witness, never relocated"
+    },
+    "noti": {
+      "root": "NewLatest",
+      "module": "lib/noti.py",
+      "doctrine": "data/noti-doctrine.json",
+      "hostess7_bridge": "lib/hostess7-noti.py",
+      "role": "Sovereign notifier \u2014 mirrored IRC rooms, address accept/deny, immutable ledger, taskbar red/green"
+    },
+    "znetwork": {
+      "root": "NewLatest/ZNetwork",
+      "outside_lab_pointer": "ZNetwork/data/outside-lab-pointer.json",
+      "orchestrator": "lib/znetwork-orchestrator.py",
+      "shell_bridge": "lib/znetwork-field.sh",
+      "relayer": "lib/znetwork-relayer.py",
+      "smart_inside": "lib/znetwork-smart-inside.py",
+      "exploit_shield": "lib/znetwork-exploit-shield.py",
+      "doctrine": "data/znetwork-doctrine.json",
+      "outside_lab_doctrine": "ZNetwork/data/znetwork-outside-lab-doctrine.json",
+      "binary": "bin/znetwork",
+      "default_mode": "ACTIVE",
+      "relayer_default": true,
+      "smart_inside_default": true,
+      "never_harm_os": true,
+      "role": "NewLatest/ZNetwork canonical \u2014 relayer sole internet in/out, smart_inside advisory, exploit shield"
+    }
+  },
+  "nexus_defenses": [
+    {
+      "id": "connection-gatekeeper",
+      "path": "lib/connection-gatekeeper.py",
+      "role": "Egress intent scoring"
+    },
+    {
+      "id": "field-queen-browser",
+      "path": "lib/field-queen-browser.py",
+      "role": "Gate manifest QUEEN_READY"
+    },
+    {
+      "id": "trust-strike-engine",
+      "path": "lib/trust-strike-engine.py",
+      "role": "Wire-point trust strikes"
+    },
+    {
+      "id": "field-attack-kit",
+      "path": "lib/field-attack-kit.py",
+      "role": "Kill/rekill/autokill salvo"
+    },
+    {
+      "id": "kill-detect",
+      "path": "lib/kill-detect.py",
+      "role": "Zero-cost kill scan"
+    },
+    {
+      "id": "host-attack",
+      "path": "lib/host-attack.sh",
+      "role": "Host attack map + strikes"
+    },
+    {
+      "id": "heaven-hell",
+      "path": "lib/heaven-hell.py",
+      "role": "Truth parameters Hostess7"
+    },
+    {
+      "id": "sovereign-time",
+      "path": "lib/sovereign-time.py",
+      "role": "Immutable linear clock \u2014 monotonic epoch only"
+    },
+    {
+      "id": "sovereign-clock",
+      "path": "lib/sovereign-clock.py",
+      "role": "Universal UTC for every module \u2014 never desync"
+    },
+    {
+      "id": "g1id-format",
+      "path": "lib/g1id-format.py",
+      "role": "Cold geometric identity \u2014 this_one 3D, sovereign time meld"
+    },
+    {
+      "id": "g1id-baseline",
+      "path": "lib/g1id-baseline.py",
+      "role": "Immoveable sealed .g1id baselines \u2014 chmod 0444 anchors"
+    },
+    {
+      "id": "field-io-packet",
+      "path": "lib/field-io-packet.py",
+      "role": "Truth-gated I/O \u2014 sovereign time in, conversation stream out only"
+    },
+    {
+      "id": "beyond-darpa-security",
+      "path": "lib/beyond-darpa-security.py",
+      "doctrine": "data/beyond-darpa-security-doctrine.json",
+      "role": "Beyond DARPA \u00b7 Lockheed tier \u2014 all systems and data, human and machine threats"
+    },
+    {
+      "id": "packet-field",
+      "path": "lib/packet-field.py",
+      "role": "Per-navigation receipts"
+    },
+    {
+      "id": "field-dns",
+      "path": "lib/field-dns.py",
+      "role": "Truth DNS"
+    },
+    {
+      "id": "znetwork-orchestrator",
+      "path": "lib/znetwork-orchestrator.py",
+      "role": "ZNetwork v2 \u2014 truth-gated activate, sovereign time, taskbar swap"
+    },
+    {
+      "id": "vsync-locker",
+      "path": "lib/field-vsync-locker.py",
+      "doctrine": "data/field-vsync-locker-doctrine.json",
+      "guard": "lib/field-vsync-locker-guard.sh",
+      "bootstrap": "lib/field-vsync-locker-bootstrap.sh",
+      "github_repo": "ZacharyGeurts/VSYNC-Locker",
+      "api": "/api/vsync-locker",
+      "surface": "/field-vsync-locker",
+      "role": "Sovereign display timing \u2014 lock, drift, input guard, background patrol"
+    }
+  ],
+  "final_eye_weapons": [
+    {
+      "id": "entity_eyeball",
+      "path": "zocr_entity_eyeball.py",
+      "count": 37,
+      "racks": 8
+    },
+    {
+      "id": "offense",
+      "path": "zocr_offense.py",
+      "role": "Ingress strikes"
+    },
+    {
+      "id": "pattern",
+      "path": "zocr_pattern.py",
+      "role": "Foreign weave rejection"
+    },
+    {
+      "id": "kill",
+      "path": "zocr_kill.py",
+      "role": "Local operator kill switches"
+    },
+    {
+      "id": "trust",
+      "path": "zocr_trust.py",
+      "role": "IRTN mesh \u2014 queen_gates peer"
+    },
+    {
+      "id": "teach",
+      "path": "data/eye-teach-doctrine.json",
+      "role": "Independent weapon authority voice"
+    }
+  ],
+  "bridges": {
+    "queen_eyeball": "Queen/lib/queen-eyeball.py",
+    "queen_earball": "Queen/lib/queen-earball.py",
+    "queen_final_eye": "Queen/lib/queen_final_eye.py",
+    "queen_final_ear": "Queen/lib/queen_final_ear.py",
+    "queen_field_nexus": "lib/queen_field_nexus.py",
+    "g16_build": "Queen/scripts/g16-build.sh",
+    "integrate_compiler": "scripts/integrate-compiler-stack.sh",
+    "integrate_ammocode": "scripts/integrate-ammocode.sh"
+  },
+  "forge_order": [
+    "integrate_compiler_stack",
+    "compiler_probe",
+    "hostess_teach",
+    "textbook_zac",
+    "hostess_verify",
+    "queen_zocr",
+    "queen_eyeball",
+    "forge_test"
+  ],
+  "start": "scripts/start-field-stack.sh",
+  "updated": "2026-06-29T12:57:29Z"
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "field-best-sort-doctrine/v1",
+  "module": "lib/field-best-sort.py",
+  "motto": "When using Field there is only one best sort ever — bench + meld, never operator crank.",
+  "field_unique_best": true,
+  "singleton_sort": true,
+  "one_best_ever": true,
+  "meld_citation": "ironclad:meld:2",
+  "format_table": {
+    "algorithm": "family_then_label",
+    "fallback": "locale_ci"
+  },
+  "chip_paths": {
+    "algorithm": "composite_bsp",
+    "statement": "field_one_best_ever — THE sort for every chip in combinatorics"
+  },
+  "registry_index": {
+    "algorithm": "family_then_label",
+    "statement": "field_one_best_ever — library/registry/catalog index via Ironclad singleton"
+  },
+  "api_registry": {
+    "algorithm": "dirs_first",
+    "statement": "field_one_best_ever — secure API route table"
+  },
+  "chip_catalog": {
+    "algorithm": "composite_bsp",
+    "statement": "field_one_best_ever — CHIPS catalog search results"
+  },
+  "catalog_index": {
+    "algorithm": "family_then_label",
+    "statement": "field_one_best_ever — library card catalog index"
+  },
+  "card_catalog": {
+    "algorithm": "call_number_then_title",
+    "statement": "field_one_best_ever — Dewey call number primary sort"
+  },
+  "bookmark_flyout": {
+    "algorithm": "recency_then_priority",
+    "statement": "field_one_best_ever — bookmarks hub MRU under ZNetwork"
+  },
+  "integrations": {
+    "power_sort": "Grok16/lib/field-power-sort.py",
+    "iron_plate_organize": "lib/iron-plate-organize.py",
+    "file_formats": "lib/field-file-formats.py",
+    "plate_meld": "lib/field-plate-meld.py"
+  }
+}

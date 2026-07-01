@@ -1,0 +1,27 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 31,
+  "slug": "stack-genesis",
+  "title": "Sega Genesis Platform Stack",
+  "body": "# Sega Genesis Platform Stack\n\n**Platform stack:** `console_genesis` · **Era:** 1988–1997 · **Vendor:** Sega · **Count:** 9\n\nMotorola 68000 main CPU with Z80 sound sub-CPU, Yamaha FM, and Sega VDP — the 16-bit cartridge platform launched **October 1988** in Japan (Mega Drive).\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: console_genesis` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **Sega 315-5313 VDP** (Sega, 16-bit) — Video Display Processor — scroll planes + sprites\n- **Yamaha YM2612 FM** (Yamaha, 8-bit) — 6-channel FM synth — Genesis stereo audio\n- **Genesis Z80 Sound Glue** (Sega, 8-bit) — Sub-CPU bus arbiter — Z80 ↔ 68000 sound path\n- **Sega 315-5304 I/O** (Sega, 16-bit) — Controller port + expansion — Genesis I/O ASIC\n- **Genesis TMSS Security** (Sega, 16-bit) — Trademark Security System — boot lock handshake\n\n## Catalog ids\n\nThe `chip_ids` array holds all **9** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: console_genesis · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "genesis_68000",
+    "glue_genesis_io",
+    "glue_genesis_tmss",
+    "glue_genesis_vdp",
+    "glue_genesis_ym2612",
+    "glue_genesis_z80_snd",
+    "libretro_genesis_plus_gx",
+    "mame_vdp",
+    "system_genesis"
+  ],
+  "chip_count": 9,
+  "kind": "platform_stack",
+  "family": "console",
+  "platform_stack": "console_genesis",
+  "era": "1988–1997",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

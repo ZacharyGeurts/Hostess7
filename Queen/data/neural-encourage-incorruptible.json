@@ -1,0 +1,44 @@
+{
+  "schema": "queen-neural-encourage-incorruptible/v1",
+  "title": "Incorruptible Encourage — weapon-resistant growth",
+  "rule": "Encouragement cannot mutate sealed base weights; hostile weaponry quarantines instead of adapting",
+  "truth_adapt_floor": 58,
+  "allowed_sources": ["hostess7", "queen_brain"],
+  "operator_source": "operator",
+  "weapon_block_sources": ["operator", "foreign_weave", "assault_drive", "ventriloquist"],
+  "heuristic_block_sources": ["heuristic_only", "subbit_overlay", "foreign_heuristic", "operator_heuristic"],
+  "subbit_immesurable": {
+    "enabled": true,
+    "reject_subbit_delta": true,
+    "min_encourage_delta": 0.00390625,
+    "never_poison_memory": true,
+    "never_poison_disk": true
+  },
+  "weapon_signals": [
+    "assault_burst",
+    "ventriloquism",
+    "threat_pattern",
+    "weaponized_interference",
+    "phantom_bearing",
+    "rf_lie"
+  ],
+  "bias_overlay": {
+    "max_delta_per_write": 0.05,
+    "max_total_per_label": 0.25,
+    "immutable_layers": ["weights", "bias"]
+  },
+  "ledger": {
+    "path": ".nexus-state/sense-neural-encourage.jsonl",
+    "hash_chain": true
+  },
+  "quarantine": {
+    "path": ".nexus-state/neural-encourage-quarantine.jsonl",
+    "ledger_path": ".nexus-state/neural-encourage-quarantine-ledger.jsonl"
+  },
+  "gates": {
+    "require_seal_ok": true,
+    "require_hostess_authority": true,
+    "require_eye_ear_quorum_on_weapon": true,
+    "reject_if_base_weights_mutated": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "nexus-github-update-lock-v1",
+  "path": "/var/lib/nexus-shield/github-update.lock",
+  "purpose": "Prevents concurrent release installer updates from breaking mid-install when operators click INSTALL UPDATE multiple times.",
+  "fields": {
+    "locked": "true while update runs",
+    "token": "handoff secret — panel passes to stealth_install via NEXUS_UPDATE_LOCK_TOKEN",
+    "pid": "process holding the lock",
+    "holder": "panel | stealth_install | cli",
+    "phase": "download_tarball | extract_tarball | install_all | git_fetch | git_pull | stealth_install | stopping_services | copying_files | signing | starting_service | restarting | awaiting_sudo | failed",
+    "target_version": "GitHub release being installed",
+    "previous_version": "version before update",
+    "started_at": "ISO8601 UTC",
+    "heartbeat_at": "last alive ping — stale locks auto-clear"
+  },
+  "stale_rules": {
+    "max_lock_seconds": 2400,
+    "heartbeat_stale_seconds": 180
+  }
+}

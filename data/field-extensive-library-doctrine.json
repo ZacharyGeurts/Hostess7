@@ -1,0 +1,19 @@
+{
+  "schema": "field-extensive-library-doctrine/v1",
+  "module": "lib/field-extensive-library.py",
+  "seed": "data/field-extensive-library-seed.json",
+  "panel": "field-extensive-library-panel.json",
+  "cache": "field-extensive-library.json",
+  "motto": "Every PC and console ever made — Dewey-tied to files, books, games, and programming greats.",
+  "dewey_shelves": {
+    "devices": "library/dewey/004-computers",
+    "games": "library/dewey/700-arts/games",
+    "greats": "library/dewey/920-biography/game-programming-greats",
+    "h7c": "library/dewey"
+  },
+  "formats": ["h7c"],
+  "registry": "lib/field-library-registry.py",
+  "textbook_covers": "lib/field-textbook-covers.py",
+  "sources": ["seed", "videogame_db", "queen_game_room", "field-cpu-library", "field-file-formats", "field_k12_catalog"],
+  "api": ["/api/extensive-library", "/api/extensive-library/search", "/api/library-registry"]
+}

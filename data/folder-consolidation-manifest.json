@@ -1,0 +1,162 @@
+{
+  "schema": "folder-consolidation/v1",
+  "updated": "2026-06-29",
+  "canonical_root": "NewLatest",
+  "motto": "Consume useful code, drop outside folders — one tight AmmoOS tree",
+  "keep": {
+    "install_root": "NewLatest",
+    "stack_real_dirs": [
+      "AmmoCode",
+      "AMOURANTHRTX",
+      "Final_Eye",
+      "Final_Ear",
+      "Final_Mouth",
+      "Grok16",
+      "GrokPy",
+      "PythonG",
+      "Hostess7",
+      "KILROY",
+      "Queen",
+      "ZNetwork",
+      "World_Redata",
+      "World_Repack",
+      "Field_Primer",
+      "Field_Research",
+      "Spiderweb",
+      "GIMP",
+      "GIMP-Field",
+      "OBS-Field",
+      "OBS-FieldVoiceFilter",
+      "KeePass-Field",
+      "GDB-Field",
+      "ammosecurity",
+      "Kill-Grok-Orphans",
+      "Textbook",
+      "hostess7-training-viewer",
+      "lib",
+      "data",
+      "panel",
+      "scripts",
+      "docs",
+      "bin",
+      "config",
+      "install",
+      "tests",
+      "assets",
+      "plugins",
+      "profile",
+      "library",
+      "nxf",
+      "state"
+    ],
+    "stack_symlink_ok": [
+      "AMOURANTHRTX",
+      "AmmoCode",
+      "Grok16",
+      "GrokPy",
+      "PythonG",
+      "KILROY",
+      "Final_Eye",
+      "Final_Ear",
+      "Final_Mouth",
+      "World_Redata",
+      "World_Repack",
+      "Field_Primer",
+      "Field_Research",
+      "Spiderweb",
+      "GIMP",
+      "GIMP-Field",
+      "OBS-Field",
+      "OBS-FieldVoiceFilter",
+      "KeePass-Field",
+      "GDB-Field",
+      "ammosecurity",
+      "Kill-Grok-Orphans"
+    ]
+  },
+  "consume_drop": [
+    {
+      "id": "znetwork_stub",
+      "path": "znetwork",
+      "harvest": [
+        {"src": "OUTSIDE_LAB.json", "dst": "ZNetwork/data/outside-lab-pointer.json"},
+        {"src": "data/threat-ledger.jsonl", "dst": "ZNetwork/data/threat-ledger.jsonl", "if_missing_only": true}
+      ],
+      "reason": "Integration pointers only — canonical ZNetwork lives in ZNetwork/"
+    },
+    {
+      "id": "zocr_legacy",
+      "path": "ZOCR",
+      "harvest": [],
+      "reason": "Superseded by Final_Eye — duplicate tree"
+    },
+    {
+      "id": "znewocr_legacy",
+      "path": "ZNEWOCR",
+      "harvest": [],
+      "reason": "Superseded by Final_Eye — duplicate cache + releases"
+    },
+    {
+      "id": "nested_newlatest",
+      "path": "NewLatest",
+      "harvest": [],
+      "reason": "Nested stub — canonical root is parent"
+    }
+  ],
+  "drop_sg_stubs": [
+    {"path": "../AmmoCode", "reason": "data-only stub — real tree is NewLatest/AmmoCode"},
+    {"path": "../Grok16", "reason": "data-only stub — real tree is NewLatest/Grok16"}
+  ],
+  "drop_publish_clones": {
+    "glob": [".pages-*", ".profile-*"],
+    "reason": "Stale GitHub Pages publish mirrors — product shell is canonical in-tree"
+  },
+  "archive": [
+    {
+      "id": "dist_installers",
+      "path": "dist",
+      "archive_to": "_archive/dist",
+      "reason": "Release tarballs — keep off main tree (66G+)"
+    }
+  ],
+  "relocate": {
+    "releases_md": {
+      "glob": "RELEASE-*.md",
+      "from": ".",
+      "to": "docs/releases",
+      "exclude_subdirs": true
+    },
+    "panel_seeds": {
+      "glob": [
+        "field-*-panel.json",
+        "field-*-combinatorics*.json",
+        "field-chips-*.json",
+        "field-program-combinatronic*.json",
+        "field-steel-neural-plates*.json",
+        "field-g16-universal-combinatronic*.json",
+        "field-plate-combinatorics-bridge.json",
+        "field-plate-rebalance-derivatives.json",
+        "g16-*-panel.json",
+        "g16-*-plate.json",
+        "g16-ideal-compile.json",
+        "g16-power-sort*.json"
+      ],
+      "from": ".",
+      "to": "data/panel-seeds",
+      "keep_symlinks": ["field-chips-core.json"]
+    }
+  },
+  "manifest_updates": {
+    "field_stack_manifest": "data/field-stack-manifest.json",
+    "sg_canonical": "data/sg-canonical.json",
+    "wire_stack": "scripts/wire-stack.sh",
+    "remove_layers": ["zocr", "znewocr"],
+    "final_eye_root": "NewLatest/Final_Eye"
+  },
+  "retired": {
+    "ZOCR": "use Final_Eye only",
+    "ZNEWOCR": "use Final_Eye only",
+    "znetwork": "use ZNetwork only",
+    "NewLatest/NewLatest": "nested stub removed"
+  }
+}

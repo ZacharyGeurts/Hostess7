@@ -1,0 +1,101 @@
+# combinatorics — migrated from run-tests.sh
+@profile fastest
+@verbose clean
+@motto "combinatorics stack tests · AmmoLang assert"
+
+suite combinatorics ·
+  group plate meld orchestrator
+    assert script:plate_meld_orchestrator
+  group plate combinatorics bridge
+    assert script:plate_combinatorics_bridge
+  group combinatorics reject retaliate
+    assert script:combinatorics_reject_retaliate
+  group chip battery combinatorics
+    assert script:chip_battery_combinatorics
+  group sense universal combinatorics
+    assert script:sense_universal_combinatorics
+  group program combinatronic
+    assert script:program_combinatronic
+  group combinatronic visuals
+    assert script:combinatronic_visuals
+  group combinatronic spider wire
+    assert script:combinatronic_spider_wire
+  group combinatronics growth
+    assert file:lib/field-combinatronics-growth.py
+    assert file:data/field-combinatronics-growth-doctrine.json
+    assert grep:lib/g16-combinatronic-rebalance.py:growth_scan
+    assert grep:lib/threat-panel-http.py:/api/combinatronics/growth
+    assert grep:Queen/lib/queen-world.py:/api/combinatronics/growth
+    assert grep:Queen/world/queen-chips-cores.html:qcc-growth
+    assert shell:tmp_g="$(mktemp -d)" && NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$tmp_g" python3 "$ROOT/lib/field-combinatronics-growth.py" grow 2>/dev/null | grep -q 'field-combinatronics-growth'
+  group plate dimensions consolidation
+    assert file:lib/field-plate-dimensions.py
+    assert file:data/field-plate-dimensions-doctrine.json
+    assert grep:lib/g16-combinatronic-rebalance.py:dimensions_consolidate
+    assert grep:lib/field-plate-combinatorics-bridge.py:field-plate-dimensions
+    assert grep:lib/threat-panel-http.py:/api/plate-dimensions
+    assert grep:Queen/lib/queen-world.py:/api/plate-dimensions
+    assert grep:Queen/world/queen-chips-cores.html:qcc-plate-dimensions
+    assert shell:tmp_state="$(mktemp -d)"
+    assert py:field-plate-dimensions.py build match:field-plate-dimensions
+    assert py:field-plate-dimensions.py read match:plate-condense-consolidated
+  group combinamatrix universal neural
+    assert file:lib/field-combinamatrix.py
+    assert file:lib/field-universal-neural.py
+    assert file:data/field-combinamatrix-doctrine.json
+    assert file:data/field-universal-neural-doctrine.json
+    assert file:library/dewey/000-computer-science/ammolang/combinamatrix_boot.aml
+    assert grep:lib/g16-combinatronic-rebalance.py:combinamatrix_build
+    assert grep:lib/g16-combinatronic-rebalance.py:teach_universal_neural
+    assert grep:Hostess7/data/hostess7-neural-stack.json:universal_neural
+    assert grep:lib/threat-panel-http.py:/api/combinamatrix
+    assert grep:lib/threat-panel-http.py:/api/universal-neural
+    assert grep:Queen/lib/queen-world.py:/api/combinamatrix
+    assert grep:Queen/world/queen-chips-cores.html:qcc-combinamatrix
+    assert shell:tmp_state="$(mktemp -d)"
+    assert py:field-combinamatrix.py build match:field-combinamatrix
+    assert py:field-universal-neural.py teach --force match:field-universal-neural
+  group combinatronic balance
+    assert script:combinatronic_balance
+  group steel neural plates
+    assert script:steel_neural_plates
+  group chips plate stack
+    assert script:chips_plate_stack
+  group chips program usage universal
+    assert script:chips_program_usage
+  group Simple Iron Plate motion resolve
+    assert file:lib/iron-plate-motion-resolve.py
+    assert file:data/simple-iron-plate-goals.json
+    assert grep:lib/field-plate-meld.py:iron_plate_motion
+    assert grep:lib/field-plate-meld.py:network_stack
+    assert grep:lib/field-plate-meld.py:znetwork
+    assert grep:data/simple-iron-plate-goals.json:network_stack_melded
+    assert grep:config/nexus.conf:NEXUS_NETWORK_STACK_MELD=1
+    assert grep:lib/field-plate-meld.sh:nexus_network_stack_pre_meld
+    assert grep:data/field-plate-meld-doctrine.json:iron_plate_motion
+    assert grep:data/field-operator-doctrine.json:simple_iron_plate_goals
+    assert grep:config/nexus.conf:NEXUS_IRON_PLATE_MOTION_RESOLVE=1
+    assert grep:config/nexus.conf:NEXUS_IRON_CLAD_ASSEMBLAGE_FLOOR=0.58
+    assert grep:lib/threat-panel-http.py:/api/iron-plate/motion-resolve
+    assert grep:lib/threat-panel-http.py:/api/iron-plate/goals
+    assert grep:lib/threat-panel-http.py:/api/iron-plate/assemblage
+    assert grep:lib/field-panel-parallel.py:iron_plate_motion
+    assert grep:panel/assets/humanoid-wireframe.js:motion_verdict
+    assert grep:panel/assets/humanoid-data.js:renderIronPlate
+    assert grep:panel/humanoid-data.html:data-section="iron_plate"
+    assert py:iron-plate-motion-resolve.py goals match:simple-iron-plate-goals-status
+    assert py:iron-plate-motion-resolve.py resolve match:iron-plate-motion-resolve/v2
+    assert py:iron-plate-motion-resolve.py resolve match:assemblage_remaining
+    assert file:data/full-assemblage-meld-doctrine.json
+    assert grep:lib/iron-plate-motion-resolve.py:full_assemblage_meld
+    assert grep:lib/threat-panel-http.py:/api/full-assemblage-meld
+    assert py:iron-plate-motion-resolve.py full-meld match:full-assemblage-meld/v2
+    assert py:humanoid-motion-training.py wireframe match:sense_plates
+    assert py:iron-plate-motion-resolve.py resolve match:motion_verdict
+    assert py:humanoid-motion-training.py data-all match:iron_plate_motion
+    assert py:humanoid-motion-training.py wireframe match:motion_verdict
+    assert grep:lib/iron-plate-motion-resolve.py:iron_plate_organize
+    assert grep:lib/iron-plate-motion-resolve.py:bsp_sort_organize_ok
+    assert grep:data/simple-iron-plate-goals.json:bsp_power_sort_organize
+  group Iron Plate BSP organize
+    assert script:iron_plate_organize

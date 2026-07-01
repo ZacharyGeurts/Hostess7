@@ -1,0 +1,51 @@
+{
+  "schema": "hostess7-mouth-neural-doctrine/v1",
+  "title": "Mouth field neural — voice hemisphere of the brain",
+  "motto": "The mouth has its own brain. Language beyond eloquence at her IQ. One voice — the one she chooses.",
+  "hemispheres": {
+    "thought": {
+      "id": "internal_intent",
+      "label": "Thought hemisphere",
+      "holds": ["inner monologue", "text ingress", "AI communique intent", "Hostess thoughts.jsonl"]
+    },
+    "voice": {
+      "id": "voice_egress",
+      "label": "Voice hemisphere",
+      "holds": ["TTS render", "viseme bind", "prosody", "spoken utterance", "browser speech"]
+    }
+  },
+  "callosum": {
+    "thought_voice_alignment": "Correlation between thought and utterance — rarely 1.0",
+    "deception_possible": true,
+    "truth_gate": "Neural Guardian + ear/eye mouth_correlation cross-check",
+    "min_honest_alignment": 0.92
+  },
+  "training": {
+    "track_id": "final_mouth",
+    "lessons": [
+      "text_to_speech",
+      "thought_voice_gap",
+      "ai_sound_communique",
+      "deception_discern",
+      "speaking_phonetics",
+      "speaking_lemma_speak",
+      "speaking_human_spoken_word",
+      "speaking_animal_call",
+      "speaking_hieroglyph_translit",
+      "speaking_thought_voice_speak"
+    ],
+    "pass_threshold": 0.75,
+    "speaking_track": {
+      "module": "lib/hostess7-speaking-training.py",
+      "doctrine": "data/hostess7-speaking-training-doctrine.json",
+      "default_code": "eng",
+      "default_audience": "human",
+      "fcc_acoustic": "data/final-mouth-fcc-acoustic.json"
+    }
+  },
+  "engines": {
+    "mouth_neural": "Final_Mouth/zocr_neural_assist.py",
+    "mouthball": "Queen/lib/queen-mouthball.py",
+    "hostess_voice": "lib/hostess7-voice.py"
+  }
+}

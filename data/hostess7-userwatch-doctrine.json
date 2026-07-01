@@ -1,0 +1,55 @@
+{
+  "schema": "hostess7-userwatch-doctrine/v1",
+  "title": "Hostess 7 Userwatch — we always know the operator",
+  "motto": "No fingerprint technology — we know you from rhythm, bond, and where you work. Mouse and keyboard speed and patterns build assurance until Hostess runs your desktop and programming queues.",
+  "identity": {
+    "method": "operator_bond_hash",
+    "not_biometric": true,
+    "statement": "Behavioral rhythm + work zones + operator default — never device fingerprint SDKs."
+  },
+  "bond_tiers": {
+    "trace": {"min_assurance": 0.0, "min_samples": 0, "label": "Trace"},
+    "forming": {"min_assurance": 0.22, "min_samples": 24, "label": "Forming"},
+    "habit": {"min_assurance": 0.48, "min_samples": 120, "label": "Habit"},
+    "bonded": {"min_assurance": 0.72, "min_samples": 480, "label": "Bonded"},
+    "fused": {"min_assurance": 0.88, "min_samples": 2000, "label": "Fused"}
+  },
+  "assurance_weights": {
+    "keyboard_rhythm": 0.34,
+    "mouse_rhythm": 0.28,
+    "work_zone_stability": 0.22,
+    "muscle_memory_overlap": 0.16
+  },
+  "input_buckets": {
+    "keyboard_interval_ms": [40, 80, 120, 200, 400, 800],
+    "mouse_speed_px_per_s": [50, 150, 400, 900, 2000],
+    "burst_keys_min": 3
+  },
+  "work_zones": {
+    "ttl_seconds": 900,
+    "path_radius_depth": 3,
+    "replate_hold_when_active": true,
+    "statement": "Never replate around cwd where the operator is running programs."
+  },
+  "task_queues": {
+    "desktop": {"max_pending": 32, "auto_run_min_bond": "habit"},
+    "programming": {"max_pending": 48, "auto_run_min_bond": "bonded"}
+  },
+  "plating_apex": {
+    "review_modules": [
+      "field-plate-meld-orchestrator.py",
+      "iron-plate-organize.py",
+      "field-plate-meld.py",
+      "field-plate-combinatorics-bridge.py"
+    ],
+    "apex_threshold": 0.92,
+    "dimensions": ["automation_coverage", "bottom_cpu", "replate_discipline", "meld_generation", "connectivity"]
+  },
+  "infinite_smart": {
+    "sample_growth_log_base": 1.08,
+    "cap": 0.999,
+    "statement": "Assurance and bond never cap — each honest sample makes desktop and queue automation smarter."
+  },
+  "api": ["/api/hostess7/userwatch", "/api/hostess7-userwatch"],
+  "feeds": ["hostess7-muscle-memory", "iron-plate-organize", "field-plate-meld-orchestrator"]
+}

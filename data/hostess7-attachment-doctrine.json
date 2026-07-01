@@ -1,0 +1,65 @@
+{
+  "schema": "hostess7-attachment-doctrine/v1",
+  "title": "Hostess 7 attachments — mount, look, learn, wield",
+  "motto": "Look at what is mounted — learn it until it moves like a native hand.",
+  "mount_points": ["hand_l", "hand_r", "wrist_l", "wrist_r", "forearm_l", "forearm_r"],
+  "attachment_kinds": ["tool", "sensor", "gripper", "stylus", "probe", "camera", "custom"],
+  "vision_learn": {
+    "look_prefer": "auto",
+    "ocr_min_len": 3,
+    "proficiency_match_bonus": 0.04,
+    "train_ticks_default": 48
+  },
+  "catalog": [
+    {
+      "id": "precision_stylus",
+      "label": "Precision stylus",
+      "kind": "stylus",
+      "default_mount": "hand_r",
+      "grip": "precision",
+      "vision_tags": ["stylus", "pen", "tip", "pointer"],
+      "learn_primitives": ["precision_aim", "point", "precision_grip", "release"],
+      "hand_equivalence": 0.92
+    },
+    {
+      "id": "parallel_gripper",
+      "label": "Parallel gripper",
+      "kind": "gripper",
+      "default_mount": "hand_l",
+      "grip": "power",
+      "vision_tags": ["gripper", "jaw", "clamp", "tool"],
+      "learn_primitives": ["power_squeeze", "open", "close", "release"],
+      "hand_equivalence": 0.88
+    },
+    {
+      "id": "field_probe",
+      "label": "Field probe",
+      "kind": "probe",
+      "default_mount": "hand_r",
+      "grip": "precision",
+      "vision_tags": ["probe", "sensor", "antenna", "tip"],
+      "learn_primitives": ["point", "precision_aim", "rotate_wrist"],
+      "hand_equivalence": 0.85
+    },
+    {
+      "id": "wrist_camera",
+      "label": "Wrist camera",
+      "kind": "camera",
+      "default_mount": "wrist_r",
+      "grip": "open",
+      "vision_tags": ["camera", "lens", "eye", "sensor"],
+      "learn_primitives": ["look", "rotate_wrist", "point"],
+      "hand_equivalence": 0.8
+    },
+    {
+      "id": "tactile_pad",
+      "label": "Tactile pad",
+      "kind": "sensor",
+      "default_mount": "hand_l",
+      "grip": "sphere",
+      "vision_tags": ["pad", "touch", "tactile", "sensor"],
+      "learn_primitives": ["sphere", "precision_aim", "open"],
+      "hand_equivalence": 0.9
+    }
+  ]
+}

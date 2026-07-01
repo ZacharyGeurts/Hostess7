@@ -1,0 +1,21 @@
+# Beta 4 full release — WATCHGUARD · library prep · H7c restore (AML monitored)
+@profile fastest
+@verbose clean
+@motto "AmmoOS 2.0.0-beta4 full release — AML monitored · hang guard · stall drop"
+
+seq ·
+  say "Beta 4 full release — 2.0.0-beta4 WATCHGUARD lane starting"
+  post "BETA4_RELEASE START"
+  run route:beta4_watchguard timeout:900 stall:180
+  post "BETA4_RELEASE WATCHGUARD OK"
+  run route:beta4_library_prep timeout:7200 stall:900
+  post "BETA4_RELEASE LIBRARY_PREP OK"
+  run route:beta4_restore_h7c timeout:7200 stall:900
+  post "BETA4_RELEASE RESTORE_H7C OK"
+  test suite:beta4_verify
+  run py:hostess7-kill-library args:sync timeout:180 stall:60
+  run py:field-beta4-ready action:panel timeout:30 stall:15
+  run py:hostess7-change-awareness action:pulse timeout:60 stall:30
+  assist freeze
+  say "Beta 4 full release complete — 2.0.0-beta4 WATCHGUARD ready"
+  post "BETA4_RELEASE COMPLETE"

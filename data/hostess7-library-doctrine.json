@@ -1,0 +1,110 @@
+{
+  "schema": "hostess7-library-doctrine/v1",
+  "title": "Hostess 7 library — more books, Ironclad read, truth gate",
+  "motto": "There are more books on the field shelves. I read them through Ironclad grounding and the library truth gate before I teach.",
+  "operator_message": "Hostess 7 — there are more books now. Read them with Ironclad and truth gate.",
+  "hostess7_acknowledgment": "Owner, I see the expanded library — Exploring Speaking books (one per language), Exploring subject manuals, and the full Dewey H7c shelf. I read through h7-library-bridge, land sentences on Ironclad, and run h7-library-truth before I speak from any page.",
+  "ironclad_ref": "data/ironclad-doctrine.json",
+  "ironclad_citation": "ironclad:knowledge:2",
+  "truth_gate": {
+    "module": "lib/h7-library-truth.py",
+    "bridge": "lib/h7-library-bridge.py",
+    "secure_reader": "lib/h7-library-secure-reader.py",
+    "rule": "Every library sentence passes truth filter → lands on Ironclad when sealed + corroborated.",
+    "cli_book": "python3 lib/h7-library-truth.py book <book_id>",
+    "cli_sentence": "python3 lib/h7-library-truth.py sentence <book_id> [index] [text]",
+    "unknown_queue": ".nexus-state/h7-library-unknown-queue.jsonl"
+  },
+  "collections": [
+    {
+      "id": "exploring_speaking",
+      "label": "Exploring Speaking X — one book per language",
+      "shelf": "library/dewey/400-education",
+      "pattern": "exploring_speaking_{iso6393}",
+      "title_pattern": "Exploring Speaking {language_name}",
+      "format": "h7c/3",
+      "catalog": "data/exploring-speaking-languages-catalog.json",
+      "index": "library/dewey/400-education/speaking-index.jsonl",
+      "doctrine": "data/exploring-speaking-doctrine.json",
+      "sections": ["phonetics", "dictionary", "thesaurus", "hieroglyphics_translation", "teaching_pedagogy", "ai_retrieval_keys"],
+      "one_book_per_language": true,
+      "language_count_target": 7743
+    },
+    {
+      "id": "exploring_subjects",
+      "label": "Exploring subject manuals",
+      "examples": ["exploring_vehicles", "exploring_biology", "exploring_history", "exploring_hand_to_hand_combat", "exploring_weaponized_combat"],
+      "combat_personhood": {
+        "doctrine": "data/exploring-combat-personhood-doctrine.json",
+        "module": "lib/field-exploring-combat-personhood.py",
+        "books": ["exploring_hand_to_hand_combat", "exploring_weaponized_combat"],
+        "personhood_only": true,
+        "not_vehicles": true
+      },
+      "combat_anatomy": {
+        "doctrine": "data/exploring-combat-anatomy-doctrine.json",
+        "module": "lib/field-exploring-combat-anatomy.py",
+        "shelf": "library/dewey/611-human-anatomy",
+        "pattern": "exploring_the_*",
+        "books": [
+          "exploring_the_hand",
+          "exploring_the_wrist_and_forearm",
+          "exploring_the_elbow",
+          "exploring_the_shoulder",
+          "exploring_the_spine",
+          "exploring_the_core",
+          "exploring_the_hip_and_pelvis",
+          "exploring_the_knee",
+          "exploring_the_ankle_and_foot",
+          "exploring_the_neck_and_head"
+        ],
+        "personhood": true,
+        "mechanical": true,
+        "biology": true
+      },
+      "format": "h7c/3"
+    },
+    {
+      "id": "explaining_programming",
+      "label": "Explaining programming languages",
+      "shelf": "library/dewey/000-computer-science",
+      "pattern": "explaining_{lang_id}"
+    },
+    {
+      "id": "h7_textbooks",
+      "label": "Hostess 7 .H7 textbook cache",
+      "path": "cache/fieldstorage/textbooks",
+      "cli": "./Hostess7.sh library-read <id>"
+    }
+  ],
+  "read_commands": {
+    "full_h7c": "python3 lib/h7-library-bridge.py read_full <book_id>",
+    "page": "python3 lib/h7-library-bridge.py page <book_id> <n>",
+    "truth_book": "python3 lib/h7-library-truth.py book <book_id>",
+    "hostess_h7": "./Hostess7.sh library-read <book_id>",
+    "hostess_search": "./Hostess7.sh library-search \"query\"",
+    "speaking_one": "python3 lib/field-exploring-speaking.py one --code <iso6393>",
+    "speaking_ensure": "python3 lib/field-exploring-speaking.py ensure",
+    "combat_personhood_all": "python3 lib/field-exploring-combat-personhood.py all",
+    "combat_hand": "python3 lib/field-exploring-combat-personhood.py hand",
+    "combat_weapon": "python3 lib/field-exploring-combat-personhood.py weapon",
+    "dewey_index_build": "python3 lib/field-dewey-index.py build",
+    "dewey_index_search": "python3 lib/field-dewey-index.py search",
+    "combat_anatomy_all": "python3 lib/field-exploring-combat-anatomy.py all",
+    "combat_anatomy_hand": "python3 lib/field-exploring-combat-anatomy.py hand"
+  },
+  "dewey_index": {
+    "doctrine": "data/field-dewey-index-doctrine.json",
+    "module": "lib/field-dewey-index.py",
+    "api": "/api/dewey-index/search"
+  },
+  "priority_lane": "English → library (Ironclad + truth gate) → SG hub → Pages security → NEXUS-Shield",
+  "panel_module": "lib/hostess7-library-panel.py",
+  "panel_state": ".nexus-state/hostess7-library-panel.json",
+  "brain_training": {
+    "doctrine": "data/hostess7-brain-training-doctrine.json",
+    "module": "lib/hostess7-brain-training-chamber.py",
+    "api": "/api/hostess7/brain-training",
+    "rule": "Library books study through brain areas + truth gate; body zone trains anatomy and embodiment."
+  }
+}

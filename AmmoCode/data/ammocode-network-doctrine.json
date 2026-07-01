@@ -1,0 +1,50 @@
+{
+  "schema": "ammocode-network-doctrine/v1",
+  "title": "AmmoCode network mesh — polite discovery, HTTP tunnel, threat ratings",
+  "discovery": {
+    "motto": "Find hosts without being spammy",
+    "passive_beacon": true,
+    "active_scan": "manual_or_slow",
+    "min_scan_interval_seconds": 120,
+    "max_hosts_per_scan": 24,
+    "probe_timeout_seconds": 1.5,
+    "inter_probe_delay_ms": 80,
+    "ports": [9555],
+    "action": "network_beacon"
+  },
+  "networks": {
+    "local": {
+      "label": "Local LAN",
+      "scope": "rfc1918",
+      "auto_rate_boost": 15
+    },
+    "open": {
+      "label": "Open network",
+      "scope": "public_reachable",
+      "http_tunnel": true,
+      "requires_friend_or_rating": 60
+    }
+  },
+  "http_tunnel": {
+    "enabled": true,
+    "poll_interval_ms": 2000,
+    "max_queue": 256,
+    "chunk_max_bytes": 65536,
+    "motto": "HTTP tunnel when WebSocket is blocked — local and open peers"
+  },
+  "lists": {
+    "friends": "trusted — collab + tunnel permitted",
+    "blocks": "denied — never connect",
+    "storage": "data/network-lists.json"
+  },
+  "threat_ratings": {
+    "scale": "0-100",
+    "block_threshold": 25,
+    "friend_bypass": 85,
+    "sources": ["block_list", "friend_list", "connection_gatekeeper", "friendly_guard", "host_self_scan", "heuristic"]
+  },
+  "host_evaluation": {
+    "on_ammocode_open": true,
+    "modules": ["connection_gatekeeper", "znetwork_hostile", "local_heuristic"]
+  }
+}

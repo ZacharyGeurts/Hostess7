@@ -1,0 +1,14 @@
+// FieldNetGate.fld — connection gatekeeper hook before egress
+// Mirrors queen-gate.py + connection-gatekeeper.py honorability doctrine
+
+module FieldNetGate {
+  import FieldNetCore;
+
+  fn permit_url(url: str) -> bool {
+    if url.starts_with("queen://") { return true; }
+    if url.starts_with("http://127.0.0.1") { return true; }
+    if url.starts_with("http://localhost") { return true; }
+    if url.starts_with("about:") { return true; }
+    return false; // QUEEN_INTERNAL_ONLY
+  }
+}

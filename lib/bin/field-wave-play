@@ -1,0 +1,7 @@
+#!/bin/sh
+# field-wave-play — ported field audio out
+for c in paplay /usr/bin/paplay aplay /usr/bin/aplay; do
+  command -v "$c" >/dev/null 2>&1 && exec "$c" "$@"
+done
+echo "field-wave-play: backend missing — run: field-wave-engine.py ensure" >&2
+exit 127

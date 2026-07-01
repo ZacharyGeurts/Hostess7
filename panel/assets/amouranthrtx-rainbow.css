@@ -1,0 +1,210 @@
+/* AMOURANTHRTX Field Max — deep dark workstation theme + RTX rainbow spectrum */
+html.amouranthrtx-rainbow {
+  --arx-void: #000104;
+  --arx-deep: #020610;
+  --arx-panel: #060c18;
+  --arx-surface: #0a1428;
+  --arx-edge: rgba(255, 255, 255, 0.06);
+  --arx-text: #eef4ff;
+  --arx-dim: #7a94b8;
+  --arx-rainbow: linear-gradient(
+    90deg,
+    #ff2d6a 0%,
+    #ff8c00 14%,
+    #ffe600 28%,
+    #00ff9c 42%,
+    #00d4ff 57%,
+    #7c5cff 71%,
+    #ff2d6a 85%,
+    #ff8c00 100%
+  );
+  --arx-rainbow-soft: linear-gradient(
+    135deg,
+    rgba(255, 45, 106, 0.35),
+    rgba(0, 212, 255, 0.35),
+    rgba(124, 92, 255, 0.35)
+  );
+}
+
+html.amouranthrtx-rainbow,
+html.amouranthrtx-rainbow body {
+  background-color: var(--arx-void);
+  color: var(--arx-text);
+}
+
+html.amouranthrtx-rainbow body {
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -30%, rgba(124, 92, 255, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 0% 50%, rgba(0, 212, 255, 0.08), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 100% 60%, rgba(255, 45, 106, 0.08), transparent 50%),
+    linear-gradient(180deg, var(--arx-void) 0%, var(--arx-deep) 100%);
+}
+
+@keyframes arx-rainbow-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes arx-rainbow-glow {
+  0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(18deg) brightness(1.08); }
+}
+
+html.amouranthrtx-rainbow .fm-shell {
+  background: var(--arx-void);
+}
+
+html.amouranthrtx-rainbow .fm-top {
+  position: relative;
+  background: rgba(4, 8, 18, 0.92);
+  border-bottom: 1px solid var(--arx-edge);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65);
+}
+
+html.amouranthrtx-rainbow .fm-top::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: var(--arx-rainbow);
+  background-size: 200% 100%;
+  animation: arx-rainbow-flow 5s linear infinite;
+}
+
+html.amouranthrtx-rainbow .fm-brand {
+  background: var(--arx-rainbow);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: arx-rainbow-flow 6s linear infinite;
+  text-shadow: none;
+}
+
+html.amouranthrtx-rainbow .fm-brand-sub {
+  color: var(--arx-dim);
+  letter-spacing: 0.22em;
+}
+
+html.amouranthrtx-rainbow .fm-arx-wordmark {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  padding-left: 0.85rem;
+  border-left: 1px solid var(--arx-edge);
+}
+
+html.amouranthrtx-rainbow .fm-arx-wordmark img {
+  height: 2.1rem;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.45));
+  animation: arx-rainbow-glow 4s ease-in-out infinite;
+}
+
+html.amouranthrtx-rainbow .fm-rail {
+  background: rgba(2, 6, 14, 0.96);
+  border-right: 1px solid var(--arx-edge);
+}
+
+html.amouranthrtx-rainbow .fm-rail-btn {
+  color: var(--arx-dim);
+  border-color: transparent;
+}
+
+html.amouranthrtx-rainbow .fm-rail-btn:hover {
+  color: var(--arx-text);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+html.amouranthrtx-rainbow .fm-rail-btn.active {
+  color: #fff;
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(255, 45, 106, 0.2), 0 0 20px rgba(0, 212, 255, 0.15);
+}
+
+html.fm-appearance-2x.amouranthrtx-rainbow .fm-rail-btn {
+  position: relative;
+}
+
+html.amouranthrtx-rainbow .fm-rail-btn.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8%;
+  bottom: 8%;
+  width: 5px;
+  border-radius: 0 3px 3px 0;
+  background: var(--arx-rainbow);
+  background-size: 100% 200%;
+  animation: arx-rainbow-flow 3s linear infinite;
+}
+
+html.amouranthrtx-rainbow .fm-btn {
+  background: rgba(8, 14, 28, 0.9);
+  border: 1px solid var(--arx-edge);
+  color: var(--arx-text);
+}
+
+html.amouranthrtx-rainbow .fm-btn:hover {
+  border-color: rgba(0, 212, 255, 0.45);
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.12);
+}
+
+html.amouranthrtx-rainbow .fm-btn--accent {
+  border-image: var(--arx-rainbow) 1;
+  border-width: 1px;
+  border-style: solid;
+  background: rgba(0, 212, 255, 0.08);
+}
+
+html.amouranthrtx-rainbow .fm-pill {
+  background: rgba(6, 12, 24, 0.9);
+  border: 1px solid var(--arx-edge);
+}
+
+html.amouranthrtx-rainbow .fm-pill--ok {
+  border-color: rgba(0, 255, 156, 0.4);
+  box-shadow: 0 0 12px rgba(0, 255, 156, 0.12);
+}
+
+html.amouranthrtx-rainbow .fm-pill--danger {
+  border-color: rgba(255, 45, 106, 0.45);
+  box-shadow: 0 0 12px rgba(255, 45, 106, 0.12);
+}
+
+html.amouranthrtx-rainbow .fm-card,
+html.amouranthrtx-rainbow .fm-monitor {
+  background: rgba(6, 12, 24, 0.88);
+  border-color: var(--arx-edge);
+}
+
+html.amouranthrtx-rainbow .fm-card h2,
+html.amouranthrtx-rainbow .fm-card h3 {
+  background: var(--arx-rainbow);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html.amouranthrtx-rainbow .fm-c2-stage,
+html.amouranthrtx-rainbow .fm-main {
+  background: var(--arx-deep);
+}
+
+html.amouranthrtx-rainbow .fm-field-max-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--arx-rainbow-soft);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  color: #fff;
+  margin-left: 0.5rem;
+}

@@ -1,0 +1,12 @@
+#!/bin/sh
+# field-wave-wav — raw IQ → wav (field wave engine)
+BINDIR="/home/default/Desktop/SG/NewLatest/lib/bin"
+VENDOR="$BINDIR/vendor"
+export LD_LIBRARY_PATH="$VENDOR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+for c in "$BINDIR/sox" sox /usr/bin/sox; do
+  if [ -x "$c" ] 2>/dev/null || command -v "$c" >/dev/null 2>&1; then
+    exec "$c" "$@"
+  fi
+done
+echo "field-wave-wav: backend missing — run: field-wave-engine.py ensure" >&2
+exit 127

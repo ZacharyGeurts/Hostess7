@@ -1,0 +1,66 @@
+{
+  "schema": "grok-lab-free-vm-providers/v1",
+  "updated": "2026-06-30",
+  "motto": "A new internet from each home — free VMs as sovereign field nodes",
+  "providers": [
+    {
+      "id": "oracle-always-free",
+      "name": "Oracle Cloud Always Free",
+      "regions": ["us-phoenix-1", "us-ashburn-1", "eu-frankfurt-1", "uk-london-1", "ap-tokyo-1", "ap-seoul-1", "ap-mumbai-1", "ap-sydney-1", "ca-montreal-1", "sa-saopaulo-1"],
+      "shape": "VM.Standard.A1.Flex (ARM) or AMD micro",
+      "os": "Ubuntu 22.04 / 24.04",
+      "notes": "4 OCPU ARM + 24GB RAM free forever; open SSH 22 from your IP only",
+      "cloud_init": "GrokLab/deploy/cloud-init-world-node.yaml"
+    },
+    {
+      "id": "google-cloud-free",
+      "name": "Google Cloud e2-micro",
+      "regions": ["us-west1", "us-central1", "us-east1", "europe-west1", "asia-east1"],
+      "shape": "e2-micro",
+      "os": "Ubuntu 22.04",
+      "notes": "Always-free tier in select regions; f1-micro legacy"
+    },
+    {
+      "id": "aws-free-tier",
+      "name": "AWS EC2 t2/t3.micro",
+      "regions": ["us-east-1", "eu-west-1", "ap-southeast-1"],
+      "shape": "t2.micro / t3.micro",
+      "os": "Ubuntu 22.04",
+      "notes": "12 months free for new accounts; use t3.micro"
+    },
+    {
+      "id": "azure-free",
+      "name": "Azure B1s",
+      "regions": ["eastus", "westeurope", "southeastasia"],
+      "shape": "Standard_B1s",
+      "os": "Ubuntu 22.04",
+      "notes": "12 months free; loopback stack fits B1s with swap"
+    },
+    {
+      "id": "fly-io",
+      "name": "Fly.io",
+      "regions": ["global edge"],
+      "shape": "shared-cpu-1x 256MB+",
+      "notes": "Needs Dockerfile adaptation — use SSH VM providers for full stack today"
+    },
+    {
+      "id": "cloudflare-tunnel",
+      "name": "Cloudflare Tunnel (Zero Trust)",
+      "regions": ["global edge"],
+      "shape": "cloudflared outbound",
+      "os": "any",
+      "notes": "Propagates loopback Grok Lab perimeter through CF edge — no inbound ports. Token in GrokLab/deploy/cloudflare/tunnel.token",
+      "bootstrap": "GrokLab/deploy/cloudflare-world-tunnel.sh",
+      "propagate": "GrokLab/deploy/cloudflare-world-propagate.sh"
+    }
+  ],
+  "node_requirements": {
+    "min_ram_mb": 1024,
+    "recommended_ram_mb": 2048,
+    "disk_gb": 10,
+    "packages": ["python3", "python3-pip", "curl", "rsync", "openssh-server", "iptables", "tesseract-ocr"],
+    "ports_loopback_only": [9477, 9479, 9481],
+    "expose_public": false,
+    "access": "ssh_tunnel_to_loopback"
+  }
+}

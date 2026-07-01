@@ -1,0 +1,15 @@
+// FieldNetCore.fld — Queen sovereign loopback framing (FIELDC v4 target)
+// Compile: Grok16 g16 field_opt + FIELDC v4 via FieldFieldCc.hpp
+// Role: IFF-tagged datagram envelope for every Queen packet
+
+module FieldNetCore {
+  port WORLD = 9481;
+  iff CIVILIAN = 0;
+  iff HOSTILE  = 1;
+
+  fn frame_loopback(host: str, path: str) -> datagram {
+    tag iff = CIVILIAN;
+    if host != "127.0.0.1" && host != "localhost" { tag = HOSTILE; }
+    return datagram { host, path, port: WORLD, iff: tag };
+  }
+}

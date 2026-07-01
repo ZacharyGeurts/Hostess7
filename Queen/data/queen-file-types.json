@@ -1,0 +1,413 @@
+{
+  "schema": "queen-file-types/v1",
+  "motto": "Every extension mapped · inspection disambiguates similar names · program icon overrides global",
+  "compileable_note": "compileable types get Compile mode (release-day wave convert) — dev runs stay interpreted/normal",
+  "default_icons": {
+    "dir": {"global": "📁", "program": null},
+    "file": {"global": "📄", "program": null},
+    "symlink": {"global": "🔗", "program": null},
+    "unknown": {"global": "❔", "program": null}
+  },
+  "types": {
+    "spirv": {
+      "extensions": [".spv"],
+      "label": "SPIR-V shader",
+      "global_icon": "🔷",
+      "program_icon": "⚡",
+      "action": "launch_spv",
+      "inspect": {"magic_le32": 118104347},
+      "mime": "application/x-spirv",
+      "open_with": "launch"
+    },
+    "glsl_comp": {
+      "extensions": [".comp"],
+      "label": "GLSL compute",
+      "compileable": true,
+      "global_icon": "🧮",
+      "program_icon": "👑",
+      "action": "open_code",
+      "inspect": {"text_any": ["#version", "layout(", "void main"]},
+      "open_with": "queen-code"
+    },
+    "glsl_vert": {
+      "extensions": [".vert", ".vs"],
+      "label": "GLSL vertex",
+      "global_icon": "🔺",
+      "program_icon": null,
+      "action": "open_code",
+      "inspect": {"text_any": ["#version", "gl_Position"]},
+      "open_with": "queen-code"
+    },
+    "glsl_frag": {
+      "extensions": [".frag", ".fs"],
+      "label": "GLSL fragment",
+      "global_icon": "🎨",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "glsl_geom": {
+      "extensions": [".geom", ".gs"],
+      "label": "GLSL geometry",
+      "global_icon": "📐",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "cpp": {
+      "extensions": [".cpp", ".cxx", ".cc", ".hpp", ".hh", ".h", ".c"],
+      "label": "C/C++",
+      "compileable": true,
+      "global_icon": "⚙",
+      "program_icon": "🛠",
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "python": {
+      "extensions": [".py", ".gpy", ".pyw"],
+      "label": "Python",
+      "compileable": true,
+      "global_icon": "🐍",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "shell": {
+      "extensions": [".sh", ".bash", ".zsh"],
+      "label": "Shell",
+      "global_icon": "⌨",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "json": {
+      "extensions": [".json"],
+      "label": "JSON",
+      "global_icon": "{ }",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "markdown": {
+      "extensions": [".md", ".markdown"],
+      "label": "Markdown",
+      "global_icon": "📝",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "html": {
+      "extensions": [".html", ".htm"],
+      "label": "HTML",
+      "global_icon": "🌐",
+      "program_icon": null,
+      "action": "open_tab",
+      "open_with": "browser"
+    },
+    "css": {
+      "extensions": [".css"],
+      "label": "CSS",
+      "global_icon": "🎛",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "javascript": {
+      "extensions": [".js", ".mjs", ".cjs"],
+      "label": "JavaScript",
+      "global_icon": "📜",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "typescript": {
+      "extensions": [".ts", ".tsx"],
+      "label": "TypeScript",
+      "global_icon": "📘",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "rust": {
+      "extensions": [".rs"],
+      "label": "Rust",
+      "compileable": true,
+      "global_icon": "🦀",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "go": {
+      "extensions": [".go"],
+      "label": "Go",
+      "compileable": true,
+      "global_icon": "🐹",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "fld": {
+      "extensions": [".fld"],
+      "label": "FIELDC network",
+      "compileable": true,
+      "global_icon": "🕸",
+      "program_icon": "📡",
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "cmake": {
+      "extensions": [".cmake"],
+      "label": "CMake",
+      "compileable": true,
+      "global_icon": "🔧",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "image": {
+      "extensions": [".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico"],
+      "label": "Image",
+      "global_icon": "🖼",
+      "program_icon": null,
+      "action": "open_tab",
+      "open_with": "browser"
+    },
+    "video": {
+      "extensions": [".mp4", ".webm", ".mkv", ".avi", ".mov"],
+      "label": "Video",
+      "global_icon": "🎬",
+      "program_icon": null,
+      "action": "open_tab",
+      "open_with": "browser"
+    },
+    "audio": {
+      "extensions": [".mp3", ".wav", ".ogg", ".flac", ".aac"],
+      "label": "Audio",
+      "global_icon": "🔊",
+      "program_icon": null,
+      "action": "open_tab",
+      "open_with": "browser"
+    },
+    "archive": {
+      "extensions": [".zip", ".tar", ".gz", ".bz2", ".xz", ".7z"],
+      "label": "Archive",
+      "global_icon": "📦",
+      "program_icon": null,
+      "action": "open_tab",
+      "open_with": "default"
+    },
+    "binary": {
+      "extensions": [".bin", ".so", ".dll", ".o", ".a", ".out"],
+      "label": "Binary",
+      "global_icon": "⬛",
+      "program_icon": null,
+      "action": "open_tab",
+      "open_with": "default"
+    },
+    "elf": {
+      "extensions": [".elf"],
+      "label": "ELF executable",
+      "global_icon": "🐧",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "inspect": {"magic_bytes": "7f454c46"},
+      "open_with": "chamber"
+    },
+    "pe_exe": {
+      "extensions": [".exe", ".com"],
+      "label": "Windows/DOS executable",
+      "global_icon": "🪟",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "inspect": {"magic_bytes": "4d5a"},
+      "open_with": "chamber"
+    },
+    "appimage": {
+      "extensions": [".appimage"],
+      "label": "AppImage",
+      "global_icon": "📀",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "open_with": "chamber"
+    },
+    "wasm": {
+      "extensions": [".wasm", ".wat"],
+      "label": "WebAssembly",
+      "global_icon": "🕸",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "open_with": "chamber"
+    },
+    "java": {
+      "extensions": [".jar", ".class"],
+      "label": "Java",
+      "global_icon": "☕",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "open_with": "chamber"
+    },
+    "powershell": {
+      "extensions": [".ps1", ".psm1"],
+      "label": "PowerShell",
+      "global_icon": "⚡",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "open_with": "chamber"
+    },
+    "batch": {
+      "extensions": [".bat", ".cmd"],
+      "label": "Batch script",
+      "global_icon": "⌨",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "open_with": "chamber"
+    },
+    "makefile": {
+      "extensions": [],
+      "label": "Makefile",
+      "global_icon": "🔨",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "name_patterns": ["makefile", "gnumakefile", "justfile"],
+      "open_with": "chamber"
+    },
+    "cmake_project": {
+      "extensions": [],
+      "label": "CMake project",
+      "compileable": true,
+      "global_icon": "🔧",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "name_patterns": ["cmakelists.txt"],
+      "open_with": "chamber"
+    },
+    "emulator_rom": {
+      "extensions": [".nes", ".smc", ".sfc", ".gb", ".gbc", ".gba", ".nds", ".z64", ".v64", ".n64", ".vb", ".pce", ".sg", ".sms", ".rom"],
+      "label": "Emulator ROM",
+      "global_icon": "🎮",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "open_with": "emulator"
+    },
+    "disc_image": {
+      "extensions": [".iso", ".cue", ".chd", ".bin", ".nrg"],
+      "label": "Disc image",
+      "global_icon": "💿",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "open_with": "emulator",
+      "big_drive": true
+    },
+    "storage_image": {
+      "extensions": [".img", ".ima", ".flp", ".dsk", ".raw", ".dd", ".fielddrive"],
+      "label": "Storage image",
+      "global_icon": "💾",
+      "program_icon": "▶",
+      "action": "open_tab",
+      "open_with": "big-drive",
+      "big_drive": true,
+      "icon_asset": "drive"
+    },
+    "vm_disk": {
+      "extensions": [".vhd", ".vhdx", ".vdi", ".qcow2", ".qcow", ".dmg"],
+      "label": "VM disk",
+      "global_icon": "🖥",
+      "program_icon": "▶",
+      "action": "open_tab",
+      "open_with": "big-drive",
+      "big_drive": true,
+      "vm": true,
+      "icon_asset": "drive"
+    },
+    "floppy_image": {
+      "extensions": [".ima", ".flp"],
+      "label": "Floppy image",
+      "global_icon": "🖫",
+      "program_icon": "▶",
+      "action": "open_tab",
+      "open_with": "big-drive",
+      "big_drive": true,
+      "icon_asset": "drive"
+    },
+    "lua": {
+      "extensions": [".lua"],
+      "label": "Lua",
+      "global_icon": "🌙",
+      "program_icon": "▶",
+      "action": "run_launchable",
+      "open_with": "chamber"
+    },
+    "zig": {
+      "extensions": [".zig"],
+      "label": "Zig",
+      "compileable": true,
+      "global_icon": "⚡",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "kotlin": {
+      "extensions": [".kt", ".kts"],
+      "label": "Kotlin",
+      "compileable": true,
+      "global_icon": "🟣",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "assembly": {
+      "extensions": [".asm", ".s"],
+      "label": "Assembly",
+      "compileable": true,
+      "global_icon": "⚙",
+      "program_icon": null,
+      "action": "open_code",
+      "open_with": "queen-code"
+    },
+    "launch": {
+      "extensions": [".launch"],
+      "label": "Launch chamber",
+      "compileable": true,
+      "global_icon": "⟨⟩",
+      "program_icon": "▶",
+      "action": "run_launch",
+      "browse_action": "browse_inside",
+      "facade": true,
+      "inspect": {"text_any": ["\"schema\": \"queen-launch/v1\"", "chamber_root", "organized_field", "uncompiled"]},
+      "open_with": "chamber",
+      "icon_asset": "code"
+    },
+    "code_chamber": {
+      "extensions": [],
+      "label": "Code chamber",
+      "compileable": true,
+      "global_icon": "⟨⟩",
+      "program_icon": "▶",
+      "action": "run_launch",
+      "browse_action": "browse_inside",
+      "facade": true,
+      "open_with": "chamber",
+      "icon_asset": "code"
+    },
+    "queen_boot_comp": {
+      "extensions": [],
+      "label": "QueenBoot compute",
+      "compileable": true,
+      "global_icon": "👑",
+      "program_icon": "✨",
+      "action": "open_code",
+      "name_patterns": ["queenboot.comp", "queen-boot.comp"],
+      "open_with": "queen-code"
+    },
+    "aos_load_comp": {
+      "extensions": [],
+      "label": "aos_load compute",
+      "compileable": true,
+      "global_icon": "🧮",
+      "program_icon": "🖥",
+      "action": "open_code",
+      "name_patterns": ["aos_load.comp", "aos-load.comp"],
+      "open_with": "queen-code"
+    }
+  }
+}

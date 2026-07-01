@@ -1,0 +1,22 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 42,
+  "slug": "stack-retro-6502",
+  "title": "6502 Family Platform Stack",
+  "body": "# 6502 Family Platform Stack\n\n**Platform stack:** `retro_6502` · **Era:** 1975–1990 · **Vendor:** MOS / Ricoh · **Count:** 4\n\n6502 / 65C02 guest dies — NES, Atari 2600, Apple II, PC Engine, and other 8-bit systems sharing MOS glue.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: retro_6502` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **MOS 6530 RIOT** (MOS, 8-bit) — RAM I/O timer — 6502 always-with\n- **MOS 6522 VIA** (MOS, 8-bit) — Versatile interface adapter — 6502 systems\n\n## Catalog ids\n\nThe `chip_ids` array holds all **4** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: retro_6502 · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "glue_mos_6522",
+    "glue_mos_6530",
+    "system_apple2",
+    "system_nes"
+  ],
+  "chip_count": 4,
+  "kind": "platform_stack",
+  "family": "retro",
+  "platform_stack": "retro_6502",
+  "era": "1975–1990",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

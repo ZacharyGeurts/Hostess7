@@ -1,0 +1,32 @@
+{
+  "schema": "hostess7-historic-truth-corpus/v1",
+  "title": "Historic Truth Corpus — gate for all new information",
+  "motto": "No new claim passes without historic truth corroboration — KNOWN seals, Lie Librarian witnesses, detective corpus anchors.",
+  "module": "lib/hostess7-historic-truth-corpus.py",
+  "rule": "Any information or new information must pass historic truth corpus before fielding, witness acceptance, or library CLEAR verdict.",
+  "sources": [
+    {"id": "known_registry", "path": ".nexus-state/hostess7-known-knowledge.json", "role": "Sealed KNOWN topics — corroboration boost"},
+    {"id": "unknown_registry", "path": ".nexus-state/hostess7-unknown-knowledge.json", "role": "Explicit gaps — block until resolved"},
+    {"id": "lie_librarian", "module": "lib/h7-lie-librarian.py", "role": "Deception index — contradiction penalty"},
+    {"id": "detective_corpus", "module": "Hostess7/scripts/field_detective_corpus.py", "role": "Investigation method anchors"},
+    {"id": "curiosity_corpus", "path": "cache/fieldstorage/brain/knowledge/curiosity_corpus.json", "role": "UNKNOWN fuel when gate fails"}
+  ],
+  "floors": {
+    "min_corroboration_channels": 1,
+    "pass_boost": 18,
+    "no_historic_penalty": 22,
+    "lie_conflict_penalty": 35,
+    "unknown_topic_penalty": 15
+  },
+  "flags": {
+    "no_historic": "no_historic_truth_corpus",
+    "lie_conflict": "historic_lie_librarian_conflict",
+    "unknown_topic": "historic_unknown_topic",
+    "passed": "historic_truth_pass"
+  },
+  "paired": {
+    "truth_lie_threat": "data/hostess7-truth-lie-threat-doctrine.json",
+    "curiosity": "data/hostess7-curiosity-corpus-doctrine.json",
+    "lie_librarian": "data/h7-lie-librarian-doctrine.json"
+  }
+}

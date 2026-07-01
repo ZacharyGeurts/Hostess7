@@ -1,0 +1,54 @@
+name: Hostess7 CI
+
+on:
+  push:
+    branches: [main, master, gh-pages]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package + dev deps
+        run: |
+          pip install -e ".[dev]"
+          pip install -r requirements.txt
+
+      - name: Ruff
+        run: ruff check src/hostess7 scripts/hostess7_web.py scripts/hostess7_boot.py scripts/hostess7_tasks.py || true
+
+      - name: Package import smoke
+        run: python -c "import hostess7; from hostess7 import packaged_context; print(hostess7.__version__, packaged_context())"
+
+      - name: Cohesion module smoke
+        run: HOSTESS7_WAR_PROFILE=1 python -m hostess7.cohesion iq
+
+      - name: Version sync + war realism smoke
+        run: |
+          python scripts/hostess7-sync-version.py
+          python -c "import hostess7; assert hostess7.__version__ == '2.0.7h'"
+          HOSTESS7_WAR_PROFILE=1 python -m hostess7.war_realism wargame advanced
+          HOSTESS7_WAR_PROFILE=1 python -m hostess7.war_realism protect_friendlies
+
+      - name: QA subset
+        run: |
+          python scripts/qa_brain_hemisphere_test.py || true
+          python scripts/qa_intelligence_flow_test.py || true
+
+      - name: Shellcheck dispatcher
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+          shellcheck -e SC1091 Hostess7.sh scripts/install-hostess7-embed.sh scripts/pack-hostess7-embed.sh || true
+
+      - name: Docker build smoke
+        run: |
+          docker build -t hostess7:ci --build-arg WAR_PROFILE=1 .
+          docker run --rm hostess7:ci python -c "import hostess7; print(hostess7.__version__)"
+          docker run --rm -e HOSTESS7_WAR_PROFILE=1 hostess7:ci python -m hostess7.cohesion iq

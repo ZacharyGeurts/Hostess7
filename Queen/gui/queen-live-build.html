@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta charset=utf-8>
+<meta http-equiv="refresh" content="3">
+<title>Queen Live Build</title>
+<style>body{font-family:ui-monospace,monospace;background:#0a0e14;color:#c8d0e0;margin:0;padding:1rem}h1{color:#6ee7b7;font-size:1.1rem}.ok{color:#6ee7b7}.warn{color:#fbbf24}.bad{color:#f87171}pre{background:#111827;padding:1rem;border-radius:8px;overflow:auto;max-height:70vh;white-space:pre-wrap;font-size:12px}.meta{opacity:.75;font-size:12px;margin:.5rem 0}</style></head><body>
+<h1>Queen Live Build — g16 field watch</h1>
+<p class=meta>Log: /home/default/Desktop/SG/NewLatest/Queen/.queen-forge.log · JSON: /home/default/Desktop/SG/NewLatest/Queen/data/queen-live-watch.json · auto-refresh 3s</p>
+<p>Open this file in your browser while the build runs.</p>
+<div id=s>Loading…</div><pre id=t></pre>
+<script>
+fetch('/home/default/Desktop/SG/NewLatest/Queen/data/queen-live-watch.json?'+Date.now()).then(r=>r.json()).then(d=>{
+  const s=document.getElementById('s');
+  const cls=d.status&&d.status.indexOf('HANGUP')>=0?'bad':(d.status&&d.status.indexOf('STALL')>=0?'warn':'ok');
+  s.innerHTML='<span class='+cls+'>'+d.status+'</span> · bytes='+d.bytes+' stall='+d.stall_count+' hangups='+d.hangup_count;
+  document.getElementById('t').textContent=d.tail||'';
+}).catch(e=>{document.getElementById('s').textContent='waiting…';});
+</script></body></html>

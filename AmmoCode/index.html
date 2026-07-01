@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="ac-nexus-c2 ac-theme-nexus-c2">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AmmoCode — NEXUS C2</title>
+  <meta name="description" content="AmmoCode — lean code editor. Opens any text-era file · 268 extensions · g16 discern · NEXUS C2 theme." />
+  <link rel="stylesheet" href="assets/ammocode-nexus-c2.css" />
+  <link rel="stylesheet" href="assets/ammocode-syntax.css" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:* http://localhost:*; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <div class="ac-shell">
+    <header class="ac-titlebar">
+      <div class="ac-brand">
+        <strong>AmmoCode</strong>
+        <span>NEXUS C2</span>
+      </div>
+      <div class="ac-titlebar-meta">
+        <span id="ac-version" class="ac-pill">v6.1.0</span>
+        <span id="ac-g16-pill" class="ac-pill warn">g16…</span>
+        <span id="ac-ext-count" class="ac-pill">268 extensions</span>
+      </div>
+    </header>
+
+    <div class="ac-toolbar-wrap">
+      <nav id="ac-toolbar" class="ac-toolbar" aria-label="Editor toolbar"></nav>
+    </div>
+
+    <div class="ac-infobar">
+      <span>Language: <strong id="ac-lang">plaintext</strong></span>
+      <span>Profile: <strong id="ac-profile-label">belt_2_0</strong></span>
+      <span class="ac-path" id="ac-path">untitled</span>
+    </div>
+
+    <div class="ac-main">
+      <div class="ac-editor-wrap">
+        <pre class="ac-gutter" id="ac-gutter" aria-hidden="true">1</pre>
+        <div class="ac-editor-stack">
+          <pre class="ac-highlight" id="ac-highlight" aria-hidden="true"></pre>
+          <textarea class="ac-editor" id="ac-editor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="// Open any text file — DOS, BBS, BASIC, modern — g16 discerns language"></textarea>
+        </div>
+      </div>
+
+      <div class="ac-output-wrap">
+        <div class="ac-output-head">
+          <span>Output</span>
+          <button type="button" id="ac-output-clear" class="ac-drawer-close">Clear</button>
+        </div>
+        <div id="ac-compile-alerts" class="ac-compile-alerts hidden" aria-live="polite"></div>
+        <pre class="ac-output" id="ac-output"></pre>
+      </div>
+    </div>
+
+    <footer class="ac-statusbar">
+      <span id="ac-nondestructive-pill">non-destructive · export to save</span>
+      <span>loopback only · 268 text-era extensions</span>
+      <span id="ac-status-msg">starting…</span>
+    </footer>
+  </div>
+
+  <input type="file" id="ac-file" hidden accept="*/*" />
+
+  <div id="ac-profile-popover" class="ac-popover" role="dialog" aria-label="Compiler profile">
+    <label>G16 profile
+      <select id="ac-popover-profile">
+        <option value="belt_2_0" selected>belt_2_0</option>
+        <option value="belt_1_0">belt_1_0</option>
+        <option value="field_opt">field_opt</option>
+        <option value="hostess_secure">hostess_secure</option>
+        <option value="vulkan_rtx">vulkan_rtx</option>
+        <option value="ammoos">ammoos</option>
+        <option value="forever">forever</option>
+        <option value="ai">ai</option>
+      </select>
+    </label>
+  </div>
+
+  <div id="ac-drawer-backdrop" class="ac-drawer-backdrop"></div>
+  <aside id="ac-drawer" class="ac-drawer" aria-label="Settings">
+    <div class="ac-drawer-head">
+      <strong>Settings</strong>
+      <button type="button" id="ac-drawer-close" class="ac-drawer-close">Close</button>
+    </div>
+    <div class="ac-drawer-body">
+      <div class="ac-drawer-section">
+        <h3>Editor</h3>
+        <label class="ac-field">Font size
+          <input type="range" id="ac-set-font" min="10" max="28" value="13" />
+        </label>
+        <label class="ac-field">Tab size
+          <input type="number" id="ac-set-tab" min="2" max="8" value="4" />
+        </label>
+        <label class="ac-check"><input type="checkbox" id="ac-set-wrap" /> Word wrap</label>
+        <label class="ac-check"><input type="checkbox" id="ac-set-autodetect" checked /> Autodetect language (g16 discern)</label>
+        <label class="ac-field">Editor theme
+          <select id="ac-set-editor-theme"></select>
+        </label>
+        <label class="ac-field">Syntax colors
+          <select id="ac-set-syntax-theme"></select>
+        </label>
+        <label class="ac-field">G16 profile
+          <select id="ac-set-profile">
+            <option value="belt_2_0" selected>belt_2_0</option>
+            <option value="belt_1_0">belt_1_0</option>
+            <option value="field_opt">field_opt</option>
+            <option value="hostess_secure">hostess_secure</option>
+            <option value="vulkan_rtx">vulkan_rtx</option>
+            <option value="ammoos">ammoos</option>
+          </select>
+        </label>
+      </div>
+      <div class="ac-drawer-section">
+        <h3>Toolbar</h3>
+        <label class="ac-field">Icon size
+          <select id="ac-set-icon-size">
+            <option value="16">16 px</option>
+            <option value="20">20 px</option>
+            <option value="24" selected>24 px</option>
+            <option value="32">32 px</option>
+          </select>
+        </label>
+        <p style="font-size:0.75rem;color:var(--ac-muted);margin:0 0 0.5rem">Enable advanced toolbar icons:</p>
+        <div id="ac-toolbar-checks"></div>
+      </div>
+    </div>
+  </aside>
+
+  <script src="lib/highlight.js"></script>
+  <script src="lib/compile-alerts.js"></script>
+  <script src="lib/g16.js"></script>
+  <script src="lib/settings.js"></script>
+  <script src="lib/ammocode-toolbar.js"></script>
+  <script src="lib/ammocode-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+[Unit]
+Description=VSYNC Locker — sovereign display timing guard
+After=graphical-session.target
+
+[Service]
+Type=simple
+Environment=NEXUS_INSTALL_ROOT=__PREFIX__
+Environment=NEXUS_STATE_DIR=__PREFIX__/.nexus-state
+ExecStart=/usr/bin/python3 __PREFIX__/lib/field-vsync-locker.py guard --quiet
+Restart=on-failure
+RestartSec=12
+
+[Install]
+WantedBy=default.target

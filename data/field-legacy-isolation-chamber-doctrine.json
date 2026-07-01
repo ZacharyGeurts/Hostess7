@@ -1,0 +1,134 @@
+{
+  "schema": "field-legacy-isolation-chamber/v1",
+  "title": "Legacy language isolation chamber — old BASIC/Pascal/VB tests in sealed subprocesses",
+  "motto": "New toolchains witness outside; old dialects boil inside the chamber.",
+  "product": "AmmoOS",
+  "module": "lib/field-legacy-isolation-chamber.py",
+  "panel": "field-legacy-isolation-chamber-panel.json",
+  "toolchains": {
+    "host_gcc": "gcc-14",
+    "host_gxx": "g++-14",
+    "pythong_manifest": "PythonG/data/pythong-version.json",
+    "pythong_toolchain": "PythonG/data/pythong-toolchain.json",
+    "g16_manifest": "Grok16/data/grok16-toolchain.json",
+    "queen_g16_manifest": "NewLatest/Queen/data/g16-toolchain.json"
+  },
+  "isolation": {
+    "subprocess_per_lang": true,
+    "fresh_state_dir": true,
+    "env_scrub": ["PYTHONPATH", "LD_LIBRARY_PATH"],
+    "chamber_prefix": "legacy-chamber-"
+  },
+  "legacy_languages": [
+    {
+      "id": "basic",
+      "era": "dartmouth",
+      "boil_probes": [
+        {"command": "PRINT", "expect": "io"},
+        {"command": "GOTO", "expect": "branch"}
+      ]
+    },
+    {
+      "id": "qbasic",
+      "era": "ms_dos",
+      "extends": "basic",
+      "boil_probes": [
+        {"command": "PRINT", "expect": "io"},
+        {"command": "SELECT CASE", "expect": "match"}
+      ]
+    },
+    {
+      "id": "quickbasic",
+      "era": "ms_dos",
+      "extends": "qbasic",
+      "boil_probes": [
+        {"command": "TYPE", "expect": "struct"},
+        {"command": "$INCLUDE", "expect": "import"}
+      ]
+    },
+    {
+      "id": "freebasic",
+      "era": "modern",
+      "extends": "quickbasic",
+      "boil_probes": [
+        {"command": "namespace", "expect": "module"},
+        {"command": "threadcreate", "expect": "async"}
+      ]
+    },
+    {
+      "id": "pascal",
+      "era": "wirth",
+      "boil_probes": [
+        {"command": "program", "expect": "module"},
+        {"command": "if", "expect": "branch"}
+      ]
+    },
+    {
+      "id": "turbo_pascal",
+      "era": "borland",
+      "extends": "pascal",
+      "boil_probes": [
+        {"command": "CRT", "expect": "import"},
+        {"command": "uses", "expect": "import"}
+      ]
+    },
+    {
+      "id": "visual_basic",
+      "era": "com",
+      "extends": "basic",
+      "boil_probes": [
+        {"command": "Sub", "expect": "declare"},
+        {"command": "MsgBox", "expect": "io"}
+      ]
+    },
+    {
+      "id": "vba",
+      "era": "office",
+      "extends": "visual_basic",
+      "boil_probes": [
+        {"command": "Range", "expect": "call"},
+        {"command": "Worksheets", "expect": "module"}
+      ]
+    },
+    {
+      "id": "java",
+      "era": "jvm",
+      "secure_chamber": true,
+      "boil_probes": [
+        {"command": "public class", "expect": "module"},
+        {"command": "System.out", "expect": "io"}
+      ]
+    },
+    {
+      "id": "javascript",
+      "era": "ecma",
+      "secure_chamber": true,
+      "boil_probes": [
+        {"command": "console.log", "expect": "io"},
+        {"command": "function", "expect": "declare"}
+      ]
+    },
+    {
+      "id": "typescript",
+      "era": "ecma",
+      "extends": "javascript",
+      "secure_chamber": true,
+      "boil_probes": [
+        {"command": "interface", "expect": "struct"},
+        {"command": "type", "expect": "declare"}
+      ]
+    },
+    {
+      "id": "fortran",
+      "era": "scientific",
+      "secure_chamber": true,
+      "boil_probes": [
+        {"command": "program", "expect": "module"},
+        {"command": "print", "expect": "io"}
+      ]
+    }
+  ],
+  "chamber_tests": ["boil", "seed_pack", "manual_book"],
+  "plate": "legacy_isolation",
+  "tier": "legacy"
+}

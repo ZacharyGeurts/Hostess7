@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chip Detail</title>
+  <link rel="stylesheet" href="queen-viewer.css" />
+  <link rel="stylesheet" href="queen-chips-catalog.css" />
+</head>
+<body data-queen-surface="browser" class="qcd-page">
+  <div class="qcd-wrap">
+    <p class="qcd-back"><a href="queen-chips-catalog.html">← CHIPS Catalog</a></p>
+    <div id="qcd-root"><p class="qcd-loading">Loading die detail…</p></div>
+  </div>
+  <script>
+  (function () {
+    "use strict";
+
+    const THUMB_FALLBACK = "/world/assets/combinatronic/chips/generic_die.png";
+    const LABEL_CACHE_KEY = "qcc_label_cache_v1";
+
+    const esc = (s) => String(s ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/"/g, "&quot;");
+
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+    const root = document.getElementById("qcd-root");
+
+    if (!id) {
+      root.innerHTML = '<p class="qcd-error">No chip id in URL.</p>';
+      return;
+    }
+
+    function loadLabelCache() {
+      try {
+        return JSON.parse(sessionStorage.getItem(LABEL_CACHE_KEY) || "{}");
+      } catch (_) {
+        return {};
+      }
+    }
+
+    function saveLabelCache(map) {
+      try {
+        sessionStorage.setItem(LABEL_CACHE_KEY, JSON.stringify(map));
+      } catch (_) { /* ignore */ }
+    }
+
+    function labelFor(cid, map, row) {
+      return map[cid]?.label || row?.label || cid;
+    }
+
+    function thumbFor(cid, map, row) {
+      return map[cid]?.thumb_url || row?.thumb_url || THUMB_FALLBACK;
+    }
+
+    function formatDates(row) {
+      const parts = [];
+      if (row.mfg_date_start) parts.push(`Intro ${esc(row.mfg_date_start)}`);
+      if (row.discontinued) parts.push(`Discontinued ${esc(row.discontinued)}`);
+      else if (row.mfg_date_end) parts.push(`End ${esc(row.mfg_date_end)}`);
+      return parts.join(" · ") || "—";
+    }
+
+    function formatPackage(row) {
+      const pkg = row.package || "—";
+      const socket = row.socket || "—";
+      const pins = row.pins ? `${row.pins} pins` : "—";
+      return `${esc(pkg)} · ${esc(socket)} · ${pins}`;
+    }
+
+    function formatImprint(row) {
+      const lines = row.imprint;
+      if (!lines?.length) return "";
+      return (
+        `<div class="qcd-imprint">` +
+        lines.map((ln) => `<span>${esc(ln)}</span>`).join("") +
+        `</div>`
+      );
+    }
+
+    function formatPath(row) {
+      const parts = [];
+      if (row.path_pct != null) parts.push(`${esc(row.path_pct)}% path`);
+      if (row.band) parts.push(`band ${esc(row.band)}`);
+      if (row.status) parts.push(esc(row.status));
+      return parts.join(" · ") || "—";
+    }
+
+    function companionChips(ids, labelMap, detailRow) {
+      if (!ids?.length) return "";
+      return ids.map((cid) => {
+        const label = labelFor(cid, labelMap, null);
+        const thumb = thumbFor(cid, labelMap, null);
+        return (
+          `<a class="qcd-chip" href="queen-chips-detail.html?id=${encodeURIComponent(cid)}"` +
+          ` title="${esc(cid)}">` +
+          `<img src="${esc(thumb)}" alt="" loading="lazy" decoding="async" />` +
+          `<span>${esc(label)}</span></a>`
+        );
+      }).join("");
+    }
+
+    async function warmLabelCache(ids) {
+      const cache = loadLabelCache();
+      const missing = ids.filter((cid) => !cache[cid]);
+      if (!missing.length) return cache;
+
+      const batch = missing.slice(0, 24);
+      await Promise.all(batch.map(async (cid) => {
+        try {
+          const res = await fetch(`/api/chips/catalog/detail?id=${encodeURIComponent(cid)}`, { cache: "no-store" });
+          if (!res.ok) return;
+          const row = await res.json();
+          if (row?.id) {
+            cache[row.id] = { label: row.label || row.id, thumb_url: row.thumb_url || THUMB_FALLBACK };
+          }
+        } catch (_) { /* ignore */ }
+      }));
+      saveLabelCache(cache);
+      return cache;
+    }
+
+    async function render(row) {
+      const img = row.detail_image_url || row.thumb_url || THUMB_FALLBACK;
+      const companions = row.always_with || [];
+      const labelMap = await warmLabelCache(companions);
+
+      const tags = [row.kind, row.vendor, row.family, row.platform_stack]
+        .filter(Boolean)
+        .map((t) => `<span class="qcc-tag">${esc(t)}</span>`)
+        .join("");
+
+      root.innerHTML =
+        `<header class="qcd-header">` +
+        `<h1>${esc(row.label)}</h1>` +
+        `<div class="qcd-tags">${tags}</div>` +
+        `</header>` +
+        `<div class="qcd-hero">` +
+        `<figure class="qcd-figure">` +
+        `<img src="${esc(img)}" alt="${esc(row.label)} detail" />` +
+        `<figcaption>Detail render · ${esc(row.id)}</figcaption>` +
+        `</figure>` +
+        (formatImprint(row) ? `<div class="qcd-imprint-wrap">${formatImprint(row)}</div>` : "") +
+        `<dl class="qcd-meta">` +
+        `<dt>Die ID</dt><dd><code>${esc(row.id)}</code></dd>` +
+        `<dt>Dates</dt><dd>${formatDates(row)}</dd>` +
+        `<dt>Era</dt><dd>${esc(row.era || row.mfg_date_start || "—")}</dd>` +
+        `<dt>Package / Socket / Pins</dt><dd>${formatPackage(row)}</dd>` +
+        `<dt>Bits / MHz</dt><dd>${esc(row.bits ?? "—")} · ${esc(row.mhz ?? "—")}</dd>` +
+        `<dt>Country</dt><dd>${esc(row.country || "—")}</dd>` +
+        `<dt>Path / Band</dt><dd>${formatPath(row)}</dd>` +
+        `<dt>Platform stack</dt><dd>${esc(row.platform_stack || "—")}</dd>` +
+        `<dt>Combinatorics leaf</dt><dd>${esc(row.combinatorics_leaf || "—")}</dd>` +
+        (row.note ? `<dt>Note</dt><dd>${esc(row.note)}</dd>` : "") +
+        `</dl></div>` +
+        (row.curator_note
+          ? `<div class="qcd-curator"><strong>Curator note</strong>${esc(row.curator_note)}</div>`
+          : "") +
+        (companions.length
+          ? `<section class="qcd-companions">` +
+            `<h2>Always with</h2>` +
+            `<div class="qcd-chip-row">${companionChips(companions, labelMap, row)}</div>` +
+            `</section>`
+          : "");
+
+      document.title = `${row.label} — CHIPS Catalog`;
+    }
+
+    fetch(`/api/chips/catalog/detail?id=${encodeURIComponent(id)}`, { cache: "no-store" })
+      .then((r) => r.json())
+      .then((row) => {
+        if (!row || row.error) {
+          root.innerHTML = '<p class="qcd-error">Chip not found in catalog.</p>';
+          return;
+        }
+        const cache = loadLabelCache();
+        cache[row.id] = { label: row.label, thumb_url: row.thumb_url || THUMB_FALLBACK };
+        saveLabelCache(cache);
+        return render(row);
+      })
+      .catch(() => {
+        root.innerHTML = '<p class="qcd-error">Failed to load chip detail.</p>';
+      });
+  })();
+  </script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,752 @@
+{
+  "product": "Grok16",
+  "schema": "grok16-toolchain/v1",
+  "updated": "2026-06-29T14:48:32.196543+00:00",
+  "g16_version": "16.2.0",
+  "cxx_std_default": "gnu++26",
+  "prefix": "/home/default/Desktop/SG/NewLatest/Grok16",
+  "root": "/home/default/Desktop/SG/NewLatest/Grok16",
+  "sg_root": "/home/default/Desktop/SG",
+  "queen_root": "/home/default/Desktop/SG/NewLatest/Queen",
+  "forge": "/home/default/Desktop/SG/NewLatest/Grok16/forge/grok16-forge.py",
+  "engine_real": true,
+  "selfhosted": true,
+  "dumpversion": "16.2.0",
+  "version": "g16 (Grok16-5.0.0) 16.2.0",
+  "profiles": {
+    "field_opt": {
+      "description": "Field-Opt \u2014 entropy/oracle, wave phase, FieldX86 emulation throughput",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "c_flags": [
+        "-std=gnu17",
+        "-O3",
+        "-march=native",
+        "-mtune=native",
+        "-ftree-vectorize",
+        "-funroll-loops",
+        "-fomit-frame-pointer"
+      ],
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-mtune=native",
+        "-ftree-vectorize",
+        "-fvect-cost-model=unlimited",
+        "-funroll-loops",
+        "-finline-functions",
+        "-fomit-frame-pointer",
+        "-ffast-math",
+        "-fno-trapping-math",
+        "-fopenmp-simd",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-flto=thin",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_PROFILE_FIELD_OPT=1",
+        "G16_FIELD_SPEED=1",
+        "FIELD_ENTROPY_DISPATCH=1",
+        "FIELD_X86_DIE=1",
+        "FIELD_WAVE_PHASE=1"
+      ]
+    },
+    "ai_agent": {
+      "description": "AI agent compile \u2014 fast iterative builds, JSON diagnostics, truth-floor macros",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "bench_source": "examples/ai-matrix-bench/matrix_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O2",
+        "-pipe",
+        "-march=native",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-diagnostics-show-caret",
+        "-fno-diagnostics-color",
+        "-fmax-errors=5",
+        "-ftree-vectorize",
+        "-funroll-loops",
+        "-finline-functions"
+      ],
+      "c_flags": [
+        "-std=gnu17",
+        "-O2",
+        "-pipe",
+        "-march=native",
+        "-fno-diagnostics-show-caret",
+        "-fmax-errors=5"
+      ],
+      "link_flags": [
+        "-Wl,--gc-sections"
+      ],
+      "definitions": [
+        "GROK16_PROFILE_AI=1",
+        "GROK16_AI_AGENT=1",
+        "HOSTESS_TRUTH_FLOOR=58",
+        "FIELD_ENTROPY_DISPATCH=1"
+      ]
+    },
+    "ai": {
+      "description": "AI / NEXUS behavioral scoring \u2014 matrix-friendly, simd/mdspan paths",
+      "cxx_std": "gnu++26",
+      "bench_source": "examples/ai-matrix-bench/matrix_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-mtune=native",
+        "-ffast-math",
+        "-funroll-loops",
+        "-finline-functions",
+        "-fomit-frame-pointer",
+        "-fno-semantic-interposition",
+        "-ftree-vectorize"
+      ],
+      "link_flags": [
+        "-flto=thin"
+      ],
+      "definitions": [
+        "GROK16_PROFILE_AI=1",
+        "FIELD_ENTROPY_DISPATCH=1"
+      ]
+    },
+    "field_compute": {
+      "description": "Field compute / FieldX86 / CANVAS-style CPU kernels",
+      "cxx_std": "gnu++26",
+      "bench_source": "examples/field-canvas-kernel/field_dispatch.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-fopenmp-simd",
+        "-fvect-cost-model=unlimited",
+        "-fno-trapping-math"
+      ],
+      "link_flags": [
+        "-fopenmp"
+      ],
+      "definitions": [
+        "GROK16_PROFILE_FIELD=1",
+        "FIELD_X86_DIE=1",
+        "FIELD_ENTROPY_DISPATCH=1"
+      ]
+    },
+    "hostess_secure": {
+      "description": "Hostess 7 memory-safe mandate \u2014 stack/clash/CFI, fortify, no strict-aliasing UB",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O2",
+        "-fstack-protector-strong",
+        "-fstack-clash-protection",
+        "-fcf-protection=full",
+        "-fno-strict-aliasing",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE",
+        "-Wformat",
+        "-Wformat-security",
+        "-Werror=format-security"
+      ],
+      "c_flags": [
+        "-std=gnu17",
+        "-O2",
+        "-fstack-protector-strong",
+        "-fstack-clash-protection",
+        "-fcf-protection=full",
+        "-fno-strict-aliasing",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-Wl,-z,noexecstack",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_HOSTESS_SECURE=1",
+        "G16_FIELD_MANDATE=1",
+        "HOSTESS_TRUTH_FLOOR=58"
+      ]
+    },
+    "forever": {
+      "description": "Forever profile \u2014 max field speed + LTO + all Hostess gates for production",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-mtune=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fstack-clash-protection",
+        "-fcf-protection=full",
+        "-ftree-vectorize",
+        "-fvect-cost-model=unlimited",
+        "-funroll-loops",
+        "-finline-functions",
+        "-fomit-frame-pointer",
+        "-fopenmp-simd",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "c_flags": [
+        "-std=gnu17",
+        "-O3",
+        "-march=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-flto=thin",
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-Wl,-z,noexecstack",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_FOREVER=1",
+        "GROK16_PROFILE_FIELD_OPT=1",
+        "G16_FIELD_SPEED=1",
+        "FIELD_ENTROPY_DISPATCH=1",
+        "HOSTESS_TRUTH_FLOOR=58"
+      ]
+    },
+    "memory_safe": {
+      "description": "Memory-safe language builds \u2014 Rust/Go/Zig secure defaults via field drivers",
+      "cxx_std": "gnu++26",
+      "bench_source": "examples/ai-matrix-bench/matrix_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O2",
+        "-fstack-protector-strong"
+      ],
+      "link_flags": [
+        "-Wl,-z,relro",
+        "-Wl,-z,now"
+      ],
+      "definitions": [
+        "GROK16_MEMORY_SAFE=1",
+        "HOSTESS_TRUTH_FLOOR=58"
+      ]
+    },
+    "expert": {
+      "description": "Expert validation tier \u2014 Hostess gates + field_opt + ironclad/linker witness (0.9e \u2192 1.0)",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-fstack-protector-strong",
+        "-fstack-clash-protection",
+        "-fcf-protection=full",
+        "-ftree-vectorize",
+        "-fvect-cost-model=unlimited",
+        "-funroll-loops",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "c_flags": [
+        "-std=gnu17",
+        "-O3",
+        "-march=native",
+        "-fstack-protector-strong",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-Wl,-z,noexecstack",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_EXPERT_TIER=1",
+        "GROK16_PROFILE_FIELD_OPT=1",
+        "GROK16_HOSTESS_SECURE=1",
+        "G16_FIELD_MANDATE=1",
+        "HOSTESS_TRUTH_FLOOR=58",
+        "FIELD_ENTROPY_DISPATCH=1"
+      ]
+    },
+    "heavy": {
+      "description": "Heavy validation tier \u2014 forever + thin LTO + full field speed (gate before 1.0)",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-mtune=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fstack-clash-protection",
+        "-fcf-protection=full",
+        "-ftree-vectorize",
+        "-fvect-cost-model=unlimited",
+        "-funroll-loops",
+        "-finline-functions",
+        "-fomit-frame-pointer",
+        "-fopenmp-simd",
+        "-ffast-math",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "c_flags": [
+        "-std=gnu17",
+        "-O3",
+        "-march=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-flto=thin",
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-Wl,-z,noexecstack",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_HEAVY_TIER=1",
+        "GROK16_FOREVER=1",
+        "GROK16_PROFILE_FIELD_OPT=1",
+        "G16_FIELD_SPEED=1",
+        "FIELD_ENTROPY_DISPATCH=1",
+        "FIELD_X86_DIE=1",
+        "HOSTESS_TRUTH_FLOOR=58"
+      ]
+    },
+    "vulkan_rtx": {
+      "description": "AMOURANTHRTX-style RTX prep \u2014 SPIR-V-only lane; Queen owns GPU; no libvulkan (G14)",
+      "cmake_profile": "cmake/grok16-profile-vulkan.cmake",
+      "spirv_only": true,
+      "cxx_std": "gnu++26",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-msse4.2",
+        "-mavx2",
+        "-mfma",
+        "-ffast-math",
+        "-funroll-loops"
+      ],
+      "link_flags": [
+        "-flto=thin"
+      ],
+      "definitions": [
+        "GROK16_PROFILE_VULKAN=1",
+        "FIELD_X86_DIE=1"
+      ]
+    },
+    "belt_1_0": {
+      "description": "Belt 1.0 \u2014 Grok16 1.0 field_opt baseline for triad compare",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-mtune=native",
+        "-ftree-vectorize",
+        "-fvect-cost-model=unlimited",
+        "-funroll-loops",
+        "-finline-functions",
+        "-fomit-frame-pointer",
+        "-ffast-math",
+        "-fno-trapping-math",
+        "-fopenmp-simd",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-flto=thin",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_BELT_1_0=1",
+        "GROK16_PROFILE_FIELD_OPT=1",
+        "G16_FIELD_SPEED=1",
+        "FIELD_ENTROPY_DISPATCH=1",
+        "FIELD_X86_DIE=1",
+        "FIELD_WAVE_PHASE=1"
+      ]
+    },
+    "field_physics": {
+      "description": "Physics-safe belt \u2014 belt_2_0 dispatch without -ffast-math; entropy/FP invariants + thermal guard",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-mtune=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fstack-clash-protection",
+        "-fcf-protection=full",
+        "-ftree-vectorize",
+        "-fvect-cost-model=dynamic",
+        "-funroll-loops",
+        "-finline-functions",
+        "-fomit-frame-pointer",
+        "-fno-trapping-math",
+        "-fopenmp",
+        "-fopenmp-simd",
+        "-fipa-pta",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "c_flags": [
+        "-std=gnu17",
+        "-O3",
+        "-march=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-flto=thin",
+        "-fopenmp",
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-Wl,-z,noexecstack",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_PROFILE_FIELD_PHYSICS=1",
+        "GROK16_BELT_2_0=1",
+        "GROK16_DISTRO_2_0=1",
+        "G16_FIELD_SPEED=1",
+        "G16_FIELD_THERMAL_GUARD=1",
+        "FIELD_BELT_DIE=67108864",
+        "FIELD_DATA_BUS=64",
+        "FIELD_REDATA_CHUNK=8192",
+        "FIELD_BELT_WAVE_MASSIVE=1",
+        "FIELD_SINGLE_LOCATION_READ=1",
+        "FIELD_ENTROPY_DISPATCH=1",
+        "FIELD_X86_DIE=1",
+        "FIELD_WAVE_PHASE=1",
+        "FIELD_THERMAL_INCREMENTAL_REDATA=1",
+        "HOSTESS_TRUTH_FLOOR=58"
+      ]
+    },
+    "ammoos": {
+      "description": "AmmoOS / Queen field desktop \u2014 belt_2_0 + Hostess secure + ironclad; field_physics for VFS/entropy",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "bench_source": "examples/ammoos-smoke/ammoos_smoke.c",
+      "cmake_profile": "cmake/grok16-profile-ammoos.cmake",
+      "physics_variant_env": "G16_AMMOOS_PHYSICS=1",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-mtune=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fstack-clash-protection",
+        "-fcf-protection=full",
+        "-ftree-vectorize",
+        "-fvect-cost-model=unlimited",
+        "-funroll-loops",
+        "-finline-functions",
+        "-fomit-frame-pointer",
+        "-fno-trapping-math",
+        "-fopenmp",
+        "-fopenmp-simd",
+        "-fipa-pta",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "c_flags": [
+        "-std=gnu17",
+        "-O3",
+        "-march=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-flto=thin",
+        "-fopenmp",
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-Wl,-z,noexecstack",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_PROFILE_AMMOOS=1",
+        "GROK16_BELT_2_0=1",
+        "GROK16_DISTRO_2_0=1",
+        "GROK16_PROFILE_FIELD_OPT=1",
+        "GROK16_HOSTESS_SECURE=1",
+        "G16_FIELD_MANDATE=1",
+        "G16_FIELD_SPEED=1",
+        "G16_IRONCLAD_MELD=1",
+        "G16_SINGLE_FABRIC=1",
+        "FIELD_BELT_DIE=67108864",
+        "FIELD_DATA_BUS=64",
+        "FIELD_REDATA_CHUNK=8192",
+        "FIELD_BELT_WAVE_MASSIVE=1",
+        "FIELD_SINGLE_LOCATION_READ=1",
+        "FIELD_ENTROPY_DISPATCH=1",
+        "FIELD_X86_DIE=1",
+        "FIELD_WAVE_PHASE=1",
+        "HOSTESS_TRUTH_FLOOR=58"
+      ],
+      "consumers": [
+        "NewLatest/Queen/build/rtx/bin/Linux/queen-browser",
+        "NewLatest/scripts/ammoos-launch-verify.sh",
+        "NewLatest/lib/g16-combinatronic-rebalance.py"
+      ],
+      "doctrine": [
+        "data/g16-ironclad-meld.json",
+        "data/grok16-single-fabric-doctrine.json",
+        "NewLatest/data/field-stack-layer-doctrine.json"
+      ]
+    },
+    "znetwork_wire": {
+      "description": "ZNetwork field wire \u2014 field-io-packet structs; Hostess secure; no libvulkan (G5)",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "cmake_profile": "cmake/grok16-profile-znetwork_wire.cmake",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O2",
+        "-pipe",
+        "-march=native",
+        "-fstack-protector-strong",
+        "-fstack-clash-protection",
+        "-fcf-protection=full",
+        "-fno-strict-aliasing",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "c_flags": [
+        "-std=gnu17",
+        "-O2",
+        "-fstack-protector-strong",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-Wl,-z,noexecstack",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_PROFILE_ZNETWORK_WIRE=1",
+        "GROK16_BELT_2_0=1",
+        "GROK16_HOSTESS_SECURE=1",
+        "G16_FIELD_MANDATE=1",
+        "G16_ZNETWORK_WIRE=1",
+        "FIELD_ENTROPY_DISPATCH=1",
+        "HOSTESS_TRUTH_FLOOR=58"
+      ],
+      "doctrine": [
+        "data/grok16-znetwork-field-wire-doctrine.json"
+      ]
+    },
+    "single_fabric": {
+      "description": "Single-fabric link \u2014 belt_2_0 + ammoos + vulkan_rtx one ninja graph; switch at link (G13)",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "cmake_profile": "cmake/grok16-profile-single-fabric.cmake",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-flto=thin",
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-pie"
+      ],
+      "definitions": [
+        "G16_SINGLE_FABRIC=1",
+        "GROK16_SINGLE_FABRIC_LINK=1",
+        "GROK16_BELT_2_0=1",
+        "GROK16_PROFILE_AMMOOS=1",
+        "GROK16_PROFILE_VULKAN=1",
+        "G16_IRONCLAD_MELD=1",
+        "HOSTESS_TRUTH_FLOOR=58"
+      ],
+      "doctrine": [
+        "data/grok16-single-fabric-doctrine.json"
+      ]
+    },
+    "belt_2_0": {
+      "description": "Belt 2.0 \u2014 chunked redata belt, wave-massive dispatch, single-location reads",
+      "cxx_std": "gnu++26",
+      "c_std": "gnu17",
+      "bench_source": "examples/field-nexus-bench/field_nexus_bench.cpp",
+      "cxx_flags": [
+        "-std=gnu++26",
+        "-O3",
+        "-march=native",
+        "-mtune=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fstack-clash-protection",
+        "-fcf-protection=full",
+        "-ftree-vectorize",
+        "-fvect-cost-model=unlimited",
+        "-funroll-loops",
+        "-finline-functions",
+        "-fomit-frame-pointer",
+        "-ffast-math",
+        "-fno-trapping-math",
+        "-fopenmp",
+        "-fopenmp-simd",
+        "-fipa-pta",
+        "-D_FORTIFY_SOURCE=3",
+        "-fPIE"
+      ],
+      "c_flags": [
+        "-std=gnu17",
+        "-O3",
+        "-march=native",
+        "-flto=thin",
+        "-fstack-protector-strong",
+        "-fPIE"
+      ],
+      "link_flags": [
+        "-flto=thin",
+        "-fopenmp",
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-Wl,-z,noexecstack",
+        "-pie"
+      ],
+      "definitions": [
+        "GROK16_BELT_2_0=1",
+        "GROK16_DISTRO_2_0=1",
+        "GROK16_PROFILE_FIELD_OPT=1",
+        "G16_FIELD_SPEED=1",
+        "FIELD_BELT_DIE=67108864",
+        "FIELD_DATA_BUS=64",
+        "FIELD_REDATA_CHUNK=8192",
+        "FIELD_BELT_WAVE_MASSIVE=1",
+        "FIELD_SINGLE_LOCATION_READ=1",
+        "FIELD_ENTROPY_DISPATCH=1",
+        "FIELD_X86_DIE=1",
+        "FIELD_WAVE_PHASE=1",
+        "HOSTESS_TRUTH_FLOOR=58"
+      ]
+    }
+  },
+  "ai": {
+    "description": "AI / NEXUS behavioral scoring \u2014 matrix-friendly, simd/mdspan paths",
+    "cxx_std": "gnu++26",
+    "bench_source": "examples/ai-matrix-bench/matrix_bench.cpp",
+    "cxx_flags": [
+      "-std=gnu++26",
+      "-O3",
+      "-march=native",
+      "-mtune=native",
+      "-ffast-math",
+      "-funroll-loops",
+      "-finline-functions",
+      "-fomit-frame-pointer",
+      "-fno-semantic-interposition",
+      "-ftree-vectorize"
+    ],
+    "link_flags": [
+      "-flto=thin"
+    ],
+    "definitions": [
+      "GROK16_PROFILE_AI=1",
+      "FIELD_ENTROPY_DISPATCH=1"
+    ]
+  },
+  "speedups": {
+    "jobs": 24,
+    "fast_rebuild": true,
+    "lto": false,
+    "pgo": false,
+    "ccache": false,
+    "disable_bootstrap": true
+  },
+  "discern_langs": [
+    "c",
+    "cxx",
+    "python",
+    "asm",
+    "rust",
+    "go",
+    "zig",
+    "fortran",
+    "d",
+    "ada",
+    "objc"
+  ],
+  "gpy16_pair": {
+    "product": "GPY-16",
+    "driver": "/home/default/Desktop/SG/NewLatest/Grok16/bin/gpy-16",
+    "version": "16.1.1",
+    "pkgversion": "GPY-16.1.1",
+    "builtin": true,
+    "tree": "python/",
+    "rule": "Built-in toolkit \u2014 g16 auto-discerns .py/.gpy; GrokVM in-tree; legacy GrokPy fallback last",
+    "root": "/home/default/Desktop/SG/NewLatest/Grok16/python"
+  },
+  "paths": {
+    "g16": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16",
+    "g++16": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g++16",
+    "backend_cc": "/home/default/Desktop/SG/NewLatest/Grok16/libexec/grok16/g16-cc",
+    "backend_cxx": "/home/default/Desktop/SG/NewLatest/Grok16/libexec/grok16/g16-cxx",
+    "gpy16": "/home/default/Desktop/SG/NewLatest/Grok16/bin/gpy-16",
+    "driver_mode": "unified",
+    "gcc_src": "/home/default/Desktop/SG/NewLatest/Grok16/vendor/gcc",
+    "gcc_build": "/home/default/Desktop/SG/NewLatest/Grok16/build/gcc",
+    "cmake": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-toolchain.cmake",
+    "field_cmake": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-field.cmake",
+    "field_build": "/home/default/Desktop/SG/NewLatest/Grok16/data/grok16-field-build.json",
+    "field_build_script": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/grok16-field-build.sh",
+    "g16_cmake": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-cmake",
+    "g16_ninja": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-ninja",
+    "g16_make": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16-make",
+    "ironclad_meld": "/home/default/Desktop/SG/NewLatest/Grok16/data/g16-ironclad-meld.json",
+    "field_sanity_doctrine": "/home/default/Desktop/SG/NewLatest/Grok16/data/g16-field-sanity-doctrine.json",
+    "ironclad_bridge": "/home/default/Desktop/SG/NewLatest/Grok16/forge/g16-ironclad.py",
+    "sanity_operator": "/home/default/Desktop/SG/NewLatest/Grok16/forge/g16-field-sanity.py",
+    "profiles_json": "/home/default/Desktop/SG/NewLatest/Grok16/data/grok16-profiles.json",
+    "version_file": "/home/default/Desktop/SG/NewLatest/Grok16/VERSION",
+    "selfhost_stamp": "/home/default/Desktop/SG/NewLatest/Grok16/SELFHOST.json"
+  },
+  "usage": {
+    "status": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/grok16-toolchain.sh status",
+    "verify": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/grok16-toolchain.sh verify",
+    "bench": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/grok16-toolchain.sh bench",
+    "rebuild": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/grok16-toolchain.sh rebuild",
+    "paths": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/grok16-toolchain.sh paths"
+  },
+  "ammoos_profile": "ammoos",
+  "ammoos_integrate": "data/grok16-ammoos-integrate.json",
+  "ammoos_root": "/home/default/Desktop/SG/NewLatest"
+}

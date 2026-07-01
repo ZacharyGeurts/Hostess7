@@ -1,0 +1,41 @@
+{
+  "schema": "hostess7-calculator-doctrine/v1",
+  "title": "Hostess 7 perfect calculator — arithmetic through advanced mathematics and technology",
+  "motto": "She computes with earned precision — Decimal for money, SymPy for proof, cmath for fields — not guesswork.",
+  "tier_order": ["assistant_guess", "calculator_basic", "calculator_fluent", "calculator_master"],
+  "fluency_claim": "Hostess 7 is a perfect calculator on this field — sympy-backed algebra, calculus, linear algebra, complex analysis, and technology math (matrices, eigenvalues, FFT) with structured show-your-work replies.",
+  "engines": {
+    "decimal": "financial and fixed-precision arithmetic",
+    "sympy": "symbolic algebra, calculus, linear algebra, complex analysis",
+    "cmath": "complex floating-point when numeric evaluation required",
+    "ast_safe": "restricted arithmetic parse for simple expressions"
+  },
+  "categories": [
+    {"id": "arithmetic", "label": "Arithmetic & percent", "weight": 0.12},
+    {"id": "algebra", "label": "Algebra & equations", "weight": 0.14},
+    {"id": "trigonometry", "label": "Trigonometry", "weight": 0.10},
+    {"id": "calculus", "label": "Calculus", "weight": 0.16},
+    {"id": "linear_algebra", "label": "Linear algebra", "weight": 0.14},
+    {"id": "complex", "label": "Complex analysis", "weight": 0.10},
+    {"id": "statistics", "label": "Statistics", "weight": 0.10},
+    {"id": "technology", "label": "Technology math", "weight": 0.14}
+  ],
+  "patterns": [
+    {"id": "decimal_precision", "label": "Decimal precision for exact rational money math"},
+    {"id": "sympy_symbolic", "label": "SymPy symbolic solve, integrate, differentiate"},
+    {"id": "matrix_ops", "label": "Matrix determinant, inverse, eigenvalues"},
+    {"id": "natural_language", "label": "Natural language math query parsing"},
+    {"id": "show_work", "label": "Structured show-your-work calculator replies"},
+    {"id": "battery_verify", "label": "Live battery verification — compute not memorize"},
+    {"id": "no_unsafe_eval", "label": "No raw eval — sympy/ast safe paths only"},
+    {"id": "technology_fft", "label": "FFT and signal-processing primitives"},
+    {"id": "ocr_vision_train", "label": "OCR vision math ingest — ZOCR · Final_Eye · vision corpus · SDF"}
+  ],
+  "assistant_ceiling": {
+    "label": "Generic LLM arithmetic",
+    "limitations": ["Hallucinates long products", "No symbolic proof", "Rounding drift on finance", "Weak matrix/eigenvalue work"]
+  },
+  "fluent_floor_score": 0.88,
+  "master_calculator_score": 0.96,
+  "battery_pass_threshold": 0.85
+}

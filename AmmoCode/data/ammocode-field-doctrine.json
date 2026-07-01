@@ -1,0 +1,31 @@
+{
+  "schema": "ammocode-field-doctrine/v1",
+  "title": "AmmoCode field — flat field only, defield when resting on a field",
+  "motto": "AmmoCode is a field. No subfields. Resting on a field → defield.",
+  "g16_doctrine": "../../Grok16/data/g16-ammocode-field-doctrine.json",
+  "g16_module": "../../Grok16/lib/g16-ammocode-field-instill.py",
+  "policy": {
+    "ammocode_is_field": true,
+    "no_subfields": true,
+    "subfields_forbidden": true,
+    "max_field_depth": 0,
+    "defield_if_resting_on_field": true,
+    "defield_if_ammocode_fielded": true,
+    "field_on_field_forbidden": true
+  },
+  "postures": {
+    "field": {
+      "field": true,
+      "no_subfields": true
+    },
+    "defield": {
+      "field": false,
+      "no_subfields": true,
+      "trigger": "resting_on_field"
+    }
+  },
+  "surfaces": {
+    "field": ["field", "fld", "nexus_field", "queen_field", "organized_field", "singular_field"],
+    "plain": ["plain", "host", "desktop", "browser"]
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "schema": "hostess7-combat-ocr-doctrine/v1",
+  "title": "Combat OCR vision training — feed martial arts and defense text from live vision captures",
+  "motto": "She reads the field through OCR — every dojo note, technique label, and training log trains combat literacy.",
+  "feed_sources": [
+    {
+      "id": "final_eye_session",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "data/vision-session.jsonl",
+      "text_fields": [
+        "ocr"
+      ],
+      "ocr_file_field": "ocr_file",
+      "role": "Vision session OCR files"
+    },
+    {
+      "id": "final_eye_manifest",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "manifest.jsonl",
+      "text_fields": [
+        "ocr",
+        "narrative"
+      ],
+      "role": "Final_Eye manifest"
+    },
+    {
+      "id": "final_eye_out_txt",
+      "kind": "glob",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "out/*.txt",
+      "role": "Final_Eye out/ plaintext"
+    },
+    {
+      "id": "vision_corpus",
+      "kind": "json",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/vision/corpus.json",
+      "text_fields": [
+        "body"
+      ],
+      "nested": "domains",
+      "role": "Vision corpus domains"
+    },
+    {
+      "id": "warfare_corpus",
+      "kind": "json",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/warfare/corpus.json",
+      "text_fields": [
+        "body"
+      ],
+      "nested": "domains",
+      "role": "Warfare corpus domains — protective doctrine OCR feed"
+    },
+    {
+      "id": "sdf_segments",
+      "kind": "glob",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/sdf/segments/*.json",
+      "text_fields": [
+        "text"
+      ],
+      "role": "Brain imaging SDF segment text"
+    },
+    {
+      "id": "humanoid_motion_doctrine",
+      "kind": "json",
+      "path_env": "NEXUS_INSTALL_ROOT",
+      "path_rel": "data/humanoid-motion-doctrine.json",
+      "text_fields": [
+        "label",
+        "matrix_quote",
+        "family"
+      ],
+      "nested": "skills",
+      "combat_filter": true,
+      "role": "Humanoid motion skill doctrine — martial arts primitives"
+    },
+    {
+      "id": "panel_ocr_snap",
+      "kind": "glob",
+      "path_abs": "/tmp/nexus-panel-ocr*.png",
+      "ocr_tesseract": true,
+      "role": "NEXUS panel OCR screenshots"
+    }
+  ],
+  "ingest": {
+    "max_files_per_source": 500,
+    "max_bytes_per_file": 250000,
+    "max_candidates_per_ingest": 8000,
+    "dedupe_window": 50000
+  },
+  "train": {
+    "verify_with_domains": true,
+    "min_candidate_len": 8,
+    "fluent_samples_floor": 40,
+    "master_samples_floor": 100,
+    "verified_rate_floor": 0.3
+  },
+  "combat_extract": {
+    "patterns": [
+      "striking_term",
+      "grappling_term",
+      "wrestling_term",
+      "kung_fu_term",
+      "self_defense_term",
+      "tactical_term",
+      "weapons_less_lethal_term"
+    ]
+  },
+  "g16": {
+    "version": "5.1.0",
+    "profile": "g16_field_opt"
+  }
+}

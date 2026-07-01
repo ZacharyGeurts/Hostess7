@@ -1,0 +1,29 @@
+{
+  "name": "Hostess7",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {},
+  "postCreateCommand": "pip install -r requirements.txt",
+  "postStartCommand": "./Hostess7.sh boot",
+  "forwardPorts": [8080, 9477, 9481, 9488],
+  "portsAttributes": {
+    "8080": {
+      "label": "Hostess7 — full brain",
+      "onAutoForward": "openBrowser"
+    },
+    "9477": {
+      "label": "KILROY panel",
+      "onAutoForward": "notify"
+    },
+    "9481": {
+      "label": "Queen",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  }
+}

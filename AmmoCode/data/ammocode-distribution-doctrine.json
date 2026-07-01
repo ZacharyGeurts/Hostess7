@@ -1,0 +1,33 @@
+{
+  "schema": "ammocode-distribution-doctrine/v1",
+  "title": "Single secured executable — replacement only",
+  "motto": "One binary. No alterations. Replace the file to upgrade.",
+  "executable": {
+    "model": "single_secured_executable",
+    "immutable_at_runtime": true,
+    "updates": "replace_file_only",
+    "no_in_place_patches": true,
+    "no_hot_patching": true,
+    "embedded_assets": true
+  },
+  "settings": {
+    "model": "secured_settings_file",
+    "external_to_executable": true,
+    "signed": true,
+    "auto_migrate_on_run": true,
+    "schema": "data/ammocode-settings-schema.json",
+    "filename": "ammocode-settings.secure.json"
+  },
+  "grok16_binary_package": {
+    "manifest": "../../Grok16/data/grok16-binary-package.json",
+    "script": "../../Grok16/scripts/grok16-binary-package.sh",
+    "settings_defaults": "data/ammocode-settings-package-defaults.json",
+    "bundled_path": "share/ammocode/ammocode",
+    "settings_path": "share/ammocode/ammocode-settings.secure.json"
+  },
+  "operator_data": {
+    "network_lists": "external",
+    "security_pins": "external",
+    "settings": "ammocode-settings.secure.json"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "field-hazard-onset/v1",
+  "motto": "Microseconds matter — shoot or buffer down at onset, cease traffic at the point.",
+  "enabled": true,
+  "proactive": true,
+  "sample_rate_hz": 2400000,
+  "detection": {
+    "energy_window_samples": 8,
+    "derivative_window_samples": 4,
+    "derivative_threshold_db": 6.0,
+    "spike_ratio_min": 4.5,
+    "impulsive_crest_min": 12.0,
+    "baseline_fraction": 0.1,
+    "min_onset_sample": 16
+  },
+  "classification": {
+    "shoot_kinds": ["burst_spike", "wideband_surge", "impulse_train", "hostile_injection"],
+    "buffer_kinds": ["moderate_rise", "narrow_surge"]
+  },
+  "response": {
+    "default_action": "auto",
+    "shoot_severity_min": 0.72,
+    "buffer_severity_min": 0.38,
+    "buffer_atten_db": 24.0,
+    "buffer_floor_linear": 0.02,
+    "buffer_ramp_samples": 96,
+    "cease_wire_traffic": true,
+    "cease_rf_path": true
+  },
+  "traffic_cease": {
+    "write_panel": true,
+    "write_ledger": true,
+    "block_harm_ports": true,
+    "mark_connections": true
+  }
+}

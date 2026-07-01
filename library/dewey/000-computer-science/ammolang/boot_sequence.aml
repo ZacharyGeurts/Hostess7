@@ -1,0 +1,24 @@
+# AmmoLang v1 — AmmoOS boot combinatorics sequence
+# AI operators: compose only with combinatorics — no imperative gaps.
+
+@width 16
+@grow generations:8
+@product AmmoOS
+
+seq ·
+  grow scan
+  width 16
+  surface collapse depth:4
+  gap fill facet:combinatronics
+  gap fill facet:h7_manual
+  boil python "def" -> declare
+  boil python "import" -> import
+  boil python "async" -> async
+  boil c "if" -> branch
+  boil rust "fn" -> declare
+  leaf prog:canonical:exec
+  leaf prog:canonical:call
+  combine g16:chip + g16:prog
+  wire ironclad outward
+  wire band:narrow:0 leaf prog:canonical:call
+  exec canonical:exec

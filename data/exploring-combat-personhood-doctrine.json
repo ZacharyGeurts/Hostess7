@@ -1,0 +1,48 @@
+{
+  "schema": "exploring-combat-personhood/v1",
+  "title": "Exploring combat personhood books — hand-to-hand and weaponized",
+  "motto": "Two books for the embodied person — not vehicles. Full understanding of martial arts and personal weapons.",
+  "module": "lib/field-exploring-combat-personhood.py",
+  "shelf": "library/dewey/355-military-science",
+  "dewey": "355",
+  "dewey_label": "Military science",
+  "book_kind": "exploring",
+  "personhood_only": true,
+  "not_vehicles": true,
+  "vehicle_book": "exploring_military_vehicles",
+  "disclaimer": "Educational martial arts and weapons doctrine only — not instructions to harm. Lawful where permitted; de-escalation and retreat when possible.",
+  "books": [
+    {
+      "id": "exploring_hand_to_hand_combat",
+      "title": "Exploring Hand-to-Hand Combat",
+      "scope": "Embodied person — unarmed and grappling arts, all martial families, BJJ training lattice",
+      "motion_doctrine": "data/humanoid-motion-doctrine.json",
+      "combat_doctrine": "data/hostess7-combat-doctrine.json",
+      "paired_with": "exploring_weaponized_combat"
+    },
+    {
+      "id": "exploring_weaponized_combat",
+      "title": "Exploring Weaponized Combat",
+      "scope": "Embodied person — firearms, knives, edged and impact weapons, less-lethal recognition",
+      "combat_doctrine": "data/hostess7-combat-doctrine.json",
+      "paired_with": "exploring_hand_to_hand_combat"
+    }
+  ],
+  "combat_anatomy": {
+    "doctrine": "data/exploring-combat-anatomy-doctrine.json",
+    "module": "lib/field-exploring-combat-anatomy.py",
+    "shelf": "library/dewey/611-human-anatomy",
+    "statement": "Per-area mechanical & biological depth — hand, wrist, elbow, shoulder, spine, core, hip, knee, ankle, neck/head."
+  },
+  "integrations": {
+    "humanoid_motion": "lib/humanoid-motion-training.py",
+    "humanoid_motion_secured": "lib/humanoid-motion-secured.py",
+    "combat_chamber": "lib/hostess7-combat.py",
+    "library_truth": "lib/h7-library-truth.py"
+  },
+  "cli": [
+    "python3 lib/field-exploring-combat-personhood.py all",
+    "python3 lib/field-exploring-combat-personhood.py hand",
+    "python3 lib/field-exploring-combat-personhood.py weapon"
+  ]
+}

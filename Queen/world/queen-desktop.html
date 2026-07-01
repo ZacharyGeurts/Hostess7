@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-surface="desktop">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Desktop</title>
+  <link rel="stylesheet" href="queen-desktop.css" />
+  <link rel="stylesheet" href="queen-dashboard-flyout.css" />
+  <link rel="stylesheet" href="queen-program-surface.css" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http://127.0.0.1:*; connect-src 'self' http://127.0.0.1:*; frame-src 'self' http://127.0.0.1:*; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <div class="qd-root" id="qd-root">
+    <div class="qd-wallpaper" id="qd-wallpaper" hidden aria-hidden="true"></div>
+    <div class="qd-net-seal" id="qd-net-seal">NET·METAL …</div>
+    <main class="qd-work" aria-label="Desktop">
+      <div class="qd-icons" id="qd-icons" aria-label="Desktop icons"></div>
+      <div class="qd-windows" id="qd-windows" aria-label="Application windows" hidden></div>
+    </main>
+    <nav class="qd-taskbar" aria-label="Taskbar">
+      <button type="button" class="qd-taskbar-start" id="qd-taskbar-start" aria-label="Start">Start</button>
+      <button type="button" class="qd-quick qd-home" id="qd-home" aria-label="AmmoOS C2" title="Return to AmmoOS C2">AmmoOS</button>
+      <button type="button" class="qd-quick" id="qd-quick-files" aria-label="Queen Files" data-qd-tip="Queen Files — AmmoOS folder manager">
+        <span class="qd-quick-glyph" aria-hidden="true">📁</span>
+      </button>
+      <button type="button" class="qd-quick" id="qd-quick-browser" aria-label="Queen Browser" data-qd-tip="Queen Browser — fullscreen inside desktop">
+        <span class="qd-quick-glyph" aria-hidden="true">🌐</span>
+      </button>
+      <div class="qd-tasks" id="qd-tasks" role="list"></div>
+      <div class="qd-tray-tools" id="qd-tray-tools"></div>
+      <label class="qd-search-wrap" id="qd-search-wrap">
+        <span class="qd-search-label">Search</span>
+        <input type="search" class="qd-search" id="qd-search" placeholder="Ironclad search…" autocomplete="off" aria-label="Ironclad search" />
+        <select class="qd-sort" id="qd-sort" aria-label="Search context">
+          <option value="all">All</option>
+          <option value="registry">Registry</option>
+          <option value="catalog">Catalog</option>
+          <option value="chips">CHIPS</option>
+        </select>
+      </label>
+      <div class="qd-tray" id="qd-clock" role="timer">--:--</div>
+    </nav>
+  </div>
+  <div class="qd-tip" id="qd-tip" role="tooltip" hidden></div>
+  <div class="qd-ctx" id="qd-ctx" role="menu"></div>
+  <div class="qd-toast" id="qd-toast" role="status" aria-live="polite"></div>
+  <script src="queen-icon-engine.js"></script>
+  <script src="queen-ai-surface.js"></script>
+  <script src="queen-sdf-icons.js"></script>
+  <script src="queen-dashboard-flyout.js"></script>
+  <script src="ironclad-bus.js"></script>
+  <script src="queen-program-surface.js"></script>
+  <script src="queen-desktop.js"></script>
+</body>
+</html>

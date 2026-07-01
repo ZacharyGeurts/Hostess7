@@ -1,0 +1,75 @@
+{
+  "schema": "field-chip-battery-doctrine/v1",
+  "title": "Deprecated — use field-ironclad-chips-combinatorics-doctrine.json",
+  "motto": "Chip combinatorics now roots on Ironclad — no battery.",
+  "deprecated": true,
+  "delegate": "data/field-ironclad-chips-combinatorics-doctrine.json",
+  "module": "lib/field-ironclad-chips-combinatorics.py",
+  "panel": "field-ironclad-chips-combinatorics-panel.json",
+  "cache": "field-ironclad-chips-combinatorics.json",
+  "seed": "data/field-chip-battery-seed.json",
+  "mame_cache": "data/field-chip-battery-mame-cache.json",
+  "combinatorics": {
+    "facet": "ironclad_chips",
+    "leaf_prefix": "chip",
+    "doctrine": "Grok16/data/g16-field-combinatorics-doctrine.json"
+  },
+  "combinatronic": {
+    "schema": "field-chips-combinatronic/v1",
+    "title": "Universal CHIPS Combinatronic",
+    "motto": "Every die a combinatorics leaf — hard path %, THE sort (composite_bsp), optimal combinatorics.",
+    "api": "/api/chips/combinatronic",
+    "queen_surface": "/world/queen-chips-cores.html",
+    "panel_cmd": "combinatronic",
+    "visuals": {
+      "doctrine": "data/field-combinatronic-visuals-doctrine.json",
+      "catalog": "data/field-combinatronic-chip-catalog.json",
+      "pattern": "chip_png",
+      "repair": "field-combinatronic-visuals.py repair"
+    }
+  },
+  "sources": [
+    {"id": "seed", "label": "Curated seed — Cyrix, CoCo, classic MAME"},
+    {"id": "mame", "label": "MAME -listdevices live import"},
+    {"id": "chips_manifest", "label": "Queen CHIPS g16 hot paths"},
+    {"id": "queen_game_room", "label": "Queen game room systems + host CPUs"},
+    {"id": "isa_data", "label": "Hostess7 ISA opcode platforms"},
+    {"id": "cpu_library", "label": "CPU library catalog — ARM, Apple, mobile, x86"},
+    {"id": "libretro", "label": "Libretro cores installed — RetroArch / Steam"},
+    {"id": "combinatronic_catalog", "label": "Combinatronic chip catalog — featured + full imprint dies"}
+  ],
+  "thermal_gate": {
+    "low_power_default": true,
+    "env": "NEXUS_CHIP_BATTERY_LOW_POWER",
+    "mame_live_env": "NEXUS_CHIP_BATTERY_MAME_LIVE",
+    "headroom_min_pct": 12,
+    "max_mame_live_devices": 8000
+  },
+  "kinds": [
+    "host_cpu", "guest_cpu", "soc", "sound", "video", "pio", "mmu", "fdc",
+    "mame_device", "chips_hot", "isa_platform", "gpu", "fpga", "network"
+  ],
+  "ironclad": {
+    "citation": "ironclad:chips:2",
+    "meld_citation": "ironclad:meld:2",
+    "connected_throughout": true,
+    "modules": ["lib/ironclad-immediate.py", "lib/ironclad-field-sanity.py", "lib/field-best-sort.py"]
+  },
+  "plate_stack": {
+    "doctrine": "data/field-chips-iron-steel-plate-doctrine.json",
+    "module": "lib/field-chips-plate-stack.py",
+    "api": "/api/chips/plate-stack",
+    "layer_above": "ironclad",
+    "connection": "sovereign_time_only"
+  },
+  "code_path_prediction": {
+    "seed": "data/field-chip-path-predict-seed.json",
+    "hard_percent": true,
+    "narrow_band_width": 16,
+    "pipe_policy": "adjacent_narrow_only",
+    "power_sort_context": "chip_paths",
+    "organize_algorithm": "composite_bsp",
+    "the_sort": "field-best-sort",
+    "one_best_ever": true
+  }
+}

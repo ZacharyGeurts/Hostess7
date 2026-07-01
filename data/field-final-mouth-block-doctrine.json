@@ -1,0 +1,32 @@
+{
+  "schema": "field-final-mouth-block/v1",
+  "title": "Final Mouth — ironclad NEXUS C2 block",
+  "motto": "Loquor + Veritas Vox · GVC1 vocal spectrum · Hostess7 bridge — one sealed voice block like CHIPS.",
+  "product": "AmmoOS",
+  "module": "lib/field-final-mouth-block.py",
+  "panel_state": "field-final-mouth-block-panel.json",
+  "battery_state": "field-final-mouth-block.json",
+  "api": "/api/field-final-mouth-block",
+  "surface": "/world/queen-final-mouth-manager.html",
+  "facet": "final_mouth",
+  "ironclad_citation": "ironclad:final_mouth:1",
+  "sense": {
+    "min_headroom_pct": 10,
+    "blocked_levels": ["crit", "storm"]
+  },
+  "stack": {
+    "mouthball": "Queen/lib/queen-mouthball.py",
+    "product": "Final_Mouth/zocr_product.py",
+    "ocr": "Final_Eye/zocr.py"
+  },
+  "ocr_expect": {
+    "surface_html": "Queen/world/queen-final-mouth-manager.html",
+    "needles": ["Final Mouth", "NEXUS C2", "Loquor", "Veritas Vox", "qfm-spectrum"]
+  },
+  "kernels": [
+    "queen_mouthball",
+    "final_mouth",
+    "gvc1",
+    "final_eye_ocr"
+  ]
+}

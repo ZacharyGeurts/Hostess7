@@ -1,0 +1,59 @@
+{
+  "schema": "field-scripts-registry/v1",
+  "updated": "2026-06-29",
+  "motto": "One canonical path per job — thin wrappers point here.",
+  "profiles": {
+    "mint_dev": "scripts/field-mint-boot-ready.sh — source tree + nexus-field-early + nexus-genius",
+    "prod_install": "genius_shield.sh / install-all.sh — /usr/local/lib/nexus-shield",
+    "ammolang": "lib/ammolang-run.sh — universal protective boundary for everything (named routes + exec any target)"
+  },
+  "canonical": {
+    "boot_mint": "scripts/field-mint-boot-ready.sh",
+    "boot_early": "scripts/nexus-field-early-boot.sh",
+    "boot_impl": "scripts/nexus-boot-impl.sh",
+    "pre_reboot_test": "scripts/field-mint-pre-reboot-test.sh",
+    "stack_full": "scripts/start-field-stack.sh",
+    "stack_fast": "scripts/ammoos-direct-start.sh",
+    "kilroy_load_os": "scripts/kilroy-load-os.sh",
+    "stack_restart": "scripts/restart-field-stack.sh",
+    "stack_router": "scripts/stack.sh",
+    "wire": "scripts/wire-stack.sh",
+    "kilroy_core": "lib/kilroy-core.sh",
+    "kilroy_loopback": "lib/kilroy-loopback.py",
+    "kilroy_boot_services": "lib/kilroy-boot-services.py",
+    "queen_profile_branding": "lib/queen-profile-branding.py",
+    "kilroy_bzimage": "scripts/field-kilroy-bzimage.sh",
+    "znetwork": "scripts/integrate-znetwork.sh",
+    "tristate_virtual": "scripts/tristate-virtual-kilroy-field.sh",
+    "update_inplace": "scripts/ammoos-update-inplace.sh"
+  },
+  "merge_map": {
+    "aml.sh": "lib/ammolang-run.sh",
+    "ammoos-beta-pipeline.sh": "lib/ammolang-run.sh beta_pipeline",
+    "ammoos-ship-beta3.sh": "lib/ammolang-run.sh ship",
+    "integrate-compiler-stack.sh": "lib/ammolang-run.sh compiler_stack",
+    "nexus-g16-recompile.sh": "lib/ammolang-run.sh g16_recompile",
+    "stealth_install.sh": "install-all.sh",
+    "nexus-field-early-boot.sh": "lib/nexus-field-early-boot.sh",
+    "nexus-boot-impl.sh": "lib/nexus-boot-impl.sh"
+  },
+  "deprecated": {
+    "znetwork_layer": "Absorbed into lib/kilroy-core.sh — stack.sh znetwork is shim only"
+  },
+  "delete_or_fix": {
+    "scripts/znetwork-activate-fast.sh": "fix symlink → NewLatest/ZNetwork/scripts/",
+    "scripts/znetwork-build-host.sh": "fix symlink → NewLatest/ZNetwork/scripts/"
+  },
+  "legacy_keep": [
+    "scripts/v10-mission.sh",
+    "scripts/kilroy-extract.sh",
+    "scripts/h7-migrate-batch.sh"
+  ],
+  "kilroy_bzimage": {
+    "required_for": "live /proc/kilroy_field, kernel self-defense, QEMU/Grok boot, Tristate commit",
+    "not_required_for": "Mint dev reboot today — userspace graft + nexus-field-early + genius",
+    "build": "scripts/field-kilroy-bzimage.sh",
+    "output": "KILROY/build/bzImage",
+    "qemu": "KILROY/scripts/grok-boot-qemu.sh"
+  }
+}

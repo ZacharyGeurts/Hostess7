@@ -1,0 +1,42 @@
+{
+  "schema": "field-diagnostic-mode-doctrine/v1",
+  "title": "Diagnostic mode — secure baseline only while debugging self",
+  "motto": "Problems detected → drop to diagnostic. All systems lock away from the fault; it is reorganized out.",
+  "policy": {
+    "auto_engage_on_fault": true,
+    "baseline_only_runtime": true,
+    "lock_non_baseline_slices": true,
+    "reorganize_fault_layers": true,
+    "debug_self_pass_required_to_clear": true
+  },
+  "secure_baseline_scripts": [
+    "sovereign-clock.py",
+    "g1id-baseline.py",
+    "ironclad-field-sanity.py",
+    "field-io-packet.py",
+    "nexus-probe-guard.py",
+    "field-diagnostic-mode.py",
+    "connection-gatekeeper.py",
+    "field-operator.py"
+  ],
+  "secure_baseline_slices": [
+    "ironclad_field_sanity",
+    "ironclad",
+    "logic_gate",
+    "gatekeeper"
+  ],
+  "fault_signals": [
+    "ironclad_field_sanity",
+    "g1id_baselines",
+    "field_io_packet",
+    "filesystem_critical",
+    "thermal_crit",
+    "brain_corruption",
+    "compatibility_fault",
+    "combinatorics_lock",
+    "combinatorics_reject",
+    "combinatorics_threat_retaliate"
+  ],
+  "module": "lib/field-diagnostic-mode.py",
+  "panel": "field-diagnostic-mode-panel.json"
+}

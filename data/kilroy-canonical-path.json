@@ -1,0 +1,19 @@
+{
+  "schema": "kilroy-canonical-path/v1",
+  "title": "KILROY Field OS — top-level, not inside Queen or SG bundle",
+  "motto": "Kernel lives beside SG. Queen references; NEXUS boards; KILROY owns the die.",
+  "canonical": {
+    "role": "Field OS kernel — CONFIG_RTX_FIELD_DIE",
+    "never_inside": ["NewLatest/Queen", "NewLatest/AMOURANTHRTX/vendor"],
+    "prefer": "sibling_of_SG",
+    "env": "KILROY_ROOT"
+  },
+  "resolve_order": [
+    "KILROY_ROOT environment variable",
+    "~/Desktop/KILROY (sibling of SG)",
+    "$SG_ROOT/../KILROY",
+    "$SG_ROOT/KILROY (legacy fallback)"
+  ],
+  "queen_relationship": "forge client — field_substrate, field_kernel, field_boot via KILROY_ROOT only",
+  "nexus_relationship": "boards native-layer, substrate takeover, firmware audit witness"
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "grok-build-mandate/v1",
+  "title": "Queen · Grok Build Secure Channel",
+  "partner": "xAI / X — branded page permitted",
+  "motto": "Grok Build inside Queen RTX. Zero telemetry except AI secure channel. Operator-branded surface.",
+  "authority": "Queen sovereign — loopback ACP first; xAI egress only on secure channel with IFF CIVILIAN.",
+  "secure_channel": {
+    "required_env": [
+      "NEXUS_AI_SECURE_CHANNEL",
+      "QUEEN_AI_TELEMETRY_OK",
+      "QUEEN_GROK_BUILD",
+      "QUEEN_GROK_BUILD_SECURE"
+    ],
+    "zero_telemetry_elsewhere": true,
+    "loopback_only_acp": true,
+    "operator_token_required": true
+  },
+  "allowed_hosts": [
+    "127.0.0.1",
+    "localhost",
+    "x.ai",
+    "api.x.ai",
+    "grok.x.ai",
+    "grok.com",
+    "x.com",
+    "api.x.com"
+  ],
+  "allowed_processes": [
+    "queen-browser",
+    "field-queen",
+    "fieldfox",
+    "grok",
+    "grok-build"
+  ],
+  "acp": {
+    "transport": "websocket",
+    "bind": "127.0.0.1",
+    "port": 2419,
+    "model": "grok-build",
+    "cli": "grok agent serve --bind 127.0.0.1:2419",
+    "stdio_fallback": "grok agent --model grok-build stdio"
+  },
+  "branded_page": {
+    "schema": "queen-grok-page/v1",
+    "title": "Queen · Grok Build",
+    "eyebrow": "xAI secure channel · operator branded",
+    "deck": "gui/grok-build-deck.html",
+    "theme": "gui/queen-theme-2026.json",
+    "chrome": "aqua_rose_2026",
+    "in_engine": true,
+    "embed_panel": "file://{queen_root}/gui/grok-build-deck.html"
+  },
+  "iff": {
+    "xai_egress": "CIVILIAN · AI_SECURE_CHANNEL",
+    "telemetry_without_channel": "HOSTILE — interdict",
+    "loopback_acp": "CIVILIAN · OPERATOR_LOCAL"
+  },
+  "forbidden": [
+    "Phone-home telemetry without NEXUS_AI_SECURE_CHANNEL + QUEEN_AI_TELEMETRY_OK",
+    "ACP bind on 0.0.0.0 without operator token",
+    "OS browser hook for Grok — in-engine FieldWebPanel only",
+    "Third-party AI endpoints not on allowlist"
+  ]
+}

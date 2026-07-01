@@ -1,0 +1,27 @@
+{
+  "schema": "field-lock-import-doctrine/v1",
+  "title": "Lock import — every popular password locker into sovereign .kdbx",
+  "motto": "KeePass · 1Password · Bitwarden · LastPass · browser exports — one vault.",
+  "product": "Lock",
+  "module": "lib/field-lock-import.py",
+  "staging": "field-lock-import-staging.json",
+  "vault_dir": "field-keepass-vault",
+  "formats": {
+    "kdbx": {"ext": [".kdbx"], "action": "copy_vault"},
+    "keepass_xml": {"ext": [".xml"], "action": "parse_keepass_xml"},
+    "csv_generic": {"ext": [".csv"], "action": "parse_csv", "headers": ["url", "username", "password", "title", "notes"]},
+    "onepassword_csv": {"ext": [".csv"], "action": "parse_1password_csv"},
+    "lastpass_csv": {"ext": [".csv"], "action": "parse_lastpass_csv"},
+    "bitwarden_json": {"ext": [".json"], "action": "parse_bitwarden_json"},
+    "chrome_csv": {"ext": [".csv"], "action": "parse_chrome_csv"},
+    "firefox_csv": {"ext": [".csv"], "action": "parse_firefox_csv"},
+    "queen_vault": {"ext": [".enc"], "action": "bridge_queen_vault"}
+  },
+  "legacy_paths": [
+    "~/.config/KeePass",
+    "~/.keepass",
+    "~/Documents/*.kdbx",
+    "~/.config/keepassxc"
+  ],
+  "api": "/api/field-lock/import"
+}

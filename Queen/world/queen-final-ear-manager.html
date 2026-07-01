@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026" class="nexus-military-v8 qfe-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Final Ear — NEXUS C2</title>
+  <link rel="stylesheet" href="queen-nexus-c2.css" />
+  <link rel="stylesheet" href="queen-final-ear-manager.css" />
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+</head>
+<body data-queen-surface="final-ear-manager">
+  <div class="qfe-shell" id="qfe-window">
+    <header class="qfe-bar">
+      <div class="qfe-bar-brand">
+        <span class="qfe-sigil" aria-hidden="true">◎</span>
+        <div>
+          <span class="qfe-title">Final Ear</span>
+          <span class="qfe-sub">NEXUS C2 · Auditus · Veritas · sovereign hearing</span>
+        </div>
+      </div>
+      <span class="qfe-pill" id="qfe-level" data-level="ok">LISTENING</span>
+      <span class="qfe-g16" id="qfe-g16">G16…</span>
+      <button type="button" class="qfe-btn" id="qfe-arm" title="Arm earball">Arm ear</button>
+      <button type="button" class="qfe-btn qfe-btn--ghost" id="qfe-refresh">Refresh</button>
+      <button type="button" class="qfe-btn qfe-styles" data-queen-styles-open title="Styles">◈</button>
+      <span class="qfe-status" id="qfe-status" aria-live="polite"></span>
+    </header>
+
+    <main class="qfe-stage">
+      <section class="qfe-hero" aria-label="Hearing posture">
+        <div class="qfe-wave-wrap">
+          <canvas class="qfe-spectrum" id="qfe-spectrum" width="480" height="160" role="img" aria-label="Auditory spectrum"></canvas>
+          <div class="qfe-wave-ring" aria-hidden="true"></div>
+        </div>
+
+        <div class="qfe-hero-metrics">
+          <article class="qfe-stat qfe-stat--living">
+            <span class="qfe-stat-label">Auditus</span>
+            <strong class="qfe-stat-val" id="qfe-auditus">—</strong>
+            <span class="qfe-stat-hint" id="qfe-living-hint">living ear</span>
+          </article>
+          <article class="qfe-stat qfe-stat--truth">
+            <span class="qfe-stat-label">Veritas</span>
+            <strong class="qfe-stat-val" id="qfe-veritas">—</strong>
+            <span class="qfe-stat-hint" id="qfe-truth-hint">truth forward</span>
+          </article>
+          <article class="qfe-stat">
+            <span class="qfe-stat-label">Virtual ears</span>
+            <strong class="qfe-stat-val" id="qfe-virtual">—</strong>
+            <span class="qfe-stat-hint">spawn any point</span>
+          </article>
+          <article class="qfe-stat">
+            <span class="qfe-stat-label">Block held</span>
+            <strong class="qfe-stat-val" id="qfe-held">—</strong>
+            <span class="qfe-stat-hint" id="qfe-headroom">headroom —</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="qfe-grid" aria-label="Ear metrics">
+        <article class="qfe-card">
+          <h3>Product doctrine</h3>
+          <dl class="qfe-kv">
+            <div><dt>Product</dt><dd id="qfe-product">—</dd></div>
+            <div><dt>Version</dt><dd id="qfe-version">—</dd></div>
+            <div><dt>Codec</dt><dd id="qfe-codec">—</dd></div>
+            <div><dt>Rule</dt><dd id="qfe-rule">—</dd></div>
+          </dl>
+        </article>
+        <article class="qfe-card">
+          <h3>Hostess7 bridge</h3>
+          <dl class="qfe-kv">
+            <div><dt>Bridge</dt><dd id="qfe-bridge">—</dd></div>
+            <div><dt>Neural stack</dt><dd id="qfe-stack">—</dd></div>
+            <div><dt>Sovereign time</dt><dd id="qfe-time">—</dd></div>
+            <div><dt>Sound tracker</dt><dd id="qfe-tracker">—</dd></div>
+          </dl>
+        </article>
+        <article class="qfe-card qfe-card--wide">
+          <h3>Secure path pipeline</h3>
+          <p class="qfe-motto" id="qfe-pipeline">seal → sync → signal_intel → truth → ear_nn → eye_nn → quorum</p>
+        </article>
+        <article class="qfe-card">
+          <h3>Ironclad block</h3>
+          <p class="qfe-motto" id="qfe-block-posture">—</p>
+          <dl class="qfe-kv qfe-kv--compact">
+            <div><dt>OCR hits</dt><dd id="qfe-ocr">—</dd></div>
+            <div><dt>Citation</dt><dd>ironclad:final_ear:1</dd></div>
+          </dl>
+        </article>
+        <article class="qfe-card">
+          <h3>C2 quick panels</h3>
+          <nav class="qfe-links" id="qfe-links">
+            <a href="/world/queen-nexus-c2.html" target="_top">AmmoOS C2</a>
+            <a href="/world/queen-final-mouth-manager.html" target="_top">Final Mouth</a>
+            <a href="/world/queen-thermal-manager.html" target="_top">Thermal Manager</a>
+            <a href="http://127.0.0.1:9477/threat-panel" target="_top">Threat Panel</a>
+          </nav>
+        </article>
+      </section>
+    </main>
+
+    <footer class="qfe-foot">
+      <span id="qfe-ts">—</span>
+      <span class="qfe-foot-sep">·</span>
+      <span>We never presume hearing loss — confidence always in Hearing</span>
+      <span class="qfe-foot-sep">·</span>
+      <span id="qfe-motto">Final_Ear · queen-earball · Hostess7 neural stack</span>
+    </footer>
+  </div>
+  <script src="queen-final-ear-manager.js"></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

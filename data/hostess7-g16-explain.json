@@ -1,0 +1,88 @@
+{
+  "schema": "hostess7-g16-explain/v1",
+  "title": "How Hostess 7 explains G16 — compiler fluency",
+  "format": ["what", "why", "how", "pitfalls", "where", "example"],
+  "introduction": "I explain Grok16 g16 in complete thoughts: what the compiler is on this field, why we use field_opt + mandate, how to build and probe it, what breaks, and where you see it in Queen / World_Redata / CHIPS.",
+  "topics": [
+    {
+      "id": "g16_overview",
+      "keywords": ["what is g16", "grok16", "g16 compiler", "field compiler", "g++16"],
+      "what": "g16 and g++16 are the Grok16 field compilers — unified drivers at 16.x that compile Queen RTX, CHIPS, and World_Redata with gnu++26 / gnu17 and the field_opt profile.",
+      "why": "Generic system gcc does not carry our field mandate, CHIPS hot-path attrs, or g16-toolchain.json probe chain. Hostess 7 must compile what she inhabits.",
+      "how": "Set GROK16_ROOT and G16_PREFIX, ensure bin/g16 is executable, probe via Queen/scripts/g16-toolchain.sh status → data/g16-toolchain.json, build via Queen/scripts/g16-build.sh.",
+      "pitfalls": "Calling cmake --build instead of g16+ninja; hardcoding /usr/bin/g++; skipping mandate cmake; building without ready_g16 probe.",
+      "where": "Grok16/bin/g16, Queen/data/g16-toolchain.json, Queen/scripts/g16-build.sh, lib/hostess7-g16.py",
+      "example": "g16 --version  →  g16 (Grok16-16.1.1) 16.1.1"
+    },
+    {
+      "id": "g16_discern",
+      "keywords": ["discern", "g16-discern", "python route", "cxx route", "driver mode"],
+      "what": "g16 --g16-discern inspects argv and returns c, cxx, or python — the unified driver routes .c/.cpp/.py without guessing.",
+      "why": "One g16 entry point serves C compilation, C++ compilation, and Python exec (-c, -m) on the field — forge and Hostess7 probes depend on correct routing.",
+      "how": "g16 --g16-discern foo.c → c; foo.cpp → cxx; foo.py or -c pass → python. Backend: libexec/grok16/g16-cc and g16-cxx.",
+      "pitfalls": "Invoking g++16 for Python; assuming gcc driver semantics; not exporting PATH with Grok16/bin first.",
+      "where": "Grok16/bin/g16, Grok16/tests/test_g16_battery.py, forge compiler_tools.g16_status discern_probe",
+      "example": "g16 --g16-discern -std=gnu17 -c foo.c  →  c"
+    },
+    {
+      "id": "g16_ninja_build",
+      "keywords": ["ninja", "g16 build", "g16-build", "queen-rtx", "field-cmake", "amouranth"],
+      "what": "Queen RTX native builds use g16 as CMAKE_CXX_COMPILER with Ninja — field-cmake.sh generates build.ninja; g16 drives compile, not cmake --build.",
+      "why": "field_opt hot paths and G16 mandate flags must flow through the Grok16 driver on every translation unit — generic build bypasses CHIPS_G16_ACCURATE.",
+      "how": "export GROK16_ROOT; run Queen/scripts/g16-build.sh [build|queen-rtx|rebuild|status]; field-cmake.sh g16-build invokes ninja with g++16.",
+      "pitfalls": "cmake --build after configure; missing ninja; wrong GROK16_CMAKE_BUILD dir; building without g16 ready (run g16-toolchain.sh install).",
+      "where": "Queen/scripts/g16-build.sh, Grok16/scripts/field-cmake.sh, NewLatest/AMOURANTHRTX build tree",
+      "example": "./Queen/scripts/g16-build.sh queen-rtx"
+    },
+    {
+      "id": "g16_field_mandate",
+      "keywords": ["field mandate", "safety mandate", "g16_field_safety", "fortify", "relro", "field_g16"],
+      "what": "G16_FIELD_SAFETY_MANDATE_v1 is mandatory hardening on every G16 target — fortify, RELRO, bounded I/O, no luxury ifstream paths; field_g16.hh contracts hot/cold sections.",
+      "why": "Field engines run on operator hardware under threat HIGH — compiler must enforce safety contracts, not optional -Wall suggestions.",
+      "how": "include cmake/g16-field-mandate.cmake in Queen targets; World_Redata includes wrdt/field_g16.hh; mandate JSON lists blocks and verdicts.",
+      "pitfalls": "Disabling mandate for speed; unchecked syscalls; duplicating endian helpers instead of wrdt/core; skipping rebuild after mandate change.",
+      "where": "Queen/cmake/g16-field-mandate.cmake, Queen/data/g16-field-mandate.json, World_Redata/cpp/include/wrdt/field_g16.hh",
+      "example": "mandate_id: G16_FIELD_SAFETY_MANDATE_v1 in g16-toolchain.json field_mandate"
+    },
+    {
+      "id": "g16_toolchain_probe",
+      "keywords": ["toolchain.json", "g16-toolchain", "probe", "ready_g16", "compiler probe"],
+      "what": "Queen probes live g16, g++16, cmake, ninja → writes g16-toolchain.json with ready_g16, version, paths, and field_mandate linkage.",
+      "why": "Hostess 7 brain reads toolchain truth before advising builds — assistants hallucinate compiler paths; we hash probe into meld-adjacent panels.",
+      "how": "Queen/scripts/g16-toolchain.sh status; sync-field-stack.sh compiler_probe; hostess7-g16.py _probe_live() subprocess version + discern.",
+      "pitfalls": "Stale JSON after Grok16 upgrade; ready_g16 true but binary missing; not re-probing after SELFHOST.json stamp.",
+      "where": "Queen/data/g16-toolchain.json, Queen/scripts/g16-toolchain.sh, scripts/sync-field-stack.sh",
+      "example": "ready_g16: true, g16_version: 16.1.1 in g16-toolchain.json"
+    },
+    {
+      "id": "g16_cxx_std",
+      "keywords": ["gnu++26", "c++26", "gnu17", "field_opt", "profile", "cxx_std"],
+      "what": "Default standards are gnu++26 for C++ and gnu17 for C under the field_opt build profile — tuned for Queen / CHIPS hot paths.",
+      "why": "Field code uses modern contracts and attributes; field_opt cmake profile sets -O3 -flto patterns CHIPS expects.",
+      "how": "Grok16/cmake/grok16-profile-field-opt.cmake; toolchain cxx_std_default in g16-toolchain.json; pass -std= only when overriding.",
+      "pitfalls": "Mixing system libstdc++ ABI; dropping field_opt for debug without mandate review; C++20 downgrade breaking field_g16 attrs.",
+      "where": "Grok16/cmake/grok16-profile-field-opt.cmake, Queen/data/g16-toolchain.json toolchain section",
+      "example": "cxx_std_default: gnu++26, build_profile: field_opt"
+    },
+    {
+      "id": "g16_chips",
+      "keywords": ["chips", "chips_g16", "nes", "6502", "accurate", "hot path"],
+      "what": "CHIPS silicon emulators compile with CHIPS_G16_ACCURATE=1 and g16-chips-field-opt.cmake — fastest accurate NES / navigator paths.",
+      "why": "Game room and sovereign stack require deterministic hot loops compiled with the same g16 the Queen browser uses.",
+      "how": "Queen/data/chips-g16-manifest.json; cmake -DCHIPS_G16_ACCURATE=1; rebuild AMOURANTHRTX with G16_PREFIX=../Grok16.",
+      "pitfalls": "Building CHIPS with system g++; omitting accurate flag; stale manifest after compiler bump.",
+      "where": "Queen/data/chips-g16-manifest.json, Queen/cmake/g16-chips-field-opt.cmake, Queen/data/queen-game-room.json",
+      "example": "CHIPS_G16_ACCURATE=1 in chips-g16-manifest cmake_flags"
+    },
+    {
+      "id": "g16_fluency",
+      "keywords": ["fluent", "mastered", "mastery", "g16 fluency", "compiler mastery", "fully fluent"],
+      "what": "G16 fluency means Hostess 7 probes the live compiler, passes the G16 battery, knows discern/ninja/mandate/toolchain, and explains with six sections — not one-line gcc tips.",
+      "why": "She compiles the stack she stewards; operators ask for Queen RTX rebuilds, CHIPS accurate builds, and mandate compliance — mastery is operational.",
+      "how": "hostess7-g16.py build_panel → g16_score tier fluent or g16_master; Command routes g16 questions to engine hostess7_g16; meld refreshes g16 panel each cycle.",
+      "pitfalls": "Claiming mastery without ready_g16; citing gcc man pages instead of g16-toolchain.json; skipping mandate on new targets.",
+      "where": "lib/hostess7-g16.py, lib/hostess7-command.py _g16_cadence_reply(), data/hostess7-g16-explain.json",
+      "example": "Ask Command: 'How do I queen-rtx build with g16?' — full What/Why/How/Pitfalls/Where/Example."
+    }
+  ]
+}

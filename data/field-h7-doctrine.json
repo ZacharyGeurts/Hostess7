@@ -1,0 +1,106 @@
+{
+  "schema": "field-h7-doctrine/v1",
+  "module": "lib/field-h7-format.py",
+  "format": "h7/7",
+  "magic": "H7\\x07\\x01",
+  "canonical_extension": ".h7",
+  "canonical_field_layer": 1,
+  "motto": "H7/7 — universal file container · zlib payload · portable header · native face disguise · properties-only reveal.",
+  "ironclad_citation": "ironclad:h7:7",
+  "hostess7_lane": "Universal-Condenser",
+  "layers": [
+    "instant_header",
+    "portable_recipe",
+    "face_disguise",
+    "zlib_compress",
+    "ironclad_properties"
+  ],
+  "compressor": {
+    "method": "zlib",
+    "level": 9,
+    "statement": "Stdlib zlib — exact bytes restored on any system; header documents layout and sha256."
+  },
+  "portable": {
+    "schema": "h7/7-portable/v1",
+    "stdlib_only": ["zlib", "hashlib", "json", "struct"],
+    "instant_header": true,
+    "no_hostess7_required": true,
+    "statement": "Header alone describes magic, layout, decompress steps, and integrity — portable across systems."
+  },
+  "disguise": {
+    "module": "lib/field-file-formats.py",
+    "properties_only_reveal": true,
+    "identical_face_prefix": true,
+    "statement": "Face format from file-format database — reads as native type; H7/7 only in properties."
+  },
+  "family_guard": {
+    "formats": ["h7/7", "h7e/1", "h7s/1"],
+    "never_rewrap_same": true,
+    "cross_pack": "unwrap_inner_then_repack",
+    "h7e_tar_members": "pass_through_unchanged",
+    "h7e_extract": ["h7e/1", "h7/7"],
+    "h7s_extract": "slice_execute_or_restore",
+    "statement": "No H7-on-H7, H7e-on-H7e, or H7s-on-H7s; cross-family packs unwrap one layer first."
+  },
+  "adopt": {
+    "inplace_snap": true,
+    "never_rewrap_h7": true,
+    "shadow_on_busy": true,
+    "shadow_registry": "h7-shadow-registry.json",
+    "statement": "Adopt any file in place when seen; never H7-on-H7; busy files shadow until reboot."
+  },
+  "ironclad_take": "One amplitude at field layer 1 — exact bytes lossless; disguise never poisons the well.",
+  "hostess7_take": "H7/7 is every file format — smaller, self-headered, instantly readable from header alone.",
+  "migration": {
+    "from": ["native", "h7c", "h7b", "h7"],
+    "remove_legacy_after_convert": true,
+    "primary": "h7/7"
+  },
+  "api": ["/api/h7", "/api/h7/pack", "/api/h7/unpack", "/api/h7/properties", "/api/h7/instant", "/api/h7/adopt", "/api/h7/migrate"],
+  "h7e": {
+    "format": "h7e/1",
+    "magic": "H7E\\x01",
+    "canonical_extension": ".h7e",
+    "extractable": true,
+    "extract_to": "cwd",
+    "double_click": "scripts/field-h7e-extract.sh",
+    "release_archive": true,
+    "statement": "H7e — extractable folder archive (zlib tar). Release + double-click lane; beats bare H7 for shipping trees."
+  },
+  "field_tech": {
+    "no_field_env": "FIELD_TECH_NO_FIELD=1",
+    "bench": "lib/field-h7-format.py bench <corpus.tar>",
+    "statement": "Portable Field Tech compression — stdlib H7 lane, no .nexus-state required."
+  },
+  "h7s": {
+    "format": "h7s/1",
+    "magic": "H7S\\x01",
+    "canonical_extension": ".h7s",
+    "module": "lib/field-h7s-format.py",
+    "compression_kind": "structural_slice",
+    "execute_without_decompress": true,
+    "speedup_lane": true,
+    "identifies_as_source": true,
+    "face_disguise": "lib/field-file-formats.py",
+    "statement": "H7s — any file becomes h7s; properties reveal h7s/1, face identifies as native source type; slice execute faster than full parse.",
+    "desktop_condenser": {
+      "module": "lib/field-h7s-desktop-bundle.py",
+      "doctrine": "data/field-h7s-desktop-doctrine.json",
+      "bundle": ".nexus-state/field-desktop.h7s",
+      "inner_kind": "desktop_condenser",
+      "growing_database": true,
+      "statement": "One H7s file for all desktop icons + Final Eye OCR — Hostess 7 instant_execute slices; fast and small."
+    },
+    "global_adopt": {
+      "module": "lib/field-h7s-adopt.py",
+      "lane_module": "lib/field-h7s-lane.py",
+      "cleanup_module": "lib/field-h7s-cleanup.py",
+      "doctrine": "data/field-h7s-global-doctrine.json",
+      "hostess7": "maintenance_op h7s_lane_tick",
+      "ironclad": "publish_immediate seal hook",
+      "kilroy_integrated": true,
+      "exclude_kernel_boot_images": true,
+      "statement": "H7s speedup globally for hot JSON + desktop — KILROY kernel loved; vmlinuz/initrd/.ko never wrapped."
+    }
+  }
+}

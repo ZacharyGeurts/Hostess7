@@ -1,0 +1,23 @@
+{
+  "schema": "queen-zero-cost-4slot/v1",
+  "title": "Zero cost 4-slot security",
+  "rule": "AMOURANTHRTX rtx() singleton — TIME, MEMORY, THERMO, CONTEXT sealed at compile time; tamper aborts with zero runtime tax. Queen exceeds engine baseline.",
+  "source": "AMOURANTHRTX",
+  "runtime_tax": 0,
+  "tamper_action": "abort",
+  "slots": [
+    {"id": "TIME", "index": 0, "guards": "sealed epoch · genesis monolith · entropy verify"},
+    {"id": "MEMORY", "index": 1, "guards": "octree regions · mmap accounting · foreign write denied"},
+    {"id": "THERMO", "index": 2, "guards": "ThermoAccountant · entropy budget · FCC guard scale"},
+    {"id": "CONTEXT", "index": 3, "guards": "syscall generation · layout version · seal hash"}
+  ],
+  "queen_layers": [
+    "iframe_sandbox+csp",
+    "nexus_jump hostile presumption",
+    "web_compat legacy cage",
+    "file_browser root jail",
+    "gate_nav loopback"
+  ],
+  "queen_exceeds_rtx": true,
+  "file_browser_jail": true
+}

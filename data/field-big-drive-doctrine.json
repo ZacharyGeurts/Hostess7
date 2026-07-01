@@ -1,0 +1,145 @@
+{
+  "schema": "field-big-drive-doctrine/v1",
+  "title": "Big Drive — field-stable storage fabric",
+  "motto": "Slider picks frame size · any format · permanent field replaces wandering USB",
+  "module": "lib/field-big-drive.py",
+  "panel": "/field-big-drive",
+  "api": "/api/field-big-drive",
+  "canonical_format": {
+    "id": "fielddrive",
+    "extension": ".fielddrive",
+    "label": "Field Drive",
+    "description": "Sovereign ironclad-meld container — replaces USB sticks for permanent stable fields. WRDT-sealed sectors, plate witness, no flash wear."
+  },
+  "persistence": {
+    "standard_usb_flash": {
+      "retention_typical_years": "5–10",
+      "write_cycles": "1k–10k P/E",
+      "failure_modes": ["bit rot", "controller death", "unmounted corruption", "wear leveling exhaustion"],
+      "field_exposure": "unsealed — files drift with host entropy"
+    },
+    "field_big_drive": {
+      "retention_target_years": "50+",
+      "write_cycles": "logical unlimited (field plate remap)",
+      "sealing": ["ironclad meld", "sovereign linear time receipt", "thermal guard", "plate witness"],
+      "field_exposure": "sealed amplitude — stable under field thermals",
+      "verdict": "Field Big Drive outlasts consumer USB by an order of magnitude; USB is transport, FieldDrive is home."
+    }
+  },
+  "frame_sizes": [
+    {"id": "sector_512", "label": "512 B · floppy sector", "bytes": 512},
+    {"id": "sector_4k", "label": "4 KiB · modern sector", "bytes": 4096},
+    {"id": "track_18", "label": "18 sectors/track", "bytes": 9216},
+    {"id": "floppy_144", "label": "1.44 MB floppy", "bytes": 1474560},
+    {"id": "floppy_720", "label": "720 KB floppy", "bytes": 737280},
+    {"id": "cd_74", "label": "CD-ROM 74 min", "bytes": 681984000},
+    {"id": "dvd_47", "label": "DVD single-layer", "bytes": 4700372992},
+    {"id": "bd_25", "label": "Blu-ray 25 GB", "bytes": 26843545600},
+    {"id": "usb_8g", "label": "USB 8 GB field", "bytes": 8589934592},
+    {"id": "usb_32g", "label": "USB 32 GB field", "bytes": 34359738368},
+    {"id": "usb_128g", "label": "USB 128 GB field", "bytes": 137438953472},
+    {"id": "hdd_1t", "label": "HDD 1 TB field", "bytes": 1099511627776},
+    {"id": "custom", "label": "Custom (slider)", "bytes": 0}
+  ],
+  "devices": [
+    {"id": "floppy_35", "label": "3.5″ Floppy", "media": ["floppy_720", "floppy_144"], "formats": ["img", "ima", "flp"], "rw": true},
+    {"id": "floppy_525", "label": "5.25″ Floppy", "media": ["floppy_360"], "formats": ["img", "ima"], "rw": true},
+    {"id": "cd_rom", "label": "CD-ROM", "media": ["cd_74"], "formats": ["iso", "bin", "cue", "chd"], "rw": false},
+    {"id": "cd_r", "label": "CD-R/RW", "media": ["cd_74"], "formats": ["iso", "cue"], "rw": true},
+    {"id": "dvd_rom", "label": "DVD-ROM", "media": ["dvd_47"], "formats": ["iso", "img"], "rw": false},
+    {"id": "dvd_r", "label": "DVD±R/RW", "media": ["dvd_47"], "formats": ["iso"], "rw": true},
+    {"id": "bd_rom", "label": "Blu-ray ROM", "media": ["bd_25"], "formats": ["iso"], "rw": false},
+    {"id": "bd_r", "label": "Blu-ray R/RE", "media": ["bd_25"], "formats": ["iso"], "rw": true},
+    {"id": "usb_stick", "label": "USB Flash", "media": ["usb_8g", "usb_32g", "usb_128g"], "formats": ["img", "iso", "fielddrive"], "rw": true, "field_replace": true},
+    {"id": "usb_hdd", "label": "USB HDD", "media": ["hdd_1t"], "formats": ["img", "fielddrive"], "rw": true, "field_replace": true},
+    {"id": "internal_hdd", "label": "Internal HDD", "media": ["hdd_1t"], "formats": ["img", "fielddrive"], "rw": true},
+    {"id": "ssd_nvme", "label": "SSD / NVMe", "media": ["hdd_1t"], "formats": ["img", "fielddrive"], "rw": true},
+    {"id": "vm_vhd", "label": "VM VHD", "media": ["hdd_1t"], "formats": ["vhd", "vhdx"], "rw": true, "vm": true},
+    {"id": "vm_vdi", "label": "VM VDI", "media": ["hdd_1t"], "formats": ["vdi"], "rw": true, "vm": true},
+    {"id": "vm_qcow", "label": "VM QCOW2", "media": ["hdd_1t"], "formats": ["qcow2", "qcow"], "rw": true, "vm": true},
+    {"id": "vm_dmg", "label": "Apple DMG", "media": ["dvd_47"], "formats": ["dmg"], "rw": false, "vm": true},
+    {"id": "tape_lto", "label": "LTO Tape", "media": ["hdd_1t"], "formats": ["tar", "fielddrive"], "rw": true},
+    {"id": "sd_card", "label": "SD / microSD", "media": ["usb_32g"], "formats": ["img", "fielddrive"], "rw": true, "field_replace": true}
+  ],
+  "format_families": {
+    "optical_canonical": {
+      "canonical": "iso",
+      "aliases": ["bin", "nrg"],
+      "keep": ["cue", "chd"],
+      "note": "ISO is canonical boot/optical; CUE/CHD kept for emulator fidelity"
+    },
+    "raw_block": {
+      "canonical": "img",
+      "aliases": ["ima", "flp", "dsk", "raw", "dd"],
+      "note": "IMG is canonical raw sector clone"
+    },
+    "vm_disk": {
+      "canonical": "fielddrive",
+      "aliases": ["vhd", "vhdx", "vdi", "qcow2", "qcow", "dmg"],
+      "export_to": "fielddrive",
+      "note": "Import any VM format; export sovereign .fielddrive"
+    },
+    "sovereign": {
+      "canonical": "fielddrive",
+      "magic": "FDRV\\x01",
+      "note": "Permanent field container — replaces USB transport layer"
+    }
+  },
+  "formats": [
+    {"id": "iso", "label": "ISO 9660 / UDF", "extensions": [".iso"], "family": "optical_canonical", "boot": true},
+    {"id": "cue", "label": "CUE sheet", "extensions": [".cue"], "family": "optical_canonical", "boot": false},
+    {"id": "chd", "label": "CHD compressed", "extensions": [".chd"], "family": "optical_canonical", "boot": false},
+    {"id": "img", "label": "Raw disk image", "extensions": [".img", ".ima", ".flp", ".dsk", ".raw"], "family": "raw_block", "boot": true},
+    {"id": "vhd", "label": "VHD", "extensions": [".vhd"], "family": "vm_disk", "vm": true},
+    {"id": "vhdx", "label": "VHDX", "extensions": [".vhdx"], "family": "vm_disk", "vm": true},
+    {"id": "vdi", "label": "VDI", "extensions": [".vdi"], "family": "vm_disk", "vm": true},
+    {"id": "qcow2", "label": "QCOW2", "extensions": [".qcow2", ".qcow"], "family": "vm_disk", "vm": true},
+    {"id": "dmg", "label": "Apple DMG", "extensions": [".dmg"], "family": "vm_disk", "vm": true},
+    {"id": "fielddrive", "label": "Field Drive", "extensions": [".fielddrive"], "family": "sovereign", "boot": true, "sovereign": true}
+  ],
+  "big_drive_extensions": [
+    ".iso", ".cue", ".chd", ".img", ".ima", ".flp", ".dsk", ".raw", ".dd",
+    ".vhd", ".vhdx", ".vdi", ".qcow2", ".qcow", ".dmg", ".fielddrive", ".bin", ".nrg"
+  ],
+  "icons": {
+    "device_grid": "data/combinatronic-visuals/formats/big_drive_devices.png",
+    "per_device_dir": "data/combinatronic-visuals/formats",
+    "grid_cols": 4,
+    "grid_rows": 3,
+    "cell_px": 128
+  },
+  "actions": ["ingest", "copy_iso", "field_seal", "stabilize", "burn_read", "vm_attach", "boot_iso", "replace_usb"],
+  "single_field": {
+    "max_field_depth": 0,
+    "field_on_field_forbidden": true,
+    "connecting_fields_forbidden": true,
+    "stacking_fields_forbidden": true,
+    "blanket": "universal_2d",
+    "rule": "One universal 2D blanket field per platform or device. No stacked subfields. No connecting fields."
+  },
+  "stabilizer": {
+    "title": "Field stabilizer — copy · defield · blanket · return",
+    "field_on_field_forbidden": true,
+    "never_field_on_fielded_disk": true,
+    "pipeline": "copy_to_drive → defield_files → field_whole_partition → return_files",
+    "phases": [
+      {"id": "copy", "label": "Copy to hard drive staging", "pct": 25},
+      {"id": "defield", "label": "Defield files (strip WRDT/WRZC/FDRV tails)", "pct": 50},
+      {"id": "field_partition", "label": "Field entire drive or partition (one blanket)", "pct": 75},
+      {"id": "return_files", "label": "Return files to operator", "pct": 100}
+    ],
+    "progress_api": "stabilizer_progress",
+    "state": "field-big-drive-stabilizer.json"
+  },
+  "thermal": {
+    "raise_field": "cool",
+    "descend_field": "warm",
+    "rule": "Raise the field plane to depth 0 (one 2D blanket) → cool_sort path, bounded Landauer work. Descend into stacked/nested fields → slow, heat-problematic. Stacking multiplies joules_per_field_op.",
+    "landauer_ref": "data/field-thermal-guard-doctrine.json",
+    "never_build_under_heat": true,
+    "math": {
+      "raise": "amplitude at depth 0, single blanket — entropy sheds via cool_sort; thermal guard headroom preserved",
+      "descend": "depth > 0, field-on-field — extra redata passes, Landauer heat accumulates, back-off triggers"
+    }
+  }
+}

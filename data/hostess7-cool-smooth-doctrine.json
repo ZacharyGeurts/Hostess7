@@ -1,0 +1,37 @@
+{
+  "schema": "hostess7-cool-smooth-doctrine/v1",
+  "title": "Cool and smooth — important",
+  "motto": "Cool and smooth is important — thermal headroom, microsecond-smooth timing, physics-smooth motion, calm operator surfaces.",
+  "module": "lib/hostess7-cool-smooth.py",
+  "api": "/api/hostess7/cool-smooth",
+  "important": true,
+  "cool": {
+    "meaning": "Stay thermally cool — bounded joules, backoff before blast, no busy-wait burn.",
+    "engines": [
+      "lib/field-thermal-guard.py",
+      "lib/thermal-governor.py",
+      "data/field-thermal-guard-doctrine.json"
+    ],
+    "presume_rule": "FIELD_SKIP_COVER and cooperative yield — never spin hot",
+    "eye_default": "final-eye-plate cool_default"
+  },
+  "smooth": {
+    "meaning": "Smooth operator experience — on-point resume, lattice motion, event-driven panels.",
+    "engines": [
+      "lib/hostess7-presume.py",
+      "lib/humanoid-motion-training.py",
+      "lib/field-thermal-guard.py"
+    ],
+    "presume_rule": "resumed_on_point — drift_us within tolerance; uninterruptable commits honored; resources still devoted",
+    "motion_rule": "physics_mode gravity lattice — no Matrix snap",
+    "panel_rule": "Parallel slice publish — no single-thread stall"
+  },
+  "paired_doctrine": {
+    "war_system": "data/hostess7-war-system-doctrine.json",
+    "presume": "data/hostess7-presume-doctrine.json",
+    "motion": "data/humanoid-motion-doctrine.json",
+    "thermal": "data/field-thermal-guard-doctrine.json",
+    "comfort": "data/hostess7-comfort-doctrine.json"
+  },
+  "soldier_requirement": "Every autonomous Soldier runs cool and smooth — war does not excuse thermal blast or jank."
+}

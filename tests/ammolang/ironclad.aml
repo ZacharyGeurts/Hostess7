@@ -1,0 +1,27 @@
+# ironclad — migrated from run-tests.sh
+@profile fastest
+@verbose clean
+@motto "ironclad stack tests · AmmoLang assert"
+
+suite ironclad ·
+  group heaven hell module
+    assert file:lib/heaven-hell.py
+    assert file:lib/heaven-hell.sh
+    assert file:data/heaven-hell-doctrine.json
+    assert grep:lib/connection-gatekeeper.py:soul_side
+    assert grep:lib/connection-gatekeeper.py:hell_chosen
+    assert grep:lib/heaven-hell.py:hostility_priority
+    assert grep:lib/field-command.py:heaven_hell
+    assert grep:lib/field-command.py:know_doctrine
+    assert grep:data/heaven-hell-doctrine.json:send Hell to Hell
+    assert grep:panel/threat-panel.html:heaven-hell-banner
+    assert grep:lib/heaven-hell.sh:nexus_heaven_hell_rip
+    assert py:heaven-hell.py json match:no_friendly_fire
+    assert py:heaven-hell.py json match:know_doctrine
+  group beyond darpa ironclad gate
+    assert file:lib/beyond-darpa-security.py
+    assert grep:data/ironclad-secure-api-doctrine.json:beyond_darpa_tier
+    assert grep:lib/threat-panel-http.py:_beyond_darpa_api_gate
+    assert script:beyond_darpa_security_suite
+  group Ironclad melded plate of truth
+    assert script:ironclad_plate

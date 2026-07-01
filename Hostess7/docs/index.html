@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Hostess 7 2.0.7 — Boot</title>
+  <meta name="description" content="Hostess 7 2.0.7 — sovereign field brain on GitHub Pages. KILROY · counsel · Queen surfaces. Other stack repos are Old Projects." />
+  <meta name="theme-color" content="#020403" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:*; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="stylesheet" href="pages-boot.css" />
+  <script src="pages-base.js"></script>
+  <script src="api-shim.js"></script>
+  <script>
+    (function () {
+      try {
+        if (sessionStorage.getItem("hostess7-pages-booted") === "1") {
+          var b = window.HOSTESS7_PAGES_BASE || "";
+          location.replace(b + "/desktop/");
+        }
+      } catch (_) {}
+    })();
+  </script>
+</head>
+<body>
+  <main class="boot-wrap" aria-live="polite">
+    <div class="boot-seal">
+      <p class="boot-eyebrow">Hostess 7 2.0.7 · Main Project · GitHub Pages</p>
+      <h1 class="boot-title">KILROY Field Brain</h1>
+      <p class="boot-stage" id="boot-stage">Initializing…</p>
+      <p class="boot-detail" id="boot-detail">Sovereign counsel · truth doctrine · stack surfaces</p>
+      <div class="boot-track"><div class="boot-bar" id="boot-bar"></div></div>
+      <p class="boot-pct" id="boot-pct">0%</p>
+      <div class="boot-stack" aria-label="Stack">
+        <span class="boot-pill boot-pill--main">Hostess 7</span>
+        <span class="boot-pill">KILROY</span>
+        <span class="boot-pill">Brain</span>
+        <span class="boot-pill">Queen</span>
+        <span class="boot-pill boot-pill--legacy">Surfaces</span>
+      </div>
+      <nav class="boot-nav" aria-label="Hostess 7 links">
+        <a class="boot-link" href="brain.html">Talk · GitHub Brain</a>
+        <a class="boot-link" href="old-projects.html">Old Projects</a>
+        <a class="boot-link" href="https://github.com/ZacharyGeurts/Hostess7">GitHub repo</a>
+      </nav>
+    </div>
+  </main>
+  <script src="pages-boot.js"></script>
+</body>
+</html>

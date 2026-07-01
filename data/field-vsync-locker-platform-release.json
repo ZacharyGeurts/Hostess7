@@ -1,0 +1,90 @@
+{
+  "schema": "field-vsync-locker-platform-release/v1",
+  "product": "VSYNC-Locker",
+  "version": "1.0.0",
+  "tag": "v1.0.0",
+  "github_repo": "ZacharyGeurts/VSYNC-Locker",
+  "release_model": "python_guard_per_platform",
+  "g16_native_launcher": true,
+  "platforms": [
+    {
+      "id": "linux-gnu-x86_64",
+      "os": "linux",
+      "arch": "x86_64",
+      "format": "tar.gz",
+      "bootstrap": "packaging/vsync-locker/linux/install.sh",
+      "g16_stub": true
+    },
+    {
+      "id": "linux-gnu-aarch64",
+      "os": "linux",
+      "arch": "aarch64",
+      "format": "tar.gz",
+      "bootstrap": "packaging/vsync-locker/linux/install.sh",
+      "g16_cross": "aarch64-linux-gnu-",
+      "g16_stub": true
+    },
+    {
+      "id": "linux-gnu-arm",
+      "os": "linux",
+      "arch": "arm",
+      "format": "tar.gz",
+      "bootstrap": "packaging/vsync-locker/linux/install.sh",
+      "g16_cross": "arm-linux-gnueabihf-",
+      "g16_stub": true
+    },
+    {
+      "id": "linux-gnu-riscv64",
+      "os": "linux",
+      "arch": "riscv64",
+      "format": "tar.gz",
+      "bootstrap": "packaging/vsync-locker/linux/install.sh",
+      "g16_cross": "riscv64-linux-gnu-",
+      "g16_stub": true
+    },
+    {
+      "id": "linux-gnu-i386",
+      "os": "linux",
+      "arch": "i386",
+      "format": "tar.gz",
+      "bootstrap": "packaging/vsync-locker/linux/install.sh",
+      "g16_cross": "i686-linux-gnu-",
+      "g16_stub": true
+    },
+    {
+      "id": "darwin-aarch64",
+      "os": "darwin",
+      "arch": "aarch64",
+      "format": "tar.gz",
+      "bootstrap": "packaging/vsync-locker/macos/install.sh"
+    },
+    {
+      "id": "darwin-x86_64",
+      "os": "darwin",
+      "arch": "x86_64",
+      "format": "tar.gz",
+      "bootstrap": "packaging/vsync-locker/macos/install.sh"
+    },
+    {
+      "id": "windows-x86_64",
+      "os": "windows",
+      "arch": "x86_64",
+      "format": "zip",
+      "bootstrap": "packaging/vsync-locker/windows/Install-VSYNSLocker.ps1"
+    },
+    {
+      "id": "freebsd-amd64",
+      "os": "freebsd",
+      "arch": "amd64",
+      "format": "tar.gz",
+      "bootstrap": "packaging/vsync-locker/freebsd/install.sh"
+    },
+    {
+      "id": "android-aarch64",
+      "os": "android",
+      "arch": "aarch64",
+      "format": "tar.gz",
+      "bootstrap": "packaging/vsync-locker/android/install-termux.sh"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+# combinamatrix_boot.aml — teach one neural the whole Universal
+# curriculum: observe → pack → wire → score → universal → emit
+
+combinator observe {
+  source g16
+  source chips
+  source program
+  source growth
+  source sequence
+  source spider
+}
+
+combinator pack {
+  width from growth.optimal_width
+  length from plate_dimensions.length
+  traverse van_emde_bois_row_major
+}
+
+combinator wire {
+  adjacency manhattan
+  weight wire_adjacency
+}
+
+combinator score {
+  facet_spread
+  path_pct
+  coolness
+  surface_depth
+  canonical_bonus
+}
+
+combinator universal {
+  facet g16_universal
+  rebalance composite_score
+  condense bands
+  connect isa_lang
+}
+
+combinator emit {
+  traversal gapless
+  wire ironclad outward
+  exec canonical:exec
+}
+
+# one_neural: universal_combinamatrix · truth_floor 58

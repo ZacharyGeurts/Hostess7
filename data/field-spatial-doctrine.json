@@ -1,0 +1,30 @@
+{
+  "schema": "field-spatial-doctrine/v1",
+  "title": "3D/4D field lattice — networks of networks",
+  "motto": "Spatial awareness is amplitude on a lattice, not a slow 3D CNN — nested chambers per scale.",
+  "dimensions": {
+    "spatial_3d": ["x", "y", "z"],
+    "temporal_4d": "t",
+    "scale_nets": ["body", "room", "field", "planetary"]
+  },
+  "lattice": {
+    "cells_per_axis": 8,
+    "coupling": "maxwell_neighbor",
+    "amplitude_from": ["operator_location", "host_attacks", "spatial_target_geometry", "sense_package"],
+    "movement": "delta_amplitude_over_t"
+  },
+  "scale_order": ["planetary", "field", "room", "body"],
+  "coupling": {
+    "method": "parent_peak_bleed",
+    "bleed_factor": 0.22,
+    "temporal_4d": "delta_t over field-spatial-history.jsonl"
+  },
+  "autonomous_being": true,
+  "networks_of_networks": {
+    "body": {"extent_m": 3, "role": "limb/proxemic — autonomous being shell"},
+    "room": {"extent_m": 30, "role": "local navigation mesh"},
+    "field": {"extent_km": 300, "role": "RF/DPI threat geometry"},
+    "planetary": {"extent": "globe", "role": "host-attack pins + approach vectors"}
+  },
+  "supersedes": "Fixed 3D neural voxel grids — field lattice couples in O(neighbors) per tick."
+}

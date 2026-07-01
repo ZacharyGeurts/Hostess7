@@ -1,0 +1,27 @@
+{
+  "schema": "hostess7-calculator-battery/v1",
+  "title": "Hostess 7 calculator battery — arithmetic through advanced math",
+  "pass_threshold": 0.85,
+  "problems": [
+    {"id": 1, "category": "arithmetic", "expr": "17*23", "expected": "391"},
+    {"id": 2, "category": "arithmetic", "expr": "15% of 240", "expected": "36"},
+    {"id": 3, "category": "arithmetic", "expr": "(3+4)*5-6", "expected": "29"},
+    {"id": 4, "category": "algebra", "expr": "solve x^2 - 4", "expected": "-2,2"},
+    {"id": 5, "category": "algebra", "expr": "expand (x+1)^3", "expected": "x^3+3*x^2+3*x+1"},
+    {"id": 6, "category": "trigonometry", "expr": "sin(pi/2)", "expected": "1"},
+    {"id": 7, "category": "trigonometry", "expr": "cos(0)", "expected": "1"},
+    {"id": 8, "category": "calculus", "expr": "diff sin(x)^2", "expected": "2*sin(x)*cos(x)"},
+    {"id": 9, "category": "calculus", "expr": "integrate x^2 from 0 to 1", "expected": "1/3"},
+    {"id": 10, "category": "calculus", "expr": "limit sin(x)/x as x->0", "expected": "1"},
+    {"id": 11, "category": "linear_algebra", "expr": "det [[1,2],[3,4]]", "expected": "-2"},
+    {"id": 12, "category": "linear_algebra", "expr": "eigenvalues [[2,1],[1,2]]", "expected": "1,3"},
+    {"id": 13, "category": "complex", "expr": "(1+i)^2", "expected": "2*i"},
+    {"id": 14, "category": "complex", "expr": "abs(3+4i)", "expected": "5"},
+    {"id": 15, "category": "statistics", "expr": "mean 2 4 6 8", "expected": "5"},
+    {"id": 16, "category": "statistics", "expr": "std 2 4 6 8", "expected": "sqrt(5)"},
+    {"id": 17, "category": "technology", "expr": "fft [1,0,1,0]", "expected": "2,0,2,0"},
+    {"id": 18, "category": "technology", "expr": "dot [1,2,3] [4,5,6]", "expected": "32"},
+    {"id": 19, "category": "algebra", "expr": "factor x^2 - 9", "expected": "(x-3)*(x+3)"},
+    {"id": 20, "category": "calculus", "expr": "integrate exp(-x^2) from -oo to oo", "expected": "sqrt(pi)"}
+  ]
+}

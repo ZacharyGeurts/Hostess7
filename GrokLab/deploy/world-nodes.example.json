@@ -1,0 +1,48 @@
+{
+  "schema": "grok-lab-world-nodes/v1",
+  "updated": "2026-06-30",
+  "motto": "The world is our defensive perimeter — one sovereign node per home/VM",
+  "operator": {
+    "name": "field-operator",
+    "home_node": "node-local"
+  },
+  "nodes": [
+    {
+      "id": "node-local",
+      "region": "local",
+      "provider": "sovereign-host",
+      "role": "home_sanctuary",
+      "ssh": "",
+      "enabled": true,
+      "note": "This machine — loopback only, no SSH deploy"
+    },
+    {
+      "id": "oracle-us-phoenix-1",
+      "region": "us-phoenix-1",
+      "provider": "oracle-always-free",
+      "role": "field_node",
+      "ssh": "ubuntu@YOUR_VM_IP",
+      "ssh_key": "~/.ssh/id_rsa",
+      "enabled": false,
+      "tunnel": "ssh -N -L 19477:127.0.0.1:9477 ubuntu@YOUR_VM_IP"
+    },
+    {
+      "id": "oracle-eu-frankfurt-1",
+      "region": "eu-frankfurt-1",
+      "provider": "oracle-always-free",
+      "role": "field_node",
+      "ssh": "ubuntu@YOUR_VM_IP",
+      "ssh_key": "~/.ssh/id_rsa",
+      "enabled": false
+    },
+    {
+      "id": "oracle-ap-tokyo-1",
+      "region": "ap-tokyo-1",
+      "provider": "oracle-always-free",
+      "role": "field_node",
+      "ssh": "ubuntu@YOUR_VM_IP",
+      "ssh_key": "~/.ssh/id_rsa",
+      "enabled": false
+    }
+  ]
+}

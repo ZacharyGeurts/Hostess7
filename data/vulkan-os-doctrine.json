@@ -1,0 +1,99 @@
+{
+  "schema": "vulkan-os-doctrine/v1",
+  "title": "Vulkan on AmmoOS — one stack, four roles",
+  "version": "1.0.0",
+  "updated": "2026-06-29",
+  "motto": "SPIR-V is the ABI. Queen owns GPU dispatch. KILROY never loads libvulkan. Grok16 compiles; AmmoCode edits.",
+  "canonical_root": "NewLatest",
+  "pairing": {
+    "grok16": "5.1.0",
+    "ammocode": "6.0.0",
+    "kilroy": "1.0.0-taco",
+    "queen": "field-rtx-sovereign"
+  },
+  "roles": {
+    "queen": {
+      "product": "Queen FieldGpuDispatch",
+      "owns": ["SPIR-V submit", "display surface", "field_gpu_dispatch gate"],
+      "doctrine": "Queen/data/field-rtx-sovereign.json",
+      "shaders": "Queen/shaders",
+      "binary": "Queen/build/rtx/bin/Linux/queen-browser",
+      "bootstrap": "libvulkan1 loader (retiring)",
+      "env": {
+        "QUEEN_FIELD_GPU": "1",
+        "QUEEN_FIELD_SURFACE": "1",
+        "QUEEN_DISPLAY_REFRESH": "120"
+      },
+      "not": ["vendor GL", "desktop compositor hook long-term"]
+    },
+    "amouranthrtx": {
+      "product": "AMOURANTHRTX Navigator",
+      "owns": ["Vulkan 1.4 field die", "x86.comp canvas", "thermo accountant"],
+      "path": "NewLatest/AMOURANTHRTX",
+      "build": "Queen/scripts/g16-build.sh",
+      "engine_header": "Navigator/engine/AMOURANTHRTX.hpp"
+    },
+    "grok16": {
+      "product": "Grok16 g16",
+      "owns": ["compile-time vulkan_rtx profile", "SPIR-V / RTX kernel prep"],
+      "path": "NewLatest/Grok16",
+      "profile": "vulkan_rtx",
+      "not": ["No GPU API in g16 driver binary"]
+    },
+    "kilroy": {
+      "product": "KILROY Field OS",
+      "owns": ["field kernel", "CONFIG_RTX_FIELD_DIE", "/proc/kilroy_field"],
+      "path": "NewLatest/KILROY",
+      "war_profile": "vulkan_rtx",
+      "not": ["No libvulkan in kernel", "No Vulkan userspace in initramfs"]
+    },
+    "ammocode": {
+      "product": "AmmoCode Stack",
+      "codename": "Stack",
+      "version": "6.0.0",
+      "owns": ["243 filetype editor", "g16 run/compile dispatch", "editor @ :9555"],
+      "path": "NewLatest/AmmoCode",
+      "serve": "AmmoCode/server/ammocode-stack-serve.py",
+      "filetypes_db": "NewLatest/data/field-programming-filetypes.json",
+      "open_handler": "NewLatest/scripts/sg-code-open.sh",
+      "not": ["No direct Vulkan — dispatches Grok16 only"]
+    }
+  },
+  "minimal_os_stack": {
+    "abi": "SPIR-V 1.6",
+    "api_bootstrap": "Vulkan 1.4 instance + device (Queen bridge)",
+    "extensions_when_rtx": [
+      "VK_KHR_ray_tracing_pipeline",
+      "VK_KHR_acceleration_structure",
+      "VK_EXT_memory_budget"
+    ],
+    "bootstrap_packages_linux": [
+      "libvulkan1",
+      "vulkan-tools",
+      "glslc"
+    ],
+    "compile_chain": [
+      "Grok16 g16 -profile vulkan_rtx",
+      "Queen queen-forge.py compiler_probe",
+      "Queen g16-build.sh",
+      "AMOURANTHRTX/kilroy.sh",
+      "make -C AMOURANTHRTX/Navigator/shaders",
+      "scripts/amouranthrtx-open.sh <file.comp|file.spv>"
+    ],
+    "double_click_shaders": {
+      "extensions": [".spv", ".comp"],
+      "handler": "NewLatest/scripts/amouranthrtx-open.sh",
+      "desktop": "~/.local/share/applications/amouranthrtx-{spv,comp,engine}.desktop"
+    }
+  },
+  "gates_held": [
+    "field_gpu_dispatch",
+    "field_surface",
+    "compiler_probe",
+    "rtx_all_vendors"
+  ],
+  "retirement_target": {
+    "libvulkan": "FieldGpuDispatch pure — direct field socket",
+    "sdl3_surface": "FieldSurface pure — in-engine framebuffer"
+  }
+}

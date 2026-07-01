@@ -1,0 +1,42 @@
+{
+  "schema": "field-program-combinatronic-doctrine/v1",
+  "title": "Universal program combinatronic — every language command boils to one facet",
+  "motto": "Every programming command in every language — 100% boiled to the single g16 combinatronic.",
+  "module": "lib/field-program-combinatronic.py",
+  "panel": "field-program-combinatronic-panel.json",
+  "cache": "field-program-combinatronic.json",
+  "seed": "data/field-program-combinatronic-seed.json",
+  "combinatorics": {
+    "facet": "program_combinatronic",
+    "leaf_prefix": "prog",
+    "canonical_facet": "single_combinatronic",
+    "doctrine": "Grok16/data/g16-field-combinatorics-doctrine.json",
+    "boil_target_pct": 100
+  },
+  "combinatronic": {
+    "schema": "field-program-combinatronic/v1",
+    "title": "Universal Program Combinatronic",
+    "motto": "One canonical op set — all languages, all commands, one combinatorics tree.",
+    "api": "/api/program/combinatronic",
+    "panel_cmd": "combinatronic",
+    "boil_rule": "lang:command → canonical_op → g16 terminal leaf",
+    "visuals": {
+      "doctrine": "data/field-combinatronic-visuals-doctrine.json",
+      "patterns": ["book_cover", "h7_manual", "book_json"],
+      "repair": "field-combinatronic-visuals.py repair"
+    }
+  },
+  "sources": [
+    {"id": "seed", "label": "Canonical ops + curated language command maps"},
+    {"id": "grok16_languages", "label": "Grok16/data/grok16-languages.json"},
+    {"id": "queen_code_languages", "label": "Queen/data/queen-code-languages.json"},
+    {"id": "hostess7_programming", "label": "Hostess7 programming supremacy patterns"},
+    {"id": "heuristic", "label": "Keyword heuristic — unknown langs still boil 100%"}
+  ],
+  "single_combinatronic": {
+    "terminal_runner": "native_bsp",
+    "terminal_emulator": "FieldX86Die",
+    "belt_profile": "belt_2_0",
+    "statement": "All language commands reduce to canonical ops; canonical ops index combinatorics leaves."
+  }
+}

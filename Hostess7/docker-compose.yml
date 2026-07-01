@@ -1,0 +1,60 @@
+services:
+  hostess7:
+    build:
+      context: .
+      args:
+        WAR_PROFILE: "1"
+    image: hostess7:2.0.7h
+    container_name: hostess7
+    restart: unless-stopped
+    ports:
+      - "${HOSTESS7_WEB_PORT:-8080}:8080"
+    environment:
+      HOSTESS7_ROOT: /opt/hostess7
+      HOSTESS7_BRAIN_STATE: /var/lib/hostess7/state
+      HOSTESS7_WEB_PORT: "8080"
+      HOSTESS7_LOW_POWER: "${HOSTESS7_LOW_POWER:-0}"
+      HOSTESS7_LICENSE_MODE: war
+      HOSTESS7_WAR_PROFILE: "${HOSTESS7_WAR_PROFILE:-1}"
+      HOSTESS7_DAEMON_INTERVAL: "${HOSTESS7_DAEMON_INTERVAL:-300}"
+    volumes:
+      - hostess7-state:/var/lib/hostess7/state
+      - hostess7-brain:/opt/hostess7/cache/fieldstorage
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 4G
+        reservations:
+          cpus: "0.5"
+          memory: 512M
+
+  hostess7-war:
+    profiles: ["war"]
+    build:
+      context: .
+      args:
+        WAR_PROFILE: "1"
+    image: hostess7:2.0.7h
+    container_name: hostess7-war
+    restart: unless-stopped
+    ports:
+      - "${HOSTESS7_WEB_PORT:-8080}:8080"
+    environment:
+      HOSTESS7_ROOT: /opt/hostess7
+      HOSTESS7_BRAIN_STATE: /var/lib/hostess7/state
+      HOSTESS7_WEB_PORT: "8080"
+      HOSTESS7_WAR_PROFILE: "1"
+      HOSTESS7_LICENSE_MODE: war
+    volumes:
+      - hostess7-state:/var/lib/hostess7/state
+      - hostess7-brain:/opt/hostess7/cache/fieldstorage
+    deploy:
+      resources:
+        limits:
+          cpus: "8.0"
+          memory: 8G
+
+volumes:
+  hostess7-state:
+  hostess7-brain:

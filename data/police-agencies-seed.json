@@ -1,0 +1,289 @@
+{
+  "schema": "nexus-police-agency-v1",
+  "default_region": "us",
+  "motto": "Major police protection systems — import known formats for local and surrounding areas.",
+  "regions": [
+    {"id": "global", "label": "Global / multi-national"},
+    {"id": "us", "label": "United States"},
+    {"id": "ca", "label": "Canada"},
+    {"id": "uk", "label": "United Kingdom"},
+    {"id": "eu", "label": "European Union"},
+    {"id": "au", "label": "Australia & Pacific"},
+    {"id": "latam", "label": "Latin America"},
+    {"id": "apac", "label": "Asia-Pacific"}
+  ],
+  "agencies": [
+    {
+      "id": "us_mi_mpscs",
+      "name": "Michigan MPSCS (Statewide)",
+      "country": "US",
+      "region": "us",
+      "state": "MI",
+      "system": "P25 Phase 2",
+      "coverage": "Statewide Michigan public safety trunking",
+      "surrounding": ["us_mi_tri_county", "us_mi_quad_state", "us_oh_marietts"],
+      "formats": [
+        {"id": "mpscs_talkgroup", "name": "MPSCS Talkgroup CSV", "ext": "csv", "columns": ["tg_decimal", "alias", "agency", "service"]},
+        {"id": "mpscs_site", "name": "MPSCS Site Table", "ext": "csv", "columns": ["site_id", "name", "county", "lat", "lon", "control_channel"]}
+      ]
+    },
+    {
+      "id": "us_mi_tri_county",
+      "name": "Michigan Tri-County Interop",
+      "country": "US",
+      "region": "us",
+      "state": "MI",
+      "system": "P25 / MPSCS overlay",
+      "coverage": "Oakland · Macomb · Wayne tri-county mutual aid",
+      "surrounding": ["us_mi_mpscs", "us_mi_quad_state"],
+      "formats": [
+        {"id": "tri_county_channel", "name": "Tri-County Channel Plan", "ext": "csv", "columns": ["channel", "rx_mhz", "tx_mhz", "mode", "notes"]},
+        {"id": "tri_county_interop", "name": "Tri-County Interop Matrix", "ext": "json", "columns": ["event", "primary_tg", "backup_tg", "command"]}
+      ]
+    },
+    {
+      "id": "us_mi_quad_state",
+      "name": "Quad-State Border Interop (MI·OH·IN·PA)",
+      "country": "US",
+      "region": "us",
+      "system": "APCO P25 / conventional patch",
+      "coverage": "Cross-border mutual aid — Detroit–Toledo–Fort Wayne corridor",
+      "surrounding": ["us_mi_mpscs", "us_oh_marietts", "us_in_project_hoosier"],
+      "formats": [
+        {"id": "quad_state_patch", "name": "Quad-State Patch List", "ext": "csv", "columns": ["patch_id", "state_a", "tg_a", "state_b", "tg_b"]},
+        {"id": "quad_state_ics205", "name": "ICS-205 Radio Plan", "ext": "ics205", "columns": ["incident", "channel", "rx", "tx", "mode", "remarks"]}
+      ]
+    },
+    {
+      "id": "us_fbi_cjis",
+      "name": "FBI CJIS / N-DEx",
+      "country": "US",
+      "region": "us",
+      "system": "CJIS WAN",
+      "coverage": "Federal criminal justice information sharing",
+      "formats": [
+        {"id": "cjis_oracle", "name": "CJIS ORI roster", "ext": "csv", "columns": ["ori", "agency", "state", "class"]}
+      ]
+    },
+    {
+      "id": "us_ics205",
+      "name": "NIMS ICS-205 Radio Plan",
+      "country": "US",
+      "region": "global",
+      "system": "ICS",
+      "coverage": "Incident radio communications plan — all US disciplines",
+      "formats": [
+        {"id": "ics205", "name": "ICS-205", "ext": "ics205", "columns": ["channel", "function", "rx_freq", "tx_freq", "mode", "remarks"]},
+        {"id": "ics217", "name": "ICS-217 Comms Resource", "ext": "csv", "columns": ["resource", "identifier", "contact"]}
+      ]
+    },
+    {
+      "id": "us_apco_p25",
+      "name": "APCO P25 Common Air Interface",
+      "country": "US",
+      "region": "global",
+      "system": "P25 CAI",
+      "coverage": "North America trunked public safety standard",
+      "formats": [
+        {"id": "p25_tsb88", "name": "TSB-88 site parameters", "ext": "csv", "columns": ["site", "ncc", "wacn", "system_id"]},
+        {"id": "p25_talkgroup", "name": "P25 talkgroup export", "ext": "csv", "columns": ["tg", "hex", "alias", "service"]}
+      ]
+    },
+    {
+      "id": "us_oh_marietts",
+      "name": "Ohio MARCS-IP",
+      "country": "US",
+      "region": "us",
+      "state": "OH",
+      "system": "P25 Phase 2",
+      "coverage": "Ohio statewide 700/800 MHz",
+      "surrounding": ["us_mi_quad_state", "us_in_project_hoosier"],
+      "formats": [
+        {"id": "marcs_talkgroup", "name": "MARCS talkgroup", "ext": "csv", "columns": ["tg", "agency", "county"]}
+      ]
+    },
+    {
+      "id": "us_in_project_hoosier",
+      "name": "Indiana Project Hoosier SAFE-T",
+      "country": "US",
+      "region": "us",
+      "state": "IN",
+      "system": "P25",
+      "coverage": "Indiana statewide SAFE-T",
+      "surrounding": ["us_mi_quad_state", "us_oh_marietts"],
+      "formats": [
+        {"id": "hoosier_tg", "name": "SAFE-T talkgroup", "ext": "csv", "columns": ["tg", "description", "county"]}
+      ]
+    },
+    {
+      "id": "us_ny_uhf",
+      "name": "NY Statewide UHF / P25",
+      "country": "US",
+      "region": "us",
+      "state": "NY",
+      "system": "P25 / UHF",
+      "coverage": "New York State interoperable channels",
+      "formats": [
+        {"id": "ny_interop", "name": "NY Interop channel plan", "ext": "csv", "columns": ["channel", "rx", "tx", "band", "use"]}
+      ]
+    },
+    {
+      "id": "us_ca_calea",
+      "name": "California CALE / Cal OES",
+      "country": "US",
+      "region": "us",
+      "state": "CA",
+      "system": "P25 / VHF-UHF",
+      "coverage": "California mutual aid and CALE interoperability",
+      "formats": [
+        {"id": "calea_plan", "name": "CALE channel plan", "ext": "csv", "columns": ["tac", "rx", "tx", "band"]}
+      ]
+    },
+    {
+      "id": "uk_airwave",
+      "name": "UK Airwave (Motorola TETRA)",
+      "country": "GB",
+      "region": "uk",
+      "system": "TETRA",
+      "coverage": "Great Britain emergency services network",
+      "formats": [
+        {"id": "airwave_gtsi", "name": "Airwave GTSI", "ext": "csv", "columns": ["gtsi", "role", "force"]},
+        {"id": "airwave_talkgroup", "name": "TETRA talkgroup", "ext": "csv", "columns": ["ssi", "name", "service"]}
+      ]
+    },
+    {
+      "id": "eu_etsi_tetra",
+      "name": "ETSI TETRA (EU standard)",
+      "country": "EU",
+      "region": "eu",
+      "system": "TETRA",
+      "coverage": "European public safety digital trunking",
+      "formats": [
+        {"id": "tetra_gtsi", "name": "GTSI export", "ext": "csv", "columns": ["mcc", "mnc", "ssi", "name"]}
+      ]
+    },
+    {
+      "id": "de_bos",
+      "name": "Germany BOS digitalfunk",
+      "country": "DE",
+      "region": "eu",
+      "system": "TETRA",
+      "coverage": "Behörden und Organisationen mit Sicherheitsaufgaben",
+      "formats": [
+        {"id": "bos_tg", "name": "BOS Funkgruppe", "ext": "csv", "columns": ["fg", "organisation", "region"]}
+      ]
+    },
+    {
+      "id": "fr_rail",
+      "name": "France RAIL / INPT",
+      "country": "FR",
+      "region": "eu",
+      "system": "TETRA / LTE-R",
+      "coverage": "French security forces radio",
+      "formats": [
+        {"id": "inpt_plan", "name": "INPT channel plan", "ext": "csv", "columns": ["canal", "service", "region"]}
+      ]
+    },
+    {
+      "id": "ca_ics",
+      "name": "Canada ICS / CREST",
+      "country": "CA",
+      "region": "ca",
+      "system": "P25 / conventional",
+      "coverage": "Canadian incident command radio interoperability",
+      "formats": [
+        {"id": "crest_plan", "name": "CREST / provincial plan", "ext": "csv", "columns": ["province", "channel", "rx", "tx"]},
+        {"id": "ics205_ca", "name": "ICS-205 (Canada)", "ext": "ics205", "columns": ["channel", "rx", "tx", "mode"]}
+      ]
+    },
+    {
+      "id": "au_grn",
+      "name": "Australia Government Radio Network",
+      "country": "AU",
+      "region": "au",
+      "system": "P25 / conventional",
+      "coverage": "Australian public safety trunked network",
+      "formats": [
+        {"id": "grn_site", "name": "GRN site table", "ext": "csv", "columns": ["site", "state", "control"]},
+        {"id": "grn_tg", "name": "GRN talkgroup", "ext": "csv", "columns": ["tg", "agency", "state"]}
+      ]
+    },
+    {
+      "id": "nz_police",
+      "name": "New Zealand Police / Fire digital",
+      "country": "NZ",
+      "region": "apac",
+      "system": "P25",
+      "coverage": "NZ emergency services digital radio",
+      "formats": [
+        {"id": "nz_tg", "name": "NZ talkgroup export", "ext": "csv", "columns": ["tg", "service", "district"]}
+      ]
+    },
+    {
+      "id": "jp_digital",
+      "name": "Japan Digital Police Radio",
+      "country": "JP",
+      "region": "apac",
+      "system": "P25-derived / proprietary",
+      "coverage": "Japanese prefectural police digital systems",
+      "formats": [
+        {"id": "jp_prefecture", "name": "Prefecture channel roster", "ext": "csv", "columns": ["prefecture", "channel", "band"]}
+      ]
+    },
+    {
+      "id": "kr_pss",
+      "name": "Korea Public Safety LTE (PS-LTE)",
+      "country": "KR",
+      "region": "apac",
+      "system": "LTE mission-critical",
+      "coverage": "Republic of Korea national disaster safety network",
+      "formats": [
+        {"id": "pslte_group", "name": "PS-LTE group ID", "ext": "csv", "columns": ["group_id", "agency", "role"]}
+      ]
+    },
+    {
+      "id": "br_anatel",
+      "name": "Brazil Anatel public safety bands",
+      "country": "BR",
+      "region": "latam",
+      "system": "TETRA / conventional",
+      "coverage": "Brazilian state police and fire VHF/UHF plans",
+      "formats": [
+        {"id": "br_channel", "name": "Canal estadual", "ext": "csv", "columns": ["estado", "canal", "mhz", "orgao"]}
+      ]
+    },
+    {
+      "id": "mx_c4",
+      "name": "Mexico C4 / C5 command centers",
+      "country": "MX",
+      "region": "latam",
+      "system": "Conventional / P25 patch",
+      "coverage": "Mexican municipal and state coordination centers",
+      "formats": [
+        {"id": "c4_roster", "name": "C4/C5 frequency roster", "ext": "csv", "columns": ["estado", "municipio", "frecuencia", "uso"]}
+      ]
+    },
+    {
+      "id": "un_itu",
+      "name": "ITU global frequency allocations (reference)",
+      "country": "INT",
+      "region": "global",
+      "system": "Reference",
+      "coverage": "ITU Region 1/2/3 public safety band reference",
+      "formats": [
+        {"id": "itu_band", "name": "Band allocation table", "ext": "csv", "columns": ["region", "band_mhz", "service", "footnote"]}
+      ]
+    },
+    {
+      "id": "interpol_icpo",
+      "name": "INTERPOL I-24/7 (reference)",
+      "country": "INT",
+      "region": "global",
+      "system": "Secure WAN",
+      "coverage": "International police communications reference",
+      "formats": [
+        {"id": "icpo_ori", "name": "National central bureau roster", "ext": "csv", "columns": ["country", "ncb", "contact"]}
+      ]
+    }
+  ]
+}

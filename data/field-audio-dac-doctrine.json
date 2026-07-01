@@ -1,0 +1,30 @@
+{
+  "schema": "field-audio-dac-doctrine/v1",
+  "title": "AmmoOS Audio DAC Chamber — sovereign sound layer",
+  "motto": "Pick any mic, any speaker, any layout — SDL 8ch, Dolby, DTS emulated when hardware cannot.",
+  "layer": "znetwork_audio",
+  "stack_position": "between_pulse_pipewire_and_apps",
+  "module": "lib/field-audio-dac-chamber.py",
+  "secure_bind": "lib/field-audio-secure-bind.py",
+  "broadcaster_chain": "lib/field-broadcaster-audio.py",
+  "ui": "/field-audio-dac",
+  "api": "/api/field-audio-dac",
+  "backends": ["pipewire", "pulse", "alsa", "sdl3_mixer", "jack"],
+  "device_kinds": ["sink", "source", "monitor", "loopback", "hdmi", "bluetooth", "usb", "virtual"],
+  "format_profiles": [
+    {"id": "stereo", "label": "Stereo", "channels": 2, "layout": ["FL", "FR"], "sdl_channels": 2},
+    {"id": "surround_51", "label": "5.1 Surround", "channels": 6, "layout": ["FL", "FR", "FC", "LFE", "BL", "BR"], "emulation": null},
+    {"id": "surround_71", "label": "7.1 Surround", "channels": 8, "layout": ["FL", "FR", "FC", "LFE", "BL", "BR", "SL", "SR"], "sdl_channels": 8},
+    {"id": "surround_8ch", "label": "8-Channel SDL", "channels": 8, "layout": ["FL", "FR", "FC", "LFE", "BL", "BR", "SL", "SR"], "sdl_channels": 8},
+    {"id": "dolby_digital_emu", "label": "Dolby Digital (emu)", "channels": 6, "layout": ["FL", "FR", "FC", "LFE", "SL", "SR"], "emulation": "dolby_digital_matrix"},
+    {"id": "dts_emu", "label": "DTS Neo:6 (emu)", "channels": 6, "layout": ["FL", "FR", "FC", "LFE", "SL", "SR"], "emulation": "dts_neo6_matrix"},
+    {"id": "atmos_emu", "label": "Dolby Atmos (emu)", "channels": 12, "layout": ["FL", "FR", "FC", "LFE", "BL", "BR", "SL", "SR", "TFL", "TFR", "TBL", "TBR"], "emulation": "atmos_height_derive"}
+  ],
+  "znetwork_hook": {
+    "register": "audio_layer",
+    "posture_key": "audio_dac",
+    "localhost_bind": true
+  },
+  "truth_before_permanency": true,
+  "ironclad_cite": "ironclad:audio_dac:1"
+}

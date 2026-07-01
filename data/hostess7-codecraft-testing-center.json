@@ -1,0 +1,19 @@
+{
+  "schema": "hostess7-codecraft-testing-center/v1",
+  "title": "Testing center — validate improvements before promote",
+  "motto": "No optimization ships without a green testing center run.",
+  "gates": [
+    {"id": "codecraft_battery", "kind": "nexus", "module": "hostess7-codecraft.py", "args": ["battery"], "required": true, "label": "Codecraft self-eval battery"},
+    {"id": "programming_battery", "kind": "nexus", "module": "hostess7-programming.py", "args": ["battery"], "required": true, "label": "Programming stack battery"},
+    {"id": "g16_battery", "kind": "nexus", "module": "hostess7-g16.py", "args": ["battery"], "required": true, "label": "G16 compiler battery"},
+    {"id": "programming_panel", "kind": "nexus", "module": "hostess7-programming.py", "args": ["json"], "required": true, "match": "better_than_assistant", "label": "Programming tier gate"},
+    {"id": "g16_panel", "kind": "nexus", "module": "hostess7-g16.py", "args": ["json"], "required": true, "match": "fluent", "label": "G16 fluency gate"},
+    {"id": "brain_guard", "kind": "nexus", "module": "hostess7-brain-guard.py", "args": ["json"], "required": false, "match": "brain_verified", "label": "Brain guard witness"},
+    {"id": "py_compile_lib", "kind": "compile_glob", "glob": "lib/hostess7-*.py", "required": true, "label": "hostess7 modules compile clean"}
+  ],
+  "smoke_tests": [
+    {"id": "prog_teach_atomic", "kind": "nexus_teach", "module": "hostess7-programming.py", "query": "atomic panel write", "match": "atomic_write"},
+    {"id": "g16_teach_discern", "kind": "nexus_teach", "module": "hostess7-g16.py", "query": "g16 discern", "match": "g16_discern"}
+  ],
+  "pass_requires_all_required": true
+}

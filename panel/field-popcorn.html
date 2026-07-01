@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="popcorn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050508" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Popcorn</title>
+  <link rel="stylesheet" href="/assets/field-shell-dock.css?v=1" />
+  <link rel="stylesheet" href="/assets/field-popcorn-player.css?v=3" />
+</head>
+<body>
+  <div class="pc-root" id="pc-root">
+    <header class="fsd-dock pc-dock" aria-label="Field dock">
+      <div class="fsd-dock-left" id="fsd-dock-left"></div>
+      <div class="fsd-dock-right" id="fsd-dock-right"></div>
+    </header>
+
+    <div class="pc-app">
+      <!-- Library -->
+      <section class="pc-library" id="pc-library" aria-label="Media library">
+        <header class="pc-lib-head">
+          <div class="pc-brand">
+            <h1>Popcorn</h1>
+            <p class="pc-tagline" id="pc-tagline">Black Cadillac theatre</p>
+          </div>
+          <button type="button" class="pc-scan-btn" id="pc-scan" title="Rescan media">Scan</button>
+        </header>
+
+        <nav class="pc-filters" aria-label="Filter by type">
+          <button type="button" class="pc-filter active" data-filter="all" title="All media">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect fill="currentColor" x="3" y="3" width="7" height="7" rx="1"/><rect fill="currentColor" x="14" y="3" width="7" height="7" rx="1"/><rect fill="currentColor" x="3" y="14" width="7" height="7" rx="1"/><rect fill="currentColor" x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <span>All</span>
+            <em id="pc-count-all">0</em>
+          </button>
+          <button type="button" class="pc-filter" data-filter="video" title="Video">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect fill="currentColor" x="2" y="5" width="20" height="14" rx="2"/><path fill="#050508" d="M10 9l6 3-6 3z"/></svg>
+            <span>Video</span>
+            <em id="pc-count-video">0</em>
+          </button>
+          <button type="button" class="pc-filter" data-filter="audio" title="Audio">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3v12.5a3.5 3.5 0 1 1-2-3.16V7h6V3h-4z"/></svg>
+            <span>Audio</span>
+            <em id="pc-count-audio">0</em>
+          </button>
+          <button type="button" class="pc-filter" data-filter="image" title="Images">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect fill="currentColor" x="3" y="5" width="18" height="14" rx="2"/><circle fill="#050508" cx="9" cy="11" r="2"/><path fill="#050508" d="M21 17l-5-5-4 4-2-2-5 5z"/></svg>
+            <span>Images</span>
+            <em id="pc-count-image">0</em>
+          </button>
+        </nav>
+
+        <div class="pc-search-wrap">
+          <input type="search" class="pc-search" id="pc-search" placeholder="Search your media…" autocomplete="off" />
+          <div class="pc-thumb-mode-bar" id="pc-lib-thumb-hint">Smart thumbnails · pause updates · right-click to set custom</div>
+        </div>
+
+        <div class="pc-grid" id="pc-grid" role="list"></div>
+      </section>
+
+      <!-- Theatre player -->
+      <section class="pc-player hidden" id="pc-player" aria-label="Player">
+        <div class="pc-stage-wrap" id="pc-stage-wrap">
+          <div class="pc-stage" id="pc-stage">
+            <video class="pc-media" id="pc-video" playsinline webkit-playsinline x-webkit-airplay="allow"></video>
+            <audio class="pc-media" id="pc-audio"></audio>
+            <img class="pc-media" id="pc-image" alt="" />
+            <div class="pc-vr-layer" id="pc-vr-layer" hidden></div>
+          </div>
+          <div class="pc-pause-poster hidden" id="pc-pause-poster" aria-hidden="true">
+            <img id="pc-pause-poster-img" alt="" />
+          </div>
+          <div class="pc-title-overlay" id="pc-now-title"></div>
+        </div>
+
+        <div class="pc-bar" id="pc-bar">
+          <div class="pc-bar-top">
+            <button type="button" class="pc-btn" id="pc-back" title="Library">←</button>
+            <span class="pc-time" id="pc-time">0:00 / 0:00</span>
+            <div class="pc-thumb-toggle" id="pc-thumb-toggle" role="group" aria-label="Thumbnail mode">
+              <button type="button" class="pc-thumb-mode active" data-mode="viewing">Viewing</button>
+              <button type="button" class="pc-thumb-mode" data-mode="custom">Custom</button>
+            </div>
+            <div class="pc-bar-actions">
+              <button type="button" class="pc-btn" id="pc-details-btn" title="File details">ℹ</button>
+              <button type="button" class="pc-btn" id="pc-vr" title="VR / stereo" hidden>VR</button>
+              <button type="button" class="pc-btn" id="pc-rotate" title="Rotation">⟳</button>
+              <button type="button" class="pc-btn pc-play-main" id="pc-play" title="Play / Pause (Space)">▶</button>
+            </div>
+          </div>
+
+          <div class="pc-seek-wrap" id="pc-seek-wrap">
+            <div class="pc-seek-track" id="pc-seek-track">
+              <div class="pc-seek-fill" id="pc-seek-fill"></div>
+              <div class="pc-seek-thumb" id="pc-seek-thumb"></div>
+            </div>
+            <div class="pc-thumb-preview" id="pc-thumb-preview" hidden>
+              <canvas id="pc-thumb-canvas" width="320" height="180"></canvas>
+              <span id="pc-thumb-time"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pc-mobile-menu hidden" id="pc-mobile-menu" role="menu">
+          <button type="button" data-act="play">Play / Pause</button>
+          <button type="button" data-act="ff">Fast forward 10s</button>
+          <button type="button" data-act="rw">Rewind 10s</button>
+          <button type="button" data-act="zoom">Zoom toggle</button>
+          <button type="button" data-act="rotate">Rotate screen</button>
+          <button type="button" data-act="library">Back to library</button>
+        </div>
+
+        <div class="pc-ctx-menu hidden" id="pc-ctx-menu" role="menu">
+          <button type="button" data-act="frame-back">← Frame</button>
+          <button type="button" data-act="frame-fwd">Frame →</button>
+          <button type="button" data-act="speed-05">0.5× speed</button>
+          <button type="button" data-act="speed-1">1× speed</button>
+          <button type="button" data-act="speed-15">1.5× speed</button>
+          <button type="button" data-act="set-thumb-custom">Set custom thumbnail (this frame)</button>
+          <button type="button" data-act="set-thumb-viewing">Save as viewing thumbnail</button>
+          <button type="button" data-act="thumb-viewing">Use Viewing thumbnail</button>
+          <button type="button" data-act="thumb-custom">Use Custom thumbnail</button>
+          <button type="button" data-act="copy-time">Copy timestamp</button>
+        </div>
+
+        <aside class="pc-details hidden" id="pc-details" aria-label="File details">
+          <header class="pc-details-head">
+            <h2>File details</h2>
+            <button type="button" class="pc-btn" id="pc-details-close" title="Close">×</button>
+          </header>
+          <div class="pc-details-body" id="pc-details-body"></div>
+        </aside>
+
+        <div class="pc-ctx-menu hidden" id="pc-card-ctx" role="menu"></div>
+        <div class="pc-ctx-menu hidden" id="pc-stage-ctx" role="menu"></div>
+      </section>
+    </div>
+  </div>
+  <script src="/assets/field-shell-dock.js?v=1" defer></script>
+  <script src="/assets/field-popcorn-player.js?v=3" defer></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#010208" />
+  <meta name="color-scheme" content="dark" />
+  <title>2026 Tristate Installer — Underlay F9</title>
+  <link rel="stylesheet" href="/assets/tristate-installer.css?v=ti7" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* https://127.0.0.1:*; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <div class="ti-shell">
+    <header class="ti-header">
+      <div class="ti-brand">
+        <img class="ti-shield" src="/assets/nexus-field.png" alt="" width="56" height="56" />
+        <div>
+          <h1>2026 Tristate Installer</h1>
+          <p>Underlay F9 · bottom-up field authority</p>
+        </div>
+      </div>
+      <span class="ti-badge" id="ti-status-badge">WELCOME</span>
+    </header>
+
+    <nav class="ti-steps" aria-label="Install steps">
+      <div class="ti-step active" data-step="welcome"><span class="ti-step-num">1</span><h3>Welcome</h3><span>Field underlay</span></div>
+      <div class="ti-step" data-step="root"><span class="ti-step-num">2</span><h3>Root</h3><span>One admin approval</span></div>
+      <div class="ti-step" data-step="unfield"><span class="ti-step-num">3</span><h3>Unfield</h3><span>Files on drive</span></div>
+      <div class="ti-step" data-step="znetwork"><span class="ti-step-num">4</span><h3>Network</h3><span>ZNetwork ingrained</span></div>
+      <div class="ti-step" data-step="arrive"><span class="ti-step-num">5</span><h3>Install</h3><span>NEXUS protections</span></div>
+      <div class="ti-step" data-step="transform"><span class="ti-step-num">6</span><h3>Transform</h3><span>WRDT pipeline</span></div>
+      <div class="ti-step" data-step="commit"><span class="ti-step-num">7</span><h3>Commit</h3><span>Permanent</span></div>
+    </nav>
+
+    <div class="ti-progress"><i id="ti-progress-bar"></i></div>
+
+    <div class="ti-card">
+      <div class="ti-hero">
+        <img class="ti-hero-bg" src="/assets/tristate-map.svg" alt="" />
+        <div class="ti-hero-overlay">
+          <h2 id="ti-hero-title">Welcome to the Field</h2>
+          <p id="ti-hero-sub">Seven guided steps — guest OS stays, we move under without damage.</p>
+        </div>
+      </div>
+
+      <div class="ti-body">
+        <section class="ti-pane active" data-pane="welcome">
+          <p class="ti-lead">Permanent underlay installs NEXUS Shield, Queen, and field protections beneath your incumbent OS. <strong>On launch</strong> you get one UAC/sudo/polkit prompt — install, network, WRDT, and commit reuse that session; never again.</p>
+          <div class="ti-welcome-grid">
+            <div class="ti-welcome-card"><strong>Root first</strong><span>Administrator access once — install, network, WRDT, commit.</span></div>
+            <div class="ti-welcome-card"><strong>Unfield on drive</strong><span>Clear nested field copies before anything is installed.</span></div>
+            <div class="ti-welcome-card"><strong>Non-destructive</strong><span>Guest substrate stays until KILROY boot.</span></div>
+            <div class="ti-welcome-card"><strong>No off switch</strong><span>Commit is permanent — review before you accept.</span></div>
+          </div>
+          <div class="ti-actions">
+            <button type="button" class="ti-btn" id="ti-refresh">Refresh posture</button>
+          </div>
+        </section>
+
+        <section class="ti-pane" data-pane="root" hidden>
+          <p class="ti-lead">Grant administrator access now. This session covers install, ZNetwork activation, drive conversion, and underlay commit — not just network.</p>
+          <div class="ti-stats">
+            <div class="ti-stat"><b id="ti-root-status">—</b><small>Root posture</small></div>
+            <div class="ti-stat"><b id="ti-root-method">—</b><small>Elevation method</small></div>
+          </div>
+          <div class="ti-actions">
+            <button type="button" class="ti-btn ti-btn--primary" id="ti-acquire-root">Grant administrator access</button>
+          </div>
+          <p class="ti-lead ti-muted">If launch auth already succeeded, this step shows READY — no second prompt. Otherwise approve once (pkexec, UAC, or sudo).</p>
+        </section>
+
+        <section class="ti-pane" data-pane="unfield" hidden>
+          <h3>Unfield files on drive</h3>
+          <p class="ti-lead">No field-in-field before whole-system install. Nested <code>nexus-field</code> copies on TEAM/KILROY drives must be quarantined; tail formats (WRDT/WRZC/ZAC) must read zero.</p>
+          <div class="ti-stats">
+            <div class="ti-stat"><b id="ti-defield-status">—</b><small>Drive safety</small></div>
+            <div class="ti-stat"><b id="ti-defield-tails">—</b><small>Restorable tails</small></div>
+            <div class="ti-stat"><b id="ti-defield-nested">—</b><small>Drive hotspots</small></div>
+            <div class="ti-stat"><b id="ti-defield-mirror">—</b><small>Publish target</small></div>
+          </div>
+          <ul class="ti-list" id="ti-defield-nested-list"></ul>
+          <div class="ti-inline-actions">
+            <button type="button" class="ti-btn ti-btn--primary" id="ti-defield-audit">Run unfield audit</button>
+            <button type="button" class="ti-btn" id="ti-purge-nested">Purge nested field</button>
+          </div>
+        </section>
+
+        <section class="ti-pane" data-pane="znetwork" hidden>
+          <p class="ti-lead">Slide-in field network manager — review what native software is disabled vs replaced.</p>
+          <span class="ti-conn-pill" id="ti-zn-conn">—</span>
+          <div class="ti-replacer">
+            <div class="ti-replacer-col"><h4>Will disable</h4><ul id="ti-zn-disable"></ul></div>
+            <div class="ti-replacer-arrow">→</div>
+            <div class="ti-replacer-col"><h4>Replaced with</h4><ul id="ti-zn-replace"></ul></div>
+          </div>
+          <div class="ti-stats">
+            <div class="ti-stat"><b id="ti-zn-status">PENDING</b><small>Status</small></div>
+            <div class="ti-stat"><b id="ti-zn-choice-label">INGRAINED</b><small>Field network</small></div>
+          </div>
+          <p class="ti-muted" id="ti-zn-ingrained">ZNetwork is built into the field stack — auto-enabled on install (no Yes/No/Skip).</p>
+        </section>
+
+        <section class="ti-pane" data-pane="arrive" hidden>
+          <p class="ti-lead">Install NEXUS Shield, Queen perimeter, and field envelope. Requires root and a clean unfield audit.</p>
+          <div class="ti-stats">
+            <div class="ti-stat"><b id="ti-underlay-verdict">—</b><small>Underlay</small></div>
+            <div class="ti-stat"><b id="ti-protections">—</b><small>Protections</small></div>
+            <div class="ti-stat"><b id="ti-operator-conns">—</b><small>Operator wires</small></div>
+            <div class="ti-stat"><b id="ti-operator-irq">—</b><small>Top IRQ</small></div>
+          </div>
+          <div class="ti-inline-actions">
+            <button type="button" class="ti-btn" id="ti-operator-board">Scan Operator</button>
+            <button type="button" class="ti-btn ti-btn--primary" id="ti-install-nexus">Install NEXUS Field</button>
+          </div>
+        </section>
+
+        <section class="ti-pane" data-pane="transform" hidden>
+          <p class="ti-lead">Re-field shadow, restore sovereign bytes, audit, then World redump (WRDT1).</p>
+          <div class="ti-stats">
+            <div class="ti-stat"><b id="ti-refield-status">—</b><small>Re-field</small></div>
+            <div class="ti-stat"><b id="ti-restore-files">—</b><small>Tail files</small></div>
+            <div class="ti-stat"><b id="ti-restore-status">—</b><small>Restore</small></div>
+            <div class="ti-stat"><b id="ti-wrdt-files">—</b><small>Packable</small></div>
+          </div>
+          <ul class="ti-list" id="ti-field-promises"></ul>
+          <div class="ti-inline-actions">
+            <button type="button" class="ti-btn" id="ti-refield">Re-field shadow</button>
+            <button type="button" class="ti-btn" id="ti-scan-restore">Scan tails</button>
+            <button type="button" class="ti-btn" id="ti-restore-out">Restore out</button>
+            <button type="button" class="ti-btn" id="ti-drive-audit">Safety audit</button>
+            <button type="button" class="ti-btn" id="ti-scan-wrdt">Scan drive</button>
+            <button type="button" class="ti-btn" id="ti-drive-dryrun">Dry-run</button>
+            <button type="button" class="ti-btn ti-btn--primary" id="ti-apply-wrdt">Apply WRDT</button>
+          </div>
+          <pre class="ti-log" id="ti-wrdt-log">Re-field → scan packed → bring back out → audit → scan → convert…</pre>
+        </section>
+
+        <section class="ti-pane" data-pane="commit" hidden id="ti-pane-commit">
+          <div class="ti-warn-box"><strong>Permanent.</strong> After commit there is no off switch. Guest OS remains inside field protections; KILROY owns syscall truth after reboot.</div>
+          <label class="ti-check"><input type="checkbox" id="ti-accept-permanent" /> I accept permanent underlay — no off switch</label>
+          <div class="ti-inline-actions">
+            <button type="button" class="ti-btn ti-btn--primary" id="ti-commit" disabled>Commit underlay</button>
+            <button type="button" class="ti-btn" id="ti-reboot" disabled>Reboot into field</button>
+          </div>
+        </section>
+
+        <section class="ti-pane" data-pane="committed" hidden>
+          <p class="ti-lead">Underlay is live. Guest substrate runs inside field protections.</p>
+          <div class="ti-inline-actions">
+            <button type="button" class="ti-btn ti-btn--primary" id="ti-reboot-committed">Reboot into KILROY Field</button>
+            <a class="ti-btn" href="/underlay-f9?sector=underlay">Open Underlay F9</a>
+          </div>
+        </section>
+
+        <nav class="ti-wizard-nav" id="ti-wizard-nav">
+          <button type="button" class="ti-btn" id="ti-wizard-back" disabled>Back</button>
+          <span class="ti-wizard-meta" id="ti-wizard-meta">Step 1 of 7</span>
+          <button type="button" class="ti-btn ti-btn--primary" id="ti-wizard-next">Next</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="ti-toast" id="ti-toast" role="status" hidden></div>
+  <script src="/assets/tristate-installer.js?v=ti8" defer></script>
+</body>
+</html>

@@ -1,0 +1,783 @@
+{
+  "schema": "field-combinamatrix/v1",
+  "updated": "2026-06-30T14:06:25Z",
+  "product": "AmmoOS",
+  "motto": "Every leaf lands in a cell — matrix pack, neural wire, universal traverse.",
+  "ok": true,
+  "dimensions": {
+    "width": 16,
+    "length": 1,
+    "cells": 16,
+    "filled": 16
+  },
+  "source_counts": {
+    "g16": 3643,
+    "chips": 978,
+    "program": 2665,
+    "growth": 0,
+    "sequence": 0,
+    "spider": 0
+  },
+  "facet_count": 1,
+  "cells": [
+    {
+      "id": "g16:prog:prog:canonical:exec",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Execute / eval / run",
+      "path_pct": 38.0,
+      "depth": 0,
+      "canonical": "exec",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 0,
+      "cell_index": 0,
+      "activation": 0.422,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:call",
+          "row": 0,
+          "col": 1,
+          "weight": 0.0627
+        }
+      ],
+      "wire_count": 1,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:call",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Call / invoke / apply",
+      "path_pct": 36.0,
+      "depth": 0,
+      "canonical": "call",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 1,
+      "cell_index": 1,
+      "activation": 0.414,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:return",
+          "row": 0,
+          "col": 2,
+          "weight": 0.0618
+        },
+        {
+          "to": "g16:prog:prog:canonical:exec",
+          "row": 0,
+          "col": 0,
+          "weight": 0.0627
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:return",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Return / exit function",
+      "path_pct": 35.0,
+      "depth": 0,
+      "canonical": "return",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 2,
+      "cell_index": 2,
+      "activation": 0.41,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:branch",
+          "row": 0,
+          "col": 3,
+          "weight": 0.0612
+        },
+        {
+          "to": "g16:prog:prog:canonical:call",
+          "row": 0,
+          "col": 1,
+          "weight": 0.0618
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:branch",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Branch / if / switch",
+      "path_pct": 34.0,
+      "depth": 0,
+      "canonical": "branch",
+      "runner": "native_bsp",
+      "belt": "belt_1_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 3,
+      "cell_index": 3,
+      "activation": 0.406,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:loop",
+          "row": 0,
+          "col": 4,
+          "weight": 0.0606
+        },
+        {
+          "to": "g16:prog:prog:canonical:return",
+          "row": 0,
+          "col": 2,
+          "weight": 0.0612
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:loop",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Loop / iterate / repeat",
+      "path_pct": 33.0,
+      "depth": 0,
+      "canonical": "loop",
+      "runner": "native_bsp",
+      "belt": "belt_1_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 4,
+      "cell_index": 4,
+      "activation": 0.402,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:break",
+          "row": 0,
+          "col": 5,
+          "weight": 0.06
+        },
+        {
+          "to": "g16:prog:prog:canonical:branch",
+          "row": 0,
+          "col": 3,
+          "weight": 0.0606
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:break",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Break / leave loop",
+      "path_pct": 32.0,
+      "depth": 0,
+      "canonical": "break",
+      "runner": "native_bsp",
+      "belt": "belt_1_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 5,
+      "cell_index": 5,
+      "activation": 0.398,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:continue",
+          "row": 0,
+          "col": 6,
+          "weight": 0.0594
+        },
+        {
+          "to": "g16:prog:prog:canonical:loop",
+          "row": 0,
+          "col": 4,
+          "weight": 0.06
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:continue",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Continue / next iteration",
+      "path_pct": 31.0,
+      "depth": 0,
+      "canonical": "continue",
+      "runner": "native_bsp",
+      "belt": "belt_1_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 6,
+      "cell_index": 6,
+      "activation": 0.394,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:type",
+          "row": 0,
+          "col": 7,
+          "weight": 0.0585
+        },
+        {
+          "to": "g16:prog:prog:canonical:break",
+          "row": 0,
+          "col": 5,
+          "weight": 0.0594
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:type",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Type / typedef / interface",
+      "path_pct": 29.0,
+      "depth": 0,
+      "canonical": "type",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 7,
+      "cell_index": 7,
+      "activation": 0.386,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:cast",
+          "row": 0,
+          "col": 8,
+          "weight": 0.0576
+        },
+        {
+          "to": "g16:prog:prog:canonical:continue",
+          "row": 0,
+          "col": 6,
+          "weight": 0.0585
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:cast",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Cast / convert / coerce",
+      "path_pct": 28.0,
+      "depth": 0,
+      "canonical": "cast",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 8,
+      "cell_index": 8,
+      "activation": 0.382,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:load",
+          "row": 0,
+          "col": 9,
+          "weight": 0.057
+        },
+        {
+          "to": "g16:prog:prog:canonical:type",
+          "row": 0,
+          "col": 7,
+          "weight": 0.0576
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:load",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Load / read memory",
+      "path_pct": 27.0,
+      "depth": 0,
+      "canonical": "load",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 9,
+      "cell_index": 9,
+      "activation": 0.378,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:store",
+          "row": 0,
+          "col": 10,
+          "weight": 0.0564
+        },
+        {
+          "to": "g16:prog:prog:canonical:cast",
+          "row": 0,
+          "col": 8,
+          "weight": 0.057
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:store",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Store / write memory",
+      "path_pct": 26.0,
+      "depth": 0,
+      "canonical": "store",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 10,
+      "cell_index": 10,
+      "activation": 0.374,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:alloc",
+          "row": 0,
+          "col": 11,
+          "weight": 0.0558
+        },
+        {
+          "to": "g16:prog:prog:canonical:load",
+          "row": 0,
+          "col": 9,
+          "weight": 0.0564
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:alloc",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Allocate / new / malloc",
+      "path_pct": 25.0,
+      "depth": 0,
+      "canonical": "alloc",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 11,
+      "cell_index": 11,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:free",
+          "row": 0,
+          "col": 12,
+          "weight": 0.0552
+        },
+        {
+          "to": "g16:prog:prog:canonical:store",
+          "row": 0,
+          "col": 10,
+          "weight": 0.0558
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:free",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Free / delete / drop",
+      "path_pct": 24.0,
+      "depth": 0,
+      "canonical": "free",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 12,
+      "cell_index": 12,
+      "activation": 0.366,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:assign",
+          "row": 0,
+          "col": 13,
+          "weight": 0.054
+        },
+        {
+          "to": "g16:prog:prog:canonical:alloc",
+          "row": 0,
+          "col": 11,
+          "weight": 0.0552
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:assign",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Assign / bind / set",
+      "path_pct": 21.0,
+      "depth": 0,
+      "canonical": "assign",
+      "runner": "python",
+      "belt": "belt_1_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 13,
+      "cell_index": 13,
+      "activation": 0.354,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:export",
+          "row": 0,
+          "col": 14,
+          "weight": 0.0531
+        },
+        {
+          "to": "g16:prog:prog:canonical:free",
+          "row": 0,
+          "col": 12,
+          "weight": 0.054
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:export",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Export / pub / module out",
+      "path_pct": 21.0,
+      "depth": 0,
+      "canonical": "export",
+      "runner": "native_bsp",
+      "belt": "belt_2_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 14,
+      "cell_index": 14,
+      "activation": 0.354,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:compare",
+          "row": 0,
+          "col": 15,
+          "weight": 0.0525
+        },
+        {
+          "to": "g16:prog:prog:canonical:assign",
+          "row": 0,
+          "col": 13,
+          "weight": 0.0531
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:prog:prog:canonical:compare",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "Compare / eq / ord",
+      "path_pct": 19.0,
+      "depth": 0,
+      "canonical": "compare",
+      "runner": "native_bsp",
+      "belt": "belt_1_0",
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 15,
+      "cell_index": 15,
+      "activation": 0.346,
+      "wires": [
+        {
+          "to": "g16:prog:prog:canonical:export",
+          "row": 0,
+          "col": 14,
+          "weight": 0.0525
+        }
+      ],
+      "wire_count": 1,
+      "combinatronic": true
+    }
+  ],
+  "traversal": [
+    {
+      "id": "g16:prog:prog:canonical:exec",
+      "row": 0,
+      "col": 0,
+      "activation": 0.422
+    },
+    {
+      "id": "g16:prog:prog:canonical:call",
+      "row": 0,
+      "col": 1,
+      "activation": 0.414
+    },
+    {
+      "id": "g16:prog:prog:canonical:return",
+      "row": 0,
+      "col": 2,
+      "activation": 0.41
+    },
+    {
+      "id": "g16:prog:prog:canonical:branch",
+      "row": 0,
+      "col": 3,
+      "activation": 0.406
+    },
+    {
+      "id": "g16:prog:prog:canonical:loop",
+      "row": 0,
+      "col": 4,
+      "activation": 0.402
+    },
+    {
+      "id": "g16:prog:prog:canonical:break",
+      "row": 0,
+      "col": 5,
+      "activation": 0.398
+    },
+    {
+      "id": "g16:prog:prog:canonical:continue",
+      "row": 0,
+      "col": 6,
+      "activation": 0.394
+    },
+    {
+      "id": "g16:prog:prog:canonical:type",
+      "row": 0,
+      "col": 7,
+      "activation": 0.386
+    },
+    {
+      "id": "g16:prog:prog:canonical:cast",
+      "row": 0,
+      "col": 8,
+      "activation": 0.382
+    },
+    {
+      "id": "g16:prog:prog:canonical:load",
+      "row": 0,
+      "col": 9,
+      "activation": 0.378
+    },
+    {
+      "id": "g16:prog:prog:canonical:store",
+      "row": 0,
+      "col": 10,
+      "activation": 0.374
+    },
+    {
+      "id": "g16:prog:prog:canonical:alloc",
+      "row": 0,
+      "col": 11,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:prog:prog:canonical:free",
+      "row": 0,
+      "col": 12,
+      "activation": 0.366
+    },
+    {
+      "id": "g16:prog:prog:canonical:assign",
+      "row": 0,
+      "col": 13,
+      "activation": 0.354
+    },
+    {
+      "id": "g16:prog:prog:canonical:export",
+      "row": 0,
+      "col": 14,
+      "activation": 0.354
+    },
+    {
+      "id": "g16:prog:prog:canonical:compare",
+      "row": 0,
+      "col": 15,
+      "activation": 0.346
+    }
+  ],
+  "traverse_method": "van_emde_bois_row_major",
+  "neural_weights": {
+    "facet_spread": 0.25,
+    "path_pct": 0.2,
+    "coolness": 0.18,
+    "surface_depth": 0.12,
+    "wire_adjacency": 0.15,
+    "canonical_bonus": 0.1
+  },
+  "elapsed_ms": 102.69,
+  "balance_gate": {
+    "schema": "field-combinatronic-balance-gate/v1",
+    "requested_refresh": true,
+    "effective_refresh": false,
+    "skip_reorganize": true,
+    "fast_path": true,
+    "reorganize": false,
+    "reason": "balanced_hold",
+    "balanced": true,
+    "new_items": false,
+    "fingerprint": {
+      "schema": "field-combinatronic-fingerprint/v1",
+      "updated": "2026-06-30T15:06:58Z",
+      "corpus_hash": "752be3e9b9a907ae6562f56856a57fbca042af5572b7c09d8b597ff2d9daf616",
+      "domains": {
+        "chips": {
+          "count": 978,
+          "ids_hash": "67a7a38d45eb51ee"
+        },
+        "programs": {
+          "count": 2629,
+          "ids_hash": "88d0856d365e3ad9"
+        },
+        "program_langs": {
+          "count": 79,
+          "ids_hash": "356f62b1493cb7d3"
+        },
+        "files": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "library_devices": {
+          "count": 21,
+          "ids_hash": "1c6b94a1d27229a3"
+        },
+        "library_games": {
+          "count": 30,
+          "ids_hash": "99c3915e70866684"
+        },
+        "library_greats": {
+          "count": 20,
+          "ids_hash": "eb702c105dc594c8"
+        },
+        "cpu": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "universal": {
+          "count": 3643,
+          "ids_hash": "295a243c7b4abf5c"
+        },
+        "matrix": {
+          "count": 16,
+          "ids_hash": "24840c1ee577b8ff"
+        },
+        "growth": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "sequence": {
+          "count": 512,
+          "ids_hash": "0e2314c27f2ad986"
+        },
+        "spider": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "visuals": {
+          "count": 4363
+        },
+        "h7c": {
+          "count": 0
+        },
+        "library_registry": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "steel_plates": {
+          "count": 10,
+          "ids_hash": "fb3c4a96929fd99d"
+        }
+      },
+      "material_lines": 17,
+      "entry_base": 13
+    },
+    "corpus_hash": "752be3e9b9a907ae6562f56856a57fbca042af5572b7c09d8b597ff2d9daf616",
+    "predictive_meld": {
+      "schema": "field-predictive-meld/v1",
+      "updated": "2026-06-30T15:06:58Z",
+      "plate_hash": "5e805795d41ec4ec16014f314fdc3e47f70b25b5c3dd9c80a9bf5af1d798cb0b",
+      "corpus_hash": "752be3e9b9a907ae6562f56856a57fbca042af5572b7c09d8b597ff2d9daf616",
+      "prev_plate_hash": null,
+      "prev_corpus_hash": null,
+      "plate_count": 9,
+      "predicted_ms_saved": 0,
+      "skip_refresh": false,
+      "skip_meld_refresh": false,
+      "fast_path": false,
+      "reason": "initial"
+    }
+  },
+  "optimized_combinatronic": true,
+  "combinatronic": true,
+  "all_data_combinatronic": true,
+  "ammolang_curriculum": {
+    "path": "library/dewey/000-computer-science/ammolang/combinamatrix_boot.aml",
+    "ok": true,
+    "step_count": 6,
+    "combinators": [
+      "observe",
+      "pack",
+      "wire",
+      "score",
+      "universal",
+      "emit"
+    ]
+  },
+  "balance_hold": true,
+  "fast_path": true
+}

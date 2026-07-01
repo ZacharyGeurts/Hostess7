@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Queen capsule entry — prefer PythonG over host pythong
+set -euo pipefail
+QUEEN="$(cd "$(dirname "$0")/.." && pwd)"
+NL="$(cd "$QUEEN/.." && pwd)"
+SG="$(cd "$NL/.." && pwd)"
+export SG_ROOT="${SG_ROOT:-$SG}"
+export NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-$NL}"
+export QUEEN_ROOT="${QUEEN_ROOT:-$QUEEN}"
+for _py in \
+  "${PYTHONG_ROOT}/bin/pythong" \
+  "${NEXUS_INSTALL_ROOT}/PythonG/bin/pythong" \
+  "${SG}/PythonG/bin/pythong" \
+  "${SG}/GrokPy/bin/pythong"; do
+  [[ -x "$_py" ]] && exec "$_py" "$@"
+done
+exec python3 "$@"

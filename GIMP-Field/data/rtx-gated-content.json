@@ -1,0 +1,42 @@
+{
+  "schema": "ammoos-rtx-gated-content/v1",
+  "title": "AmmoOS Image — RTX-gated tools and code paths",
+  "policy": "Hidden or disabled when RTX gate fails; field_opt CPU paths remain available.",
+  "detection": {
+    "module": "Grok16/forge/rtx_gate.py",
+    "fallback_profile": "field_opt"
+  },
+  "field_io": {
+    "cpu_profile": "field_opt",
+    "rtx_profile": "queen_rtx",
+    "plugin": "plug-ins/file-field",
+    "python_plugin": "plug-ins/python/file-field-formats.py",
+    "backend": "GIMP-Field/lib/field-image-io.py"
+  },
+  "gated_features": [
+    {"id": "field_io_rtx_batch", "label": "Field format RTX batch unpack", "requires": "rtx", "fallback": "field_io_cpu"},
+    {"id": "field_io_parallel_zlib", "label": "Parallel WRDT zlib decompress", "requires": "rtx", "fallback": "scalar_zlib"},
+    {"id": "gpu_paint_accel", "label": "GPU paint acceleration", "requires": "rtx", "fallback": "cpu_gegl"},
+    {"id": "opencl_filters", "label": "OpenCL filter stack", "requires": "rtx", "fallback": "scalar_gegl"},
+    {"id": "vulkan_preview", "label": "Vulkan compositor preview", "requires": "vulkan_rtx", "fallback": "gtk_canvas"},
+    {"id": "cuda_plugins", "label": "CUDA plugin lane", "requires": "rtx", "fallback": "disabled"},
+    {"id": "rtx_batch_render", "label": "RTX batch render queue", "requires": "queen_rtx", "fallback": "single_thread_field_opt"}
+  ],
+  "gated_paths": [
+    "plug-ins/file-field/field-io-dispatch.c",
+    "plug-ins/common/opencl",
+    "plug-ins/common/cuda",
+    "app/gegl/gpu",
+    "app/operations/gimpoperationopencl",
+    "libgimpbase/gimpcpuaccel.c"
+  ],
+  "gated_plugins": [
+    "opencl-experiments",
+    "gpu-paint",
+    "cuda-filter"
+  ],
+  "operator_ui": {
+    "hidden_when_gated": true,
+    "banner": "RTX tools gated — CPU field path active. Set G16_RTX_GATE_FORCE=1 for dev override only."
+  }
+}

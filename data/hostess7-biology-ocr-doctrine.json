@@ -1,0 +1,115 @@
+{
+  "schema": "hostess7-biology-ocr-doctrine/v1",
+  "title": "Biology OCR vision training — feed life-science text from live vision captures",
+  "motto": "She reads the field through OCR — every textbook line, anatomy label, and clinic note trains biology and medical literacy.",
+  "feed_sources": [
+    {
+      "id": "final_eye_session",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "data/vision-session.jsonl",
+      "text_fields": [
+        "ocr"
+      ],
+      "ocr_file_field": "ocr_file",
+      "role": "Vision session OCR files"
+    },
+    {
+      "id": "final_eye_manifest",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "manifest.jsonl",
+      "text_fields": [
+        "ocr",
+        "narrative"
+      ],
+      "role": "Final_Eye manifest"
+    },
+    {
+      "id": "final_eye_out_txt",
+      "kind": "glob",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "out/*.txt",
+      "role": "Final_Eye out/ plaintext"
+    },
+    {
+      "id": "vision_corpus",
+      "kind": "json",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/vision/corpus.json",
+      "text_fields": [
+        "body"
+      ],
+      "nested": "domains",
+      "role": "Vision corpus domains"
+    },
+    {
+      "id": "medical_corpus",
+      "kind": "json",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/medical/corpus.json",
+      "text_fields": [
+        "body"
+      ],
+      "nested": "domains",
+      "role": "Medical corpus domains — clinical OCR feed"
+    },
+    {
+      "id": "sdf_segments",
+      "kind": "glob",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/sdf/segments/*.json",
+      "text_fields": [
+        "text"
+      ],
+      "role": "Brain imaging SDF segment text"
+    },
+    {
+      "id": "field_brain_manifest",
+      "kind": "json",
+      "path_env": "NEXUS_INSTALL_ROOT",
+      "path_rel": "data/field-brain/manifest.json",
+      "text_fields": [
+        "title",
+        "id"
+      ],
+      "nested": "books",
+      "biology_filter": true,
+      "role": "OpenStax biology/microbiology/anatomy manifest index"
+    },
+    {
+      "id": "panel_ocr_snap",
+      "kind": "glob",
+      "path_abs": "/tmp/nexus-panel-ocr*.png",
+      "ocr_tesseract": true,
+      "role": "NEXUS panel OCR screenshots"
+    }
+  ],
+  "ingest": {
+    "max_files_per_source": 500,
+    "max_bytes_per_file": 250000,
+    "max_candidates_per_ingest": 8000,
+    "dedupe_window": 50000
+  },
+  "train": {
+    "verify_with_domains": true,
+    "min_candidate_len": 8,
+    "fluent_samples_floor": 40,
+    "master_samples_floor": 100,
+    "verified_rate_floor": 0.3
+  },
+  "biology_extract": {
+    "patterns": [
+      "anatomy_term",
+      "physiology_term",
+      "cell_term",
+      "genetics_term",
+      "microbe_term",
+      "clinical_term"
+    ]
+  },
+  "g16": {
+    "version": "5.1.0",
+    "profile": "g16_field_opt"
+  }
+}

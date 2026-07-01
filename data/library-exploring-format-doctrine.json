@@ -1,0 +1,23 @@
+{
+  "schema": "library-exploring-format-doctrine/v1",
+  "title": "Exploring books — H7c primary, H7s for metadata only",
+  "motto": "Exploring shelf books stay H7c — figures, reader, EIN. H7s wraps hot JSON metadata, not book bodies.",
+  "book_body_format": "h7c",
+  "book_body_reason": "H7c packs embedded figures (cover, plates), format_version 3, NEXUS_H7C reader, h7-library-bridge decompress_h7c — the library lane expects .h7c.",
+  "metadata_h7s": {
+    "enabled": true,
+    "targets": ["book.json", "shelf.json", "book-manifest.json"],
+    "via": "field-h7s-global-doctrine.json cleanup.annotate_library_h7s",
+    "reason": "Hot panel reads of shelf metadata — in-place at original .json extension; transparent via field-h7s-fs read_json."
+  },
+  "do_not_convert": [
+    "library/**/*.h7c",
+    "Hostess7_Exploring_*_Textbook.pdf"
+  ],
+  "paired_formats": {
+    "h7c": "canonical exploring book — always generate",
+    "pdf": "human textbook alongside manifest — optional shelf root",
+    "h7/7": "legacy explaining_* language shelf — migrate to h7c on ensure_h7c_for_book"
+  },
+  "family_roles_ref": "data/field-h7s-global-doctrine.json family_roles"
+}

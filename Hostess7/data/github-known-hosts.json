@@ -1,0 +1,58 @@
+{
+  "schema": "hostess7-github-known-hosts/v1",
+  "owner": "ZacharyGeurts",
+  "policy": "Pinned SSH host keys only — StrictHostKeyChecking=yes, no MITM; tunnel via ssh.github.com:443 when :22 blocked; no redirects, hooks, or proxy hijacks",
+  "anti_hook": {
+    "ignore_ssh_config": true,
+    "disable_git_hooks": true,
+    "block_credential_helpers": true,
+    "block_url_insteadOf": true,
+    "block_proxy": true,
+    "dns_pin_git_cidrs": true
+  },
+  "dns_allow": {
+    "git_cidrs": [
+      "192.30.252.0/22", "185.199.108.0/22", "140.82.112.0/20", "143.55.64.0/20",
+      "2a0a:a440::/29", "2606:50c0::/32", "20.201.28.151/32", "20.205.243.166/32",
+      "20.87.245.0/32", "4.237.22.38/32", "4.228.31.150/32", "20.207.73.82/32",
+      "20.27.177.113/32", "20.200.245.247/32", "20.175.192.147/32", "20.233.83.145/32",
+      "20.29.134.23/32", "20.199.39.232/32", "20.217.135.5/32", "4.225.11.194/32",
+      "4.208.26.197/32", "20.26.156.215/32", "20.201.28.152/32", "20.205.243.160/32",
+      "20.87.245.4/32", "4.237.22.40/32", "4.228.31.145/32", "20.207.73.83/32",
+      "20.27.177.118/32", "20.200.245.248/32", "20.175.192.146/32", "20.233.83.149/32",
+      "20.29.134.19/32", "20.199.39.227/32", "20.217.135.4/32", "4.225.11.200/32",
+      "4.208.26.198/32", "20.26.156.214/32"
+    ]
+  },
+  "tunnel": {
+    "via": "ssh.github.com",
+    "port": 443,
+    "when": "github.com:22 unreachable or HOSTESS7_GIT_TUNNEL=tunnel"
+  },
+  "hosts": {
+    "github.com": {
+      "port": 22,
+      "keys": [
+        "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl",
+        "github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=",
+        "github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk="
+      ]
+    },
+    "ssh.github.com": {
+      "port": 443,
+      "keys": [
+        "ssh.github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
+      ]
+    }
+  },
+  "repos": {
+    "Hostess7": "git@github.com:ZacharyGeurts/Hostess7.git",
+    "Hostess7.wiki": "git@github.com:ZacharyGeurts/Hostess7.wiki.git"
+  },
+  "api": {
+    "host": "api.github.com",
+    "tls_pin_sha256": null,
+    "verify_tls": true
+  },
+  "pages_origin": "https://zacharygeurts.github.io/Hostess7/"
+}

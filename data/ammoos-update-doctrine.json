@@ -1,0 +1,102 @@
+{
+  "schema": "ammoos-update-doctrine/v1",
+  "title": "AmmoOS Software Update Manager",
+  "motto": "Track GitHub · preflight · lock · apply · never break a running field.",
+  "product": "AmmoOS",
+  "getting_started": "Open Software Update Manager from the host desktop or visit /ammoos-update-os. Click Check for updates to query GitHub. When an update is available, review components and release notes, then Apply. Updates run in the background with a global lock so panel and Queen stay consistent.",
+  "primary_repo": {
+    "id": "ammoos",
+    "name": "AmmoOS",
+    "github": "ZacharyGeurts/AmmoOS",
+    "branch": "main",
+    "version_file": "data/ammoos-version.json",
+    "install_script": "install-all.sh",
+    "release_archive": "ammoos-{version}-source.h7e",
+    "release_format": "h7e/1",
+    "release_tarball": "ammoos-{version}-source.h7e",
+    "installers_tarball": "ammoos-{version}-installers.tar.gz"
+  },
+  "stack_repos": [
+    {
+      "id": "ammocode",
+      "name": "AmmoCode",
+      "github": "ZacharyGeurts/AmmoCode",
+      "branch": "main",
+      "local_paths": ["AmmoCode", "../AmmoCode"],
+      "optional": true,
+      "version_hint": "VERSION"
+    },
+    {
+      "id": "queen",
+      "name": "Queen",
+      "github": "ZacharyGeurts/Queen",
+      "branch": "main",
+      "local_paths": ["Queen"],
+      "optional": true,
+      "bundled": true
+    },
+    {
+      "id": "grok16",
+      "name": "Grok16",
+      "github": "ZacharyGeurts/Grok16",
+      "branch": "main",
+      "local_paths": ["Grok16"],
+      "optional": true,
+      "bundled": true
+    },
+    {
+      "id": "znetwork",
+      "name": "ZNetwork",
+      "github": "ZacharyGeurts/ZNetwork",
+      "branch": "main",
+      "local_paths": ["ZNetwork", "../ZNetwork"],
+      "optional": true
+    },
+    {
+      "id": "nexus-shield",
+      "name": "NEXUS Field lineage",
+      "github": "ZacharyGeurts/NEXUS-Shield",
+      "branch": "main",
+      "optional": true,
+      "legacy": true
+    }
+  ],
+  "safety": {
+    "require_update_lock": true,
+    "max_concurrent_updates": 1,
+    "preflight": {
+      "disk_free_mb_min": 512,
+      "require_panel_healthy": false,
+      "block_dirty_git": false,
+      "never_harm_os": true
+    },
+    "apply_order": ["acquire_lock", "preflight", "backup_state_marker", "fetch", "install", "post_update", "release_lock"],
+    "post_update": [
+      "nexus-host-desktop-install",
+      "nexus-vestigial-cleanup",
+      "panel_restart"
+    ],
+    "rollback": {
+      "enabled": true,
+      "marker": "update-previous-version.json",
+      "hint": "Re-run install-all.sh from prior release tarball if apply fails."
+    }
+  },
+  "channels": {
+    "default": "git_tree",
+    "release": {
+      "mode": "release",
+      "apply_via": "release_tarball"
+    },
+    "development": {
+      "mode": "git_tree",
+      "apply_via": "git_tree"
+    }
+  },
+  "ui": {
+    "route": "/ammoos-update-os",
+    "api_base": "/api/ammoos-update",
+    "poll_ms": 2500,
+    "check_cache_ttl_sec": 3600
+  }
+}

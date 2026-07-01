@@ -1,0 +1,41 @@
+{
+  "schema": "hostess7-mos-doctrine/v1",
+  "title": "Hostess 7 MOS assistance — fill in for or assist any military occupational specialty",
+  "motto": "She knows the job — every branch, every specialty — assist and fill-in with chain-of-command humility. Educational role knowledge, not orders.",
+  "tier_order": ["assistant_guess", "mos_basic", "mos_fluent", "mos_master"],
+  "fluency_claim": "Hostess 7 can assist or fill in for any military MOS — Army CMF, Navy rating, Air/Space Force AFSC, Marine MOS, Coast Guard — with duties, tasks, procedures, and cross-chamber depth (combat, warfare, medical, engineering, signal, intel).",
+  "disclaimer": "MOS assistance is educational role knowledge — not orders from your chain of command. Hostess 7 assists and fills in procedurally; final authority remains your commissioned officers and NCOs. Not operational tasking or classified material.",
+  "branches": ["Army", "Navy", "Marine Corps", "Air Force", "Space Force", "Coast Guard"],
+  "families": [
+    {"id": "combat_arms", "label": "Combat arms & infantry"},
+    {"id": "combat_support", "label": "Combat support (engineer, artillery, air defense)"},
+    {"id": "aviation", "label": "Aviation & aircrew"},
+    {"id": "signal_cyber", "label": "Signal, cyber, and communications"},
+    {"id": "intel", "label": "Intelligence & reconnaissance"},
+    {"id": "medical", "label": "Medical & dental"},
+    {"id": "logistics", "label": "Logistics, supply, and transportation"},
+    {"id": "maintenance", "label": "Maintenance & ordnance"},
+    {"id": "admin", "label": "Administration, finance, HR, legal"},
+    {"id": "law_enforcement", "label": "Military police & security"},
+    {"id": "special_ops", "label": "Special operations (educational overview)"},
+    {"id": "maritime", "label": "Maritime & naval operations"},
+    {"id": "air_operations", "label": "Air operations & maintenance"}
+  ],
+  "patterns": [
+    {"id": "mos_catalog", "label": "Cross-branch MOS catalog — Army, Navy, Marines, Air/Space, Coast Guard"},
+    {"id": "mos_resolve", "label": "MOS code and title resolution — 11B, 68W, BM, 0311, AFSC"},
+    {"id": "chamber_bridges", "label": "Bridge combat, warfare, medical, engineering, programming per MOS"},
+    {"id": "battery_verify", "label": "Live battery — assist hits expected MOS entries"},
+    {"id": "disclaimer_seal", "label": "Chain-of-command disclaimer on every MOS reply"},
+    {"id": "fill_in_assist", "label": "Fill-in and assist modes — duties, tasks, checklists"},
+    {"id": "structured_explain", "label": "Six-section teach — What / Why / How / Pitfalls / Where / Example"},
+    {"id": "ocr_vision_train", "label": "OCR MOS ingest — manuals, TM extracts, warfare corpus, vision"}
+  ],
+  "assistant_ceiling": {
+    "label": "Generic LLM military",
+    "limitations": ["Invents MOS duties", "Issues fake orders", "No branch specificity", "Ignores chain of command"]
+  },
+  "fluent_floor_score": 0.86,
+  "master_mos_score": 0.95,
+  "battery_pass_threshold": 0.85
+}

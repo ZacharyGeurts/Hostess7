@@ -1,0 +1,33 @@
+# Stack update — tests through AmmoLang (hang guard · adaptive timeouts) → GitHub publish
+@profile fastest
+@verbose clean
+@motto "Stack v2 · test · mint · push all NewLatest GitHubs"
+
+seq ·
+  say "Stack update — AmmoLang hang guard · timing ledger caps each step"
+  post "STACK_UPDATE START — KILROY absorbs ZNetwork · AmmoOS+AMOURANTHRTX · Queen standalone"
+  post "Subfolders — gut vestigial · wire AmmoLang routes"
+  run route:subfolder_migrate timeout:900 stall:300
+  post "Hostess7 first — brain diagnostics · tasklist before tests"
+  run route:hostess7_pre_update
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+  github check repo:ZacharyGeurts/AmmoOS
+  github check repo:ZacharyGeurts/Grok16
+  github check repo:ZacharyGeurts/KILROY
+  post "Gates — Grok16 smoke + launch-verify"
+  run route:grok16_gates
+  post "Agent bundle — catalog + ship dry"
+  run route:agent_tasks
+  post "Stack tests — AmmoLang assert suites (monitored timeouts)"
+  run route:stack_tests timeout:7200 stall:3600
+  post "Mint pre-reboot posture"
+  run route:mint_pre_reboot
+  post "Git publish — commit + push origin (normal git, no push lane)"
+  run script:git-publish arg:--siblings timeout:1800 stall:900
+  post "Seal built executables — MANIFEST + tamper vault"
+  run script:seal-built-executables timeout:300 stall:120
+  assist freeze
+  say "Stack update complete — inspect ammolang-timing-ledger.json + hang-freeze panel"
+  post "STACK_UPDATE COMPLETE"

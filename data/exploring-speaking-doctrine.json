@@ -1,0 +1,39 @@
+{
+  "schema": "exploring-speaking-doctrine/v1",
+  "title": "Exploring Speaking books — phonetics, dictionary, thesaurus, teaching",
+  "motto": "Every language ever — living, extinct, ancient, constructed — for humans and AI retrieval.",
+  "module": "lib/field-exploring-speaking.py",
+  "catalog": "data/exploring-speaking-languages-catalog.json",
+  "seeds": "data/exploring-speaking-seeds.json",
+  "shelf": "library/dewey/400-education",
+  "dewey": "400",
+  "dewey_label": "Language",
+  "book_id_pattern": "exploring_speaking_{iso6393}",
+  "title_pattern": "Exploring Speaking {name}",
+  "one_book_per_language": true,
+  "book_rule": "Exactly one Exploring Speaking X book per language — X is the language name; id exploring_speaking_{iso6393}.",
+  "hieroglyphics": "data/exploring-speaking-hieroglyphics.json",
+  "book_kind": "exploring",
+  "speaking_lane": true,
+  "format": "h7c/3",
+  "sections": [
+    "phonetics",
+    "dictionary",
+    "thesaurus",
+    "hieroglyphics_translation",
+    "teaching_pedagogy",
+    "ai_retrieval_keys"
+  ],
+  "ai_retrieval_fields": [
+    "lemma",
+    "ipa",
+    "pos",
+    "register",
+    "gloss_en",
+    "iso6393",
+    "status",
+    "script"
+  ],
+  "skip_scope": ["special"],
+  "family_roles_ref": "data/library-exploring-format-doctrine.json"
+}

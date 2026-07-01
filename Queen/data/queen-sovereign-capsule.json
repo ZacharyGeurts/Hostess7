@@ -1,0 +1,74 @@
+{
+  "schema": "queen-sovereign-capsule/v1",
+  "title": "Queen Sovereign Capsule — never leave, nothing watches in",
+  "motto": "Inside Queen you build everything. Horizon 7 + Hostess 7 + Grok16 live here. Humans and AI stay sealed.",
+  "doctrine": {
+    "never_leave": "All tools, compilers, tests, reboot — inside the capsule. No host OS dependency for operator work.",
+    "ingress": "BLOCK — external URLs, telemetry, host monitors unless IFF-held inside capsule",
+    "egress": "BLOCK — packet field observes; connection gatekeeper holds honorability before any wire",
+    "monitoring": "Only inside witnesses: Hostess 7 truth filter, Final_Eye assistive, packet-field IFF tags",
+    "compiler": "Grok16 g16 @ field_opt — Queen Forge + Horizon 7 lane compile, rebuild, test without exiting",
+    "runtime": "GrokPy grokpy @ field_opt — native Grok VM replaces pythong; Hostess 7 brain lane; G16-built CPython prefix optional",
+    "reboot": "Seal → Boot → World → Live — AmmoOS aperture; KILROY guest die; RTX queen-browser surface",
+    "horizon7": "Hostess 7 Horizon lane — geography, people, world corpus; paired with Queen brain in isolation"
+  },
+  "layers": [
+    {"id": "seal", "role": "Grok16 + RTX FieldSocket sealed", "api": "/api/queen-boot"},
+    {"id": "gates", "role": "IFF civilian/hostile — hold all", "api": "/api/queen-browser"},
+    {"id": "fieldnet", "role": "Internal routes only — queen:// scheme", "api": "/api/field-net"},
+    {"id": "forge", "role": "Native inside build — no shell escape", "api": "/api/queen-build"},
+    {"id": "compiler", "role": "g16 / g++16 / FIELDC — self-update silicon", "api": "/api/sovereign"},
+    {"id": "runtime", "role": "GrokPy grokpy — Grok Python replaces pythong", "api": "/api/grokpy"},
+    {"id": "horizon7", "role": "Hostess 7 brain + Horizon lane", "api": "/api/horizon7"},
+    {"id": "test", "role": "Forge-test, NES QA, browser gates — inside only", "api": "/api/sovereign"},
+    {"id": "reboot", "role": "Re-seal + boot map refresh", "api": "/api/sovereign"}
+  ],
+  "compiler_lane": {
+    "g16": "Grok16/bin/g16",
+    "gxx16": "Grok16/bin/g++16",
+    "profile": "field_opt",
+    "forge_tools": ["g16_toolchain", "grokpy", "pythong", "rtx", "chips", "fieldc"],
+    "rebuild_cmds": {
+      "queen_rtx": "grokpy lib/queen-forge.py run rtx",
+      "g16_toolchain": "grokpy lib/queen-forge.py run g16_toolchain",
+      "grokpy_rebuild": "grokpy lib/queen-forge.py run grokpy_rebuild",
+      "pythong_rebuild": "grokpy lib/queen-forge.py run pythong_rebuild",
+      "chips": "cd AMOURANTHRTX && ./linux.sh nes-qa",
+      "field_package": "pythong lib/queen-forge.py field"
+    }
+  },
+  "runtime_lane": {
+    "grokpy": "GrokPy/bin/grokpy",
+    "pythong": "GrokPy/bin/grokpy",
+    "profile": "field_opt",
+    "hostess_profile": "hostess_brain",
+    "bytecode_magic": "GROKPY12",
+    "forge_tools": ["grokpy_fetch", "grokpy_build", "grokpy_probe", "grokpy_rebuild", "pythong_probe", "pythong_rebuild"],
+    "rebuild_cmds": {
+      "grokpy_rebuild": "grokpy lib/queen-forge.py run grokpy_rebuild",
+      "grokpy_probe": "grokpy lib/queen-forge.py run grokpy_probe",
+      "pythong_rebuild": "grokpy lib/queen-forge.py run pythong_rebuild",
+      "pythong_probe": "grokpy lib/queen-forge.py run pythong_probe"
+    }
+  },
+  "horizon7": {
+    "hostess_root": "SG/Hostess7",
+    "lane": "Horizon",
+    "corpus": "field_world_corpus",
+    "neural_stack": "Hostess7/data/hostess7-neural-stack.json",
+    "paired_with": "Queen DARPA Robot Brain"
+  },
+  "ingress_policy": {
+    "external_http": "BLOCK",
+    "external_dns": "BLOCK",
+    "host_telemetry": "BLOCK",
+    "loopback_capsule": "ALLOW",
+    "queen_scheme": "ALLOW",
+    "file_data_blob": "ALLOW_LOCAL"
+  },
+  "operator_entry": {
+    "surface": "AMOURANTHRTX queen-browser — FieldWebPanel inside RTX",
+    "not": "Host browser, external port monitor, cloud shell",
+    "world_inside_panel": "queen://world — capsule UI rendered in-engine"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "dns-legal-rfc-seed/v1",
+  "motto": "Truth DNS — letter of RFC and applicable law on every resolver decision.",
+  "rfc_matrix": [
+    {"rfc": "RFC 1034", "title": "Domain Names — Concepts and Facilities", "section": "§3.6", "requirement": "Recursive resolution must follow delegation chain from root.", "compliance": "enforced", "nexus_control": "dig +trace from root hints only"},
+    {"rfc": "RFC 1035", "title": "Domain Names — Implementation and Specification", "section": "§4.1.1", "requirement": "DNS message header: ID, flags, QDCOUNT; QNAME label sequence ≤255 octets.", "compliance": "enforced", "nexus_control": "UDP parser validates header and name compression pointers"},
+    {"rfc": "RFC 1035", "title": "Domain Names — Implementation and Specification", "section": "§4.1.3", "requirement": "QTYPE IN class IN queries for A/AAAA resolution.", "compliance": "enforced", "nexus_control": "QTYPE_MAP 1=A, 28=AAAA, 5=CNAME, 15=MX, 16=TXT"},
+    {"rfc": "RFC 1035", "title": "Domain Names — Implementation and Specification", "section": "§4.1.4", "requirement": "RCODE 0=NOERROR, 2=SERVFAIL, 3=NXDOMAIN.", "compliance": "enforced", "nexus_control": "Blocked domains return NXDOMAIN (3); miss returns SERVFAIL (2)"},
+    {"rfc": "RFC 2181", "title": "Clarifications to the DNS Specification", "section": "§10", "requirement": "TTL interpretation — cache honors minimum TTL semantics.", "compliance": "enforced", "nexus_control": "NEXUS_FIELD_DNS_CACHE_TTL default 300s"},
+    {"rfc": "RFC 5890", "title": "IDNA: Definitions and Document Framework", "section": "§2", "requirement": "Internationalized domain labels encoded per IDNA before wire format.", "compliance": "enforced", "nexus_control": "idna encode/decode on QNAME"},
+    {"rfc": "RFC 6891", "title": "Extension Mechanisms for DNS (EDNS(0))", "section": "§6", "requirement": "OPT pseudo-RR for UDP payload size negotiation.", "compliance": "documented", "nexus_control": "Standard UDP 512B baseline; EDNS surfaced in planetary posture"},
+    {"rfc": "RFC 4033", "title": "DNS Security Introduction and Requirements", "section": "§3", "requirement": "Authenticate DNS data via DNSSEC chain of trust.", "compliance": "recommended", "nexus_control": "Trace path validates delegation; DNSSEC validation flagged per zone"},
+    {"rfc": "RFC 4034", "title": "Resource Records for DNS Security Extensions", "section": "§2", "requirement": "RRSIG, DNSKEY, NSEC/NSEC3 records in signed zones.", "compliance": "monitored", "nexus_control": "Planetary table marks signed TLDs"},
+    {"rfc": "RFC 4035", "title": "Protocol Modifications for DNSSEC", "section": "§4", "requirement": "Resolver must set AD bit only when data verified.", "compliance": "monitored", "nexus_control": "Truth resolver does not forge AD"},
+    {"rfc": "RFC 6761", "title": "Special-Use Domain Names", "section": "§6.3", "requirement": "localhost. names resolve only to loopback.", "compliance": "enforced", "nexus_control": "Loopback-only listener binding"},
+    {"rfc": "RFC 6895", "title": "IANA DNS Parameters", "section": "§3", "requirement": "QTYPE/QCLASS assignments per IANA registry.", "compliance": "enforced", "nexus_control": "Unsupported QTYPE returns empty/SERVFAIL"},
+    {"rfc": "RFC 7766", "title": "DNS Transport over TCP", "section": "§6", "requirement": "TCP fallback for responses >512 bytes.", "compliance": "documented", "nexus_control": "UDP-first; TCP noted in resolver policy"},
+    {"rfc": "RFC 7858", "title": "Specification for DNS over TLS (DoT)", "section": "§3", "requirement": "Port 853 TLS encapsulation — optional client path.", "compliance": "blocked_foreign", "nexus_control": "Foreign DoT resolvers stopped; local truth path only"},
+    {"rfc": "RFC 8484", "title": "DNS Queries over HTTPS (DoH)", "section": "§4", "requirement": "HTTPS application/dns-message wire format.", "compliance": "blocked_foreign", "nexus_control": "DoH bypass blocked under planetary EXTREME envelope"},
+    {"rfc": "RFC 9520", "title": "DNS Resolver Integrity Extensions", "section": "§1", "requirement": "Resolver must not substitute answers without operator policy.", "compliance": "enforced", "nexus_control": "No shortcut public DNS; trace-only answers"}
+  ],
+  "legal_framework": [
+    {"citation": "18 U.S.C. § 1030(a)(2)(C)", "title": "Computer Fraud and Abuse Act", "requirement": "No exceeding authorized access to obtain information from protected computers.", "nexus_application": "DNS poisoning and unauthorized resolver hijack treated as CFAA-class harm vectors."},
+    {"citation": "18 U.S.C. § 1030(a)(5)(A)", "title": "Computer Fraud and Abuse Act", "requirement": "Knowingly causing damage to protected computers.", "nexus_application": "NXDOMAIN blocklist and segment blocks for DNS tunnel exfil (DNS_TUNNEL vector)."},
+    {"citation": "47 U.S.C. § 222", "title": "Communications Act — CPNI", "requirement": "Protect customer proprietary network information.", "nexus_application": "Resolver query logs stay local on field drive; no third-party DNS leakage."},
+    {"citation": "GDPR Art. 5(1)(f)", "title": "EU General Data Protection Regulation", "requirement": "Personal data processed with integrity and confidentiality.", "nexus_application": "Loopback resolver; foreign ISP DNS (Charter, Google, Cloudflare) egress stopped."},
+    {"citation": "GDPR Art. 32", "title": "EU General Data Protection Regulation", "requirement": "Appropriate technical measures for security of processing.", "nexus_application": "EXTREME watcher bundle + truth DNS for EU-facing flows."},
+    {"citation": "EU Directive 2022/2555 (NIS2)", "title": "Network and Information Security", "requirement": "DNS service providers implement security risk management.", "nexus_application": "Planetary DNS posture table with per-region EXTREME controls."},
+    {"citation": "15 U.S.C. §§ 6501-6506", "title": "COPPA", "requirement": "Verifiable parental consent before collecting children's data.", "nexus_application": "Ad tracking domains blocked at resolver when adblock lists apply."},
+    {"citation": "ICANN RAA 2013", "title": "Registrar Accreditation Agreement", "requirement": "Registrars maintain accurate WHOIS/RDAP data.", "nexus_application": "RDAP/WHOIS lookups documented in research cross-ref; not forged locally."},
+    {"citation": "FCC 47 CFR § 64.2003", "title": "CPNI rules (voice/Broadband)", "requirement": "Opt-in for use of CPNI.", "nexus_application": "ISP DNS redirection (Charter/Spectrum) classified foreign resolver — blocked."}
+  ],
+  "root_servers": [
+    {"letter": "a", "hostname": "a.root-servers.net", "ipv4": "198.41.4.4", "ipv6": "2001:503:ba3e::2:30", "operator": "Verisign"},
+    {"letter": "b", "hostname": "b.root-servers.net", "ipv4": "199.9.14.201", "ipv6": "2001:500:200::b", "operator": "USC-ISI"},
+    {"letter": "c", "hostname": "c.root-servers.net", "ipv4": "192.33.4.4", "ipv6": "2001:500:2::c", "operator": "Cogent"},
+    {"letter": "d", "hostname": "d.root-servers.net", "ipv4": "199.7.91.13", "ipv6": "2001:500:2d::d", "operator": "University of Maryland"},
+    {"letter": "e", "hostname": "e.root-servers.net", "ipv4": "192.203.230.10", "ipv6": "2001:dc3::35", "operator": "NASA Ames"},
+    {"letter": "f", "hostname": "f.root-servers.net", "ipv4": "192.5.5.241", "ipv6": "2001:500:2f::f", "operator": "Internet Systems Consortium"},
+    {"letter": "g", "hostname": "g.root-servers.net", "ipv4": "192.112.36.4", "ipv6": "2001:500:12::d0d", "operator": "US DoD"},
+    {"letter": "h", "hostname": "h.root-servers.net", "ipv4": "198.97.190.53", "ipv6": "2001:500:1::53", "operator": "US Army"},
+    {"letter": "i", "hostname": "i.root-servers.net", "ipv4": "192.36.148.17", "ipv6": "2001:7fe::53", "operator": "Netnod"},
+    {"letter": "j", "hostname": "j.root-servers.net", "ipv4": "192.58.128.30", "ipv6": "2001:503:c27::2:30", "operator": "Verisign"},
+    {"letter": "k", "hostname": "k.root-servers.net", "ipv4": "193.0.14.129", "ipv6": "2001:7fd::1", "operator": "RIPE NCC"},
+    {"letter": "l", "hostname": "l.root-servers.net", "ipv4": "199.7.83.42", "ipv6": "2001:500:9f::42", "operator": "ICANN"},
+    {"letter": "m", "hostname": "m.root-servers.net", "ipv4": "202.12.27.33", "ipv6": "2001:dc3::35", "operator": "WIDE Project"}
+  ],
+  "foreign_resolvers_blocked": [
+    {"name": "Google Public DNS", "ipv4": ["8.8.8.8", "8.8.4.4"], "ipv6": ["2001:4860:4860::8888", "2001:4860:4860::8844"], "reason": "RFC 9520 — non-authoritative shortcut"},
+    {"name": "Cloudflare DNS", "ipv4": ["1.1.1.1", "1.0.0.1"], "ipv6": ["2606:4700:4700::1111", "2606:4700:4700::1001"], "reason": "Foreign resolver bypass"},
+    {"name": "Charter/Spectrum", "ipv4": ["71.10.216.1", "71.10.216.2"], "ipv6": [], "reason": "ISP DNS redirection — 47 CFR CPNI class"},
+    {"name": "Quad9", "ipv4": ["9.9.9.9"], "ipv6": ["2620:fe::fe", "2620:fe::9"], "reason": "Third-party policy injection"}
+  ]
+}

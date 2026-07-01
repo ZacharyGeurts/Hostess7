@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen Code</title>
+  <link rel="canonical" href="/world/queen-code.html" />
+  <link rel="stylesheet" href="queen-modern.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-syntax.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-code.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-code-themes.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="field-performance-flyout.css" />
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:*; frame-ancestors 'self' http://127.0.0.1:*; object-src 'none'; base-uri 'self'" />
+</head>
+<body class="qc" data-queen-surface="code" data-telemetry="off" data-qc-theme="queen_emerald">
+  <div class="qc-app">
+    <header class="qc-titlebar">
+      <strong>Queen Code</strong>
+      <nav class="qc-menubar" aria-label="Application menu">
+        <details class="qc-menu">
+          <summary>File</summary>
+          <div class="qc-menu-panel">
+            <button type="button" id="qc-menu-open-files">Open Queen Files…</button>
+            <div class="qc-menu-sep" role="separator"></div>
+            <div class="qc-menu-label">Recent</div>
+            <div class="qc-recent-list" id="qc-recent-list"></div>
+            <div class="qc-menu-sep" role="separator"></div>
+            <button type="button" id="qc-menu-save">Save</button>
+            <button type="button" id="qc-menu-g16">g16 syntax check</button>
+          </div>
+        </details>
+        <details class="qc-menu">
+          <summary>Run</summary>
+          <div class="qc-menu-panel">
+            <button type="button" id="qc-menu-build">g16 Build</button>
+            <button type="button" id="qc-menu-launch">Run .launch chamber</button>
+            <button type="button" id="qc-menu-run-py">Run Python (gpy-16)</button>
+            <div class="qc-menu-sep" role="separator"></div>
+            <div class="qc-menu-label">Compiler profile</div>
+            <select id="qc-menu-compiler" class="qc-menu-select">
+              <option value="belt_2_0">belt_2_0 — Grok16 default</option>
+              <option value="belt_1_0">belt_1_0 — baseline</option>
+              <option value="field_opt">field_opt — field optimized</option>
+              <option value="hostess_secure">hostess_secure</option>
+              <option value="forever">forever</option>
+              <option value="ai">ai — AI compile lane</option>
+            </select>
+          </div>
+        </details>
+        <details class="qc-menu">
+          <summary>View</summary>
+          <div class="qc-menu-panel">
+            <button type="button" id="qc-menu-wrap">Toggle word wrap</button>
+            <button type="button" id="qc-menu-font-dec">Font −</button>
+            <button type="button" id="qc-menu-font-inc">Font +</button>
+            <label>Theme
+              <select id="qc-set-theme">
+                <option value="queen_emerald">Queen Emerald</option>
+                <option value="one_dark">One Dark</option>
+                <option value="dracula">Dracula</option>
+                <option value="nord">Nord</option>
+                <option value="solarized_dark">Solarized Dark</option>
+                <option value="monokai">Monokai</option>
+              </select>
+            </label>
+          </div>
+        </details>
+        <details class="qc-menu">
+          <summary>Settings</summary>
+          <div class="qc-menu-panel qc-settings-panel">
+            <label>Font size <input type="range" id="qc-set-font" min="11" max="22" value="13" /></label>
+            <label>Tab size <input type="number" id="qc-set-tab" min="2" max="8" value="4" /></label>
+            <label class="qc-check"><input type="checkbox" id="qc-set-wrap" /> Word wrap</label>
+            <label class="qc-check"><input type="checkbox" id="qc-set-autodetect" checked /> Autodetect language (g16 discern)</label>
+            <label class="qc-check"><input type="checkbox" id="qc-set-recent" checked /> Track recent files</label>
+            <label>g16 profile
+              <select id="qc-set-profile">
+                <option value="belt_1_0">belt_1_0</option>
+                <option value="belt_2_0" selected>belt_2_0</option>
+                <option value="field_opt">field_opt</option>
+              </select>
+            </label>
+          </div>
+        </details>
+      </nav>
+      <nav class="qc-debug" aria-label="Debug">
+        <details class="qc-debug-menu">
+          <summary>Debug</summary>
+          <label class="qc-debug-item"><input type="checkbox" id="qc-perf-flyout" /> Performance Flyout</label>
+        </details>
+      </nav>
+      <span class="pill ok" id="qc-telemetry-pill">telemetry: off</span>
+      <span class="pill" id="qc-g16-pill">g16 · belt 2.0</span>
+      <span class="pill">loopback · path jail</span>
+    </header>
+
+    <nav class="qc-activity" aria-label="Activity bar">
+      <button type="button" class="qc-act active" title="Explorer">📁</button>
+      <button type="button" class="qc-act" title="Queen Files" id="qc-open-files">🗂️</button>
+      <button type="button" class="qc-act" title="Queen Browser" id="qc-open-browser">🌐</button>
+      <button type="button" class="qc-act" title="g16 check" id="qc-act-g16">⚙</button>
+    </nav>
+
+    <aside class="qc-sidebar">
+      <div class="qc-side-head">Explorer · SG roots</div>
+      <div class="qc-tree" id="qc-tree"></div>
+      <div class="qc-side-head">g16 languages</div>
+      <div class="qc-lang-list" id="qc-lang-list"></div>
+    </aside>
+
+    <main class="qc-main">
+      <div class="qc-tabs" role="tablist">
+        <button type="button" class="qc-tab active" id="qc-tab-label">Welcome</button>
+      </div>
+      <div class="qc-toolbar">
+        <button type="button" class="primary" id="qc-save">Save (Ctrl+S)</button>
+        <button type="button" id="qc-g16">g16 syntax check</button>
+        <button type="button" id="qc-build">Build</button>
+        <button type="button" id="qc-launch">▶ .launch</button>
+      </div>
+      <div class="qc-editor-wrap">
+        <div class="qc-gutter" id="qc-gutter" aria-hidden="true">1</div>
+        <div class="qc-editor-stack">
+          <pre class="qc-highlight qs-code" id="qc-highlight" aria-hidden="true"></pre>
+          <textarea class="qc-editor" id="qc-editor" spellcheck="false" autocorrect="off" autocapitalize="off" aria-label="Editor"></textarea>
+        </div>
+      </div>
+    </main>
+
+    <footer class="qc-statusbar">
+      <span><strong id="qc-st-lang">plaintext</strong></span>
+      <span id="qc-st-g16">g16</span>
+      <span id="qc-st-pos">Ln 1, Col 1</span>
+      <span id="qc-st-path">untitled</span>
+      <span id="qc-st-dirty"></span>
+    </footer>
+  </div>
+  <div class="qc-toast" id="qc-toast" hidden></div>
+
+  <script src="field-math.js"></script>
+  <script src="queen-code-highlight.js"></script>
+  <script src="field-performance-flyout.js"></script>
+  <script src="queen-code.js"></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

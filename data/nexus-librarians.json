@@ -1,0 +1,100 @@
+{
+  "schema": "nexus-librarians/v1",
+  "version": 1,
+  "motto": "A few librarians who know Dewey — and learn how we catalog and dispense.",
+  "lead": "hostess7_lead",
+  "catalog_systems": [
+    {
+      "id": "dewey_h7",
+      "name": "Dewey Decimal H7 shelves",
+      "path": "textbooks/dewey/{class}/",
+      "classifier": "field_library_organize.classify_dewey",
+      "dispense": "h7-library-bridge.read_page"
+    },
+    {
+      "id": "nexus_file_catalog",
+      "name": "NEXUS install file catalog",
+      "path": "data/nexus-file-catalog.json",
+      "classifier": "nexus-file-catalog.build",
+      "dispense": "nexus-incremental-update.apply"
+    },
+    {
+      "id": "library_atlas",
+      "name": "Hostess7 Library Atlas",
+      "path": "brain/library/atlas/",
+      "classifier": "h7-library-atlas.build_atlas",
+      "dispense": "h7-library-bridge.search_library"
+    },
+    {
+      "id": "field_card_catalog",
+      "name": "Field Card Catalog",
+      "path": "library/dewey/020-library-science/card-catalog/",
+      "classifier": "field-card-catalog.detect_cards",
+      "dispense": "field-card-catalog.search_cards",
+      "sort": "field-card-catalog._sort_cards",
+      "ui": "/panel/field-card-catalog.html"
+    }
+  ],
+  "librarians": [
+    {
+      "id": "hostess7_lead",
+      "name": "Hostess7 World's Best Librarian",
+      "role": "lead",
+      "dewey_ranges": ["000-999"],
+      "specialty": "EIN/ISBN bibliography, cover SDF, field-drive fingerprint",
+      "learns": ["catalog_build", "card_catalog", "classify", "upload", "dispense_page", "search", "book_knowledge", "issue_reader", "checkout", "checkin"]
+    },
+    {
+      "id": "margot_dewey",
+      "name": "Margot Dewey",
+      "role": "dewey_general",
+      "dewey_ranges": ["000-399"],
+      "specialty": "000–399 — computing, philosophy, religion, social sciences",
+      "learns": ["classify", "upload", "dispense_page", "search", "card_catalog", "dewey_browse", "book_knowledge", "issue_reader", "checkout", "checkin"]
+    },
+    {
+      "id": "soren_shelf",
+      "name": "Soren Shelf",
+      "role": "dewey_stem",
+      "dewey_ranges": ["400-699"],
+      "specialty": "400–699 — language, science, medicine, engineering",
+      "learns": ["classify", "upload", "dispense_page", "search", "card_catalog", "dewey_browse", "book_knowledge", "issue_reader", "checkout", "checkin"]
+    },
+    {
+      "id": "rhea_reader",
+      "name": "Rhea Reader",
+      "role": "dewey_humanities",
+      "dewey_ranges": ["700-999"],
+      "specialty": "700–999 — arts, literature, history, war shelves",
+      "learns": ["classify", "upload", "dispense_page", "search", "card_catalog", "war_ascertain", "dewey_browse", "book_knowledge", "issue_reader", "checkout", "checkin"]
+    },
+    {
+      "id": "clara_catalog",
+      "name": "Clara Catalog",
+      "role": "nexus_catalog",
+      "dewey_ranges": [],
+      "specialty": "NEXUS file catalog, incremental update manifest, install-tree roles",
+      "learns": ["nexus_file_catalog", "catalog_build", "incremental_diff", "dispense_file"]
+    },
+    {
+      "id": "vera_lies",
+      "name": "Lie Librarian — Ironclad Deception Index",
+      "role": "lie_librarian",
+      "dewey_ranges": ["000-999"],
+      "specialty": "Autonomous Warfare corpus gate — every LIKELY_FALSE claim per book, page-numbered, operational",
+      "learns": [
+        "lie_catalog",
+        "lie_scan",
+        "lies_index",
+        "deception_index",
+        "truth_questionable",
+        "corrections_ledger",
+        "reinform",
+        "search_lies",
+        "issue_reader"
+      ],
+      "module": "lib/h7-lie-librarian.py",
+      "doctrine": "data/h7-lie-librarian-doctrine.json"
+    }
+  ]
+}

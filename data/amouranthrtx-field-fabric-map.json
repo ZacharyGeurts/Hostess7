@@ -1,0 +1,76 @@
+{
+  "schema": "amouranthrtx-field-fabric/v1",
+  "description": "NEXUS_FIELD_* env keys mapped to AMOURANTHRTX FieldFabric entropy/physics modules",
+  "fabric": {
+    "entropy_watch": {
+      "nexus_keys": ["NEXUS_ENTROPY_WATCH", "NEXUS_ENTROPY_SAMPLE"],
+      "amouranthrtx": "FieldFabric.EntropyPulse",
+      "role": "Shannon spike detection — 94% noise quarantine"
+    },
+    "packet_oracle": {
+      "nexus_keys": ["NEXUS_PACKET_ORACLE", "NEXUS_PACKET_DPI_SAMPLE"],
+      "amouranthrtx": "FieldFabric.PacketDPI",
+      "role": "Metadata + sampled frame corroboration"
+    },
+    "connection_gatekeeper": {
+      "nexus_keys": ["NEXUS_CONNECTION_GATEKEEPER"],
+      "amouranthrtx": "FieldFabric.ScoreMatrix",
+      "role": "10-axis scoring → heat crush at 0.7"
+    },
+    "field_rf": {
+      "nexus_keys": ["NEXUS_FIELD_RF", "NEXUS_FIELD_RF_TRIANGULATE"],
+      "amouranthrtx": "FieldFabric.SpectrumSentinel",
+      "role": "FCC-permitted spectrum + triangulation lock"
+    },
+    "field_antenna": {
+      "nexus_keys": ["NEXUS_FIELD_ANTENNA"],
+      "amouranthrtx": "FieldFabric.AntennaOrchestrator",
+      "role": "RF catch + multi-antenna merge"
+    },
+    "field_dns": {
+      "nexus_keys": ["NEXUS_FIELD_DNS_ENFORCE_RESOLV"],
+      "amouranthrtx": "FieldFabric.PlanetaryResolver",
+      "role": "Truth DNS/DHCP planetary takeover"
+    },
+    "ultra_stealth": {
+      "nexus_keys": ["NEXUS_ULTRA_STEALTH", "NEXUS_CPU_QUOTA_PCT"],
+      "amouranthrtx": "FieldFabric.EnergyEnvelope",
+      "role": "cgroup quota + adaptive idle pacing"
+    },
+    "thermal_governor": {
+      "nexus_keys": ["NEXUS_THERMAL_GOVERNOR", "NEXUS_THERMAL_WARN_C", "NEXUS_THERMAL_CRIT_C"],
+      "amouranthrtx": "FieldFabric.ThermalThrottle",
+      "role": "Hardware sensor → dynamic quota reduction"
+    },
+    "field_thermal_guard": {
+      "nexus_keys": ["NEXUS_FIELD_THERMAL_GUARD", "NEXUS_FIELD_MAX_JOULES_PER_SEC", "NEXUS_FIELD_REDATA_CHUNK"],
+      "amouranthrtx": "FieldThermalGuard + FieldWave + FieldGlobalRedata",
+      "role": "Landauer work budget, per-wave entropy guard, incremental redata, Pipeline dispatch guard"
+    },
+    "efficient_store": {
+      "nexus_keys": ["NEXUS_STATE_DIR"],
+      "amouranthrtx": "FieldFabric.MerkleArchive",
+      "role": "blake3 + zstd append-only verifiable logs"
+    },
+    "rust_core": {
+      "nexus_keys": ["NEXUS_RUST_CORE"],
+      "amouranthrtx": "FieldFabric.RustHotPath",
+      "role": "Lock-free scoring core via PyO3"
+    },
+    "fabric_encrypt": {
+      "nexus_keys": ["NEXUS_FABRIC_ENCRYPT_SLOTS", "NEXUS_FIELD_SEAL_KEY"],
+      "amouranthrtx": "FieldFabric.dispatchExtended",
+      "role": "Zero-cost 4+ parallel encryption lanes — free when idle"
+    },
+    "port_ddos_shield": {
+      "nexus_keys": ["NEXUS_PORT_DDOS_SHIELD", "NEXUS_HEAT_CRUSH_THRESHOLD", "NEXUS_PORT_DDOS_ENFORCE"],
+      "amouranthrtx": "FieldFabric.dispatchExtended + EntropyPulse + ThermalThrottle",
+      "role": "Wave view thermals + entropy at every port and WiFi edge — heat crush DDoS"
+    },
+    "unified_bus": {
+      "nexus_keys": ["NEXUS_UNIFIED_BUS"],
+      "amouranthrtx": "FieldLayer::BusMap + data_bus[64]",
+      "role": "Pack all lanes once — copilot hot route per subsystem at arithmetic rate"
+    }
+  }
+}

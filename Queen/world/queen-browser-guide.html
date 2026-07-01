@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen Browser — User Guide</title>
+  <link rel="icon" href="/assets/ammoos-field-48.png" type="image/png" sizes="48x48" />
+  <link rel="stylesheet" href="queen-modern.css" />
+  <link rel="stylesheet" href="queen-branding.css" />
+  <link rel="stylesheet" href="queen-browser-guide.css" />
+</head>
+<body class="qbg" data-queen-surface="guide">
+  <header class="qbg-hero">
+    <img src="assets/branding/queen-crown-surprise.svg" alt="" width="72" height="72" class="qbg-crown" />
+    <div>
+      <h1>Queen Browser</h1>
+      <p class="qbg-lead">Your field web engine on <code>127.0.0.1</code> — sovereign shell for AmmoOS, not a generic host browser tab.</p>
+    </div>
+  </header>
+
+  <main class="qbg-main">
+    <section class="qbg-card">
+      <h2>Coming from another browser?</h2>
+      <p>Queen is the only browser product in AmmoOS. Your habits still work — tabs, bookmarks, passwords — but navigation runs through <strong>field gates</strong> on loopback.</p>
+      <ul>
+        <li><strong>Import</strong> — click <span class="qbg-chip">IMPORT</span> in the browser bar, or drop <code>bookmarks.html</code> / <code>passwords.csv</code> into <code>.nexus-state/imports/</code></li>
+        <li><strong>Default browser</strong> — Shift+click <span class="qbg-chip">IMPORT</span> to register Queen as your system default</li>
+        <li><strong>Legacy profiles</strong> — Queen can sweep old gecko-family profiles locally; nothing is sent to the cloud</li>
+      </ul>
+    </section>
+
+    <section class="qbg-card">
+      <h2>How the stack is layered</h2>
+      <p>Everything is built bottom-up. <strong>Hardware is never broken</strong> — we witness and wire, we do not brick your machine.</p>
+      <ol class="qbg-stack-list">
+        <li><strong>NEXUS C2</strong> (<code>:9477</code>) — command, gates, trust strike, all security fixes</li>
+        <li><strong>ZNetwork</strong> — 100% internet pipe, relayer + exploit shield help Queen defend</li>
+        <li><strong>Queen CANVAS renderer</strong> — AMOURANTHRTX display technology (<code>CANVAS.comp</code>); chip layer, not a GUI</li>
+        <li><strong>Queen Browser</strong> (<code>:9481</code>) — secure rewritten shell; tabs, import, gates</li>
+        <li><strong>AmmoOS</strong> — <em>inside</em> Queen (Start tab) — not a separate browser product</li>
+      </ol>
+      <p>The browser bar <span class="qbg-chip">Stack</span> strip shows live layer health from NEXUS C2.</p>
+    </section>
+
+    <section class="qbg-card">
+      <h2>Start here</h2>
+      <table class="qbg-table">
+        <thead><tr><th>What</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr><td>Queen shell (tabs, nav)</td><td><a href="/world/browser.html">/world/browser.html</a></td></tr>
+          <tr><td>Host desktop / Start</td><td><a href="http://127.0.0.1:9477/field">127.0.0.1:9477/field</a></td></tr>
+          <tr><td>View — folder manager</td><td><a href="/world/view.html">/world/view.html</a></td></tr>
+          <tr><td>Field command deck</td><td><a href="http://127.0.0.1:9477/command">127.0.0.1:9477/command</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="qbg-card">
+      <h2>Keyboard shortcuts</h2>
+      <ul class="qbg-kbd-list">
+        <li><kbd>Ctrl</kbd>+<kbd>T</kbd> — new tab</li>
+        <li><kbd>Ctrl</kbd>+<kbd>R</kbd> — reload</li>
+        <li><kbd>F11</kbd> / <kbd>Alt</kbd>+<kbd>Enter</kbd> — fullscreen viewport</li>
+        <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd> — page inspector (block ads locally)</li>
+        <li><kbd>Alt</kbd>+<kbd>Tab</kbd> — cycle Queen tabs</li>
+      </ul>
+    </section>
+
+    <section class="qbg-card">
+      <h2>Security you can see</h2>
+      <p>Every URL passes Queen gates before it loads. The gate pill and drawer (◇) show verdicts. Mic, camera, and screen capture stay locked until you grant them locally.</p>
+      <p>When ZNetwork is live, you <strong>are</strong> <code>127.0.0.1</code> — the field OS on loopback, not a generic browser tab.</p>
+    </section>
+
+    <section class="qbg-card qbg-card--help">
+      <h2>Need more?</h2>
+      <p>Open the gate drawer from the browser bar, or run Hostess 7 Command for operator tools. This guide stays on your machine — no remote fetch.</p>
+      <p><a class="qbg-btn" href="/world/browser.html">← Back to Queen</a></p>
+    </section>
+  </main>
+</body>
+</html>

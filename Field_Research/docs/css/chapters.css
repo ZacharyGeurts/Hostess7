@@ -1,0 +1,67 @@
+.chapter-hero {
+  position: relative;
+  min-height: 42vh;
+  display: flex;
+  align-items: flex-end;
+  background: center/cover no-repeat;
+}
+.chapter-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,6,16,0.2) 0%, var(--bg) 100%);
+}
+.chapter-hero-content {
+  position: relative; z-index: 2;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 2.5rem var(--page-pad);
+  width: 100%;
+}
+.chapter-hero h1 { font-size: clamp(1.5rem, 4vw, 2.4rem); }
+
+.chapter-main {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 1.5rem var(--page-pad) 3rem;
+}
+.chapter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+}
+.chapter-main h2 {
+  font-size: 1.35rem;
+  margin: 2rem 0 0.75rem;
+  color: var(--heart-glow);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.35rem;
+}
+.chapter-main h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; color: var(--gold); }
+.chapter-main p { margin-bottom: 1rem; }
+.chapter-main ul, .chapter-main ol { margin: 0 0 1rem 1.5rem; }
+.chapter-main li { margin-bottom: 0.35rem; }
+
+.figure {
+  margin: 1.5rem 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.figure img { width: 100%; display: block; }
+.figure figcaption {
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  background: var(--panel);
+}
+
+.objectives {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--heart);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.objectives h2 { margin-top: 0; border: none; padding: 0; font-size: 1.1rem; }

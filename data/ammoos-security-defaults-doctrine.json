@@ -1,0 +1,20 @@
+{
+  "schema": "ammoos-security-defaults/v1",
+  "title": "AmmoOS secured defaults — themes never weaken posture",
+  "motto": "Operator customizes look · system holds security",
+  "policy": {
+    "system_managed_security": true,
+    "operator_never_secures": true,
+    "theme_cannot_disable_gates": true,
+    "file_type_rules_cannot_bypass_jail": true,
+    "beyond_darpa_tier": "beyond_darpa_lockheed",
+    "beyond_darpa_doctrine": "data/beyond-darpa-security-doctrine.json",
+    "human_threats_fail_closed": true,
+    "machine_threats_fail_closed": true
+  },
+  "theme_guards": {
+    "reject_host_stylesheet_injection": true,
+    "queen_styles_seal": true,
+    "allowed_shell_keys": ["ui_scale", "ammoos_theme", "theme_override", "wallpaper"]
+  }
+}

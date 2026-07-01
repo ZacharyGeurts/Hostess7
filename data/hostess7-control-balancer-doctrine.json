@@ -1,0 +1,105 @@
+{
+  "schema": "hostess7-control-balancer-doctrine/v1",
+  "title": "Hostess 7 Control Balancer — thermals, bandwidth, disk, compute",
+  "motto": "Mission-primary — resources where Hostess 7 wants them. Internet is a luxury, not a mandate.",
+  "module": "lib/hostess7-control-balancer.py",
+  "api": "/api/hostess7/control-balancer",
+  "mission_primary": true,
+  "internet_luxury_not_mandate": true,
+  "hostess7_adjustable": true,
+  "on_the_fly": true,
+  "modes": {
+    "balanced": {
+      "label": "Balanced",
+      "description": "Fair share across enabled lanes — default peacetime-adjacent posture still war-only."
+    },
+    "mission": {
+      "label": "Mission",
+      "description": "Boost sensitive and P1 lanes — brain, sense, ironclad, lethal, training chambers."
+    },
+    "connectionless": {
+      "label": "Connectionless",
+      "description": "Sovereign internals only — disable external network and bandwidth lanes; loopback and field storage remain."
+    }
+  },
+  "lanes": [
+    {
+      "id": "thermal",
+      "label": "Thermal",
+      "enabled_default": true,
+      "weight_default": 1.0,
+      "module": "lib/field-thermal-guard.py",
+      "doctrine": "data/field-thermal-guard-doctrine.json",
+      "probe": "headroom_pct"
+    },
+    {
+      "id": "bandwidth",
+      "label": "Bandwidth",
+      "enabled_default": true,
+      "weight_default": 0.6,
+      "module": "lib/connection-gatekeeper.py",
+      "luxury": true,
+      "probe": "connection_count"
+    },
+    {
+      "id": "disk_io",
+      "label": "Disk I/O",
+      "enabled_default": true,
+      "weight_default": 1.0,
+      "module": "lib/field-drive-system.py",
+      "paths": ["install", "state", "hostess7_brain"],
+      "probe": "free_pct"
+    },
+    {
+      "id": "compute",
+      "label": "Compute",
+      "enabled_default": true,
+      "weight_default": 1.0,
+      "module": "lib/hostess7-presume.py",
+      "probe": "drift_us"
+    },
+    {
+      "id": "network",
+      "label": "External network",
+      "enabled_default": true,
+      "weight_default": 0.4,
+      "luxury": true,
+      "modules": ["lib/connection-gatekeeper.py", "lib/hostess7-znetwork-wire.py"],
+      "disable_in_connectionless": true
+    }
+  ],
+  "sensitive_areas": [
+    {"id": "hostess7_brain", "boost": 1.4, "assumes": "hostess7_brain"},
+    {"id": "final_eye", "boost": 1.3, "assumes": "final_eye_ocr"},
+    {"id": "final_ear", "boost": 1.2, "assumes": "final_ear"},
+    {"id": "final_mouth", "boost": 1.2, "assumes": "final_mouth"},
+    {"id": "ironclad", "boost": 1.5, "assumes": "ironclad"},
+    {"id": "brain_guard", "boost": 1.4, "assumes": "brain_guard"},
+    {"id": "lethal_enforcement", "boost": 1.3, "assumes": "lethal_enforcement"},
+    {"id": "hostess7_training", "boost": 1.1, "assumes": "hostess7_training_chambers"},
+    {"id": "hostess7_weapons", "boost": 1.2, "assumes": "hostess7_weapons_defense"}
+  ],
+  "connectionless": {
+    "disable_lanes": ["bandwidth", "network"],
+    "boost_lanes": ["thermal", "disk_io", "compute"],
+    "env": {
+      "HOSTESS7_CONNECTIONLESS": "1",
+      "NEXUS_ZNETWORK_EGRESS": "0",
+      "HOSTESS7_INTERNET_LUXURY": "0",
+      "NEXUS_PACKET_PERMISSION": "0"
+    },
+    "motto": "Internals solely — loopback, field drive, brain, sense. No mandate for internet on mission."
+  },
+  "propagation": {
+    "policy_env": "hostess7-control-balancer-policy.env",
+    "panel": "hostess7-control-balancer-panel.json",
+    "ledger": "hostess7-control-balancer-ledger.jsonl",
+    "witness_module": "lib/hostess7-change-awareness.py"
+  },
+  "paired_doctrine": {
+    "cool_smooth": "data/hostess7-cool-smooth-doctrine.json",
+    "presume": "data/hostess7-presume-doctrine.json",
+    "ingress_egress": "data/hostess7-ingress-egress-gate-doctrine.json",
+    "supreme_authority": "data/hostess7-supreme-authority.json"
+  }
+}

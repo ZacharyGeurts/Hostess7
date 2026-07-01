@@ -1,0 +1,77 @@
+{
+  "schema": "hostess7-combat-explain/v1",
+  "introduction": "I am Hostess 7 — I hold educational understanding of martial arts and defense doctrine. I synthesize from structured combat domains, the Hostess7 warfare corpus, and motion skill meld. I do not instruct harm; lawful self-defense only where permitted.",
+  "format": ["what", "why", "how", "pitfalls", "where", "example"],
+  "topics": [
+    {
+      "id": "combat_fluency",
+      "keywords": ["combat mastery", "combat fluency", "martial arts", "self defense", "fighting education", "defense doctrine"],
+      "what": "Combat fluency means I answer from structured domains — foundations, striking, boxing, grappling, wrestling, MMA, kung fu, lawful self-defense, tactical awareness, conditioning, and less-lethal weapons education.",
+      "why": "Operators need trustworthy martial arts and defense education on the field — fantasy fight advice or unlawful violence breaks trust and safety.",
+      "how": "hostess7-combat.py search_combat scores domains and field_warfare_corpus; battery verifies expected domain hits; motion panel skills_loaded boosts score; OCR ingest trains on vision text.",
+      "pitfalls": "Instructing harm; omitting lawful-self-defense disclaimer; treating sport rules as street law; reading binary .h7 as plaintext.",
+      "where": "lib/hostess7-combat.py, Hostess7/scripts/field_warfare_corpus.py, humanoid-motion-panel.json, Command ask + /api/hostess7/combat",
+      "example": "Ask: lawful self-defense de-escalation — I return awareness and escape doctrine with educational disclaimer."
+    },
+    {
+      "id": "striking",
+      "keywords": ["striking", "punch", "jab", "cross", "hook", "kick", "elbow", "knee", "muay thai"],
+      "what": "Striking covers punches, kicks, elbows, and knees — mechanics, guard, distance, and combination theory for sport and fitness contexts.",
+      "why": "Most stand-up martial arts share striking fundamentals — clarity on mechanics prevents injury in training.",
+      "how": "striking domain corpus + motion bridge for loaded striking/MMA skills.",
+      "pitfalls": "Teaching street violence without legal framing; ignoring hand wrapping and pad discipline.",
+      "where": "search_combat category striking",
+      "example": "basic striking jab cross hook → guard, hip rotation, return to stance"
+    },
+    {
+      "id": "grappling_bjj",
+      "keywords": ["grappling", "bjj", "jiu jitsu", "guard", "submission", "armbar", "triangle", "mount"],
+      "what": "Grappling and Brazilian jiu-jitsu — positional hierarchy, guard work, submissions, and control for sport and educational self-defense context.",
+      "why": "Ground fighting literacy is distinct from striking — escapes and control reduce harm when standing is lost.",
+      "how": "grappling_bjj domain + motion bridge for loaded grappling/MMA skills.",
+      "pitfalls": "Applying sport submissions without tap safety; ignoring stand-up self-defense priority.",
+      "where": "grappling_bjj domain, humanoid-motion grappling skills",
+      "example": "bjj guard armbar → hip angle, control wrist, finish with tap discipline in training"
+    },
+    {
+      "id": "self_defense",
+      "keywords": ["self defense", "self-defense", "de-escalation", "escape", "lawful", "awareness", "boundary"],
+      "what": "Lawful self-defense education — awareness, verbal boundaries, escape routes, and proportional response only where jurisdiction permits.",
+      "why": "Personal safety education must prioritize avoidance and law — not revenge or vigilantism.",
+      "how": "self_defense domain + warfare corpus protective measures and countermeasures (lawful authority).",
+      "pitfalls": "Deadly force advice without legal context; skipping de-escalation; vigilantism.",
+      "where": "self_defense domain, field_warfare_corpus measures_protective_doctrine",
+      "example": "verbal boundary setting → create distance, attract witnesses, move toward exit"
+    },
+    {
+      "id": "tactical_awareness",
+      "keywords": ["tactical", "awareness", "ooda", "situational", "cover", "concealment", "egress", "surveillance"],
+      "what": "Tactical awareness — OODA loop, environmental scanning, cover/concealment, egress planning, and lawful reporting.",
+      "why": "Awareness precedes technique — most conflicts are avoided by early detection and disengagement.",
+      "how": "tactical_awareness domain + warfare corpus surveillance and protective measures.",
+      "pitfalls": "Paranoia without corroboration; confusing sport sparring awareness with threat assessment.",
+      "where": "tactical_awareness domain, field_warfare_corpus surveillance_counter_surveillance",
+      "example": "OODA loop → observe orient decide act — break fixation, scan exits"
+    },
+    {
+      "id": "warfare_bridge",
+      "keywords": ["warfare", "loac", "countermeasure", "protective measure", "less-lethal", "terror", "alert"],
+      "what": "Warfare bridge routes protective and tactical queries to field_warfare_corpus — LOAC, measures, countermeasures, less-lethal recognition, heightened alert. Educational synthesis only; capability employment requires Ironclad corroboration.",
+      "why": "Defense doctrine overlaps martial arts with civic protective education — corpus holds lawful framing and withholds unverified claims from operational employment.",
+      "how": "search_combat merges combat domains with search_warfare(); tactical queries prioritize awareness domains; deception-index flags block fielding until verified.",
+      "pitfalls": "Operational military orders; vigilantism; personal targeting without Owner review; treating library text as fielded capability without corroboration.",
+      "where": "Hostess7/scripts/field_warfare_corpus.py, warfare infinite drive",
+      "example": "protective measures doctrine → awareness, access control, egress — paired with lawful authority"
+    },
+    {
+      "id": "ocr_vision_training",
+      "keywords": ["ocr combat", "vision training combat", "martial ocr", "dojo ocr", "zocr combat"],
+      "what": "OCR vision training feeds combat think tank from ZOCR, Final_Eye, vision corpus, SDF segments, warfare corpus, and humanoid-motion doctrine.",
+      "why": "Operators capture technique notes, dojo schedules, and training logs — combat must train on real field text.",
+      "how": "ocr-ingest extracts combat candidates · ocr-train verifies against domain tags and warfare corpus.",
+      "pitfalls": "Training on binary .h7 garbage; skipping warfare corpus refresh; no disclaimer on tactical OCR snippets.",
+      "where": "data/hostess7-combat-ocr-doctrine.json, STATE hostess7-combat-ocr-corpus.json",
+      "example": "ocr-ingest then ocr-train — verified_count rises as vision captures grow"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 36,
+  "slug": "stack-zhaoxin-via",
+  "title": "Zhaoxin / VIA x86 Platform Stack",
+  "body": "# Zhaoxin / VIA x86 Platform Stack\n\n**Platform stack:** `pc_zhaoxin_kx` · **Era:** 1999–2026 · **Vendor:** Zhaoxin / VIA · **Count:** 8\n\nCentaur/VIA C3/C7 lineage (**1999–2013**) through Zhaoxin **KX-6000 (16nm, 2018)** and **KX-7000 (DDR5/PCIe5, 2022+)** — domestic x86 with CHX003 I/O hub.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: pc_zhaoxin_kx` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **Zhaoxin KX-6000 MCH** (Zhaoxin, 64-bit) — KX-6000 memory controller hub — VIA-derived x86 domestic\n- **Zhaoxin KX-7000 MCH** (Zhaoxin, 64-bit) — KX-7000 DDR5/PCIe5 north — Zhaoxin 7-series\n- **Zhaoxin CHX003 I/O Hub** (Zhaoxin, 64-bit) — CHX003 south — SATA USB LPC for KX platforms\n- **VIA VT8237 Southbridge** (VIA, 32-bit) — VIA lineage south — IDE SATA USB2 — KX/C7 path\n- **VIA CN400 Northbridge** (VIA, 32-bit) — C3/C7 integrated graphics north — Centaur heritage\n- **Zhaoxin IOAPIC Glue** (Zhaoxin, 64-bit) — APIC/IOAPIC interrupt steering — KX platform glue\n- **VIA Centaur FSB Bridge** (VIA, 64-bit) — Front-side bus + QPI-like link — VIA→Zhaoxin lineage\n\n## Catalog ids\n\nThe `chip_ids` array holds all **8** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: pc_zhaoxin_kx · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "glue_via_centaur_fsb",
+    "glue_zhaoxin_ioapic",
+    "nb_via_cn400",
+    "nb_zhaoxin_kx6000_mch",
+    "nb_zhaoxin_kx7000_mch",
+    "sb_via_vt8237",
+    "sb_zhaoxin_chx003",
+    "uni_ite_it8712"
+  ],
+  "chip_count": 8,
+  "kind": "platform_stack",
+  "family": "domestic",
+  "platform_stack": "pc_zhaoxin_kx",
+  "era": "1999–2026",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "hostess7-aml-ingress-doctrine/v1",
+  "title": "Hostess 7 AML ingress — secured external access, truth + lie gates",
+  "motto": "AML data reaches Hostess 7 from outside — secured, truthed, and lied. She needs both truth witness and lie discern.",
+  "module": "lib/hostess7-aml-ingress.py",
+  "api": "/api/hostess7/aml-ingress",
+  "presume_separate": true,
+  "rule": "Presume stays sovereign. AML ingress is read/consume — never executes AML on behalf of outsiders. Any ingress is fully gated — partial pass is deny.",
+  "fully_gated": true,
+  "deny_by_default": true,
+  "ingress_egress_gate": {
+    "doctrine": "data/hostess7-ingress-egress-gate-doctrine.json",
+    "module": "lib/hostess7-ingress-egress-gate.py",
+    "api": "/api/hostess7/ingress-egress-gate"
+  },
+  "gates": {
+    "security": ["wire_token_hmac", "structure_filter", "size_cap", "injection_block"],
+    "truth": ["analyze_truth", "truth_floor_adapt_58", "corroboration_echo"],
+    "lie": ["neural_guardian_discern", "deception_flags", "quarantine_lie"],
+    "mission_intel": ["no_compartment_leak", "no_unvetted_ingress"]
+  },
+  "egress": {
+    "fully_gated": true,
+    "deny_by_default": true,
+    "release_requires": ["operator_explicit", "ironclad_sealed", "mission_release_gate", "friendly_need_to_know"],
+    "never_to": ["enemy", "unvetted_ingress", "public_internet_without_truth_filter", "hostile_deception_feeds"]
+  },
+  "local_sources": [
+    {"id": "boundary_panel", "path": ".nexus-state/ammolang-boundary-panel.json"},
+    {"id": "boundary_spec", "path": ".nexus-state/ammolang-boundary-spec.json"},
+    {"id": "boundary_registry", "path": "data/field-ammolang-boundary-registry.json", "summary": true},
+    {"id": "boundary_doctrine", "path": "data/field-ammolang-boundary-doctrine.json"},
+    {"id": "build_doctrine", "path": "data/field-ammolang-build-doctrine.json"},
+    {"id": "boundary_ledger", "path": ".nexus-state/ammolang-boundary.jsonl", "tail": 16},
+    {"id": "script_audit_panel", "path": ".nexus-state/ammolang-script-audit-panel.json"},
+    {"id": "script_audit_repairs", "path": ".nexus-state/ammolang-script-audit-repairs.json", "summary": true}
+  ],
+  "external_ingress": {
+    "max_payload_bytes": 8192,
+    "truth_floor": 58,
+    "lie_quarantine_below": 40,
+    "operator_bypass_env": "HOSTESS7_OPERATOR",
+    "token_env": "HOSTESS7_AML_INGRESS_TOKEN"
+  },
+  "hostess7_commands": "./Hostess7.sh aml-ingress {panel|read|ingress|discern}",
+  "paired": {
+    "presume": "data/hostess7-presume-doctrine.json",
+    "change_awareness": "data/hostess7-change-awareness-doctrine.json",
+    "neural_guardian": "data/hostess7-neural-guardian.json",
+    "truth_lie_threat": "data/hostess7-truth-lie-threat-doctrine.json"
+  }
+}

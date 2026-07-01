@@ -1,0 +1,48 @@
+{
+  "schema": "field-wave-doctrine/v1",
+  "title": "Voltage is voltage — stripped to the wave",
+  "motto": "If it is voltage, it is voltage. No encoding. Strip to the wave; the rest is potential energy.",
+  "regulation": {
+    "operate_at_present_rail": true,
+    "power_company_grid_trust_layer": "blocked",
+    "conversion_on_voltage_path": false,
+    "entropy_on_trust_layer": false,
+    "doctrine": "data/field-voltage-regulation-doctrine.json"
+  },
+  "policy": {
+    "voltage_is_voltage": true,
+    "encode_wave": false,
+    "json_wave_samples": false,
+    "wave_storage": "raw_binary_vdat_only",
+    "strip_manifest_separate": true,
+    "potential_energy_from_strip": true,
+    "demod_is_downstream": true,
+    "trust_layer": "wave_only",
+    "push_out_excess": true,
+    "strip_never_retained_on_shed": true
+  },
+  "shed": {
+    "discard_strip_buffers": true,
+    "stop_capture_on_crit": true,
+    "usb_autosuspend_rtl": true,
+    "lower_cpu_quota_on_excess": true,
+    "honest_limit": "Reduces CPU/USB/disk draw; cannot dump RF energy at the antenna in software"
+  },
+  "layers": {
+    "wave": "Raw voltage vs time — I/Q rails or baseband Volts, no framing",
+    "strip": "Everything removed to reach the wave — carrier, encoding, protocol, metadata",
+    "potential_energy": "Energy budget in the strip — ∫V²dt proxy, not trusted as signal"
+  },
+  "formats": {
+    "wave_file": ".vdat",
+    "strip_manifest": ".strip.json",
+    "forbidden": ["base64_wave", "json_sample_array", "opus_on_wave_layer"]
+  },
+  "lives_with_us": [
+    "field_wave_engine",
+    "field_spectrum_demod",
+    "field_rf_sentinel",
+    "hardware_wire",
+    "native_layer"
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "schema": "field-clipboard-doctrine/v1",
+  "title": "Hardware clipboard wire — secured, every chord, every editor soul",
+  "motto": "Ctrl+C Ctrl+V Shift+Insert OpenApple — ALL OF IT. Apple IIe included. Nobody else is middleman.",
+  "policy": {
+    "mandatory_secure_vault": true,
+    "block_untrusted_clipboard": true,
+    "no_third_party_managers": true,
+    "sovereign_password_manager": "field-lock",
+    "field_keepass_offline_only": true,
+    "os_clipboard_ttl_sec": 45,
+    "vault_ttl_sec": 300,
+    "hardware_evdev_wire": true,
+    "browser_wire": true,
+    "default_scheme": "standard",
+    "ghost_mode": true,
+    "ghost_visible": false,
+    "historic_ring": true,
+    "historic_ring_max": 32,
+    "historic_preview_chars": 48,
+    "emulator_schemes": ["apple2e", "apple2e_prodos", "c64", "nes_keyboard", "clipboard_master", "emacs"],
+    "config_env": "NEXUS_CLIPBOARD_SCHEME",
+    "config_file": "state/field-clipboard-scheme.json"
+  },
+  "wire_chain": [
+    "hardware_bus",
+    "evdev_or_compositor",
+    "nexus_clipboard_wire",
+    "secure_vault_sclip",
+    "panel_operator_only"
+  ],
+  "actions": {
+    "copy": "Encrypt selection → RAM vault → OS clipboard (TTL wipe)",
+    "cut": "Copy then delete selection on wire surface",
+    "paste": "Decrypt vault → target (no extra history)",
+    "paste_primary": "X11/Wayland primary selection paste",
+    "clear": "Wipe vault + OS clipboard + primary",
+    "kill_region": "emacs/nano kill ring deposit",
+    "yank": "emacs/nano yank from kill ring",
+    "break": "apple2e Ctrl+C break — never mapped to copy in emulator scheme"
+  },
+  "schemes": {
+    "standard": {
+      "label": "AmmoOS field standard",
+      "bindings": [
+        {"action": "copy", "chord": "Control+c"},
+        {"action": "copy", "chord": "Control+Insert"},
+        {"action": "paste", "chord": "Control+v"},
+        {"action": "paste", "chord": "Shift+Insert"},
+        {"action": "cut", "chord": "Control+x"},
+        {"action": "cut", "chord": "Shift+Delete"},
+        {"action": "paste_primary", "chord": "Control+Shift+Insert"},
+        {"action": "clear", "chord": "Control+Shift+Delete"}
+      ]
+    },
+    "windows": {
+      "label": "AmmoOS C2 classic",
+      "bindings": [
+        {"action": "copy", "chord": "Control+c"},
+        {"action": "copy", "chord": "Control+Insert"},
+        {"action": "paste", "chord": "Control+v"},
+        {"action": "paste", "chord": "Shift+Insert"},
+        {"action": "cut", "chord": "Control+x"},
+        {"action": "cut", "chord": "Shift+Delete"}
+      ]
+    },
+    "mac": {
+      "label": "AmmoOS Rose command chords",
+      "bindings": [
+        {"action": "copy", "chord": "Meta+c"},
+        {"action": "paste", "chord": "Meta+v"},
+        {"action": "cut", "chord": "Meta+x"},
+        {"action": "paste", "chord": "Meta+Shift+v", "note": "paste and match style"}
+      ]
+    },
+    "emacs": {
+      "label": "GNU Emacs",
+      "bindings": [
+        {"action": "kill_region", "chord": "Control+w"},
+        {"action": "yank", "chord": "Control+y"},
+        {"action": "copy", "chord": "Meta+w"},
+        {"action": "copy", "chord": "Control+Insert"},
+        {"action": "paste", "chord": "Control+y"},
+        {"action": "paste", "chord": "Shift+Insert"},
+        {"action": "kill_region", "chord": "Control+Shift+w"},
+        {"action": "yank", "chord": "Meta+y", "note": "yank pop"}
+      ]
+    },
+    "nano": {
+      "label": "GNU nano",
+      "bindings": [
+        {"action": "copy", "chord": "Alt+6", "note": "mark copy (M-6)"},
+        {"action": "cut", "chord": "Control+k"},
+        {"action": "paste", "chord": "Control+u", "note": "uncut"},
+        {"action": "paste", "chord": "Shift+Insert"},
+        {"action": "copy", "chord": "Control+Insert"}
+      ]
+    },
+    "vi": {
+      "label": "Vi / Vim style",
+      "bindings": [
+        {"action": "copy", "chord": "Control+Insert"},
+        {"action": "paste", "chord": "Shift+Insert"},
+        {"action": "copy", "chord": "Control+c", "when": "visual_mode"},
+        {"action": "paste", "chord": "Control+v", "when": "insert_mode"},
+        {"action": "yank", "chord": "Control+y", "note": "\"+y equivalent on wire"}
+      ]
+    },
+    "apple2e": {
+      "label": "Apple IIe — OpenApple / SolidApple / Ctrl",
+      "bindings": [
+        {"action": "break", "chord": "Control+c", "note": "BREAK — not copy"},
+        {"action": "copy", "chord": "Alt+c", "note": "OpenApple+C proxy (Alt)"},
+        {"action": "paste", "chord": "Alt+v", "note": "OpenApple+V proxy"},
+        {"action": "copy", "chord": "Control+Insert"},
+        {"action": "paste", "chord": "Shift+Insert"},
+        {"action": "clear", "chord": "Control+Shift+Delete"},
+        {"action": "copy", "chord": "Alt+s", "note": "OpenApple+S save screen (witness only)"}
+      ],
+      "platform": "CHIPS/Apple2",
+      "cpu": "6502",
+      "status": "scaffold+wire"
+    },
+    "apple2e_prodos": {
+      "label": "Apple IIe ProDOS MERLIN/ASM",
+      "extends": "apple2e",
+      "bindings": [
+        {"action": "break", "chord": "Control+c"},
+        {"action": "copy", "chord": "Alt+c"},
+        {"action": "paste", "chord": "Alt+v"},
+        {"action": "paste", "chord": "Control+v", "note": "host paste into monitor"}
+      ]
+    },
+    "c64": {
+      "label": "Commodore 64 — C= key chords",
+      "bindings": [
+        {"action": "copy", "chord": "Control+c"},
+        {"action": "paste", "chord": "Shift+Insert"},
+        {"action": "paste", "chord": "Control+v"}
+      ]
+    },
+    "nes_keyboard": {
+      "label": "NES / Famicom host keyboard overlay",
+      "bindings": [
+        {"action": "copy", "chord": "Control+c"},
+        {"action": "paste", "chord": "Control+v"}
+      ]
+    },
+    "terminal": {
+      "label": "POSIX terminal defaults",
+      "bindings": [
+        {"action": "copy", "chord": "Control+Shift+c"},
+        {"action": "paste", "chord": "Control+Shift+v"},
+        {"action": "copy", "chord": "Control+Insert"},
+        {"action": "paste", "chord": "Shift+Insert"}
+      ]
+    },
+    "readline": {
+      "label": "GNU readline",
+      "bindings": [
+        {"action": "copy", "chord": "Control+Insert"},
+        {"action": "paste", "chord": "Shift+Insert"},
+        {"action": "kill_region", "chord": "Control+w"},
+        {"action": "yank", "chord": "Control+y"}
+      ]
+    },
+    "clipboard_master": {
+      "label": "Clipboard Master — famous ring + quick paste",
+      "bindings": [
+        {"action": "copy", "chord": "Control+c"},
+        {"action": "copy", "chord": "Control+Insert"},
+        {"action": "paste", "chord": "Control+v"},
+        {"action": "paste", "chord": "Shift+Insert"},
+        {"action": "cut", "chord": "Control+x"},
+        {"action": "history_paste", "chord": "Control+Shift+v", "note": "paste previous ring slot"},
+        {"action": "history_paste", "chord": "Control+Alt+v", "note": "Clipboard Master quick paste"},
+        {"action": "history", "chord": "Control+Shift+c", "note": "copy + push historic ring"},
+        {"action": "clear", "chord": "Control+Shift+Delete"}
+      ]
+    },
+    "all": {
+      "label": "Union — accept every known chord (field sovereign mode)",
+      "union_of": [
+        "standard", "windows", "mac", "emacs", "nano", "vi",
+        "apple2e", "apple2e_prodos", "c64", "nes_keyboard", "terminal", "readline",
+        "clipboard_master"
+      ]
+    }
+  },
+  "middleman_procs": [
+    "copyq", "parcellite", "clipit", "clipman", "diodon", "greenclip", "klipper",
+    "cliphist", "clipster", "gpaste", "clipmgr", "xclipboard", "autocutsel"
+  ],
+  "secure_backend": {
+    "script": "memes/Security/secure_clipboard.sh",
+    "commands": {
+      "init": "init",
+      "copy": "copy",
+      "paste": "paste",
+      "paste_clip": "paste-clip",
+      "clear": "clear",
+      "status": "status",
+      "disable_managers": "disable-managers"
+    }
+  },
+  "integrations": [
+    "hardware_wire",
+    "smart_wire",
+    "front_hook",
+    "field_underlay",
+    "queen_browser",
+    "hostess_secure"
+  ]
+}

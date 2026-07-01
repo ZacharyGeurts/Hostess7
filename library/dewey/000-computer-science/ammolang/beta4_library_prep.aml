@@ -1,0 +1,16 @@
+# Beta 4 library prep — deception index · reinform · lie librarian
+@profile fastest
+@verbose clean
+@motto "Beta 4 library prep — reinform beta4 · lie librarian · audit"
+
+seq ·
+  say "Beta 4 library prep — AML stepped reinform + deception index"
+  post "BETA4_LIBRARY_PREP START"
+  run py:h7-library-reinform action:audit timeout:300 stall:60
+  run py:h7-library-reinform args:reinform-all --priority=beta4 --apply --limit=48 timeout:3600 stall:600
+  run py:h7-lie-librarian args:build --refresh --limit=200 timeout:1800 stall:300
+  run py:h7-library-reinform action:audit timeout:300 stall:60
+  run py:hostess7-change-awareness action:pulse timeout:60 stall:30
+  assist freeze
+  say "Beta 4 library prep complete"
+  post "BETA4_LIBRARY_PREP COMPLETE"

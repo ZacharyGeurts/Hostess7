@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#060a12" />
+  <title>Combinatorics Studio · G16 Plates</title>
+  <link rel="stylesheet" href="/assets/combinatorics-studio.css" />
+</head>
+<body>
+  <div class="comb-wrap">
+    <a class="comb-back" href="/command#settings">← NEXUS Settings</a>
+    <header class="comb-hero">
+      <div>
+        <h1>Combinatorics Studio</h1>
+        <p class="comb-tagline">
+          Walk the facet tree, read every live metric in plain English, and land on the best G16 compile.
+          You run each step — nothing leaves your machine.
+        </p>
+      </div>
+      <span class="comb-badge" id="comb-badge">Operator studio</span>
+    </header>
+
+    <section class="comb-metrics-strip" id="comb-metrics-strip" aria-label="Live metrics"></section>
+
+    <section class="comb-card comb-surfaces-card">
+      <div class="comb-section-head">
+        <h2>C2 quint &amp; operator surfaces</h2>
+        <span class="comb-surfaces-badge" id="comb-surfaces-badge">— live</span>
+      </div>
+      <p class="comb-muted">Start · Files · Terminal · Broadcaster · Lock — plus dock, Popcorn, Launch, GPU, Audio. Plated into meld; combinatorics condense and BSP reuse.</p>
+      <div class="comb-quint-strip" id="comb-quint-strip" aria-label="C2 taskbar quint"></div>
+      <div class="comb-surfaces-grid" id="comb-surfaces-grid"></div>
+    </section>
+
+    <section class="comb-card comb-charts-card">
+      <div class="comb-charts-head">
+        <h2>Comb progress</h2>
+        <span class="comb-poll-badge" id="comb-poll-badge">Live · 5s</span>
+      </div>
+      <div class="comb-charts-grid" id="comb-charts-grid">
+        <div class="comb-chart-box"><span class="comb-chart-label">Cycle ms</span><canvas id="chart-elapsed" height="56"></canvas></div>
+        <div class="comb-chart-box"><span class="comb-chart-label">Native ops/s</span><canvas id="chart-ops" height="56"></canvas></div>
+        <div class="comb-chart-box"><span class="comb-chart-label">Tree leaves</span><canvas id="chart-leaves" height="56"></canvas></div>
+        <div class="comb-chart-box"><span class="comb-chart-label">Thermal %</span><canvas id="chart-thermal" height="56"></canvas></div>
+      </div>
+      <div class="comb-pattern-freq" id="comb-pattern-freq"></div>
+    </section>
+
+    <div class="comb-grid comb-grid--hero">
+      <div class="comb-card comb-card--glow">
+        <h2>Tree leaves</h2>
+        <div class="comb-stat" id="comb-leaves-count">—</div>
+        <div class="comb-stat-sub">Truth-gated paths</div>
+      </div>
+      <div class="comb-card">
+        <h2>Condensed</h2>
+        <div class="comb-stat" id="comb-condense-count">—</div>
+        <div class="comb-stat-sub">Fused plate groups</div>
+      </div>
+      <div class="comb-card">
+        <h2>Speed cap</h2>
+        <div class="comb-stat comb-stat--sm" id="comb-speed-cap">—</div>
+        <div class="comb-stat-sub">Native bench ceiling</div>
+      </div>
+      <div class="comb-card">
+        <h2>Cardinality</h2>
+        <div class="comb-stat comb-stat--sm" id="comb-cardinality">—</div>
+        <div class="comb-stat-sub">Legal facet product</div>
+      </div>
+    </div>
+
+    <div class="comb-chips" id="comb-status-chips"></div>
+
+    <div class="comb-actions">
+      <button type="button" class="primary" data-comb-action="full">Full cycle</button>
+      <button type="button" data-comb-action="cycle">Walk → condense → recombine</button>
+      <button type="button" data-comb-action="walk">Walk tree</button>
+      <button type="button" data-comb-action="condense">Condense plates</button>
+      <button type="button" data-comb-action="recombine">Recombinatorics</button>
+      <button type="button" data-comb-action="bridge">Bridge meld</button>
+      <button type="button" data-comb-action="truth">Refresh truths</button>
+      <button type="button" data-comb-action="publish">Publish panel</button>
+      <button type="button" data-comb-action="orchestrate">Meld orchestrator</button>
+    </div>
+
+    <div class="comb-grid comb-grid--wide">
+      <section class="comb-card comb-meld-design">
+        <div class="comb-section-head">
+          <h2>Plate meld architecture</h2>
+          <span class="comb-meld-gen" id="comb-meld-gen">gen —</span>
+        </div>
+        <div id="comb-meld-chain" class="comb-meld-chain"></div>
+        <div id="comb-meld-layers" class="comb-meld-layers"></div>
+        <div id="comb-meld-sources" class="comb-meld-sources"></div>
+      </section>
+      <section class="comb-card comb-brain-speed">
+        <div class="comb-section-head">
+          <h2>Brain speed path</h2>
+          <button type="button" class="comb-brain-try" id="comb-brain-try">Try brain area</button>
+        </div>
+        <p class="comb-muted" id="comb-brain-plain">When headroom allows, Hostess7 brain areas can try faster compile paths.</p>
+        <div id="comb-brain-alts" class="comb-brain-alts"></div>
+      </section>
+    </div>
+
+    <section class="comb-card comb-emulator-launch-card">
+      <h2>CHIPS emulator launch</h2>
+      <div id="comb-emulator-launch">
+        <p class="comb-muted">When combinatorics picks FieldChips, launch the Game Room pump from here.</p>
+      </div>
+    </section>
+
+    <section class="comb-card comb-cpu-catalog">
+      <div class="comb-section-head">
+        <h2>All CPU architectures</h2>
+        <span class="comb-cpu-total" id="comb-cpu-total">— architectures</span>
+      </div>
+      <p class="comb-muted">Guest systems, host CPUs, G16 patterns, FieldX86 die — total map.</p>
+      <div class="comb-cpu-grid" id="comb-cpu-grid"></div>
+    </section>
+
+    <section class="comb-card comb-narrative">
+      <h2>Plain English readout</h2>
+      <div id="comb-narrative" class="comb-narrative-body">
+        <p class="comb-muted">Loading field metrics…</p>
+      </div>
+    </section>
+
+    <div class="comb-grid">
+      <div class="comb-card">
+        <h2>Top leaves</h2>
+        <div class="comb-leaves" id="comb-leaves"></div>
+      </div>
+      <div class="comb-card comb-candidates">
+        <h2>Compile candidates</h2>
+        <div id="comb-candidates"></div>
+      </div>
+    </div>
+
+    <section class="comb-verdict" id="comb-verdict" aria-live="polite">
+      <div class="comb-verdict-inner">
+        <span class="comb-verdict-label">Best compile</span>
+        <h2 class="comb-verdict-profile" id="comb-verdict-profile">—</h2>
+        <p class="comb-verdict-detail" id="comb-verdict-detail"></p>
+        <p class="comb-verdict-why" id="comb-verdict-why"></p>
+      </div>
+    </section>
+
+    <div class="comb-card">
+      <h2>Activity log</h2>
+      <div class="comb-log" id="comb-log"></div>
+    </div>
+
+    <section class="comb-card comb-howto">
+      <h2>How to run</h2>
+      <ol>
+        <li>Start NEXUS if needed: <code>./nexus.sh</code> from <code>NewLatest/</code></li>
+        <li>Open this studio: <a href="/combinatorics">http://127.0.0.1:9477/combinatorics</a> (or Settings → Combinatorics Studio)</li>
+        <li>Click <strong>Full cycle</strong> for truths → walk → condense → recombine → publish → bridge → plate tests</li>
+        <li>Read the plain English sections above, then the <strong>Best compile</strong> verdict at the bottom</li>
+      </ol>
+      <p class="comb-stat-sub">CLI: <code>pythong lib/field-combinatorics-studio.py full</code> · evaluate only: <code>… evaluate</code></p>
+    </section>
+  </div>
+  <script src="/assets/combinatorics-studio.js"></script>
+</body>
+</html>

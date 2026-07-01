@@ -1,0 +1,62 @@
+name: Hostess7 CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: System deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck python3 curl rsync
+
+      - name: Dependency check (AML)
+        run: ./lib/ammolang-run.sh exec script:scripts/check-deps.sh
+
+      - name: Shell syntax (entrypoints)
+        run: |
+          for f in scripts/*.sh scripts/impl/*.sh lib/*.sh; do
+            [[ -f "$f" ]] || continue
+            bash -n "$f"
+          done
+
+      - name: Shellcheck (critical paths)
+        run: |
+          shellcheck -e SC1091,SC2034 \
+            scripts/check-deps.sh \
+            scripts/impl/wire-stack.sh \
+            scripts/impl/kilroy-load-os.sh \
+            scripts/impl/field-vm-boot.sh \
+            lib/nexus-biology-mutable.sh \
+            lib/nexus-executable-seal.sh \
+            lib/self-defense.sh || true
+
+      - name: Python compile (lib + Hostess7)
+        run: |
+          find lib Hostess7/scripts hostess7-training-viewer -name '*.py' -print0 2>/dev/null \
+            | xargs -0 -r python3 -m py_compile
+
+      - name: Version matrix JSON
+        run: python3 -c "import json; json.load(open('data/hostess7-platform-release.json'))"
+
+      - name: Biology mutable doctrine
+        run: python3 -c "import json; json.load(open('data/hostess7-biology-mutable-paths-doctrine.json'))"
+
+      - name: AML security snippets (biology seal exempt)
+        run: |
+          export NEXUS_INSTALL_ROOT="$PWD"
+          export NEXUS_STATE_DIR="$PWD/.nexus-state"
+          mkdir -p "$NEXUS_STATE_DIR"
+          ./lib/ammolang-run.sh exec script:tests/ammolang/snippets/biology_mutable_seal_exempt.sh
+
+      - name: field_vm_boot AML route resolves
+        run: |
+          ./lib/ammolang-run.sh tasks | python3 -c "import json,sys; d=json.load(sys.stdin); assert 'field_vm_boot' in d.get('tasks',{}), d"

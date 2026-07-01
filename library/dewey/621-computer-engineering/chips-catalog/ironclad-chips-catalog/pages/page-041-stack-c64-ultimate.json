@@ -1,0 +1,22 @@
+{
+  "schema": "field-chips-catalog-page/v1",
+  "page_num": 41,
+  "slug": "stack-c64-ultimate",
+  "title": "Commodore 64 Ultimate (FPGA)",
+  "body": "# Commodore 64 Ultimate (FPGA)\n\n**Platform stack:** `c64_ultimate_fpga` · **Era:** 2025–2026 · **Vendor:** Commodore International Corporation · **Count:** 4\n\n**C64U / C64CU** — AMD Xilinx **Artix-7** FPGA, cycle-accurate recreation. Pairs with Grok16 on the host; **g16 does not run on classic 6510 silicon**.\n\n## Stack doctrine\n\nThis page lists every combinatorics leaf stamped `platform_stack: c64_ultimate_fpga` plus companion dies emitted from `field-cpu-companion-seed.json`. Host and guest CPUs matching the stack's `match` rules receive `always_with` linkage at combinatorics build — no manual wiring.\n\n## Manufacturing notes — companion dies\n\n- **C64 Ultimate FPGA core** (Commodore, 32-bit) — AMD Xilinx Artix-7 — cycle-accurate 6510/SID/VIC/CIA\n- **C64 Ultimate HDMI bridge** (Commodore, 32-bit) — 1080p HDMI output — PAL/NTSC\n- **C64 Ultimate SID sockets** (Commodore, 8-bit) — Dual 6581/8580 sockets + 8 FPGA SIDs\n\n## Catalog ids\n\nThe `chip_ids` array holds all **4** entries for this platform stack, sorted alphabetically. Run `field-ironclad-chips-combinatorics.py combinatronic` for path percents and imprint renders.\n\n*Stack: c64_ultimate_fpga · seed: data/field-cpu-companion-seed.json · citation: ironclad:chips:3*",
+  "chip_ids": [
+    "glue_c64u_fpga_core",
+    "glue_c64u_hdmi",
+    "glue_c64u_sid_sockets",
+    "system_c64_ultimate"
+  ],
+  "chip_count": 4,
+  "kind": "platform_stack",
+  "family": "hardware_pair",
+  "platform_stack": "c64_ultimate_fpga",
+  "era": "2025–2026",
+  "combinatorics_total": 978,
+  "cover": "/world/assets/combinatronic/chips/cyrix_6x86.png",
+  "thumb": "/panel/assets/queen-prog-chips.png",
+  "updated": "2026-06-29T14:48:47Z"
+}

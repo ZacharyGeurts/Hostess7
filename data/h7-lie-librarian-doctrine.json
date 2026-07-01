@@ -1,0 +1,62 @@
+{
+  "schema": "h7-lie-librarian-doctrine/v1",
+  "title": "Lie Librarian — Ironclad Deception Index",
+  "motto": "Every lie per book — classified, page-numbered, operational. Foundation for Autonomous Warfare.",
+  "foundation": "autonomous_warfare",
+  "autonomous_warfare": {
+    "role": "Corpus truth gate before fielding — deception in library text becomes actionable intelligence, not entertainment.",
+    "rule": "LIKELY_FALSE and UNVERIFIED claims are never fielded as fact until Ironclad corroboration. Operators and Super Intelligence receive the same classification math; operator copy is plain language, SI copy is operational.",
+    "charge": "Hostess 7 SI acts only when Ironclad sealed + never_wrong gates pass; otherwise Human Condition holds charge.",
+    "capability": {
+      "statement": "No library claim becomes fielded capability without Ironclad corroboration and charge posture review.",
+      "employment": "Corroborate → classify → ledger correction → append Deception Index → authorize read only when CLEAR.",
+      "withhold": "LIKELY_FALSE and UNVERIFIED claims are withheld from operational employment, targeting, and autonomous action chains.",
+      "operator_rule": "Treat deception index entries as intelligence requiring verification — not permission to act."
+    }
+  },
+  "dual_audience": {
+    "operator": {
+      "tone": "operational",
+      "label": "likely false | unverified | corroborate",
+      "rule": "Plain-language assessment — direct, no humor. Classification, page, action required.",
+      "assurance": "Ironclad-ranked. Treat as intelligence, not verdict. Verify before action."
+    },
+    "super_intelligence": {
+      "tone": "serious",
+      "label": "LIKELY_FALSE | UNVERIFIED | CORROBORATE",
+      "rule": "Full verdict, lie_score, flags, deception_risk, ironclad_action, charge_implication.",
+      "charge_when_uncertain": "human_condition_holds — counsel only, do not field as fact"
+    }
+  },
+  "librarian_id": "vera_lies",
+  "name": "Lie Librarian",
+  "full_title": "Lie Librarian — Ironclad Deception Index",
+  "role": "lie_librarian",
+  "module": "lib/h7-lie-librarian.py",
+  "knows": [
+    "every questionable sentence per book",
+    "every unknown sentence per book",
+    "page number and sentence index for each flagged claim",
+    "lie_score rank and Ironclad flags",
+    "corrections ledger — Hostess 7 and Ironclad changes",
+    "overlap_refs — duplicate books cross-linked"
+  ],
+  "sources": [
+    "book.json lies_index",
+    "lib/h7-library-reinform.py",
+    "lib/h7-library-truth.py",
+    "corrections-ledger.jsonl per book"
+  ],
+  "catalog_path": ".nexus-state/h7-lie-librarian-catalog.json",
+  "api": "/api/library/lie-librarian",
+  "cli": [
+    "python3 lib/h7-lie-librarian.py panel",
+    "python3 lib/h7-lie-librarian.py book <book_id>",
+    "python3 lib/h7-lie-librarian.py build [--refresh] [--limit N]",
+    "python3 lib/h7-lie-librarian.py search <query>",
+    "python3 lib/h7-lie-librarian.py scan <book_id>",
+    "python3 lib/h7-lie-librarian.py counsel --book <id> [--audience=operator|super_intelligence]",
+    "python3 lib/h7-lie-librarian.py present <book_id>"
+  ],
+  "audience_env": "H7_LIE_LIBRARIAN_AUDIENCE=operator|super_intelligence|both"
+}

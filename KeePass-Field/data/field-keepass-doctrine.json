@@ -1,0 +1,36 @@
+{
+  "schema": "field-lock-doctrine/v1",
+  "title": "Lock — sovereign offline vault",
+  "product": "Lock",
+  "legacy_product": "Field KeePass",
+  "motto": "No cloud login. Local .kdbx only. Hardened, readable, every platform.",
+  "policy": {
+    "offline_only": true,
+    "no_cloud_accounts": true,
+    "no_keeshare_sync": true,
+    "no_update_phone_home": true,
+    "browser_integration_localhost_only": true,
+    "queen_vault_compat": true,
+    "auto_lock_seconds": 300,
+    "clipboard_clear_seconds": 30,
+    "screenshot_blocked": true
+  },
+  "ui": {
+    "desktop_bump_pct": 10,
+    "default_ui_scale_pct": 110,
+    "min_ui_scale_pct": 85,
+    "max_ui_scale_pct": 200,
+    "rtx_reduce_default": true,
+    "rtx_reduce_factor": 0.92,
+    "doctrine": "data/field-keepass-ui-tiers.json",
+    "qss": "themes/field-keepass.qss"
+  },
+  "platforms": {
+    "linux": {"binary": ["keepassxc", "/usr/bin/keepassxc", "/usr/local/bin/keepassxc"], "flatpak": "org.keepassxc.KeePassXC"},
+    "darwin": {"app": "/Applications/KeePassXC.app/Contents/MacOS/keepassxc"},
+    "windows": {"binary": ["KeePassXC.exe", "C:\\\\Program Files\\\\KeePassXC\\\\KeePassXC.exe"]}
+  },
+  "vault_dir": "vault",
+  "config": "config/keepassxc-field.ini",
+  "harden_script": "forge/field-keepass-harden.py"
+}

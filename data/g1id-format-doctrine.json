@@ -1,0 +1,76 @@
+{
+  "schema": "g1id-format-doctrine/v1",
+  "title": "G1ID — Geometric Identity (This One)",
+  "extension": ".g1id",
+  "media_type": "application/vnd.ironclad.g1id+json",
+  "motto": "Cold file, 3D proportions only — this one hardened, plate preserved. Time is linear; sovereign-time seals, never t in geometry.",
+  "time_is_linear": {
+    "declaration": "Time is linear.",
+    "citation": "ironclad:time:1",
+    "geometry_axes": ["x", "y", "z"],
+    "forbidden_in_geometry": ["t", "timestamp", "wall_clock"]
+  },
+  "thermal": {
+    "policy": "cold_only",
+    "hot_forbidden": true,
+    "max_file_bytes": 65536,
+    "max_array_items": 32,
+    "atomic_write": true,
+    "network_in_codec": false
+  },
+  "spatial": {
+    "dimensions_allowed": 3,
+    "axes": ["x", "y", "z"],
+    "t_forbidden": true,
+    "units_default": "m",
+    "extent_max_m": 1000.0,
+    "proportion_min": 0.001,
+    "proportion_max": 1000.0
+  },
+  "identity": {
+    "kind_locked": "this_one",
+    "that_one_forbidden_in_file": true,
+    "citation": "ironclad:spatial_existence:1",
+    "sealed_anchor": "ironclad:place:2"
+  },
+  "plate": {
+    "preserved": true,
+    "verify_on_read": true,
+    "fields": ["canonical_hash", "immutable", "realized"],
+    "amendment_forbidden": true
+  },
+  "payload_schema": "g1-geometric-identity/v1",
+  "example": "data/examples/operator-this-one.g1id",
+  "baseline": {
+    "immoveable": true,
+    "rewrite_forbidden": true,
+    "mode_bits": "0444",
+    "manager": "lib/g1id-baseline.py",
+    "manifest": "data/g1id-baseline-manifest.json",
+    "doctrine": "data/g1id-baseline-doctrine.json",
+    "install_dir": "data/baselines"
+  },
+  "meld": {
+    "citation": "ironclad:meld:2",
+    "policy": "G1ID seals with meld inputs only — sovereign time is the sole required input; geometry stays 3D.",
+    "inputs": {
+      "sovereign_time": {
+        "required": true,
+        "source": "lib/sovereign-time.py",
+        "clock": "lib/sovereign-clock.py",
+        "doctrine": "data/sovereign-time-doctrine.json",
+        "fields": ["linear_ns", "derived_utc", "sealed", "synced", "never_desync"],
+        "not_geometry_t": true
+      }
+    }
+  },
+  "integrations": {
+    "spatial_existence": "lib/ironclad-spatial-existence.py",
+    "ironclad_plate": "lib/ironclad-plate.py",
+    "sovereign_time": "lib/sovereign-time.py",
+    "sovereign_clock": "lib/sovereign-clock.py",
+    "g1id_baseline": "lib/g1id-baseline.py",
+    "field_io_packet": "lib/field-io-packet.py",
+    "g16_bridge": "Grok16/forge/g16-g1id.py"
+  }
+}

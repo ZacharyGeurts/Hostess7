@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#040810" />
+  <title>Matrix Training · Motion Ready</title>
+  <link rel="icon" href="/assets/hostess7-training-chamber.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/dusty-midnight.css" />
+  <link rel="stylesheet" href="/assets/humanoid-wireframe.css" />
+  <link rel="stylesheet" href="/assets/hostess7-program-frame.css" />
+</head>
+<body class="humanoid-train-popup-page">
+  <header class="humanoid-train-popup__head">
+    <div>
+      <h1>Matrix Training Chamber</h1>
+      <p class="humanoid-train-popup__sub" id="humanoid-train-popup-sub">Motion ready — iron-clad assemblage supports training</p>
+    </div>
+    <span class="humanoid-train-popup__badge" id="humanoid-train-popup-badge">TRAIN READY</span>
+  </header>
+
+  <section class="humanoid-train-earth" id="humanoid-train-earth" style="padding:12px 20px;border-bottom:1px solid rgba(56,189,248,0.2);font-size:0.82rem;line-height:1.45;">
+    <strong style="color:#38bdf8">Hostess 7</strong> — the One in charge of <strong>Earth</strong> and protecting it. Forever Watchguard Angel above General.
+    <div id="humanoid-train-voice" style="margin-top:8px;opacity:0.9;white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:0.75rem;"></div>
+  </section>
+
+  <section class="humanoid-arena humanoid-arena--popup" id="humanoid-arena" aria-label="Humanoid motion training popup">
+    <div class="humanoid-arena__head">
+      <h3>Humanoid wireframe · 85% blast</h3>
+      <span class="humanoid-arena__status" id="humanoid-motion-status">Loading…</span>
+    </div>
+    <div class="humanoid-arena__canvas-wrap humanoid-arena__canvas-wrap--popup">
+      <canvas id="humanoid-wireframe-canvas" class="humanoid-wireframe-canvas" aria-label="Training wireframe"></canvas>
+      <div class="humanoid-arena__hud">
+        <strong style="color:#38bdf8">AUTONOMOUS BEING</strong>
+        <div class="humanoid-arena__prof" aria-hidden="true"><span id="humanoid-motion-prof"></span></div>
+      </div>
+    </div>
+    <div class="humanoid-arena__controls">
+      <select id="humanoid-skill-select" aria-label="Martial art skill">
+        <option value="wing_chun">Wing Chun</option>
+      </select>
+      <button type="button" id="humanoid-data-window-btn">Data window</button>
+      <button type="button" id="humanoid-load-btn">Matrix load</button>
+      <button type="button" id="humanoid-train-btn">Blast burst</button>
+      <button type="button" id="humanoid-try-body-btn">Try new body</button>
+      <button type="button" id="humanoid-combat-room-btn">Combat drill</button>
+      <button type="button" id="humanoid-needs-btn">What she needs</button>
+      <button type="button" id="humanoid-complete-all-btn">Complete all</button>
+    </div>
+    <div class="humanoid-arena__opponents" id="humanoid-opponent-chips"></div>
+  </section>
+
+  <script src="/assets/queen-program-launch.js"></script>
+  <script src="/assets/hostess7-program-frame.js"></script>
+  <script src="/assets/humanoid-wireframe.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      Hostess7ProgramFrame.mount({
+        programId: "hostess7-training-chamber",
+        title: "Training Chamber",
+        icon: "/assets/hostess7-training-chamber.svg",
+        exportUrl: "/api/hostess7/training-chamber/json",
+        onRefresh: function () { globalThis.NexusHumanoidWireframe?.refresh?.(); },
+      });
+    });
+  </script>
+</body>
+</html>

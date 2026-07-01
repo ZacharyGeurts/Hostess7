@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Card Catalog — Hostess 7 Librarians</title>
+  <link rel="stylesheet" href="/assets/field-foundation.css" />
+  <link rel="stylesheet" href="/assets/field-nav-spine.css?v=1" />
+  <link rel="stylesheet" href="/assets/field-ironclad-taskbar.css?v=1" />
+  <style>
+    :root { --accent: #c9a227; --bg: #0c0f14; --card: #141a24; --text: #e8e4dc; --muted: #8a9aaa; --line: #243040; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Georgia, "Palatino Linotype", serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    header { padding: 1.1rem 1.4rem; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; justify-content: space-between; }
+    h1 { margin: 0; font-size: 1.4rem; font-weight: 600; letter-spacing: 0.02em; }
+    .sub { color: var(--muted); font-size: 0.88rem; margin-top: 0.2rem; }
+    .toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    input[type="search"], select { padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--line); background: #0a1018; color: var(--text); font-family: inherit; font-size: 0.9rem; }
+    input[type="search"] { min-width: 260px; }
+    button { cursor: pointer; border: 1px solid var(--line); background: #182030; color: var(--text); padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.85rem; font-family: inherit; }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    button.primary { background: #2a2410; border-color: var(--accent); color: var(--accent); }
+    .stats { display: flex; gap: 1rem; flex-wrap: wrap; padding: 0.65rem 1.4rem; background: #0e141c; border-bottom: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); }
+    .stats strong { color: var(--accent); }
+    main { display: grid; grid-template-columns: 1fr 380px; min-height: calc(100vh - 140px); }
+    @media (max-width: 960px) { main { grid-template-columns: 1fr; } }
+    .drawer { overflow-y: auto; max-height: calc(100vh - 140px); padding: 0.75rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.65rem; }
+    .catalog-card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 0.75rem 0.85rem; cursor: pointer; transition: border-color 0.15s; }
+    .catalog-card:hover, .catalog-card.active { border-color: var(--accent); }
+    .catalog-card .call { font-family: "Consolas", monospace; font-size: 0.78rem; color: var(--accent); }
+    .catalog-card .title { font-weight: 600; margin: 0.25rem 0; font-size: 0.95rem; line-height: 1.3; }
+    .catalog-card .author { font-size: 0.82rem; color: var(--muted); }
+    .catalog-card .meta { font-size: 0.72rem; color: var(--muted); margin-top: 0.35rem; }
+    .kw { display: inline-block; font-size: 0.68rem; padding: 1px 5px; border-radius: 3px; background: #1a2430; color: #9ab0c0; margin: 2px 3px 0 0; }
+    .detail { border-left: 1px solid var(--line); padding: 1rem 1.2rem; overflow-y: auto; max-height: calc(100vh - 140px); background: #0e1218; }
+    .detail h2 { margin: 0 0 0.5rem; font-size: 1.15rem; }
+    .detail .call-big { font-family: Consolas, monospace; color: var(--accent); font-size: 1rem; margin-bottom: 0.75rem; }
+    .detail dl { margin: 0; font-size: 0.88rem; }
+    .detail dt { color: var(--muted); margin-top: 0.6rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .detail dd { margin: 0.15rem 0 0; }
+    .empty { color: var(--muted); padding: 2rem; text-align: center; }
+    .librarian-badge { font-size: 0.75rem; color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Card Catalog</h1>
+      <div class="sub">Auto-detected books · keywords placed · sort &amp; search for librarians · <a href="/field-library-bookshelf.html" style="color:var(--accent)">Bookshelf browser</a></div>
+    </div>
+    <div class="toolbar">
+      <input type="search" id="q" placeholder="Search title, author, call number, keywords…" aria-label="Search catalog" autocomplete="off" />
+      <select id="sort" aria-label="Sort order">
+        <option value="relevance">Sort: relevance</option>
+        <option value="call_number">Sort: call number</option>
+        <option value="title">Sort: title</option>
+        <option value="author">Sort: author</option>
+        <option value="collection">Sort: collection</option>
+        <option value="shelf">Sort: shelf</option>
+        <option value="format">Sort: format</option>
+      </select>
+      <button type="button" id="btn-detect" class="primary">Detect &amp; rebuild</button>
+    </div>
+  </header>
+  <div class="stats" id="stats">Loading catalog…</div>
+  <main>
+    <section class="drawer">
+      <div class="card-grid" id="grid"></div>
+      <div class="empty" id="empty" hidden>No cards match.</div>
+    </section>
+    <aside class="detail" id="detail">
+      <div class="empty">Select a catalog card.</div>
+    </aside>
+  </main>
+  <script>
+    (function () {
+      const qEl = document.getElementById("q");
+      const sortEl = document.getElementById("sort");
+      const gridEl = document.getElementById("grid");
+      const detailEl = document.getElementById("detail");
+      const statsEl = document.getElementById("stats");
+      const emptyEl = document.getElementById("empty");
+      const btnDetect = document.getElementById("btn-detect");
+      let cards = [];
+      let selected = null;
+      let debounce = null;
+
+      function esc(s) {
+        return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+
+      function renderStats(panel) {
+        const c = panel?.counts || {};
+        statsEl.innerHTML = [
+          `<span><strong>${c.cards ?? "—"}</strong> cards</span>`,
+          `<span><strong>${c.keyword_terms ?? "—"}</strong> keyword terms</span>`,
+          `<span><strong>${c.shelves ?? "—"}</strong> shelves</span>`,
+          `<span><strong>${c.formats ?? "—"}</strong> formats</span>`,
+          `<span class="librarian-badge">Hostess7 Librarian Corps</span>`,
+        ].join(" · ");
+      }
+
+      function renderCard(c, active) {
+        const kws = (c.keywords || []).slice(0, 5).map((k) => `<span class="kw">${esc(k)}</span>`).join("");
+        return `<article class="catalog-card${active ? " active" : ""}" data-id="${esc(c.card_id || c.id)}">
+          <div class="call">${esc(c.call_number || c.dewey || "—")}</div>
+          <div class="title">${esc(c.title)}</div>
+          <div class="author">${esc(c.author || "—")}</div>
+          <div class="meta">${esc(c.shelf || "")} · ${esc(c.format || "")}</div>
+          <div>${kws}</div>
+        </article>`;
+      }
+
+      function renderDetail(c) {
+        if (!c) {
+          detailEl.innerHTML = "<div class='empty'>Select a catalog card.</div>";
+          return;
+        }
+        const kws = (c.keywords || []).map((k) => `<span class="kw">${esc(k)}</span>`).join("");
+        const placement = c.keyword_placement || {};
+        const placeRows = Object.entries(placement).filter(([, v]) => v && v.length)
+          .map(([k, v]) => `<dt>${esc(k)}</dt><dd>${v.map((x) => esc(x)).join(", ")}</dd>`).join("");
+        detailEl.innerHTML = `
+          <div class="call-big">${esc(c.call_number)} · ${esc(c.card_id || "")}</div>
+          <h2>${esc(c.title)}</h2>
+          <p style="color:var(--muted);margin:0 0 1rem">${esc(c.author || "")}</p>
+          <dl>
+            <dt>Dewey</dt><dd>${esc(c.dewey)} — ${esc(c.dewey_label || "")}</dd>
+            <dt>Shelf</dt><dd>${esc(c.shelf || "")}</dd>
+            <dt>Location</dt><dd><code>${esc(c.location || "")}</code></dd>
+            <dt>Format</dt><dd>${esc(c.format || "")} · ${esc(c.collection || "")}</dd>
+            ${c.ein ? `<dt>EIN</dt><dd>${esc(c.ein)}</dd>` : ""}
+            ${c.page_count ? `<dt>Pages</dt><dd>${esc(c.page_count)}</dd>` : ""}
+            <dt>Keywords</dt><dd>${kws || "—"}</dd>
+            ${placeRows ? `<dt>Keyword placement</dt>${placeRows}` : ""}
+          </dl>`;
+      }
+
+      function bindGrid() {
+        gridEl.querySelectorAll(".catalog-card").forEach((el) => {
+          el.addEventListener("click", () => {
+            const id = el.getAttribute("data-id");
+            selected = cards.find((c) => (c.card_id || c.id) === id) || null;
+            gridEl.querySelectorAll(".catalog-card").forEach((n) => n.classList.remove("active"));
+            el.classList.add("active");
+            renderDetail(selected);
+          });
+        });
+      }
+
+      async function loadSort() {
+        const mode = sortEl.value;
+        if (mode === "relevance" && qEl.value.trim()) return;
+        const res = await fetch(`/api/card-catalog/sort?mode=${encodeURIComponent(mode)}`, { cache: "no-store" });
+        const doc = await res.json();
+        cards = doc.cards || [];
+        paint();
+      }
+
+      async function search() {
+        const q = qEl.value.trim();
+        const mode = sortEl.value;
+        const url = q
+          ? `/api/card-catalog/search?q=${encodeURIComponent(q)}&limit=120`
+          : (mode === "relevance" ? "/api/card-catalog/sort?mode=call_number" : `/api/card-catalog/sort?mode=${encodeURIComponent(mode)}`);
+        const res = await fetch(url, { cache: "no-store" });
+        const doc = await res.json();
+        if (q) {
+          cards = (doc.hits || []).map((h) => ({ ...h, keywords: h.keywords || [] }));
+        } else {
+          cards = doc.cards || doc.hits || [];
+        }
+        paint();
+      }
+
+      function paint() {
+        gridEl.innerHTML = cards.map((c) => renderCard(c, selected && (selected.card_id || selected.id) === (c.card_id || c.id))).join("");
+        emptyEl.hidden = cards.length > 0;
+        bindGrid();
+      }
+
+      async function loadPanel() {
+        const res = await fetch("/api/card-catalog/panel", { cache: "no-store" });
+        const doc = await res.json();
+        renderStats(doc);
+      }
+
+      qEl.addEventListener("input", () => {
+        clearTimeout(debounce);
+        debounce = setTimeout(search, 220);
+      });
+      sortEl.addEventListener("change", () => {
+        if (qEl.value.trim()) search();
+        else loadSort();
+      });
+      btnDetect.addEventListener("click", async () => {
+        btnDetect.disabled = true;
+        btnDetect.textContent = "Detecting…";
+        await fetch("/api/card-catalog/detect", { cache: "no-store" });
+        await loadPanel();
+        await search();
+        btnDetect.disabled = false;
+        btnDetect.textContent = "Detect & rebuild";
+      });
+
+      loadPanel().then(search);
+    })();
+  </script>
+  <script src="/assets/ironclad-bus.js?v=1" defer></script>
+  <script src="/assets/field-ironclad-taskbar.js?v=1" defer></script>
+  <script src="/assets/field-nav-spine.js?v=1" defer></script>
+</body>
+</html>

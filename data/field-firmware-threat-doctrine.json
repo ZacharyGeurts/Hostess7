@@ -1,0 +1,45 @@
+{
+  "schema": "field-firmware-threat-doctrine/v1",
+  "title": "BIOS and firmware threat removal — safe, everywhere, no ROM flash",
+  "motto": "Witness BIOS, strip firmware attack surface in software — flash_chip stays false.",
+  "policy": {
+    "flash_spi_rom": false,
+    "remove_userspace_threats": true,
+    "remove_kernel_module_threats": true,
+    "block_dev_mem_access": true,
+    "apply_sysctl_hardening": true,
+    "run_grok_audit": true,
+    "fail_closed_on_major_bios": false,
+    "bios_manual_only": ["secure_boot", "tpm2", "iommu", "nx_bit", "csm_disabled", "firmware_password"]
+  },
+  "module_blacklist": [
+    "acpi_custom_method",
+    "msr",
+    "cpuid"
+  ],
+  "module_blacklist_optional": [
+    "mei",
+    "mei_me"
+  ],
+  "sysctl_hardening": {
+    "kernel.kptr_restrict": "2",
+    "kernel.dmesg_restrict": "1",
+    "kernel.unprivileged_bpf_disabled": "1",
+    "kernel.yama.ptrace_scope": "2",
+    "kernel.perf_event_paranoid": "3",
+    "fs.protected_symlinks": "1",
+    "fs.protected_hardlinks": "1"
+  },
+  "dmesg_threat_patterns": [
+    "ACPI Error",
+    "ACPI BIOS Error",
+    "BIOS bug",
+    "firmware: failed",
+    "UEFI Error",
+    "corrupted boot",
+    "Invalid BIOS",
+    "SMM",
+    "System Management Mode"
+  ],
+  "dangerous_devices": ["/dev/mem", "/dev/kmem", "/dev/port", "/dev/urandom"]
+}

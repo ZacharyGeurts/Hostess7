@@ -1,0 +1,72 @@
+{
+  "schema": "ammocode-combinatorics-rewrite/v1",
+  "title": "Harder rewrite — combinatorics-aware secure transforms",
+  "facets": ["belt", "die", "runner", "gate", "truth"],
+  "patterns": [
+    {
+      "id": "comb-nested-field",
+      "langs": ["field", "ammolang", "*"],
+      "pattern": "\\bfield\\s*\\(\\s*field\\s*\\(",
+      "severity": "critical",
+      "block": true,
+      "message": "Nested field violates Ironclad (max_field_depth: 0)",
+      "use_instead": "single universal_2d blanket — no subfields",
+      "rewrite": "universal_2d("
+    },
+    {
+      "id": "comb-operator-crank",
+      "langs": ["field", "ammolang", "python"],
+      "pattern": "\\boperator_combinatorics\\s*=\\s*True",
+      "severity": "bad",
+      "block": true,
+      "message": "Operator combinatorics crank is demoted in 2027",
+      "use_instead": "background combinatorics via compatibility layers",
+      "rewrite": "operator_combinatorics = False  # background combinatorics"
+    },
+    {
+      "id": "comb-exec-without-gate",
+      "langs": ["field", "ammolang", "shell"],
+      "pattern": "\\bexec\\s+without\\s+gate",
+      "severity": "bad",
+      "block": true,
+      "message": "Execution without combinatorics gate",
+      "use_instead": "gate.verify() then exec_posture",
+      "rewrite": "gate.verify() then exec"
+    },
+    {
+      "id": "comb-depth-field",
+      "langs": ["field", "ammolang", "*"],
+      "pattern": "\\bdepth_field\\s*\\(",
+      "severity": "critical",
+      "block": true,
+      "message": "Depth fields are sealed and destroyed at every gate",
+      "use_instead": "flat field surface with defield on rest",
+      "rewrite": "defield("
+    },
+    {
+      "id": "comb-insecure-invite",
+      "langs": ["javascript", "typescript", "python"],
+      "pattern": "connect\\s*\\([^)]*\\)\\s*(?:\\/\\/.*)?$",
+      "severity": "bad",
+      "block": true,
+      "message": "Open connection without invite token",
+      "use_instead": "connect({ invite, token }) — invite-only",
+      "rewrite": "connect({ invite: INVITE_TOKEN, "
+    },
+    {
+      "id": "comb-raw-ws",
+      "langs": ["javascript", "typescript"],
+      "pattern": "new\\s+WebSocket\\s*\\(\\s*['\"]ws",
+      "severity": "suggestion",
+      "block": false,
+      "message": "Raw WebSocket — use AmmoCode collab hub with invite",
+      "use_instead": "AmmoCodeCollab.connect(invite)",
+      "rewrite": "AmmoCodeCollab.connect(INVITE"
+    }
+  ],
+  "tree": {
+    "max_depth": 4,
+    "speed_cap_ops_per_sec": 8192,
+    "condense_on_truth": true
+  }
+}

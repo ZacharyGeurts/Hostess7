@@ -1,0 +1,32 @@
+{
+  "schema": "field-locational-sitrep-doctrine/v1",
+  "title": "Locational sitrep — this one here, threats there, lattice witness",
+  "motto": "Place is receipt — operator location, spatial existence, and field lattice fused into one sitrep plate.",
+  "meld_citation": "ironclad:meld:2",
+  "ironclad_ref": "ironclad:spatial_existence:1",
+  "plate_not_wire": true,
+  "policy": {
+    "auto_on_plate_meld": true,
+    "refresh_spatial_on_cycle": true,
+    "never_collapse_this_into_that": true,
+    "employ_on_boot": true
+  },
+  "sections": {
+    "operator": {"gate": true, "consumer": "operator_location", "module": "lib/operator-location.py"},
+    "spatial_existence": {"gate": true, "consumer": "ironclad_spatial_existence", "module": "lib/ironclad-spatial-existence.py"},
+    "field_lattice": {"gate": true, "consumer": "field_spatial_cognition", "module": "lib/field-spatial-cognition.py"},
+    "threat_geometry": {"gate": true, "consumer": "threat_panel"},
+    "census": {"gate": false, "consumer": "census_field_populate"},
+    "physics_thermal": {"gate": false, "consumer": "field_physics_witness"},
+    "compat_layers": {"gate": true, "consumer": "field_compatibility_layers"},
+    "panel": {"gate": true, "manifest_api": "/api/locational-sitrep"}
+  },
+  "receipt_order": ["operator_location", "postal_address", "gps_lat_lon", "bearing_deg", "movement", "movement_mode", "lattice_cell", "linear_ns"],
+  "positional_awareness": {
+    "doctrine": "data/hostess7-positional-awareness-doctrine.json",
+    "module": "lib/hostess7-positional-awareness.py",
+    "rule": "Location and heading always known; movement and mode always known; objects P1 until familiar."
+  },
+  "module": "lib/field-locational-sitrep-plate.py",
+  "panel": "field-locational-sitrep-plate.json"
+}

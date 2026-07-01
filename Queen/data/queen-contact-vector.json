@@ -1,0 +1,24 @@
+{
+  "schema": "queen-contact-vector/v1",
+  "title": "Contact classification vector — who we are actually speaking with",
+  "motto": "Stable instant percentages — AI, Human, Unknown, Alien.",
+  "axes": ["ai", "human", "unknown", "alien"],
+  "defaults": {
+    "ai": 30.0,
+    "human": 25.0,
+    "unknown": 40.0,
+    "alien": 5.0
+  },
+  "update": {
+    "ema_alpha": 0.18,
+    "normalize": true,
+    "instant_cache": true,
+    "persist": true
+  },
+  "signals": {
+    "ai": ["party:ai", "channel:machine", "json_envelope", "wire_auth_valid"],
+    "human": ["party:human", "channel:keystroke", "channel:voice", "channel:typed"],
+    "alien": ["party:alien", "anomaly_script", "non_terrestrial_marker", "iff_unknown_hostile"],
+    "unknown": ["party:unknown", "no_party", "ambiguous"]
+  }
+}

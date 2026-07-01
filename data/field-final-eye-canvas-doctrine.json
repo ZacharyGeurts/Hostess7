@@ -1,0 +1,33 @@
+{
+  "schema": "field-final-eye-canvas-doctrine/v1",
+  "title": "Final_Eye → Queen CANVAS secure vision wire",
+  "motto": "Straight path by default — sealed localhost egress. Final_Eye looks only when asked; look may share with Hostess 7.",
+  "ingress": "Final_Eye",
+  "egress": "Queen CANVAS",
+  "module": "lib/field-final-eye-canvas-bridge.py",
+  "routing": {
+    "default": "straight_path",
+    "straight_path": "Display/capture MJPEG → CANVAS → stream — no OCR or look in the hot path",
+    "look_path": "Final_Eye look on demand — truth-gated before any Hostess 7 share or permanency",
+    "hostess7_share": "Only when look_path is invoked — vision excerpt shared via hostess7-growth truth gate"
+  },
+  "policy": {
+    "localhost_only": true,
+    "default_egress_host": "127.0.0.1",
+    "seal_frames": true,
+    "kill_switch_respect": true,
+    "threat_gate": true,
+    "truth_before_permanency": true,
+    "no_cloud_egress": true,
+    "default_mode": "straight_path"
+  },
+  "wire": {
+    "ingress_mjpeg": "/api/stream/mjpeg",
+    "ingress_port": 9479,
+    "canvas_api": "/api/queen-canvas-renderer",
+    "canvas_shader": "CANVAS.comp",
+    "relay_state": "field-final-eye-canvas-link.json"
+  },
+  "consumers": ["field-broadcaster-chamber", "queen-browser", "queen-canvas-renderer"],
+  "ironclad_cite": "ironclad:final_eye_canvas:1"
+}

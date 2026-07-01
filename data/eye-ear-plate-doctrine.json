@@ -1,0 +1,32 @@
+{
+  "schema": "eye-ear-plate/v1",
+  "title": "Eye ↔ Ear ↔ Mouth Plate — Final_Eye OCR + eyeball melded with ear and mouth",
+  "motto": "Plate together, not wire — Final_Eye · Ear · Mouth quorum before compiler optimizes.",
+  "final_eye_doctrine": "data/final-eye-plate-doctrine.json",
+  "g16": {"version": "5.1.0", "profile": "g16_field_opt"},
+  "ironclad_ref": "data/ironclad-doctrine.json",
+  "meld_citation": "ironclad:meld:2",
+  "fusion_engine": "Final_Ear/zocr_eye_ear_fusion.py",
+  "products": ["Final_Eye", "Final_Ear", "Final_Mouth"],
+  "plate_rule": "Eye, Ear, and Mouth resolve into one chain-hashed plate before G16 profile ladder",
+  "integral": {
+    "never_desync": true,
+    "seal_before_analyze": true,
+    "plate_not_wire": true
+  },
+  "universal_lock": {
+    "required": true,
+    "gate": "field-sense-package-meld.sense_universal_slice",
+    "combinatorics_condense_group": "universal_lock",
+    "green_requires_lock": true,
+    "motto": "GREEN only when Universal Protector + combinatorics lock seal eye-ear-mouth quorum."
+  },
+  "matrix_plates": [
+    {"from": "final_eye_node", "to": "eye_ear_plate", "kind": "plate"},
+    {"from": "final_ear_node", "to": "eye_ear_plate", "kind": "plate"},
+    {"from": "final_mouth_node", "to": "eye_ear_plate", "kind": "plate"},
+    {"from": "eye_ear_plate", "to": "g16_compiler_sense_plate", "kind": "optimize"},
+    {"from": "eye_ear_plate", "to": "sense_package_hub", "kind": "meld"},
+    {"from": "eye_ear_plate", "to": "hostess7_core", "kind": "quorum"}
+  ]
+}

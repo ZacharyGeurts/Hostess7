@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-surface="diagnostic-pane">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diagnostic</title>
+  <link rel="stylesheet" href="queen-diagnostic-pane.css" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http://127.0.0.1:*; connect-src 'self' http://127.0.0.1:*; frame-src 'none'; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <header class="qdp-head" id="qdp-head">
+    <strong id="qdp-title">Diagnostic</strong>
+    <span class="qdp-verdict" id="qdp-verdict">…</span>
+    <button type="button" id="qdp-refresh" title="Refresh">↻</button>
+  </header>
+  <pre class="qdp-body" id="qdp-body">Loading…</pre>
+  <script src="queen-diagnostic-pane.js"></script>
+</body>
+</html>

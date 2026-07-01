@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="broadcaster" data-queen-theme="black_emerald_rose_2026">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AmmoOS Broadcaster</title>
+  <link rel="icon" href="/assets/queen-prog-broadcaster.png" type="image/png" />
+  <link rel="stylesheet" href="/assets/field-broadcaster.css?v=5" />
+</head>
+<body>
+  <div class="bc-studio" id="bc-studio">
+    <header class="bc-menubar" role="menubar" aria-label="Broadcaster menu">
+      <nav class="bc-menu" data-menu="file">File</nav>
+      <nav class="bc-menu" data-menu="edit">Edit</nav>
+      <nav class="bc-menu" data-menu="view">View</nav>
+      <nav class="bc-menu" data-menu="scene">Scenes</nav>
+      <nav class="bc-menu" data-menu="stream">Stream</nav>
+      <nav class="bc-menu" data-menu="codecs">Codecs</nav>
+      <nav class="bc-menu" data-menu="threat">Threat</nav>
+      <nav class="bc-menu" data-menu="help">Help</nav>
+      <div class="bc-menubar-status" id="bc-menubar-status">Studio ready</div>
+    </header>
+
+    <div class="bc-workspace">
+      <aside class="bc-docks bc-docks--left">
+        <section class="bc-dock" aria-label="Scenes">
+          <div class="bc-dock-head">
+            <h2>Scenes</h2>
+            <button type="button" class="bc-icon-btn" id="bc-scene-add" title="Add scene">+</button>
+          </div>
+          <ul class="bc-list" id="bc-scenes"></ul>
+        </section>
+        <section class="bc-dock" aria-label="Sources">
+          <div class="bc-dock-head">
+            <h2>Sources</h2>
+            <div class="bc-dock-actions">
+              <button type="button" class="bc-icon-btn" id="bc-source-add-display" title="Final_Eye Display">👁</button>
+              <button type="button" class="bc-icon-btn" id="bc-source-add-camera" title="Final_Eye Camera">📷</button>
+              <button type="button" class="bc-icon-btn" id="bc-source-add-desktop" title="Desktop capture (secure)">🖥</button>
+              <button type="button" class="bc-icon-btn" id="bc-source-add-audio" title="Audio">🎤</button>
+            </div>
+          </div>
+          <ul class="bc-list" id="bc-sources"></ul>
+        </section>
+      </aside>
+
+      <main class="bc-stage">
+        <div class="bc-platform-bar" id="bc-platform-bar">
+          <label>Platform
+            <select id="bc-platform-select"></select>
+          </label>
+          <label>Stream key
+            <input type="password" id="bc-stream-key" placeholder="Paste stream key" autocomplete="off" />
+          </label>
+          <button type="button" class="bc-btn bc-btn--primary" id="bc-platform-save">Save</button>
+        </div>
+        <div class="bc-views">
+          <div class="bc-view">
+            <div class="bc-view-label">Preview · Final_Eye</div>
+            <div class="bc-viewport" id="bc-preview">
+              <img id="bc-preview-img" class="bc-preview-feed" alt="" hidden />
+              <span class="bc-view-placeholder" id="bc-preview-ph">Final_Eye preview</span>
+            </div>
+          </div>
+          <div class="bc-view">
+            <div class="bc-view-label">Program · CANVAS</div>
+            <div class="bc-viewport bc-viewport--program" id="bc-program">
+              <img id="bc-program-img" class="bc-preview-feed" alt="" hidden />
+              <span class="bc-view-placeholder" id="bc-program-ph">Program</span>
+            </div>
+          </div>
+        </div>
+        <div class="bc-transitions">
+          <button type="button" class="bc-btn" id="bc-transition-cut">Cut</button>
+          <button type="button" class="bc-btn bc-btn--primary" id="bc-transition-fade">Fade</button>
+          <button type="button" class="bc-btn" id="bc-canvas-wire">Wire CANVAS</button>
+        </div>
+      </main>
+
+      <aside class="bc-docks bc-docks--right">
+        <section class="bc-controls">
+          <button type="button" class="bc-ctl bc-ctl--live" id="bc-go-live">Start Streaming</button>
+          <button type="button" class="bc-ctl bc-ctl--rec" id="bc-record">Start Recording</button>
+          <button type="button" class="bc-ctl" id="bc-stop">Stop</button>
+          <div class="bc-threat" id="bc-threat"></div>
+          <div class="bc-canvas" id="bc-canvas"></div>
+        </section>
+        <section class="bc-dock" aria-label="Codec chamber">
+          <div class="bc-dock-head"><h2>Codec chamber</h2></div>
+          <div class="bc-codecs" id="bc-codecs"></div>
+        </section>
+        <section class="bc-dock" aria-label="Devices">
+          <div class="bc-dock-head"><h2>Devices</h2></div>
+          <div class="bc-devices" id="bc-devices"></div>
+        </section>
+        <section class="bc-dock" aria-label="Audio mixer">
+          <div class="bc-dock-head"><h2>Audio Mixer</h2></div>
+          <div class="bc-mixer" id="bc-mixer"></div>
+        </section>
+        <section class="bc-dock bc-dock--recordings" aria-label="Recordings">
+          <div class="bc-dock-head"><h2>Recordings</h2></div>
+          <ul class="bc-list bc-recordings" id="bc-recordings"></ul>
+          <video id="bc-playback" class="bc-playback" controls playsinline hidden></video>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="bc-statusbar">
+      <span id="bc-status-text">Ready</span>
+      <span id="bc-scene-label">—</span>
+      <span id="bc-platform-label">—</span>
+      <span id="bc-comb-label">—</span>
+    </footer>
+
+    <div class="bc-dropdown" id="bc-dropdown" hidden></div>
+  </div>
+  <script src="/assets/field-broadcaster.js?v=5" defer></script>
+</body>
+</html>

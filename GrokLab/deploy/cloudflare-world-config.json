@@ -1,0 +1,35 @@
+{
+  "schema": "cloudflare-world-perimeter/v1",
+  "updated": "2026-06-30",
+  "motto": "Cloudflare edge carries the defensive perimeter — loopback sanctuary stays sovereign",
+  "perimeter": "defensive_only",
+  "loopback_authority": "127.0.0.1",
+  "tunnel": {
+    "name": "grok-lab-world-perimeter",
+    "id": "78f79148-b086-4d4a-a1da-3b417c5f505a",
+    "account_id": "4b10f43cab3c5833c91bb238295b296f",
+    "account_email": "Gzac5314@gmail.com",
+    "auth": "github_oauth",
+    "public_hostname": "78f79148-b086-4d4a-a1da-3b417c5f505a.cfargotunnel.com",
+    "protocol": "quic",
+    "no_tls_verify": false
+  },
+  "ingress": [
+    {"hostname": "*", "service": "http://127.0.0.1:9477", "path": "/grok-lab", "comment": "Grok AI Lab desktop"},
+    {"hostname": "*", "service": "http://127.0.0.1:9477", "path": "/field", "comment": "Field command surface"},
+    {"hostname": "*", "service": "http://127.0.0.1:9479", "path": "/ops", "comment": "Final Eye ops"},
+    {"hostname": "*", "service": "http://127.0.0.1:9479", "path": "/api/*", "comment": "Final Eye API"},
+    {"service": "http_status:404"}
+  ],
+  "credentials": {
+    "token_env": "CLOUDFLARE_TUNNEL_TOKEN",
+    "token_file": "GrokLab/deploy/cloudflare/tunnel.token",
+    "account_id_env": "CLOUDFLARE_ACCOUNT_ID",
+    "api_token_env": "CLOUDFLARE_API_TOKEN"
+  },
+  "propagate": {
+    "enabled": true,
+    "nodes_config": "GrokLab/deploy/world-nodes.json",
+    "state": ".nexus-state/cloudflare-world.json"
+  }
+}

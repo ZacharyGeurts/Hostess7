@@ -1,0 +1,75 @@
+{
+  "schema": "hostess7-connected-models/v1",
+  "updated": "2026-06-26T17:30:00Z",
+  "models": [
+    {
+      "id": "grok16_g16",
+      "label": "Grok16 g16",
+      "group": "compiler",
+      "kind": "install_data",
+      "path": "Queen/data/g16-toolchain.json",
+      "connect_to": ["g16_chamber", "hostess7_core"],
+      "ready_key": "ready_g16",
+      "color": "#f4a261"
+    },
+    {
+      "id": "nexus_panel",
+      "label": "NEXUS Threat Panel",
+      "group": "field",
+      "kind": "http_json",
+      "url": "http://127.0.0.1:9477/api/hostess7/training",
+      "connect_to": ["training_chamber", "hostess7_core"],
+      "color": "#60a5fa"
+    },
+    {
+      "id": "hostess7_brain_cache",
+      "label": "Hostess7 Brain Cache",
+      "group": "brain",
+      "kind": "path_exists",
+      "path": "/home/default/Desktop/SG/NewLatest/Hostess7/cache/fieldstorage/brain",
+      "connect_to": ["hostess7_brain_guard", "hostess7_core"],
+      "color": "#e76f8a"
+    },
+    {
+      "id": "final_eye_bridge",
+      "label": "Final Eye · queen-eyeball",
+      "group": "sense",
+      "kind": "http_json",
+      "url": "http://127.0.0.1:9477/api/queen-eyeball",
+      "timeout": 60,
+      "connect_to": ["final_eye_node", "sense_package_hub", "hostess7_core"],
+      "color": "#7ec8ff"
+    },
+    {
+      "id": "final_ear_bridge",
+      "label": "Final Ear · queen-earball",
+      "group": "sense",
+      "kind": "http_json",
+      "url": "http://127.0.0.1:9477/api/queen-earball",
+      "timeout": 60,
+      "connect_to": ["final_ear_node", "sense_package_hub", "hostess7_core"],
+      "color": "#4de88a"
+    },
+    {
+      "id": "final_mouth_bridge",
+      "label": "Final Mouth · queen-mouthball",
+      "group": "sense",
+      "kind": "http_json",
+      "url": "http://127.0.0.1:9477/api/queen-mouthball",
+      "timeout": 60,
+      "connect_to": ["final_mouth_node", "sense_package_hub", "hostess7_core"],
+      "color": "#f0a060"
+    },
+    {
+      "id": "sense_training",
+      "label": "Sense training panel",
+      "group": "sense",
+      "kind": "panel_file",
+      "path": "hostess7-sense-training-panel.json",
+      "connect_to": ["sense_package_hub", "sense_neural_wire"],
+      "ready_key": "tracks_complete",
+      "score_key": "overall_score",
+      "color": "#38bdf8"
+    }
+  ]
+}

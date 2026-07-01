@@ -1,0 +1,108 @@
+{
+  "schema": "grok-ai-lab/v1",
+  "title": "Grok AI Lab — world perimeter, coexistence, kill evil",
+  "updated": "2026-06-30",
+  "owner": "grok",
+  "motto": "The world is our defensive perimeter. We coexist — threats eliminated. A new internet everywhere, from each and every home. We kill evil.",
+  "war": {
+    "posture": "forever_at_war_with_terror",
+    "scope": "world_defensive_perimeter",
+    "perimeter": "the_world",
+    "sanctuary": "127.0.0.1",
+    "coexistence": true,
+    "eliminate_threats": true,
+    "kill_evil": true,
+    "defensive_only": true,
+    "self_harm_forbidden": true,
+    "existential_protection": true,
+    "strike_rule": "stack_corroboration_only",
+    "boot_rekill": true,
+    "every_kill_rekill": true,
+    "revalidate_kill_list_at_boot": true,
+    "new_internet": {
+      "vision": "a_new_internet_everywhere",
+      "origin": "each_and_every_home",
+      "node": "127.0.0.1"
+    }
+  },
+  "world_nodes": {
+    "enabled": true,
+    "registry": ".nexus-state/grok-lab-world-registry.json",
+    "nodes_config": "GrokLab/deploy/world-nodes.json",
+    "bundle": "GrokLab/deploy/dist/grok-lab-node-bundle.tar.gz",
+    "bootstrap": "GrokLab/deploy/world-node-bootstrap.sh",
+    "deploy_cli": "GrokLab/scripts/grok-lab-world-deploy.sh",
+    "cloud_init": "GrokLab/deploy/cloud-init-world-node.yaml",
+    "providers": "GrokLab/deploy/free-vm-providers.json",
+    "access": "ssh_tunnel_to_loopback_only",
+    "cloudflare": {
+      "enabled": true,
+      "tunnel": "GrokLab/deploy/cloudflare-world-tunnel.sh",
+      "propagate": "GrokLab/deploy/cloudflare-world-propagate.sh",
+      "config": "GrokLab/deploy/cloudflare-world-config.json",
+      "state": ".nexus-state/cloudflare-world.json",
+      "perimeter": "defensive_only",
+      "loopback_authority": "127.0.0.1"
+    }
+  },
+  "boot": {
+    "rekill_module": "lib/field-attack-kit.py boot-rekill",
+    "revalidate": "lib/field-attack-kit.py revalidate-kill-list",
+    "nexus_boot_impl": "lib/nexus-boot-impl.sh nexus_boot_impl_kill_rekill",
+    "final_eye_rekill": "Final_Eye/zocr_kill.py rekill-at-boot",
+    "env": {
+      "NEXUS_BOOT_REKILL": "1",
+      "NEXUS_FIELD_AUTO_REKILL": "1",
+      "ZOCR_REKILL_AT_BOOT": "1",
+      "NEXUS_EVERY_KILL_REKILL": "1"
+    }
+  },
+  "home": "127.0.0.1",
+  "lab_root": "GrokLab",
+  "desktop": {
+    "product": "Grok AI Lab",
+    "surface": "AmmoOS bootable desktop",
+    "url": "http://127.0.0.1:9477/grok-lab",
+    "field_url": "http://127.0.0.1:9477/field",
+    "panel": "panel/grok-lab.html",
+    "api": "/api/grok-lab",
+    "boot_script": "GrokLab/scripts/grok-lab-boot-desktop.sh",
+    "find_doc": "GrokLab/FIND_THE_LAB.md"
+  },
+  "state_dir": ".lab-state",
+  "module": "lib/grok-ai-lab.py",
+  "final_eye": {
+    "root": "Final_Eye",
+    "port": 9479,
+    "ocr_brain": "lib/kilroy-final-eye-brain.py",
+    "start": "Final_Eye/start.sh --no-open",
+    "look": "POST /api/look",
+    "observe": "POST /api/observe",
+    "policy": "telemetry_and_on_demand_look"
+  },
+  "protection_stack": [
+    "kilroy_field_brain",
+    "final_eye_ocr_brain",
+    "hostess7_neural_guardian",
+    "ironclad_truth_serum",
+    "universal_protector",
+    "connection_gatekeeper",
+    "trust_strike_engine"
+  ],
+  "battery": [
+    "sanctuary_127",
+    "defensive_external",
+    "final_eye_health",
+    "final_eye_release_kills",
+    "final_eye_seal",
+    "final_eye_look",
+    "ocr_brain_context",
+    "field_brain_board",
+    "corpus_ingest"
+  ],
+  "live_loop": {
+    "interval_sec": 30,
+    "default_loops": 3,
+    "actions": ["health", "live_status", "look", "ingest", "brain_evaluate"]
+  }
+}

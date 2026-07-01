@@ -1,0 +1,1 @@
+/home/default/Desktop/SG/NewLatest/lib/kill-detect.py

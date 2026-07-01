@@ -1,0 +1,17 @@
+{
+  "name": "ammocode-openvsx",
+  "displayName": "AmmoCode (Open VSX)",
+  "description": "AmmoCode for VSCodium — same extension manifest, Open VSX marketplace",
+  "version": "4.9.0",
+  "publisher": "amouranthrtx",
+  "repository": { "type": "git", "url": "https://github.com/ZacharyGeurts/AmmoCode" },
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "extensionKind": ["ui", "workspace"],
+  "contributes": {
+    "commands": [
+      { "command": "ammocode.open", "title": "AmmoCode: Open" }
+    ]
+  },
+  "main": "../vscode/extension.js"
+}

@@ -1,0 +1,12 @@
+# AmmoOS Software Update — safe GitHub check from AmmoLang
+@profile fastest
+@verbose clean
+@motto "AmmoOS update · preflight · GitHub · lock-safe"
+
+seq ·
+  say "Software Update Manager — AmmoLang preflight"
+  self upgrade
+  fast path:gpy fastest
+  github check repo:ZacharyGeurts/AmmoOS
+  update check
+  say "Use /ammoos-update-os to apply when update_available"

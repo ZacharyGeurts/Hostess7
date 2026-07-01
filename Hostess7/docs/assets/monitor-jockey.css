@@ -1,0 +1,184 @@
+/* Actions tab — command center scale */
+
+html.fm-appearance-2x .jockey-actions-head h2 {
+  font-size: 3.5rem;
+}
+
+html.fm-appearance-2x .jockey-actions-head p {
+  font-size: 2.1rem;
+  max-width: none;
+}
+
+html.fm-appearance-2x .jockey-actions-toolbar button {
+  font-size: 1.76rem;
+  padding: 1.5rem 2.7rem;
+}
+
+html.fm-appearance-2x .jockey-pending-section h3,
+html.fm-appearance-2x .jockey-actions-section h3,
+html.fm-appearance-2x .jockey-kill-codes-section h3 {
+  font-size: 1.9rem;
+}
+
+html.fm-appearance-2x .jockey-focus-banner {
+  font-size: 2rem;
+}
+
+.jockey-actions-deck {
+  width: 100%;
+  max-width: none;
+  padding: 0.5rem 0 2rem;
+}
+
+.jockey-actions-head {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid rgba(240, 192, 96, 0.25);
+}
+
+.jockey-actions-head h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #f0d48a, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.jockey-actions-head p {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--fm-dim, #8aa4c8);
+  line-height: 1.6;
+  max-width: 48rem;
+}
+
+.jockey-actions-toolbar {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.jockey-actions-toolbar button {
+  padding: 0.75rem 1.35rem;
+  border-radius: 12px;
+  border: 2px solid var(--fm-border, rgba(90, 120, 180, 0.28));
+  background: rgba(16, 28, 56, 0.75);
+  color: var(--fm-text-soft, #d0dcf0);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.jockey-actions-toolbar button:hover {
+  border-color: rgba(240, 192, 96, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(240, 192, 96, 0.12);
+}
+
+.jockey-focus-banner {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 140, 80, 0.4);
+  background: rgba(60, 28, 18, 0.55);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffd4b8;
+}
+
+.jockey-pending-section { margin-bottom: 1.5rem; }
+
+.jockey-pending-section h3,
+.jockey-actions-section h3,
+.jockey-kill-codes-section h3 {
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fm-gold, #f0c060);
+}
+
+.jockey-pending-queue {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.jockey-queue-quiet {
+  padding: 1.25rem;
+  font-size: 1rem;
+  border: 2px dashed var(--fm-border);
+  border-radius: 12px;
+}
+
+.jockey-queue-item {
+  padding: 1.1rem 1.25rem;
+  border-radius: 12px;
+  border: 2px solid var(--fm-glass-border, rgba(255,255,255,0.08));
+  background: var(--fm-glass, rgba(10, 18, 40, 0.82));
+  border-left: 5px solid var(--fm-blue, #60a5fa);
+}
+
+.jockey-queue-item.HARM_CANDIDATE { border-left-color: #f43f5e; }
+.jockey-queue-item.SUSPICIOUS { border-left-color: #f0c060; }
+
+.jockey-queue-head strong { font-size: 1.05rem; }
+.jockey-queue-item p { font-size: 0.95rem; margin-bottom: 0.75rem; }
+
+.jockey-queue-act {
+  padding: 0.55rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.jockey-actions-grid {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.85rem;
+}
+
+.jockey-action-btn {
+  padding: 1.15rem 1.25rem;
+  border-radius: 14px;
+  border: 2px solid var(--fm-glass-border);
+  min-height: 100px;
+}
+
+.jockey-action-btn strong { font-size: 1.05rem; }
+.jockey-action-btn .meta { font-size: 0.88rem; }
+
+.jockey-kill-codes-section {
+  padding: 1.25rem 1.35rem;
+  border-radius: 16px;
+  border: 2px solid rgba(244, 63, 94, 0.3);
+  margin-bottom: 1.5rem;
+}
+
+.jockey-kill-codes-hint { font-size: 0.95rem; margin-bottom: 1rem; }
+
+.jockey-kill-codes-grid {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.75rem;
+}
+
+.jockey-kill-code {
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  min-height: 88px;
+}
+
+.jockey-kill-code strong { font-size: 0.95rem; }
+.jockey-kill-code code { font-size: 0.75rem; }

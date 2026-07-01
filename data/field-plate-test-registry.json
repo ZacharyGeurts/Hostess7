@@ -1,0 +1,117 @@
+{
+  "schema": "field-plate-test-registry/v1",
+  "title": "Plate-routed tests — run incomplete when resources available",
+  "motto": "Never leave a battery half-wired. Plates witness every pass.",
+  "policy": {
+    "run_incomplete_when_resources": true,
+    "plate_witness": true,
+    "meld_after_run": true
+  },
+  "tests": [
+    {
+      "id": "g16_smoke_battery",
+      "plate": "g16_stack",
+      "script": "Grok16/scripts/grok16-toolchain.sh",
+      "args": ["test-battery"],
+      "requires": ["g16"],
+      "tier": "smoke"
+    },
+    {
+      "id": "g16_expert_battery",
+      "plate": "g16_compiler_sense",
+      "script": "Grok16/scripts/grok16-toolchain.sh",
+      "args": ["test-battery-expert"],
+      "requires": ["g16", "g16-ld", "ironclad"],
+      "tier": "expert"
+    },
+    {
+      "id": "g16_heavy_battery",
+      "plate": "g16_compiler_sense",
+      "script": "Grok16/scripts/grok16-toolchain.sh",
+      "args": ["test-battery-heavy"],
+      "requires": ["g16", "g16-ld", "ironclad"],
+      "tier": "heavy"
+    },
+    {
+      "id": "g16_binutils_runtime",
+      "plate": "plate_compiler",
+      "script": "Grok16/tests/test_g16_binutils_battery.py",
+      "args": [],
+      "requires": ["g16-as", "g16-objdump"],
+      "tier": "expert"
+    },
+    {
+      "id": "g16_python_battery",
+      "plate": "g16_stack",
+      "script": "Grok16/tests/test_g16_battery.py",
+      "args": [],
+      "requires": ["g16", "gpy-16"],
+      "tier": "smoke"
+    },
+    {
+      "id": "eye_ear_mouth_plate",
+      "plate": "eye_ear_plate",
+      "script": "NewLatest/lib/eye-ear-plate.py",
+      "args": ["cycle"],
+      "requires": ["final_eye", "final_ear"],
+      "tier": "sense"
+    },
+    {
+      "id": "plate_compiler_meld",
+      "plate": "plate_compiler",
+      "script": "NewLatest/lib/plate-compiler.py",
+      "args": ["cycle"],
+      "requires": ["g16", "eye_ear_plate"],
+      "tier": "meld"
+    },
+    {
+      "id": "g16_compiler_sense_plate",
+      "plate": "g16_compiler_sense",
+      "script": "NewLatest/lib/g16-compiler-sense-plate.py",
+      "args": ["cycle"],
+      "requires": ["g16", "eye_ear_plate"],
+      "tier": "optimize"
+    },
+    {
+      "id": "locational_sitrep_plate",
+      "plate": "locational_sitrep",
+      "script": "NewLatest/lib/field-locational-sitrep-plate.py",
+      "args": ["cycle"],
+      "requires": ["operator_location"],
+      "tier": "sense"
+    },
+    {
+      "id": "g16_power_sort_plate",
+      "plate": "g16_power_sort",
+      "script": "Grok16/lib/g16-power-sort-plate.py",
+      "args": ["cycle"],
+      "requires": ["g16", "ironclad"],
+      "tier": "optimize"
+    },
+    {
+      "id": "clipboard_wire_enforce",
+      "plate": "clipboard_wire",
+      "script": "NewLatest/lib/field-clipboard-wire.py",
+      "args": ["enforce"],
+      "requires": ["secure_clipboard"],
+      "tier": "expert"
+    },
+    {
+      "id": "clipboard_wire_bindings_all",
+      "plate": "clipboard_wire",
+      "script": "NewLatest/lib/field-clipboard-wire.py",
+      "args": ["bindings", "all"],
+      "requires": [],
+      "tier": "smoke"
+    },
+    {
+      "id": "legacy_isolation_chamber",
+      "plate": "legacy_isolation",
+      "script": "NewLatest/lib/field-legacy-isolation-chamber.py",
+      "args": ["verify"],
+      "requires": [],
+      "tier": "legacy",
+      "timeout": 120
+    }
+  ]
+}

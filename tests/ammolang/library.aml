@@ -1,0 +1,41 @@
+# library — migrated from run-tests.sh
+@profile fastest
+@verbose clean
+@motto "library stack tests · AmmoLang assert"
+
+suite library ·
+  group extensive library h7c
+    assert script:extensive_library_h7c
+  group library registry textbook covers
+    assert file:lib/field-library-registry.py
+    assert file:lib/field-textbook-covers.py
+    assert file:data/field-library-registry-doctrine.json
+    assert file:data/field-textbook-covers-doctrine.json
+    assert grep:lib/h7-library-bridge.py:field-library-registry
+    assert grep:lib/h7-library-librarian.py:library/assets/covers
+    assert grep:lib/threat-panel-http.py:/api/library-registry
+    assert grep:lib/field-panel-parallel.py:library_registry
+    assert shell:tmp_state="$(mktemp -d)"
+    assert py:field-textbook-covers.py verify match:"ok": true
+    assert py:field-library-registry.py build match:"ok": true
+    assert py:field-library-registry.py search openstax match:"hits"
+    assert file:library/assets/covers/openstax_biology/front.png
+    assert shell:[[ -f "/home/default/Desktop/SG/NewLatest/library/dewey/500-science/openstax_biology/book.json" ]] || grep -q '"cover"' "/home/default/Desktop/SG/NewLatest/library/dewey/500-science/openstax_biology_ap/book.json" 2>/dev/null || NEXUS_INSTALL_ROOT="$ROOT" NEXUS_STATE_DIR="$tmp_state" pythong "/home/default/Desktop/SG/NewLatest/lib/field-library-registry.py" build | grep -q 'textbooks'
+  group dewey library h7c
+    assert script:dewey_library_h7c
+  group h7c neural rebalance
+    assert file:lib/field-h7c-compression.py
+    assert file:lib/field-steel-neural-plates.py
+    assert file:lib/field-universal-neural.py
+    assert grep:lib/field-h7c-compression.py:rebalance_h7c_path
+    assert grep:lib/field-h7c-compression.py:steel_deep_path
+    assert shell:tmp_state="$(mktemp -d)"
+    assert py:field-steel-neural-plates.py build match:field-steel-neural-plates/v1
+    assert py:field-h7c-compression.py bench match:h7c-neural-benchmark/v1
+    assert py:field-h7c-compression.py bench match:full_neural
+  group future war h7c block
+    assert script:future_war_h7c_block
+  group h7c library corrects
+    assert script:h7c_library_corrects
+  group cpu library font clipboard
+    assert script:cpu_library_font_clipboard

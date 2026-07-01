@@ -1,0 +1,43 @@
+{
+  "schema": "field-perimeter-doctrine/v1",
+  "title": "NEXUS Field Perimeter — cord to cloud, everything protected",
+  "motto": "Power cord in, WiFi out, USB sideways — one shield, fail closed.",
+  "layers": [
+    {"id": "network_edge", "label": "Network edge", "covers": ["ipv4", "ipv6", "multicast", "sharing_services", "nftables_perimeter"]},
+    {"id": "wifi", "label": "WiFi / WLAN", "covers": ["rfkill", "association", "wpa_posture", "rogue_ap_correlation"]},
+    {"id": "bluetooth", "label": "Bluetooth / BLE", "covers": ["rfkill", "pairing", "beacon_watch"]},
+    {"id": "ethernet", "label": "Ethernet / LAN", "covers": ["promiscuous", "carrier", "arp_drift", "wol"]},
+    {"id": "usb", "label": "USB / HID / storage", "covers": ["hotplug", "mass_storage", "serial_gadget"]},
+    {"id": "power_acpi", "label": "Power / ACPI", "covers": ["ac_online", "battery", "suspend", "hibernate", "lid"]},
+    {"id": "physical", "label": "Physical tamper", "covers": ["tpm_witness", "usb_insert_alert", "chassis_acpi"]}
+  ],
+  "apply": {
+    "sysctl_network": true,
+    "nftables_multicast_block": true,
+    "network_lockdown": true,
+    "bluetooth_rfkill_on_hostile": true,
+    "wol_disable": true,
+    "suspend_inhibit_on_alert": true,
+    "usb_storage_automount_deny": true
+  },
+  "sysctl_targets": {
+    "net.ipv4.conf.all.rp_filter": "1",
+    "net.ipv4.conf.default.rp_filter": "1",
+    "net.ipv6.conf.all.accept_ra": "0",
+    "net.ipv6.conf.default.accept_ra": "0",
+    "net.ipv4.conf.all.accept_redirects": "0",
+    "net.ipv4.conf.default.accept_redirects": "0",
+    "net.ipv4.conf.all.send_redirects": "0",
+    "net.ipv4.icmp_ignore_bogus_error_responses": "1"
+  },
+  "multicast_block_ports": [5353, 5355, 137, 138, 1900],
+  "lives_with_us": [
+    "field_rf_sentinel",
+    "firewall_sentinel",
+    "connection_gatekeeper",
+    "hardware_wire",
+    "field_dns",
+    "native_layer",
+    "field_polkit"
+  ]
+}

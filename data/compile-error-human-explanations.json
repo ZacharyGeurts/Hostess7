@@ -1,0 +1,214 @@
+{
+  "schema": "compile-error-human-explanations/v1",
+  "title": "Human Explanation — plain-language compiler errors with per-language hints",
+  "motto": "Collect every error; explain in human terms; hint per language and retro platform.",
+  "patterns": [
+    {
+      "id": "missing_semicolon",
+      "match": ["expected ';'", "expected \";\"", "missing ';'"],
+      "explanation": "The compiler finished reading a statement but did not find the semicolon that ends it.",
+      "hints": {
+        "c": "Add `;` at the end of this statement. In C, every expression statement and declaration ends with `;`.",
+        "cxx": "Add `;` after the statement. Do not confuse struct/class closing `}` with statement terminators.",
+        "java": "Java statements end with `;`. Check that this line is not inside a class body where a brace was forgotten.",
+        "pascal": "Pascal uses `;` between statements inside a `begin…end` block. A missing `;` before `else` is a common mistake.",
+        "vb": "Classic VB (VB6/VBA) rarely uses `;` — this error may mean you are in a C-style module or the wrong language profile.",
+        "basic": "Line-oriented BASIC does not use `;` terminators. Switch to the correct dialect profile (AMOS, Blitz, QBasic).",
+        "asm": "Do not blindly add `;` on label lines. M68k/68000 assemblers use `;` for comments, not statement ends.",
+        "m68k": "68000 assembly: operand lines end with newline; labels have no trailing `;`. Semicolons start comments only.",
+        "amiga": "Amiga C (vbcc, GCC m68k-amigaos, SAS/C) uses normal `;` terminators. For Kickstart 1.x targets prefer `/* */` over `//` comments.",
+        "amiga_68000": "68000 on Amiga: C needs `;`; assembly labels must not get an auto-appended `;`. Check you selected C vs asm profile.",
+        "python": "Python does not use `;` to end statements (except rarely on one line). This message often means the wrong language was selected.",
+        "javascript": "ASI (automatic semicolon insertion) may hide issues — add `;` explicitly if the linter/compiler asks for it.",
+        "fortran": "Fortran uses `;` only in free-form (F90+). Fixed-form uses column rules — verify free vs fixed profile."
+      }
+    },
+    {
+      "id": "missing_colon",
+      "match": ["expected ':'", "expected :", "missing ':'"],
+      "explanation": "A block header (def, class, if, for, etc.) was written without the colon that opens the indented block.",
+      "hints": {
+        "python": "Add `:` at the end of the `def`, `class`, `if`, `elif`, `else`, `for`, `while`, `try`, `except`, `with`, `match`, or `case` line.",
+        "c": "C does not use trailing `:`. This diagnostic usually means Python content was compiled as C — check language detection.",
+        "amiga": "AMOS/Blitz Basic use different block syntax — not Python colons. Select `amos` or `blitzbasic` profile."
+      }
+    },
+    {
+      "id": "undeclared_identifier",
+      "match": ["undeclared", "not declared", "unknown type name", "was not declared in this scope"],
+      "explanation": "The compiler saw a name it does not know — no variable, function, type, or macro by that name is visible here.",
+      "hints": {
+        "c": "Add a declaration, `#include` the header, or forward-declare the function. Check spelling and scope.",
+        "cxx": "Add `#include`, a `using` declaration, namespace qualifier, or class member declaration.",
+        "java": "Declare the variable, import the class (`import pkg.Class;`), or fix the package name.",
+        "pascal": "Add the variable to `var` or the type to `type` section. Units must be in the `uses` clause.",
+        "vb": "Use `Dim` / `Public` / `Private` before first use. Check `Option Explicit` is not flagging typos.",
+        "basic": "Assign with `LET` or `DIM` arrays first. AMOS: declare with `:` inline or setup in initialization.",
+        "asm": "Labels must be defined before branch, or use `.global`/`.extern`. Check case sensitivity of the assembler.",
+        "m68k": "68000: equates need `EQU`/`=` in assembler; in C, declare `extern` for asm symbols.",
+        "amiga": "Amiga SDK: include `proto/`, `exec/`, or `libraries/` headers. Link `-lamiga` for system calls.",
+        "python": "Define the name before use, or fix the import (`from module import name`)."
+      }
+    },
+    {
+      "id": "implicit_declaration",
+      "match": ["implicit declaration", "implicit int", "implicit function"],
+      "explanation": "A function was called without a prior declaration. Older C compilers assumed `int`; modern compilers reject this.",
+      "hints": {
+        "c": "Add a function prototype before use, or `#include` the header that declares it.",
+        "amiga": "AmigaOS headers in `include/proto/` declare most system calls — include the correct proto header."
+      }
+    },
+    {
+      "id": "undefined_reference",
+      "match": ["undefined reference", "unresolved external", "linker command failed"],
+      "explanation": "Compilation succeeded for this file, but the linker cannot find the implementation of a function or global.",
+      "hints": {
+        "c": "Add the missing `.c` file to the build, or pass `-llibrary` to the linker.",
+        "cxx": "Ensure all translation units are linked. C++ needs `extern \"C\"` for C libraries sometimes.",
+        "amiga": "Link Amiga libraries: `-lamiga`, `-ldebug`, or add `.o` from NDK examples. Check vlink/GCC spec files."
+      }
+    },
+    {
+      "id": "syntax_error",
+      "match": ["syntax error", "syntaxerror", "parse error", "unexpected token"],
+      "explanation": "The compiler hit tokens it cannot parse — often a missing bracket, quote, operator, or keyword in the wrong place.",
+      "hints": {
+        "c": "Check matching `()`, `{}`, `[]`. Look one line above — errors often report on the line after the real mistake.",
+        "python": "Check indentation (4 spaces), matching quotes, and parentheses. Mixed tabs/spaces cause IndentationError.",
+        "pascal": "Every `begin` needs `end`. `:=` is assignment; `=` is comparison in some dialects.",
+        "vb": "Line continuations use `_` at end of line. Block `If` needs `End If`.",
+        "basic": "AMOS: commands are line-based; string quotes are double. Blitz: types must be declared.",
+        "asm": "Check instruction operands match the ISA. M68k: address modes and size suffixes (`.w`, `.l`).",
+        "amiga": "Cross-check Amiga BASIC vs C profile. Hardware registers need `volatile` and correct include paths."
+      }
+    },
+    {
+      "id": "indentation_error",
+      "match": ["indentationerror", "indentation error", "unexpected indent", "unindent does not match"],
+      "explanation": "Python requires consistent indentation to define blocks. Mixed tabs and spaces or wrong depth breaks parsing.",
+      "hints": {
+        "python": "Use 4 spaces per level — no tabs. Align `except`/`elif` with matching `try`/`if`.",
+        "c": "C ignores indentation — if you see this, the file may be detected as Python by mistake."
+      }
+    },
+    {
+      "id": "type_mismatch",
+      "match": ["cannot convert", "incompatible types", "type mismatch", "invalid conversion"],
+      "explanation": "A value is being used where the compiler expected a different type.",
+      "hints": {
+        "c": "Cast explicitly `(type)value` or fix the variable type. Check pointer vs value.",
+        "cxx": "Use `static_cast` / `reinterpret_cast` deliberately. Check template parameter types.",
+        "java": "Autoboxing may fail — use `.intValue()` or fix generic bounds.",
+        "pascal": "Use explicit conversion functions (`Ord`, `Chr`, `Trunc`).",
+        "amiga": "Amiga `ULONG`/`LONG` vs `unsigned long` — match NDK typedefs from `exec/types.h`."
+      }
+    },
+    {
+      "id": "is_none_identity",
+      "match": ["== none", "!= none", "is none", "comparison to none"],
+      "explanation": "Comparing to `None` with `==` works but `is None` is the idiomatic identity test in Python.",
+      "hints": {
+        "python": "Use `is None` / `is not None` for singleton checks. Use `==` only when `__eq__` semantics matter."
+      }
+    },
+    {
+      "id": "missing_brace",
+      "match": ["expected '}'", "expected \"}\"", "expected '{'", "expected \"{\""],
+      "explanation": "A brace-delimited block is not closed or opened correctly.",
+      "hints": {
+        "c": "Count `{` and `}`. Macro expansions can confuse line numbers — run `gcc -E` to preprocess if stuck.",
+        "java": "Each `{` in a class or method needs a matching `}`.",
+        "pascal": "Use `begin` / `end` instead of braces — verify dialect.",
+        "amiga": "Amiga C follows K&R/ANSI brace rules; SAS/C may warn on `{` after `if` on same line."
+      }
+    }
+  ],
+  "fallback": {
+    "explanation": "The compiler reported a problem at this location. Read the raw message for the exact token or symbol involved.",
+    "hints": {
+      "c": "Fix the line cited; then recompile. Check the first error first — later errors are often cascades.",
+      "python": "Run `python3 -m py_compile file.py` for a focused syntax check.",
+      "amiga": "Confirm m68k-amigaos toolchain, NDK includes, and that asm vs C profile matches the source.",
+      "generic": "Compare against a minimal working example in the same language profile."
+    }
+  },
+  "retro_safe_fix_policy": {
+    "never_auto_apply": {
+      "asm": ["missing_semicolon", "missing_colon", "is_none_identity"],
+      "m68k": ["missing_semicolon", "missing_colon"],
+      "amos": ["missing_semicolon", "missing_colon", "is_none_identity"],
+      "blitzbasic": ["missing_semicolon", "missing_colon", "is_none_identity"],
+      "basic": ["missing_semicolon", "missing_colon"],
+      "pascal": ["is_none_identity"],
+      "fortran": ["missing_colon", "is_none_identity"]
+    },
+    "platform_never_auto_apply": {
+      "amiga_68000": ["missing_semicolon"],
+      "c64_6510": ["missing_semicolon", "missing_colon"]
+    },
+    "notes": {
+      "amiga": "Semicolon autocorrect is allowed for C/C++ on Amiga only when lang is c/cxx and line is not asm-style.",
+      "amiga_68000": "Assembly profile: never append semicolons — 68000 uses ; for comments.",
+      "retro_global": "Confidence 1.0 fixes are verified by re-compile; rejected fixes stay in Human Explanation as hints only."
+    }
+  },
+  "emulator_series": {
+    "retro_amiga": {
+      "ready": true,
+      "chip_count": 4,
+      "chips": ["amiga_68000", "amiga_paula", "amiga_agnus", "amiga_denise"],
+      "libretro_core": "libretro_puae",
+      "libretro_family": "libretro_live",
+      "mame_device": "mame_m68000",
+      "system_id": "system_amiga",
+      "status": "seeded",
+      "compile_profiles": ["c", "cxx", "asm", "m68k", "amos", "blitzbasic"]
+    },
+    "amiga": {
+      "ready": true,
+      "chip_count": 4,
+      "steel_family": true,
+      "status": "seeded"
+    },
+    "retro_c64": {
+      "ready": true,
+      "chip_count": 6,
+      "libretro_core": "libretro_vice_x64",
+      "status": "seeded"
+    },
+    "retro_nes": {
+      "ready": true,
+      "chip_count": 4,
+      "libretro_core": "libretro_fceumm",
+      "status": "seeded"
+    },
+    "retro_snes": {
+      "ready": true,
+      "chip_count": 6,
+      "libretro_core": "libretro_snes9x",
+      "status": "seeded"
+    },
+    "retro_genesis": {
+      "ready": true,
+      "chip_count": 5,
+      "libretro_core": "libretro_genesis_plus_gx",
+      "status": "seeded"
+    },
+    "retro_atari": {
+      "ready": true,
+      "chip_count": 5,
+      "status": "seeded"
+    },
+    "libretro_installed": {
+      "ready": true,
+      "chip_count": 10,
+      "note": "Pre-installed cores; Amiga uses libretro_live/puae not in installed set"
+    },
+    "libretro_live": {
+      "ready": true,
+      "chip_count": 37,
+      "includes_amiga": true
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "field-dewey-library-doctrine/v1",
+  "module": "lib/field-dewey-library.py",
+  "root": "library/dewey",
+  "tree": "data/dewey-full-tree.json",
+  "format_primary": "h7",
+  "format_label": "Hostess 7 Book (H7/7)",
+  "format_id": "h7/7",
+  "h7_module": "lib/field-h7-format.py",
+  "motto": "Every book ever — glob Dewey bookshelves, Hostess 7 Condenser (H7c) only, display the whole tree.",
+  "migration": {
+    "from": "h7",
+    "to": "h7",
+    "via": "h7/7",
+    "in_place": true,
+    "remove_h7_after_convert": true,
+    "remove_corpus_duplicates": true,
+    "auto_convert_on_open": true,
+    "seamless": true,
+    "statement": "Any opened H7 converts to H7c immediately — readers never see legacy H7 on disk.",
+    "rebalance_on_open": true
+  },
+  "index_module": "lib/field-dewey-index.py",
+  "index_doctrine": "data/field-dewey-index-doctrine.json",
+  "api": [
+    "/api/dewey-library",
+    "/api/dewey-library/tree",
+    "/api/dewey-library/migrate",
+    "/api/dewey-index",
+    "/api/dewey-index/search",
+    "/api/dewey-index/tags"
+  ]
+}

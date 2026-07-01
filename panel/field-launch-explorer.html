@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="launch">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050508" />
+  <title>Launch Explorer</title>
+  <link rel="stylesheet" href="/assets/field-shell-dock.css?v=1" />
+  <link rel="stylesheet" href="/assets/field-launch-explorer.css?v=1" />
+</head>
+<body>
+  <div class="le-root" id="le-root">
+    <header class="fsd-dock le-dock" aria-label="Field dock">
+      <div class="fsd-dock-left" id="fsd-dock-left"></div>
+      <div class="fsd-dock-right" id="fsd-dock-right"></div>
+    </header>
+
+    <div class="le-app">
+      <header class="le-head">
+        <div>
+          <h1>Launch Explorer</h1>
+          <p class="le-sub" id="le-sub">g16 + .launch — no AmmoOS compile</p>
+        </div>
+        <span class="le-g16-pill" id="le-g16-pill">g16 …</span>
+        <button type="button" class="le-scan" id="le-scan">Rescan</button>
+      </header>
+
+      <div class="le-split">
+        <section class="le-list-pane" aria-label="Launch chambers">
+          <input type="search" class="le-search" id="le-search" placeholder="Filter .launch chambers…" />
+          <div class="le-grid" id="le-grid" role="list"></div>
+        </section>
+
+        <aside class="le-detail" id="le-detail" aria-label="Chamber detail">
+          <p class="le-empty">Select a chamber — right-click to run or explore</p>
+        </aside>
+      </div>
+    </div>
+
+    <div class="le-ctx hidden" id="le-ctx" role="menu"></div>
+    <div class="le-toast hidden" id="le-toast" role="status"></div>
+  </div>
+  <script src="/assets/field-shell-dock.js?v=1" defer></script>
+  <script src="/assets/field-launch-explorer.js?v=1" defer></script>
+</body>
+</html>

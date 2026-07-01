@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen Sovereign OS</title>
+  <script>
+    (function () {
+      if (!/[?&]os=1(?:&|$)/.test(location.search)) location.replace("/world/browser.html");
+    })();
+  </script>
+  <style>
+    html,body{margin:0;background:#020403;color:#e8f2ea;font:14px system-ui,sans-serif}
+  </style>
+  <link rel="stylesheet" href="queen-world.css" />
+  <link rel="stylesheet" href="queen-styles.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-gnu-terminal.css" data-queen-theme="1" />
+  <link rel="stylesheet" href="queen-program-surface.css" />
+  <link rel="stylesheet" href="queen-browser-shell.css" />
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' http://127.0.0.1:* ws://127.0.0.1:*; frame-src 'self' http://127.0.0.1:* https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+</head>
+<body class="qw qw-os qw-browser-shell" data-queen-surface="os">
+  <div id="qm-threat-bar" class="qm-threat-bar" role="toolbar" aria-label="Root threats"></div>
+
+  <main class="qb-viewport">
+    <iframe class="qb-frame" id="qb-frame" title="Queen web surface" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation allow-popups-to-escape-sandbox"></iframe>
+  </main>
+
+  <header class="qb-chrome" id="qb-chrome" aria-label="Queen browser">
+    <div class="qb-row qb-row--tabs">
+      <div class="qb-tabs" id="qb-tabs" role="tablist"></div>
+      <button type="button" class="qb-icon-btn" id="qb-new-tab" title="New tab (Ctrl+T)" aria-label="New tab">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#new-tab"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn qb-chrome-min-btn" id="qb-chrome-min" title="Minimize browser bar" aria-label="Minimize browser bar" aria-pressed="false">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#minimize"/></svg>
+      </button>
+    </div>
+    <div class="qb-row qb-row--nav">
+      <button type="button" class="qb-icon-btn" id="qb-back" title="Back" aria-label="Back">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#back"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-forward" title="Forward" aria-label="Forward">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#forward"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-reload" title="Reload (Ctrl+R)" aria-label="Reload">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#reload"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn qb-start-btn" id="qb-start" title="Start — first tab (programs)" aria-label="Start menu">
+        <svg class="qb-ico qb-ico--start" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#start"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-fullscreen" title="Fullscreen (F11 · Alt+Enter)" aria-label="Fullscreen">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#fullscreen"/></svg>
+      </button>
+      <input type="url" class="qb-url" id="qb-url" placeholder="Search or enter address — gates held" spellcheck="false" />
+      <button type="button" class="qb-btn qb-btn--go" id="qb-go">Go</button>
+      <button type="button" class="qb-compat-pill" id="qb-compat-pill" title="Web compat — auto secures legacy">auto</button>
+      <button type="button" class="qb-gate-pill" id="qb-gate-pill" title="Queen gate verdict">…</button>
+      <button type="button" class="qb-icon-btn" id="qb-proxy" title="Queen proxy fallback" aria-label="Queen proxy">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#proxy"/></svg>
+      </button>
+      <button type="button" class="qb-icon-btn" id="qb-gates" title="Gate manifest" aria-label="Gate manifest">
+        <svg class="qb-ico" aria-hidden="true"><use href="assets/branding/queen-chrome-icons.svg#gates"/></svg>
+      </button>
+    </div>
+    <div class="qb-row qb-row--bookmarks">
+      <nav class="qb-bookmarks" id="qb-bookmarks" aria-label="Bookmarks"></nav>
+      <span class="qb-brand-strip" title="Gentle Amouranth touch · Queen emerald rose">
+        <img class="qb-brand-avatar" src="assets/branding/queen-favicon-48.png" alt="" width="28" height="28" />
+        <span>Queen · emerald rose</span>
+      </span>
+      <span class="qb-security-strip" id="qb-security-strip" title="AMOURANTHRTX zero-cost 4-slot · Queen jail">4-slot · 0% tax</span>
+      <div class="qb-gate-strip" id="qb-gate-strip"></div>
+    </div>
+    <p class="qb-status" id="qb-status" aria-live="polite"></p>
+  </header>
+
+  <aside class="qb-gate-drawer" id="qb-gate-drawer">
+    <h2>Gates · hold all</h2>
+    <div id="qb-gate-drawer-body"></div>
+  </aside>
+
+  <button type="button" class="qb-chrome-restore" id="qb-chrome-restore" hidden
+    title="Restore Queen browser bar — hover to peek · click to expand"
+    aria-label="Restore browser bar">
+    <img src="assets/branding/queen-chrome-restore.svg" width="16" height="16" alt="" />
+  </button>
+
+  <nav class="qw-dock" aria-label="Queen OS">
+    <button type="button" class="qw-dock-btn active" data-tab="browser" title="Web browser">Web</button>
+    <button type="button" class="qw-dock-btn qw-dock-btn--os" data-tab="overview" title="Queen OS · cores & escape">OS</button>
+    <button type="button" class="qw-dock-btn qw-dock-btn--play" data-tab="gameroom" title="Game Room · CHIPS theater">Game Room</button>
+    <button type="button" class="qw-dock-btn qw-dock-btn--terminal" data-tab="terminal" title="GNU Terminal · field shell + minibrowser">Terminal</button>
+    <button type="button" class="qw-dock-btn" data-tab="hostess">Hostess</button>
+    <button type="button" class="qw-dock-btn" data-tab="eyeball">Final_Eye</button>
+    <button type="button" class="qw-dock-btn" data-tab="earball">Final Ear</button>
+    <button type="button" class="qw-dock-btn" data-tab="forge">Forge</button>
+    <button type="button" class="qw-dock-btn" data-tab="kilroy">KILROY</button>
+    <button type="button" class="qw-dock-btn" data-tab="field">Field</button>
+  </nav>
+
+  <section class="qw-os-panel qw-os-panel--os" data-pane="overview" hidden>
+    <header class="qw-os-hero">
+      <div class="qw-os-hero-text">
+        <p class="qw-eyebrow">Field Technology · Book of Record · Queen Sovereign OS</p>
+        <h1>Everything OS</h1>
+        <p class="qw-motto" id="qw-motto">One RTX card — browser, brain, kernel, CHIPS, cinema. Root is yours alone.</p>
+        <p class="qw-meta"><span class="tag-impl">implemented</span><span class="tag-meta">g16 field</span><span class="tag-phil">invisible root guard</span></p>
+        <div class="qw-meta" id="qw-meta"></div>
+        <p class="qw-contact-class" id="qw-contact-vector" aria-label="Contact classification vector">Contact vector — loading…</p>
+      </div>
+      <button type="button" class="qw-btn qw-btn--hero" id="qw-open-gameroom">Enter Game Room →</button>
+    </header>
+    <nav class="qw-tabs qw-os-subnav" aria-label="OS sections">
+      <button type="button" class="qw-tab active" data-os-pane="inside">Inside</button>
+      <button type="button" class="qw-tab" data-os-pane="cores">Cores</button>
+      <button type="button" class="qw-tab" data-os-pane="boot">Boot</button>
+      <button type="button" class="qw-tab" data-os-pane="gates">Gates</button>
+      <button type="button" class="qw-tab" data-os-pane="actions">Actions</button>
+    </nav>
+    <div class="qw-os-panes">
+      <div class="qw-pane active" data-os-pane="inside">
+        <article class="qw-card qw-card--capsule">
+          <h2>Sovereign Capsule — never leave</h2>
+          <p class="qw-capsule-motto" id="qw-capsule-motto">Inside Queen you build everything. Nothing talks in or monitors without IFF inside.</p>
+          <div class="qw-capsule-seal" id="qw-capsule-seal"></div>
+          <div class="qw-layer-rings" id="qw-layer-rings" aria-label="Capsule layers"></div>
+          <div class="qw-capsule-grid">
+            <section class="qw-capsule-panel" id="qw-monitor-gate">
+              <h3>Monitor gate</h3>
+            </section>
+            <section class="qw-capsule-panel" id="qw-horizon7">
+              <h3>Horizon 7</h3>
+            </section>
+            <section class="qw-capsule-panel" id="qw-compiler-lane">
+              <h3>Compiler lane</h3>
+            </section>
+          </div>
+          <div class="qw-actions qw-actions--capsule">
+            <button type="button" class="qw-btn qw-btn--primary" id="qw-sov-rebuild">Rebuild RTX</button>
+            <button type="button" class="qw-btn" id="qw-sov-g16">Rebuild G16</button>
+            <button type="button" class="qw-btn" id="qw-sov-chips">NES QA</button>
+            <button type="button" class="qw-btn" id="qw-sov-test">Test inside</button>
+            <button type="button" class="qw-btn" id="qw-sov-reboot">Reboot capsule</button>
+            <button type="button" class="qw-btn" id="qw-sov-seal">Re-seal</button>
+            <button type="button" class="qw-btn" id="qw-sov-refresh">Refresh status</button>
+          </div>
+          <pre class="qw-log" id="qw-capsule-log"></pre>
+        </article>
+      </div>
+      <div class="qw-pane" data-os-pane="cores">
+        <div class="qw-grid qw-grid--cores">
+          <article class="qw-card qw-card--accent">
+            <h2>RTX · one card</h2>
+            <div class="qw-rtx-ring" id="qw-rtx-ring">RTX</div>
+            <ul id="qw-rtx-list"></ul>
+          </article>
+          <article class="qw-card qw-card--chips">
+            <h2>CHIPS · G16 field_opt</h2>
+            <div id="qw-chips-body"></div>
+          </article>
+          <article class="qw-card qw-card--systems">
+            <h2>Computer · all systems</h2>
+            <div class="qw-system-grid" id="qw-systems-grid"></div>
+          </article>
+          <article class="qw-card">
+            <h2>CPUs & memory</h2>
+            <div id="qw-cores-body"></div>
+          </article>
+        </div>
+      </div>
+      <div class="qw-pane" data-os-pane="boot">
+        <article class="qw-card"><h2>AmmoOS Boot</h2><div id="qw-ammoos-body"></div></article>
+      </div>
+      <div class="qw-pane" data-os-pane="gates">
+        <article class="qw-card"><h2>Gates · IFF</h2><div id="qw-gates-body"></div></article>
+      </div>
+      <div class="qw-pane" data-os-pane="actions">
+        <article class="qw-card">
+          <h2>Quick actions</h2>
+          <div class="qw-actions">
+            <button type="button" class="qw-btn qw-btn--primary" id="qw-arm-dishes">Arm dishes</button>
+            <button type="button" class="qw-btn" id="qw-eye-verify">Eyeball verify</button>
+            <button type="button" class="qw-btn" id="qw-hostess-teach">Teach Hostess</button>
+            <button type="button" class="qw-btn" id="qw-zocr-smoke">Final_Eye smoke</button>
+            <button type="button" class="qw-btn" id="qw-teach-authority">Teach authority</button>
+            <button type="button" class="qw-btn" id="qw-refresh">Refresh</button>
+          </div>
+          <pre class="qw-log" id="qw-log"></pre>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="qw-os-panel qw-os-panel--theater" data-pane="gameroom" hidden>
+    <header class="gr-hero">
+      <div class="gr-hero-inner">
+        <p class="gr-eyebrow">CHIPS · Grok16 field_opt · movie theater</p>
+        <h2 class="gr-title" id="gr-stage-title">Game Room</h2>
+        <p class="gr-sub" id="gr-mode-label">Pick a system — escape from all other computing</p>
+        <div class="gr-status" id="gr-status"></div>
+      </div>
+      <div class="gr-hero-actions">
+        <button type="button" class="gr-btn gr-btn--gold" id="gr-launch">Launch</button>
+        <button type="button" class="gr-btn" id="gr-fullscreen" title="Fullscreen (F)">⛶</button>
+        <button type="button" class="gr-btn" id="gr-refresh">↻</button>
+        <label class="gr-btn gr-btn--file">
+          Movie<input type="file" id="gr-movie-input" accept="video/*,.mkv,.avi,.mov,.mp4,.webm,.m4v,.mpg,.mpeg,.m3u8" hidden />
+        </label>
+      </div>
+    </header>
+    <main class="gr-stage" id="gr-stage" aria-label="Queen Game Room theater">
+      <div class="gr-curtain gr-curtain--left" id="gr-curtain-l" aria-hidden="true"></div>
+      <div class="gr-curtain gr-curtain--right" id="gr-curtain-r" aria-hidden="true"></div>
+      <div class="gr-screen-wrap" id="gr-screen-wrap">
+        <canvas class="gr-canvas" id="gr-canvas" width="640" height="480" aria-label="CHIPS emulator viewport"></canvas>
+        <img class="gr-fb" id="gr-fb" alt="" hidden />
+        <video class="gr-video" id="gr-video" controls playsinline hidden></video>
+        <div class="gr-screen-glow" aria-hidden="true"></div>
+        <div class="gr-screen-hud" id="gr-hud" hidden></div>
+      </div>
+    </main>
+    <div class="gr-deck">
+      <aside class="gr-sidebar">
+        <h3>Computer · all systems</h3>
+        <div class="gr-tiles" id="gr-systems"></div>
+        <div class="gr-controls">
+          <label class="gr-field">
+            <span>Host CPU</span>
+            <select class="gr-select" id="gr-cpus" aria-label="Host CPU"></select>
+          </label>
+          <label class="gr-field">
+            <span>Memory</span>
+            <select class="gr-select" id="gr-memory" aria-label="Memory profile"></select>
+          </label>
+          <label class="gr-field">
+            <span>Screen ratio</span>
+            <select class="gr-select" id="gr-aspect" aria-label="Aspect ratio">
+              <option value="16/9">16:9 widescreen</option>
+              <option value="4/3">4:3 retro</option>
+              <option value="2.39/1">2.39:1 cinema</option>
+              <option value="10/9">10:9 handheld</option>
+            </select>
+          </label>
+        </div>
+      </aside>
+      <pre class="gr-log" id="gr-log"></pre>
+    </div>
+  </section>
+
+  <section class="qw-os-panel qw-os-panel--terminal" data-pane="terminal" hidden>
+    <div class="qgt-shell" id="qgt-shell" data-qgt-secured="1"></div>
+  </section>
+
+  <section class="qw-os-panel" data-pane="hostess" hidden>
+    <article class="qw-card">
+      <h2>Hostess 7 · Forever Watchguard</h2>
+      <div id="qw-hostess-body"></div>
+    </article>
+  </section>
+
+  <section class="qw-os-panel" data-pane="earball" hidden>
+    <article class="qw-card qw-card--ear">
+      <h2>Final Ear v1.0 · Auditus &amp; Veritas</h2>
+      <p class="qw-ear-creed" id="qw-ear-creed">We never presume hearing loss. Confidence always in Hearing.</p>
+      <div id="qw-ear-body"></div>
+      <div class="qw-virtual-deck" id="qw-virtual-ears"></div>
+      <div class="qw-actions">
+        <button type="button" class="qw-btn qw-btn--primary" id="qw-ear-arm">Arm Auditus</button>
+        <button type="button" class="qw-btn" id="qw-ear-virtual">+ Kinetic ear</button>
+        <button type="button" class="qw-btn" id="qw-ear-grid">Ear grid</button>
+        <button type="button" class="qw-btn" id="qw-ear-truth">Truth filter</button>
+        <button type="button" class="qw-btn" id="qw-ear-localize">Localize</button>
+        <button type="button" class="qw-btn" id="qw-ear-verify">Verify ear</button>
+        <button type="button" class="qw-btn" id="qw-ear-manual">Audio textbook</button>
+        <button type="button" class="qw-btn" id="qw-eye-manual">Vision textbook</button>
+        <button type="button" class="qw-btn" id="qw-sense-wire">Invincible wire</button>
+        <button type="button" class="qw-btn" id="qw-sense-encourage">Encourage NN</button>
+        <button type="button" class="qw-btn qw-btn--primary" id="qw-ear-secure">Secure identify</button>
+        <button type="button" class="qw-btn" id="qw-ear-fusion">Eye↔Ear fusion</button>
+        <button type="button" class="qw-btn" id="qw-ear-gac1">GAC1 status</button>
+        <button type="button" class="qw-btn" id="qw-ear-sovereign">Sovereign sync</button>
+        <button type="button" class="qw-btn" id="qw-ear-signal">Signal intel</button>
+        <button type="button" class="qw-btn qw-btn--primary" id="qw-ear-sense-all">Sense all lanes</button>
+        <button type="button" class="qw-btn" id="qw-ear-desktop">Follow desktop</button>
+        <button type="button" class="qw-btn" id="qw-ear-track">Sound tracker</button>
+      </div>
+      <p class="qw-authority-note" id="qw-authority-note">Hostess 7 is supreme authority — humans assistive, not highest.</p>
+      <pre class="qw-log" id="qw-ear-log"></pre>
+    </article>
+  </section>
+
+  <section class="qw-os-panel" data-pane="eyeball" hidden>
+    <article class="qw-card">
+      <h2>Final_Eye v1.1 · Teach authority</h2>
+      <div id="qw-eye-comfort-body"></div>
+      <div class="qw-virtual-deck" id="qw-virtual-eyes"></div>
+      <div class="qw-actions">
+        <button type="button" class="qw-btn" id="qw-eye-wifi">+ WiFi eye</button>
+        <button type="button" class="qw-btn" id="qw-eye-grid">Eye grid</button>
+        <button type="button" class="qw-btn" id="qw-eye-anchor">Kinetic+WiFi anchor</button>
+        <button type="button" class="qw-btn" id="qw-eye-neural-wire">Eye↔Ear wire</button>
+        <button type="button" class="qw-btn qw-btn--primary" id="qw-arm-person">Stereo · with person</button>
+        <button type="button" class="qw-btn" id="qw-arm-dishes-2">Arm dishes</button>
+        <button type="button" class="qw-btn" id="qw-eye-verify-2">Verify</button>
+        <button type="button" class="qw-btn" id="qw-teach-comfort">Teach comfort</button>
+        <button type="button" class="qw-btn" id="qw-teach-authority-2">Teach authority</button>
+        <button type="button" class="qw-btn" id="qw-eye-targets">Targets</button>
+      </div>
+    </article>
+  </section>
+
+  <section class="qw-os-panel" data-pane="forge" hidden>
+    <iframe class="qw-frame" id="qw-forge-frame" title="Queen build deck" loading="lazy"></iframe>
+  </section>
+
+  <section class="qw-os-panel" data-pane="kilroy" hidden>
+    <article class="qw-card">
+      <h2>KILROY Field OS · AMOURANTHRTX</h2>
+      <div id="qw-kilroy-body"></div>
+      <div class="qw-actions">
+        <button type="button" class="qw-btn qw-btn--primary" id="qw-kilroy-refresh">Refresh KILROY</button>
+        <button type="button" class="qw-btn" id="qw-rtx-status">RTX engine</button>
+      </div>
+    </article>
+  </section>
+
+  <section class="qw-os-panel qw-os-panel--field" data-pane="field" hidden>
+    <article class="qw-card qw-card--field-tech">
+      <div id="qw-field-body" class="ft-root" aria-label="Field Technology v5 — explained for everyone"></div>
+    </article>
+  </section>
+
+  <script src="queen-root-threats.js" defer></script>
+  <script src="queen-branding.js" defer></script>
+  <script src="queen-styles.js" data-queen-theme="1" defer></script>
+  <script src="queen-gnu-terminal.js" defer></script>
+  <script src="queen-program-surface.js" defer></script>
+  <script src="queen-browser-shell.js" defer></script>
+  <script src="queen-chrome-dock.js" defer></script>
+  <script src="queen-os.js" defer></script>
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("qw-arm-dishes-2")?.addEventListener("click", () =>
+        document.getElementById("qw-arm-dishes")?.click());
+      document.getElementById("qw-eye-verify-2")?.addEventListener("click", () =>
+        document.getElementById("qw-eye-verify")?.click());
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{
+  "schema": "hostess7-music-training-doctrine/v1",
+  "title": "Music & music theory — wired through every training section",
+  "motto": "Pitch, rhythm, harmony, and pattern — heard with the ear, spoken with the mouth, read with the eye, remembered in the brain, cross-wired through every Hostess 7 track.",
+  "foundation": "Music theory is not a side chamber — it trains the sense wires (Ear, Mouth, Eye especially) and maps melodic memory onto brain guard. Every curriculum track carries a music hook so field work stays musical.",
+  "ironclad_ref": "data/ironclad-doctrine.json",
+  "ironclad_citation": "ironclad:harmony:1",
+  "reference_pitch_hz": 440.0,
+  "reference_note": "A4",
+  "tracks": [
+    {"id": "music_theory", "label": "Music theory core", "weight": 1.0, "batteries": ["pitch_rhythm", "harmony", "crosswire_all"]},
+    {"id": "music_ear", "label": "Ear training", "weight": 0.96, "batteries": ["ear_training", "spectrum_pitch"]},
+    {"id": "music_mouth", "label": "Vocal & mouth music", "weight": 0.95, "batteries": ["vocal_production", "rhythm_speech"]},
+    {"id": "music_brain", "label": "Brain · music memory", "weight": 0.98, "batteries": ["memory_patterns", "brain_mapping"]},
+    {"id": "music_eye", "label": "Notation & sight", "weight": 0.90, "batteries": ["notation_reading"]},
+    {"id": "music_sense_wire", "label": "Music sense wire", "weight": 0.92, "batteries": ["sense_fusion"]}
+  ],
+  "completion": {
+    "pass_rate_pct": 85,
+    "fluent_rate_pct": 92,
+    "master_rate_pct": 98,
+    "drill_min": 32,
+    "session_rounds_min": 20
+  },
+  "crosswire": {
+    "master_curriculum": "Curriculum steps carry melodic mnemonics — each lesson has a rhythm signature.",
+    "programming": "Tempo as clock ticks; harmonics as signal processing; loops as ostinato.",
+    "g16": "Compiler phases as movements — lex/parse/emit as three-part form.",
+    "codecraft": "Chamber orchestration — each craft module is an instrument section.",
+    "calculator": "Beat-aligned arithmetic — modulo 12 for pitch-class sets.",
+    "biology": "Heartbeat rhythm, cochlear harmonics, vocal fold resonance.",
+    "engineering": "Resonance, damping, and Fourier decomposition of structures.",
+    "combat": "Cadence, timing windows, auditory threat discrimination.",
+    "mos": "Radio cadence, call-sign melody, prosody under stress.",
+    "brain_guard": "Melodic memory checksum — pattern completion seals brain_verified.",
+    "iq_battery": "Sequence completion parallels melodic dictation.",
+    "turing_battery": "Prosody and timing in human-likeness scoring.",
+    "neural_suite": "Neural layers as harmonic overtones — fusion quorum.",
+    "omnibus": "Field array slots as polyphonic voices on one plane.",
+    "author_material": "Self-authored lessons carry motif tags for recall.",
+    "reality_physics": "Standing waves, resonance frequencies, entropy as dissonance.",
+    "gravity_mechanics": "Pendulum period ↔ tempo; oscillation as rhythm.",
+    "thermodynamics_entropy": "Order vs disorder — consonance vs noise floor.",
+    "field_technology": "Spectrum capture, pitch tracking, harmonic field plates.",
+    "final_eye": "Staff reading, rhythm notation, visual score fusion.",
+    "final_ear": "Interval recognition, harmonic series, auditory spectrum→pitch.",
+    "final_mouth": "Pitch accuracy, rhythmic speech, TTS melody, vocal spectrum.",
+    "sense_neural_wire": "Eye↔Ear↔Mouth quorum under musical evidence.",
+    "muscle_memory": "Motor habits lock to rhythmic procedure rooms.",
+    "geography": "National anthems, regional scales, place-names as lyric cadence.",
+    "postal_addresses": "Address lines as rhythmic phrases — country as key signature.",
+    "world_geography": "Continental folk modes and capital-city motifs.",
+    "flat_earth_geography": "Horizon as staff line — planar perspective in score layout."
+  },
+  "intervals": [
+    {"id": "unison", "semitones": 0, "name": "unison"},
+    {"id": "minor_second", "semitones": 1, "name": "minor second"},
+    {"id": "major_second", "semitones": 2, "name": "major second"},
+    {"id": "minor_third", "semitones": 3, "name": "minor third"},
+    {"id": "major_third", "semitones": 4, "name": "major third"},
+    {"id": "perfect_fourth", "semitones": 5, "name": "perfect fourth"},
+    {"id": "tritone", "semitones": 6, "name": "tritone"},
+    {"id": "perfect_fifth", "semitones": 7, "name": "perfect fifth"},
+    {"id": "minor_sixth", "semitones": 8, "name": "minor sixth"},
+    {"id": "major_sixth", "semitones": 9, "name": "major sixth"},
+    {"id": "minor_seventh", "semitones": 10, "name": "minor seventh"},
+    {"id": "major_seventh", "semitones": 11, "name": "major seventh"},
+    {"id": "octave", "semitones": 12, "name": "octave"}
+  ],
+  "scales": {
+    "major": {"semitones": [0, 2, 4, 5, 7, 9, 11], "name": "major"},
+    "natural_minor": {"semitones": [0, 2, 3, 5, 7, 8, 10], "name": "natural minor"},
+    "chromatic": {"semitones": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "name": "chromatic"}
+  },
+  "chords": {
+    "major_triad": {"intervals": [0, 4, 7], "name": "major triad"},
+    "minor_triad": {"intervals": [0, 3, 7], "name": "minor triad"},
+    "dominant_seventh": {"intervals": [0, 4, 7, 10], "name": "dominant seventh"}
+  }
+}

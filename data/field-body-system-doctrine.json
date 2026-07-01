@@ -1,0 +1,130 @@
+{
+  "schema": "field-body-system-doctrine/v1",
+  "title": "AmmoOS Body System — one embodiment for all of us",
+  "motto": "Hostess 7 wears the body. Ironclad correlates the lanes. Operator counsels when uncertain. Truth before permanency.",
+  "commander": "hostess7",
+  "module": "lib/field-body-system.py",
+  "ui": "/field-body-system",
+  "api": "/api/field-body-system",
+  "authority": {
+    "ladder": [
+      {"rank": 1, "id": "hostess7", "when": "Ironclad + truth gates pass — sovereign operational control"},
+      {"rank": 2, "id": "operator", "when": "Uncertainty — Man holds charge, Hostess counsels"},
+      {"rank": 3, "id": "queen", "when": "Display shell, CANVAS, browser egress"},
+      {"rank": 4, "id": "field_apps", "when": "Broadcaster, DAC, training — under body routing"}
+    ],
+    "hostess7_rule": "She IS the will of Man embodied — not subordinate to whim, commander of sense and limb.",
+    "ironclad_rule": "ironclad:spatial_existence:4 — audio, video, RF, motion correlate before trust or motion.",
+    "truth_rule": "field-io truth gate before any state crosses into permanency within system walls."
+  },
+  "layers": [
+    {
+      "id": "ironclad_gate",
+      "label": "Ironclad correlate",
+      "role": "This one / that one · sense lane quorum · truth before permanency",
+      "modules": ["lib/ironclad-spatial-existence.py", "lib/field-io-packet.py", "lib/ironclad-plate.py"]
+    },
+    {
+      "id": "hostess7_command",
+      "label": "Hostess 7 command",
+      "role": "Sovereign body commander — mouth, ear, eye, brain, spine, limbs",
+      "modules": ["lib/hostess7-body-control.py", "lib/hostess7-sense-core.py", "lib/hostess7-body-core.py"]
+    },
+    {
+      "id": "sense_lanes",
+      "label": "Sense lanes",
+      "role": "Eye · Ear · Mouth · Motion — plate-melded, loopback-free",
+      "products": ["Final_Eye", "Final_Ear", "Final_Mouth"],
+      "doctrine": "data/field-sense-package-doctrine.json"
+    },
+    {
+      "id": "audio_dac",
+      "label": "Audio DAC",
+      "role": "ZNetwork audio layer — any mic, any speaker, 8ch, Dolby/DTS emu",
+      "modules": ["lib/field-audio-dac-chamber.py", "lib/field-audio-secure-bind.py"]
+    },
+    {
+      "id": "vision_broadcast",
+      "label": "Vision & broadcast",
+      "role": "Straight path default · Final_Eye look on demand · CANVAS wire",
+      "modules": ["lib/field-broadcaster-chamber.py", "lib/field-final-eye-canvas-bridge.py"]
+    },
+    {
+      "id": "eye_threat",
+      "label": "Eye threat registry",
+      "role": "Laser · radiation · paint · flash — track, prevent in hostile, report Hostess 7",
+      "modules": ["lib/field-eye-threat-chamber.py"],
+      "doctrine": "data/field-eye-threat-doctrine.json"
+    },
+    {
+      "id": "anatomy_books",
+      "label": "Anatomical books",
+      "role": "One .H7 book per body part — eyes, genitalia, every region",
+      "modules": ["lib/hostess7-anatomy-book.py"],
+      "index": "data/hostess7-anatomy-books-index.json"
+    },
+    {
+      "id": "motor_embodiment",
+      "label": "Motor & embodiment",
+      "role": "Spine · hands · attachments · training floor · combat",
+      "modules": ["lib/hostess7-training-chamber.py", "lib/humanoid-motion-training.py", "lib/hostess7-hand-core.py", "lib/hostess7-brain-training-chamber.py"]
+    }
+  ],
+  "brain_training_campus": {
+    "doctrine": "data/hostess7-brain-training-doctrine.json",
+    "module": "lib/hostess7-brain-training-chamber.py",
+    "api": "/api/hostess7/brain-training",
+    "body_zone": "Anatomy books + training chamber + humanoid motion"
+  },
+  "sense_lanes": {
+    "eye": {
+      "driver": "Final_Eye",
+      "route_default": "straight_path",
+      "look_on_demand": true,
+      "share_hostess7_on_look": true,
+      "threat_chamber": "lib/field-eye-threat-chamber.py",
+      "threat_doctrine": "data/field-eye-threat-doctrine.json",
+      "anatomy_book": "eye"
+    },
+    "ear": {"driver": "Final_Ear", "correlate": "zocr_ear_localize.correlate_existence"},
+    "mouth": {"driver": "Final_Mouth", "neural": "lib/hostess7-mouth-neural.py"},
+    "audio": {"driver": "Audio DAC", "znetwork_layer": true},
+    "motion": {"driver": "humanoid-motion", "proprioception": "lib/hostess7-body-core.py"},
+    "rf": {"driver": "ZNetwork", "advisory": true}
+  },
+  "correlation": {
+    "citation": "ironclad:spatial_existence:4",
+    "floor": 0.65,
+    "lanes_required": ["eye", "ear", "audio", "motion"],
+    "before": ["go_live", "lethal_posture", "permanency", "hostess7_growth_adapt"],
+    "fail_policy": "that_one — deceit until reheard; ephemeral posture only"
+  },
+  "routing": {
+    "hot_path": "straight — capture/audio/display → apps without look/OCR in the wire",
+    "look_path": "Final_Eye look → truth gate → optional Hostess 7 vision share",
+    "audio_path": "DAC chamber → PipeWire/Pulse → physical device",
+    "motor_path": "body-core joint pose → motion lattice → training floor"
+  },
+  "consolidates": [
+    "hostess7-body-control",
+    "hostess7-sense-core",
+    "field-audio-dac-chamber",
+    "field-broadcaster-chamber",
+    "field-eye-threat-chamber",
+    "hostess7-anatomy-book",
+    "ironclad-spatial-existence",
+    "field-sense-package-meld"
+  ],
+  "routes": {
+    "body": "/api/field-body-system",
+    "hostess7_body": "/api/hostess7/body",
+    "audio_dac": "/api/field-audio-dac",
+    "broadcaster": "/api/field-broadcaster/chamber",
+    "training": "/api/hostess7/training-chamber",
+    "hands": "/api/hostess7/hands",
+    "humanoid": "/humanoid-train.html",
+    "eye_threat": "/api/field-eye-threat",
+    "anatomy_books": "/api/hostess7/anatomy-books"
+  },
+  "ironclad_cite": "ironclad:body_system:1"
+}

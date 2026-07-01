@@ -1,0 +1,47 @@
+{
+  "schema": "hostess7-training-floor/v1",
+  "title": "Training floor — sense, footwork, sparring AI, haptics, environment",
+  "motto": "The floor is live — eye, ear, weight, walls, and reactive opponents under Hostess 7.",
+  "arena": {
+    "walls": [
+      {"id": "north_wall", "x": 0.5, "y": 0.18, "kind": "boundary"},
+      {"id": "south_wall", "x": 0.5, "y": 0.92, "kind": "boundary"},
+      {"id": "west_wall", "x": 0.06, "y": 0.55, "kind": "boundary"},
+      {"id": "east_wall", "x": 0.94, "y": 0.55, "kind": "boundary"}
+    ],
+    "cover": [
+      {"id": "cover_left", "x": 0.22, "y": 0.48, "height": 0.35, "kind": "low_wall"},
+      {"id": "cover_right", "x": 0.78, "y": 0.52, "height": 0.4, "kind": "barrier"},
+      {"id": "cover_center", "x": 0.5, "y": 0.62, "height": 0.28, "kind": "bag"}
+    ],
+    "egress": [
+      {"id": "egress_north", "x": 0.5, "y": 0.2, "label": "North exit"},
+      {"id": "egress_west", "x": 0.08, "y": 0.55, "label": "West exit"}
+    ]
+  },
+  "sparring_ai": {
+    "reactivity": 0.85,
+    "stances": ["orthodox", "southpaw", "clinch", "aggressive"],
+    "skill_counters": {
+      "wing_chun": "clinch",
+      "boxing": "orthodox",
+      "mma_mixed": "aggressive",
+      "muay_thai": "southpaw",
+      "krav_maga": "aggressive"
+    }
+  },
+  "haptic_gloves": {
+    "force_scale": 1.0,
+    "impact_threshold_n": 12.0,
+    "grip_feedback": true
+  },
+  "cardio": {
+    "rest_hr_bpm": 72,
+    "max_hr_bpm": 185,
+    "technique_decay_per_bpm": 0.0012
+  },
+  "weapon_training": {
+    "gate": "corroborated_threat_only",
+    "lethal_gate": "hostess7_corroborate"
+  }
+}

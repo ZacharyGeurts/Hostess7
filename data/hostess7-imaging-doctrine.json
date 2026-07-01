@@ -1,0 +1,68 @@
+{
+  "schema": "hostess7-imaging-doctrine/v1",
+  "title": "Hostess 7 imaging — Imagine + NEXUS combinatronic + exact-text code",
+  "motto": "Grok Imagine for scenes · PIL/HTML for exact text · combinatronic for every field asset.",
+  "module": "lib/hostess7-imaging.py",
+  "hostess7_teach": "Hostess7/scripts/field_imagine_nexus_teach.py",
+  "corpus": "Hostess7/cache/fieldstorage/brain/imagine/corpus.json",
+  "skills": [
+    {
+      "id": "imagine_tool_choice",
+      "label": "Choose the right imaging tool",
+      "rules": [
+        "No source image → image_gen (invented subjects, base frames).",
+        "Source image → image_edit (restyle, add/remove, likeness, iterate).",
+        "Named real person → image_edit with verified reference only — never pure gen.",
+        "Exact text, charts, tables, labels → build with PIL or HTML/CSS code — not image models.",
+        "Video → image_to_video from a staged frame; ffmpeg concat -c copy to assemble shots."
+      ]
+    },
+    {
+      "id": "nexus_combinatronic",
+      "label": "NEXUS combinatronic visuals",
+      "module": "lib/field-combinatronic-visuals.py",
+      "patterns": ["chip_png", "book_cover", "h7_manual", "format_icon", "big_drive_device"],
+      "repair": "field-combinatronic-visuals.py repair — rebuild broken PNGs from seeds, never hand-edit.",
+      "api": "/api/combinatronic/visuals"
+    },
+    {
+      "id": "format_icons",
+      "label": "Field file format icons",
+      "module": "lib/field-file-formats.py",
+      "command": "field-file-formats.py icons",
+      "family": "storage",
+      "note": "64×64 PNG per format id — sovereign badge, family color."
+    },
+    {
+      "id": "big_drive_devices",
+      "label": "Big Drive device grids",
+      "module": "lib/field-big-drive.py",
+      "command": "field-big-drive.py render_icons",
+      "grid": "4×3 combinatronic PNG + bd_{device_id}.png tiles",
+      "hero": "PIL overlay for exact BIG DRIVE branding on reference photos"
+    },
+    {
+      "id": "gfx_canvas",
+      "label": "Hostess7 Graphics window",
+      "module": "Hostess7/scripts/field_gfx_canvas.py",
+      "note": "Lossless RGB framebuffer — pixels and TTF text for Talk+Graphics path."
+    },
+    {
+      "id": "field_gimp",
+      "label": "AmmoOS Image bridge",
+      "panel": "/field-gimp",
+      "module": "lib/field-gimp-bridge.py",
+      "note": "GIMP-Field sovereign image formats — magics, lossless field layers."
+    }
+  ],
+  "work_sources": [
+    {"id": "combinatronic_broken", "scan": "field-combinatronic-visuals.py inventory", "repair": "field-combinatronic-visuals.py repair", "note": "inventory() returns broken_rows — repair rebuilds from seeds"},
+    {"id": "format_icons", "scan": "field-file-formats.py icons"},
+    {"id": "big_drive_icons", "scan": "field-big-drive.py render_icons"},
+    {"id": "imagine_corpus", "scan": "field_imagine_corpus.py", "teach": "field_imagine_nexus_teach.py"}
+  ],
+  "assistant_help": {
+    "statement": "When combinatronic inventory shows broken assets, run repair. When new tools ship (Big Drive, formats), regenerate device grids and format icons. Teach Imagine corpus after skill updates.",
+    "priority_when_broken_gt": 10
+  }
+}

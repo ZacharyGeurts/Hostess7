@@ -1,0 +1,80 @@
+{
+  "schema": "ammoos-gimp-consolidation/v1",
+  "title": "High-level AmmoOS Image consolidation — lose merged sources",
+  "drop_dirs": [
+    "po-libgimp",
+    "po-plug-ins",
+    "po-python",
+    "po-script-fu",
+    "po-tags",
+    "po-tips",
+    "po-windows-installer",
+    "devel-docs",
+    "docs",
+    ".gitlab",
+    "app/tests",
+    "libgimp/tests",
+    "app-tools"
+  ],
+  "drop_po_keep": ["en_GB.po", "en_US.po", "LINGUAS", "POTFILES.in", "meson.build"],
+  "merge_libs": {
+    "libammoos/core": ["libgimpmath", "libgimpcolor", "libgimpthumb", "libgimpmodule"],
+    "libammoos/config": ["libgimpconfig"],
+    "libammoos/base": ["libgimpbase"],
+    "libammoos/widgets": ["libgimpwidgets"],
+    "libammoos/api": ["libgimp"]
+  },
+  "amalgamate_min_files": 3,
+  "plugins_keep": [
+    "common",
+    "file-bmp",
+    "file-jpeg",
+    "file-tiff",
+    "file-webp",
+    "file-psd",
+    "file-ico",
+    "file-raw",
+    "filter-browser",
+    "script-fu",
+    "python",
+    "metadata",
+    "screenshot",
+    "print",
+    "selection-to-path",
+    "file-field"
+  ],
+  "plugins_merge_into": {
+    "plug-ins/field-io": [
+      "file-cin",
+      "file-dds",
+      "file-exr",
+      "file-faxg3",
+      "file-fits",
+      "file-fli",
+      "file-icns",
+      "file-sgi"
+    ],
+    "plug-ins/field-fx": [
+      "flame",
+      "fractal-explorer",
+      "gfig",
+      "gimpressionist",
+      "gradient-flare",
+      "ifs-compose",
+      "imagemap",
+      "lighting",
+      "map-object",
+      "pagecurl"
+    ]
+  },
+  "plugins_drop": [
+    "twain",
+    "help",
+    "generate_mime_ext.py"
+  ],
+  "app_consolidate": {
+    "dialogs_into": "app/field-dialogs",
+    "widgets_into": "app/field-widgets",
+    "drop_subdirs": ["tests"]
+  }
+}

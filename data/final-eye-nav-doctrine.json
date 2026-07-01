@@ -1,0 +1,26 @@
+{
+  "schema": "final-eye-nav-doctrine/v1",
+  "motto": "Every look carries place and bearing — sub-micron GPS, heading, azimuth, course.",
+  "module": "lib/final-eye-gps-nav.py",
+  "zocr_hook": ".pages-hub-Final_Eye/zocr_nav.py",
+  "precision_module": "lib/gps-precision.py",
+  "operator_module": "lib/operator-location.py",
+  "spatial_module": "lib/field-look-spatial.py",
+  "receipt_fields": [
+    "lat", "lon", "lat_str", "lon_str", "lat_i", "lon_i",
+    "heading_deg", "azimuth_deg", "bearing_deg", "course_deg",
+    "pitch_deg", "roll_deg", "accuracy_m", "speed_mps", "altitude_m",
+    "enu_e_nm", "enu_n_nm", "enu_u_nm", "source", "sources"
+  ],
+  "source_priority": ["gpsd", "operator", "operator_default", "wireless_egress"],
+  "heading_priority": ["gpsd_track", "compass", "manual", "gaze_offset"],
+  "h7s_feed": "desktop-live",
+  "panel": ".nexus-state/final-eye-nav-panel.json",
+  "state": ".nexus-state/final-eye-nav-state.json",
+  "api": ["/api/nav", "/api/nav/doctrine"],
+  "cli": [
+    "python3 lib/final-eye-gps-nav.py json",
+    "python3 lib/final-eye-gps-nav.py snapshot",
+    "python3 lib/final-eye-gps-nav.py set-heading DEG"
+  ]
+}

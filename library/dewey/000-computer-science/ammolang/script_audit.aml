@@ -1,0 +1,14 @@
+# AmmoLang script audit — one script per pass, agent repair queue
+@profile fastest
+@verbose clean
+@motto "Script audit · sequential · no batch · agent repairs"
+
+seq ·
+  say "AML script audit — scan registry, check ONE script, report repairs"
+  post "SCRIPT_AUDIT START — one-by-one, stop on fail"
+  run py:field-ammolang-script-audit action:scan timeout:120 stall:60
+  run py:field-ammolang-script-audit action:run timeout:180 stall:90
+  run py:field-ammolang-script-audit action:report timeout:30 stall:15
+  assist freeze
+  say "Script audit pass complete — see .nexus-state/ammolang-script-audit-repairs.json if failed"
+  post "SCRIPT_AUDIT PASS_OR_STOP"

@@ -1,0 +1,46 @@
+# Master build — everything the kit needs via included AmmoLang + Grok16
+@profile fastest
+@verbose clean
+@motto "AmmoLang build — sovereign kit · Grok16 · Queen · KILROY · surfaces"
+
+combinator observe {
+  source grok16
+  source queen
+  source kilroy
+  source ammoos
+  source ammolang
+}
+
+seq ·
+  say "AmmoLang master build — kit Grok16 owns compile · read · execute"
+  post "BUILD START — NewLatest sovereign kit"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  assist hang
+
+  say "Phase 0 · wire stack siblings"
+  run script:wire-stack timeout:120 stall:30
+
+  say "Phase 1 · Grok16 gates"
+  run route:grok16_gates timeout:900 stall:300
+
+  say "Phase 2 · stack fast — panel + Queen up"
+  run route:stack_fast timeout:120 stall:45
+
+  say "Phase 3 · KILROY bzImage witness"
+  run route:kilroy_bzimage timeout:60 stall:30
+
+  say "Phase 4 · mint boot posture"
+  run route:mint_boot_ready timeout:300 stall:90
+
+  say "Phase 5 · pre-reboot audit"
+  run route:mint_pre_reboot timeout:180 stall:60
+
+  say "Phase 6 · boot simulation"
+  run route:boot_simulate timeout:120 stall:45
+
+  say "Phase 7 · boot QEMU + zpics OCR"
+  run route:boot_qemu_test timeout:600 stall:120
+
+  assist freeze
+  post "BUILD COMPLETE — inspect SG/zpics/boot-qemu-receipt.json"

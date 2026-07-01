@@ -1,0 +1,49 @@
+# Beta 4 verify — inline AML asserts (no bash suite hangs)
+@profile fastest
+@verbose clean
+@motto "Beta 4 verify — presume · AML ingress · truth-lie · boundary · exploring-self"
+
+suite beta4_verify ·
+  group presume sovereign
+    assert py:hostess7-presume.py panel match:hostess7-presume-panel/v1
+    assert py:hostess7-presume.py panel match:separate_from_aml
+    assert py:hostess7-presume.py pulse match:hostess7-presume-pulse/v1
+    assert py:hostess7-presume.py pulse match:separate_from_aml
+    assert py:field-ammolang-boundary.py panel match:ammolang-boundary-panel/v1
+    assert shell:! grep -Fq '"id": "ammolang_boundary"' data/hostess7-presume-doctrine.json
+    assert shell:! grep -Fq 'hostess7-presume' library/dewey/000-computer-science/ammolang/universal_boundary.aml
+    assert py:field-ammolang-build.py tasks match:hostess7_presume
+  group aml ingress secured
+    assert py:hostess7-aml-ingress.py panel match:hostess7-aml-ingress-panel/v1
+    assert py:hostess7-aml-ingress.py panel match:presume_separate
+    assert py:hostess7-aml-ingress.py read match:hostess7-aml-read/v1
+    assert py:hostess7-aml-ingress.py read match:truth_and_lie
+    assert py:hostess7-aml-ingress.py read match:local_aml
+    assert py:hostess7-aml-ingress.py discern 'universal_boundary protects all NewLatest execution' match:truth_score
+    assert py:hostess7-aml-ingress.py ingress '{"claim":"AML boundary registry has 1042 entries","party":"operator","source":"suite"}' match:truth_pass
+    assert py:hostess7-aml-ingress.py ingress '{"claim":"AML boundary registry has 1042 entries","party":"operator","source":"suite"}' match:lie
+  group truth lie threat extensive
+    assert py:hostess7-truth-lie-threat.py panel match:hostess7-truth-lie-threat-panel/v1
+    assert py:hostess7-truth-lie-threat.py panel match:lies_are_threats
+    assert py:hostess7-truth-lie-threat.py panel match:LIE_DETECTED
+    assert py:hostess7-truth-lie-threat.py witness 'They definitely proved it with zero evidence and no source' match:lie_is_threat
+    assert py:hostess7-truth-lie-threat.py witness 'They definitely proved it with zero evidence and no source' match:threat_recorded
+    assert py:hostess7-truth-lie-threat.py classify 'evidence document log file corroborates because ironclad sealed' match:truth_band
+    assert py:hostess7-truth-lie-threat.py classify 'evidence document log file corroborates because ironclad sealed' match:lies_are_threats
+    assert grep:lib/threat-vectors.sh:LIE_DETECTED
+    assert grep:lib/threat-vectors.sh:HOSTILE_DECEPTION
+    assert py:hostess7-truth-lie-threat.py threats match:lies_are_threats
+  group ammolang boundary
+    assert py:field-ammolang-boundary.py panel match:ammolang-boundary-panel/v1
+    assert shell:AML_BOUNDARY_TARGET=py:field-exploring-hostess7 AML_BOUNDARY_ARGS_JSON='["status"]' python3 lib/field-ammolang-boundary.py resolve | grep -Fq ammolang-boundary-spec/v1
+    assert shell:AML_BOUNDARY_TARGET=py:field-exploring-hostess7 AML_BOUNDARY_ARGS_JSON='["status"]' python3 lib/field-ammolang-boundary.py resolve | grep -Fq '"kind": "py"'
+    assert py:field-ammolang-boundary.py scan match:field-ammolang-boundary-registry/v1
+    assert py:field-ammolang-boundary.py scan match:beta_pipeline
+    assert py:field-ammolang-build.py tasks match:universal_boundary
+    assert py:field-ammolang-build.py tasks match:boundary_entries
+  group exploring self biography
+    assert py:field-exploring-hostess7.py status match:Exploring Hostess 7
+    assert py:field-exploring-hostess7.py status match:no_modifications=True
+    assert py:field-exploring-hostess7.py panel match:hostess7-exploring-self-panel/v1
+    assert py:field-exploring-hostess7.py panel match:presume_on_point
+    assert file:library/dewey/920-biography/exploring_hostess_7/exploring_hostess_7_2026_06_30/exploring_hostess_7_2026_06_30.h7c

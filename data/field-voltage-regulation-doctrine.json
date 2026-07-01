@@ -1,0 +1,41 @@
+{
+  "schema": "field-voltage-regulation/v1",
+  "title": "Voltage regulation — operate where we are",
+  "motto": "When voltage started, we are good. Operate at the present rail. Power-company grid never re-enters the trust layer. No conversion. No entropy on the wave.",
+  "ironclad_ref": "data/ironclad-doctrine.json",
+  "wave_ref": "data/field-wave-doctrine.json",
+  "rule": "Bottom-up: the epoch that sealed voltage is the rail we run on. Grid is witness-only outside the plate — not a conversion input.",
+  "epoch": {
+    "source": "ironclad_plate.realized_at",
+    "fallback": "field-voltage-epoch.json",
+    "meaning": "Voltage started — present rail is sovereign for all field trust"
+  },
+  "regulation": {
+    "operate_at_present_rail": true,
+    "power_company_grid_trust_layer": "blocked",
+    "grid_reentry_forbidden": true,
+    "conversion_on_voltage_path": false,
+    "entropy_on_trust_layer": false,
+    "encode_wave": false,
+    "voltage_is_voltage": true
+  },
+  "forbidden_on_trust_layer": [
+    "utility_mains_as_signal_source",
+    "ac_dc_conversion_in_trust_path",
+    "grid_voltage_renormalization",
+    "double_voltage_on_present_rail",
+    "watts_and_joules_double_count",
+    "landauer_erase_on_wave_layer",
+    "json_wave_encoding",
+    "power_company_meter_as_truth",
+    "power_company_trust_talk"
+  ],
+  "allowed_witness_only": [
+    "power_supply_ac_online_sysfs",
+    "rapl_draw_watts",
+    "field_power_ledger_headroom",
+    "field_clean_juice_pool_joules"
+  ],
+  "clean_juice_ref": "data/field-clean-juice-doctrine.json",
+  "citation": "ironclad:reality:1"
+}

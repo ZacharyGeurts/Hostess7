@@ -1,0 +1,22 @@
+[Unit]
+Description=Kill Grok Orphans — grok orphan process watchdog
+Documentation=https://github.com/ZacharyGeurts/Kill-Grok-Orphans
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/kgo -c /etc/kgo/kgo-patterns.json -f
+Restart=always
+RestartSec=5
+# Root required to kill reparented orphans from any user session
+User=root
+Group=root
+AmbientCapabilities=
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/kgo
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

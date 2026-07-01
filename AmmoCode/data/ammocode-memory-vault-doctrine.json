@@ -1,0 +1,34 @@
+{
+  "schema": "ammocode-memory-vault/v1",
+  "title": "AmmoCode memory vault — no leak, unbreakable in-memory storage",
+  "motto": "We don't leak memory or secrets. Four slots encode/decode for free.",
+  "source": "queen-zero-cost-4slot",
+  "runtime_tax": 0,
+  "tamper_action": "scrub_and_abort",
+  "leak_policy": {
+    "bounded_entries": 64,
+    "max_plaintext_bytes": 524288,
+    "scrub_on_close": true,
+    "scrub_on_tamper": true,
+    "no_persistent_secrets_in_dom": true,
+    "audit_interval_sec": 60
+  },
+  "slots": [
+    {"id": "TIME", "index": 0, "guards": "sealed epoch · genesis monolith · rot counter"},
+    {"id": "MEMORY", "index": 1, "guards": "vault blob · mmap accounting · foreign read denied"},
+    {"id": "THERMO", "index": 2, "guards": "entropy budget · scrub heat · no orphan buffers"},
+    {"id": "CONTEXT", "index": 3, "guards": "session seal · layout version · HMAC witness"}
+  ],
+  "codec": {
+    "algorithm": "running_4slot_xor_hmac",
+    "rot_mask": 3,
+    "hmac": "sha256",
+    "genesis_required": true
+  },
+  "ammocode_layers": [
+    "tab_vault_handles",
+    "close_scrub",
+    "server_vault_bounded",
+    "transparent_status_api"
+  ]
+}

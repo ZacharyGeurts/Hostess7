@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="audio-dac" data-queen-theme="black_emerald_rose_2026">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AmmoOS Audio DAC</title>
+  <link rel="icon" href="/assets/queen-prog-audio-settings.png" type="image/png" />
+  <link rel="stylesheet" href="/assets/field-queen-theme.css?v=qf1" />
+  <link rel="stylesheet" href="/assets/field-audio-dac.css?v=1" />
+</head>
+<body>
+  <div class="dac-root" id="dac-root">
+    <header class="dac-head">
+      <div>
+        <h1>Audio DAC</h1>
+        <p class="dac-sub" id="dac-sub">ZNetwork layer · device pick · 8ch · Dolby emu</p>
+      </div>
+      <div class="dac-head-actions">
+        <button type="button" class="dac-btn" id="dac-bind">Secure bind</button>
+        <button type="button" class="dac-btn dac-btn--primary" id="dac-apply">Apply routing</button>
+      </div>
+    </header>
+
+    <div class="dac-body">
+      <aside class="dac-rail" id="dac-rail"></aside>
+
+      <main class="dac-main">
+        <section class="dac-vu-panel" aria-label="VU meters">
+          <h2>Channel meters</h2>
+          <canvas id="dac-vu-canvas" width="640" height="160" aria-hidden="true"></canvas>
+          <div class="dac-layout" id="dac-layout"></div>
+        </section>
+
+        <section class="dac-grid" id="dac-devices"></section>
+
+        <section class="dac-grid" id="dac-gain"></section>
+
+        <section class="dac-formats" id="dac-formats"></section>
+
+        <section class="dac-hard" id="dac-hard" hidden>
+          <h2>Hard settings</h2>
+          <div class="dac-grid" id="dac-hard-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="dac-foot" id="dac-foot">DAC ready</footer>
+  </div>
+  <script src="/assets/field-audio-dac.js?v=1" defer></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen · Grok Build</title>
+  <link rel="stylesheet" href="grok-build.css" />
+</head>
+<body class="gb">
+  <header class="gb-hero">
+    <p class="gb-eyebrow" id="gb-eyebrow">Queen · xAI secure channel</p>
+    <h1 id="gb-title">Grok Build Inside Queen</h1>
+    <p class="gb-motto" id="gb-motto">Operator-branded page. Loopback ACP. Zero telemetry elsewhere.</p>
+    <div class="gb-badges">
+      <span class="gb-badge" id="gb-secure">Secure channel: —</span>
+      <span class="gb-badge" id="gb-acp">ACP: —</span>
+    </div>
+  </header>
+
+  <section class="gb-workspace" aria-label="Grok Build workspace">
+    <div class="gb-panel gb-panel--chat" id="gb-chat">
+      <div class="gb-panel__head">Grok Build · in-engine</div>
+      <div class="gb-transcript" id="gb-transcript" role="log">
+        <p class="gb-msg gb-msg--system">Queen RTX holds the secure channel. Connect loopback ACP when ready.</p>
+      </div>
+      <div class="gb-compose">
+        <textarea id="gb-input" rows="2" placeholder="Operator prompt — Grok Build via secure channel…"></textarea>
+        <button type="button" id="gb-send" class="gb-btn gb-btn--primary">Send</button>
+      </div>
+    </div>
+    <aside class="gb-panel gb-panel--intel">
+      <div class="gb-panel__head">Secure channel</div>
+      <ul class="gb-env" id="gb-env"></ul>
+      <div class="gb-panel__head">Allowed hosts</div>
+      <ul class="gb-hosts" id="gb-hosts"></ul>
+      <button type="button" id="gb-login" class="gb-btn gb-btn--primary">Grok login</button>
+      <button type="button" id="gb-rebuild" class="gb-btn">Rebuild Queen</button>
+      <button type="button" id="gb-reboot" class="gb-btn">Reboot RTX</button>
+      <button type="button" id="gb-start-acp" class="gb-btn">Start loopback ACP</button>
+      <button type="button" id="gb-refresh" class="gb-btn">Refresh</button>
+    </aside>
+  </section>
+
+  <footer class="gb-foot">
+    <span id="gb-partner">xAI / X — branded page permitted</span>
+    <span>IFF CIVILIAN on secure channel only</span>
+  </footer>
+  <script src="grok-build.js"></script>
+</body>
+</html>

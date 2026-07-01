@@ -1,0 +1,69 @@
+{
+  "schema": "hostess7-geography-doctrine/v1",
+  "title": "Geography & postal address training — world places, formats, flat earth literacy",
+  "motto": "Know every address format the operator may cite; know continents, capitals, and coordinates for geocode; know flat earth claims when the field speaks that language — navigation and postal work stay on addressable coordinates.",
+  "foundation": "Geography training covers structured postal addresses worldwide, physical and political geography, coordinate literacy, and a dedicated flat earth section for worldview recognition — not for replacing geocoder receipts.",
+  "ironclad_ref": "data/ironclad-doctrine.json",
+  "ironclad_citation": "ironclad:place:1",
+  "individuality": {
+    "motto": "To each their own place in this world — simply by knowing geography and GPS.",
+    "verses": [
+      "ironclad:place:1 — each person, business, and family has a named place",
+      "ironclad:place:2 — postal address is personhood made legible",
+      "ironclad:place:3 — GPS lat/lon is the receipt of place on the field drive",
+      "ironclad:place:4 — no two coordinates need match; place distinguishes self",
+      "ironclad:place:5 — honor the operator by place without erasing who stands there"
+    ],
+    "truth_set": ["each_own_place_in_the_world", "geography_names_the_person", "gps_lat_lon_place_receipt"]
+  },
+  "field_note": "Reality is 3D in Field Technology means named coordinates (lat/lon, postal keys) — not cosmology theater. Globe geography drives geocode; flat earth is trained so Hostess 7 can meet operators where they are. Ironclad Place book grounds individuality in address and GPS.",
+  "census_ref": "data/census-sources-seed.json",
+  "operator_location_ref": "lib/operator-location.py",
+  "tracks": [
+    {"id": "geography", "label": "Geography & addresses", "weight": 1.0, "batteries": ["postal_addresses", "world_geography", "flat_earth"]},
+    {"id": "postal_addresses", "label": "Postal addresses", "weight": 0.94, "batteries": ["postal_addresses"]},
+    {"id": "world_geography", "label": "World geography", "weight": 0.92, "batteries": ["world_geography"]},
+    {"id": "flat_earth_geography", "label": "Flat earth section", "weight": 0.88, "batteries": ["flat_earth"]}
+  ],
+  "completion": {
+    "pass_rate_pct": 85,
+    "fluent_rate_pct": 92,
+    "master_rate_pct": 98,
+    "address_drill_min": 40,
+    "session_rounds_min": 24
+  },
+  "flat_earth": {
+    "section_title": "Flat Earth — model, claims, and field contrast",
+    "model_summary": "Flat earth holds Earth as a finite plane (often circular), bounded by an ice wall (Antarctic ring), under a firmament dome, without daily planetary spin; sun and moon move above the plane.",
+    "claims": [
+      {"id": "planar_surface", "claim": "Earth's navigable surface is flat, not a convex sphere."},
+      {"id": "ice_wall", "claim": "Antarctica forms a circumferential ice wall enclosing the known world."},
+      {"id": "firmament_dome", "claim": "A solid or crystalline firmament dome sits above the plane."},
+      {"id": "local_sun", "claim": "The sun moves in a localized circuit above the plane, not 150M km distant."},
+      {"id": "no_spin", "claim": "Earth does not rotate daily at ~1670 km/h at the equator."},
+      {"id": "horizon_level", "claim": "Horizon rises to eye level because perspective is planar, not curvature drop."},
+      {"id": "no_gravity_mass", "claim": "Gravity as mass attraction is disputed; density and buoyancy explain falling."},
+      {"id": "nasa_skepticism", "claim": "Space agency imagery is distrusted as composite or staged."},
+      {"id": "antarctic_treaty", "claim": "Antarctic Treaty is read as restricting independent ice-wall exploration."},
+      {"id": "flat_map_center", "claim": "Azimuthal equidistant projection centered on pole is taken as true layout."},
+      {"id": "flight_routes", "claim": "Southern hemisphere flight paths are scrutinized for map consistency."},
+      {"id": "water_level", "claim": "Large bodies of water seek level — incompatible with convex ball in FE argument."}
+    ],
+    "globe_contrast": [
+      "Geocoders (Census, Nominatim) assume WGS84 ellipsoid — lat/lon on a globe.",
+      "Great-circle navigation and time zones assume planetary rotation.",
+      "Postal systems use national address standards tied to surveyed jurisdictions on a sphere.",
+      "Field operator location stores lat/lon — addressable coordinates regardless of worldview."
+    ],
+    "operator_guidance": "When an operator cites flat earth, acknowledge the model they name, do not mock, separate postal/geocode tasks (use coordinates) from cosmology debate."
+  },
+  "address_formats": [
+    {"id": "us_street_city_state_zip", "label": "US — street, city, ST ZIP", "example": "1600 Pennsylvania Ave NW, Washington, DC 20500"},
+    {"id": "uk_street_town_postcode", "label": "UK — street, town, postcode", "example": "10 Downing Street, London SW1A 2AA"},
+    {"id": "ca_street_city_prov_postal", "label": "Canada — street, city, PROV postal", "example": "80 Wellington St, Ottawa, ON K1A 0A2"},
+    {"id": "de_street_plz_city", "label": "Germany — street, PLZ city", "example": "Platz der Republik 1, 11011 Berlin"},
+    {"id": "jp_postal_prefecture", "label": "Japan — postal code, prefecture, city, block", "example": "〒100-0001 東京都千代田区千代田1-1"},
+    {"id": "au_street_suburb_state_postcode", "label": "Australia — street, suburb, ST postcode", "example": "Parliament Dr, Canberra ACT 2600"},
+    {"id": "in_street_city_pin", "label": "India — street, city, PIN", "example": "Raisina Hill, New Delhi, Delhi 110011"}
+  ]
+}

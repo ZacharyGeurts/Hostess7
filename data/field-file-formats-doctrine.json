@@ -1,0 +1,63 @@
+{
+  "schema": "field-file-formats-doctrine/v1",
+  "module": "lib/field-file-formats.py",
+  "motto": "Every field format catalogued — full table, icon per format, Ironclad picks the one best sort.",
+  "sort": {
+    "context": "format_table",
+    "field_unique_best": true,
+    "singleton_sort": true,
+    "meld_citation": "ironclad:meld:2",
+    "statement": "field_one_best_ever"
+  },
+  "family_order": [
+    "sovereign",
+    "storage",
+    "library",
+    "geometry",
+    "image_field",
+    "media",
+    "executable",
+    "document",
+    "archive",
+    "data"
+  ],
+  "family_labels": {
+    "sovereign": "Sovereign field",
+    "storage": "Big Drive storage",
+    "library": "H7 library",
+    "geometry": "Geometric identity",
+    "image_field": "AmmoOS image",
+    "media": "Media container",
+    "executable": "Executable",
+    "document": "Document",
+    "archive": "Archive",
+    "data": "Data"
+  },
+  "family_colors": {
+    "sovereign": [212, 168, 75],
+    "storage": [34, 197, 94],
+    "library": [94, 234, 212],
+    "geometry": [167, 139, 250],
+    "image_field": [251, 146, 60],
+    "media": [59, 130, 246],
+    "executable": [239, 68, 68],
+    "document": [148, 163, 184],
+    "archive": [132, 204, 22],
+    "data": [100, 116, 139]
+  },
+  "icons": {
+    "size": 64,
+    "dir": "data/combinatronic-visuals/formats",
+    "library_mirror": "library/assets/formats"
+  },
+  "sources": [
+    "data/field-h7c-doctrine.json",
+    "data/g1id-format-doctrine.json",
+    "data/field-media-codec-doctrine.json",
+    "Queen/data/field-virus-formats.json",
+    "GIMP-Field/data/field-formats.json",
+    "data/field-big-drive-doctrine.json",
+    "data/field-no-file-doctrine.json"
+  ],
+  "api": ["/api/file-formats", "/api/file-formats/icons"]
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "field-substrate-takeover/v1",
+  "title": "Whole computer inside us — permanent upgrade, zero destruction",
+  "motto": "Replace the OS by absorbing it. x5–x500 through Field Die + RTX forefront. Linux moves inside; we become native.",
+  "policy": {
+    "destructive_wipe": false,
+    "flash_bios_rom": false,
+    "linux_passthrough": true,
+    "permanent_upgrade": true,
+    "forefront_every_rtx": true
+  },
+  "takeover_model": {
+    "phase_1_userspace": "NEXUS + Queen aboard host — hooks, panel, sovereign, RTX bridge (NOW)",
+    "phase_2_substrate": "KILROY bzImage + Grok boot — Linux 7.1.1 inside Field Die (dual-boot)",
+    "phase_3_forefront": "FieldGpuDispatch pure — every RTX through Queen SPIR-V, no vendor stack forever",
+    "phase_4_capsule": "Guest OS + apps in Queen sovereign capsule — host kernel is witness only",
+    "phase_5_underlay": "Drop-in for every OS — guest inside protections, vision assist, nothing below Field Die"
+  },
+  "underlay": "See field-underlay-doctrine.json — secure underlay, active assist, bottom-up authority"
+  "performance_tiers": {
+    "x5": {
+      "label": "Field userspace aboard",
+      "requires": ["nexus-genius live", "queen-browser RTX", "hardware-wire", "cpu sysctl apply"],
+      "mechanism": "Gatekeeper zero-cost permit, field DNS, shed excess draw, RTX Vulkan bridge"
+    },
+    "x50": {
+      "label": "KILROY Field Die booted",
+      "requires": ["kilroy bzImage", "CONFIG_RTX_FIELD_DIE", "proc/kilroy_field", "field slots live"],
+      "mechanism": "Syscall field paths, cache/direct fields, thermo idle, FCC touch amortization"
+    },
+    "x500": {
+      "label": "RTX pure path + nocache field",
+      "requires": ["FieldGpuDispatch pure", "FieldSurface pure", "kilroy-nocache.config", "guest in capsule"],
+      "mechanism": "No libvulkan/SDL compositor hop; SPIR-V straight to silicon; OS inside Queen RAM field"
+    }
+  },
+  "move_inside_us": [
+    {"what": "Linux kernel", "how": "compat substrate pin linux-7.1.1 inside KILROY — not deleted, absorbed"},
+    {"what": "RAM", "how": "kilroy RAM slot + Queen capsule guest — host mm witness, field owns layout"},
+    {"what": "CPU", "how": "Field Die @ syscall + cpu-vulnerability shield + direct field"},
+    {"what": "GPU/RTX", "how": "field_gpu_dispatch gate — SPIR-V forefront, vendor driver bootstrap only"},
+    {"what": "Network/DNS", "how": "graceful takeover — incumbent observed, then Truth resolver primary"},
+    {"what": "Apps", "how": "POSIX/glibc passthrough — unchanged binaries, new native authority"}
+  ],
+  "forge_sequence": [
+    "forge:field_substrate",
+    "forge:field_kernel",
+    "forge:field_boot",
+    "forge:field_rootfs",
+    "forge:field_package",
+    "install-all.sh"
+  ],
+  "not_destruction": [
+    "No disk wipe — dual-boot Grok + existing EFI entry kept until operator commits",
+    "No BIOS flash — witness only",
+    "No app rebuild required — Linux ABI passthrough",
+    "Incumbent DNS/network observed before primary — no blackout install"
+  ]
+}

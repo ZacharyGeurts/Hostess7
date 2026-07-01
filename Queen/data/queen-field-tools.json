@@ -1,0 +1,501 @@
+{
+  "schema": "queen-field-tools/v1",
+  "updated": "2026-06-27T00:18:42Z",
+  "product": "Queen Field Tools",
+  "doctrine": "All build tools are field-native \u2014 Grok16 g16 + field cmake + Queen forge. Hostess 7 invokes via ./Hostess7.sh queen-field-tools or /api/field-tools.",
+  "queen_root": "/home/default/Desktop/SG/NewLatest/Queen",
+  "grok16_root": "/home/default/Desktop/SG/NewLatest/Grok16",
+  "hostess7_root": "/home/default/Desktop/SG/NewLatest/Hostess7",
+  "g16": {
+    "version": "16.1.1",
+    "ready": true,
+    "unified_driver": true,
+    "paths": {
+      "g16": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g16",
+      "g++16": "/home/default/Desktop/SG/NewLatest/Grok16/bin/g++16",
+      "backend_cc": "/home/default/Desktop/SG/NewLatest/Grok16/libexec/grok16/g16-cc",
+      "backend_cxx": "/home/default/Desktop/SG/NewLatest/Grok16/libexec/grok16/g16-cxx",
+      "cmake": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-toolchain.cmake",
+      "grok16_cmake": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-toolchain.cmake",
+      "field_cmake": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-field.cmake",
+      "field_cmake_script": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/field-cmake.sh",
+      "g16_build_script": "/home/default/Desktop/SG/NewLatest/Queen/scripts/g16-build.sh",
+      "build_method": "g16+ninja",
+      "profile_cmake": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-profile-field-opt.cmake",
+      "toolchain_sh": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/grok16-toolchain.sh",
+      "grok16_manifest": "/home/default/Desktop/SG/NewLatest/Grok16/data/grok16-toolchain.json"
+    }
+  },
+  "field_cmake": {
+    "product": "Grok16 Field CMake",
+    "grok16_root": "/home/default/Desktop/SG/NewLatest/Grok16",
+    "toolchain": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-toolchain.cmake",
+    "field_cmake": "/home/default/Desktop/SG/NewLatest/Grok16/cmake/grok16-field.cmake",
+    "field_cmake_script": "/home/default/Desktop/SG/NewLatest/Grok16/scripts/field-cmake.sh",
+    "ninja": true,
+    "g16_ready": true,
+    "rtx_source": "/home/default/Desktop/SG/NewLatest/AMOURANTHRTX",
+    "rtx_build": "/home/default/Desktop/SG/NewLatest/Queen/build/rtx",
+    "cache_ok": true,
+    "binary": "/home/default/Desktop/SG/NewLatest/Queen/build/rtx/bin/Linux/queen-browser",
+    "generator": "Ninja"
+  },
+  "display_default": {
+    "width": 3840,
+    "height": 2160,
+    "refresh_hz": 120
+  },
+  "api": {
+    "field_tools": "/api/field-tools",
+    "queen_build": "/api/queen-build",
+    "hostess_brain": "/api/field-brain",
+    "forge": "/api/queen-forge"
+  },
+  "hostess_commands": {
+    "status": "./Hostess7.sh queen-field-tools",
+    "probe": "./Hostess7.sh queen-field-tools probe",
+    "run": "./Hostess7.sh queen-field-tools run <tool_id>",
+    "build_rtx": "./Hostess7.sh queen-field-build rtx",
+    "g16_probe": "./Hostess7.sh queen-grok16-probe"
+  },
+  "tools": [
+    {
+      "id": "field_cmake",
+      "track": "field-cmake",
+      "label": "Grok16 Field CMake (configure + Ninja build)",
+      "role": "g16 owns RTX cmake \u2014 replaces Queen cmake glue",
+      "hostess_cmd": "./Hostess7.sh queen-field-build rtx",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": "Grok16/scripts/field-cmake.sh"
+    },
+    {
+      "id": "field_cmake_configure",
+      "track": "field-cmake",
+      "label": "Field CMake configure (queen-rtx preset)",
+      "role": "Ninja + grok16-field.cmake + 4K@120Hz preset",
+      "hostess_cmd": "./Hostess7.sh queen-field-build configure",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": "Grok16/scripts/field-cmake.sh"
+    },
+    {
+      "id": "field_cmake_build",
+      "track": "field-cmake",
+      "label": "Field CMake build amouranth_engine",
+      "role": "Incremental Ninja compile via g16",
+      "hostess_cmd": "./Hostess7.sh queen-field-build compile",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": "Grok16/scripts/field-cmake.sh"
+    },
+    {
+      "id": "compiler_probe",
+      "track": "toolchain",
+      "label": "Probe g16 + cmake + ninja \u2192 manifest",
+      "role": "Sync g16-toolchain.json for Hostess brain",
+      "hostess_cmd": "./Hostess7.sh queen-grok16-probe",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": ""
+    },
+    {
+      "id": "gcc",
+      "track": "toolchain",
+      "label": "Grok16 g16 toolchain pipeline",
+      "role": "Unified g16 @ 16.1.1 field_opt",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run gcc",
+      "ready": true,
+      "optional": true,
+      "forge": "lib/queen-forge.py",
+      "replaces": ""
+    },
+    {
+      "id": "binutils_fetch",
+      "track": "toolchain",
+      "label": "Grok16 field binutils fetch",
+      "role": "g16-as / g16-ld vendor",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run binutils_fetch",
+      "ready": true,
+      "optional": true,
+      "forge": "lib/queen-forge.py",
+      "replaces": ""
+    },
+    {
+      "id": "binutils_build",
+      "track": "toolchain",
+      "label": "Grok16 field binutils build",
+      "role": "Field assembler + linker",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run binutils_build",
+      "ready": true,
+      "optional": true,
+      "forge": "lib/queen-forge.py",
+      "replaces": ""
+    },
+    {
+      "id": "shaders",
+      "track": "compile",
+      "label": "QueenBoot SPIR-V (glslc)",
+      "role": "Boot comp shader for RTX",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run shaders",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": "make Navigator/shaders"
+    },
+    {
+      "id": "deps",
+      "track": "compile",
+      "label": "Stage inside deps (SDL, glm)",
+      "role": "No network fetch \u2014 Queen/vendor/deps",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run deps",
+      "ready": false,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": "scripts/stage-deps-inside.sh"
+    },
+    {
+      "id": "rtx",
+      "track": "compile",
+      "label": "Queen-browser RTX exe",
+      "role": "Sovereign browser \u2014 field_opt + mandate",
+      "hostess_cmd": "bash Queen/build-all.sh",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": "build.sh"
+    },
+    {
+      "id": "rtx_configure",
+      "track": "compile",
+      "label": "RTX cmake configure",
+      "role": "Delegates to field-cmake.sh",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run rtx_configure",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": ""
+    },
+    {
+      "id": "rtx_build",
+      "track": "compile",
+      "label": "RTX compile queen-browser",
+      "role": "Ninja incremental via field cmake",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run rtx_build",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": ""
+    },
+    {
+      "id": "gpu_probe",
+      "track": "probe",
+      "label": "Vulkan + PCI GPU probe",
+      "role": "RTX vendor selection for Queen",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run gpu_probe",
+      "ready": true,
+      "optional": true,
+      "forge": "lib/queen-forge.py",
+      "replaces": "scripts/queen-gpu-probe.sh"
+    },
+    {
+      "id": "verify",
+      "track": "qa",
+      "label": "Queen doctrine + GUI verify",
+      "role": "Post-build QA gate",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run verify",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": "scripts/verify-queen.sh"
+    },
+    {
+      "id": "field_tech",
+      "track": "operator",
+      "label": "Field Technology full core pipeline",
+      "role": "Optimized forge drop order",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run field_tech",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": "build-all.sh"
+    },
+    {
+      "id": "field",
+      "track": "sovereign",
+      "label": "Seal one sovereign field package",
+      "role": "field/sovereign publish",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run field",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": ""
+    },
+    {
+      "id": "hostess_teach",
+      "track": "hostess",
+      "label": "Teach Hostess Queen redata + build tools",
+      "role": "Comfort brief + BUILD_TOOLS sync",
+      "hostess_cmd": "./Hostess7.sh queen-teach-redata",
+      "ready": true,
+      "optional": false,
+      "forge": "lib/queen-forge.py",
+      "replaces": "Hostess7.sh queen-teach-redata"
+    },
+    {
+      "id": "textbook_zac",
+      "track": "hostess",
+      "label": "Field Technology ZAC monolith",
+      "role": "22 chapters \u2192 brain",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run textbook_zac",
+      "ready": true,
+      "optional": true,
+      "forge": "lib/queen-forge.py",
+      "replaces": "NewLatest/Textbook/build-field-technology-zac.py"
+    },
+    {
+      "id": "forge_watch",
+      "track": "operator",
+      "label": "Forge log watch (ZOCR + senses)",
+      "role": "Catch build hangups",
+      "hostess_cmd": "pythong Queen/lib/queen-forge.py run forge_watch",
+      "ready": true,
+      "optional": true,
+      "forge": "lib/queen-forge.py",
+      "replaces": "scripts/watch-build.sh"
+    }
+  ],
+  "by_track": {
+    "field-cmake": [
+      {
+        "id": "field_cmake",
+        "track": "field-cmake",
+        "label": "Grok16 Field CMake (configure + Ninja build)",
+        "role": "g16 owns RTX cmake \u2014 replaces Queen cmake glue",
+        "hostess_cmd": "./Hostess7.sh queen-field-build rtx",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": "Grok16/scripts/field-cmake.sh"
+      },
+      {
+        "id": "field_cmake_configure",
+        "track": "field-cmake",
+        "label": "Field CMake configure (queen-rtx preset)",
+        "role": "Ninja + grok16-field.cmake + 4K@120Hz preset",
+        "hostess_cmd": "./Hostess7.sh queen-field-build configure",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": "Grok16/scripts/field-cmake.sh"
+      },
+      {
+        "id": "field_cmake_build",
+        "track": "field-cmake",
+        "label": "Field CMake build amouranth_engine",
+        "role": "Incremental Ninja compile via g16",
+        "hostess_cmd": "./Hostess7.sh queen-field-build compile",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": "Grok16/scripts/field-cmake.sh"
+      }
+    ],
+    "toolchain": [
+      {
+        "id": "compiler_probe",
+        "track": "toolchain",
+        "label": "Probe g16 + cmake + ninja \u2192 manifest",
+        "role": "Sync g16-toolchain.json for Hostess brain",
+        "hostess_cmd": "./Hostess7.sh queen-grok16-probe",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": ""
+      },
+      {
+        "id": "gcc",
+        "track": "toolchain",
+        "label": "Grok16 g16 toolchain pipeline",
+        "role": "Unified g16 @ 16.1.1 field_opt",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run gcc",
+        "ready": true,
+        "optional": true,
+        "forge": "lib/queen-forge.py",
+        "replaces": ""
+      },
+      {
+        "id": "binutils_fetch",
+        "track": "toolchain",
+        "label": "Grok16 field binutils fetch",
+        "role": "g16-as / g16-ld vendor",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run binutils_fetch",
+        "ready": true,
+        "optional": true,
+        "forge": "lib/queen-forge.py",
+        "replaces": ""
+      },
+      {
+        "id": "binutils_build",
+        "track": "toolchain",
+        "label": "Grok16 field binutils build",
+        "role": "Field assembler + linker",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run binutils_build",
+        "ready": true,
+        "optional": true,
+        "forge": "lib/queen-forge.py",
+        "replaces": ""
+      }
+    ],
+    "compile": [
+      {
+        "id": "shaders",
+        "track": "compile",
+        "label": "QueenBoot SPIR-V (glslc)",
+        "role": "Boot comp shader for RTX",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run shaders",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": "make Navigator/shaders"
+      },
+      {
+        "id": "deps",
+        "track": "compile",
+        "label": "Stage inside deps (SDL, glm)",
+        "role": "No network fetch \u2014 Queen/vendor/deps",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run deps",
+        "ready": false,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": "scripts/stage-deps-inside.sh"
+      },
+      {
+        "id": "rtx",
+        "track": "compile",
+        "label": "Queen-browser RTX exe",
+        "role": "Sovereign browser \u2014 field_opt + mandate",
+        "hostess_cmd": "bash Queen/build-all.sh",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": "build.sh"
+      },
+      {
+        "id": "rtx_configure",
+        "track": "compile",
+        "label": "RTX cmake configure",
+        "role": "Delegates to field-cmake.sh",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run rtx_configure",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": ""
+      },
+      {
+        "id": "rtx_build",
+        "track": "compile",
+        "label": "RTX compile queen-browser",
+        "role": "Ninja incremental via field cmake",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run rtx_build",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": ""
+      }
+    ],
+    "probe": [
+      {
+        "id": "gpu_probe",
+        "track": "probe",
+        "label": "Vulkan + PCI GPU probe",
+        "role": "RTX vendor selection for Queen",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run gpu_probe",
+        "ready": true,
+        "optional": true,
+        "forge": "lib/queen-forge.py",
+        "replaces": "scripts/queen-gpu-probe.sh"
+      }
+    ],
+    "qa": [
+      {
+        "id": "verify",
+        "track": "qa",
+        "label": "Queen doctrine + GUI verify",
+        "role": "Post-build QA gate",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run verify",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": "scripts/verify-queen.sh"
+      }
+    ],
+    "operator": [
+      {
+        "id": "field_tech",
+        "track": "operator",
+        "label": "Field Technology full core pipeline",
+        "role": "Optimized forge drop order",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run field_tech",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": "build-all.sh"
+      },
+      {
+        "id": "forge_watch",
+        "track": "operator",
+        "label": "Forge log watch (ZOCR + senses)",
+        "role": "Catch build hangups",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run forge_watch",
+        "ready": true,
+        "optional": true,
+        "forge": "lib/queen-forge.py",
+        "replaces": "scripts/watch-build.sh"
+      }
+    ],
+    "sovereign": [
+      {
+        "id": "field",
+        "track": "sovereign",
+        "label": "Seal one sovereign field package",
+        "role": "field/sovereign publish",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run field",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": ""
+      }
+    ],
+    "hostess": [
+      {
+        "id": "hostess_teach",
+        "track": "hostess",
+        "label": "Teach Hostess Queen redata + build tools",
+        "role": "Comfort brief + BUILD_TOOLS sync",
+        "hostess_cmd": "./Hostess7.sh queen-teach-redata",
+        "ready": true,
+        "optional": false,
+        "forge": "lib/queen-forge.py",
+        "replaces": "Hostess7.sh queen-teach-redata"
+      },
+      {
+        "id": "textbook_zac",
+        "track": "hostess",
+        "label": "Field Technology ZAC monolith",
+        "role": "22 chapters \u2192 brain",
+        "hostess_cmd": "pythong Queen/lib/queen-forge.py run textbook_zac",
+        "ready": true,
+        "optional": true,
+        "forge": "lib/queen-forge.py",
+        "replaces": "NewLatest/Textbook/build-field-technology-zac.py"
+      }
+    ]
+  },
+  "ready_count": 18,
+  "tool_count": 19
+}

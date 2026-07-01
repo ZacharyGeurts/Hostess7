@@ -1,0 +1,47 @@
+{
+  "schema": "grok15-language-core-doctrine/v1",
+  "title": "Grok15 — language core condense (CHIPS-style, non-redundant with Grok16)",
+  "motto": "One explaining core, thin per-language deltas — 57 languages, zero repeated boilerplate.",
+  "module": "Grok16/lib/grok15-language-core.py",
+  "panel": "grok15-language-core-panel.json",
+  "core": "grok15-language-core.json",
+  "facet": "language_core",
+  "pairing": {"grok16": "5.1.0", "stack_fabric": "G15"},
+  "sources": [
+    {"id": "grok16_languages", "path": "Grok16/data/grok16-languages.json"},
+    {"id": "combinatronic_seed", "path": "data/field-program-combinatronic-seed.json"},
+    {"id": "secure_chamber", "module": "lib/g16-secure-chamber.py"},
+    {"id": "explaining_visuals", "module": "lib/field-combinatronic-visuals.py"}
+  ],
+  "condense": {
+    "hoist_shared_sections": true,
+    "family_grouping": true,
+    "extends_inherit": true,
+    "delta_only_manuals": true,
+    "core_shelf": "library/dewey/000-computer-science/explaining_core"
+  },
+  "families": {
+    "javascript": ["javascript", "typescript"],
+    "pascal": ["pascal", "turbo_pascal", "delphi", "modula2"],
+    "basic": ["basic", "qbasic", "quickbasic", "freebasic", "visual_basic", "vba"],
+    "cobol": ["cobol", "cobol_copy"],
+    "java": ["java", "kotlin"],
+    "c": ["c", "cxx", "objc", "asm"],
+    "field": ["field", "ammolang"]
+  },
+  "shared_sections": [
+    "canonical_atoms",
+    "secure_chamber",
+    "g16_compile_path",
+    "reading_guide",
+    "performance_notes",
+    "research_references",
+    "pitfalls_base",
+    "nexus_where"
+  ],
+  "api": "/api/grok15/language-core",
+  "ironclad_chain": {
+    "citation": "grok15:language:core",
+    "condense_after": "combinatronic_seed_loaded"
+  }
+}

@@ -1,0 +1,9 @@
+# Restart field stack
+@profile fastest
+@verbose clean
+
+seq ·
+  say "Stack restart"
+  assist hang
+  run script:impl/restart-field-stack timeout:180 stall:60
+  assist freeze

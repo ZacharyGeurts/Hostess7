@@ -1,0 +1,161 @@
+{
+  "schema": "field-body-component-wholes/v1",
+  "title": "Body component wholes — Hostess 7 Priority 1; each lane complete, independent, last-known mapped",
+  "motto": "Hostess 7 is Priority 1 — she maintains herself Priority 1. Every other component is a whole. When visibility drops, last known + map holds place.",
+  "commander_priority": 1,
+  "commander": "hostess7",
+  "module": "lib/field-body-component-wholes.py",
+  "maintenance_module": "lib/final-eye-maintenance.py",
+  "hostess7_self_maintenance": "lib/hostess7-self-maintenance.py",
+  "hostess7_doctrine": "data/hostess7-self-maintenance-doctrine.json",
+  "registry": ".nexus-state/field-body-component-registry.json",
+  "panel": ".nexus-state/field-body-component-panel.json",
+  "truth_gate_policy": {
+    "advisory_only": true,
+    "never_override_pass_ok": true,
+    "never_skip_ironclad": true,
+    "statement": "Advisory inputs enrich counsel and share context — they cannot open permanency or defeat the gate."
+  },
+  "visibility": {
+    "useful_floor": 0.55,
+    "hold_floor": 0.35,
+    "statement": "At or above useful_floor store live. Below hold_floor serve last_known + map."
+  },
+  "components": [
+    {
+      "id": "hostess7",
+      "priority": 1,
+      "label": "Hostess 7",
+      "product": "Hostess7",
+      "whole": true,
+      "independent": true,
+      "lane": "commander",
+      "modules": ["lib/hostess7-self-maintenance.py", "lib/hostess7-body-control.py", "lib/hostess7-system-control.py"],
+      "self_maintenance_priority": 1,
+      "useful_visibility": 0.6,
+      "hold_visibility": 0.4,
+      "maintenance": {
+        "required_for_active": true,
+        "self_priority": 1,
+        "tasks": ["seal_modules", "body_cycle", "motion_secure_cycle", "sense_witness", "component_registry", "truth_gate_witness"]
+      },
+      "map_fallback": "last_self_maintenance_posture"
+    },
+    {
+      "id": "eye",
+      "priority": 2,
+      "label": "Final Eye",
+      "product": "Final_Eye",
+      "whole": true,
+      "independent": true,
+      "lane": "vision",
+      "modules": ["lib/final-eye-maintenance.py", "lib/field-broadcaster-final-eye.py"],
+      "visibility_sources": ["preserve", "neural", "stereo", "maintenance"],
+      "useful_visibility": 0.55,
+      "hold_visibility": 0.35,
+      "maintenance": {
+        "required_for_active": true,
+        "tasks": ["lens_wipe", "sensor_clean", "calibration_check", "vault_verify"]
+      },
+      "map_fallback": "preserve_vault_then_last_frame"
+    },
+    {
+      "id": "nav",
+      "priority": 3,
+      "label": "GPS / heading / azimuth",
+      "product": "final-eye-nav",
+      "whole": true,
+      "independent": true,
+      "lane": "place",
+      "modules": ["lib/final-eye-gps-nav.py", "lib/gps-precision.py"],
+      "visibility_sources": ["gps_accuracy", "gpsd_fix", "operator_seed"],
+      "useful_visibility": 0.6,
+      "hold_visibility": 0.4,
+      "map_fallback": "last_known_place_plus_heading_history"
+    },
+    {
+      "id": "ear",
+      "priority": 4,
+      "label": "Final Ear",
+      "product": "Final_Ear",
+      "whole": true,
+      "independent": true,
+      "lane": "hearing",
+      "modules": ["lib/hostess7-sense-core.py"],
+      "useful_visibility": 0.5,
+      "hold_visibility": 0.3,
+      "map_fallback": "last_localization_bearing"
+    },
+    {
+      "id": "mouth",
+      "priority": 5,
+      "label": "Final Mouth",
+      "product": "Final_Mouth",
+      "whole": true,
+      "independent": true,
+      "lane": "speech",
+      "modules": ["lib/hostess7-mouth-neural.py"],
+      "useful_visibility": 0.5,
+      "hold_visibility": 0.3,
+      "map_fallback": "last_vocal_posture"
+    },
+    {
+      "id": "motion",
+      "priority": 6,
+      "label": "Body motion",
+      "product": "hostess7-body",
+      "whole": true,
+      "independent": true,
+      "lane": "proprioception",
+      "modules": ["lib/hostess7-body-core.py", "lib/humanoid-motion-training.py", "lib/humanoid-motion-secured.py"],
+      "useful_visibility": 0.45,
+      "hold_visibility": 0.25,
+      "map_fallback": "last_joint_pose"
+    },
+    {
+      "id": "audio",
+      "priority": 7,
+      "label": "Audio DAC",
+      "product": "Audio DAC",
+      "whole": true,
+      "independent": true,
+      "lane": "audio",
+      "modules": ["lib/field-audio-dac-chamber.py"],
+      "useful_visibility": 0.4,
+      "hold_visibility": 0.2,
+      "map_fallback": "last_active_profile"
+    },
+    {
+      "id": "spatial",
+      "priority": 8,
+      "label": "Look spatial",
+      "product": "field-look-spatial",
+      "whole": true,
+      "independent": true,
+      "lane": "place_view",
+      "modules": ["lib/field-look-spatial.py"],
+      "useful_visibility": 0.5,
+      "hold_visibility": 0.3,
+      "map_fallback": "last_view_location_pairs"
+    },
+    {
+      "id": "correlate",
+      "priority": 9,
+      "label": "Sense correlate",
+      "product": "ironclad-spatial",
+      "whole": true,
+      "independent": true,
+      "lane": "truth_correlate",
+      "modules": ["lib/ironclad-spatial-existence.py", "lib/field-body-system.py"],
+      "useful_visibility": 0.65,
+      "hold_visibility": 0.45,
+      "map_fallback": "last_correlation_receipt"
+    }
+  ],
+  "api": "/api/field-body-components",
+  "cli": [
+    "python3 lib/field-body-component-wholes.py status",
+    "python3 lib/hostess7-self-maintenance.py message",
+    "python3 lib/final-eye-maintenance.py status"
+  ]
+}

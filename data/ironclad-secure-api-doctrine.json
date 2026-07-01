@@ -1,0 +1,126 @@
+{
+  "schema": "ironclad-secure-api/v1",
+  "title": "Ironclad Secure API — singleton gate for every loopback route",
+  "motto": "One gate, one sort, one index — Ironclad grounds every API before serve.",
+  "module": "lib/ironclad-secure-api.py",
+  "panel": "ironclad-secure-api-panel.json",
+  "singleton": true,
+  "ironclad_citation": "ironclad:api:1",
+  "meld_citation": "ironclad:meld:2",
+  "policy": {
+    "loopback_only": true,
+    "ironclad_grounding_required": true,
+    "human_integration_forbidden": true,
+    "write_requires_token": false,
+    "destructive_blocked": true,
+    "beyond_darpa_tier": "beyond_darpa_lockheed",
+    "beyond_darpa_module": "lib/beyond-darpa-security.py",
+    "human_and_machine_threats_fail_closed": true
+  },
+  "sort_contexts": {
+    "registry_index": {
+      "algorithm": "family_then_label",
+      "statement": "field_one_best_ever — library/registry/catalog index"
+    },
+    "api_registry": {
+      "algorithm": "dirs_first",
+      "statement": "field_one_best_ever — API route table"
+    },
+    "chip_catalog": {
+      "algorithm": "composite_bsp",
+      "statement": "field_one_best_ever — CHIPS catalog leaves"
+    },
+    "catalog_index": {
+      "algorithm": "family_then_label",
+      "statement": "field_one_best_ever — library card catalog index"
+    }
+  },
+  "security_headers": {
+    "X-Ironclad-Secure-API": "singleton",
+    "X-Loopback-Only": "1",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "no-referrer",
+    "Cache-Control": "no-store"
+  },
+  "api": {
+    "gate": "/api/ironclad/secure-api",
+    "status": "/api/ironclad/secure-api/status",
+    "registry_index": "/api/ironclad/secure-api/registry-index",
+    "route_index": "/api/ironclad/secure-api/routes",
+    "sort": "/api/ironclad/secure-api/sort",
+    "search": "/api/ironclad/secure-api/search"
+  },
+  "search_contexts": {
+    "all": "Federated — registry + catalog + chips + routes + files",
+    "registry": "Library registry entries (Ironclad token index)",
+    "catalog": "Field card catalog",
+    "chips": "CHIPS catalog autocomplete",
+    "routes": "Ironclad API route table",
+    "files": "Queen file browser — cached ironclad-file-search-index",
+    "file_list": "Sorted file entries via field-best-sort file_list context"
+  },
+  "search_index_module": "lib/ironclad-search-index.py",
+  "access_module": "lib/ironclad-access.py",
+  "h7_access_module": "lib/ironclad-h7-access.py",
+  "access_api": "/api/ironclad/access",
+  "h7_access_api": "/api/ironclad/h7-access",
+  "taskbar": {
+    "module": "panel/assets/field-ironclad-taskbar.js",
+    "bus": "panel/assets/ironclad-bus.js",
+    "nav_spine": "panel/assets/field-nav-spine.js",
+    "mount": "bottom",
+    "home": "/field",
+    "queen_home": "http://127.0.0.1:9481/world/browser.html",
+    "focus_or_running_os_only": true
+  },
+  "g16": {
+    "version": "5.1.0",
+    "profile": "g16_field_opt",
+    "sort_module": "lib/field-best-sort.py",
+    "pairing": "data/ammoos-version.json"
+  },
+  "route_sources": [
+    "data/field-compile-autocorrect-doctrine.json",
+    "data/compile-error-human-explanations.json",
+    "data/field-card-catalog-doctrine.json",
+    "data/final-eye-plate-doctrine.json",
+    "data/hostess7-ocr-control-doctrine.json",
+    "data/tobins-spirit-guide-doctrine.json",
+    "data/field-chips-catalog-doctrine.json",
+    "data/field-library-registry-doctrine.json",
+    "data/field-file-formats-doctrine.json",
+    "data/field-monster-monitor-doctrine.json",
+    "data/field-monster-shell-doctrine.json",
+    "data/field-os-keybindings-doctrine.json",
+    "data/field-sovereign-stack-meld-doctrine.json",
+    "data/field-chips-core-doctrine.json",
+    "data/znetwork-doctrine.json",
+    "Queen/data/queen-field-net.json"
+  ],
+  "integrations": [
+    "lib/threat-panel-http.py",
+    "lib/field-library-registry.py",
+    "lib/field-card-catalog.py",
+    "lib/tobins-spirit-guide.py",
+    "lib/field-compile-autocorrect.py",
+    "lib/field-chips-catalog.py",
+    "lib/field-file-formats.py",
+    "lib/field-monster-monitor.py",
+    "lib/field-monster-shell.py",
+    "lib/field-monster-popup.py",
+    "lib/field-monster-launch.sh",
+    "lib/field-os-keybindings.py",
+    "lib/field-sovereign-stack-meld.py",
+    "lib/hostess7-ocr-control.py",
+    "AmmoCode/server/ammocode-stack-serve.py",
+    "Queen/lib/queen-world.py",
+    "lib/eye-ear-plate.py",
+    "lib/ironclad-access.py",
+    "lib/ironclad-h7-access.py",
+    "lib/ironclad-search-index.py",
+    "lib/h7-library-bridge.py",
+    "lib/field-dewey-library.py",
+    "lib/beyond-darpa-security.py"
+  ]
+}

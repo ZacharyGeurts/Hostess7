@@ -1,0 +1,102 @@
+{
+  "schema": "hostess7-calculator-ocr-doctrine/v1",
+  "title": "Calculator OCR vision training — feed the think tank from live vision text",
+  "motto": "She reads the field through OCR — every captured equation, HUD number, and panel metric trains perfect calculation.",
+  "feed_sources": [
+    {
+      "id": "final_eye_session",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "data/vision-session.jsonl",
+      "text_fields": [
+        "ocr"
+      ],
+      "ocr_file_field": "ocr_file",
+      "role": "Vision session — follow ocr_file pointers"
+    },
+    {
+      "id": "final_eye_manifest",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "manifest.jsonl",
+      "text_fields": [
+        "ocr",
+        "narrative"
+      ],
+      "role": "Final_Eye capture manifest"
+    },
+    {
+      "id": "final_eye_out_txt",
+      "kind": "glob",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "out/*.txt",
+      "role": "Final_Eye out/ plaintext"
+    },
+    {
+      "id": "final_eye_neural",
+      "kind": "jsonl",
+      "path_env": "FINAL_EYE_ROOT",
+      "path_rel": "data/neural-analysis.jsonl",
+      "text_fields": [
+        "narrative"
+      ],
+      "role": "Final_Eye neural assist narratives — disparity, confidence metrics"
+    },
+    {
+      "id": "vision_corpus",
+      "kind": "json",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/vision/corpus.json",
+      "text_fields": [
+        "body"
+      ],
+      "nested": "domains",
+      "role": "Hostess7 vision corpus domains"
+    },
+    {
+      "id": "sdf_segments",
+      "kind": "glob",
+      "path_env": "HOSTESS7_ROOT",
+      "path_rel": "cache/fieldstorage/brain/sdf/segments/*.json",
+      "text_fields": [
+        "text"
+      ],
+      "role": "Brain imaging SDF segment OCR text"
+    },
+    {
+      "id": "panel_ocr_snap",
+      "kind": "glob",
+      "path_abs": "/tmp/nexus-panel-ocr*.png",
+      "ocr_tesseract": true,
+      "role": "NEXUS panel OCR validation screenshots"
+    }
+  ],
+  "ingest": {
+    "max_files_per_source": 500,
+    "max_bytes_per_file": 250000,
+    "max_candidates_per_ingest": 8000,
+    "dedupe_window": 50000
+  },
+  "train": {
+    "verify_with_compute": true,
+    "min_candidate_len": 3,
+    "fluent_samples_floor": 48,
+    "master_samples_floor": 120,
+    "verified_rate_floor": 0.35
+  },
+  "math_extract": {
+    "patterns": [
+      "arithmetic_expr",
+      "equation",
+      "percent_of",
+      "matrix_bracket",
+      "calculus_keyword",
+      "stats_keyword",
+      "disparity_metric"
+    ]
+  },
+  "g16": {
+    "version": "5.1.0",
+    "profile": "g16_field_opt"
+  }
+}

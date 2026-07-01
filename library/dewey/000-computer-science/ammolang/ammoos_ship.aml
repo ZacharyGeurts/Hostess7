@@ -1,0 +1,26 @@
+# AmmoOS beta 5 ship — AmmoLang full lane → GitHub + Pages + wikis
+@profile fastest
+@verbose clean
+@motto "AmmoOS 2.0.0-beta5 · CONDENSER · AmmoLang ship · MCP · Pages · wikis"
+
+seq ·
+  say "AmmoOS beta 5 CONDENSER ship — NewLatest canonical"
+  post "SHIP START — progress every 60s in terminal + .nexus-state/ammolang-release-progress.json"
+  self upgrade
+  fast path:gpy path:g16 compile:0 fastest
+  github check repo:ZacharyGeurts/AmmoOS
+  post "GitHub MCP check done — packing beta5 next"
+  github site repo:Grok16
+  github site repo:Queen
+  github site repo:KILROY
+  post "Pre-flight complete — wire stack + GitHub MCP"
+  run script:wire-stack
+  run route:github_mcp
+  post "Release push starting (pack + AmmoOS repo + gh-pages hubs)"
+  run script:ammoos-release arg:--version arg:2.0.0-beta5 arg:--push timeout:7200
+  post "AmmoOS repo shipped — stack hub + redirect pages"
+  run script:publish-stack-pages timeout:1800
+  post "Wiki publish"
+  run script:publish-ammoos-wiki timeout:300
+  say "Shipped v2.0.0-beta5 → github.com/ZacharyGeurts/AmmoOS + Pages + wikis"
+  post "SHIP COMPLETE — https://zacharygeurts.github.io/AmmoOS/"

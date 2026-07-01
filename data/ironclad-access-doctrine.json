@@ -1,0 +1,34 @@
+{
+  "schema": "ironclad-access-doctrine/v1",
+  "title": "Ironclad Access — fast on-metal tools",
+  "module": "lib/ironclad-access.py",
+  "motto": "Read-only indexes on the metal — no H7 body reads, loopback gate, propagate everywhere",
+  "read_only": true,
+  "no_body_reads": true,
+  "loopback_only": true,
+  "destructive_blocked": true,
+  "build_requires_env": "IRONCLAD_ACCESS_BUILD=1",
+  "api": {
+    "access": "/api/ironclad/access",
+    "search": "/api/ironclad/secure-api/search",
+    "h7": "/api/ironclad/h7-access"
+  },
+  "modules": {
+    "hub": "lib/ironclad-access.py",
+    "search_index": "lib/ironclad-search-index.py",
+    "h7_access": "lib/ironclad-h7-access.py",
+    "best_sort": "lib/field-best-sort.py",
+    "secure_api": "lib/ironclad-secure-api.py"
+  },
+  "integrations": [
+    "lib/threat-panel-http.py",
+    "lib/ironclad-immediate.py",
+    "lib/ironclad-secure-api.py",
+    "lib/h7-library-bridge.py",
+    "lib/field-dewey-library.py",
+    "lib/field-library-registry.py",
+    "Queen/lib/queen-file-browser.py",
+    "Queen/world/ironclad-bus.js",
+    "panel/assets/ironclad-bus.js"
+  ]
+}

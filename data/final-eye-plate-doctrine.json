@@ -1,0 +1,140 @@
+{
+  "schema": "final-eye-plate/v1",
+  "title": "Final_Eye — OCR · AI Eyeball · plate-melded vision",
+  "motto": "One eye on the plate — trained OCR, assistive eyeball, offense mesh; ZOCR retired.",
+  "product": "Final_Eye",
+  "version": "1.3.0",
+  "codename": "eye-stoard",
+  "canonical_root": "NewLatest/Final_Eye",
+  "env": "FINAL_EYE_ROOT",
+  "port_env": "FINAL_EYE_PORT",
+  "default_port": 9479,
+  "g16": {
+    "version": "5.1.0",
+    "profile": "g16_field_opt",
+    "pairing": "data/ammoos-version.json"
+  },
+  "plate_meld": {
+    "required": true,
+    "doctrine": "data/eye-ear-plate-doctrine.json",
+    "module": "lib/eye-ear-plate.py",
+    "sense_meld": "lib/field-sense-package-meld.py",
+    "meld_citation": "ironclad:meld:2",
+    "seal_before_analyze": true,
+    "plate_not_wire": true,
+    "chain_with_sense_package": true,
+    "universal_lock_gate": "field-sense-package-meld.sense_universal_slice"
+  },
+  "bridges": {
+    "queen": "Queen/lib/queen_final_eye.py",
+    "eyeball": "Queen/lib/queen-eyeball.py",
+    "neural_assist": "Final_Eye/zocr_neural_assist.py",
+    "pattern_registry": "Final_Eye/data/zocr-pattern-registry.json",
+    "hostess7_doctrine": "Hostess7/data/final-eye-12-doctrine.json"
+  },
+  "ocr": {
+    "engine": "Final_Eye/zocr.py",
+    "watch": "Final_Eye/zocr_watch.py",
+    "neural_assist": "Final_Eye/zocr_neural_assist.py",
+    "pattern_engine": "Final_Eye/zocr_pattern.py",
+    "outputs": ["out/*.h7", "out/", "manifest.jsonl", "data/vision-session.jsonl"],
+    "output_format": "h7/7",
+    "h7_bridge": "Final_Eye/zocr_h7.py",
+    "h7_module": "lib/field-h7-format.py",
+    "canonical_bridge": "lib/final-eye-h7-ocr.py",
+    "training_doctrines": [
+      "data/hostess7-combat-ocr-doctrine.json",
+      "data/hostess7-calculator-ocr-doctrine.json",
+      "data/hostess7-mos-ocr-doctrine.json",
+      "data/hostess7-biology-ocr-doctrine.json",
+      "data/hostess7-engineering-ocr-doctrine.json"
+    ],
+    "ready": true,
+    "trained": true,
+    "enhancement_room": {
+      "neural_assist": true,
+      "stereo_comfort": true,
+      "motion_track": true,
+      "entity_eyeball": true,
+      "field_compiler_witness": true,
+      "stoard_expand": true
+    }
+  },
+  "eyeball": {
+    "module": "Queen/lib/queen-eyeball.py",
+    "assist_default": true,
+    "low_end_default": true,
+    "cool_default": true,
+    "operations": ["enemy", "heaven", "hell", "disarmament", "weaponize", "verify"],
+    "teach_lessons": ["enemy", "operations", "disarmament", "authority", "comfort"]
+  },
+  "security": {
+    "ironclad_ref": "data/ironclad-doctrine.json",
+    "code_seal": "Final_Eye/data/code-seal.json",
+    "trust_mesh": true,
+    "scene_guard_ref": "OBS-FieldVoiceFilter/data/field-scene-guard-doctrine.json",
+    "reject_patterns": [
+      "banded_signal", "coded_signal", "grid_jam", "moire_weave", "hostile_waveform",
+      "laser_direct", "laser_scatter", "radiation_uv", "hostile_paint", "flash_bang", "strobe_attack"
+    ],
+    "eye_threat_chamber": {
+      "module": "lib/field-eye-threat-chamber.py",
+      "doctrine": "data/field-eye-threat-doctrine.json",
+      "api": "/api/field-eye-threat",
+      "hostess7_report": true,
+      "hostile_prevention": true
+    }
+  },
+  "api": {
+    "health": "/api/health",
+    "eye_operations": "/api/eye/operations",
+    "eye_stoard": "/api/eye/stoard",
+    "sense_meld": "/api/sense-package/meld",
+    "ironclad_search": "/api/ironclad/secure-api/search"
+  },
+  "hostess7_ocr_control": {
+    "module": "lib/hostess7-ocr-control.py",
+    "doctrine": "data/hostess7-ocr-control-doctrine.json",
+    "api": "/api/hostess7/ocr",
+    "commander": "Hostess 7 · Angel above General",
+    "full_os_control": true
+  },
+  "hostess7_ocr_brain": {
+    "preserve": true,
+    "read_only_brain": true,
+    "training_module": "lib/hostess7-training.py",
+    "ocr_train_flag": "ocr_train",
+    "chambers": [
+      {"module": "lib/hostess7-calculator.py", "doctrine": "data/hostess7-calculator-ocr-doctrine.json", "corpus": "hostess7-calculator-ocr-corpus.json", "train": "hostess7-calculator-ocr-train.json"},
+      {"module": "lib/hostess7-biology.py", "doctrine": "data/hostess7-biology-ocr-doctrine.json", "corpus": "hostess7-biology-ocr-corpus.json", "train": "hostess7-biology-ocr-train.json"},
+      {"module": "lib/hostess7-engineering.py", "doctrine": "data/hostess7-engineering-ocr-doctrine.json", "corpus": "hostess7-engineering-ocr-corpus.json", "train": "hostess7-engineering-ocr-train.json"},
+      {"module": "lib/hostess7-combat.py", "doctrine": "data/hostess7-combat-ocr-doctrine.json", "corpus": "hostess7-combat-ocr-corpus.json", "train": "hostess7-combat-ocr-train.json"},
+      {"module": "lib/hostess7-mos.py", "doctrine": "data/hostess7-mos-ocr-doctrine.json", "corpus": "hostess7-mos-ocr-corpus.json", "train": "hostess7-mos-ocr-train.json"},
+      {"module": "lib/hostess7-programming.py", "doctrine": "data/hostess7-programming-ocr-doctrine.json", "corpus": "hostess7-programming-ocr-corpus.json", "train": "hostess7-programming-ocr-train.json"},
+      {"module": "lib/hostess7-g16.py", "doctrine": "data/hostess7-g16-ocr-doctrine.json", "corpus": "hostess7-g16-ocr-corpus.json", "train": "hostess7-g16-ocr-train.json"},
+      {"module": "lib/hostess7-codecraft.py", "doctrine": "data/hostess7-codecraft-ocr-doctrine.json", "corpus": "hostess7-codecraft-ocr-corpus.json", "train": "hostess7-codecraft-ocr-train.json"},
+      {"module": "lib/hostess7-geography-training.py", "doctrine": "data/hostess7-geography-ocr-doctrine.json", "corpus": "hostess7-geography-ocr-corpus.json", "train": "hostess7-geography-ocr-train.json"},
+      {"module": "lib/hostess7-music-training.py", "doctrine": "data/hostess7-music-ocr-doctrine.json", "corpus": "hostess7-music-ocr-corpus.json", "train": "hostess7-music-ocr-train.json"},
+      {"module": "lib/hostess7-imaging.py", "doctrine": "data/hostess7-imaging-ocr-doctrine.json", "corpus": "hostess7-imaging-ocr-corpus.json", "train": "hostess7-imaging-ocr-train.json"},
+      {"module": "lib/hostess7-sense-training.py", "doctrine": "data/hostess7-sense-ocr-doctrine.json", "corpus": "hostess7-sense-ocr-corpus.json", "train": "hostess7-sense-ocr-train.json"},
+      {"module": "lib/hostess7-reality-physics-training.py", "doctrine": "data/hostess7-reality_physics-ocr-doctrine.json", "corpus": "hostess7-reality_physics-ocr-corpus.json", "train": "hostess7-reality_physics-ocr-train.json"}
+    ],
+    "brain_feeds": [
+      "HOSTESS7_ROOT/cache/fieldstorage/brain/vision/corpus.json",
+      "HOSTESS7_ROOT/cache/fieldstorage/brain/warfare/corpus.json",
+      "HOSTESS7_ROOT/cache/fieldstorage/brain/sdf/segments/*.json"
+    ],
+    "final_eye_feeds": [
+      "FINAL_EYE_ROOT/manifest.jsonl",
+      "FINAL_EYE_ROOT/data/vision-session.jsonl",
+      "FINAL_EYE_ROOT/out/*.txt",
+      "FINAL_EYE_ROOT/data/neural-analysis.jsonl"
+    ],
+    "guard": "data/hostess7-brain-guard-doctrine.json"
+  },
+  "retired": {
+    "ZOCR": "removed — use Final_Eye only; Hostess7 OCR brain unchanged",
+    "ZNEWOCR": "removed — use Final_Eye only",
+    "ZOCR_ROOT": "legacy alias maps to FINAL_EYE_ROOT in hostess7 chambers"
+  }
+}

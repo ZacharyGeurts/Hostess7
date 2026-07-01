@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hostess 7 — Training Viewer</title>
+  <link rel="stylesheet" href="/assets/viewer.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Hostess 7 Training Viewer</h1>
+        <p class="sub">Wireframe field graph · connected models · live training completion</p>
+      </div>
+      <div class="toolbar">
+        <label class="chip"><input type="checkbox" id="auto-refresh" checked /> Auto 8s</label>
+        <button type="button" id="btn-refresh">Refresh</button>
+        <button type="button" id="btn-assess">Assess</button>
+        <button type="button" id="btn-self-interaction">Self-interaction</button>
+        <button type="button" id="btn-iq-train">IQ battery</button>
+        <button type="button" id="btn-train-all">Train to Master</button>
+        <button type="button" id="btn-solidify" class="primary">Solidify (GUI)</button>
+      </div>
+    </header>
+
+    <p class="statusline" id="statusline">Starting…</p>
+
+    <section class="viz-layout">
+      <div class="viz-main">
+        <div class="wireframe-wrap">
+          <div class="wireframe-toolbar">
+            <span id="wireframe-hud">Wireframe loading…</span>
+            <button type="button" id="btn-focus-core" class="small">Focus core</button>
+            <button type="button" id="btn-reload-graph" class="small">Reload graph</button>
+          </div>
+          <canvas id="wireframe-canvas"></canvas>
+        </div>
+        <aside class="node-inspector" id="node-detail">
+          <h3>Node inspector</h3>
+          <p class="meta">Click any wireframe node — chambers, tracks, connected models.</p>
+        </aside>
+      </div>
+
+      <aside class="models-panel">
+        <h2 class="section-title" style="margin-top:0">Connected models</h2>
+        <div id="models-list"></div>
+        <form class="model-form" id="model-form" onsubmit="return false">
+          <label>ID <input type="text" id="model-id" placeholder="my_model" required /></label>
+          <label>Label <input type="text" id="model-label" placeholder="Display name" /></label>
+          <label>Group <input type="text" id="model-group" value="connected" /></label>
+          <label>Kind
+            <select id="model-kind">
+              <option value="panel_file">panel_file (STATE panel)</option>
+              <option value="nexus_module">nexus_module (lib/*.py)</option>
+              <option value="install_data">install_data (INSTALL path)</option>
+              <option value="http_json">http_json (live API)</option>
+              <option value="path_exists">path_exists (filesystem)</option>
+            </select>
+          </label>
+          <label id="label-model-path">Path <input type="text" id="model-path" placeholder="hostess7-g16-panel.json" /></label>
+          <div id="model-extra-wrap" style="display:none">
+            <label>Args (JSON) <input type="text" id="model-extra" value='["json"]' /></label>
+          </div>
+          <label>Connect to <input type="text" id="model-connect" value="hostess7_core" placeholder="hostess7_core, g16_chamber" /></label>
+          <label>Color <input type="color" id="model-color" value="#60a5fa" /></label>
+          <button type="button" id="btn-add-model" class="primary" style="width:100%;margin-top:8px">Add connected model</button>
+        </form>
+      </aside>
+    </section>
+
+    <h2 class="section-title">Agents 7 — Prime + twelve World Experts</h2>
+    <p class="meta" id="agents7-flow" style="margin:-6px 0 12px;color:var(--muted);font-size:0.88rem"></p>
+    <div class="agents7-grid" id="agents7-grid"></div>
+
+    <section class="hero">
+      <div class="ring" id="score-ring" style="--pct: 0">
+        <div class="ring-inner">
+          <strong>0%</strong>
+          <span>overall</span>
+        </div>
+      </div>
+      <div id="hero-meta"></div>
+    </section>
+
+    <h2 class="section-title">Mastery pillars — flexibility · adaptability · confidence</h2>
+    <p class="meta" id="mastery-motto" style="margin:-6px 0 12px;color:var(--muted);font-size:0.88rem"></p>
+    <div class="facets-grid" id="facets-grid"></div>
+
+    <h2 class="section-title">Training tracks</h2>
+    <div class="grid" id="tracks-grid"></div>
+
+    <h2 class="section-title">Master curriculum</h2>
+    <div id="curriculum-list"></div>
+
+    <div class="tabs" style="margin-top: 24px">
+      <button type="button" class="tab active" data-panel="panel-phases">Solidify phases</button>
+      <button type="button" class="tab" data-panel="panel-ledger">Ledger</button>
+      <button type="button" class="tab" data-panel="panel-graph">Graph JSON</button>
+      <button type="button" class="tab" data-panel="panel-raw">Raw bundle</button>
+    </div>
+
+    <div id="panel-phases" class="panels active">
+      <pre class="log" id="phases-log">Loading…</pre>
+    </div>
+    <div id="panel-ledger" class="panels">
+      <pre class="log" id="ledger-log">Loading…</pre>
+    </div>
+    <div id="panel-graph" class="panels">
+      <pre class="log" id="graph-json" style="max-height: 420px">Loading…</pre>
+    </div>
+    <div id="panel-raw" class="panels">
+      <pre class="log" id="raw-json" style="max-height: 520px">Loading…</pre>
+    </div>
+
+    <footer id="paths-meta">—</footer>
+  </div>
+  <script type="module" src="/assets/wireframe.js"></script>
+  <script src="/assets/models.js"></script>
+  <script src="/assets/viewer.js"></script>
+</body>
+</html>

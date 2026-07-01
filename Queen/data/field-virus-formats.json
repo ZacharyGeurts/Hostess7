@@ -1,0 +1,191 @@
+{
+  "schema": "field-virus-formats/v1",
+  "edition": "Queen 2026",
+  "motto": "Every byte hostile until positively identified. Abstract harms before touch.",
+  "iff_doctrine": {
+    "presume_hostile": true,
+    "initial_iff": "HOSTILE",
+    "civilian_requires_positive_id": true,
+    "threat_requires_harm_proof": true,
+    "unknown_is_hold": true,
+    "memory_hardened_against_memory": true,
+    "drive_hardened_like_memory": true
+  },
+  "space_policy": {
+    "memory": {
+      "isolate_regions": true,
+      "no_execute_unclassified": true,
+      "abstract_before_map": true,
+      "cross_region_copy_forbidden": true
+    },
+    "drive": {
+      "quarantine_unclassified": true,
+      "sealed_paths_read_only": true,
+      "ingress_scan_mandatory": true,
+      "egress_scan_mandatory": true,
+      "cross_volume_copy_scanned": true
+    }
+  },
+  "own_formats": [
+    {
+      "id": "zac7",
+      "label": "ZAC7 field shard",
+      "magic_hex": "5a414337",
+      "extensions": [".zac"],
+      "sovereign": true,
+      "civilian_on_valid_header": true
+    },
+    {
+      "id": "queen_code_seal",
+      "label": "Queen code seal",
+      "json_schema": "queen-code-seal/v1",
+      "extensions": [".json"],
+      "path_hint": "queen-code-seal.json",
+      "sovereign": true
+    },
+    {
+      "id": "field_queen_gates",
+      "label": "Field Queen gates seed",
+      "json_schema": "field-queen-gates/v1",
+      "extensions": [".json"],
+      "sovereign": true
+    },
+    {
+      "id": "grokpy12",
+      "label": "GrokPy bytecode",
+      "magic_ascii": "GROKPY12",
+      "extensions": [".gpy", ".grokpy"],
+      "sovereign": true
+    },
+    {
+      "id": "gpy16",
+      "label": "G16 PythonG bytecode",
+      "magic_ascii": "GPY16",
+      "extensions": [".pyc"],
+      "sovereign": true
+    },
+    {
+      "id": "wrzc1",
+      "label": "World Redata ZAC container",
+      "magic_ascii": "WRZC1",
+      "extensions": [".wrzc"],
+      "sovereign": true
+    },
+    {
+      "id": "wrdt1",
+      "label": "World Redata tar shard",
+      "magic_ascii": "WRDT1",
+      "extensions": [".wrdt"],
+      "sovereign": true
+    },
+    {
+      "id": "sdf_segment",
+      "label": "Hostess7 SDF brain segment",
+      "json_keys": ["text", "text_sha256"],
+      "extensions": [".json"],
+      "path_hint": "brain/sdf/segments/",
+      "sovereign": true
+    },
+    {
+      "id": "queen_external_wire",
+      "label": "External wire mandate",
+      "json_schema": "queen-external-wire/v2",
+      "sovereign": true
+    },
+    {
+      "id": "queen_secure_channel",
+      "label": "Secure channel mandate",
+      "json_schema": "queen-secure-channel/v1",
+      "sovereign": true
+    },
+    {
+      "id": "field_virus_formats",
+      "label": "Field virus format registry",
+      "json_schema": "field-virus-formats/v1",
+      "sovereign": true
+    }
+  ],
+  "universal_formats": [
+    {"id": "elf", "label": "ELF executable", "magic_hex": "7f454c46", "risk": "executable"},
+    {"id": "pe", "label": "PE/COFF", "magic_hex": "4d5a", "risk": "executable"},
+    {"id": "mach_o", "label": "Mach-O fat", "magic_hex": "cafebabe", "risk": "executable"},
+    {"id": "mach_o64", "label": "Mach-O 64", "magic_hex": "cffaedfe", "risk": "executable"},
+    {"id": "pdf", "label": "PDF document", "magic_ascii": "%PDF", "risk": "document_polyglot"},
+    {"id": "zip", "label": "ZIP archive", "magic_hex": "504b0304", "risk": "archive"},
+    {"id": "gzip", "label": "GZIP", "magic_hex": "1f8b", "risk": "archive"},
+    {"id": "png", "label": "PNG image", "magic_hex": "89504e47", "risk": "media"},
+    {"id": "jpeg", "label": "JPEG image", "magic_hex": "ffd8ff", "risk": "media"},
+    {"id": "gif", "label": "GIF image", "magic_ascii": "GIF8", "risk": "media"},
+    {"id": "webp", "label": "WebP image", "magic_ascii": "RIFF", "risk": "media"},
+    {"id": "mp4", "label": "MP4 container", "magic_ascii": "ftyp", "offset": 4, "risk": "media"},
+    {"id": "wasm", "label": "WebAssembly", "magic_hex": "0061736d", "risk": "executable"},
+    {"id": "shell_script", "label": "Shell script", "magic_ascii": "#!", "risk": "script"},
+    {"id": "python_shebang", "label": "Python script", "magic_regex": "^#!.*python", "risk": "script"},
+    {"id": "html", "label": "HTML document", "magic_regex": "^\\s*<(!DOCTYPE\\s+html|html)", "risk": "markup"},
+    {"id": "json_text", "label": "JSON text", "magic_regex": "^\\s*[\\[{]", "risk": "data"},
+    {"id": "sqlite", "label": "SQLite DB", "magic_ascii": "SQLite format 3", "risk": "database"}
+  ],
+  "harm_heuristics": {
+    "extension_mismatch_score": 12,
+    "executable_in_text_score": 14,
+    "injection_pattern_score": 10,
+    "webshell_score": 16,
+    "polyglot_score": 11,
+    "zip_bomb_ratio_threshold": 100,
+    "zip_bomb_score": 18,
+    "oversize_score": 6,
+    "max_scan_bytes": 2097152,
+    "max_file_bytes": 536870912,
+    "threat_score_block": 20,
+    "threat_score_hold": 8,
+    "double_extension_score": 9
+  },
+  "harm_patterns": {
+    "injection_regex": [
+      "<script\\b",
+      "javascript:",
+      "eval\\s*\\(",
+      "onerror\\s*=",
+      "union\\s+select",
+      ";\\s*drop\\s+",
+      "powershell\\s+-enc",
+      "__import__\\s*\\(",
+      "os\\.system\\s*\\(",
+      "/dev/tcp/",
+      "base64_decode",
+      "curl\\s+[^\\s|]+\\s*\\|\\s*(ba)?sh",
+      "wget\\s+[^\\s]+.*\\|\\s*(ba)?sh"
+    ],
+    "webshell_regex": [
+      "eval\\(\\$_",
+      "passthru\\s*\\(",
+      "shell_exec\\s*\\(",
+      "system\\s*\\(\\$_",
+      "cmd\\.exe",
+      "\\$\\{jndi:",
+      "Runtime\\.getRuntime"
+    ],
+    "executable_markers": [
+      "\\x7fELF",
+      "MZ",
+      "\\x00asm",
+      "#!/bin/",
+      "#!/usr/bin/env"
+    ],
+    "double_extensions": [
+      ".pdf.exe", ".jpg.exe", ".png.js", ".doc.js", ".txt.sh", ".zip.exe"
+    ]
+  },
+  "sovereign_roots": [
+    "NewLatest/Queen",
+    "Hostess7",
+    "Grok16",
+    "World_Redata",
+    "Field_Primer"
+  ],
+  "quarantine": {
+    "relative_dir": ".nexus-state/field-virus/quarantine",
+    "scan_log": ".nexus-state/field-virus/scan.jsonl",
+    "panel": ".nexus-state/field-virus/panel.json"
+  }
+}

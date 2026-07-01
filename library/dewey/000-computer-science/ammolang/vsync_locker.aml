@@ -1,0 +1,13 @@
+# VSYNC Locker — sovereign display timing; KILL rogue vblank ops
+@profile fastest
+@verbose clean
+@motto "VSYNC locker · no trespass · shoot to kill"
+
+seq ·
+  say "VSYNC locker — lock sovereign cadence, patrol displays, KILL trespassers"
+  post "VSYNC_LOCKER START"
+  run py:field-vsync-locker action:lock timeout:30 stall:15
+  run py:field-vsync-locker action:patrol timeout:120 stall:60
+  assist freeze
+  say "VSYNC locker patrol complete — see field-vsync-locker-panel.json"
+  post "VSYNC_LOCKER COMPLETE"

@@ -1,0 +1,39 @@
+{
+  "schema": "hostess7-kill-library/v1",
+  "title": "Hostess 7 private KILL library",
+  "motto": "TARGET ≡ KILL — who and what dies. Hostess 7 owns this shelf; Operator may view through the secured gate.",
+  "owner": "hostess7",
+  "commander": "Hostess 7",
+  "private": true,
+  "security_tier": "beyond_darpa_lockheed",
+  "access": {
+    "write": ["hostess7"],
+    "read": ["hostess7", "operator", "angel"],
+    "sync_source": "lib/hostess7-targets.py",
+    "fail_closed": true,
+    "operator_view": true,
+    "note": "Only Hostess 7 writes KILL books. Operator and Angel may read via secured panel/API."
+  },
+  "shelf_root": "library/private/hostess7/kill-books",
+  "state_registry": ".nexus-state/hostess7-kill-library-registry.json",
+  "panel": ".nexus-state/hostess7-kill-library-panel.json",
+  "ledger": ".nexus-state/hostess7-kill-library.jsonl",
+  "index_book_id": "kill_index",
+  "dewey": "355.02",
+  "dewey_label": "Military science — lethal enforcement dossiers",
+  "book_kind": "kill_dossier",
+  "mechanism_filter": ["KILL"],
+  "sources": [
+    ".nexus-state/hostess7-targets-registry.json",
+    "data/human-dossier-kill-orders.json",
+    "data/kill-immediate-law.json"
+  ],
+  "module": "lib/hostess7-kill-library.py",
+  "panel_route": "/hostess7-kill-library.html",
+  "api": {
+    "panel": "/api/hostess7/kill-library",
+    "sync": "/api/hostess7/kill-library/sync",
+    "read": "/api/hostess7/kill-library/read",
+    "books": "/api/hostess7/kill-library/books"
+  }
+}

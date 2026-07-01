@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NEXUS Calendar</title>
+  <link rel="icon" href="/assets/queen-prog-os-48.png" type="image/png" />
+  <style>
+    :root { --bg:#0a1220; --panel:#111a2a; --accent:#38bdf8; --text:#eef4fc; --dim:#94a3b8; --today:#5eead4; }
+    body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font-family:system-ui,sans-serif; padding:20px; }
+    h1 { margin:0 0 16px; font-size:1.25rem; }
+    .nav { display:flex; gap:10px; align-items:center; margin-bottom:14px; }
+    .nav button { padding:8px 14px; border-radius:8px; border:1px solid #2d4a6e; background:var(--panel); color:var(--text); cursor:pointer; }
+    .grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; max-width:560px; }
+    .dow { font-size:0.7rem; color:var(--dim); text-align:center; text-transform:uppercase; }
+    .day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:8px; border:1px solid transparent; font-size:0.9rem; }
+    .day.other { color:var(--dim); opacity:0.45; }
+    .day.today { border-color:var(--today); background:rgba(94,234,212,0.12); font-weight:700; }
+    .clock { margin-top:20px; font-size:2rem; color:var(--accent); }
+  </style>
+</head>
+<body>
+  <h1 id="title">Calendar</h1>
+  <div class="nav">
+    <button type="button" id="prev">←</button>
+    <button type="button" id="today">Today</button>
+    <button type="button" id="next">→</button>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="clock" id="clock"></div>
+  <script>
+    let view = new Date();
+    const grid = document.getElementById("grid");
+    const title = document.getElementById("title");
+    const dow = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    function render() {
+      const y = view.getFullYear(), m = view.getMonth();
+      title.textContent = view.toLocaleString(undefined, { month: "long", year: "numeric" });
+      grid.innerHTML = dow.map((d) => '<div class="dow">' + d + "</div>").join("");
+      const first = new Date(y, m, 1).getDay();
+      const days = new Date(y, m + 1, 0).getDate();
+      const prevDays = new Date(y, m, 0).getDate();
+      const now = new Date();
+      for (let i = 0; i < first; i++) {
+        const d = prevDays - first + i + 1;
+        grid.innerHTML += '<div class="day other">' + d + "</div>";
+      }
+      for (let d = 1; d <= days; d++) {
+        const today = now.getFullYear() === y && now.getMonth() === m && now.getDate() === d;
+        grid.innerHTML += '<div class="day' + (today ? " today" : "") + '">' + d + "</div>";
+      }
+    }
+    document.getElementById("prev").onclick = () => { view.setMonth(view.getMonth() - 1); render(); };
+    document.getElementById("next").onclick = () => { view.setMonth(view.getMonth() + 1); render(); };
+    document.getElementById("today").onclick = () => { view = new Date(); render(); };
+    function tick() {
+      document.getElementById("clock").textContent = new Date().toLocaleString();
+    }
+    render(); tick(); setInterval(tick, 1000);
+  </script>
+</body>
+</html>

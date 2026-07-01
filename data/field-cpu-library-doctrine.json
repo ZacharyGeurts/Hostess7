@@ -1,0 +1,20 @@
+{
+  "schema": "field-cpu-library-doctrine/v1",
+  "title": "CPU Library — every make, model, ARM, Mac, mobile — H7-grade catalog",
+  "motto": "Company, mfg date, die map, schematic text, AI detail — databased like the library.",
+  "module": "lib/field-cpu-library.py",
+  "panel": "field-cpu-library-panel.json",
+  "cache": "field-cpu-library.json",
+  "seed": "data/field-cpu-library-seed.json",
+  "ironclad_chips": "lib/field-ironclad-chips-combinatorics.py",
+  "categories": [
+    "arm", "apple_silicon", "mobile_soc", "x86_intel", "x86_amd", "x86_cyrix",
+    "mips", "powerpc", "risc_v", "retro_guest", "host_cpu", "mame_device"
+  ],
+  "library_fields": [
+    "id", "label", "vendor", "company", "family", "arch", "bits",
+    "mfg_date_start", "mfg_date_end", "process_nm", "package", "socket",
+    "address_map", "schematic_blueprint", "ai_detail", "diagram_hint",
+    "combinatorics_leaf", "source"
+  ]
+}

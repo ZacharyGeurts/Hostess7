@@ -1,0 +1,100 @@
+{
+  "schema": "ammoos-themes/v1",
+  "title": "AmmoOS Themes — single index for every surface",
+  "motto": "One catalog · Queen Styles · C2 shell · editor · terminal · file-type properties",
+  "default_ammoos_theme": "nexus_c2",
+  "default_queen_styles": "black_emerald_rose_2026",
+  "default_editor_theme": "nexus_c2",
+  "default_syntax_theme": "nexus_c2",
+  "default_terminal_theme": "black_emerald_rose_2026",
+  "control_panel_index": "/control-panel?tab=themes",
+  "engines": {
+    "queen_styles": {
+      "catalog": "Queen/gui/queen-styles-themes.json",
+      "runtime": "Queen/world/queen-styles.js",
+      "storage_key": "queen-styles-v1"
+    },
+    "editor": {
+      "catalog": "AmmoCode/data/ammocode-syntax-themes.json",
+      "api": "/api/syntax-themes"
+    },
+    "program_surface": {
+      "api": "/api/queen-program-surface",
+      "doctrine": "Queen/data/queen-program-surface-doctrine.json"
+    },
+    "file_types": {
+      "registry": "Queen/data/queen-file-types.json",
+      "prefs": "ammoos-file-type-themes"
+    }
+  },
+  "sections": [
+    {"id": "presets", "label": "Presets", "hint": "Built-in Queen + C2 themes"},
+    {"id": "customize", "label": "Customize", "hint": "Colors · typography · widgets"},
+    {"id": "surfaces", "label": "Surfaces", "hint": "Window vs Browser per program"},
+    {"id": "file_types", "label": "File types", "hint": "Right-click properties by extension"}
+  ],
+  "c2_themes": {
+    "nexus_c2": {
+      "label": "NEXUS C2 Military",
+      "built_in": true,
+      "css": "panel/assets/ammoos-c2-themes.css",
+      "data_attr": "nexus-military-v8",
+      "vars": {
+        "--qf-bg-deep": "#040508",
+        "--qf-bg": "#1a1624",
+        "--qf-bg-mid": "#241f31",
+        "--qf-panel": "#0a0c12",
+        "--qf-emerald-glow": "#3ecf8e",
+        "--qf-rose-soft": "#f472b6"
+      }
+    },
+    "ammo-field": {
+      "label": "Ammo Field",
+      "built_in": true,
+      "data_attr": "ammo-field",
+      "vars": {
+        "--qf-bg-deep": "#040810",
+        "--qf-bg": "#0a1628",
+        "--qf-emerald-glow": "#22c55e"
+      }
+    },
+    "ammo-c2": {
+      "label": "Ammo C2 Classic",
+      "built_in": true,
+      "data_attr": "ammo-c2",
+      "vars": {
+        "--qf-bg-deep": "#060806",
+        "--qf-bg": "#0c100c",
+        "--qf-emerald-glow": "#5ecf7a"
+      }
+    },
+    "ammo-rose": {
+      "label": "Ammo Rose",
+      "built_in": true,
+      "data_attr": "ammo-rose",
+      "vars": {
+        "--qf-bg-deep": "#120810",
+        "--qf-bg": "#1a1020",
+        "--qf-emerald-glow": "#eb488c"
+      }
+    }
+  },
+  "shell_themes": {
+    "auto": {"label": "Auto (detect host)"},
+    "gnome": {"label": "GNOME"},
+    "windows11": {"label": "Windows 11"},
+    "kde": {"label": "KDE"},
+    "macos": {"label": "macOS"}
+  },
+  "surface_options": [
+    {"id": "auto", "label": "Remember last"},
+    {"id": "window", "label": "Queen Window"},
+    {"id": "browser", "label": "Queen Browser"}
+  ],
+  "file_type_defaults": {
+    "open_with": "inherit",
+    "surface": "auto",
+    "show_in_context": true,
+    "properties_sections": ["general", "launch", "always", "security"]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "dns-admin-seed/v1",
+  "motto": "Hostess 7 DNS Admin — information only, shared with love. No remote controls. Ever.",
+  "admin_ports": [7, 77, 777],
+  "port_mnemonic": {
+    "7": "lucky7 — tired engineer port",
+    "77": "double77 — rack walk port",
+    "777": "triple7 — field server port"
+  },
+  "passkeys": {
+    "7": ["7", "lucky7", "hostess7"],
+    "77": ["77", "double77", "hostess77"],
+    "777": ["777", "triple7", "hostess777"]
+  },
+  "admins": [
+    {"username": "hostess", "roles": ["dns-admin"], "ports": [7, 77, 777], "note": "Hostess 7 operator — any port"},
+    {"username": "engineer", "roles": ["dns-admin"], "ports": [7, 77, 777], "note": "Network equipment room engineer"},
+    {"username": "field", "roles": ["dns-admin"], "ports": [777], "note": "Field DNS server technician"}
+  ],
+  "welcome": {
+    "headline": "Welcome — here's everything about our DNS",
+    "lead": "You logged in for DNS management information only. We share it all upfront so you can end the call fast.",
+    "dns_upfront": [
+      "Truth Resolver binds loopback only (127.0.0.1 / ::1 port 53) — RFC 1034 trace from root, no Google/Cloudflare shortcut.",
+      "Planetary EXTREME security extends to all zones when host honorability is 4★/5★.",
+      "Foreign resolvers (Google 8.8.8.8, Cloudflare 1.1.1.1, Charter/Spectrum ISP DNS) are documented and blocked under policy.",
+      "/etc/resolv.conf is steered to 127.0.0.1 when NEXUS_FIELD_DNS_ENFORCE_RESOLV=1.",
+      "DoT (RFC 7858) and DoH (RFC 8484) bypass paths are blocked under EXTREME — local truth path only.",
+      "We never offer remote desktop, SSH shell, VNC, RDP, or panel mutation through this portal — information and relish in sharing knowledge."
+    ],
+    "love_note": "Thank you for keeping the network honest. Ask anything DNS — we're an open book."
+  },
+  "remote_control_blocked": [
+    {"path_prefix": "/api/firewall", "reason": "No remote firewall mutation — use Hostess7 operator bridge locally"},
+    {"path_prefix": "/api/attack", "reason": "No attack kit — information only"},
+    {"path_prefix": "/api/nexus/restart", "reason": "No service restart from admin portal"},
+    {"path_prefix": "/api/remote", "reason": "Remote control explicitly forbidden"},
+    {"path_prefix": "/api/rdp", "reason": "RDP blocked — RFC 1035 info only"},
+    {"path_prefix": "/api/vnc", "reason": "VNC blocked"},
+    {"path_prefix": "/api/ssh", "reason": "SSH shell blocked — DNS read-only"},
+    {"path_prefix": "/api/field-toolkit", "reason": "Field toolkit sever/hell-rip not exposed"},
+    {"path_prefix": "/api/home-protector/block", "reason": "Airspace mutation not exposed"}
+  ],
+  "remote_ports_blocked": [22, 23, 3389, 3390, 5900, 5901, 5985, 5986, 4899, 6568, 7070, 8291, 8728],
+  "equipment_room_default_enabled": true,
+  "equipment_room_prompt": "Enable standard network equipment room reporting? (Recommended — on by default for Hostess 7 admins)",
+  "legacy_dns_equipment": [
+    {"id": "bind9-legacy", "vendor": "ISC BIND", "era": "1990s–2010s", "role": "authoritative/recursive", "rfc": "RFC 1035", "interop": "Full — trace delegation compatible", "notes": "Classic named.conf; forwarders should point to 127.0.0.1 Truth Resolver"},
+    {"id": "windows-dns", "vendor": "Microsoft Windows Server DNS", "era": "2000s–2020s", "role": "AD-integrated DNS", "rfc": "RFC 1035 / RFC 2181", "interop": "Conditional — disable ISP forwarders; use Truth Resolver upstream", "notes": "dnscmd /zone export for inventory; no remote admin via this portal"},
+    {"id": "cisco-router-dns", "vendor": "Cisco IOS/IOS-XE", "era": "1990s–present", "role": "DNS forwarder on router", "rfc": "RFC 1035", "interop": "Forwarder mode — ip dns server; point to 127.0.0.1", "notes": "Equipment room report captures ip dns name-server lines"},
+    {"id": "pi-hole-legacy", "vendor": "Pi-hole / dnsmasq", "era": "2010s", "role": "filtering forwarder", "rfc": "RFC 1035 / RFC 6761", "interop": "Upstream 127.0.0.1; blocklist merges with NEXUS adblock", "notes": "Legacy Pi-hole kept as reporting peer — not authoritative"},
+    {"id": "isp-modem-dns", "vendor": "ISP CPE (Charter/Spectrum etc.)", "era": "ongoing", "role": "ISP DNS redirection", "rfc": "47 U.S.C. § 222 CPNI", "interop": "Blocked — classified foreign resolver", "notes": "Document in equipment room; do not use as upstream"},
+    {"id": "embedded-dns", "vendor": "Embedded / IoT gateway", "era": "2010s", "role": "local stub resolver", "rfc": "RFC 6761", "interop": "Point to Truth Resolver; special-use names loopback-only", "notes": "Old gear — report MAC and firmware in equipment room"}
+  ],
+  "field_dns_peers_seed": [
+    {"id": "local-truth", "role": "primary", "host": "127.0.0.1", "port": 53, "stack": "NEXUS Truth Resolver", "rfc": "RFC 1034 §3.6 trace"}
+  ],
+  "mdf_idf_checklist": [
+    {"item": "Main Distribution Frame (MDF) patch panel labeled", "rfc": "TIA-606", "default_on": true},
+    {"item": "Intermediate Distribution Frame (IDF) per floor documented", "rfc": "TIA-568", "default_on": true},
+    {"item": "Core switch DNS ACL — no egress to foreign resolvers", "rfc": "RFC 9520", "default_on": true},
+    {"item": "UPS runtime for DNS host documented", "rfc": "—", "default_on": true},
+    {"item": "Legacy BIND / Windows DNS forwarder inventory", "rfc": "RFC 1035", "default_on": true},
+    {"item": "Field server DNS peers (777 port family) listed", "rfc": "RFC 1034", "default_on": true},
+    {"item": "Cable test results on DNS server uplink", "rfc": "TIA-1152", "default_on": false}
+  ]
+}

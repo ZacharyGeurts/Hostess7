@@ -1,0 +1,32 @@
+{
+  "schema": "nexus-fcc-global-pollution-v1",
+  "motto": "Near-infinite passive reach. Global pollution cleanup. Always safe on the wire.",
+  "reach_model": {
+    "mode": "passive_receive_only",
+    "description": "Passive beacon correlation — no transmission. Effective horizon grows with each scan cycle as pollution enters the field; ledger persists forever so nothing slips back in.",
+    "near_infinite": true,
+    "safety": "FCC Part 15 receive-only. We never jam, burst, or transmit. Cleanup is wire-layer: disconnect our station, firewall block, forever registry, dossier archive.",
+    "horizon_growth": "Each cycle extends the correlated field. Cumulative pollution ledger tracks every hostile AP ever seen — global cleanup never forgets."
+  },
+  "pollution_definition": [
+    "unpermitted_spectrum",
+    "evil_twin",
+    "rogue_open",
+    "hostile_oui",
+    "enterprise_downgrade",
+    "hidden_surveillance",
+    "connected_rogue",
+    "connected_unpermitted"
+  ],
+  "cleanup_actions": [
+    "ledger_record",
+    "forever_registry",
+    "dossier_archive",
+    "firewall_block_forever",
+    "disconnect_on_sight",
+    "boot_reenforce",
+    "operations_log_detail"
+  ],
+  "operations_log": "field-rf-operations.jsonl",
+  "pollution_ledger": "field-rf-pollution-ledger.json"
+}

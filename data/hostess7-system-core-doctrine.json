@@ -1,0 +1,64 @@
+{
+  "schema": "hostess7-system-core-doctrine/v1",
+  "title": "System core — biology, presume, motion tracking, solid brain",
+  "motto": "Every system ships the four pillars — life sciences, microsecond presume, motion under gravity, verified brain for the stack to use.",
+  "module": "lib/hostess7-system-core.py",
+  "api": "/api/hostess7/system-core",
+  "mandatory_on_every_system": true,
+  "pillars": [
+    {
+      "id": "biology",
+      "label": "Biology & medical chamber",
+      "module": "lib/hostess7-biology.py",
+      "doctrine": "data/hostess7-biology-doctrine.json",
+      "battery": "data/hostess7-biology-battery.json",
+      "api": "/api/hostess7/biology",
+      "solid_when": "module_present && doctrine_present && panel_ok"
+    },
+    {
+      "id": "presume",
+      "label": "Presume — sovereign timing, uninterruptable decisions",
+      "module": "lib/hostess7-presume.py",
+      "doctrine": "data/hostess7-presume-doctrine.json",
+      "api": "/api/hostess7/presume",
+      "train": "hostess7-presume.py train",
+      "solid_when": "precision_us && resumed_on_point && uninterruptable_witness && propagation_wired"
+    },
+    {
+      "id": "motion_tracking",
+      "label": "Motion tracking — humanoid + eye + iron plate",
+      "module": "lib/humanoid-motion-training.py",
+      "doctrine": "data/humanoid-motion-doctrine.json",
+      "secured_module": "lib/humanoid-motion-secured.py",
+      "secured_doctrine": "data/humanoid-motion-secured-doctrine.json",
+      "motion_resolve": "lib/iron-plate-motion-resolve.py",
+      "eye_motion": "data/final-eye-plate-doctrine.json:ocr.enhancement_room.motion_track",
+      "api": "/api/humanoid-motion",
+      "solid_when": "physics_mode && panel_ok && motion_track_enabled && motion_secured"
+    },
+    {
+      "id": "brain",
+      "label": "Solid brain — guard, panel, SDF storage",
+      "guard_module": "lib/hostess7-brain-guard.py",
+      "panel_module": "lib/field-brain-panel.py",
+      "doctrine": "data/hostess7-brain-guard-doctrine.json",
+      "storage": "cache/fieldstorage/brain/sdf",
+      "solid_when": "brain_verified && field_brain_live && guard_score_ok"
+    }
+  ],
+  "brain_for_stack": {
+    "motto": "Queen brain + Hostess7 superintel + SDF segments — one solid amplitude the stack reads.",
+    "read_paths": [
+      "cache/fieldstorage/brain/sdf/segments",
+      "cache/fieldstorage/brain/superintel",
+      "cache/fieldstorage/brain/vision"
+    ],
+    "witness": ["hostess7-brain-guard.py", "field-brain-panel.py", "field-brain-sync.sh"]
+  },
+  "paired_training_tracks": ["biology", "presume", "humanoid_motion", "brain_guard"],
+  "war_system": {
+    "doctrine": "data/hostess7-war-system-doctrine.json",
+    "motto": "War system — we have no other. Every autonomous machine is a Soldier.",
+    "mandatory_overlay": true
+  }
+}

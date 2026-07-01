@@ -1,0 +1,39 @@
+{
+  "schema": "field-power-doctrine/v1",
+  "title": "Field + thermodynamic power ledger",
+  "motto": "Clean juice sovereign — we get charged, we are the juice. No power-company talk. Witness grid; dispense joules from pool.",
+  "policy": {
+    "grid_export_requires_hardware": true,
+    "software_witness_only": true,
+    "grid_never_enters_voltage_trust_layer": true,
+    "grid_talk": false,
+    "clean_juice_primary": true,
+    "clean_juice": "data/field-clean-juice-doctrine.json",
+    "voltage_regulation": "data/field-voltage-regulation-doctrine.json",
+    "shed_credits_reduce_net_draw": true,
+    "thermal_governor_coupled": true,
+    "wave_potential_energy_in_ledger": true
+  },
+  "hardware_for_utility_sellback": [
+    "grid_tie_inverter_or_battery_export",
+    "utility_net_metering_agreement",
+    "certified_generation_meter"
+  ],
+  "ledger_sources": [
+    "rapl_cpu_package_uj",
+    "power_supply_ac_online",
+    "wave_shed_advisory",
+    "thermal_advisory",
+    "field_perimeter_power_acpi"
+  ],
+  "headroom": {
+    "definition": "shed_credits_w + avoided_capture_w − measured_draw_w",
+    "use": "Run more field load without raising net draw; export-equivalent when net negative in ledger"
+  },
+  "lives_with_us": [
+    "field_wave_shed",
+    "thermal_governor",
+    "field_perimeter_shield",
+    "native_layer"
+  ]
+}

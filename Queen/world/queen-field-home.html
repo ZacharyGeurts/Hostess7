@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-surface="field-home" data-queen-plated="1">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queen</title>
+  <link rel="stylesheet" href="queen-field-plate.css" />
+  <link rel="stylesheet" href="queen-branding.css" />
+  <style>
+    html, body { margin: 0; min-height: 100vh; background: #010302; color: #e8f2ea; font: 14px system-ui, sans-serif; overflow: hidden; }
+    .qfh { position: relative; min-height: 100vh; display: flex; flex-direction: column; }
+    .qfh-plate { flex: 1; position: relative; min-height: 0; }
+    .qfh-plate .qb-field-plate { position: absolute; }
+    .qfh-plate .qb-field-plate__seal { bottom: 18%; }
+    .qfh-deck {
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      padding: 14px 18px 18px;
+      border-top: 1px solid #1a4d32;
+      background: linear-gradient(0deg, #050806, rgba(8, 16, 12, 0.95));
+    }
+    .qfh-card {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(26, 77, 50, 0.55);
+      background: rgba(4, 10, 7, 0.75);
+    }
+    .qfh-card h3 { margin: 0 0 6px; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #3ecf8e; }
+    .qfh-card p { margin: 0; font-size: 0.84rem; color: #c8d6ea; line-height: 1.45; }
+    .qfh-card a { color: #f472b6; text-decoration: none; }
+    .qfh-card a:hover { color: #3ecf8e; }
+  </style>
+</head>
+<body class="qfh">
+  <div class="qfh-plate">
+    <div class="qb-field-plate" id="qfh-plate">
+      <img class="qb-field-plate__portrait" src="assets/branding/amouranth-plate.png" alt="" width="1920" height="1080" loading="eager" />
+      <div class="qb-field-plate__vignette" aria-hidden="true"></div>
+      <div class="qb-field-plate__seal">
+        <h1 class="qb-field-plate__name">Queen</h1>
+        <p class="qb-field-plate__motto">Field web engine · plated · loopback held</p>
+        <p class="qb-field-plate__rtx" id="qfh-rtx">AMOURANTHRTX · wiring…</p>
+        <p class="qb-field-plate__depth" id="qfh-depth">Field depth · layer 1</p>
+      </div>
+    </div>
+  </div>
+  <footer class="qfh-deck" aria-label="Queen field surfaces">
+    <article class="qfh-card">
+      <h3>Field C2</h3>
+      <p><a href="http://127.0.0.1:9477/field" target="_top">AmmoOS field panel</a></p>
+    </article>
+    <article class="qfh-card">
+      <h3>AMOURANTHRTX</h3>
+      <p id="qfh-rtx-card">RTX engine · G16 field_opt</p>
+    </article>
+    <article class="qfh-card">
+      <h3>Field sanity</h3>
+      <p id="qfh-sanity">Integral · simplify field layers · never obtuse</p>
+    </article>
+    <article class="qfh-card">
+      <h3>Nested fields</h3>
+      <p id="qfh-nested">Infinite resolution is aspiration — we simplify, never stack heat</p>
+    </article>
+    <article class="qfh-card">
+      <h3>Programs</h3>
+      <p><a href="queen-start.html" target="_top">Start</a> · <a href="queen-files.html" target="_top">Files</a></p>
+    </article>
+  </footer>
+  <script src="queen-field-engine.js" defer></script>
+  <script src="queen-field-sanity.js" defer></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>
