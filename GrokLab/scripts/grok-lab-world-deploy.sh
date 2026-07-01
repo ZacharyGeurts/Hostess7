@@ -43,9 +43,26 @@ case "$CMD" in
     log "Bootstrap local sovereign node (world perimeter home)…"
     bash "$ROOT/deploy/world-node-bootstrap.sh" --installed --region local --node-id node-local
     ;;
-  launch-qemu)
-    log "Launch QEMU free VM world nodes (us + eu on :2222 :2223)…"
-    bash "$ROOT/deploy/qemu-world-launch.sh"
+  sync-nodes)
+    log "Sync 30 geographic nodes from world-node-regions.json…"
+    python3 "$ROOT/deploy/world-nodes-sync.py" sync
+    ;;
+  launch-qemu|launch-qemu-wave)
+    log "launch-qemu superseded — use pipeline (rolling 3-slot provisioner)…"
+    python3 "$ROOT/deploy/world-nodes-sync.py" sync
+    python3 "$ROOT/deploy/qemu-world-pipeline.py" run
+    ;;
+  spin-30|setup-30)
+    log "spin-30 superseded — starting rolling 3-QEMU pipeline…"
+    python3 "$ROOT/deploy/world-nodes-sync.py" sync
+    python3 "$ROOT/deploy/qemu-world-pipeline.py" run
+    ;;
+  pipeline|pipeline-run)
+    log "Rolling 3-QEMU pipeline — keep 3 active until all 30 are provisioned…"
+    python3 "$ROOT/deploy/qemu-world-pipeline.py" run
+    ;;
+  pipeline-status|pipeline-watch)
+    python3 "$ROOT/deploy/qemu-world-pipeline.py" "${CMD#pipeline-}"
     ;;
   deploy)
     log "Deploy to all enabled nodes in GrokLab/deploy/world-nodes.json"
@@ -63,9 +80,9 @@ case "$CMD" in
     curl -sf --connect-timeout 2 http://127.0.0.1:9479/api/stream/status 2>/dev/null | "$PY" -m json.tool 2>/dev/null | head -20 || true
     ;;
   world-boot)
-    bash "$0" launch-qemu
+    bash "$0" sync-nodes
     bash "$0" pack
-    bash "$0" deploy
+    bash "$0" pipeline
     bash "$0" verify
     ;;
   status)
@@ -92,7 +109,7 @@ case "$CMD" in
     fi
     ;;
   *)
-    echo "Usage: grok-lab-world-deploy.sh {init-nodes|pack|launch-qemu|bootstrap|deploy|verify|world-boot|status|providers|cloudflare|cloudflare-propagate}" >&2
+    echo "Usage: grok-lab-world-deploy.sh {init-nodes|sync-nodes|pack|pipeline|pipeline-status|pipeline-watch|bootstrap|deploy|verify|world-boot|status|providers|cloudflare|cloudflare-propagate}" >&2
     exit 1
     ;;
 esac

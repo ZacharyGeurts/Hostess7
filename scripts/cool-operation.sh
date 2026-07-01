@@ -56,7 +56,7 @@ _cool_on() {
     done < <(pgrep -f "$pat" 2>/dev/null || true)
   done
   # Pause bandwidth-heavy VM deploy/rsync while cool
-  for pat in 'world-node-deploy-remaining' 'world-node-quick-deploy' 'world-node-hostess7-deploy'; do
+  for pat in 'qemu-world-pipeline' 'world-node-c2-kilroy-war-deploy' 'qemu-world-launch-one'; do
     while IFS= read -r pid; do
       [[ -n "$pid" && "$pid" != "$$" ]] && kill -TERM "$pid" 2>/dev/null || true
     done < <(pgrep -f "$pat" 2>/dev/null || true)
