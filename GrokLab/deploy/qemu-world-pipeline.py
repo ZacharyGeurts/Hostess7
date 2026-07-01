@@ -32,9 +32,10 @@ RSYNC_LOG_PATH = Path(
 )
 SSH_KEY = os.environ.get("GROK_LAB_SSH_KEY", str(DEPLOY / "world-ssh" / "id_ed25519"))
 NL = Path(os.environ.get("NEXUS_INSTALL_ROOT", str(DEPLOY.parent.parent)))
-VERIFY_SEC = int(os.environ.get("WORLD_PIPELINE_VERIFY_SEC", "90"))
-REBOOT_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_REBOOT_SSH_SEC", "120"))
+VERIFY_SEC = int(os.environ.get("WORLD_PIPELINE_VERIFY_SEC", "240"))
+REBOOT_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_REBOOT_SSH_SEC", "180"))
 DEPLOY_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_DEPLOY_SSH_SEC", "180"))
+CHECK_BOOT_SEC = int(os.environ.get("WORLD_PIPELINE_CHECK_BOOT_SEC", "200"))
 CHECK_MAX_ROUNDS = int(os.environ.get("WORLD_PIPELINE_CHECK_MAX_ROUNDS", "100"))
 DEPLOY_SETTLE_SEC = int(os.environ.get("WORLD_PIPELINE_DEPLOY_SETTLE_SEC", "2"))
 MAX_DEPLOY_ATTEMPTS = int(os.environ.get("WORLD_PIPELINE_MAX_DEPLOY_ATTEMPTS", "8"))
@@ -414,40 +415,61 @@ def _tree_ok(port: int) -> bool:
     return chk.returncode == 0
 
 
-def _trigger_panel_boot(port: int) -> None:
+def _trigger_panel_boot(
+    port: int,
+    *,
+    slot: int | None = None,
+    nid: str | None = None,
+) -> None:
     ensure = "/opt/ammoos/ammoos/NewLatest/GrokLab/deploy/world-node-panel-ensure.sh"
     boot = "/opt/ammoos/ammoos/NewLatest/GrokLab/deploy/world-node-c2-kilroy-boot.sh"
+    label = f"slot {slot} boot {nid} :{port}" if slot is not None else f"boot :{port}"
+    _log(f"{label} — starting c2/kilroy + panel (up to {CHECK_BOOT_SEC}s)")
     _run(
         _ssh_cmd(
             port,
             f"sudo systemctl start nexus-c2-kilroy.service 2>/dev/null; "
             f"sudo systemctl start nexus-panel.service 2>/dev/null; "
-            f"test -x {ensure} && GROK_LAB_WORLD_NODE=1 AML_BUILD=0 bash {ensure} >/dev/null 2>&1 || "
-            f"(test -x {boot} && AML_BUILD=0 bash {boot} >/dev/null 2>&1) || true",
-            connect_timeout=8,
+            f"test -x {ensure} && GROK_LAB_WORLD_NODE=1 AML_BUILD=0 bash {ensure} 2>&1 | tail -5 || "
+            f"(test -x {boot} && AML_BUILD=0 bash {boot} 2>&1 | tail -5) || true",
+            connect_timeout=15,
         ),
-        timeout=45,
+        timeout=CHECK_BOOT_SEC,
     )
 
 
-def _verify_panel(port: int, timeout: int | None = None) -> bool:
+def _verify_panel(
+    port: int,
+    timeout: int | None = None,
+    *,
+    slot: int | None = None,
+    nid: str | None = None,
+) -> bool:
     limit = timeout if timeout is not None else VERIFY_SEC
+    attempts = max(1, limit // 5)
     boot_nudged = False
-    for i in range(max(1, limit // 5)):
+    prefix = f"slot {slot} verify {nid}" if slot is not None else "verify"
+    for i in range(attempts):
         r = _run(
             _ssh_cmd(
                 port,
                 "curl -sf -o /dev/null -w '%{http_code}' "
                 "http://127.0.0.1:9477/field 2>/dev/null || echo 000",
+                connect_timeout=8,
             ),
-            timeout=20,
+            timeout=25,
         )
-        if (r.stdout or "").strip() == "200":
+        code = (r.stdout or "").strip() or "000"
+        if code == "200":
+            _log(f"{prefix} :{port} — panel 200 ({i + 1}/{attempts})")
             return True
-        if not boot_nudged and i >= 3:
+        if i == 0 or (i + 1) % 4 == 0:
+            _log(f"{prefix} :{port} — waiting panel http={code} ({i + 1}/{attempts})")
+        if not boot_nudged and i >= 2:
             boot_nudged = True
-            _trigger_panel_boot(port)
+            _trigger_panel_boot(port, slot=slot, nid=nid)
         time.sleep(5)
+    _log(f"{prefix} :{port} — panel not ready after {attempts} attempts")
     return False
 
 
@@ -581,9 +603,12 @@ def _slot_worker_check(slot: int) -> None:
                 continue
 
             _set_slot(slot, state="check_verify", node=node)
-            _trigger_panel_boot(port)
-            verified = _verify_panel(port)
+            _log(f"slot {slot} check_verify {nid} :{port} — boot + panel (up to {VERIFY_SEC}s)")
+            _trigger_panel_boot(port, slot=slot, nid=nid)
+            verified = _verify_panel(port, slot=slot, nid=nid)
             tree_ok = _tree_ok(port)
+            if not tree_ok:
+                _log(f"slot {slot} tree missing {nid} :{port}")
 
             if tree_ok and verified:
                 _mark_provisioned(nid)
