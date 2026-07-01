@@ -4,6 +4,9 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PY="${ROOT}/PythonG/bin/pythong"
+if [[ ! -x "$PY" ]]; then
+  PY="$(command -v python3 2>/dev/null || echo python3)"
+fi
 MONSTER="${ROOT}/lib/field-monster-shell.py"
 export PYTHONPATH="${ROOT}/lib:${PYTHONPATH:-}"
 

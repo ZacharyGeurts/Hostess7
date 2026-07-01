@@ -9,7 +9,9 @@ REGION="${3:-unknown}"
 REBOOT="${WORLD_NODE_REBOOT:-1}"
 
 SSH_KEY="${GROK_LAB_SSH_KEY:-$(cd "$(dirname "$0")" && pwd)/world-ssh/id_ed25519}"
-NL="${NEXUS_INSTALL_ROOT:-$(cd "$(dirname "$0")/../../.." && pwd)}"
+chmod 600 "$SSH_KEY" 2>/dev/null || true
+SSH_OPTS="-o BatchMode=yes -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20"
+NL="${NEXUS_INSTALL_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}"
 SG="${SG_ROOT:-$(cd "$NL/.." && pwd)}"
 KILROY="${KILROY_ROOT:-$(readlink -f "$NL/KILROY" 2>/dev/null || echo "$SG/KILROY")}"
 DEPLOY="$(cd "$(dirname "$0")" && pwd)"
@@ -19,7 +21,8 @@ RS="rsync -a --delete-after -e 'ssh -p $PORT -i $SSH_KEY -o StrictHostKeyCheckin
 log() { printf '[c2-kilroy-deploy] %s\n' "$*"; }
 
 ssh_ok() {
-  ssh -o BatchMode=yes -o ConnectTimeout=12 -p "$PORT" -i "$SSH_KEY" ubuntu@127.0.0.1 "$@" 2>/dev/null
+  # shellcheck disable=SC2086
+  ssh $SSH_OPTS -p "$PORT" -i "$SSH_KEY" ubuntu@127.0.0.1 "$@" 2>/dev/null
 }
 
 log "=== $NODE_ID :$PORT ($REGION) — NEXUS C2 + KILROY war harden ==="
@@ -74,16 +77,17 @@ ssh_ok "chmod +x ${RB}/GrokLab/deploy/world-node-c2-kilroy-boot.sh ${RB}/GrokLab
   chmod +x ${RB}/lib/field-war-hardening.sh 2>/dev/null; true"
 
 log "arm + boot C2/KILROY on :$PORT"
-ssh -p "$PORT" -i "$SSH_KEY" ubuntu@127.0.0.1 bash -s <<REMOTE
-set -euo pipefail
+# shellcheck disable=SC2086
+ssh $SSH_OPTS -p "$PORT" -i "$SSH_KEY" ubuntu@127.0.0.1 bash -s <<REMOTE || true
+set -uo pipefail
 export SG_ROOT=/opt/ammoos/ammoos
 export NEXUS_INSTALL_ROOT=${RB}
 export NEXUS_STATE_DIR=${RB}/.nexus-state
 export GROK_LAB_NODE_ID=${NODE_ID}
 export GROK_LAB_NODE_REGION=${REGION}
 export GROK_LAB_WORLD_NODE=1
-export NEXUS_WAR_MACHINE=1 NEXUS_EVERY_KILL_REKILL=1 NEXUS_BOOT_REKILL=1
-bash ${RB}/GrokLab/deploy/world-node-c2-kilroy-boot.sh 2>&1 | tail -12
+export AML_BUILD=0 NEXUS_WAR_MACHINE=1 NEXUS_EVERY_KILL_REKILL=1 NEXUS_BOOT_REKILL=1
+AML_BUILD=0 bash ${RB}/GrokLab/deploy/world-node-c2-kilroy-boot.sh 2>&1 | tail -12 || true
 
 # systemd — survive reboot
 sudo tee /etc/systemd/system/nexus-c2-kilroy.service >/dev/null <<'UNIT'
@@ -113,7 +117,8 @@ REMOTE
 
 if [[ "$REBOOT" == "1" ]]; then
   log "reboot :$PORT ($NODE_ID)"
-  ssh -o ConnectTimeout=10 -p "$PORT" -i "$SSH_KEY" ubuntu@127.0.0.1 'sudo /sbin/reboot' 2>/dev/null || true
+  # shellcheck disable=SC2086
+  ssh $SSH_OPTS -p "$PORT" -i "$SSH_KEY" ubuntu@127.0.0.1 'sudo /sbin/reboot' 2>/dev/null || true
   sleep 3
 fi
 

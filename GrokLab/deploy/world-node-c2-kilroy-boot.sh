@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # World node boot — NEXUS C2 command deck + KILROY PC core only (no Queen kiosk).
 set -euo pipefail
+export AML_BUILD=0
 
 NL="${NEXUS_INSTALL_ROOT:-/opt/ammoos/ammoos/NewLatest}"
 SG="${SG_ROOT:-/opt/ammoos/ammoos}"
@@ -18,9 +19,14 @@ export FIELD_STACK_LAYER="hardware,nexus_c2,kilroy"
 
 mkdir -p "$STATE"
 
-if [[ -x "$NL/Grok16/bin/gpy-16" ]]; then
-  PY="$NL/Grok16/bin/gpy-16"
-  export PATH="$NL/Grok16/bin:$PATH"
+# World nodes get slim Grok16 rsync (no grok_core) — gpy-16 crashes the panel.
+if [[ -z "${GROK_LAB_PY:-}" ]]; then
+  if [[ "${GROK_LAB_WORLD_NODE:-0}" == "1" ]]; then
+    PY="python3"
+  elif [[ -x "$NL/Grok16/bin/gpy-16" ]] && "$NL/Grok16/bin/gpy-16" -c 'import grok_core' 2>/dev/null; then
+    PY="$NL/Grok16/bin/gpy-16"
+    export PATH="$NL/Grok16/bin:$PATH"
+  fi
 fi
 
 log() { printf '[c2-kilroy-boot] %s\n' "$*"; }

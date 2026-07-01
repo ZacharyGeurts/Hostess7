@@ -3,11 +3,15 @@
 set -euo pipefail
 
 DEPLOY="$(cd "$(dirname "$0")" && pwd)"
-NL="${NEXUS_INSTALL_ROOT:-$(cd "$DEPLOY/../../.." && pwd)}"
+NL="${NEXUS_INSTALL_ROOT:-$(cd "$DEPLOY/../.." && pwd)}"
 LOG="${NEXUS_STATE_DIR:-$NL/.nexus-state}/world-c2-kilroy-deploy.log"
 mkdir -p "$(dirname "$LOG")"
 
 log() { printf '[c2-kilroy-all] %s\n' "$*" | tee -a "$LOG"; }
+
+KEY="${GROK_LAB_SSH_KEY:-$DEPLOY/world-ssh/id_ed25519}"
+chmod 600 "$KEY" 2>/dev/null || true
+SSH_OPTS="-o BatchMode=yes -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20"
 
 # Core 5 nodes (qemu cap)
 NODES=(
@@ -25,12 +29,16 @@ for spec in "${NODES[@]}"; do
   if bash "$DEPLOY/world-node-c2-kilroy-war-deploy.sh" "$PORT" "$NODE_ID" "$REGION" >>"$LOG" 2>&1; then
     log "OK $NODE_ID :$PORT"
   else
-    log "FAIL $NODE_ID :$PORT"
+    # Rsync may have landed even if post-boot harden logged warnings
+    if ssh $SSH_OPTS -p "$PORT" -i "$KEY" ubuntu@127.0.0.1 "test -f /opt/ammoos/ammoos/NewLatest/lib/field-war-hardening.sh" 2>/dev/null; then
+      log "PARTIAL $NODE_ID :$PORT (tree present — boot may need retry)"
+    else
+      log "FAIL $NODE_ID :$PORT"
+    fi
   fi
 done
 
 log "waiting for post-reboot SSH (up to 180s per node)…"
-KEY="${GROK_LAB_SSH_KEY:-$DEPLOY/world-ssh/id_ed25519}"
 for spec in "${NODES[@]}"; do
   IFS=: read -r PORT NODE_ID REGION <<< "$spec"
   ok=0

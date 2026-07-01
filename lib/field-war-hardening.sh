@@ -19,6 +19,7 @@ unset -f _aml_find_root 2>/dev/null || true
 #!/usr/bin/env bash
 # NEXUS C2 war machine hardening — layer chain, forever RE-KILL, full defense arm.
 set -euo pipefail
+export AML_BUILD=0
 
 _LIB="$(cd "$(dirname "$0")" && pwd)"
 _ROOT="$(cd "${_LIB}/.." && pwd)"
