@@ -29,6 +29,12 @@
   },
   "api": {
     "status": "/api/status",
-    "ask": "/api/ask"
+    "ask": "/api/ask",
+    "sovereign_time": "/api/sovereign-time"
+  },
+  "sovereign_time": {
+    "policy": "No wall timers — sovereign linear clock only",
+    "refresh": "visibilitychange and focus — never setInterval",
+    "wait": "hostess7_sovereign_wait.py via hostess7-presume"
   }
 }

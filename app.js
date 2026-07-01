@@ -111,6 +111,7 @@ async function ask(rawQuery) {
     if (!r.ok) throw new Error("ask failed");
     const j = await r.json();
     addMsg(j.text || "(no reply)", "hostess");
+    checkStatus();
   } catch {
     if (liveBrain) {
       addMsg("Brain request failed — check Hostess7 logs.", "hostess");
@@ -137,14 +138,37 @@ bootBtn?.addEventListener("click", () => {
   window.open(bootManifest?.codespaces || CODESPACES, "_blank", "noopener,noreferrer");
 });
 
+async function sovereignPulse() {
+  try {
+    const r = await fetch("/api/sovereign-time", { cache: "no-store" });
+    if (r.ok) return await r.json();
+  } catch {
+    /* static mirror — no sovereign endpoint */
+  }
+  return null;
+}
+
+function bindSovereignRefresh() {
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      sovereignPulse().then(() => checkStatus());
+    }
+  });
+  window.addEventListener("focus", () => {
+    sovereignPulse().then(() => checkStatus());
+  });
+  form.addEventListener("focusin", () => checkStatus());
+}
+
 (async () => {
   bootManifest = await loadBootManifest();
+  bindSovereignRefresh();
+  await sovereignPulse();
   const live = await checkStatus();
   addMsg(
     live
-      ? "I'm Hostess 7 — war-ready, live on KILROY. Never demo. Ask me anything; I draw while we talk."
-      : `War-ready boot: ${BOOT_CMD}. On GitHub Pages, use Boot Hostess 7 → Codespaces.`,
+      ? "I'm Hostess 7 — war-ready, live on KILROY. Sovereign time only — never demo."
+      : `War-ready boot: ${BOOT_CMD}. Sovereign pulse on focus — no wall timers.`,
     "hostess"
   );
-  setInterval(checkStatus, 15000);
 })();
