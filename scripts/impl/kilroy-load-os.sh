@@ -83,7 +83,7 @@ else
   fi
 fi
 
-# Launch AmmoOS desktop (AMOURANTHRTX-backed /field kiosk)
+# Launch AmmoOS desktop (AMOURANTHRTX-backed /field command deck)
 OPEN_PY="${ROOT}/lib/field-queen-browser-open.py"
 if [[ -f "$OPEN_PY" ]]; then
   echo ""

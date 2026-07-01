@@ -41,6 +41,20 @@ export NEXUS_FIELD_BROWSER_QUEEN="${NEXUS_FIELD_BROWSER_QUEEN:-1}"
 export NEXUS_FIELD_DNS="${NEXUS_FIELD_DNS:-1}"
 export NEXUS_FIELD_DHCP="${NEXUS_FIELD_DHCP:-1}"
 export NEXUS_FIELD_LOCAL_DNS_CONNECT="${NEXUS_FIELD_LOCAL_DNS_CONNECT:-1}"
+export NEXUS_WAR_MACHINE="${NEXUS_WAR_MACHINE:-1}"
+export NEXUS_C2_WAR_POSTURE="${NEXUS_C2_WAR_POSTURE:-1}"
+export NEXUS_C2_KIOSK="${NEXUS_C2_KIOSK:-0}"
+export NEXUS_EVERY_KILL_REKILL="${NEXUS_EVERY_KILL_REKILL:-1}"
+export NEXUS_BOOT_REKILL="${NEXUS_BOOT_REKILL:-1}"
+export NEXUS_FIELD_ATTACK_KIT="${NEXUS_FIELD_ATTACK_KIT:-1}"
+export NEXUS_FIELD_AUTO_REKILL="${NEXUS_FIELD_AUTO_REKILL:-1}"
+export NEXUS_ATTACK_KIT_AUTO_CRUSH="${NEXUS_ATTACK_KIT_AUTO_CRUSH:-1}"
+export NEXUS_KILL_DETECT="${NEXUS_KILL_DETECT:-1}"
+export SG_ROOT_KILL_PREJUDICE="${SG_ROOT_KILL_PREJUDICE:-1}"
+export SG_ROOT_SOVEREIGN_KILL="${SG_ROOT_SOVEREIGN_KILL:-1}"
+export SG_ROOT_SOVEREIGN_GUARD="${SG_ROOT_SOVEREIGN_GUARD:-1}"
+export KILROY_WAR_POSTURE="${KILROY_WAR_POSTURE:-1}"
+export FIELD_STACK_LAYER="${FIELD_STACK_LAYER:-hardware,nexus_c2,kilroy,ammoos,queen}"
 
 # shellcheck source=/dev/null
 source "${ROOT}/lib/nexus-common.sh"
@@ -410,7 +424,7 @@ if [[ "${1:-}" == "--tab" && -n "${2:-}" ]]; then
 fi
 
 if nexus_boot_c2_desktop; then
-  echo "NEXUS C2 desktop — fullscreen kiosk at ${URL}"
+  echo "NEXUS C2 war machine — command deck at ${URL}"
   nexus_panel_tray_install_autostart 2>/dev/null || true
   nexus_panel_tray_ensure_once 2>/dev/null || true
   exit 0

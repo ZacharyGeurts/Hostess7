@@ -49,8 +49,22 @@ export NEXUS_FIELD_BROWSER_QUEEN="${NEXUS_FIELD_BROWSER_QUEEN:-1}"
 export NEXUS_FIELD_DNS="${NEXUS_FIELD_DNS:-1}"
 export NEXUS_FIELD_DHCP="${NEXUS_FIELD_DHCP:-1}"
 export NEXUS_FIELD_LOCAL_DNS_CONNECT="${NEXUS_FIELD_LOCAL_DNS_CONNECT:-1}"
+export NEXUS_WAR_MACHINE="${NEXUS_WAR_MACHINE:-1}"
+export NEXUS_C2_WAR_POSTURE="${NEXUS_C2_WAR_POSTURE:-1}"
+export NEXUS_C2_KIOSK="${NEXUS_C2_KIOSK:-0}"
+export NEXUS_EVERY_KILL_REKILL="${NEXUS_EVERY_KILL_REKILL:-1}"
+export NEXUS_BOOT_REKILL="${NEXUS_BOOT_REKILL:-1}"
+export NEXUS_FIELD_ATTACK_KIT="${NEXUS_FIELD_ATTACK_KIT:-1}"
+export NEXUS_FIELD_AUTO_REKILL="${NEXUS_FIELD_AUTO_REKILL:-1}"
+export NEXUS_ATTACK_KIT_AUTO_CRUSH="${NEXUS_ATTACK_KIT_AUTO_CRUSH:-1}"
+export NEXUS_KILL_DETECT="${NEXUS_KILL_DETECT:-1}"
+export SG_ROOT_KILL_PREJUDICE="${SG_ROOT_KILL_PREJUDICE:-1}"
+export SG_ROOT_SOVEREIGN_KILL="${SG_ROOT_SOVEREIGN_KILL:-1}"
+export SG_ROOT_SOVEREIGN_GUARD="${SG_ROOT_SOVEREIGN_GUARD:-1}"
 export DISPLAY="${DISPLAY:-:0}"
 mkdir -p "$NEXUS_STATE_DIR" "$TDIR"
+# shellcheck source=/dev/null
+[[ -f "${ROOT}/lib/field-war-hardening.sh" ]] && AML_BUILD=0 source "${ROOT}/lib/field-war-hardening.sh" && nexus_field_war_harden || true
 PY=$(command -v pythong || command -v python3)
 if [[ ! -f "$NEXUS_STATE_DIR/znetwork-operator.json" ]] || ! grep -q '"choice"[[:space:]]*:[[:space:]]*"yes"' "$NEXUS_STATE_DIR/znetwork-operator.json" 2>/dev/null; then
   NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" \

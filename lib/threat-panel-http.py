@@ -3269,6 +3269,15 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200 if payload.get("ok", True) else 500, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-war-hardening", "/api/field-war-harden"):
+            script = INSTALL_ROOT / "lib" / "field-war-hardening.py"
+            if script.is_file():
+                payload = _nexus_py_json(script, ["posture"], timeout=45)
+            else:
+                payload = {"ok": False, "error": "field_war_hardening_missing"}
+            self._send(200 if payload.get("ok", True) else 500, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
         if path in ("/api/hostess7/system-control", "/api/hostess7-system-control"):
             script = INSTALL_ROOT / "lib" / "hostess7-system-control.py"
             if script.is_file():

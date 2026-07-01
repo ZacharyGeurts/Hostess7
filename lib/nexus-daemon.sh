@@ -73,6 +73,11 @@ nexus_firewall_trust_sync_from_memory
 source "${NEXUS_INSTALL_ROOT}/lib/field-attack-kit.sh"
 nexus_field_attack_sync_from_memory
 nexus_field_attack_apply_registry
+[[ -f "${NEXUS_INSTALL_ROOT}/lib/field-war-hardening.sh" ]] && {
+  # shellcheck source=/dev/null
+  source "${NEXUS_INSTALL_ROOT}/lib/field-war-hardening.sh"
+  nexus_field_war_harden || true
+}
 # shellcheck source=/dev/null
 source "${NEXUS_INSTALL_ROOT}/lib/threat-vectors.sh"
 # shellcheck source=/dev/null

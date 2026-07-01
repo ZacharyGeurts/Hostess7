@@ -1,0 +1,69 @@
+{
+  "schema": "field-war-hardening/v1",
+  "title": "NEXUS C2 War Machine — full stack hardening",
+  "motto": "NEXUS C2 is command base — not a kiosk. Every KILL is RE-KILL on existence forever.",
+  "posture": {
+    "war_machine": true,
+    "kiosk": false,
+    "command_deck": true,
+    "defensive_perimeter": true,
+    "offensive_reactive": true,
+    "every_kill_rekill": true,
+    "forever_kill_enforce": true,
+    "immediate_kill_law": true
+  },
+  "layer_order": ["hardware", "nexus_c2", "kilroy", "ammoos", "queen"],
+  "boot_order": ["nexus_c2", "kilroy", "ammoos_desktop", "queen_on_demand"],
+  "defense_chain": [
+    "hardware_wire",
+    "nexus_c2_gates",
+    "connection_gatekeeper",
+    "kilroy_core",
+    "kilroy_network_lane",
+    "trust_strike_engine",
+    "field_attack_kit",
+    "kill_detect",
+    "queen_gates",
+    "hostess7_weapons_defense",
+    "root_sovereign_guard",
+    "ironclad_immediate"
+  ],
+  "kill_policy": {
+    "law": "data/kill-immediate-law.json",
+    "every_kill_rekill": true,
+    "forever_kill_on_registry": true,
+    "boot_rekill": true,
+    "auto_rekill_cycle": true,
+    "rekill_on_existence": true,
+    "motto": "First KILL immediate · registry permanent · returners RE-KILL forever"
+  },
+  "env": {
+    "NEXUS_WAR_MACHINE": "1",
+    "NEXUS_C2_WAR_POSTURE": "1",
+    "NEXUS_C2_KIOSK": "0",
+    "NEXUS_EVERY_KILL_REKILL": "1",
+    "NEXUS_BOOT_REKILL": "1",
+    "ZOCR_REKILL_AT_BOOT": "1",
+    "NEXUS_FIELD_ATTACK_KIT": "1",
+    "NEXUS_FIELD_AUTO_REKILL": "1",
+    "NEXUS_ATTACK_KIT_AUTO_CRUSH": "1",
+    "NEXUS_KILL_DETECT": "1",
+    "SG_ROOT_KILL_PREJUDICE": "1",
+    "SG_ROOT_SOVEREIGN_KILL": "1",
+    "SG_ROOT_SOVEREIGN_GUARD": "1",
+    "KILROY_WAR_POSTURE": "1",
+    "KILROY_PC_CORE": "1",
+    "QUEEN_DEFENDS_WITH_NEXUS": "1",
+    "QUEEN_DEFENDS_WITH_KILROY": "1",
+    "FIELD_STACK_LAYER": "hardware,nexus_c2,kilroy,ammoos,queen"
+  },
+  "modules": {
+    "harden": "lib/field-war-hardening.sh",
+    "harden_py": "lib/field-war-hardening.py",
+    "attack_kit": "lib/field-attack-kit.py",
+    "weapons_defense": "lib/hostess7-weapons-defense.py",
+    "kilroy_war": "GrokLab/deploy/kilroy-war-arm.sh",
+    "root_guard": "lib/root-sovereign-guard.sh"
+  },
+  "api": "/api/field-war-hardening"
+}

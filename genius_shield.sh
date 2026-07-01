@@ -300,6 +300,11 @@ source "${NEXUS_INSTALL_ROOT}/lib/host-attack.sh" 2>/dev/null || true
 # shellcheck source=/dev/null
 source "${NEXUS_INSTALL_ROOT}/lib/field-attack-kit.sh"
 nexus_field_attack_install_autokill || true
+[[ -f "${NEXUS_INSTALL_ROOT}/lib/field-war-hardening.sh" ]] && {
+  # shellcheck source=/dev/null
+  source "${NEXUS_INSTALL_ROOT}/lib/field-war-hardening.sh"
+  nexus_field_war_harden || true
+}
 
 # First-install boot impl — wire stack, migrate, meld; marks first-boot.complete
 export NEXUS_BOOT_FORCE_FIRST=1

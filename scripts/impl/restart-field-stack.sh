@@ -72,7 +72,7 @@ if ! curl -sf "http://127.0.0.1:${EYE_PORT}/api/health" >/dev/null 2>&1; then
 fi
 
 if [[ "${NEXUS_FIELD_LAUNCH_BROWSER}" == "1" ]]; then
-  echo "NEXUS C2 desktop — fullscreen kiosk at /field"
+  echo "NEXUS C2 war machine — command deck at /field"
 fi
 
 echo ""
