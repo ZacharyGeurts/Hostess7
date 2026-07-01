@@ -1,0 +1,31 @@
+{
+  "name": "Hostess 7",
+  "version": "1.0.0-beta",
+  "boot_command": "./Hostess7.sh boot",
+  "steps": [
+    "zac-restore",
+    "stack-learn",
+    "on",
+    "web-start"
+  ],
+  "boot_order": [
+    "kilroy_kernel",
+    "unified_device_field",
+    "underlay",
+    "guest_os"
+  ],
+  "web_port": 8080,
+  "pages_url": "https://zacharygeurts.github.io/Hostess7/",
+  "codespaces": "https://github.com/codespaces/new?hide_repo_select=true&repo=ZacharyGeurts/Hostess7",
+  "repo": "https://github.com/ZacharyGeurts/Hostess7",
+  "surfaces": {
+    "hostess7": "http://127.0.0.1:8080/",
+    "panel": "http://127.0.0.1:9477/field",
+    "queen": "http://127.0.0.1:9481/world/browser.html",
+    "training": "http://127.0.0.1:9488/"
+  },
+  "api": {
+    "status": "/api/status",
+    "ask": "/api/ask"
+  }
+}
