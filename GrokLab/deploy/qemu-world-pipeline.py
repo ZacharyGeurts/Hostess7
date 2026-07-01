@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rolling 3-QEMU pipeline — deploy 3 at a time, optional fast reboot + deferred check pass."""
+"""Rolling 3-QEMU pipeline — deploy all nodes (no reboot wait), then loop checks from top."""
 from __future__ import annotations
 
 import json
@@ -11,7 +11,7 @@ import time
 from collections import deque
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 DEPLOY = Path(__file__).resolve().parent
 REGIONS = DEPLOY / "world-node-regions.json"
@@ -26,10 +26,10 @@ LOG_PATH = Path(
 )
 SSH_KEY = os.environ.get("GROK_LAB_SSH_KEY", str(DEPLOY / "world-ssh" / "id_ed25519"))
 NL = Path(os.environ.get("NEXUS_INSTALL_ROOT", str(DEPLOY.parent.parent)))
-VERIFY_SEC = int(os.environ.get("WORLD_PIPELINE_VERIFY_SEC", "120"))
-REBOOT_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_REBOOT_SSH_SEC", "180"))
-# Fast path: deploy+reboot fire-and-forget, then second pass for panel checks (default on).
-FAST_DEPLOY = os.environ.get("WORLD_PIPELINE_FAST", "1") != "0"
+VERIFY_SEC = int(os.environ.get("WORLD_PIPELINE_VERIFY_SEC", "90"))
+REBOOT_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_REBOOT_SSH_SEC", "120"))
+CHECK_MAX_ROUNDS = int(os.environ.get("WORLD_PIPELINE_CHECK_MAX_ROUNDS", "100"))
+DEPLOY_SETTLE_SEC = int(os.environ.get("WORLD_PIPELINE_DEPLOY_SETTLE_SEC", "2"))
 
 SLOTS = [
     {"slot": 0, "port": 2222, "tunnel": 19477},
@@ -98,19 +98,29 @@ def _staged_ids() -> set[str]:
     return set(doc.get("staged") or [])
 
 
+def _pending_check_ids() -> set[str]:
+    return _staged_ids() - _provisioned_ids()
+
+
 def _mark_provisioned(node_id: str) -> None:
     ids = _provisioned_ids()
     ids.add(node_id)
     staged = _staged_ids()
     staged.discard(node_id)
-    doc = {
-        "schema": "grok-lab-qemu-provisioned/v1",
-        "updated": _ts(),
-        "provisioned": sorted(ids),
-        "count": len(ids),
-        "target": _target(),
-    }
-    PROVISIONED.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
+    PROVISIONED.write_text(
+        json.dumps(
+            {
+                "schema": "grok-lab-qemu-provisioned/v1",
+                "updated": _ts(),
+                "provisioned": sorted(ids),
+                "count": len(ids),
+                "target": _target(),
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     STAGED.write_text(
         json.dumps(
             {
@@ -149,24 +159,34 @@ def _mark_staged(node_id: str) -> None:
     )
 
 
+def _unstage(node_id: str) -> None:
+    ids = _staged_ids()
+    ids.discard(node_id)
+    STAGED.write_text(
+        json.dumps(
+            {
+                "schema": "grok-lab-qemu-staged/v1",
+                "updated": _ts(),
+                "staged": sorted(ids),
+                "count": len(ids),
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+
 def _all_region_nodes() -> list[dict[str, Any]]:
     return list(_load_json(REGIONS, {}).get("nodes") or [])
 
 
-def _node_by_id(node_id: str) -> dict[str, Any] | None:
-    for n in _all_region_nodes():
-        if n.get("id") == node_id:
-            return n
-    return None
-
-
-def _init_queue() -> None:
-    regions = _load_json(REGIONS, {})
+def _init_deploy_queue() -> None:
     done = _provisioned_ids()
     staged = _staged_ids()
     pending = [
         n
-        for n in regions.get("nodes") or []
+        for n in _all_region_nodes()
         if n.get("id") not in done and n.get("id") not in staged
     ]
     _queue.clear()
@@ -174,15 +194,16 @@ def _init_queue() -> None:
     tgt = _target()
     _state.update(
         {
-            "schema": "grok-lab-qemu-pipeline/v2",
+            "schema": "grok-lab-qemu-pipeline/v3",
             "running": True,
-            "fast_deploy": FAST_DEPLOY,
+            "mode": "deploy-then-loop-check",
             "phase": "deploy",
             "slots": SLOTS,
-            "pending": len(_queue),
-            "staged": len(staged),
+            "pending_deploy": len(_queue),
+            "pending_check": len(_pending_check_ids()),
             "completed": len(done),
             "target": tgt,
+            "check_round": 0,
             "slot_status": {str(s["slot"]): {"state": "idle", "node": None} for s in SLOTS},
             "log": str(LOG_PATH),
         }
@@ -190,7 +211,8 @@ def _init_queue() -> None:
     _save_state()
 
 
-def _init_check_queue() -> None:
+def _init_check_queue_from_top() -> None:
+    """Rebuild check queue in manifest order (top → bottom)."""
     done = _provisioned_ids()
     staged = _staged_ids()
     need = [n for n in _all_region_nodes() if n.get("id") in staged and n.get("id") not in done]
@@ -199,6 +221,7 @@ def _init_check_queue() -> None:
     with _lock:
         _state["phase"] = "check"
         _state["pending_check"] = len(_check_queue)
+        _state["completed"] = len(done)
     _save_state()
 
 
@@ -215,8 +238,8 @@ def _set_slot(slot: int, *, state: str, node: dict[str, Any] | None = None, extr
         if extra:
             entry.update(extra)
         _state["slot_status"][str(slot)] = entry
-        _state["pending"] = len(_queue)
-        _state["staged"] = len(_staged_ids())
+        _state["pending_deploy"] = len(_queue)
+        _state["pending_check"] = len(_pending_check_ids())
         _state["completed"] = len(_provisioned_ids())
     _save_state()
 
@@ -250,7 +273,7 @@ def _clear_slot_host_key(port: int) -> None:
 
 def _wait_ssh(port: int, timeout: int = 120) -> bool:
     _clear_slot_host_key(port)
-    for _ in range(timeout // 2):
+    for _ in range(max(1, timeout // 2)):
         r = _run(
             [
                 "ssh",
@@ -335,10 +358,9 @@ def _verify_panel(port: int, timeout: int | None = None) -> bool:
             ),
             timeout=20,
         )
-        code = (r.stdout or "").strip()
-        if code == "200":
+        if (r.stdout or "").strip() == "200":
             return True
-        if not boot_nudged and i >= 4:
+        if not boot_nudged and i >= 3:
             boot_nudged = True
             _trigger_panel_boot(port)
         time.sleep(5)
@@ -346,41 +368,31 @@ def _verify_panel(port: int, timeout: int | None = None) -> bool:
 
 
 def _stop_vm(nid: str) -> None:
-    _run(["bash", str(DEPLOY / "qemu-world-stop-one.sh"), nid], timeout=60)
+    if nid:
+        _run(["bash", str(DEPLOY / "qemu-world-stop-one.sh"), nid], timeout=60)
 
 
-def _finish_node(
-    slot: int,
-    node: dict[str, Any],
-    *,
-    deploy_ok: bool,
-    verified: bool | None = None,
-    fast: bool = False,
-) -> None:
+def _launch_node(slot: int, port: int, node: dict[str, Any]) -> bool:
     nid = node["id"]
-    tgt = _target()
-    if deploy_ok and fast:
-        _mark_staged(nid)
-        _set_slot(slot, state="staged", node=node, extra={"verified": False})
-        _log(f"slot {slot} STAGED {nid} — reboot fire-and-forget ({len(_staged_ids())} staged, {len(_provisioned_ids())}/{tgt} done)")
-    elif deploy_ok and verified:
-        _mark_provisioned(nid)
-        _set_slot(slot, state="complete", node=node, extra={"verified": True})
-        _log(f"slot {slot} DONE {nid} — {len(_provisioned_ids())}/{tgt}")
-    elif deploy_ok:
-        _mark_provisioned(nid)
-        _set_slot(slot, state="complete", node=node, extra={"verified": bool(verified)})
-        _log(f"slot {slot} DONE {nid} (panel={'ok' if verified else 'warn'}) — {len(_provisioned_ids())}/{tgt}")
-    else:
-        _set_slot(slot, state="error", node=node, extra={"error": "deploy_failed"})
-        with _lock:
-            _queue.appendleft(node)
-    _stop_vm(nid)
-    _set_slot(slot, state="idle", node=None)
-    time.sleep(1)
+    r = _run(
+        [
+            "bash",
+            str(DEPLOY / "qemu-world-launch-one.sh"),
+            nid,
+            node["region"],
+            str(port),
+            str(int(node.get("mem_mb") or 1024)),
+        ],
+        timeout=300,
+    )
+    if r.returncode != 0:
+        _log(f"slot {slot} LAUNCH FAIL {nid}: {(r.stderr or r.stdout)[-200:]}")
+        return False
+    return True
 
 
-def _slot_worker(slot: int) -> None:
+def _slot_worker_deploy(slot: int) -> None:
+    """Launch → SSH → deploy → stage → stop VM. Never wait for reboot or verify."""
     port = SLOTS[slot]["port"]
     while True:
         node = _pop_next(_queue)
@@ -389,164 +401,119 @@ def _slot_worker(slot: int) -> None:
             _log(f"slot {slot} idle — deploy queue empty")
             return
 
+        nid = node["id"]
         try:
-            nid = node["id"]
-            region = node["region"]
-            mem = int(node.get("mem_mb") or 1024)
-
             _set_slot(slot, state="launching", node=node)
-            _log(f"slot {slot} :{port} launching {nid} ({region})")
+            _log(f"slot {slot} :{port} launching {nid} ({node.get('city', node['region'])})")
 
-            r = _run(
-                [
-                    "bash",
-                    str(DEPLOY / "qemu-world-launch-one.sh"),
-                    nid,
-                    region,
-                    str(port),
-                    str(mem),
-                ],
-                timeout=300,
-            )
-            if r.returncode != 0:
-                _log(f"slot {slot} LAUNCH FAIL {nid}: {(r.stderr or r.stdout)[-200:]}")
-                _set_slot(slot, state="error", node=node, extra={"error": "launch_failed"})
+            if not _launch_node(slot, port, node):
                 with _lock:
                     _queue.appendleft(node)
                 time.sleep(5)
                 continue
 
             _set_slot(slot, state="ssh_wait", node=node)
-            if not _wait_ssh(port):
+            if not _wait_ssh(port, timeout=120):
                 _log(f"slot {slot} SSH TIMEOUT {nid}")
                 _stop_vm(nid)
-                _set_slot(slot, state="error", node=node, extra={"error": "ssh_timeout"})
                 with _lock:
                     _queue.appendleft(node)
                 continue
 
             _set_slot(slot, state="deploying", node=node)
-            _log(f"slot {slot} deploying {nid}")
+            _log(f"slot {slot} deploying {nid} (reboot fire-and-forget)")
             r = _run(
                 [
                     "bash",
                     str(DEPLOY / "world-node-c2-kilroy-war-deploy.sh"),
                     str(port),
                     nid,
-                    region,
+                    node["region"],
                 ],
                 timeout=3600,
             )
             deploy_ok = _deploy_ok(port, r.returncode)
 
-            if FAST_DEPLOY and deploy_ok:
-                _log(f"slot {slot} deploy sent reboot for {nid} — not waiting")
-                time.sleep(3)
-                _finish_node(slot, node, deploy_ok=True, fast=True)
-                continue
+            if deploy_ok:
+                _mark_staged(nid)
+                tgt = _target()
+                _log(
+                    f"slot {slot} STAGED {nid} — load next "
+                    f"({len(_staged_ids())} staged, {len(_provisioned_ids())}/{tgt} online)"
+                )
+                time.sleep(DEPLOY_SETTLE_SEC)
+            else:
+                _log(f"slot {slot} DEPLOY FAIL {nid} — re-queue")
+                with _lock:
+                    _queue.appendleft(node)
 
-            _set_slot(slot, state="reboot_wait", node=node)
-            _log(f"slot {slot} waiting post-reboot SSH on {nid} (up to {REBOOT_SSH_SEC}s)")
-            _clear_slot_host_key(port)
-            if not _wait_ssh(port, timeout=REBOOT_SSH_SEC):
-                _log(f"slot {slot} REBOOT SSH TIMEOUT {nid}")
-                if deploy_ok:
-                    _finish_node(slot, node, deploy_ok=True, verified=False)
-                else:
-                    _stop_vm(nid)
-                    _set_slot(slot, state="error", node=node, extra={"error": "reboot_ssh_timeout"})
-                    with _lock:
-                        _queue.appendleft(node)
-                continue
-
-            _set_slot(slot, state="verifying", node=node)
-            _log(f"slot {slot} verifying {nid} panel (up to {VERIFY_SEC}s)")
-            verified = _verify_panel(port)
-            if not verified:
-                _log(f"slot {slot} VERIFY WARN {nid} deploy_ok={deploy_ok}")
-            _finish_node(slot, node, deploy_ok=deploy_ok, verified=verified)
+            _stop_vm(nid)
+            _set_slot(slot, state="idle", node=None)
+            time.sleep(1)
 
         except Exception as exc:  # noqa: BLE001
-            nid = node.get("id", "?")
-            _log(f"slot {slot} UNHANDLED {nid} {type(exc).__name__}: {exc}")
+            _log(f"slot {slot} DEPLOY UNHANDLED {nid} {type(exc).__name__}: {exc}")
             _stop_vm(nid)
-            _set_slot(slot, state="error", node=node, extra={"error": type(exc).__name__})
             with _lock:
                 _queue.appendleft(node)
             time.sleep(5)
 
 
-def _check_worker(slot: int) -> None:
+def _slot_worker_check(slot: int) -> None:
+    """Check pass: launch staged node, verify panel online, provision or retry next round."""
     port = SLOTS[slot]["port"]
     while True:
         node = _pop_next(_check_queue)
         if node is None:
             _set_slot(slot, state="idle", node=None)
-            _log(f"slot {slot} idle — check queue empty")
             return
 
+        nid = node["id"]
         try:
-            nid = node["id"]
-            region = node["region"]
-            mem = int(node.get("mem_mb") or 1024)
-
             _set_slot(slot, state="check_launch", node=node)
-            _log(f"slot {slot} check-pass launching {nid}")
+            _log(f"slot {slot} check {nid} ({node.get('city', node['region'])})")
 
-            r = _run(
-                [
-                    "bash",
-                    str(DEPLOY / "qemu-world-launch-one.sh"),
-                    nid,
-                    region,
-                    str(port),
-                    str(mem),
-                ],
-                timeout=300,
-            )
-            if r.returncode != 0:
-                _log(f"slot {slot} CHECK LAUNCH FAIL {nid}")
+            if not _launch_node(slot, port, node):
                 with _lock:
-                    _check_queue.appendleft(node)
+                    _check_queue.append(node)
                 time.sleep(5)
                 continue
 
             _set_slot(slot, state="check_ssh", node=node)
             if not _wait_ssh(port, timeout=REBOOT_SSH_SEC):
-                _log(f"slot {slot} CHECK SSH TIMEOUT {nid}")
+                _log(f"slot {slot} CHECK SSH TIMEOUT {nid} — retry next round")
                 _stop_vm(nid)
-                with _lock:
-                    _check_queue.appendleft(node)
                 continue
 
             _set_slot(slot, state="check_verify", node=node)
             _trigger_panel_boot(port)
             verified = _verify_panel(port)
-            deploy_ok = _deploy_ok(port, 0)
-            if deploy_ok:
-                _finish_node(slot, node, deploy_ok=True, verified=verified)
-            else:
-                _log(f"slot {slot} CHECK FAIL {nid} — tree missing, re-stage for deploy")
-                staged = _staged_ids()
-                staged.discard(nid)
-                STAGED.write_text(
-                    json.dumps({"schema": "grok-lab-qemu-staged/v1", "staged": sorted(staged), "count": len(staged)}, indent=2) + "\n",
-                    encoding="utf-8",
-                )
+            tree_ok = _deploy_ok(port, 0)
+
+            if tree_ok and verified:
+                _mark_provisioned(nid)
+                tgt = _target()
+                _log(f"slot {slot} ONLINE {nid} — {len(_provisioned_ids())}/{tgt}")
+            elif not tree_ok:
+                _log(f"slot {slot} CHECK FAIL {nid} — tree missing, back to deploy queue")
+                _unstage(nid)
                 with _lock:
-                    _queue.appendleft(node)
-                _stop_vm(nid)
+                    _queue.append(node)
+            else:
+                _log(f"slot {slot} CHECK NOT READY {nid} — retry next round from top")
+
+            _stop_vm(nid)
+            _set_slot(slot, state="idle", node=None)
+            time.sleep(1)
 
         except Exception as exc:  # noqa: BLE001
-            _log(f"slot {slot} CHECK UNHANDLED {node.get('id')} {exc}")
-            _stop_vm(node.get("id", ""))
-            with _lock:
-                _check_queue.appendleft(node)
+            _log(f"slot {slot} CHECK UNHANDLED {nid} {exc}")
+            _stop_vm(nid)
             time.sleep(5)
 
 
-def _run_slot_pool(worker, label: str) -> None:
-    _log(f"{label} — 3 slots active")
+def _run_slot_pool(worker: Callable[[int], None], label: str) -> None:
+    _log(f"{label} — 3 QEMU slots")
     threads = [threading.Thread(target=worker, args=(s["slot"],), daemon=True) for s in SLOTS]
     for t in threads:
         t.start()
@@ -554,44 +521,76 @@ def _run_slot_pool(worker, label: str) -> None:
         t.join()
 
 
+def _run_check_loop() -> None:
+    """Sweep staged nodes from top of manifest until all online or max rounds."""
+    round_num = 0
+    while _pending_check_ids():
+        round_num += 1
+        if round_num > CHECK_MAX_ROUNDS:
+            _log(f"check loop stopped after {CHECK_MAX_ROUNDS} rounds — {_len_pending()} still offline")
+            break
+        _init_check_queue_from_top()
+        pending = len(_check_queue)
+        if not pending:
+            break
+        with _lock:
+            _state["check_round"] = round_num
+        _log(f"=== check round {round_num} — {pending} nodes from top ===")
+        _run_slot_pool(_slot_worker_check, f"check round {round_num}")
+        done = len(_provisioned_ids())
+        tgt = _target()
+        still = len(_pending_check_ids())
+        _log(f"=== end round {round_num} — {done}/{tgt} online, {still} awaiting check ===")
+        if still:
+            time.sleep(5)
+
+
+def _len_pending() -> int:
+    return len(_pending_check_ids())
+
+
 def run_pipeline() -> dict[str, Any]:
     pid_path = DEPLOY.parent.parent / ".nexus-state" / "world-pipeline.pid"
     pid_path.parent.mkdir(parents=True, exist_ok=True)
     pid_path.write_text(f"{os.getpid()}\n", encoding="utf-8")
     tgt = _target()
-    _init_queue()
+    _init_deploy_queue()
 
-    if not _queue and not (_staged_ids() - _provisioned_ids()):
+    to_deploy = len(_queue)
+    to_check = len(_pending_check_ids())
+    if not to_deploy and not to_check:
         _state["running"] = False
         _save_state()
-        return {"ok": True, "message": f"all {tgt} nodes already provisioned", "completed": len(_provisioned_ids())}
+        return {"ok": True, "message": f"all {tgt} nodes online", "completed": len(_provisioned_ids())}
 
-    mode = "fast deploy+check" if FAST_DEPLOY else "deploy+inline-verify"
-    _log(f"pipeline start — {_state['pending']} to deploy, {len(_staged_ids())} staged, target {tgt} ({mode})")
+    _log(
+        f"pipeline start — {to_deploy} to deploy, {to_check} awaiting check, "
+        f"{len(_provisioned_ids())}/{tgt} online (deploy-only then loop-check)"
+    )
 
     ensure = DEPLOY / "world-node-panel-ensure.sh"
     if ensure.is_file():
-        r = _run(["bash", str(ensure)], timeout=60)
-        if r.returncode == 0:
-            _log("local sanctuary panel :9477 ready")
+        _run(["bash", str(ensure)], timeout=60)
 
     if _queue:
-        _run_slot_pool(_slot_worker, "deploy phase")
+        with _lock:
+            _state["phase"] = "deploy"
+        _run_slot_pool(_slot_worker_deploy, "deploy phase")
 
-    if FAST_DEPLOY:
-        _init_check_queue()
-        if _check_queue:
-            _run_slot_pool(_check_worker, "check phase")
+    if _pending_check_ids():
+        _run_check_loop()
 
     with _lock:
         _state["running"] = False
+        _state["phase"] = "done"
         _state["completed"] = len(_provisioned_ids())
-        _state["pending"] = len(_queue)
-        _state["staged"] = len(_staged_ids() - _provisioned_ids())
+        _state["pending_deploy"] = len(_queue)
+        _state["pending_check"] = len(_pending_check_ids())
     _save_state()
     done = len(_provisioned_ids())
-    _log(f"pipeline finished — {done}/{tgt} provisioned, {len(_staged_ids() - _provisioned_ids())} awaiting check")
-    return {"ok": True, "completed": done, "target": tgt, "remaining": max(0, tgt - done)}
+    still = len(_pending_check_ids())
+    _log(f"pipeline finished — {done}/{tgt} online, {still} still need check")
+    return {"ok": still == 0, "completed": done, "target": tgt, "remaining_check": still}
 
 
 def show_status() -> dict[str, Any]:
@@ -610,6 +609,7 @@ def show_status() -> dict[str, Any]:
     st["completed"] = prov.get("count", len(prov.get("provisioned") or []))
     st["provisioned"] = prov.get("provisioned") or []
     st["staged"] = staged.get("staged") or []
+    st["pending_check"] = len(_pending_check_ids())
     st["target"] = tgt
     return st
 
