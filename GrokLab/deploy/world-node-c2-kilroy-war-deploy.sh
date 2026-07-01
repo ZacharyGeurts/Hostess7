@@ -13,13 +13,19 @@ chmod 600 "$SSH_KEY" 2>/dev/null || true
 DEPLOY="$(cd "$(dirname "$0")" && pwd)"
 # shellcheck source=world-ssh-slot.sh
 source "$DEPLOY/world-ssh-slot.sh"
+# shellcheck source=world-rsync-progress.sh
+source "$DEPLOY/world-rsync-progress.sh"
 world_ssh_clear_slot_key "$PORT"
 SSH_OPTS="${WORLD_SSH_SLOT_OPTS[*]}"
 NL="${NEXUS_INSTALL_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}"
 SG="${SG_ROOT:-$(cd "$NL/.." && pwd)}"
 KILROY="${KILROY_ROOT:-$(readlink -f "$NL/KILROY" 2>/dev/null || echo "$SG/KILROY")}"
 RB="/opt/ammoos/ammoos/NewLatest"
-RS="rsync -a --delete-after -e '$(world_ssh_rsync_e "$PORT" "$SSH_KEY")'"
+STATE="${NEXUS_STATE_DIR:-$NL/.nexus-state}"
+export WORLD_RSYNC_PORT="$PORT"
+export WORLD_RSYNC_NODE="$NODE_ID"
+export WORLD_NODE_RSYNC_LOG="${WORLD_NODE_RSYNC_LOG:-$STATE/world-rsync.log}"
+export SSH_KEY
 
 log() { printf '[c2-kilroy-deploy] %s\n' "$*"; }
 
@@ -36,45 +42,61 @@ for _ in $(seq 1 30); do
 done
 ssh_ok "echo ready" | grep -q ready || { log "SKIP — SSH not ready :$PORT"; exit 1; }
 
+log "ensure rsync on guest (cloud-init may still be running)"
+for _ in $(seq 1 90); do
+  if ssh_ok 'command -v rsync >/dev/null'; then
+    log "rsync ready on guest"
+    break
+  fi
+  ssh_ok 'sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq \
+    && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq rsync' 2>/dev/null || true
+  sleep 3
+done
+ssh_ok 'command -v rsync >/dev/null' || { log "SKIP — rsync not available on guest :$PORT"; exit 1; }
+
 ssh_ok 'sudo /usr/bin/mkdir -p /opt/ammoos && sudo chown ubuntu:ubuntu /opt/ammoos && \
   /usr/bin/mkdir -p /opt/ammoos/ammoos/NewLatest/.nexus-state \
   /opt/ammoos/ammoos/NewLatest/KILROY/{boot,dist,rootfs,scripts,data,kernel,userspace,Grok} \
   /opt/ammoos/ammoos/NewLatest/GrokLab/deploy'
 
+_rsync_part() {
+  local part="$1"
+  shift
+  world_rsync_run "$part" "$NL/$part/" "ubuntu@127.0.0.1:${RB}/$part/" "$@"
+}
+
 for part in lib panel scripts data config; do
-  log "rsync $part -> :$PORT"
-  eval $RS --exclude cache --exclude releases --exclude '*.log' --exclude __pycache__ \
-    "$NL/$part/" "ubuntu@127.0.0.1:${RB}/$part/"
+  _rsync_part "$part" \
+    --exclude cache --exclude releases --exclude '*.log' --exclude __pycache__
 done
 
 for f in nexus.sh nexus-launch.sh install.sh; do
-  [[ -f "$NL/$f" ]] && eval $RS "$NL/$f" "ubuntu@127.0.0.1:${RB}/"
+  [[ -f "$NL/$f" ]] && world_rsync_run "$f" "$NL/$f" "ubuntu@127.0.0.1:${RB}/"
 done
 
-log "rsync KILROY -> :$PORT"
 if [[ -d "$KILROY" ]]; then
-  eval $RS "$KILROY/" "ubuntu@127.0.0.1:${RB}/KILROY/"
+  world_rsync_run "KILROY" "$KILROY/" "ubuntu@127.0.0.1:${RB}/KILROY/"
 else
   log "WARN — KILROY missing at $KILROY"
 fi
 
 if [[ -d "$NL/Grok16/bin" ]]; then
-  log "rsync Grok16 runtime (slim) -> :$PORT"
   ssh_ok "/usr/bin/mkdir -p ${RB}/Grok16/bin ${RB}/Grok16/python/driver"
-  eval $RS --include='gpy-16' --include='g16-*' --exclude='*' "$NL/Grok16/bin/" "ubuntu@127.0.0.1:${RB}/Grok16/bin/" 2>/dev/null || true
-  eval $RS "$NL/Grok16/python/driver/" "ubuntu@127.0.0.1:${RB}/Grok16/python/driver/" 2>/dev/null || true
+  world_rsync_run "Grok16/bin" "$NL/Grok16/bin/" "ubuntu@127.0.0.1:${RB}/Grok16/bin/" \
+    --include='gpy-16' --include='g16-*' --exclude='*' 2>/dev/null || true
+  world_rsync_run "Grok16/driver" "$NL/Grok16/python/driver/" "ubuntu@127.0.0.1:${RB}/Grok16/python/driver/" \
+    2>/dev/null || true
 fi
 
-log "rsync GrokLab/deploy -> :$PORT"
-eval $RS --exclude qemu-vms --exclude dist --exclude stage --exclude bundles \
-  "$DEPLOY/" "ubuntu@127.0.0.1:${RB}/GrokLab/deploy/"
+world_rsync_run "GrokLab/deploy" "$DEPLOY/" "ubuntu@127.0.0.1:${RB}/GrokLab/deploy/" \
+  --exclude qemu-vms --exclude dist --exclude stage --exclude bundles
 
 log "rsync kill state + war panel from sanctuary"
 mkdir -p /tmp/wstate
 for f in field-hostile.tsv kill-rekill-registry.json threat-panel.json settings.override field-war-hardening-panel.json; do
-  [[ -f "$NL/.nexus-state/$f" ]] && cp -a "$NL/.nexus-state/$f" /tmp/wstate/ 2>/dev/null || true
+  [[ -f "$STATE/$f" ]] && cp -a "$STATE/$f" /tmp/wstate/ 2>/dev/null || true
 done
-eval $RS /tmp/wstate/ "ubuntu@127.0.0.1:${RB}/.nexus-state/" 2>/dev/null || true
+world_rsync_run "war-state" /tmp/wstate/ "ubuntu@127.0.0.1:${RB}/.nexus-state/" 2>/dev/null || true
 
 ssh_ok "chmod +x ${RB}/GrokLab/deploy/world-node-c2-kilroy-boot.sh ${RB}/GrokLab/deploy/kilroy-war-arm.sh \
   ${RB}/GrokLab/deploy/nexus-c2-basement-arm.sh 2>/dev/null; \

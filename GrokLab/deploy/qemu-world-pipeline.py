@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rolling 3-QEMU pipeline — deploy all nodes (no reboot wait), then loop checks from top."""
+"""Rolling 3-QEMU pipeline — deploy+reboot every node (move on), then loop checks from top."""
 from __future__ import annotations
 
 import json
@@ -22,6 +22,12 @@ LOG_PATH = Path(
     os.environ.get(
         "WORLD_PIPELINE_LOG",
         str(DEPLOY.parent.parent / ".nexus-state" / "world-pipeline.log"),
+    )
+)
+RSYNC_LOG_PATH = Path(
+    os.environ.get(
+        "WORLD_NODE_RSYNC_LOG",
+        str(DEPLOY.parent.parent / ".nexus-state" / "world-rsync.log"),
     )
 )
 SSH_KEY = os.environ.get("GROK_LAB_SSH_KEY", str(DEPLOY / "world-ssh" / "id_ed25519"))
@@ -263,6 +269,40 @@ def _run(cmd: list[str], *, timeout: int = 3600) -> subprocess.CompletedProcess[
         )
 
 
+def _append_log_line(line: str, *, tag: str = "pipeline") -> None:
+    pline = f"[{_ts()}] [{tag}] {line}"
+    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with LOG_PATH.open("a", encoding="utf-8") as f:
+        f.write(pline + "\n")
+    if sys.stdout.isatty():
+        print(pline, flush=True)
+
+
+def _run_stream_to_log(cmd: list[str], *, timeout: int = 3600, prefix: str = "", tag: str = "deploy") -> int:
+    """Run a subprocess and stream stdout/stderr lines into the pipeline log."""
+    start = time.monotonic()
+    proc = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1,
+    )
+    try:
+        assert proc.stdout is not None
+        for raw in proc.stdout:
+            line = raw.rstrip("\n")
+            if not line:
+                continue
+            _append_log_line(f"{prefix}{line}", tag=tag)
+        remaining = max(1, timeout - int(time.monotonic() - start))
+        proc.wait(timeout=remaining)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        return 124
+    return int(proc.returncode or 0)
+
+
 def _clear_slot_host_key(port: int) -> None:
     subprocess.run(
         ["ssh-keygen", "-f", f"{Path.home()}/.ssh/known_hosts", "-R", f"[127.0.0.1]:{port}"],
@@ -316,9 +356,8 @@ def _ssh_cmd(port: int, remote: str, *, connect_timeout: int = 4) -> list[str]:
     ]
 
 
-def _deploy_ok(port: int, deploy_rc: int) -> bool:
-    if deploy_rc == 0:
-        return True
+def _tree_ok(port: int) -> bool:
+    """Post-reboot check only — verify deploy tree exists on a live guest."""
     chk = _run(
         _ssh_cmd(
             port,
@@ -392,7 +431,7 @@ def _launch_node(slot: int, port: int, node: dict[str, Any]) -> bool:
 
 
 def _slot_worker_deploy(slot: int) -> None:
-    """Launch → SSH → deploy → stage → stop VM. Never wait for reboot or verify."""
+    """Launch → SSH → deploy+reboot → stage → stop VM → next. No post-reboot checks here."""
     port = SLOTS[slot]["port"]
     while True:
         node = _pop_next(_queue)
@@ -421,8 +460,11 @@ def _slot_worker_deploy(slot: int) -> None:
                 continue
 
             _set_slot(slot, state="deploying", node=node)
-            _log(f"slot {slot} deploying {nid} (reboot fire-and-forget)")
-            r = _run(
+            _log(
+                f"slot {slot} deploying {nid} (work → reboot → move on) — "
+                f"rsync: {RSYNC_LOG_PATH}"
+            )
+            deploy_rc = _run_stream_to_log(
                 [
                     "bash",
                     str(DEPLOY / "world-node-c2-kilroy-war-deploy.sh"),
@@ -431,19 +473,28 @@ def _slot_worker_deploy(slot: int) -> None:
                     node["region"],
                 ],
                 timeout=3600,
+                prefix=f"{nid}: ",
             )
-            deploy_ok = _deploy_ok(port, r.returncode)
+            deploy_ok = deploy_rc == 0
 
             if deploy_ok:
                 _mark_staged(nid)
                 tgt = _target()
                 _log(
-                    f"slot {slot} STAGED {nid} — load next "
-                    f"({len(_staged_ids())} staged, {len(_provisioned_ids())}/{tgt} online)"
+                    f"slot {slot} DEPLOYED {nid} — reboot sent, moving on "
+                    f"({len(_staged_ids())} awaiting check, {len(_provisioned_ids())}/{tgt} online)"
                 )
                 time.sleep(DEPLOY_SETTLE_SEC)
             else:
-                _log(f"slot {slot} DEPLOY FAIL {nid} — re-queue")
+                tail = ""
+                try:
+                    tail = RSYNC_LOG_PATH.read_text(encoding="utf-8", errors="replace").splitlines()[-1]
+                except OSError:
+                    pass
+                _log(
+                    f"slot {slot} DEPLOY FAIL {nid} rc={deploy_rc}"
+                    + (f" — {tail}" if tail else " — re-queue")
+                )
                 with _lock:
                     _queue.appendleft(node)
 
@@ -488,7 +539,7 @@ def _slot_worker_check(slot: int) -> None:
             _set_slot(slot, state="check_verify", node=node)
             _trigger_panel_boot(port)
             verified = _verify_panel(port)
-            tree_ok = _deploy_ok(port, 0)
+            tree_ok = _tree_ok(port)
 
             if tree_ok and verified:
                 _mark_provisioned(nid)
@@ -549,6 +600,10 @@ def _len_pending() -> int:
     return len(_pending_check_ids())
 
 
+def _len_staged() -> int:
+    return len(_staged_ids())
+
+
 def run_pipeline() -> dict[str, Any]:
     pid_path = DEPLOY.parent.parent / ".nexus-state" / "world-pipeline.pid"
     pid_path.parent.mkdir(parents=True, exist_ok=True)
@@ -564,8 +619,8 @@ def run_pipeline() -> dict[str, Any]:
         return {"ok": True, "message": f"all {tgt} nodes online", "completed": len(_provisioned_ids())}
 
     _log(
-        f"pipeline start — {to_deploy} to deploy, {to_check} awaiting check, "
-        f"{len(_provisioned_ids())}/{tgt} online (deploy-only then loop-check)"
+        f"pipeline start — {to_deploy} to deploy+reboot, {to_check} already deployed awaiting check, "
+        f"{len(_provisioned_ids())}/{tgt} online (checks after all deploys finish)"
     )
 
     ensure = DEPLOY / "world-node-panel-ensure.sh"
@@ -576,8 +631,18 @@ def run_pipeline() -> dict[str, Any]:
         with _lock:
             _state["phase"] = "deploy"
         _run_slot_pool(_slot_worker_deploy, "deploy phase")
+        _log(
+            f"deploy phase complete — {_len_staged()} deployed awaiting check, "
+            f"{len(_queue)} still in deploy queue"
+        )
 
-    if _pending_check_ids():
+    if _queue:
+        _log(f"post-reboot checks deferred — {len(_queue)} nodes still need deploy")
+    elif _pending_check_ids():
+        _log(
+            f"all deploys done — starting post-reboot checks/finishes for "
+            f"{len(_pending_check_ids())} nodes (top → bottom)"
+        )
         _run_check_loop()
 
     with _lock:
@@ -635,7 +700,27 @@ def main() -> int:
         except KeyboardInterrupt:
             pass
         return 0
-    print("usage: qemu-world-pipeline.py [run|status|watch]", file=sys.stderr)
+    if cmd in {"watch-rsync", "rsync-watch"}:
+        path = RSYNC_LOG_PATH
+        print(f"watching {path} (Ctrl-C to stop)", flush=True)
+        try:
+            if path.is_file():
+                with path.open(encoding="utf-8", errors="replace") as f:
+                    f.seek(0, os.SEEK_END)
+                    while True:
+                        line = f.readline()
+                        if line:
+                            print(line, end="", flush=True)
+                        else:
+                            time.sleep(0.5)
+            else:
+                while not path.is_file():
+                    time.sleep(0.5)
+                os.execvp("tail", ["tail", "-f", str(path)])  # noqa: S606
+        except KeyboardInterrupt:
+            pass
+        return 0
+    print("usage: qemu-world-pipeline.py [run|status|watch|watch-rsync]", file=sys.stderr)
     return 2
 
 

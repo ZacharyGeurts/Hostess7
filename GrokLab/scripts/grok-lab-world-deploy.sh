@@ -66,7 +66,7 @@ case "$CMD" in
     bash "$NL/lib/nexus-panel-ensure.sh" 2>/dev/null || log "WARN: local panel not up yet"
     python3 "$ROOT/deploy/qemu-world-pipeline.py" run
     ;;
-  pipeline-status|pipeline-watch)
+  pipeline-status|pipeline-watch|pipeline-watch-rsync)
     python3 "$ROOT/deploy/qemu-world-pipeline.py" "${CMD#pipeline-}"
     ;;
   deploy)
