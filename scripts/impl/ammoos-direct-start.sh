@@ -87,14 +87,16 @@ if [[ ! -f "$NEXUS_STATE_DIR/threat-panel.json" ]]; then
     "$PY" "$ROOT/scripts/panel-json-assemble.py" >/dev/null 2>&1 || true
 fi
 if ! pgrep -f 'threat-panel-http.py.*9477' >/dev/null 2>&1; then
-  nohup env NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" \
+  nohup env PYTHONPATH="${ROOT}/lib${PYTHONPATH:+:$PYTHONPATH}" \
+    NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" NEXUS_STATE_DIR="$NEXUS_STATE_DIR" \
     SG_ROOT="$SG_ROOT" TDIR="$TDIR" \
     "$GROKPY" "$ROOT/lib/threat-panel-http.py" 9477 \
     "$ROOT/panel" "$NEXUS_STATE_DIR/threat-panel.json" \
     >>"$NEXUS_STATE_DIR/panel-http.log" 2>&1 &
 fi
 if ! pgrep -f 'Queen/lib/queen-world.py' >/dev/null 2>&1; then
-  nohup env SG_ROOT="$SG_ROOT" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+  nohup env PYTHONPATH="${ROOT}/lib${PYTHONPATH:+:$PYTHONPATH}" \
+    SG_ROOT="$SG_ROOT" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
     NEXUS_STATE_DIR="$NEXUS_STATE_DIR" TDIR="$TDIR" \
     "$GROKPY" "$ROOT/Queen/lib/queen-world.py" --daemon \
     >>"$NEXUS_STATE_DIR/queen-world.log" 2>&1 &
