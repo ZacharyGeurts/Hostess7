@@ -78,6 +78,24 @@
   }
 
   function launchApp(app) {
+    if (window.FieldQueenNav?.isStandaloneQueenApp?.(app)) {
+      window.FieldQueenNav.openStandalone(app);
+      return;
+    }
+    if (window.FieldQueenNav?.needsEnsureLaunch?.(app)) {
+      window.FieldQueenNav.ensureProgramLaunch(app).then(function (doc) {
+        if (doc && doc.ok === false) {
+          toast("Program unavailable · " + (app.name || app.id));
+          return;
+        }
+        launchAppInner(app);
+      });
+      return;
+    }
+    launchAppInner(app);
+  }
+
+  function launchAppInner(app) {
     const exec = app.exec || app.url || "";
     if (app.shell !== false && (app.shell || exec.includes("embed=1") || app.view)) {
       if (shellLaunch(app)) {

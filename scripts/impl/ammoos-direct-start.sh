@@ -101,12 +101,23 @@ if ! pgrep -f 'Queen/lib/queen-world.py' >/dev/null 2>&1; then
     "$GROKPY" "$ROOT/Queen/lib/queen-world.py" --daemon \
     >>"$NEXUS_STATE_DIR/queen-world.log" 2>&1 &
 fi
-p=000 q=000
+TRAIN_PORT="${H7_TRAINING_VIEWER_PORT:-9488}"
+TRAIN_URL="http://127.0.0.1:${TRAIN_PORT}/"
+if ! curl -sf --connect-timeout 1 --max-time 2 "${TRAIN_URL}api/health" >/dev/null 2>&1; then
+  TRAIN_LAUNCH="${ROOT}/hostess7-training-viewer/launch.sh"
+  if [[ -x "$TRAIN_LAUNCH" ]]; then
+    H7_TRAINING_VIEWER_PORT="$TRAIN_PORT" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+      NEXUS_STATE_DIR="$NEXUS_STATE_DIR" SG_ROOT="$SG_ROOT" \
+      bash "$TRAIN_LAUNCH" url >/dev/null 2>&1 || true
+  fi
+fi
+p=000 q=000 tv=000
 for _ in $(seq 1 40); do
   p=$(curl -sf -o /dev/null -w '%{http_code}' --connect-timeout 1 http://127.0.0.1:9477/field 2>/dev/null || echo 000)
   q=$(curl -sf -o /dev/null -w '%{http_code}' --connect-timeout 1 http://127.0.0.1:9481/api/status 2>/dev/null || echo 000)
+  tv=$(curl -sf -o /dev/null -w '%{http_code}' --connect-timeout 1 "${TRAIN_URL}api/health" 2>/dev/null || echo 000)
   [[ "$p" == "200" && "$q" == "200" ]] && break
   sleep 0.25
 done
-echo "panel=$p queen=$q TDIR=$TDIR"
-ss -tlnp 2>/dev/null | grep -E ':9477|:9481' || true
+echo "panel=$p queen=$q training=$tv TDIR=$TDIR"
+ss -tlnp 2>/dev/null | grep -E ':9477|:9481|:9488' || true

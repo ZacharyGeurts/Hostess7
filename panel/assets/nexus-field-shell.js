@@ -317,6 +317,10 @@
   function launch(app, opts) {
     opts = opts || {};
     if (!app) return null;
+    if (global.FieldQueenNav?.isStandaloneQueenApp?.(app)) {
+      global.FieldQueenNav.openStandalone(app, opts);
+      return null;
+    }
     if (!opts._skipThumbnail && (app.panel_thumbnail || app.panel_only)) {
       return launchPanelThumbnail(app, opts);
     }

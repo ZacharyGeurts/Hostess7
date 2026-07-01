@@ -88,6 +88,58 @@
     return launch(url, opts);
   }
 
+  function isStandaloneQueenApp(app) {
+    if (!app) return false;
+    if (app.standalone_queen || app.open_via === "api") return true;
+    return app.id === "queen-browser" && app.c2_embedded === false;
+  }
+
+  function needsEnsureLaunch(app) {
+    if (!app) return "";
+    if (app.ensure_api) return String(app.ensure_api);
+    const exec = String(app.exec || app.url || "");
+    if (exec.includes(":9488")) return "/api/hostess7-training-viewer/ensure";
+    return "";
+  }
+
+  function ensureProgramLaunch(app) {
+    const api = needsEnsureLaunch(app);
+    if (!api) return Promise.resolve({ ok: true });
+    return fetch(api, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: app.id || "" }),
+    })
+      .then(function (r) { return r.json(); })
+      .catch(function () { return { ok: false }; });
+  }
+
+  function openStandalone(app, opts) {
+    opts = opts || {};
+    const name = (app && app.name) || "Queen Browser";
+    return fetch("/api/queen-browser/open", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(opts.body || {}),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (doc) {
+        if (doc && doc.ok !== false) {
+          global.FieldHostDesktop?.toast?.("Opened · " + name);
+          global.FieldStartbar?.trackRunning?.(app || { id: "queen-browser", name: name });
+        } else {
+          global.FieldHostDesktop?.toast?.("Queen Browser launch failed");
+        }
+        return doc;
+      })
+      .catch(function () {
+        global.FieldHostDesktop?.toast?.("Queen Browser launch failed");
+        return { ok: false };
+      });
+  }
+
   function patchWindowOpen() {
     const orig = global.open;
     global.open = function fieldQueenOpen(url, target, features) {
@@ -108,6 +160,10 @@
     resolve: resolve,
     launch: launch,
     open: open,
+    openStandalone: openStandalone,
+    isStandaloneQueenApp: isStandaloneQueenApp,
+    ensureProgramLaunch: ensureProgramLaunch,
+    needsEnsureLaunch: needsEnsureLaunch,
     queenBrowserBase: queenBrowserBase,
     panelBase: panelBase,
     isInternal: isInternal,

@@ -43,6 +43,17 @@ def _export_health() -> dict[str, Any]:
 
 def _export_status() -> dict[str, Any]:
     st = status_mirror()
+    panel_path = API / "status.json"
+    if panel_path.is_file():
+        try:
+            panel = h7_read_json(panel_path)
+            if isinstance(panel, dict) and (
+                panel.get("field") is not None or panel.get("mode") == "pages-surfaces"
+            ):
+                merged = {**panel, "brain_mirror": st, "exported": _ts()}
+                return merged
+        except Exception:
+            pass
     st["exported"] = _ts()
     return st
 

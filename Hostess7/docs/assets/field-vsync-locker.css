@@ -1,0 +1,82 @@
+.vl-root {
+  min-height: 100vh;
+  background: var(--qf-bg, #040508);
+  color: var(--qf-text, #e8ecf4);
+  font-family: system-ui, sans-serif;
+}
+.vl-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+.vl-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.vl-head h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+}
+.vl-sub {
+  margin: 6px 0 0;
+  opacity: 0.72;
+  font-size: 0.9rem;
+}
+.vl-pill {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #1a2030;
+  border: 1px solid #2a3550;
+}
+.vl-pill.ok { color: #7dffb2; border-color: #2d6b4a; }
+.vl-pill.warn { color: #ffb86c; border-color: #6b4a2d; }
+.vl-pill.bad { color: #ff7d9a; border-color: #6b2d3d; }
+.vl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.vl-card {
+  background: #0b0f18;
+  border: 1px solid #1c2438;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.vl-card h2 {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7aa8ff;
+}
+.vl-card pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  opacity: 0.9;
+}
+.vl-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.vl-actions button {
+  background: #14203a;
+  color: #e8ecf4;
+  border: 1px solid #2a3d66;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+.vl-actions button:hover { background: #1a2a4d; }

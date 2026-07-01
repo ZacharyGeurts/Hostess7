@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="vsync-locker">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VSYNC Locker · NEXUS C2</title>
+  <link rel="icon" href="/Hostess7/assets/queen-favicon-48.png" type="image/png" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-queen-theme.css?v=qf1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-shell-dock.css?v=2" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-vsync-locker.css?v=1" />
+</head>
+<body>
+  <div class="vl-root">
+    <header class="fsd-dock vl-dock qf-dock" aria-label="Queen field dock">
+      <div class="fsd-dock-left" id="fsd-dock-left"></div>
+      <div class="fsd-dock-right" id="fsd-dock-right"></div>
+    </header>
+    <main class="vl-main">
+      <div class="vl-head">
+        <div>
+          <h1>VSYNC Locker</h1>
+          <p class="vl-sub" id="vl-motto">Sovereign display timing — lock, drift, patrol</p>
+        </div>
+        <span class="vl-pill" id="vl-status-pill">…</span>
+      </div>
+      <section class="vl-grid" id="vl-grid">
+        <article class="vl-card"><h2>Guard</h2><pre id="vl-guard">…</pre></article>
+        <article class="vl-card"><h2>Lock</h2><pre id="vl-lock">…</pre></article>
+        <article class="vl-card"><h2>Drift</h2><pre id="vl-drift">…</pre></article>
+        <article class="vl-card"><h2>Rogues</h2><pre id="vl-rogues">…</pre></article>
+      </section>
+      <div class="vl-actions">
+        <button type="button" id="vl-btn-lock">Lock VSYNC</button>
+        <button type="button" id="vl-btn-patrol">Patrol</button>
+        <button type="button" id="vl-btn-launch">Launch guard</button>
+        <button type="button" id="vl-btn-drift">Apply drift</button>
+      </div>
+    </main>
+  </div>
+  <script src="/Hostess7/assets/field-shell-dock.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-vsync-locker.js?v=1" defer></script>
+</body>
+</html>

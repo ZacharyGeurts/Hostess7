@@ -15,6 +15,8 @@ PY=python3
 log() { printf '[hostess7-pages] %s\n' "$*"; }
 
 export HOSTESS7_ROOT="$ROOT"
+export NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-${ROOT}/..}"
+export SG_ROOT="${SG_ROOT:-$(cd "${NEXUS_INSTALL_ROOT}/.." && pwd)}"
 export HOSTESS7_LICENSE_MODE=war
 
 log "build surfaces (Queen + AmmoOS) + brain corpus + API export"

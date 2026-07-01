@@ -17,9 +17,15 @@ sys.path.insert(0, str(ROOT / "src"))
 from hostess7 import __version__ as H7_VERSION  # noqa: E402
 
 DOCS = ROOT / "docs"
-NL = Path(os.environ.get("NEXUS_INSTALL_ROOT", ROOT.parent / "NewLatest"))
-if not (NL / "Queen").is_dir() and (ROOT.parent / "NewLatest").is_dir():
+_env_nl = os.environ.get("NEXUS_INSTALL_ROOT", "").strip()
+if _env_nl and (Path(_env_nl) / "Queen").is_dir():
+    NL = Path(_env_nl)
+elif (ROOT.parent / "Queen").is_dir():
+    NL = ROOT.parent
+elif (ROOT.parent / "NewLatest" / "Queen").is_dir():
     NL = ROOT.parent / "NewLatest"
+else:
+    NL = Path(_env_nl or ROOT.parent / "NewLatest")
 
 QUEEN_WORLD = NL / "Queen" / "world"
 PANEL = NL / "panel"
@@ -109,6 +115,14 @@ def _run_field_host_desktop() -> dict[str, Any]:
     script = NL / "lib" / "field-host-desktop.py"
     if not script.is_file():
         return {"schema": "field-host-desktop/v1", "ok": False, "error": "missing field-host-desktop.py"}
+    state_dir = ROOT / ".pages-build-state"
+    state_dir.mkdir(parents=True, exist_ok=True)
+    env = {
+        **os.environ,
+        "NEXUS_INSTALL_ROOT": str(NL),
+        "NEXUS_STATE_DIR": str(state_dir),
+        "SG_ROOT": str(NL.parent),
+    }
     try:
         out = subprocess.run(
             [sys.executable, str(script), "json"],
@@ -117,6 +131,7 @@ def _run_field_host_desktop() -> dict[str, Any]:
             text=True,
             timeout=120,
             check=False,
+            env=env,
         )
         if out.returncode != 0 and out.stdout.strip():
             pass
@@ -181,6 +196,31 @@ def _fix_icon_urls(obj: Any) -> None:
             _fix_icon_urls(item)
 
 
+def _patch_queen_browser_app(app: dict[str, Any]) -> None:
+    app["exec"] = f"{PAGES_BASE}/queen/browser.html"
+    app["pinned"] = True
+    app["desktop"] = True
+    app["launcher_visible"] = True
+    app["shell"] = True
+    app["c2_embedded"] = True
+    app.pop("standalone_queen", None)
+    app.pop("open_via", None)
+    for field in ("exec", "url", "launch_url"):
+        if field in app and app[field]:
+            app[field] = _pages_url(str(app[field]))
+
+
+def _patch_queen_browser_deep(obj: Any) -> None:
+    if isinstance(obj, dict):
+        if obj.get("id") == "queen-browser":
+            _patch_queen_browser_app(obj)
+        for v in obj.values():
+            _patch_queen_browser_deep(v)
+    elif isinstance(obj, list):
+        for item in obj:
+            _patch_queen_browser_deep(item)
+
+
 def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
     doc = json.loads(json.dumps(doc))
     doc["pages"] = True
@@ -229,10 +269,7 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
                 if field in app and app[field]:
                     app[field] = _pages_url(str(app[field]))
             if app.get("id") == "queen-browser":
-                app["exec"] = f"{PAGES_BASE}/queen/browser.html"
-                app["pinned"] = True
-                app["desktop"] = True
-                app["launcher_visible"] = True
+                _patch_queen_browser_app(app)
 
     doc.pop("boot_program_url", None)
     programs = doc.setdefault("programs", [])
@@ -251,10 +288,14 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
                 programs.append(qb)
                 break
     if qb:
-        qb["exec"] = f"{PAGES_BASE}/queen/browser.html"
-        qb["pinned"] = True
-        qb["desktop"] = True
-        qb["launcher_visible"] = True
+        _patch_queen_browser_app(qb)
+
+    _patch_queen_browser_deep(doc)
+
+    for pool in (programs, doc.get("field_apps") or [], doc.get("desktop_icons") or []):
+        for app in pool:
+            if isinstance(app, dict) and app.get("id") == "hostess7-training-viewer":
+                app.pop("ensure_api", None)
 
     doc["desktop_icons"] = [
         a
@@ -662,11 +703,14 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
 
     status = {
         "ok": True,
+        "field": True,
+        "panel_ready": True,
         "pages": True,
         "mode": "pages-surfaces",
         "queen_verdict": "READY",
-        "port": 9481,
+        "port": 9477,
         "posture": "war-ready",
+        "version": H7_VERSION,
     }
     (API / "status.json").write_text(json.dumps(status, indent=2) + "\n", encoding="utf-8")
     files.append("status.json")

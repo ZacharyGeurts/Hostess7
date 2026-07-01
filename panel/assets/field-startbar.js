@@ -109,6 +109,26 @@
 
   function launchApp(app) {
     if (!app) return;
+    if (global.FieldQueenNav?.isStandaloneQueenApp?.(app)) {
+      global.FieldQueenNav.openStandalone(app);
+      return;
+    }
+    const exec = app.exec || app.url;
+    if (!exec) return;
+    if (global.FieldQueenNav?.needsEnsureLaunch?.(app)) {
+      global.FieldQueenNav.ensureProgramLaunch(app).then(function (doc) {
+        if (doc && doc.ok === false) {
+          global.FieldHostDesktop?.toast?.("Program unavailable · " + (app.name || app.id));
+          return;
+        }
+        launchAppInner(app);
+      });
+      return;
+    }
+    launchAppInner(app);
+  }
+
+  function launchAppInner(app) {
     const exec = app.exec || app.url;
     if (!exec) return;
     if (global.NexusFieldShell?.launch && (app.shell || exec.includes("embed=1") || app.view || exec.startsWith("/"))) {
@@ -573,26 +593,11 @@
   function handleTrayAction(app) {
     if (!app) return;
     if (app.action === "bookmarks") {
-      const url = "http://127.0.0.1:9481/world/browser.html";
-      if (global.FieldQueenNav?.launch) {
-        global.FieldQueenNav.launch(url, { id: "bookmarks", name: "Bookmarks" });
+      if (global.FieldQueenNav?.openStandalone) {
+        global.FieldQueenNav.openStandalone({ id: "queen-browser", name: "Bookmarks" });
         return;
       }
-      fetch("/api/field-c2-bookmarks", { method: "POST", credentials: "same-origin" })
-        .then(function (r) { return r.json(); })
-        .then(function (doc) {
-          if (doc.ok && global.NexusFieldShell?.launch) {
-            global.NexusFieldShell.launch({
-              id: "queen-browser",
-              name: "Queen Browser",
-              exec: url,
-              shell: true,
-            });
-          }
-        })
-        .catch(function () {
-          launchApp({ id: "queen-browser", name: "Queen Browser", exec: url, shell: true });
-        });
+      launchApp({ id: "queen-browser", name: "Queen Browser", exec: "http://127.0.0.1:9481/world/browser.html" });
       return;
     }
     launchApp(app);

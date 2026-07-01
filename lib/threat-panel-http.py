@@ -7,6 +7,9 @@ import os
 import subprocess
 import sys
 import threading
+import time
+import urllib.error
+import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
@@ -1602,6 +1605,45 @@ def _nexus_py_json(script: Path, args: list[str], timeout: int = 25) -> dict:
         return json.loads(proc.stdout or "{}")
     except json.JSONDecodeError:
         return {"ok": False, "error": "script_failed", "detail": (proc.stderr or "")[:200]}
+
+
+def _ensure_training_viewer() -> dict[str, Any]:
+    port = int(os.environ.get("H7_TRAINING_VIEWER_PORT", "9488"))
+    url = f"http://127.0.0.1:{port}/"
+    health = f"{url}api/health"
+    try:
+        req = urllib.request.Request(health, headers={"Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=2.0) as resp:
+            if 200 <= resp.status < 400:
+                return {"ok": True, "url": url, "port": port, "already_running": True}
+    except (urllib.error.URLError, TimeoutError, OSError):
+        pass
+    launch = INSTALL_ROOT / "hostess7-training-viewer" / "launch.sh"
+    if not launch.is_file():
+        return {"ok": False, "error": "training_viewer_missing", "url": url}
+    env = _field_stack_env()
+    env["H7_TRAINING_VIEWER_PORT"] = str(port)
+    try:
+        subprocess.run(
+            ["bash", str(launch), "url"],
+            env=env,
+            cwd=str(INSTALL_ROOT),
+            capture_output=True,
+            text=True,
+            timeout=20,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return {"ok": False, "error": str(exc), "url": url}
+    for _ in range(30):
+        try:
+            req = urllib.request.Request(health, headers={"Accept": "application/json"})
+            with urllib.request.urlopen(req, timeout=2.0) as resp:
+                if 200 <= resp.status < 400:
+                    return {"ok": True, "url": url, "port": port, "started": True}
+        except (urllib.error.URLError, TimeoutError, OSError):
+            time.sleep(0.2)
+    return {"ok": False, "error": "training_viewer_unavailable", "url": url}
 
 
 def _field_always_files_dispatch(body: dict[str, Any] | None = None, *, timeout: int = 120) -> dict:
@@ -3453,7 +3495,17 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
-        if path in ("/api/queen-browser/open", "/api/queen-browser/f9"):
+        if path in ("/api/hostess7-training-viewer/ensure", "/api/hostess7-training-viewer/open"):
+            payload = _ensure_training_viewer()
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path == "/api/queen-browser/open":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-queen-browser-open.py", ["open"], timeout=50)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path == "/api/queen-browser/f9":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-queen-browser-open.py", ["f9"], timeout=50)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
@@ -11698,6 +11750,23 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 payload = {"ok": False, "error": "field_c2_bookmark_boot_missing"}
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/hostess7-training-viewer/ensure", "/api/hostess7-training-viewer/open"):
+            payload = _ensure_training_viewer()
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path == "/api/queen-browser/open":
+            route = str((body or {}).get("route") or "")
+            args = ["open", route] if route else ["open"]
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-queen-browser-open.py", args, timeout=50)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path == "/api/queen-browser/f9":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-queen-browser-open.py", ["f9"], timeout=50)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
         if path in ("/api/field-vfs", "/api/always-files"):
