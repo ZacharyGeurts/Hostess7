@@ -1,7 +1,7 @@
 /* NEXUS Field Foundation — live fetch only (/api/status). No client cache. */
 (function (global) {
   function fetchField() {
-    return global.fetch("/Hostess7/api/status", { cache: "no-store" })
+    return global.fetch("/api/status", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null);
   }

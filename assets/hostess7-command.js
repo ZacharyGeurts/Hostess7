@@ -1420,8 +1420,8 @@
     void (async () => {
       try {
         await Promise.all([
-          fetch("/Hostess7/api/hostess7/appearance", { cache: "no-store" }),
-          fetch("/Hostess7/api/hostess7/core-of-truth", { cache: "no-store" }),
+          fetch("/api/hostess7/appearance", { cache: "no-store" }),
+          fetch("/api/hostess7/core-of-truth", { cache: "no-store" }),
         ]);
         const panel = await fetch(API, { cache: "no-store" }).then((r) => (r.ok ? r.json() : null));
         if (panelRenderable(panel)) {

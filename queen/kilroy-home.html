@@ -119,8 +119,8 @@
       const el = document.getElementById("kh-status");
       const panel = "9477";
       Promise.allSettled([
-        fetch("http://127.0.0.1:" + panel + "/api/znetwork", { cache: "no-store" }),
-        fetch("http://127.0.0.1:" + panel + "/api/field-keyboard-sovereign", { cache: "no-store" }),
+        fetch("/api/znetwork", { cache: "no-store" }),
+        fetch("/api/field-keyboard-sovereign", { cache: "no-store" }),
       ]).then(function (results) {
         const zn = results[0].status === "fulfilled" && results[0].value.ok;
         const kb = results[1].status === "fulfilled" && results[1].value.ok;

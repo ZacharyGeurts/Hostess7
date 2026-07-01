@@ -474,7 +474,7 @@
   async function refresh() {
     const btn = $("qcc-refresh");
     if (btn) btn.disabled = true;
-    await fetch("/Hostess7/api/chips/catalog/publish", { cache: "no-store" });
+    await fetch("/api/chips/catalog/publish", { cache: "no-store" });
     const [cat, pg, stacks] = await Promise.all([fetchCatalog(), fetchPages(), fetchBookStacks()]);
     catalog = cat;
     pages = pg.length ? pg : cat?.pages || [];

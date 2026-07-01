@@ -155,7 +155,7 @@
   }
 
   async function issueSecureSession(bookId, bookMeta) {
-    const res = await fetch("/Hostess7/api/library/reader/issue", {
+    const res = await fetch("/api/library/reader/issue", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ book_id: bookId, book: bookMeta || null }),

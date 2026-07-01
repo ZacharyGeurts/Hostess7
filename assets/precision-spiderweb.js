@@ -225,7 +225,7 @@
       btn.addEventListener("click", () => setWebMode(btn.dataset.pfWeb || "global"));
     });
     document.getElementById("precision-web-rebuild")?.addEventListener("click", async () => {
-      const res = await fetch("/Hostess7/api/precision-field/rebuild", { method: "POST" });
+      const res = await fetch("/api/precision-field/rebuild", { method: "POST" });
       renderPrecisionSpiderweb(await res.json());
     });
   }

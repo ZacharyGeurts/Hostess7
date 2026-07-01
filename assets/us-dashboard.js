@@ -91,7 +91,7 @@
 
   async function loadHostessProfile() {
     try {
-      const res = await fetch("/Hostess7/api/hostess-profile", { cache: "no-store" });
+      const res = await fetch("/api/hostess-profile", { cache: "no-store" });
       return await res.json();
     } catch {
       return {};
@@ -135,7 +135,7 @@
       urls: collectUrls(),
     };
     try {
-      const res = await fetch("/Hostess7/api/hostess-profile", {
+      const res = await fetch("/api/hostess-profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

@@ -1,5 +1,5 @@
 /**
- * GitHub Pages base path — /Hostess7 on project sites, / on user sites.
+ * GitHub Pages base path — /Hostess7 on project sites.
  */
 (function (global) {
   "use strict";
@@ -19,24 +19,14 @@
     return (BASE || "") + p;
   }
 
+  function stripBase(pathname) {
+    const base = BASE.replace(/\/$/, "");
+    if (base && pathname.startsWith(base + "/")) return pathname.slice(base.length) || "/";
+    if (base && pathname === base) return "/";
+    return pathname;
+  }
+
   global.HOSTESS7_PAGES_BASE = BASE;
   global.H7Base = withBase;
-
-  const origFetch = global.fetch.bind(global);
-  global.fetch = function (input, opts) {
-    let url = typeof input === "string" ? input : input.url;
-    try {
-      const u = new URL(url, global.location.origin);
-      if (u.origin === global.location.origin && u.pathname.startsWith("/api/")) {
-        url = withBase(u.pathname) + u.search;
-        input = typeof input === "string" ? url : new Request(url, input);
-      } else if (u.origin === global.location.origin && u.pathname === "/health") {
-        url = withBase("/api/health.json");
-        input = typeof input === "string" ? url : new Request(url, input);
-      }
-    } catch (_e) {
-      /* relative */
-    }
-    return origFetch(input, opts);
-  };
+  global.H7StripBase = stripBase;
 })(typeof window !== "undefined" ? window : globalThis);

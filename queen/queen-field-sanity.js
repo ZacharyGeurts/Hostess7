@@ -153,7 +153,7 @@
   async function instantFieldDieCheck() {
     const local = snapPitsInstant();
     try {
-      const r = await fetch("/Hostess7/api/field-depth-snap", {
+      const r = await fetch("/api/field-depth-snap", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "field_die", layers: collectLayers() }),
@@ -253,7 +253,7 @@
       };
     }
     try {
-      const r = await fetch("/Hostess7/api/field-net", {
+      const r = await fetch("/api/field-net", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "classify", url }),

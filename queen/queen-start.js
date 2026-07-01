@@ -107,7 +107,7 @@
     const el = document.getElementById("qs-verdict");
     if (!el) return;
     try {
-      const r = await fetch("/Hostess7/api/queen-browser", { cache: "no-store" });
+      const r = await fetch("/api/queen-browser", { cache: "no-store" });
       const j = await r.json();
       el.textContent = `Gates ${j.gates?.held ?? "—"}/${j.gates?.total ?? "—"} · ${j.queen_verdict || "…"}`;
     } catch (_) {

@@ -251,7 +251,7 @@
 
   async function sendHostessSpeak() {
     const text = ($("zn-h7-speak")?.value || "").trim();
-    const res = await fetch("/Hostess7/api/hostess7/znetwork/speak", {
+    const res = await fetch("/api/hostess7/znetwork/speak", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "speak", text }),
@@ -266,7 +266,7 @@
   }
 
   async function rebuildProfile() {
-    const res = await fetch("/Hostess7/api/hostess7/znetwork/rebuild-profile", {
+    const res = await fetch("/api/hostess7/znetwork/rebuild-profile", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "rebuild-profile" }),

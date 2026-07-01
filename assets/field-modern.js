@@ -310,7 +310,7 @@
         body: JSON.stringify({ action: "audit_root" }),
       }).then((r) => r.ok ? toast("Root audit complete", true) : toast("Audit failed", false)));
     $("#fm-rekill")?.addEventListener("click", () =>
-      global.fetch("/Hostess7/api/attack-kit/rekill", {
+      global.fetch("/api/attack-kit/rekill", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({}),

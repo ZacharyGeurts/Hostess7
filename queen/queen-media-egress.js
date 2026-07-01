@@ -33,7 +33,7 @@
   async function refreshGrant() {
     if (!onBrowserSurface()) return state;
     try {
-      const r = await fetch("/Hostess7/api/queen-browser", {
+      const r = await fetch("/api/queen-browser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "media_egress_status" }),
@@ -195,7 +195,7 @@
     refreshGrant,
     state: () => ({ ...state }),
     requestLocalCapture: async (purpose) => {
-      const r = await fetch("/Hostess7/api/queen-browser", {
+      const r = await fetch("/api/queen-browser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "capture_request", purpose: purpose || "obs_local" }),
@@ -205,7 +205,7 @@
       return j;
     },
     revokeCapture: async () => {
-      const r = await fetch("/Hostess7/api/queen-browser", {
+      const r = await fetch("/api/queen-browser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "capture_revoke" }),

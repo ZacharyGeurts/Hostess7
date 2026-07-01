@@ -512,7 +512,7 @@
     });
     $("qb-gates")?.addEventListener("click", () => $("qb-gate-drawer")?.classList.toggle("open"));
     function recordMuscleShortcut(combo) {
-      fetch("/Hostess7/api/muscle-memory", {
+      fetch("/api/muscle-memory", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -560,7 +560,7 @@
     if (globalThis.QUEEN_BROWSER_IMPORT_RAN) return;
     globalThis.QUEEN_BROWSER_IMPORT_RAN = true;
     try {
-      await fetch("/Hostess7/api/queen-browser", {
+      await fetch("/api/queen-browser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "import_all", apply: true, force: false }),

@@ -43,8 +43,8 @@
     let spatial = null;
     try {
       const [upRes, spRes] = await Promise.all([
-        fetch("/Hostess7/api/universal-protector", { credentials: "same-origin" }),
-        fetch("/Hostess7/api/field-spatial", { credentials: "same-origin" }),
+        fetch("/api/universal-protector", { credentials: "same-origin" }),
+        fetch("/api/field-spatial", { credentials: "same-origin" }),
       ]);
       if (upRes.ok) up = await upRes.json();
       if (spRes.ok) spatial = await spRes.json();

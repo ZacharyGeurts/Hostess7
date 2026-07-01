@@ -56,7 +56,7 @@
   }
 
   function fetchWorld() {
-    return global.fetch("/Hostess7/api/status?fast=1", { cache: "no-store" })
+    return global.fetch("/api/status?fast=1", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null);
   }

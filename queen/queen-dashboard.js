@@ -379,7 +379,7 @@
   async function loadDefaultScreens() {
     if (state.panels.length) return;
     try {
-      const r = await fetch("/Hostess7/api/queen-dashboard", { cache: "no-store" });
+      const r = await fetch("/api/queen-dashboard", { cache: "no-store" });
       const doc = await r.json();
       const pinned = (doc.screens || []).filter((s) => s.pinned);
       const list = pinned.length ? pinned : (doc.screens || []).slice(0, 8);

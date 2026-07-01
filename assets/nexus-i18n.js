@@ -78,7 +78,7 @@
   }
 
   async function saveLanguage(code, remember) {
-    const res = await fetch("/Hostess7/api/panel-language", {
+    const res = await fetch("/api/panel-language", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ code, remember: remember !== false }),
@@ -134,7 +134,7 @@
 
   async function bootstrapFromApi() {
     try {
-      const res = await fetch("/Hostess7/api/panel-language", { cache: "no-store" });
+      const res = await fetch("/api/panel-language", { cache: "no-store" });
       if (res.ok) ingest(await res.json());
     } catch (_) {}
     if (!catalog) {

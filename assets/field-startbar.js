@@ -578,7 +578,7 @@
         global.FieldQueenNav.launch(url, { id: "bookmarks", name: "Bookmarks" });
         return;
       }
-      fetch("/Hostess7/api/field-c2-bookmarks", { method: "POST", credentials: "same-origin" })
+      fetch("/api/field-c2-bookmarks", { method: "POST", credentials: "same-origin" })
         .then(function (r) { return r.json(); })
         .then(function (doc) {
           if (doc.ok && global.NexusFieldShell?.launch) {
@@ -664,14 +664,14 @@
   }
 
   function persistQuickUnpin(appId) {
-    fetch("/Hostess7/api/field-taskbar-pins", {
+    fetch("/api/field-taskbar-pins", {
       method: "POST",
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "unpin", id: appId }),
     })
       .then(function () {
-        return fetch("/Hostess7/api/field-host-desktop", { credentials: "same-origin" });
+        return fetch("/api/field-host-desktop", { credentials: "same-origin" });
       })
       .then(function (r) { return r.json(); })
       .then(function (doc) {

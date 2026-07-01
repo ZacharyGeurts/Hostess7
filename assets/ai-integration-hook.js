@@ -48,7 +48,7 @@
   }
 
   function fetchPosture() {
-    return fetch("/Hostess7/api/ai-integration", { cache: "no-store" })
+    return fetch("/api/ai-integration", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null);
   }

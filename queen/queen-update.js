@@ -75,12 +75,12 @@
 
   async function pollStatus() {
     try {
-      const res = await fetch("/Hostess7/api/update/status", { cache: "no-store" });
+      const res = await fetch("/api/update/status", { cache: "no-store" });
       const data = await res.json();
       state = data;
       if (data.needs_sudo) {
         setBusy(true, "Administrator password required");
-        await fetch("/Hostess7/api/update/sudo-prompt", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
+        await fetch("/api/update/sudo-prompt", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
         return true;
       }
       if (data.update_in_progress) {
@@ -122,7 +122,7 @@
     applying = true;
     setBusy(true, `Installing ${state.previous} → ${state.latest}…`);
     try {
-      const res = await fetch("/Hostess7/api/update/apply", {
+      const res = await fetch("/api/update/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: "{}",

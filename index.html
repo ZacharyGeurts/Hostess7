@@ -3,36 +3,41 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Hostess 7 — Queen Browser + AmmoOS</title>
-  <meta name="description" content="Queen Browser and AmmoOS C2 desktop — running live on GitHub Pages for every visitor." />
-  <meta name="theme-color" content="#040508" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
-  <link rel="stylesheet" href="pages-runtime.css" />
+  <title>Hostess 7 — NEXUS C2 Boot</title>
+  <meta name="description" content="NEXUS C2 through KILROY to AmmoOS desktop and Queen Browser on GitHub Pages." />
+  <meta name="theme-color" content="#020403" />
+  <link rel="stylesheet" href="pages-boot.css" />
   <script src="pages-base.js"></script>
   <script src="api-shim.js"></script>
+  <script>
+    (function () {
+      try {
+        if (sessionStorage.getItem("hostess7-pages-booted") === "1") {
+          var b = window.HOSTESS7_PAGES_BASE || "";
+          location.replace(b + "/desktop/");
+        }
+      } catch (_) {}
+    })();
+  </script>
 </head>
 <body>
-  <div class="pages-topbar" aria-label="Hostess 7 pages runtime">
-    <span class="pages-logo">HOSTESS 7</span>
-    <span class="pages-badge" id="runtime-badge">booting Queen + AmmoOS…</span>
-    <div class="pages-actions">
-      <a class="pages-btn" href="brain.html">Brain</a>
-      <a class="pages-btn" href="https://github.com/ZacharyGeurts/Hostess7/releases/tag/v1.0.7h" rel="noopener">RTX release</a>
+  <main class="boot-wrap" aria-live="polite">
+    <div class="boot-seal">
+      <p class="boot-eyebrow">Hostess 7 · GitHub Pages</p>
+      <h1 class="boot-title">NEXUS C2</h1>
+      <p class="boot-stage" id="boot-stage">Initializing…</p>
+      <p class="boot-detail" id="boot-detail">G16 field_opt · sovereign stack wiring</p>
+      <div class="boot-track"><div class="boot-bar" id="boot-bar"></div></div>
+      <p class="boot-pct" id="boot-pct">0%</p>
+      <div class="boot-stack" aria-label="Stack">
+        <span class="boot-pill">NEXUS C2</span>
+        <span class="boot-pill">KILROY</span>
+        <span class="boot-pill">ZNetwork</span>
+        <span class="boot-pill">AmmoOS</span>
+        <span class="boot-pill">Queen</span>
+      </div>
     </div>
-  </div>
-
-  <div class="pages-shell" id="pages-shell">
-    <section class="pages-queen" aria-label="Queen Browser">
-      <div class="pages-loading" id="queen-loading">Queen Browser · RTX shell</div>
-      <iframe id="queen-frame" title="Queen Browser" allow="fullscreen"></iframe>
-    </section>
-    <div class="pages-split" id="pages-split" role="separator" aria-label="Resize Queen and AmmoOS"></div>
-    <section class="pages-ammoos" aria-label="AmmoOS C2 Desktop">
-      <div class="pages-loading" id="ammoos-loading">AmmoOS · field desktop</div>
-      <iframe id="ammoos-frame" title="AmmoOS C2 Desktop" allow="fullscreen"></iframe>
-    </section>
-  </div>
-
-  <script src="pages-runtime.js"></script>
+  </main>
+  <script src="pages-boot.js"></script>
 </body>
 </html>

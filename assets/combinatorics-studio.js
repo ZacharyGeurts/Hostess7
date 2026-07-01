@@ -440,7 +440,7 @@
     host.querySelector("#comb-launch-gameroom")?.addEventListener("click", async () => {
       log(`Launching Game Room CHIPS pump (${system})…`);
       try {
-        const res = await fetch("/Hostess7/api/game-room", {
+        const res = await fetch("/api/game-room", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ action: "launch", system, spawn_rtx: true }),
@@ -455,7 +455,7 @@
   }
 
   async function fetchStatus() {
-    const res = await fetch("/Hostess7/api/combinatorics");
+    const res = await fetch("/api/combinatorics");
     if (!res.ok) throw new Error("status failed");
     return res.json();
   }
@@ -464,7 +464,7 @@
     setBusy(true);
     log(`Starting: ${action}`);
     try {
-      const res = await fetch("/Hostess7/api/combinatorics/run", {
+      const res = await fetch("/api/combinatorics/run", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
@@ -492,9 +492,9 @@
   let pollTimer = null;
 
   async function fetchCombPayload() {
-    const res = await fetch("/Hostess7/api/combinatorics/comb");
+    const res = await fetch("/api/combinatorics/comb");
     if (res.ok) return res.json();
-    const st = await fetch("/Hostess7/api/combinatorics");
+    const st = await fetch("/api/combinatorics");
     if (!st.ok) return null;
     const doc = await st.json();
     return doc.comb || null;
@@ -517,7 +517,7 @@
     if (btn) btn.disabled = true;
     log("Trying brain speed route…");
     try {
-      const res = await fetch("/Hostess7/api/combinatorics/brain-try", {
+      const res = await fetch("/api/combinatorics/brain-try", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({}),

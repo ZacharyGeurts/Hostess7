@@ -98,7 +98,7 @@
 
   async function refreshVector() {
     try {
-      const r = await fetch("/Hostess7/api/contact-vector", { cache: "no-store" });
+      const r = await fetch("/api/contact-vector", { cache: "no-store" });
       if (!r.ok) return;
       const doc = await r.json();
       vector = doc.vector || doc.contact_vector || doc;
@@ -110,7 +110,7 @@
 
   async function recordShortcut(combo, context) {
     try {
-      await fetch("/Hostess7/api/muscle-memory", {
+      await fetch("/api/muscle-memory", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -147,7 +147,7 @@
     const grid = $("jockey-kill-codes-grid");
     if (!grid) return;
     try {
-      const res = await fetch("/Hostess7/api/kill-codes", { cache: "no-store", credentials: "same-origin" });
+      const res = await fetch("/api/kill-codes", { cache: "no-store", credentials: "same-origin" });
       const doc = await res.json();
       const codes = (doc.codes || []).slice(0, 18);
       if (!codes.length) {

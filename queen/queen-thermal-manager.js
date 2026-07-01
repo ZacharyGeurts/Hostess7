@@ -20,6 +20,7 @@
   }
 
   function panelBase() {
+    if (document.body?.dataset?.pagesRuntime === "1") return (global.HOSTESS7_PAGES_BASE || "");
     return `http://127.0.0.1:${panelPort()}`;
   }
 

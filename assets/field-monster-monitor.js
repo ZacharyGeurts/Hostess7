@@ -576,7 +576,7 @@
         else if (act === "lock") global.NexusFieldShell?.openProgram?.({ exec: "/field-lock" });
         else if (act === "thermal") global.open("/Hostess7/queen/queen-thermal-manager.html", "_blank");
         else if (act === "shield")
-          fetch("/Hostess7/api/admin-shield", { method: "GET", credentials: "same-origin" }).catch(function () {});
+          fetch("/api/admin-shield", { method: "GET", credentials: "same-origin" }).catch(function () {});
         close();
       });
     });

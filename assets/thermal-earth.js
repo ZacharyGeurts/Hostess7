@@ -170,7 +170,7 @@
   function bindThermalControls() {
     document.getElementById("thermal-rebuild")?.addEventListener("click", async () => {
       try {
-        const res = await fetch("/Hostess7/api/thermal-earth/rebuild", { method: "POST" });
+        const res = await fetch("/api/thermal-earth/rebuild", { method: "POST" });
         const doc = await res.json();
         renderThermalEarth(doc);
         if (global.renderTerrorSpiderweb && global.lastPanelData) {

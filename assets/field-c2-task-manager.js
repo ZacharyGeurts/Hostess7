@@ -81,7 +81,7 @@
 
   async function hangRespond(id, choice) {
     try {
-      await fetch("/Hostess7/api/field-monster-shell/hang-respond", {
+      await fetch("/api/field-monster-shell/hang-respond", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",
@@ -137,7 +137,7 @@
 
   async function pollHang() {
     try {
-      const res = await fetch("/Hostess7/api/field-monster-shell/hang-pending", {
+      const res = await fetch("/api/field-monster-shell/hang-pending", {
         credentials: "same-origin",
         cache: "no-store",
       });

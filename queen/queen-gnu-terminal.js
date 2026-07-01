@@ -604,7 +604,7 @@
 
     if (raw.startsWith("queen://")) {
       frame.srcdoc = "<p style='font-family:monospace;padding:1rem;color:#3ecf8e'>Resolving queen://…</p>";
-      fetch("/Hostess7/api/field-net", {
+      fetch("/api/field-net", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "resolve", url: raw }),
@@ -654,7 +654,7 @@
 
     try {
       const j = await api({ action: "run", command: trimmed, cwd: sess.cwd || root.cwd });
-      fetch("/Hostess7/api/hostess7/userwatch", {
+      fetch("/api/hostess7/userwatch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -607,13 +607,13 @@
   }
 
   async function fetchWireframe() {
-    const res = await fetch("/Hostess7/api/humanoid-motion/wireframe", { credentials: "same-origin" });
+    const res = await fetch("/api/humanoid-motion/wireframe", { credentials: "same-origin" });
     if (!res.ok) throw new Error("wireframe fetch failed");
     return res.json();
   }
 
   async function fetchCatalog() {
-    const res = await fetch("/Hostess7/api/humanoid-motion/catalog", { credentials: "same-origin" });
+    const res = await fetch("/api/humanoid-motion/catalog", { credentials: "same-origin" });
     if (res.ok) {
       const j = await res.json();
       catalog = j.skills || [];

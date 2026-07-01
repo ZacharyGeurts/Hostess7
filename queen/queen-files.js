@@ -677,7 +677,7 @@
   async function fetchLaunchSeal() {
     if (state.launchSeal?.generation != null) return state.launchSeal;
     try {
-      const r = await fetch("/Hostess7/api/compatibility");
+      const r = await fetch("/api/compatibility");
       const d = await r.json();
       state.launchSeal = d.launch_seal || { generation: 0 };
       return state.launchSeal;

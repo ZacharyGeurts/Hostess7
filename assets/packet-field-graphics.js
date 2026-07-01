@@ -162,7 +162,7 @@
     if (global.NexusRtxZero?.paused?.()) return;
     capturePending = true;
     try {
-      await fetch("/Hostess7/api/packet-field/capture", { method: "POST", cache: "no-store" });
+      await fetch("/api/packet-field/capture", { method: "POST", cache: "no-store" });
     } catch (_) {
       /* zero-cost — skip on miss */
     } finally {

@@ -1,0 +1,109 @@
+:root {
+  --bg: #020403;
+  --accent: #3ecf8e;
+  --rose: #f472b6;
+  --text: #e8f2ea;
+  --muted: #64748b;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  height: 100dvh;
+  background: radial-gradient(ellipse 120% 90% at 50% 0%, #0a1812 0%, var(--bg) 55%, #000 100%);
+  color: var(--text);
+  font: 14px system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.boot-wrap {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.boot-seal {
+  width: min(640px, 92vw);
+  padding: 32px 28px 36px;
+  border: 1px solid rgba(26, 77, 50, 0.65);
+  border-radius: 16px;
+  background: linear-gradient(165deg, rgba(4, 12, 8, 0.92), rgba(2, 6, 4, 0.88));
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(62, 207, 142, 0.12);
+}
+
+.boot-eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.boot-title {
+  margin: 0 0 6px;
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.boot-stage {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.boot-detail {
+  margin: 0 0 22px;
+  color: var(--muted);
+  line-height: 1.55;
+  min-height: 2.8em;
+}
+
+.boot-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.boot-bar {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--rose));
+  transition: width 0.35s ease;
+}
+
+.boot-pct {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.boot-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.boot-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(62, 207, 142, 0.35);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}

@@ -9,7 +9,7 @@
     const main = document.getElementById("fg-main");
     if (!main) return;
     try {
-      const res = await fetch("/Hostess7/api/field-gimp", { credentials: "same-origin" });
+      const res = await fetch("/api/field-gimp", { credentials: "same-origin" });
       const doc = await res.json();
       const pill = document.getElementById("fg-os-pill");
       if (pill) pill.textContent = doc.os_brand || "AmmoOS";

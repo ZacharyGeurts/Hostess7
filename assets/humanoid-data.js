@@ -428,7 +428,7 @@
   }
 
   async function fetchAll() {
-    const res = await fetch("/Hostess7/api/humanoid-motion/data-all", { credentials: "same-origin" });
+    const res = await fetch("/api/humanoid-motion/data-all", { credentials: "same-origin" });
     if (!res.ok) throw new Error("data-all failed");
     return res.json();
   }

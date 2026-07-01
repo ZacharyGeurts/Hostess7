@@ -106,7 +106,7 @@
 
   async function pollChips() {
     try {
-      const r = await fetch("/Hostess7/api/chips", { cache: "no-store" });
+      const r = await fetch("/api/chips", { cache: "no-store" });
       if (r.ok) renderChips(await r.json());
     } catch (_) {
       /* loopback only — quiet */

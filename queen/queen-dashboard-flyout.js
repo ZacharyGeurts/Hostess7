@@ -116,7 +116,7 @@
 
   async function fetchScreens() {
     try {
-      const r = await fetch("/Hostess7/api/nexus-c2?flyout=1", { cache: "no-store" });
+      const r = await fetch("/api/nexus-c2?flyout=1", { cache: "no-store" });
       const doc = await r.json();
       state.screens = doc.panels || doc.screens || [];
       state.g16 = doc.g16 || null;

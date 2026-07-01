@@ -823,7 +823,7 @@
 
   async function prototypeSoundOff(opts) {
     const body = { action: "sound_off", freq_mhz: 93.1, station_id: "wimk-931", call_sign: "WIMK", play: true, ...opts };
-    const res = await fetch("/Hostess7/api/field-antenna", {
+    const res = await fetch("/api/field-antenna", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -905,7 +905,7 @@
     const statusEl = document.getElementById("signals-wimk-status");
     if (statusEl) statusEl.textContent = "93.1 WIMK — trying playback paths until working…";
     const body = { action: "listen", freq_mhz: 93.1, station_id: "wimk-931", call_sign: "WIMK", live_play: true, ota_only: true, ...opts };
-    const res = await fetch("/Hostess7/api/field-antenna", {
+    const res = await fetch("/api/field-antenna", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -930,7 +930,7 @@
 
   async function catchRadioFrequency(opts) {
     const body = { action: "catch", freq_mhz: 93.1, station_id: "wimk-931", call_sign: "WIMK", ...opts };
-    const res = await fetch("/Hostess7/api/field-antenna", {
+    const res = await fetch("/api/field-antenna", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -957,7 +957,7 @@
   }
 
   async function tuneWorldBand(band) {
-    const res = await fetch("/Hostess7/api/field-antenna", {
+    const res = await fetch("/api/field-antenna", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "listen", band, live_play: true, ota_only: true }),
@@ -1128,7 +1128,7 @@
           };
           if (st.freq_mhz != null) body.freq_mhz = st.freq_mhz;
           if (st.freq_khz != null) body.freq_khz = st.freq_khz;
-          const res = await fetch("/Hostess7/api/field-antenna", {
+          const res = await fetch("/api/field-antenna", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
@@ -1298,8 +1298,8 @@
       const btn = document.getElementById("signals-refresh");
       if (btn) btn.disabled = true;
       try {
-        await fetch("/Hostess7/api/field", { method: "POST", cache: "no-store" });
-        const res = await fetch("/Hostess7/api/field", { cache: "no-store" });
+        await fetch("/api/field", { method: "POST", cache: "no-store" });
+        const res = await fetch("/api/field", { cache: "no-store" });
         const doc = await res.json();
         renderSignalsField(mergeSignalsPayload(doc));
         if (global.refresh) global.refresh();
@@ -1315,7 +1315,7 @@
         const btn = document.getElementById("signals-antenna-test");
         if (btn) btn.disabled = true;
         try {
-          const res = await fetch("/Hostess7/api/field-antenna", {
+          const res = await fetch("/api/field-antenna", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ action: "test" }),

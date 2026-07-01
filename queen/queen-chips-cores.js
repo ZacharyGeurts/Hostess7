@@ -382,18 +382,18 @@
 
   async function refresh() {
     const [chips, boot, comb, chipsCore, visuals, spider, growth, plateDims, combinamatrix, universalNeural, steelPlates, sequence] = await Promise.all([
-      fetch("/Hostess7/api/chips", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/queen-boot", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/chips/combinatronic", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/chips/core", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/combinatronic/visuals", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/combinatronic/spider-wire", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/combinatronics/growth", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/plate-dimensions", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/combinamatrix", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/universal-neural", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/steel-neural-plates", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      fetch("/Hostess7/api/combinatorics/sequence", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/chips", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/queen-boot", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/chips/combinatronic", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/chips/core", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/combinatronic/visuals", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/combinatronic/spider-wire", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/combinatronics/growth", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/plate-dimensions", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/combinamatrix", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/universal-neural", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/steel-neural-plates", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch("/api/combinatorics/sequence", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
     ]);
     const chipsDoc = chips || {};
     const bootDoc = boot || {};

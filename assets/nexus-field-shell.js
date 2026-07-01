@@ -159,7 +159,7 @@
 
   async function loadSettings() {
     try {
-      const res = await fetch("/Hostess7/api/field-shell-settings", { credentials: "same-origin" });
+      const res = await fetch("/api/field-shell-settings", { credentials: "same-origin" });
       if (!res.ok) throw new Error("settings " + res.status);
       applySettings(await res.json());
     } catch (_) {
@@ -169,7 +169,7 @@
 
   async function saveSettings(patch) {
     try {
-      const res = await fetch("/Hostess7/api/field-shell-settings", {
+      const res = await fetch("/api/field-shell-settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(patch || {}),
@@ -515,7 +515,7 @@
     if (!modal || !body) return;
     body.innerHTML = "Loading displays…";
     modal.classList.add("open");
-    fetch("/Hostess7/api/field-shell-settings", { credentials: "same-origin" })
+    fetch("/api/field-shell-settings", { credentials: "same-origin" })
       .then(function (r) {
         return r.json();
       })
@@ -672,7 +672,7 @@
     }
     if (action === "restart-nexus" || action === "restart") {
       if (!confirm("Restart NEXUS panel and services?")) return;
-      fetch("/Hostess7/api/nexus/restart", {
+      fetch("/api/nexus/restart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ policy: "log" }),
@@ -690,7 +690,7 @@
     }
     if (action === "close-os" || action === "close_os" || action === "quit-ammoos") {
       if (!confirm("Shut down AmmoOS? The host computer will stay on.")) return;
-      fetch("/Hostess7/api/ammoos/close", {
+      fetch("/api/ammoos/close", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ confirm: true }),
@@ -718,7 +718,7 @@
       }
       if (!confirm("Shut down host?")) return;
       function requestShutdown(elevated) {
-        return fetch("/Hostess7/api/field-host-freeze/shutdown", {
+        return fetch("/api/field-host-freeze/shutdown", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ mode: "disk", elevated: elevated, confirm: true }),
@@ -737,7 +737,7 @@
           if (res.body && res.body.error === "root_required") {
             return requestShutdown(true);
           }
-          return fetch("/Hostess7/api/host/poweroff", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" })
+          return fetch("/api/host/poweroff", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" })
             .then(function (r) {
               return r.json();
             })

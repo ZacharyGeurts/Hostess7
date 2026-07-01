@@ -320,7 +320,7 @@
     const cur = programs.find((p) => p.id === item.id);
     const next = !(cur?.pinned);
     try {
-      const r = await fetch("/Hostess7/api/queen-desktop", {
+      const r = await fetch("/api/queen-desktop", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "toggle_pin", program_id: item.id, pinned: next }),
@@ -616,7 +616,7 @@
 
   async function setWallpaper(url) {
     try {
-      const r = await fetch("/Hostess7/api/queen-desktop", {
+      const r = await fetch("/api/queen-desktop", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "set_wallpaper", wallpaper: url }),
@@ -652,7 +652,7 @@
 
   async function refresh() {
     try {
-      const r = await fetch("/Hostess7/api/queen-desktop", { cache: "no-store" });
+      const r = await fetch("/api/queen-desktop", { cache: "no-store" });
       state.data = await r.json();
       applyWallpaper(state.data);
       renderIcons(desktopSurfacePrograms());

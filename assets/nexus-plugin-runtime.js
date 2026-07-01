@@ -138,7 +138,7 @@
         const on = btn.dataset.enabled === "1";
         btn.disabled = true;
         try {
-          await fetch("/Hostess7/api/plugins/toggle", {
+          await fetch("/api/plugins/toggle", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id, enabled: on }),

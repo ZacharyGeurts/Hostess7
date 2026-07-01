@@ -532,8 +532,8 @@
     toast("Scanning Operator — parallel IRQ, DMA, PCI…");
     try {
       const [scanR, plateR] = await Promise.all([
-        fetch("/Hostess7/api/field-operator/scan", { credentials: "same-origin" }),
-        fetch("/Hostess7/api/field-operator/iron-plate", { credentials: "same-origin" }),
+        fetch("/api/field-operator/scan", { credentials: "same-origin" }),
+        fetch("/api/field-operator/iron-plate", { credentials: "same-origin" }),
       ]);
       const scan = await scanR.json();
       const plate = await plateR.json();

@@ -23,7 +23,7 @@
   }
 
   async function fetchShell() {
-    const res = await fetch("/Hostess7/api/field-shell-settings", { credentials: "same-origin" });
+    const res = await fetch("/api/field-shell-settings", { credentials: "same-origin" });
     if (!res.ok) throw new Error("settings " + res.status);
     shellDoc = await res.json();
     return shellDoc;
@@ -36,7 +36,7 @@
   }
 
   async function saveShell(patch) {
-    const res = await fetch("/Hostess7/api/field-shell-settings", {
+    const res = await fetch("/api/field-shell-settings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(patch),
@@ -549,7 +549,7 @@
   function bindSystemHandlers() {
     $("cp-restart")?.addEventListener("click", async function () {
       if (!confirm("Restart Queen field services?")) return;
-      await fetch("/Hostess7/api/nexus/restart", {
+      await fetch("/api/nexus/restart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ policy: "log" }),

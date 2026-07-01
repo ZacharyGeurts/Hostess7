@@ -66,7 +66,7 @@
     $("outside-probe-btn")?.addEventListener("click", () => runConnect(true));
     $("outside-refresh-btn")?.addEventListener("click", async () => {
       try {
-        const res = await fetch("/Hostess7/api/field-outside-talk", { method: "POST" });
+        const res = await fetch("/api/field-outside-talk", { method: "POST" });
         const j = await res.json();
         renderOutsideTalk(j);
       } catch (err) {
@@ -131,7 +131,7 @@
         term.scrollTop = term.scrollHeight;
       }
       if (!probeOnly && lastDoc) {
-        const res2 = await fetch("/Hostess7/api/field-outside-talk");
+        const res2 = await fetch("/api/field-outside-talk");
         const fresh = await res2.json();
         renderOutsideTalk(fresh);
       }

@@ -41,6 +41,7 @@
   }
 
   function panelBase() {
+    if (document.body?.dataset?.pagesRuntime === "1") return (global.HOSTESS7_PAGES_BASE || "");
     return `http://127.0.0.1:${panelPort()}`;
   }
 
@@ -430,7 +431,7 @@
   async function fetchDesktopDoc() {
     if (shell.desktopDoc) return shell.desktopDoc;
     try {
-      const r = await fetch("/Hostess7/api/queen-desktop", { cache: "no-store" });
+      const r = await fetch("/api/queen-desktop", { cache: "no-store" });
       shell.desktopDoc = await r.json();
     } catch {
       shell.desktopDoc = { classic_programs: [], host_programs: [] };
@@ -689,7 +690,7 @@
       if (!tab) return;
       const cur = tab.compat_mode || "auto";
       const next = modes[(modes.indexOf(cur) + 1) % modes.length];
-      const r = await fetch("/Hostess7/api/queen-browser", {
+      const r = await fetch("/api/queen-browser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "set_compat", tab_id: tab.id, compat_mode: next }),
@@ -722,7 +723,7 @@
     strip.id = "qb-security-strip";
     strip.textContent = "KILROY · ZNetwork hooks · Queen Browser shell";
     $("qb-gate-strip")?.prepend(strip);
-    fetch("/Hostess7/api/github-secure", { cache: "no-store" })
+    fetch("/api/github-secure", { cache: "no-store" })
       .then((r) => r.json())
       .then((j) => {
         const ok = j.verify?.ok;
@@ -820,7 +821,7 @@
 
   async function loadShieldPolicy() {
     try {
-      const r = await fetch("/Hostess7/api/queen-page-shields", { cache: "no-store" });
+      const r = await fetch("/api/queen-page-shields", { cache: "no-store" });
       const doc = await r.json();
       shell.autoProxyExternal = doc?.policy?.auto_proxy_external !== false;
     } catch (_) {

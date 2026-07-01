@@ -11,7 +11,7 @@
 
   async function clipboardCopy(text) {
     try {
-      const res = await fetch("/Hostess7/api/field-clipboard", {
+      const res = await fetch("/api/field-clipboard", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "copy", text: String(text) }),
@@ -83,7 +83,7 @@
   }
 
   async function refresh() {
-    const res = await fetch("/Hostess7/api/field-font");
+    const res = await fetch("/api/field-font");
     font = await res.json();
     if (font.font) font = font.font;
     renderPointSizes();

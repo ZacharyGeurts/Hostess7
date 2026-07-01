@@ -194,7 +194,7 @@
   async function runLaunchable(root, rel) {
     toast("Running launchable…");
     try {
-      const out = await fetch("/Hostess7/api/queen-file-browser", {
+      const out = await fetch("/api/queen-file-browser", {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },

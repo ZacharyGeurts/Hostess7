@@ -23,7 +23,7 @@
     const detail = $("qb-import-detail");
     if (!chip || !detail) return;
     try {
-      const res = await fetch("/Hostess7/api/queen-browser", { cache: "no-store" });
+      const res = await fetch("/api/queen-browser", { cache: "no-store" });
       const doc = await res.json();
       detail.textContent = formatImport(doc);
       const vault = doc.vault || {};
@@ -45,7 +45,7 @@
     const detail = $("qb-import-detail");
     if (detail) detail.textContent = "Importing & resecuring…";
     try {
-      const res = await fetch("/Hostess7/api/queen-browser", {
+      const res = await fetch("/api/queen-browser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "import_all", apply: true, force: !!force }),
@@ -73,7 +73,7 @@
   async function setPrimary() {
     const detail = $("qb-import-detail");
     try {
-      const res = await fetch("/Hostess7/api/queen-browser", {
+      const res = await fetch("/api/queen-browser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "set_primary_browser" }),

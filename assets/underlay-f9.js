@@ -187,7 +187,7 @@
   async function runTristateAction(path, label, body) {
     toast(label + "…");
     try {
-      const res = await fetch("/Hostess7/api/tristate-installer" + path, {
+      const res = await fetch("/api/tristate-installer" + path, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
@@ -205,7 +205,7 @@
   async function runDropInAction(path, label, body) {
     toast(label + "…");
     try {
-      const res = await fetch("/Hostess7/api/drop-in-orchestrator" + path, {
+      const res = await fetch("/api/drop-in-orchestrator" + path, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
@@ -224,7 +224,7 @@
   async function runQueenBrowser() {
     toast("Opening Queen sovereign browser…");
     try {
-      const res = await fetch("/Hostess7/api/queen-browser/f9", {
+      const res = await fetch("/api/queen-browser/f9", {
         method: "POST",
         credentials: "same-origin",
         headers: { Accept: "application/json", "Content-Type": "application/json" },
@@ -303,7 +303,7 @@
   async function runIroncladSerum() {
     toast("Ironclad truth serum cycle…");
     try {
-      const res = await fetch("/Hostess7/api/ironclad/reality-field/cycle", {
+      const res = await fetch("/api/ironclad/reality-field/cycle", {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },

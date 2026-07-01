@@ -70,7 +70,7 @@
   }
 
   async function loadStatus() {
-    const res = await fetch("/Hostess7/api/compatibility");
+    const res = await fetch("/api/compatibility");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const doc = await res.json();
     renderStack(doc);
@@ -82,7 +82,7 @@
     setBusy(true);
     log(deep ? "Deep refresh started…" : "Sync all layers…");
     try {
-      const res = await fetch("/Hostess7/api/compatibility/refresh", {
+      const res = await fetch("/api/compatibility/refresh", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ deep: !!deep }),

@@ -277,14 +277,14 @@
       source: "precision_map_click",
     };
     try {
-      const res = await fetch("/Hostess7/api/precision-field/place", {
+      const res = await fetch("/api/precision-field/place", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       const doc = await res.json();
       if (doc.ok) {
-        const rebuilt = await fetch("/Hostess7/api/precision-field/rebuild", { method: "POST" });
+        const rebuilt = await fetch("/api/precision-field/rebuild", { method: "POST" });
         renderPrecisionMap(await rebuilt.json());
       }
     } catch {
@@ -299,7 +299,7 @@
       btn.addEventListener("click", () => setMode(btn.dataset.pfMap || "global"));
     });
     document.getElementById("precision-map-rebuild")?.addEventListener("click", async () => {
-      const res = await fetch("/Hostess7/api/precision-field/rebuild", { method: "POST" });
+      const res = await fetch("/api/precision-field/rebuild", { method: "POST" });
       renderPrecisionMap(await res.json());
     });
     document.getElementById("precision-map-refocus")?.addEventListener("click", () => {

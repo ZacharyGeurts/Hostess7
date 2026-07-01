@@ -16,7 +16,7 @@
 
   function engageKeyboardSovereign() {
     if (state.keysEngaged) return;
-    fetch("/Hostess7/api/field-keyboard-sovereign/engage", {
+    fetch("/api/field-keyboard-sovereign/engage", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: "{}",
@@ -35,7 +35,7 @@
     if (navigator.sendBeacon) {
       navigator.sendBeacon("/api/field-keyboard-sovereign/release", body);
     } else {
-      fetch("/Hostess7/api/field-keyboard-sovereign/release", {
+      fetch("/api/field-keyboard-sovereign/release", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: body,
@@ -59,9 +59,10 @@
   async function refresh() {
     fillViewport();
     try {
-      const res = await fetch("/Hostess7/api/field-host-desktop", { credentials: "same-origin" });
+      const res = await fetch("/api/field-host-desktop", { credentials: "same-origin" });
       if (!res.ok) throw new Error("desktop API " + res.status);
       state.data = await res.json();
+      try { global.__H7_DESKTOP_DOC__ = state.data; } catch (_) {}
 
       const mon = document.getElementById("hd-monitor");
       const policy = state.data?.policy || {};

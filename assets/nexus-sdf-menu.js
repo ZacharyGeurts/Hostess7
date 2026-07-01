@@ -73,7 +73,7 @@
 
   async function fetchGpuStatus() {
     try {
-      const res = await fetch("/Hostess7/api/field-die/gpu", { cache: "no-store" });
+      const res = await fetch("/api/field-die/gpu", { cache: "no-store" });
       if (res.ok) gpuStatus = await res.json();
     } catch (_) {
       gpuStatus = null;
@@ -85,7 +85,7 @@
     const status = document.getElementById("nexus-sdf-menu-status");
     if (status) status.textContent = "Launching GPU Field Die…";
     try {
-      const res = await fetch("/Hostess7/api/field-die/gpu-launch", {
+      const res = await fetch("/api/field-die/gpu-launch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ extended: true, infinite_sdf: true }),

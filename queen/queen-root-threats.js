@@ -66,13 +66,13 @@
   }
 
   function fetchStatus() {
-    return global.fetch("/Hostess7/api/root-threats", { cache: "no-store" })
+    return global.fetch("/api/root-threats", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null);
   }
 
   function postAction(action) {
-    return global.fetch("/Hostess7/api/root-threats", {
+    return global.fetch("/api/root-threats", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action }),

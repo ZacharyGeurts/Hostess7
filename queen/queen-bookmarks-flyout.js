@@ -178,7 +178,7 @@
 
   async function refresh() {
     try {
-      const r = await fetch("/Hostess7/api/queen-browser", { cache: "no-store" });
+      const r = await fetch("/api/queen-browser", { cache: "no-store" });
       const doc = await r.json();
       render(doc);
     } catch (_) {}
