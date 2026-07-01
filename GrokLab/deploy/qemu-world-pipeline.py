@@ -216,15 +216,18 @@ def _ssh_cmd(port: int, remote: str, *, connect_timeout: int = 4) -> list[str]:
 
 
 def _trigger_panel_boot(port: int) -> None:
-    rb = "/opt/ammoos/ammoos/NewLatest/GrokLab/deploy/world-node-c2-kilroy-boot.sh"
+    ensure = "/opt/ammoos/ammoos/NewLatest/GrokLab/deploy/world-node-panel-ensure.sh"
+    boot = "/opt/ammoos/ammoos/NewLatest/GrokLab/deploy/world-node-c2-kilroy-boot.sh"
     _run(
         _ssh_cmd(
             port,
             f"sudo systemctl start nexus-c2-kilroy.service 2>/dev/null; "
-            f"test -x {rb} && AML_BUILD=0 bash {rb} >/dev/null 2>&1 || true",
+            f"sudo systemctl start nexus-panel.service 2>/dev/null; "
+            f"test -x {ensure} && GROK_LAB_WORLD_NODE=1 AML_BUILD=0 bash {ensure} >/dev/null 2>&1 || "
+            f"(test -x {boot} && AML_BUILD=0 bash {boot} >/dev/null 2>&1) || true",
             connect_timeout=8,
         ),
-        timeout=30,
+        timeout=45,
     )
 
 
@@ -378,6 +381,13 @@ def run_pipeline() -> dict[str, Any]:
         return {"ok": True, "message": "all 30 nodes already provisioned", "completed": 30}
 
     _log(f"pipeline start — {_state['pending']} pending, 3 slots active")
+    ensure = DEPLOY / "world-node-panel-ensure.sh"
+    if ensure.is_file():
+        r = _run(["bash", str(ensure)], timeout=60)
+        if r.returncode == 0:
+            _log("local sanctuary panel :9477 ready")
+        else:
+            _log("WARN local sanctuary panel not ready — program launch may fail until panel is up")
     threads = [threading.Thread(target=_slot_worker, args=(s["slot"],), daemon=True) for s in SLOTS]
     for t in threads:
         t.start()

@@ -37,15 +37,12 @@ log() { printf '[c2-kilroy-boot] %s\n' "$*"; }
 # shellcheck source=/dev/null
 [[ -f "$NL/lib/field-war-hardening.sh" ]] && AML_BUILD=0 source "$NL/lib/field-war-hardening.sh" && nexus_field_war_harden || true
 
-if [[ ! -f "$STATE/threat-panel.json" && -f "$NL/scripts/panel-json-assemble.py" ]]; then
-  NEXUS_INSTALL_ROOT="$NL" NEXUS_STATE_DIR="$STATE" "$PY" "$NL/scripts/panel-json-assemble.py" >/dev/null 2>&1 || true
-fi
-
-if ! pgrep -f 'threat-panel-http.py.*9477' >/dev/null 2>&1; then
-  log "starting NEXUS C2 panel :9477"
-  nohup env NEXUS_INSTALL_ROOT="$NL" NEXUS_STATE_DIR="$STATE" SG_ROOT="$SG" \
-    "$PY" "$NL/lib/threat-panel-http.py" 9477 "$NL/panel" "$STATE/threat-panel.json" \
-    >>"$STATE/panel-http.log" 2>&1 &
+if [[ -x "$DEPLOY/world-node-panel-ensure.sh" ]]; then
+  GROK_LAB_WORLD_NODE=1 GROK_LAB_PY="$PY" \
+    NEXUS_INSTALL_ROOT="$NL" NEXUS_STATE_DIR="$STATE" SG_ROOT="$SG" \
+    bash "$DEPLOY/world-node-panel-ensure.sh" || log "WARN — panel ensure deferred"
+else
+  log "WARN — world-node-panel-ensure.sh missing"
 fi
 
 if [[ -f "$NL/lib/kilroy-boot-services.py" ]]; then

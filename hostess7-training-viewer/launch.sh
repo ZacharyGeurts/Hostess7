@@ -48,6 +48,16 @@ OPENER="${NEXUS_INSTALL_ROOT}/lib/queen-panel-open.py"
 
 /usr/bin/mkdir -p "${NEXUS_STATE_DIR}"
 
+_ensure_panel() {
+  if curl -sf --connect-timeout 1 --max-time 2 "http://127.0.0.1:${NEXUS_THREAT_PANEL_PORT:-9477}/field" >/dev/null 2>&1; then
+    return 0
+  fi
+  local ensure="${NEXUS_INSTALL_ROOT}/lib/nexus-panel-ensure.sh"
+  [[ -x "$ensure" ]] && AML_BUILD=0 bash "$ensure" >/dev/null 2>&1 || true
+}
+
+_ensure_panel || echo "WARN: NEXUS panel :9477 not ready — run lib/nexus-panel-ensure.sh" >&2
+
 _running() {
   curl -sf --connect-timeout 1 --max-time 2 "${URL}api/health" >/dev/null 2>&1
 }

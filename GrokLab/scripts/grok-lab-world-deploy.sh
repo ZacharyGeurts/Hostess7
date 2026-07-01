@@ -57,8 +57,13 @@ case "$CMD" in
     python3 "$ROOT/deploy/world-nodes-sync.py" sync
     python3 "$ROOT/deploy/qemu-world-pipeline.py" run
     ;;
+  panel-ensure|ensure-panel)
+    log "Ensure local NEXUS panel :9477…"
+    bash "$NL/lib/nexus-panel-ensure.sh"
+    ;;
   pipeline|pipeline-run)
     log "Rolling 3-QEMU pipeline — keep 3 active until all 30 are provisioned…"
+    bash "$NL/lib/nexus-panel-ensure.sh" 2>/dev/null || log "WARN: local panel not up yet"
     python3 "$ROOT/deploy/qemu-world-pipeline.py" run
     ;;
   pipeline-status|pipeline-watch)
@@ -109,7 +114,7 @@ case "$CMD" in
     fi
     ;;
   *)
-    echo "Usage: grok-lab-world-deploy.sh {init-nodes|sync-nodes|pack|pipeline|pipeline-status|pipeline-watch|bootstrap|deploy|verify|world-boot|status|providers|cloudflare|cloudflare-propagate}" >&2
+    echo "Usage: grok-lab-world-deploy.sh {init-nodes|sync-nodes|pack|panel-ensure|pipeline|pipeline-status|pipeline-watch|bootstrap|deploy|verify|world-boot|status|providers|cloudflare|cloudflare-propagate}" >&2
     exit 1
     ;;
 esac

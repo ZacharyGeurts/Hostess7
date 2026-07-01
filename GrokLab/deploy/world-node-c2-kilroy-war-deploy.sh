@@ -10,13 +10,16 @@ REBOOT="${WORLD_NODE_REBOOT:-1}"
 
 SSH_KEY="${GROK_LAB_SSH_KEY:-$(cd "$(dirname "$0")" && pwd)/world-ssh/id_ed25519}"
 chmod 600 "$SSH_KEY" 2>/dev/null || true
-SSH_OPTS="-o BatchMode=yes -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20"
+DEPLOY="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=world-ssh-slot.sh
+source "$DEPLOY/world-ssh-slot.sh"
+world_ssh_clear_slot_key "$PORT"
+SSH_OPTS="${WORLD_SSH_SLOT_OPTS[*]}"
 NL="${NEXUS_INSTALL_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}"
 SG="${SG_ROOT:-$(cd "$NL/.." && pwd)}"
 KILROY="${KILROY_ROOT:-$(readlink -f "$NL/KILROY" 2>/dev/null || echo "$SG/KILROY")}"
-DEPLOY="$(cd "$(dirname "$0")" && pwd)"
 RB="/opt/ammoos/ammoos/NewLatest"
-RS="rsync -a --delete-after -e 'ssh -p $PORT -i $SSH_KEY -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20'"
+RS="rsync -a --delete-after -e '$(world_ssh_rsync_e "$PORT" "$SSH_KEY")'"
 
 log() { printf '[c2-kilroy-deploy] %s\n' "$*"; }
 
@@ -112,8 +115,30 @@ TimeoutStartSec=180
 [Install]
 WantedBy=multi-user.target
 UNIT
+sudo tee /etc/systemd/system/nexus-panel.service >/dev/null <<'UNIT'
+[Unit]
+Description=NEXUS C2 threat panel (:9477)
+After=network-online.target nexus-c2-kilroy.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=SG_ROOT=/opt/ammoos/ammoos
+Environment=NEXUS_INSTALL_ROOT=/opt/ammoos/ammoos/NewLatest
+Environment=NEXUS_STATE_DIR=/opt/ammoos/ammoos/NewLatest/.nexus-state
+Environment=GROK_LAB_WORLD_NODE=1
+Environment=AML_BUILD=0
+ExecStart=/usr/bin/python3 /opt/ammoos/ammoos/NewLatest/lib/threat-panel-http.py 9477 /opt/ammoos/ammoos/NewLatest/panel /opt/ammoos/ammoos/NewLatest/.nexus-state/threat-panel.json
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/opt/ammoos/ammoos/NewLatest/.nexus-state/panel-http.log
+StandardError=append:/opt/ammoos/ammoos/NewLatest/.nexus-state/panel-http.log
+
+[Install]
+WantedBy=multi-user.target
+UNIT
 sudo systemctl daemon-reload
-sudo systemctl enable nexus-c2-kilroy.service
+sudo systemctl enable nexus-c2-kilroy.service nexus-panel.service
 REMOTE
 
 if [[ "$REBOOT" == "1" ]]; then
