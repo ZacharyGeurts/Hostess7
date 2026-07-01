@@ -1,192 +1,217 @@
-const termOut = document.getElementById("term-out");
-const termForm = document.getElementById("term-form");
-const termIn = document.getElementById("term-in");
-const surfacesPanel = document.getElementById("surfaces");
+const chatLog = document.getElementById("chat-log");
+const chatForm = document.getElementById("chat-form");
+const chatIn = document.getElementById("chat-in");
+const searchForm = document.getElementById("search-form");
+const searchDomain = document.getElementById("search-domain");
+const searchQ = document.getElementById("search-q");
+const searchOut = document.getElementById("search-out");
+const statusList = document.getElementById("status-list");
+const apiList = document.getElementById("api-list");
 const surfaceList = document.getElementById("surface-list");
+const brainBadge = document.getElementById("brain-badge");
+const routeLabel = document.getElementById("route-label");
 const codespacesBtn = document.getElementById("codespaces-btn");
+const btnStatus = document.getElementById("btn-status");
 
-const BOOT_CMD = "./Hostess7.sh boot";
+const LOOPBACK = Hostess7ApiShim.LOOPBACK;
 const CODESPACES =
   "https://github.com/codespaces/new?hide_repo_select=true&repo=ZacharyGeurts/Hostess7";
 
-const SURFACES = [
-  { id: "hostess7", label: "Hostess 7 web", url: "http://127.0.0.1:8080/", path: "/api/status" },
-  { id: "panel", label: "NEXUS Field C2", url: "http://127.0.0.1:9477/field", path: "/field" },
-  { id: "queen", label: "Queen Browser", url: "http://127.0.0.1:9481/world/browser.html", path: "/api/status?fast=1" },
-  { id: "training", label: "Training chamber", url: "http://127.0.0.1:9488/", path: "/" },
+const API_ROUTES = [
+  "/api/status",
+  "/api/brain",
+  "/api/ask",
+  "/api/hearing",
+  "/api/world",
+  "/api/library/search",
+  "/api/videogames",
 ];
 
-let bootManifest = null;
-let liveStack = false;
+let manifest = null;
+let corpus = null;
+let loopbackUp = false;
 
-function line(text, cls) {
+function chatLine(text, cls, who) {
   const el = document.createElement("div");
-  el.className = cls ? `term-line ${cls}` : "term-line";
-  el.textContent = text;
-  termOut.appendChild(el);
-  termOut.scrollTop = termOut.scrollHeight;
-}
-
-function block(lines, cls) {
-  lines.forEach((t) => line(t, cls));
-}
-
-async function loadBootManifest() {
-  try {
-    const r = await fetch("/boot.json", { cache: "no-store" });
-    if (!r.ok) return null;
-    return await r.json();
-  } catch {
-    return null;
+  el.className = "chat-line " + (cls || "");
+  if (who) {
+    const tag = document.createElement("span");
+    tag.className = "chat-who";
+    tag.textContent = who;
+    el.appendChild(tag);
   }
+  const body = document.createElement("div");
+  body.className = "chat-text";
+  body.textContent = text;
+  el.appendChild(body);
+  chatLog.appendChild(el);
+  chatLog.scrollTop = chatLog.scrollHeight;
 }
 
-async function probeSurface(s) {
+function setStatus(items) {
+  statusList.innerHTML = "";
+  items.forEach(([k, v]) => {
+    const li = document.createElement("li");
+    li.innerHTML = "<strong>" + k + "</strong> " + v;
+    statusList.appendChild(li);
+  });
+}
+
+function renderApiList() {
+  apiList.innerHTML = "";
+  API_ROUTES.forEach((r) => {
+    const li = document.createElement("li");
+    li.textContent = r;
+    apiList.appendChild(li);
+  });
+}
+
+async function probeLoopback() {
   try {
-    const origin = new URL(s.url).origin;
-    const r = await fetch(`${origin}${s.path}`, { cache: "no-store", mode: "cors" });
+    const r = await fetch(LOOPBACK + "/health", { cache: "no-store", mode: "cors" });
     return r.ok;
   } catch {
     return false;
   }
 }
 
-function renderSurfaces(results) {
+async function scanSurfaces() {
   surfaceList.innerHTML = "";
-  let any = false;
-  results.forEach(({ s, up }) => {
+  loopbackUp = await probeLoopback();
+  if (loopbackUp) {
     const li = document.createElement("li");
-    if (up) {
-      any = true;
-      const a = document.createElement("a");
-      a.href = s.url;
-      a.textContent = `${s.label} — ${s.url}`;
-      a.target = "_blank";
-      a.rel = "noopener";
-      li.appendChild(a);
-    } else {
-      li.textContent = `${s.label} — ${s.url} (offline)`;
-      li.className = "offline";
-    }
+    const a = document.createElement("a");
+    a.href = LOOPBACK + "/";
+    a.textContent = "Full stack LIVE — " + LOOPBACK;
+    a.target = "_blank";
+    a.rel = "noopener";
+    li.appendChild(a);
     surfaceList.appendChild(li);
-  });
-  surfacesPanel.hidden = !any;
-  liveStack = any;
-}
-
-async function scanLoopback() {
-  const checks = await Promise.all(
-    SURFACES.map(async (s) => ({ s, up: await probeSurface(s) }))
-  );
-  renderSurfaces(checks);
-  return checks.some((c) => c.up);
-}
-
-function showBootHelp() {
-  block([
-    "",
-    "This GitHub Pages site is a BOOT TERMINAL only.",
-    "It does not host the brain, talk UI, or Queen shell.",
-    "",
-    "On your machine (or Codespaces):",
-    "  git clone https://github.com/ZacharyGeurts/Hostess7.git",
-    "  cd Hostess7",
-    `  ${BOOT_CMD}`,
-    "",
-    "Then open your local browser at:",
-    "  http://127.0.0.1:8080/     — Hostess 7",
-    "  http://127.0.0.1:9477/field — NEXUS C2",
-    "  http://127.0.0.1:9481/world/browser.html — Queen",
-    "",
-    "Commands: help | boot | scan | surfaces | codespaces",
-    "",
-  ], "muted");
-}
-
-function handleCommand(raw) {
-  const cmd = (raw || "").trim().toLowerCase();
-  line(`hostess7@pages:~$ ${raw || ""}`, "cmd");
-
-  if (!cmd || cmd === "help" || cmd === "?") {
-    showBootHelp();
-    return;
+    brainBadge.textContent = "loopback + pages";
+    brainBadge.className = "badge live";
+  } else {
+    const li = document.createElement("li");
+    li.className = "offline";
+    li.textContent = "Pages package active (static API + corpus)";
+    surfaceList.appendChild(li);
+    brainBadge.textContent = "full package";
+    brainBadge.className = "badge";
   }
-  if (cmd === "boot") {
-    block([
-      "Boot sequence (run on your host, not on github.io):",
-      `  ${BOOT_CMD}`,
-      "",
-      "Steps: deps → zac-restore → stack-learn → on → alert-posture → web-start",
-      "Posture: war-ready · never demo",
+}
+
+async function refreshStatus() {
+  try {
+    const st = await fetch("/api/status").then((r) => r.json());
+    setStatus([
+      ["mode", st.mode || "pages-full-package"],
+      ["brain", st.brain ? "ready" : "export"],
+      ["library", String(st.library_h7 || 0) + " H7"],
+      ["posture", st.posture || "war-ready"],
+      ["route", loopbackUp ? "loopback" : "pages"],
     ]);
-    return;
+    if (routeLabel) routeLabel.textContent = st.mode || "pages-full-package";
+  } catch (err) {
+    chatLine("Status error: " + err.message, "warn", "sys");
   }
-  if (cmd === "scan" || cmd === "status") {
-    line("Scanning loopback surfaces…", "info");
-    scanLoopback().then((up) => {
-      if (up) {
-        line("Stack LIVE — open 127.0.0.1 links in your browser (panel right).", "ok");
-      } else {
-        line("No loopback stack detected. Run boot locally first.", "warn");
-      }
-    });
-    return;
+}
+
+async function handleAsk(raw) {
+  const q = Hostess7Brain.sanitize(raw);
+  if (!q) return;
+  chatLine(q, "user", "you");
+  chatIn.disabled = true;
+  chatLine("…", "thinking", "H7");
+
+  const r = await fetch("/api/ask", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: q }),
+  });
+  const res = await r.json();
+
+  const thinking = chatLog.querySelector(".chat-line.thinking");
+  if (thinking) thinking.remove();
+
+  chatLine(res.text || res.error || "No response.", "hostess", "H7");
+  if (routeLabel && res.route) routeLabel.textContent = res.route;
+  chatIn.disabled = false;
+  chatIn.focus();
+}
+
+async function handleSearch(e) {
+  e.preventDefault();
+  const domain = searchDomain.value;
+  const q = Hostess7Brain.sanitize(searchQ.value || "overview");
+  const paths = {
+    hearing: "/api/hearing?q=" + encodeURIComponent(q),
+    world: "/api/world?q=" + encodeURIComponent(q),
+    library: "/api/library/search?q=" + encodeURIComponent(q),
+    videogames: "/api/videogames?q=" + encodeURIComponent(q),
+  };
+  const path = paths[domain] || paths.world;
+  try {
+    const doc = await fetch(path).then((r) => r.json());
+    searchOut.textContent = JSON.stringify(doc, null, 2);
+  } catch (err) {
+    searchOut.textContent = String(err);
   }
-  if (cmd === "surfaces" || cmd === "urls") {
-    SURFACES.forEach((s) => line(`  ${s.label}: ${s.url}`));
-    return;
-  }
-  if (cmd === "codespaces") {
-    window.open(bootManifest?.codespaces || CODESPACES, "_blank", "noopener,noreferrer");
-    line("Opening GitHub Codespaces…", "info");
-    return;
-  }
-  if (cmd === "clear") {
-    termOut.innerHTML = "";
-    return;
-  }
-  line(`Unknown: ${raw}. Type 'help'.`, "warn");
 }
 
 function bindSovereignRefresh() {
-  const pulse = () => scanLoopback();
+  const pulse = () => {
+    scanSurfaces().then(refreshStatus);
+  };
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") pulse();
   });
   window.addEventListener("focus", pulse);
 }
 
-termForm.addEventListener("submit", (e) => {
+chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const v = termIn.value;
-  termIn.value = "";
-  handleCommand(v);
+  const v = chatIn.value;
+  chatIn.value = "";
+  handleAsk(v);
 });
 
-codespacesBtn?.addEventListener("click", () => handleCommand("codespaces"));
+searchForm.addEventListener("submit", handleSearch);
+btnStatus?.addEventListener("click", refreshStatus);
+codespacesBtn?.addEventListener("click", () => {
+  window.open(manifest?.codespaces || CODESPACES, "_blank", "noopener,noreferrer");
+});
+
+document.querySelectorAll("[data-scene]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.dispatchEvent(new CustomEvent("hostess7-gfx-scene", { detail: btn.dataset.scene }));
+  });
+});
 
 (async () => {
-  bootManifest = await loadBootManifest();
-  if (bootManifest?.version) {
+  renderApiList();
+  try {
+    const init = await Hostess7Brain.initPagesBrain();
+    manifest = init.manifest;
+    corpus = init.corpus;
+    window.__H7_BRAIN__ = { manifest: manifest, corpus: corpus, loopbackUrl: null };
+
     const verEl = document.getElementById("ver");
-    if (verEl) verEl.textContent = bootManifest.version;
+    if (verEl && manifest.version) verEl.textContent = manifest.version;
+
+    chatLine(
+      "I'm the GitHub brain — a read-only mirror of Hostess 7. Same knowledge, isolated lane. " +
+        "Your chat here never writes to cache/fieldstorage/brain or brain/state. " +
+        "Corpus: " + (corpus.chunk_count || corpus.chunks?.length || 0) + " chunks. " +
+        "Full sovereign stack: ./Hostess7.sh boot on loopback.",
+      "hostess",
+      "H7"
+    );
+  } catch (err) {
+    chatLine("Brain init: " + err.message, "warn", "sys");
+    brainBadge.textContent = "degraded";
   }
 
-  block([
-    "Hostess 7 — Boot Terminal (GitHub Pages)",
-    "========================================",
-    "Pages URL is NOT the live brain.",
-    "Boot here → use 127.0.0.1 in your browser.",
-    "",
-  ], "head");
-
-  showBootHelp();
   bindSovereignRefresh();
-  const up = await scanLoopback();
-  if (up) {
-    line("Loopback stack detected — local surfaces ready.", "ok");
-  } else {
-    line(`Type 'boot' for instructions, or 'codespaces' to boot in cloud.`, "info");
-  }
-  termIn.focus();
+  await scanSurfaces();
+  await refreshStatus();
+  chatIn.focus();
 })();

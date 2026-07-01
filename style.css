@@ -199,3 +199,107 @@ code {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
+.live-layout { grid-template-columns: 1fr minmax(240px, 300px); }
+
+.main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.chat-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 42vh;
+  padding: 1rem 1.25rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.chat-log {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  min-height: 200px;
+}
+
+.chat-line { margin-bottom: 0.65rem; }
+.chat-line.user .chat-text { color: #8ecae6; }
+.chat-line.hostess .chat-text { color: var(--text); }
+.chat-line.thinking .chat-text { color: var(--muted); font-style: italic; }
+.chat-line.warn .chat-text { color: var(--warn); }
+.chat-who {
+  display: inline-block;
+  font-size: 0.65rem;
+  color: var(--accent);
+  margin-right: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.chat-input-row, .search-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.chat-input-row input, .search-form input, .search-form select {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.8rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.35rem;
+}
+
+.badge {
+  font-size: 0.65rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.35rem;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.badge.live { color: var(--accent); border-color: var(--accent); }
+
+.gfx-wrap {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+#gfx {
+  width: 100%;
+  max-width: 100%;
+  background: #0a0d12;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+}
+.gfx-caption { font-size: 0.7rem; color: var(--muted); margin: 0.35rem 0; }
+.gfx-tools { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.search-row { padding: 0.75rem 1.25rem; }
+.search-out {
+  margin: 0.5rem 0 0;
+  max-height: 160px;
+  overflow: auto;
+  font-size: 0.68rem;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  padding: 0.5rem;
+}
+
+.status-list, .api-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  line-height: 1.45;
+}
+
+.term-sub a { color: var(--accent); }
