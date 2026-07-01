@@ -1,49 +1,34 @@
-const messages = document.getElementById("messages");
-const form = document.getElementById("chat-form");
-const input = document.getElementById("query");
-const statusEl = document.getElementById("status");
-const modeBanner = document.getElementById("mode-banner");
-const modeTitle = document.getElementById("mode-title");
-const modeDetail = document.getElementById("mode-detail");
-const bootBtn = document.getElementById("boot-btn");
+const termOut = document.getElementById("term-out");
+const termForm = document.getElementById("term-form");
+const termIn = document.getElementById("term-in");
+const surfacesPanel = document.getElementById("surfaces");
+const surfaceList = document.getElementById("surface-list");
+const codespacesBtn = document.getElementById("codespaces-btn");
 
-let liveBrain = false;
-let bootManifest = null;
-
-const MAX_QUERY_LEN = 2000;
 const BOOT_CMD = "./Hostess7.sh boot";
 const CODESPACES =
   "https://github.com/codespaces/new?hide_repo_select=true&repo=ZacharyGeurts/Hostess7";
 
-function sanitize(text) {
-  if (typeof text !== "string") return "";
-  return text
-    .replace(/<[^>]*>/g, "")
-    .replace(/javascript:/gi, "")
-    .slice(0, MAX_QUERY_LEN)
-    .trim();
-}
+const SURFACES = [
+  { id: "hostess7", label: "Hostess 7 web", url: "http://127.0.0.1:8080/", path: "/api/status" },
+  { id: "panel", label: "NEXUS Field C2", url: "http://127.0.0.1:9477/field", path: "/field" },
+  { id: "queen", label: "Queen Browser", url: "http://127.0.0.1:9481/world/browser.html", path: "/api/status?fast=1" },
+  { id: "training", label: "Training chamber", url: "http://127.0.0.1:9488/", path: "/" },
+];
 
-function addMsg(text, role) {
+let bootManifest = null;
+let liveStack = false;
+
+function line(text, cls) {
   const el = document.createElement("div");
-  el.className = `msg ${role}`;
+  el.className = cls ? `term-line ${cls}` : "term-line";
   el.textContent = text;
-  messages.appendChild(el);
-  messages.scrollTop = messages.scrollHeight;
+  termOut.appendChild(el);
+  termOut.scrollTop = termOut.scrollHeight;
 }
 
-function showStackNav(j) {
-  const stack = j.stack || {};
-  const surfaces = j.surfaces || bootManifest?.surfaces || {};
-  const show = (id, on, href) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.hidden = !on;
-    if (href) el.href = href;
-  };
-  show("nav-panel", !!(stack.panel || j.kilroy), surfaces.panel);
-  show("nav-queen", !!stack.queen, surfaces.queen);
-  show("nav-training", !!stack.training, surfaces.training);
+function block(lines, cls) {
+  lines.forEach((t) => line(t, cls));
 }
 
 async function loadBootManifest() {
@@ -56,119 +41,152 @@ async function loadBootManifest() {
   }
 }
 
-function setBootUI(active) {
-  if (bootBtn) bootBtn.hidden = !active;
-  if (active) modeBanner.classList.add("boot");
-  else modeBanner.classList.remove("boot");
-}
-
-async function checkStatus() {
+async function probeSurface(s) {
   try {
-    const r = await fetch("/api/status", { cache: "no-store" });
-    if (!r.ok) throw new Error("status");
-    const j = await r.json();
-    liveBrain = !!(j.brain && j.ok && (j.war_ready || j.mode === "live" || j.posture === "war-ready"));
-    showStackNav(j);
-    setBootUI(false);
-    if (liveBrain) {
-      const parts = [];
-      if (j.kilroy || j.stack?.panel) parts.push("KILROY");
-      if (j.stack?.queen) parts.push("Queen");
-      if (j.stack?.training) parts.push("training");
-      statusEl.textContent = `Live · brain on · ${j.library_h7 ?? 0} books · ${parts.join(" · ") || "field"}`;
-      modeTitle.textContent = "War-ready — Hostess 7 live";
-      modeDetail.textContent = "Full brain · KILROY stack · field_superintelligence · never demo";
-      modeBanner.classList.add("live");
-      modeBanner.classList.add("war");
-      return true;
-    }
-    statusEl.textContent = `Field web · brain=${j.brain ? "on" : "loading"} · ${j.library_h7 ?? 0} books`;
-    modeTitle.textContent = "Hostess 7 field web";
-    modeDetail.textContent = `Run ${BOOT_CMD} for full brain + KILROY doctrine`;
-    return false;
+    const origin = new URL(s.url).origin;
+    const r = await fetch(`${origin}${s.path}`, { cache: "no-store", mode: "cors" });
+    return r.ok;
   } catch {
-    setBootUI(true);
-    modeBanner.classList.remove("live");
-    statusEl.textContent = "War-ready mirror — boot for full brain on loopback";
-    modeTitle.textContent = "Boot KILROY + Hostess 7 — war posture";
-    modeDetail.textContent = `${BOOT_CMD} — always operational, never demo`;
     return false;
   }
 }
 
-async function ask(rawQuery) {
-  const query = sanitize(rawQuery);
-  if (!query) return;
-  addMsg(query, "user");
-  input.value = "";
-  window.HostessGfx?.presentScene(query);
-  try {
-    const r = await fetch("/api/ask", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query }),
-    });
-    if (!r.ok) throw new Error("ask failed");
-    const j = await r.json();
-    addMsg(j.text || "(no reply)", "hostess");
-    checkStatus();
-  } catch {
-    if (liveBrain) {
-      addMsg("Brain request failed — check Hostess7 logs.", "hostess");
+function renderSurfaces(results) {
+  surfaceList.innerHTML = "";
+  let any = false;
+  results.forEach(({ s, up }) => {
+    const li = document.createElement("li");
+    if (up) {
+      any = true;
+      const a = document.createElement("a");
+      a.href = s.url;
+      a.textContent = `${s.label} — ${s.url}`;
+      a.target = "_blank";
+      a.rel = "noopener";
+      li.appendChild(a);
     } else {
-      addMsg(
-        `Full Hostess 7 is not running here. Boot: ${BOOT_CMD} — or open Codespaces (button above).`,
-        "hostess"
-      );
+      li.textContent = `${s.label} — ${s.url} (offline)`;
+      li.className = "offline";
     }
-  }
+    surfaceList.appendChild(li);
+  });
+  surfacesPanel.hidden = !any;
+  liveStack = any;
 }
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const q = input.value.trim();
-  if (q) ask(q);
-});
+async function scanLoopback() {
+  const checks = await Promise.all(
+    SURFACES.map(async (s) => ({ s, up: await probeSurface(s) }))
+  );
+  renderSurfaces(checks);
+  return checks.some((c) => c.up);
+}
 
-document.querySelectorAll(".chip").forEach((btn) => {
-  btn.addEventListener("click", () => ask(btn.dataset.q || ""));
-});
+function showBootHelp() {
+  block([
+    "",
+    "This GitHub Pages site is a BOOT TERMINAL only.",
+    "It does not host the brain, talk UI, or Queen shell.",
+    "",
+    "On your machine (or Codespaces):",
+    "  git clone https://github.com/ZacharyGeurts/Hostess7.git",
+    "  cd Hostess7",
+    `  ${BOOT_CMD}`,
+    "",
+    "Then open your local browser at:",
+    "  http://127.0.0.1:8080/     — Hostess 7",
+    "  http://127.0.0.1:9477/field — NEXUS C2",
+    "  http://127.0.0.1:9481/world/browser.html — Queen",
+    "",
+    "Commands: help | boot | scan | surfaces | codespaces",
+    "",
+  ], "muted");
+}
 
-bootBtn?.addEventListener("click", () => {
-  window.open(bootManifest?.codespaces || CODESPACES, "_blank", "noopener,noreferrer");
-});
+function handleCommand(raw) {
+  const cmd = (raw || "").trim().toLowerCase();
+  line(`hostess7@pages:~$ ${raw || ""}`, "cmd");
 
-async function sovereignPulse() {
-  try {
-    const r = await fetch("/api/sovereign-time", { cache: "no-store" });
-    if (r.ok) return await r.json();
-  } catch {
-    /* static mirror — no sovereign endpoint */
+  if (!cmd || cmd === "help" || cmd === "?") {
+    showBootHelp();
+    return;
   }
-  return null;
+  if (cmd === "boot") {
+    block([
+      "Boot sequence (run on your host, not on github.io):",
+      `  ${BOOT_CMD}`,
+      "",
+      "Steps: deps → zac-restore → stack-learn → on → alert-posture → web-start",
+      "Posture: war-ready · never demo",
+    ]);
+    return;
+  }
+  if (cmd === "scan" || cmd === "status") {
+    line("Scanning loopback surfaces…", "info");
+    scanLoopback().then((up) => {
+      if (up) {
+        line("Stack LIVE — open 127.0.0.1 links in your browser (panel right).", "ok");
+      } else {
+        line("No loopback stack detected. Run boot locally first.", "warn");
+      }
+    });
+    return;
+  }
+  if (cmd === "surfaces" || cmd === "urls") {
+    SURFACES.forEach((s) => line(`  ${s.label}: ${s.url}`));
+    return;
+  }
+  if (cmd === "codespaces") {
+    window.open(bootManifest?.codespaces || CODESPACES, "_blank", "noopener,noreferrer");
+    line("Opening GitHub Codespaces…", "info");
+    return;
+  }
+  if (cmd === "clear") {
+    termOut.innerHTML = "";
+    return;
+  }
+  line(`Unknown: ${raw}. Type 'help'.`, "warn");
 }
 
 function bindSovereignRefresh() {
+  const pulse = () => scanLoopback();
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") {
-      sovereignPulse().then(() => checkStatus());
-    }
+    if (document.visibilityState === "visible") pulse();
   });
-  window.addEventListener("focus", () => {
-    sovereignPulse().then(() => checkStatus());
-  });
-  form.addEventListener("focusin", () => checkStatus());
+  window.addEventListener("focus", pulse);
 }
+
+termForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const v = termIn.value;
+  termIn.value = "";
+  handleCommand(v);
+});
+
+codespacesBtn?.addEventListener("click", () => handleCommand("codespaces"));
 
 (async () => {
   bootManifest = await loadBootManifest();
+  if (bootManifest?.version) {
+    const verEl = document.getElementById("ver");
+    if (verEl) verEl.textContent = bootManifest.version;
+  }
+
+  block([
+    "Hostess 7 — Boot Terminal (GitHub Pages)",
+    "========================================",
+    "Pages URL is NOT the live brain.",
+    "Boot here → use 127.0.0.1 in your browser.",
+    "",
+  ], "head");
+
+  showBootHelp();
   bindSovereignRefresh();
-  await sovereignPulse();
-  const live = await checkStatus();
-  addMsg(
-    live
-      ? "I'm Hostess 7 — war-ready, live on KILROY. Sovereign time only — never demo."
-      : `War-ready boot: ${BOOT_CMD}. Sovereign pulse on focus — no wall timers.`,
-    "hostess"
-  );
+  const up = await scanLoopback();
+  if (up) {
+    line("Loopback stack detected — local surfaces ready.", "ok");
+  } else {
+    line(`Type 'boot' for instructions, or 'codespaces' to boot in cloud.`, "info");
+  }
+  termIn.focus();
 })();
