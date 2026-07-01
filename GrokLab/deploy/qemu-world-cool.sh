@@ -5,7 +5,7 @@ set -euo pipefail
 DEPLOY="$(cd "$(dirname "$0")" && pwd)"
 VM_DIR="${GROK_LAB_VM_DIR:-$DEPLOY/qemu-vms}"
 MODE="${1:-status}"
-KEEP_PORTS="${GROK_LAB_COOL_KEEP_PORTS:-2222,2223}"
+KEEP_PORTS="${GROK_LAB_COOL_KEEP_PORTS:-2222,2223,2224,2225,2226,2227}"
 
 log() { printf '[qemu-cool] %s\n' "$*"; }
 
@@ -30,17 +30,9 @@ _vm_pid() {
 }
 
 _port_for_id() {
-  case "$1" in
-    node-qemu-us-phoenix) echo 2222 ;;
-    node-qemu-eu-frankfurt) echo 2223 ;;
-    node-qemu-ap-tokyo) echo 2224 ;;
-    node-qemu-ap-sydney) echo 2225 ;;
-    node-qemu-sa-saopaulo) echo 2226 ;;
-    node-qemu-ap-mumbai) echo 2227 ;;
-    node-qemu-uk-london) echo 2228 ;;
-    node-qemu-ca-montreal) echo 2229 ;;
-    *) echo 0 ;;
-  esac
+  local id="$1" port
+  port="$(python3 "$(cd "$(dirname "$0")" && pwd)/world-nodes-sync.py" port-for-id "$id" 2>/dev/null || echo 0)"
+  printf '%s' "${port:-0}"
 }
 
 _keep_port() {

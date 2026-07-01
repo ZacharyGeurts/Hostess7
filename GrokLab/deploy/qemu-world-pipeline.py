@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rolling 3-QEMU pipeline — deploy+reboot every node (move on), then loop checks from top."""
+"""Rolling multi-QEMU pipeline — deploy+reboot every node (move on), then loop checks from top."""
 from __future__ import annotations
 
 import json
@@ -37,11 +37,28 @@ REBOOT_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_REBOOT_SSH_SEC", "120"))
 CHECK_MAX_ROUNDS = int(os.environ.get("WORLD_PIPELINE_CHECK_MAX_ROUNDS", "100"))
 DEPLOY_SETTLE_SEC = int(os.environ.get("WORLD_PIPELINE_DEPLOY_SETTLE_SEC", "2"))
 
-SLOTS = [
-    {"slot": 0, "port": 2222, "tunnel": 19477},
-    {"slot": 1, "port": 2223, "tunnel": 19478},
-    {"slot": 2, "port": 2224, "tunnel": 19479},
-]
+def _build_slots() -> list[dict[str, Any]]:
+    regions: dict[str, Any] = {}
+    try:
+        regions = json.loads(REGIONS.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        pass
+    port_base = int(regions.get("ssh_port_base", 2222))
+    tunnel_base = int(regions.get("tunnel_port_base", 19477))
+    count = int(
+        os.environ.get(
+            "WORLD_PIPELINE_SLOTS",
+            regions.get("qemu_concurrent_slots", 6),
+        )
+    )
+    count = max(1, min(count, 16))
+    return [
+        {"slot": i, "port": port_base + i, "tunnel": tunnel_base + i}
+        for i in range(count)
+    ]
+
+
+SLOTS = _build_slots()
 
 SSH_SLOT_OPTS = [
     "-o",
@@ -564,7 +581,7 @@ def _slot_worker_check(slot: int) -> None:
 
 
 def _run_slot_pool(worker: Callable[[int], None], label: str) -> None:
-    _log(f"{label} — 3 QEMU slots")
+    _log(f"{label} — {len(SLOTS)} QEMU slots (ports {SLOTS[0]['port']}–{SLOTS[-1]['port']})")
     threads = [threading.Thread(target=worker, args=(s["slot"],), daemon=True) for s in SLOTS]
     for t in threads:
         t.start()

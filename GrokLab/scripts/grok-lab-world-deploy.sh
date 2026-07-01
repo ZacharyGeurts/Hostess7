@@ -48,12 +48,12 @@ case "$CMD" in
     python3 "$ROOT/deploy/world-nodes-sync.py" sync
     ;;
   launch-qemu|launch-qemu-wave)
-    log "launch-qemu superseded — use pipeline (rolling 3-slot provisioner)…"
+    log "launch-qemu superseded — use pipeline (rolling 6-slot provisioner)…"
     python3 "$ROOT/deploy/world-nodes-sync.py" sync
     python3 "$ROOT/deploy/qemu-world-pipeline.py" run
     ;;
   spin-30|setup-30)
-    log "spin-30 superseded — starting rolling 3-QEMU pipeline…"
+    log "spin-30 superseded — starting rolling 6-QEMU pipeline…"
     python3 "$ROOT/deploy/world-nodes-sync.py" sync
     python3 "$ROOT/deploy/qemu-world-pipeline.py" run
     ;;
@@ -62,7 +62,7 @@ case "$CMD" in
     bash "$NL/lib/nexus-panel-ensure.sh"
     ;;
   pipeline|pipeline-run)
-    log "Rolling 3-QEMU pipeline — keep 3 active until all 30 are provisioned…"
+    log "Rolling 6-QEMU pipeline — keep 6 active until all nodes are provisioned…"
     bash "$NL/lib/nexus-panel-ensure.sh" 2>/dev/null || log "WARN: local panel not up yet"
     python3 "$ROOT/deploy/qemu-world-pipeline.py" run
     ;;
