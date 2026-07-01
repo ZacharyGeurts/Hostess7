@@ -34,8 +34,10 @@ SSH_KEY = os.environ.get("GROK_LAB_SSH_KEY", str(DEPLOY / "world-ssh" / "id_ed25
 NL = Path(os.environ.get("NEXUS_INSTALL_ROOT", str(DEPLOY.parent.parent)))
 VERIFY_SEC = int(os.environ.get("WORLD_PIPELINE_VERIFY_SEC", "90"))
 REBOOT_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_REBOOT_SSH_SEC", "120"))
+DEPLOY_SSH_SEC = int(os.environ.get("WORLD_PIPELINE_DEPLOY_SSH_SEC", "180"))
 CHECK_MAX_ROUNDS = int(os.environ.get("WORLD_PIPELINE_CHECK_MAX_ROUNDS", "100"))
 DEPLOY_SETTLE_SEC = int(os.environ.get("WORLD_PIPELINE_DEPLOY_SETTLE_SEC", "2"))
+MAX_DEPLOY_ATTEMPTS = int(os.environ.get("WORLD_PIPELINE_MAX_DEPLOY_ATTEMPTS", "8"))
 
 def _build_slots() -> list[dict[str, Any]]:
     regions: dict[str, Any] = {}
@@ -77,6 +79,7 @@ _lock = threading.Lock()
 _state: dict[str, Any] = {}
 _queue: deque[dict[str, Any]] = deque()
 _check_queue: deque[dict[str, Any]] = deque()
+_deploy_attempts: dict[str, int] = {}
 
 
 def _ts() -> str:
@@ -204,6 +207,31 @@ def _all_region_nodes() -> list[dict[str, Any]]:
     return list(_load_json(REGIONS, {}).get("nodes") or [])
 
 
+def _manifest_needs_deploy() -> list[dict[str, Any]]:
+    done = _provisioned_ids()
+    staged = _staged_ids()
+    return [
+        n
+        for n in _all_region_nodes()
+        if n.get("id") not in done and n.get("id") not in staged
+    ]
+
+
+def _requeue_deploy(node: dict[str, Any], *, slot: int, reason: str) -> bool:
+    nid = node["id"]
+    with _lock:
+        _deploy_attempts[nid] = _deploy_attempts.get(nid, 0) + 1
+        attempts = _deploy_attempts[nid]
+        if attempts >= MAX_DEPLOY_ATTEMPTS:
+            _log(
+                f"slot {slot} DEPLOY SKIP {nid} — {reason} after {attempts} attempts "
+                f"(will retry on next pipeline run)"
+            )
+            return False
+        _queue.appendleft(node)
+    return True
+
+
 def _init_deploy_queue() -> None:
     done = _provisioned_ids()
     staged = _staged_ids()
@@ -261,7 +289,7 @@ def _set_slot(slot: int, *, state: str, node: dict[str, Any] | None = None, extr
         if extra:
             entry.update(extra)
         _state["slot_status"][str(slot)] = entry
-        _state["pending_deploy"] = len(_queue)
+        _state["pending_deploy"] = len(_manifest_needs_deploy())
         _state["pending_check"] = len(_pending_check_ids())
         _state["completed"] = len(_provisioned_ids())
     _save_state()
@@ -453,8 +481,11 @@ def _slot_worker_deploy(slot: int) -> None:
     while True:
         node = _pop_next(_queue)
         if node is None:
+            if _manifest_needs_deploy():
+                time.sleep(3)
+                continue
             _set_slot(slot, state="idle", node=None)
-            _log(f"slot {slot} idle — deploy queue empty")
+            _log(f"slot {slot} idle — deploy complete")
             return
 
         nid = node["id"]
@@ -463,17 +494,15 @@ def _slot_worker_deploy(slot: int) -> None:
             _log(f"slot {slot} :{port} launching {nid} ({node.get('city', node['region'])})")
 
             if not _launch_node(slot, port, node):
-                with _lock:
-                    _queue.appendleft(node)
+                _requeue_deploy(node, slot=slot, reason="launch failed")
                 time.sleep(5)
                 continue
 
             _set_slot(slot, state="ssh_wait", node=node)
-            if not _wait_ssh(port, timeout=120):
-                _log(f"slot {slot} SSH TIMEOUT {nid}")
+            if not _wait_ssh(port, timeout=DEPLOY_SSH_SEC):
+                _log(f"slot {slot} SSH TIMEOUT {nid} :{port} (>{DEPLOY_SSH_SEC}s)")
                 _stop_vm(nid)
-                with _lock:
-                    _queue.appendleft(node)
+                _requeue_deploy(node, slot=slot, reason="SSH timeout")
                 continue
 
             _set_slot(slot, state="deploying", node=node)
@@ -510,10 +539,9 @@ def _slot_worker_deploy(slot: int) -> None:
                     pass
                 _log(
                     f"slot {slot} DEPLOY FAIL {nid} rc={deploy_rc}"
-                    + (f" — {tail}" if tail else " — re-queue")
+                    + (f" — {tail}" if tail else "")
                 )
-                with _lock:
-                    _queue.appendleft(node)
+                _requeue_deploy(node, slot=slot, reason=f"deploy rc={deploy_rc}")
 
             _stop_vm(nid)
             _set_slot(slot, state="idle", node=None)
@@ -522,8 +550,7 @@ def _slot_worker_deploy(slot: int) -> None:
         except Exception as exc:  # noqa: BLE001
             _log(f"slot {slot} DEPLOY UNHANDLED {nid} {type(exc).__name__}: {exc}")
             _stop_vm(nid)
-            with _lock:
-                _queue.appendleft(node)
+            _requeue_deploy(node, slot=slot, reason=type(exc).__name__)
             time.sleep(5)
 
 
@@ -621,6 +648,57 @@ def _len_staged() -> int:
     return len(_staged_ids())
 
 
+def run_check_only() -> dict[str, Any]:
+    """Run post-reboot checks for staged nodes (skip deploy phase)."""
+    pid_path = DEPLOY.parent.parent / ".nexus-state" / "world-pipeline.pid"
+    pid_path.parent.mkdir(parents=True, exist_ok=True)
+    pid_path.write_text(f"{os.getpid()}\n", encoding="utf-8")
+    tgt = _target()
+    staged = len(_pending_check_ids())
+    stragglers = _manifest_needs_deploy()
+    if not staged:
+        return {"ok": True, "message": "no staged nodes awaiting check", "completed": len(_provisioned_ids())}
+
+    _state.update(
+        {
+            "schema": "grok-lab-qemu-pipeline/v3",
+            "running": True,
+            "mode": "check-only",
+            "phase": "check",
+            "slots": SLOTS,
+            "pending_deploy": len(stragglers),
+            "pending_check": staged,
+            "completed": len(_provisioned_ids()),
+            "target": tgt,
+            "check_round": 0,
+            "slot_status": {str(s["slot"]): {"state": "idle", "node": None} for s in SLOTS},
+            "log": str(LOG_PATH),
+        }
+    )
+    _save_state()
+    _log(
+        f"check-only start — {staged} staged nodes, {len(stragglers)} never deployed, "
+        f"{len(_provisioned_ids())}/{tgt} online"
+    )
+    if stragglers:
+        ids = [n.get("id") for n in stragglers]
+        _log(f"deploy stragglers (check proceeds anyway): {ids}")
+
+    _run_check_loop()
+
+    with _lock:
+        _state["running"] = False
+        _state["phase"] = "done"
+        _state["completed"] = len(_provisioned_ids())
+        _state["pending_deploy"] = len(_manifest_needs_deploy())
+        _state["pending_check"] = len(_pending_check_ids())
+    _save_state()
+    done = len(_provisioned_ids())
+    still = len(_pending_check_ids())
+    _log(f"check-only finished — {done}/{tgt} online, {still} still need check")
+    return {"ok": still == 0, "completed": done, "target": tgt, "remaining_check": still}
+
+
 def run_pipeline() -> dict[str, Any]:
     pid_path = DEPLOY.parent.parent / ".nexus-state" / "world-pipeline.pid"
     pid_path.parent.mkdir(parents=True, exist_ok=True)
@@ -628,7 +706,7 @@ def run_pipeline() -> dict[str, Any]:
     tgt = _target()
     _init_deploy_queue()
 
-    to_deploy = len(_queue)
+    to_deploy = len(_manifest_needs_deploy())
     to_check = len(_pending_check_ids())
     if not to_deploy and not to_check:
         _state["running"] = False
@@ -637,28 +715,28 @@ def run_pipeline() -> dict[str, Any]:
 
     _log(
         f"pipeline start — {to_deploy} to deploy+reboot, {to_check} already deployed awaiting check, "
-        f"{len(_provisioned_ids())}/{tgt} online (checks after all deploys finish)"
+        f"{len(_provisioned_ids())}/{tgt} online (checks after deploy slots finish)"
     )
 
     ensure = DEPLOY / "world-node-panel-ensure.sh"
     if ensure.is_file():
         _run(["bash", str(ensure)], timeout=60)
 
-    if _queue:
+    if to_deploy:
         with _lock:
             _state["phase"] = "deploy"
         _run_slot_pool(_slot_worker_deploy, "deploy phase")
+        stragglers = _manifest_needs_deploy()
         _log(
-            f"deploy phase complete — {_len_staged()} deployed awaiting check, "
-            f"{len(_queue)} still in deploy queue"
+            f"deploy phase complete — {_len_staged()} awaiting check, "
+            f"{len(stragglers)} stragglers"
+            + (f": {[n['id'] for n in stragglers]}" if stragglers else "")
         )
 
-    if _queue:
-        _log(f"post-reboot checks deferred — {len(_queue)} nodes still need deploy")
-    elif _pending_check_ids():
+    if _pending_check_ids():
         _log(
-            f"all deploys done — starting post-reboot checks/finishes for "
-            f"{len(_pending_check_ids())} nodes (top → bottom)"
+            f"starting post-reboot checks for {len(_pending_check_ids())} staged nodes "
+            f"(top → bottom)"
         )
         _run_check_loop()
 
@@ -666,13 +744,20 @@ def run_pipeline() -> dict[str, Any]:
         _state["running"] = False
         _state["phase"] = "done"
         _state["completed"] = len(_provisioned_ids())
-        _state["pending_deploy"] = len(_queue)
+        _state["pending_deploy"] = len(_manifest_needs_deploy())
         _state["pending_check"] = len(_pending_check_ids())
     _save_state()
     done = len(_provisioned_ids())
     still = len(_pending_check_ids())
-    _log(f"pipeline finished — {done}/{tgt} online, {still} still need check")
-    return {"ok": still == 0, "completed": done, "target": tgt, "remaining_check": still}
+    stragglers = len(_manifest_needs_deploy())
+    _log(f"pipeline finished — {done}/{tgt} online, {still} awaiting check, {stragglers} stragglers")
+    return {
+        "ok": still == 0 and stragglers == 0,
+        "completed": done,
+        "target": tgt,
+        "remaining_check": still,
+        "stragglers": stragglers,
+    }
 
 
 def show_status() -> dict[str, Any]:
@@ -692,6 +777,7 @@ def show_status() -> dict[str, Any]:
     st["provisioned"] = prov.get("provisioned") or []
     st["staged"] = staged.get("staged") or []
     st["pending_check"] = len(_pending_check_ids())
+    st["pending_deploy"] = len(_manifest_needs_deploy())
     st["target"] = tgt
     return st
 
@@ -700,6 +786,9 @@ def main() -> int:
     cmd = (sys.argv[1] if len(sys.argv) > 1 else "status").strip().lower()
     if cmd == "run":
         print(json.dumps(run_pipeline(), indent=2))
+        return 0
+    if cmd in {"check", "check-only"}:
+        print(json.dumps(run_check_only(), indent=2))
         return 0
     if cmd == "status":
         print(json.dumps(show_status(), indent=2))
@@ -737,7 +826,7 @@ def main() -> int:
         except KeyboardInterrupt:
             pass
         return 0
-    print("usage: qemu-world-pipeline.py [run|status|watch|watch-rsync]", file=sys.stderr)
+    print("usage: qemu-world-pipeline.py [run|check|status|watch|watch-rsync]", file=sys.stderr)
     return 2
 
 
