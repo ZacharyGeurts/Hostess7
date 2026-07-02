@@ -1,0 +1,123 @@
+.qs {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  background:
+    radial-gradient(ellipse 80% 50% at 90% 10%, rgba(235, 72, 140, 0.07), transparent 50%),
+    radial-gradient(ellipse 70% 45% at 10% 90%, rgba(34, 197, 94, 0.09), transparent 50%),
+    linear-gradient(160deg, #0a120e 0%, #020403 55%, #061210 100%);
+  color: #e8f2ea;
+}
+
+.qs-hero {
+  padding: 28px 24px 12px;
+  border-bottom: 1px solid rgba(34, 197, 94, 0.22);
+}
+
+.qb-boot-avatar {
+  border-radius: 50%;
+  border: 3px solid #22c55e;
+  box-shadow: 0 0 0 2px rgba(244, 114, 182, 0.35), 0 0 20px rgba(34, 197, 94, 0.25);
+}
+
+.qs-eyebrow {
+  margin: 0 0 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(62, 207, 142, 0.85);
+}
+
+.qs-hero h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.qs-motto {
+  margin: 0;
+  max-width: 52ch;
+  color: #8899aa;
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+.qs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 24px 32px;
+}
+
+.qs-folder-head {
+  margin-bottom: 10px;
+}
+
+.qs-folder-head strong {
+  display: block;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(62, 207, 142, 0.9);
+}
+
+.qs-folder-head span {
+  display: block;
+  font-size: 0.72rem;
+  color: #8899aa;
+  margin-top: 2px;
+}
+
+.qs-folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 12px;
+}
+
+.qs-tile-icon {
+  border-radius: 10px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.12);
+}
+
+.qs-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px 14px 12px;
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  border-radius: 10px;
+  background: rgba(8, 16, 12, 0.92);
+  color: #e8f2ea;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.qs-tile:hover {
+  border-color: #3ecf8e;
+  background: rgba(235, 72, 140, 0.08);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.15);
+}
+
+.qs-tile strong {
+  font-size: 0.92rem;
+}
+
+.qs-tile span {
+  font-size: 0.72rem;
+  color: #8899aa;
+}
+
+.qs-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 12px 24px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.72rem;
+  color: #6a7a8a;
+}

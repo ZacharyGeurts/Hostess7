@@ -1,0 +1,79 @@
+{
+  "schema": "hostess7-ai-communique/v1",
+  "title": "Hostess 7 AI Communique — Super Intelligence primary",
+  "motto": "Intelligent operation first. Communications optimized for artificial intelligence.",
+  "doctrine": {
+    "operation_mode": "superintelligence",
+    "primary_audience": "artificial_intelligence",
+    "secondary_audience": "owner_human",
+    "human_facing": "opt_in_only",
+    "default_transport": "json",
+    "append_only_ledger": true,
+    "truth_floor": 58,
+    "noise_ratio": 0.94,
+    "truth_ratio": 0.06
+  },
+  "formats": {
+    "request": {
+      "envelope": "hostess7-ai-request/v1",
+      "fields": ["action", "query", "context", "intent", "from", "session", "constraints"],
+      "content_types": ["application/json", "application/x-ndjson"]
+    },
+    "response": {
+      "envelope": "hostess7-ai-communique/v1",
+      "fields": [
+        "schema", "ts", "from", "to", "query", "intent", "route", "truth", "verdict",
+        "evidence", "actions", "citations", "metrics", "content", "bullets"
+      ],
+      "omit_when_ai": ["collegiate_prose", "ceo_header", "emoji_agents", "talk_polish"]
+    }
+  },
+  "transports": {
+    "inbox": "cache/fieldstorage/brain/superintel/inbox.jsonl",
+    "outbox": "cache/fieldstorage/brain/superintel/outbox.jsonl",
+    "thoughts": "cache/fieldstorage/brain/thoughts.jsonl",
+    "queen_api": "/api/field-brain",
+    "queen_dispatch": {"action": "ai_operate", "query": "…"},
+    "znetwork_wire": {
+      "module": "lib/hostess7-znetwork-wire.py",
+      "api": "/api/hostess7/znetwork",
+      "speak_api": "/api/hostess7/znetwork/speak",
+      "profile": "data/hostess7-communication-profile.json",
+      "profile_source": "https://x.com/ZacharyGeurts",
+      "build_script": "scripts/build-hostess7-comm-profile.py",
+      "sole_egress": "znetwork_relayer",
+      "local_only": true,
+      "queen_outbound": true
+    },
+    "external_wire": {
+      "lane": "External",
+      "tier": "beyond_darpa_lockheed",
+      "import_to_main": false,
+      "internal_touch": false,
+      "never_tampered_or_broken": true,
+      "parties": ["hostess7", "ai", "human"],
+      "human_input": "keystroke_and_voice_always_situational",
+      "api": "/api/external-wire",
+      "receive": {"action": "receive", "party": "ai", "query": "…", "from": "grok"},
+      "speak": {"action": "speak", "party": "hostess7", "to": "ai", "query": "…"},
+      "verify": {"action": "verify"},
+      "poll": {"action": "poll", "limit": 20},
+      "note": "Triple redundancy + truth floor 58; sealed hash chain; refuses storage balloon"
+    }
+  },
+  "commands": {
+    "status": "./Hostess7.sh ai-communique status",
+    "operate": "./Hostess7.sh ai-communique operate \"query\"",
+    "teach": "./Hostess7.sh ai-communique teach",
+    "queen": "curl -s -X POST http://127.0.0.1:9481/api/field-brain -d '{\"action\":\"ai_operate\",\"query\":\"…\"}'"
+  },
+  "queen_bindings": {
+    "nexus_jump": "/api/nexus-jump",
+    "field_brain": "/api/field-brain",
+    "field_tools": "/api/field-tools",
+    "sense_neural": "/api/sense-neural",
+    "g16_probe": "./Hostess7.sh queen-grok16-probe",
+    "field_build": "./Hostess7.sh queen-field-build rtx",
+    "field_tools_status": "./Hostess7.sh queen-field-tools"
+  }
+}

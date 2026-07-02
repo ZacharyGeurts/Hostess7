@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" role="img" aria-label="Tristate corridor NY NJ CT">
+  <defs>
+    <linearGradient id="ts-sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="50%" stop-color="#102040"/>
+      <stop offset="100%" stop-color="#1a0838"/>
+    </linearGradient>
+    <linearGradient id="ts-glow" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#22d3ee" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="ts-blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+  <rect width="480" height="320" fill="url(#ts-sky)" rx="16"/>
+  <ellipse cx="240" cy="280" rx="200" ry="40" fill="url(#ts-glow)" filter="url(#ts-blur)"/>
+  <!-- stylized corridor -->
+  <path d="M60 240 Q120 180 200 200 T340 160 T420 120" fill="none" stroke="#22d3ee" stroke-width="3" stroke-opacity="0.5" stroke-dasharray="8 6"/>
+  <circle cx="120" cy="210" r="28" fill="#1e3a5f" stroke="#60a5fa" stroke-width="2"/>
+  <text x="120" y="216" text-anchor="middle" fill="#f4f8ff" font-family="system-ui,sans-serif" font-size="14" font-weight="700">NY</text>
+  <circle cx="240" cy="175" r="32" fill="#1a3050" stroke="#22d3ee" stroke-width="2.5"/>
+  <text x="240" y="181" text-anchor="middle" fill="#f4f8ff" font-family="system-ui,sans-serif" font-size="14" font-weight="700">NJ</text>
+  <circle cx="360" cy="145" r="26" fill="#1e3a5f" stroke="#a78bfa" stroke-width="2"/>
+  <text x="360" y="151" text-anchor="middle" fill="#f4f8ff" font-family="system-ui,sans-serif" font-size="14" font-weight="700">CT</text>
+  <text x="240" y="48" text-anchor="middle" fill="#8aa4c8" font-family="system-ui,sans-serif" font-size="11" letter-spacing="0.2em">TRISTATE FIELD CORRIDOR · 2026</text>
+  <text x="240" y="68" text-anchor="middle" fill="#f0c060" font-family="system-ui,sans-serif" font-size="13" font-weight="600">ARRIVE → TRANSFORM → COMMIT</text>
+</svg>

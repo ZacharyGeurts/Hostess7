@@ -1,0 +1,138 @@
+/**
+ * Queen Code editor themes — researched palettes (contrast-safe, distinct hues).
+ * Queen Emerald: brand default. Others: One Dark, Dracula, Nord, Solarized, Monokai.
+ */
+body.qc[data-qc-theme="queen_emerald"] {
+  --qc-bg: #0a0e0c;
+  --qc-panel: #101814;
+  --qc-gutter-bg: #0c1210;
+  --qc-gutter-fg: #4a6a58;
+  --qc-fg: #e8f2ea;
+  --qc-cursor: #22c55e;
+  --qc-sel: rgba(34, 197, 94, 0.18);
+  --qc-kw: #7ee8a8;
+  --qc-kw2: #eb488c;
+  --qc-str: #f0c674;
+  --qc-num: #6ec8f0;
+  --qc-com: #5a7a68;
+  --qc-fn: #80e0c0;
+  --qc-ty: #c0a0f0;
+}
+
+body.qc[data-qc-theme="one_dark"] {
+  --qc-bg: #282c34;
+  --qc-panel: #21252b;
+  --qc-gutter-bg: #1e2127;
+  --qc-gutter-fg: #5c6370;
+  --qc-fg: #abb2bf;
+  --qc-cursor: #528bff;
+  --qc-sel: rgba(82, 139, 255, 0.2);
+  --qc-kw: #c678dd;
+  --qc-kw2: #e06c75;
+  --qc-str: #98c379;
+  --qc-num: #d19a66;
+  --qc-com: #5c6370;
+  --qc-fn: #61afef;
+  --qc-ty: #e5c07b;
+}
+
+body.qc[data-qc-theme="dracula"] {
+  --qc-bg: #282a36;
+  --qc-panel: #21222c;
+  --qc-gutter-bg: #1e1f29;
+  --qc-gutter-fg: #6272a4;
+  --qc-fg: #f8f8f2;
+  --qc-cursor: #ff79c6;
+  --qc-sel: rgba(189, 147, 249, 0.22);
+  --qc-kw: #ff79c6;
+  --qc-kw2: #bd93f9;
+  --qc-str: #f1fa8c;
+  --qc-num: #bd93f9;
+  --qc-com: #6272a4;
+  --qc-fn: #50fa7b;
+  --qc-ty: #8be9fd;
+}
+
+body.qc[data-qc-theme="nord"] {
+  --qc-bg: #2e3440;
+  --qc-panel: #3b4252;
+  --qc-gutter-bg: #2e3440;
+  --qc-gutter-fg: #4c566a;
+  --qc-fg: #eceff4;
+  --qc-cursor: #88c0d0;
+  --qc-sel: rgba(136, 192, 208, 0.18);
+  --qc-kw: #81a1c1;
+  --qc-kw2: #b48ead;
+  --qc-str: #a3be8c;
+  --qc-num: #d08770;
+  --qc-com: #616e88;
+  --qc-fn: #88c0d0;
+  --qc-ty: #ebcb8b;
+}
+
+body.qc[data-qc-theme="solarized_dark"] {
+  --qc-bg: #002b36;
+  --qc-panel: #073642;
+  --qc-gutter-bg: #00212b;
+  --qc-gutter-fg: #586e75;
+  --qc-fg: #839496;
+  --qc-cursor: #2aa198;
+  --qc-sel: rgba(42, 161, 152, 0.2);
+  --qc-kw: #859900;
+  --qc-kw2: #cb4b16;
+  --qc-str: #2aa198;
+  --qc-num: #d33682;
+  --qc-com: #586e75;
+  --qc-fn: #268bd2;
+  --qc-ty: #b58900;
+}
+
+body.qc[data-qc-theme="monokai"] {
+  --qc-bg: #272822;
+  --qc-panel: #1e1f1c;
+  --qc-gutter-bg: #1e1f1c;
+  --qc-gutter-fg: #75715e;
+  --qc-fg: #f8f8f2;
+  --qc-cursor: #f92672;
+  --qc-sel: rgba(249, 38, 114, 0.15);
+  --qc-kw: #f92672;
+  --qc-kw2: #66d9ef;
+  --qc-str: #e6db74;
+  --qc-num: #ae81ff;
+  --qc-com: #75715e;
+  --qc-fn: #a6e22e;
+  --qc-ty: #fd971f;
+}
+
+body.qc .qc-app {
+  background: var(--qc-bg, #0a0e0c);
+  color: var(--qc-fg, #e8f2ea);
+}
+
+body.qc .qc-sidebar,
+body.qc .qc-titlebar,
+body.qc .qc-toolbar,
+body.qc .qc-statusbar {
+  background: var(--qc-panel, #101814);
+}
+
+body.qc .qc-gutter {
+  background: var(--qc-gutter-bg, #0c1210);
+  color: var(--qc-gutter-fg, #4a6a58);
+}
+
+body.qc .qc-editor,
+body.qc .qc-highlight {
+  background: var(--qc-bg, #0a0e0c);
+  color: var(--qc-fg, #e8f2ea);
+  caret-color: var(--qc-cursor, #22c55e);
+}
+
+body.qc .qc-highlight .kw { color: var(--qc-kw, #7ee8a8); }
+body.qc .qc-highlight .kw2 { color: var(--qc-kw2, #eb488c); }
+body.qc .qc-highlight .str,
+body.qc .qc-highlight .str2 { color: var(--qc-str, #f0c674); }
+body.qc .qc-highlight .num { color: var(--qc-num, #6ec8f0); }
+body.qc .qc-highlight .com { color: var(--qc-com, #5a7a68); font-style: italic; }
+body.qc .qc-highlight .fn { color: var(--qc-fn, #80e0c0); }
+body.qc .qc-highlight .ty { color: var(--qc-ty, #c0a0f0); }

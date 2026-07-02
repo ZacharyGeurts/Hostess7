@@ -1,0 +1,49 @@
+name: Hostess7 GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "docs/**"
+      - "data/**"
+      - "scripts/hostess7_pages_*.py"
+      - "src/hostess7/**"
+      - "zac/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Hostess7
+        run: |
+          pip install -e .
+          pip install -r requirements.txt
+
+      - name: Build full Pages package
+        env:
+          HOSTESS7_ROOT: ${{ github.workspace }}
+          HOSTESS7_LICENSE_MODE: war
+        run: |
+          python scripts/hostess7_pages_surfaces_build.py || true
+          python scripts/hostess7_pages_brain_build.py --full
+          python scripts/hostess7_pages_api_export.py
+
+      - name: Deploy gh-pages
+        run: bash scripts/publish-hostess7-pages.sh
+        env:
+          HOSTESS7_VERSION: 2.0.7
+          PAGES_REPO: ${{ github.workspace }}/gh-pages-out
+          GITHUB_PAGES_OWNER: ZacharyGeurts
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

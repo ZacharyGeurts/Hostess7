@@ -1,0 +1,252 @@
+.au-root {
+  min-height: 100vh;
+  background: radial-gradient(1200px 600px at 10% -10%, #1a1030 0%, transparent 55%),
+    radial-gradient(900px 500px at 90% 0%, #0d2038 0%, transparent 50%),
+    #050508;
+  color: #e8ecf4;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.au-app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 3rem;
+}
+
+.au-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.au-brand h1 {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.au-tagline {
+  margin: 0.35rem 0 0;
+  color: #9aa8c0;
+  font-size: 0.92rem;
+}
+
+.au-head-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.au-btn {
+  border: 1px solid #3a4a68;
+  background: #12182a;
+  color: #e8ecf4;
+  border-radius: 8px;
+  padding: 0.55rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.au-btn:hover:not(:disabled) {
+  border-color: #5b7fd4;
+  background: #182038;
+}
+
+.au-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.au-btn.primary {
+  background: linear-gradient(135deg, #2a4fd4, #1a7fd4);
+  border-color: #4a8fff;
+}
+
+.au-btn.primary.au-ready:not(:disabled) {
+  box-shadow: 0 0 0 2px rgba(74, 143, 255, 0.35);
+}
+
+.au-btn.secondary {
+  background: transparent;
+}
+
+.au-btn.tiny {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+}
+
+.au-status-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  background: rgba(12, 16, 28, 0.85);
+  border: 1px solid #2a3550;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.au-status-card.au-busy {
+  border-color: #d4a02a;
+}
+
+.au-status-card.au-ready {
+  border-color: #3ecf8e;
+}
+
+.au-status-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a96ac;
+}
+
+.au-status-version {
+  font-size: 1.35rem;
+}
+
+.au-status-new {
+  color: #6ee7a8;
+}
+
+.au-status-arrow {
+  font-size: 1.5rem;
+  color: #6ee7a8;
+  text-align: center;
+}
+
+.au-status-detail {
+  grid-column: 1 / -1;
+  margin: 0.25rem 0 0;
+  color: #b8c4dc;
+  font-size: 0.9rem;
+}
+
+.au-safety,
+.au-components,
+.au-notes,
+.au-log {
+  margin-bottom: 1.25rem;
+}
+
+.au-safety h2,
+.au-components h2,
+.au-notes h2,
+.au-log h2 {
+  font-size: 1rem;
+  margin: 0 0 0.6rem;
+  color: #c5d0e8;
+}
+
+.au-safety-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.au-safety-list li {
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  background: #0e1424;
+  border: 1px solid #243048;
+}
+
+.au-safety-list li.ok {
+  border-color: #2d6a4a;
+  color: #9ef0c4;
+}
+
+.au-safety-list li.warn {
+  border-color: #8a6020;
+  color: #f0d49e;
+}
+
+.au-safety-list li.fail {
+  border-color: #8a3040;
+  color: #f0a0a8;
+}
+
+.au-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #2a3550;
+  border-radius: 10px;
+}
+
+.au-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.au-table th,
+.au-table td {
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #1e2840;
+}
+
+.au-table th {
+  background: #0e1424;
+  color: #9aa8c0;
+  font-weight: 600;
+}
+
+.au-table tr:last-child td {
+  border-bottom: none;
+}
+
+.au-badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  background: #1a2840;
+}
+
+.au-badge.update {
+  background: #1a4030;
+  color: #8ef0c0;
+}
+
+.au-badge.current {
+  background: #1a3048;
+  color: #a8c8f0;
+}
+
+.au-badge.optional {
+  background: #282018;
+  color: #d0c0a0;
+}
+
+.au-notes-body,
+.au-log-body {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: #080c14;
+  border: 1px solid #243048;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 220px;
+  overflow: auto;
+}
+
+@media (max-width: 720px) {
+  .au-status-card {
+    grid-template-columns: 1fr;
+  }
+  .au-status-arrow {
+    display: none;
+  }
+}

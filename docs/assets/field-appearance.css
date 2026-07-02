@@ -1,0 +1,130 @@
+/* NEXUS Field appearance — 100% width, 2× tabs & type (operator comfort) */
+:root {
+  --fm-ui-scale: 2;
+  --fm-rail-w: 17rem;
+  --fm-top-h: 11rem;
+}
+
+html.fm-appearance-2x {
+  font-size: calc(18px * var(--fm-ui-scale));
+}
+
+html.fm-appearance-2x .fm-shell,
+html.fm-appearance-2x .fm-body,
+html.fm-appearance-2x .fm-main,
+html.fm-appearance-2x .fm-c2-stage,
+html.fm-appearance-2x .fm-c2-frame,
+html.fm-appearance-2x .fm-top,
+html.fm-appearance-2x .fm-rail,
+html.fm-appearance-2x .fm-pane {
+  width: 100%;
+  max-width: none;
+}
+
+html.fm-appearance-2x .fm-us-icon {
+  width: 128px;
+  height: 128px;
+}
+
+html.fm-appearance-2x .fm-arx-wordmark img {
+  height: 4.2rem;
+}
+
+html.fm-appearance-2x .fm-rail-btn {
+  padding: 1.5rem 1rem;
+  min-height: 9rem;
+  gap: 0.7rem;
+  border-width: 3px;
+}
+
+html.fm-appearance-2x .fm-rail-icon {
+  font-size: 4rem;
+}
+
+html.fm-appearance-2x .fm-rail-label {
+  font-size: 1.56rem;
+  letter-spacing: 0.06em;
+}
+
+html.fm-appearance-2x .fm-rail-icon--img img {
+  width: 72px !important;
+  height: 72px !important;
+  border-radius: 14px;
+}
+
+html.fm-appearance-2x .fm-actions-badge {
+  min-width: 2.8rem;
+  height: 2.8rem;
+  font-size: 1.44rem;
+  margin-left: 5rem;
+}
+
+html.fm-appearance-2x .fm-btn {
+  font-size: 1.64rem;
+  padding: 1.1rem 2rem;
+}
+
+html.fm-appearance-2x .fm-btn--lg {
+  font-size: 1.9rem;
+  padding: 1.7rem 2.9rem;
+}
+
+html.fm-appearance-2x .fm-pill {
+  font-size: 1.56rem;
+  padding: 0.8rem 1.7rem;
+}
+
+html.fm-appearance-2x .fm-field-max-badge {
+  font-size: 1.24rem;
+  padding: 0.4rem 1.1rem;
+}
+
+html.fm-appearance-2x .fm-brand {
+  font-size: 2.7rem;
+}
+
+html.fm-appearance-2x .fm-brand-sub {
+  font-size: 1.44rem;
+}
+
+html.fm-appearance-2x .fm-version {
+  font-size: 1.5rem;
+  padding: 0.5rem 1.1rem;
+}
+
+html.fm-appearance-2x .fm-top {
+  padding: 1.5rem 2.7rem;
+  gap: 1.7rem;
+}
+
+html.fm-appearance-2x .fm-rail {
+  padding: 1.7rem 1.1rem;
+  gap: 0.5rem;
+}
+
+html.fm-appearance-2x .fm-pane {
+  padding: 2.5rem 3rem 4rem;
+}
+
+@media (max-width: 1400px) {
+  html.fm-appearance-2x .fm-rail-btn {
+    flex: 1 1 11rem;
+    min-height: 7rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  html.fm-appearance-2x .fm-rail {
+    max-height: 48vh;
+  }
+  html.fm-appearance-2x .fm-rail-btn {
+    flex: 1 1 9rem;
+    min-height: 6.5rem;
+  }
+  html.fm-appearance-2x .fm-rail-label {
+    font-size: 1.25rem;
+  }
+  html.fm-appearance-2x .fm-rail-icon {
+    font-size: 3rem;
+  }
+}

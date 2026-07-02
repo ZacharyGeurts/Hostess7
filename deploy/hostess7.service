@@ -1,0 +1,27 @@
+[Unit]
+Description=Hostess7 sovereign field brain
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=%h/Hostess7
+Environment=HOSTESS7_ROOT=%h/Hostess7
+Environment=HOSTESS7_BRAIN_STATE=%h/Hostess7/brain/state
+Environment=HOSTESS7_WEB_PORT=8080
+Environment=HOSTESS7_LICENSE_MODE=war
+Environment=HOSTESS7_LOW_POWER=0
+ExecStartPre=/bin/mkdir -p %h/Hostess7/brain/state/snapshots
+ExecStartPre=%h/Hostess7/Hostess7.sh boot
+ExecStart=/usr/bin/env PYTHONPATH=%h/Hostess7/src pythong -m hostess7.daemon
+ExecStop=/bin/kill -TERM $MAINPID
+Restart=on-failure
+RestartSec=15
+Nice=5
+IOSchedulingClass=idle
+MemoryMax=2G
+CPUQuota=200%
+
+[Install]
+WantedBy=default.target

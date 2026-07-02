@@ -1,0 +1,167 @@
+/**
+ * NEXUS-Shield v8.2 — Experience smoothing (QOL presentation layer)
+ */
+html.nexus-v82 {
+  scroll-behavior: smooth;
+}
+
+html.nexus-v82 .nexus-field-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 10001;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: linear-gradient(90deg, transparent, var(--internet, #5ecf7a), transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+html.nexus-v82.panel-fetching .nexus-field-progress {
+  opacity: 1;
+  animation: nexus-field-progress 1.2s ease-in-out infinite;
+}
+
+@keyframes nexus-field-progress {
+  0% { transform: scaleX(0.08); }
+  50% { transform: scaleX(0.72); }
+  100% { transform: scaleX(0.15); }
+}
+
+html.nexus-v82 .view {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+html.nexus-v82 .view.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+html.nexus-v82 nav.menu button {
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+html.nexus-v82 nav.menu button .tab-load-pct {
+  transition: color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+html.nexus-v82 nav.menu button .tab-load-pct.loading {
+  animation: nexus-tab-pulse 1.4s ease-in-out infinite;
+}
+
+html.nexus-v82 nav.menu button .tab-load-pct.ready {
+  transform: scale(1.02);
+}
+
+@keyframes nexus-tab-pulse {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; }
+}
+
+html.nexus-v82 .panel-subnav button {
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+html.nexus-v82 .card,
+html.nexus-v82 .know-card,
+html.nexus-v82 .conn-row {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+html.nexus-v82 .card:hover,
+html.nexus-v82 .know-card:hover {
+  transform: translateY(-1px);
+}
+
+html.nexus-v82 .nexus-ops-bar {
+  transition: box-shadow 0.2s ease;
+}
+
+html.nexus-v82 .nexus-kill-chain-badge {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--murder, #dc2626);
+  color: #fecaca;
+  background: rgba(127, 29, 29, 0.35);
+  white-space: nowrap;
+}
+
+html.nexus-v82 .nexus-kill-chain-badge.idle {
+  border-color: var(--border, #3d4f32);
+  color: var(--muted, #9aaa8c);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+html.nexus-v82 .nexus-toast-host {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10002;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  max-width: min(360px, 92vw);
+}
+
+html.nexus-v82 .nexus-toast {
+  pointer-events: auto;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-bright, #5a7048);
+  background: linear-gradient(180deg, #1a2218 0%, #101610 100%);
+  color: var(--text, #e6efe0);
+  font-size: 0.82rem;
+  box-shadow: var(--shadow, 0 8px 32px rgba(0, 0, 0, 0.72));
+  opacity: 0;
+  transform: translateY(8px);
+  animation: nexus-toast-in 0.28s ease forwards;
+}
+
+html.nexus-v82 .nexus-toast.ok { border-color: var(--ok, #3dd68c); }
+html.nexus-v82 .nexus-toast.warn { border-color: var(--gold, #b8956a); }
+html.nexus-v82 .nexus-toast.kill { border-color: var(--murder, #dc2626); }
+
+@keyframes nexus-toast-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+html.nexus-v82 * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-bright, #5a7048) transparent;
+}
+
+html.nexus-v82 *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html.nexus-v82 *::-webkit-scrollbar-thumb {
+  background: var(--border-bright, #5a7048);
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.nexus-v82,
+  html.nexus-v82 .view,
+  html.nexus-v82 .nexus-toast,
+  html.nexus-v82 .nexus-field-progress,
+  html.nexus-v82 nav.menu button .tab-load-pct.loading {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto;
+  }
+  html.nexus-v82 .view { opacity: 1; transform: none; }
+}

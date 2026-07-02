@@ -1,0 +1,616 @@
+/* 2026 Tristate Installer — premium field software install experience */
+:root {
+  --ti-bg: #010208;
+  --ti-surface: rgba(8, 14, 28, 0.92);
+  --ti-glass: rgba(12, 20, 40, 0.78);
+  --ti-border: rgba(96, 165, 250, 0.22);
+  --ti-text: #f4f8ff;
+  --ti-soft: #b8c8e0;
+  --ti-muted: #6a82a8;
+  --ti-cyan: #22d3ee;
+  --ti-blue: #60a5fa;
+  --ti-violet: #a78bfa;
+  --ti-gold: #f0c060;
+  --ti-ok: #34d399;
+  --ti-warn: #fbbf24;
+  --ti-danger: #f43f5e;
+  --ti-radius: 20px;
+  --ti-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ti-font: system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  color-scheme: dark;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--ti-font);
+  color: var(--ti-text);
+  background:
+    radial-gradient(ellipse 80% 50% at 15% -10%, rgba(34, 211, 238, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 45% at 90% 0%, rgba(167, 139, 250, 0.14), transparent 50%),
+    radial-gradient(ellipse 70% 40% at 50% 110%, rgba(240, 192, 96, 0.1), transparent 50%),
+    linear-gradient(165deg, #010208 0%, #060c18 45%, #0a1020 100%);
+  background-attachment: fixed;
+}
+
+.ti-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+}
+
+.ti-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.ti-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ti-brand img.ti-shield {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.ti-brand h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.ti-brand p {
+  margin: 0.15rem 0 0;
+  color: var(--ti-muted);
+  font-size: 0.82rem;
+}
+
+.ti-badge {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(34, 211, 238, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  color: var(--ti-cyan);
+}
+
+.ti-badge--committed {
+  background: rgba(52, 211, 153, 0.12);
+  border-color: rgba(52, 211, 153, 0.4);
+  color: var(--ti-ok);
+}
+
+/* Step rail */
+.ti-steps {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1100px) {
+  .ti-steps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .ti-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.ti-step {
+  position: relative;
+  padding: 1rem 1.1rem;
+  border-radius: var(--ti-radius);
+  background: var(--ti-glass);
+  border: 1px solid var(--ti-border);
+  cursor: default;
+  transition: border-color 0.35s var(--ti-ease), transform 0.35s var(--ti-ease), box-shadow 0.35s var(--ti-ease);
+}
+
+.ti-step.done,
+.ti-step.active {
+  cursor: pointer;
+}
+
+.ti-step.active {
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.15), 0 12px 40px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+.ti-step.done {
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
+.ti-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: rgba(96, 165, 250, 0.2);
+  color: var(--ti-blue);
+  margin-bottom: 0.5rem;
+}
+
+.ti-step.done .ti-step-num {
+  background: rgba(52, 211, 153, 0.25);
+  color: var(--ti-ok);
+}
+
+.ti-step h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+.ti-step span {
+  font-size: 0.78rem;
+  color: var(--ti-muted);
+}
+
+/* Main card */
+.ti-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: calc(var(--ti-radius) + 4px);
+  background: var(--ti-surface);
+  border: 1px solid var(--ti-border);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+}
+
+@media (min-width: 860px) {
+  .ti-card { grid-template-columns: 1.1fr 0.9fr; align-items: start; }
+}
+
+.ti-hero {
+  position: relative;
+  border-radius: var(--ti-radius);
+  overflow: hidden;
+  min-height: 280px;
+  background: #081018;
+}
+
+.ti-hero img.ti-hero-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  display: block;
+  min-height: 280px;
+}
+
+.ti-hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.25rem;
+  background: linear-gradient(180deg, transparent 30%, rgba(1, 2, 8, 0.92) 100%);
+}
+
+.ti-hero-overlay h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.ti-hero-overlay p {
+  margin: 0;
+  color: var(--ti-soft);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 28rem;
+}
+
+.ti-map {
+  margin-top: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--ti-border);
+}
+
+.ti-map img, .ti-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ti-lead {
+  margin: 0 0 0.5rem;
+  color: var(--ti-soft);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.ti-pane { display: none; animation: tiFade 0.45s var(--ti-ease); }
+.ti-pane.active { display: block; }
+
+@keyframes tiFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ti-features {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.ti-feature {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ti-feature img {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.ti-feature strong {
+  display: block;
+  font-size: 0.88rem;
+  margin-bottom: 0.15rem;
+}
+
+.ti-feature span {
+  font-size: 0.78rem;
+  color: var(--ti-muted);
+  line-height: 1.45;
+}
+
+.ti-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+
+@media (min-width: 640px) {
+  .ti-stats { grid-template-columns: repeat(4, 1fr); }
+}
+
+.ti-stat {
+  padding: 0.75rem;
+  border-radius: 12px;
+  background: rgba(34, 211, 238, 0.06);
+  border: 1px solid rgba(34, 211, 238, 0.15);
+}
+
+.ti-stat b {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--ti-cyan);
+}
+
+.ti-stat small {
+  color: var(--ti-muted);
+  font-size: 0.72rem;
+}
+
+.ti-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.ti-progress > i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ti-cyan), var(--ti-violet));
+  transition: width 0.6s var(--ti-ease);
+}
+
+.ti-list {
+  margin: 0.75rem 0;
+  padding-left: 1.25rem;
+  font-size: 0.82rem;
+  color: var(--ti-soft);
+}
+
+.ti-list .ti-muted {
+  color: var(--ti-muted);
+  list-style: none;
+  margin-left: -1.25rem;
+}
+
+.ti-log {
+  max-height: 140px;
+  overflow: auto;
+  font-family: ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--ti-muted);
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 0.75rem;
+}
+
+.ti-warn-box {
+  padding: 1rem;
+  border-radius: 14px;
+  background: rgba(244, 63, 94, 0.08);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.ti-warn-box strong { color: var(--ti-danger); }
+
+.ti-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.ti-check input { margin-top: 0.2rem; accent-color: var(--ti-cyan); }
+
+.ti-actions,
+.ti-inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.ti-wizard-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ti-wizard-meta {
+  font-size: 0.78rem;
+  color: var(--ti-muted);
+  letter-spacing: 0.04em;
+}
+
+.ti-welcome-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  margin: 1rem 0 0.5rem;
+}
+
+@media (max-width: 520px) {
+  .ti-welcome-grid { grid-template-columns: 1fr; }
+}
+
+.ti-welcome-card {
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ti-welcome-card strong {
+  display: block;
+  font-size: 0.88rem;
+  margin-bottom: 0.2rem;
+}
+
+.ti-welcome-card span {
+  font-size: 0.78rem;
+  color: var(--ti-muted);
+  line-height: 1.45;
+}
+
+.ti-conn-pill {
+  display: inline-block;
+  margin: 0.5rem 0 0.75rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-family: ui-monospace, monospace;
+  background: rgba(167, 139, 250, 0.12);
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  color: var(--ti-violet);
+}
+
+.ti-replacer {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.65rem;
+  align-items: stretch;
+  margin: 0.5rem 0 0.75rem;
+}
+
+@media (max-width: 720px) {
+  .ti-replacer {
+    grid-template-columns: 1fr;
+  }
+  .ti-replacer-arrow { display: none; }
+}
+
+.ti-replacer-col {
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.25);
+  min-height: 8rem;
+}
+
+.ti-replacer-col--off {
+  border-color: rgba(244, 63, 94, 0.25);
+  background: rgba(244, 63, 94, 0.06);
+}
+
+.ti-replacer-col--on {
+  border-color: rgba(52, 211, 153, 0.3);
+  background: rgba(52, 211, 153, 0.06);
+}
+
+.ti-replacer-col h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ti-replacer-col--off h4 { color: var(--ti-danger); }
+.ti-replacer-col--on h4 { color: var(--ti-ok); }
+
+.ti-replacer-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.76rem;
+  color: var(--ti-soft);
+  line-height: 1.5;
+}
+
+.ti-replacer-list li { margin-bottom: 0.25rem; }
+
+.ti-replacer-arrow {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: var(--ti-gold);
+  padding: 0 0.15rem;
+}
+
+.ti-hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  color: var(--ti-muted);
+}
+
+.ti-promises {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.2rem;
+  font-size: 0.78rem;
+  color: var(--ti-soft);
+  line-height: 1.55;
+}
+
+.ti-promises li { margin-bottom: 0.2rem; }
+
+.ti-choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 0.5rem;
+}
+
+.ti-choice.selected {
+  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.45);
+  border-color: rgba(34, 211, 238, 0.6);
+}
+
+.ti-choice--muted {
+  opacity: 0.75;
+}
+
+.ti-btn {
+  appearance: none;
+  border: 1px solid var(--ti-border);
+  background: rgba(96, 165, 250, 0.12);
+  color: var(--ti-text);
+  padding: 0.7rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s var(--ti-ease), background 0.2s, border-color 0.2s;
+}
+
+.ti-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(96, 165, 250, 0.45);
+  background: rgba(96, 165, 250, 0.2);
+}
+
+.ti-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ti-btn--primary {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.25), rgba(96, 165, 250, 0.25));
+  border-color: rgba(34, 211, 238, 0.5);
+}
+
+.ti-btn--gold {
+  background: linear-gradient(135deg, rgba(240, 192, 96, 0.2), rgba(167, 139, 250, 0.15));
+  border-color: rgba(240, 192, 96, 0.45);
+}
+
+.ti-btn--danger {
+  background: rgba(244, 63, 94, 0.15);
+  border-color: rgba(244, 63, 94, 0.4);
+}
+
+.ti-toast {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  background: var(--ti-surface);
+  border: 1px solid var(--ti-border);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  font-size: 0.85rem;
+  transition: transform 0.35s var(--ti-ease);
+  z-index: 100;
+}
+
+.ti-toast.show { transform: translateX(-50%) translateY(0); }
+
+.ti-foot {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--ti-muted);
+}
+
+.ti-foot a { color: var(--ti-blue); }

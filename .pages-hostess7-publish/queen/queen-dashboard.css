@@ -1,0 +1,277 @@
+/* Queen Dashboard — empty frame, frameless panel thumbnails */
+
+:root {
+  --qdash-bg: #020403;
+  --qdash-frame: #1a3d2e;
+  --qdash-glow: rgba(62, 207, 142, 0.35);
+  --qdash-text: #e8f2ea;
+  --qdash-dim: #7a9a88;
+  --qdash-accent: #3ecf8e;
+  --qdash-bar-h: 36px;
+  --qdash-gap: 10px;
+  --qdash-pad: 8px;
+  --qdash-font: system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--qdash-font);
+  font-size: 13px;
+  color: var(--qdash-text);
+  background: var(--qdash-bg);
+}
+
+.qdash-window {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border: 1px solid var(--qdash-frame);
+  box-shadow: inset 0 0 0 1px rgba(62, 207, 142, 0.08);
+}
+
+.qdash-bar {
+  flex: 0 0 var(--qdash-bar-h);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  background: linear-gradient(180deg, #0a120e 0%, #06100c 100%);
+  border-bottom: 1px solid var(--qdash-frame);
+  user-select: none;
+}
+
+.qdash-title {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--qdash-accent);
+  margin-right: auto;
+}
+
+.qdash-bar label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--qdash-dim);
+  font-size: 12px;
+}
+
+.qdash-bar select,
+.qdash-bar button {
+  font: inherit;
+  font-size: 12px;
+  color: var(--qdash-text);
+  background: #0f1a14;
+  border: 1px solid var(--qdash-frame);
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.qdash-bar button:hover,
+.qdash-bar select:hover {
+  border-color: var(--qdash-accent);
+}
+
+.qdash-canvas-wrap {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.qdash-canvas {
+  position: absolute;
+  inset: var(--qdash-pad);
+  overflow: auto;
+  border: 1px dashed rgba(62, 207, 142, 0.2);
+  border-radius: 8px;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(62, 207, 142, 0.04), transparent 70%),
+    var(--qdash-bg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.qdash-canvas.qdash-dragover {
+  border-color: var(--qdash-accent);
+  box-shadow: inset 0 0 24px var(--qdash-glow);
+}
+
+.qdash-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--qdash-dim);
+  pointer-events: none;
+  text-align: center;
+  padding: 24px;
+}
+
+.qdash-empty strong { color: var(--qdash-accent); font-weight: 500; }
+
+.qdash-grid {
+  position: relative;
+  min-height: 100%;
+  display: grid;
+  gap: var(--qdash-gap);
+  padding: var(--qdash-gap);
+  align-content: start;
+}
+
+.qdash-grid[data-cols="auto"] {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+}
+
+.qdash-grid[data-cols="1"] { grid-template-columns: 1fr; }
+.qdash-grid[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
+.qdash-grid[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+.qdash-grid[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
+.qdash-grid[data-cols="6"] { grid-template-columns: repeat(6, 1fr); }
+
+.qdash-panel {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  min-height: 140px;
+  border-radius: 6px;
+  padding: 8px;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+  transition: box-shadow 0.12s, transform 0.12s;
+}
+
+.qdash-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  pointer-events: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+
+.qdash-panel:hover::before,
+.qdash-panel.qdash-focus::before {
+  border-color: var(--qdash-glow);
+  box-shadow: 0 0 12px var(--qdash-glow);
+}
+
+.qdash-panel.qdash-dragging {
+  opacity: 0.85;
+  cursor: grabbing;
+  z-index: 20;
+  transform: scale(1.02);
+}
+
+.qdash-panel.qdash-slot-target {
+  outline: 2px dashed var(--qdash-accent);
+  outline-offset: 2px;
+}
+
+.qdash-panel-grip {
+  position: absolute;
+  inset: 8px;
+  z-index: 2;
+  border-radius: 4px;
+  cursor: grab;
+  background: transparent;
+}
+
+.qdash-panel.qdash-active .qdash-panel-grip {
+  pointer-events: none;
+}
+
+.qdash-panel.qdash-dragging .qdash-panel-grip {
+  pointer-events: auto;
+}
+
+.qdash-panel-view {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 4px;
+  background: #0a120e;
+  display: block;
+  pointer-events: auto;
+}
+
+.qdash-panel.qdash-free {
+  position: absolute;
+  aspect-ratio: unset;
+  width: 280px;
+  height: 210px;
+  margin: 0;
+}
+
+.qdash-fs-layer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--qdash-bg);
+  padding: 12px;
+}
+
+.qdash-window.qdash-fs-active .qdash-fs-layer {
+  display: flex;
+  flex-direction: column;
+}
+
+.qdash-window.qdash-fs-active .qdash-canvas-wrap {
+  visibility: hidden;
+}
+
+.qdash-fs-panel {
+  flex: 1;
+  min-height: 0;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.qdash-fs-panel::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 2px solid rgba(62, 207, 142, 0.25);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.qdash-fs-panel {
+  position: relative;
+}
+
+.qdash-fs-panel .qdash-panel-view {
+  height: 100%;
+}
+
+.qdash-fs-hint {
+  flex: 0 0 auto;
+  text-align: center;
+  font-size: 11px;
+  color: var(--qdash-dim);
+  padding: 4px;
+}
+
+.qdash-status {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--qdash-dim);
+  padding: 4px 12px 8px;
+  min-height: 22px;
+}
+
+@media (max-width: 720px) {
+  .qdash-grid[data-cols="4"],
+  .qdash-grid[data-cols="6"] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

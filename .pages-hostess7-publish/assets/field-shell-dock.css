@@ -1,0 +1,174 @@
+/* AmmoOS field shell dock — taskbar, bookmarks flyout, sovereign tray · Grok16 5.1.0 */
+:root {
+  --fsd-base: rgba(18, 22, 32, 0.92);
+  --fsd-edge: rgba(26, 77, 50, 0.45);
+  --fsd-text: #e8edf7;
+  --fsd-dim: #7c8aa3;
+  --fsd-green: #3ecf8e;
+  --fsd-red: #f85149;
+  --fsd-blue: #f472b6;
+  --fsd-dock-h: 52px;
+}
+
+.fsd-dock {
+  height: var(--fsd-dock-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background: var(--fsd-base);
+  border-bottom: 1px solid var(--fsd-edge);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 200;
+}
+.fsd-dock-left, .fsd-dock-right { display: flex; align-items: center; gap: 10px; }
+.fsd-dock-icon {
+  width: 36px; height: 36px;
+  border: none; border-radius: 8px;
+  background: transparent;
+  color: var(--fsd-dim);
+  cursor: pointer;
+  display: grid; place-items: center;
+  position: relative;
+  transition: background 0.15s, color 0.15s;
+}
+.fsd-dock-icon:hover { background: rgba(62, 207, 142, 0.14); color: var(--fsd-text); }
+.fsd-dock-icon.active {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.22), rgba(244, 114, 182, 0.1));
+  color: var(--fsd-green);
+  box-shadow: 0 0 0 1px rgba(62, 207, 142, 0.35);
+}
+.fsd-dock-icon svg { width: 22px; height: 22px; }
+.fsd-badge {
+  position: absolute; top: 2px; right: 2px;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  border-radius: 8px; background: var(--fsd-red);
+  color: #fff; font-size: 10px; font-weight: 700;
+  display: grid; place-items: center;
+}
+
+.fsd-tray-pill {
+  font-size: 12px; color: var(--fsd-dim);
+  padding: 4px 10px; border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  border: none;
+  cursor: default;
+  font-family: inherit;
+}
+.fsd-tray-pill.clickable { cursor: pointer; }
+.fsd-tray-pill.clickable:hover { background: rgba(255,255,255,0.08); color: var(--fsd-text); }
+.fsd-tray-live {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--fsd-red);
+  box-shadow: 0 0 8px var(--fsd-red);
+  flex-shrink: 0;
+}
+.fsd-tray-live.synced {
+  background: var(--fsd-green);
+  box-shadow: 0 0 8px var(--fsd-green);
+}
+
+.fsd-drift {
+  font-family: "Cascadia Mono", "Consolas", monospace;
+  font-size: 11px;
+  color: var(--fsd-green);
+}
+.fsd-drift.warn { color: #d29922; }
+.fsd-drift.bad { color: var(--fsd-red); }
+
+.fsd-bookmarks-wrap { position: relative; }
+.fsd-bookmarks-btn {
+  display: flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 6px;
+  border: none; background: rgba(255,255,255,0.04);
+  color: var(--fsd-dim); cursor: pointer; font-size: 12px;
+  font-family: inherit;
+}
+.fsd-bookmarks-btn:hover { background: rgba(255,255,255,0.08); color: var(--fsd-text); }
+.fsd-bookmarks-btn svg { width: 14px; height: 14px; }
+
+.fsd-flyout {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 240px;
+  max-width: 320px;
+  background: #161b22;
+  border: 1px solid var(--fsd-edge);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+  padding: 8px 0;
+  display: none;
+  z-index: 500;
+}
+.fsd-flyout.open { display: block; }
+.fsd-flyout-head {
+  padding: 6px 14px 8px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fsd-dim);
+  border-bottom: 1px solid var(--fsd-edge);
+  margin-bottom: 4px;
+}
+.fsd-flyout-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  color: var(--fsd-text);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+}
+.fsd-flyout-item:hover { background: rgba(88, 166, 255, 0.1); }
+.fsd-flyout-item small {
+  display: block;
+  color: var(--fsd-dim);
+  font-size: 11px;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fsd-time-wrap { position: relative; }
+.fsd-time-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 200px;
+  background: #161b22;
+  border: 1px solid var(--fsd-edge);
+  border-radius: 8px;
+  padding: 6px 0;
+  display: none;
+  z-index: 500;
+}
+.fsd-time-menu.open { display: block; }
+.fsd-time-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--fsd-text);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+}
+.fsd-time-opt:hover { background: rgba(63, 185, 80, 0.12); }
+.fsd-time-opt.active { color: var(--fsd-green); }
+
+.fsd-sovereign-detail {
+  font-size: 10px;
+  color: var(--fsd-dim);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

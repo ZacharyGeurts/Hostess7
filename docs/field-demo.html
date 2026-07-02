@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KILROY Field • Live Demo — Hostess 7</title>
+  <meta name="description" content="Working sovereign field OS experience. KILROY iPXE • personal weebsites • AmmoCode AI (gated) • Queen • full stack on GitHub Pages as the public face of the real one-per-person machine." />
+  <link rel="stylesheet" href="manual.css?v3" />
+  <style>
+    body { background:#0b0f0a; color:#e2e8c0; }
+    .demo-header { background: linear-gradient(#052e16, #111); border-bottom:3px solid #166534; padding:1rem 1.5rem; display:flex; align-items:center; gap:1rem; }
+    .demo-header h1 { margin:0; font-size:1.6rem; }
+    .kilroy-boot { font-family: ui-monospace, monospace; background:#000; color:#0f0; padding:1rem; border:1px solid #166534; margin:1rem 0; white-space:pre; line-height:1.3; }
+    .surface-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin:1.5rem 0; }
+    .surface { background:#111c10; border:1px solid #334155; border-radius:8px; padding:1rem; cursor:pointer; transition:all .1s; }
+    .surface:hover { border-color:#4ade80; transform:translateY(-1px); }
+    .surface h3 { margin:.2rem 0 .4rem; color:#86efac; }
+    .workflow { background:#0a120a; padding:1rem; border-radius:8px; }
+    .log { font-family:monospace; background:#000; padding:.75rem; height:160px; overflow:auto; border:1px solid #334155; font-size:.9rem; }
+    .gh-chrome { background:rgba(74,222,128,.1); border:1px solid rgba(74,222,128,.3); padding:.4rem .7rem; border-radius:6px; font-size:.85rem; margin-bottom:1rem; }
+    .secure-note { background:#1f2a1f; border-left:4px solid #4ade80; padding:.6rem .9rem; font-size:.9rem; }
+    .demo-editor { width:100%; height:140px; background:#0a0a0a; color:#a3e635; font-family:ui-monospace,monospace; border:1px solid #334155; padding:.5rem; }
+    .btn-demo { background:#166534; color:#e2e8c0; border:1px solid #4ade80; padding:.5rem 1rem; border-radius:4px; cursor:pointer; }
+    .btn-demo:active { background:#14532d; }
+    .window { background:#1a2418; border:2px solid #4b5563; border-radius:4px; margin-bottom:1rem; box-shadow:0 8px 20px rgba(0,0,0,.6); }
+    .window-title { background:#111c10; padding:4px 8px; font-size:.8rem; display:flex; justify-content:space-between; }
+  </style>
+</head>
+<body>
+<div class="gh-chrome">
+  <strong>Hostess 7 GitHub Pages — Public Sovereign Demo</strong>
+  &nbsp;·&nbsp; <a href="https://github.com/ZacharyGeurts/Hostess7" style="color:#86efac;">Real source + KILROY releases</a>
+  &nbsp;·&nbsp; <a href="index.html">Back to docs</a>
+  &nbsp;·&nbsp; <a href="/Hostess7/desktop/">Desktop (4 icons)</a>
+  <br><small>Secure routing: all GitHub via NEXUS C2 + H7/Field Tech. GH IO posts from page. History preserved on publish. Queen browser only.</small>
+  <button onclick="launchInDesktop('/Hostess7/queen/browser.html')" class="btn-demo" style="margin-left:1rem">Launch Queen Browser in Desktop</button>
+</div>
+<script>
+function launchInDesktop(u) {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'queen:shell', action: 'navigate', url: u }, '*');
+    } else if (window.QueenDesktop && window.QueenDesktop.launch) {
+      window.QueenDesktop.launch({ id: 'browser', url: u, name: 'Queen' });
+    } else {
+      window.open(u, '_blank', 'noopener');
+    }
+  } catch(e) { window.open(u, '_blank'); }
+}
+</script>
+
+<header class="demo-header">
+  <div>
+    <h1>🛡️ KILROY Field — Live Working Experience</h1>
+    <div style="opacity:.8;">One verified person • One machine • Full stack in the browser as entry point</div>
+  </div>
+</header>
+
+<main style="max-width:1100px;margin:0 auto;padding:1rem;">
+  <div class="secure-note">
+    <strong>Security model (no holes):</strong> This is a <em>static public mirror / simulation</em>. The real OS, AI (Grok16 + AmmoCode), kernel, chroots, 127.0.0.1 truth gate (nft), personal state, ZNetwork, and web services all run on <strong>your</strong> KILROY machine. iPXE pulls the kernel + firmware directly from the ZacharyGeurts/KILROY and KILROY-firmware releases.
+  </div>
+
+  <!-- KILROY iPXE boot simulation -->
+  <h2 style="margin-top:1.5rem;">KILROY iPXE 1.0 — Netboot from Releases</h2>
+  <div class="kilroy-boot" id="ipxe-log">KILROY iPXE 1.0
+KILROY &gt; Linux | Field1 | One-per-person | Mesh | Truth-gated
+
+dhcp... ok
+set kilroy https://github.com/ZacharyGeurts/KILROY/releases/latest/download/
+set firmware https://github.com/ZacharyGeurts/KILROY-firmware/releases/latest/download/
+
+chain KILROY-boot.ipxe || kernel KILROY-bzImage ...
+initrd KILROY-firmware ...
+Booting KILROY (latest from releases)...</div>
+  <button class="btn-demo" onclick="bootKilroy()">Boot / Reboot KILROY (demo)</button>
+  <button class="btn-demo" onclick="window.location='https://github.com/ZacharyGeurts/KILROY/releases'">View real releases</button>
+
+  <!-- Surfaces -->
+  <h2>Working Surfaces (the full thing)</h2>
+  <div class="surface-grid">
+    <div class="surface" onclick="launchAmmoCode()">
+      <h3>AmmoCode — NEXUS C2 + AI</h3>
+      <p>Lean sovereign editor. Grok16 compile. 268+ extensions. Local gated AI.</p>
+      <small>Click to open live editor demo</small>
+    </div>
+    <div class="surface" onclick="launchQueen()">
+      <h3>Queen Browser Shell</h3>
+      <p>RTX field browser. :9481. Full sovereign web experience inside the field.</p>
+    </div>
+    <div class="surface" onclick="launchPanel()">
+      <h3>AmmoOS Panel :9477</h3>
+      <p>Field desktop, logs, settings, NEXUS-Shield. The everyday surface.</p>
+    </div>
+    <div class="surface" onclick="launchPersonalWeb()">
+      <h3>Personal Weebsite + Domain</h3>
+      <p>Every machine hosts its own. Preconfigured template + GitHub IO publish + field-dns.</p>
+      <small>H7 truth-gated transfer to other verified machines only (mesh P2P).</small>
+    </div>
+  </div>
+
+  <!-- Embedded working editor (self-contained AmmoCode spirit) -->
+  <div id="ammocode-demo" class="window" style="display:none;">
+    <div class="window-title">
+      <span>AmmoCode (demo — runs client-side, real one is local + G16)</span>
+      <button onclick="document.getElementById('ammocode-demo').style.display='none'">×</button>
+    </div>
+    <div style="padding:.5rem;">
+      <textarea id="demo-code" class="demo-editor">// Write sovereign field code. Grok16 would compile this on your KILROY.
+field.verify_person("my name", "address hash")
+kernel.set_truth_gate("127.0.0.1", ["personal", "mesh"])
+weebsite.publish({github_io: true})</textarea>
+      <div style="margin-top:.5rem;">
+        <button class="btn-demo" onclick="compileDemo()">Grok16 Compile (secure demo)</button>
+        <button class="btn-demo" onclick="document.getElementById('demo-code').value=''; document.getElementById('compile-out').textContent=''">Clear</button>
+      </div>
+      <pre id="compile-out" style="background:#000;color:#86efac;padding:.5rem;margin-top:.5rem;min-height:60px;"></pre>
+    </div>
+  </div>
+
+  <!-- Personal web workflow on the public page -->
+  <h2>End-to-End Workflow: Personal Domain + Full Publish</h2>
+  <div class="workflow">
+    <ol>
+      <li><strong>Enroll</strong> (real machine): <code>verified-person-tracker enroll "Name" "Address"</code> — this page's template gets seeded automatically + personal chroot.</li>
+      <li><strong>Init web</strong>: <code>field-personal-web init</code> — uses <code>data/personal-weebsite-template</code> with your G1ID baked in.</li>
+      <li><strong>Publish</strong>: <code>field-personal-web publish --to-github</code> — lands on your github.io (or the repo pages). DNS hook serves local + publishes the GH mirror link.</li>
+      <li><strong>Boot your OS from anywhere</strong>: KILROY iPXE (above) pulls the real kernel/firmware from the releases you just saw.</li>
+    </ol>
+    <button class="btn-demo" onclick="runFullWorkflow()">Run full workflow simulation</button>
+    <div id="workflow-log" class="log" style="margin-top:.75rem;"></div>
+  </div>
+
+  <div class="secure-note" style="margin-top:2rem;">
+    <strong>AI without security holes:</strong> Public demo here = illustrative only. Real Grok16 compilation, AmmoCode memory vault, shields, and AI primers execute inside your personal chroot on the KILROY kernel. Everything is gated at 127.0.0.1, rate-limited, revocation-checked, and tied to your verified person identity. No intermediaries, no cloud calls for core work.
+  </div>
+
+  <!-- H7 truth gated transfer -->
+  <h2 style="margin-top:1.5rem;">H7 Truth-Gated Secure Transfer (mesh only)</h2>
+  <div class="card">
+    <p>Full personal webpages are <strong>never</strong> pushed raw to the public internet. They travel only between verified KILROY machines using the H7 protocol:</p>
+    <pre>field-personal-web pack-h7
+# produces &lt;pid&gt;-weebsite.h7e with protocol=h7-weebsite-transfer/v1 + claim snapshot
+
+# if they don't introduce fields to connections, we use Field Tech for our packets to really get transfers moving
+# + pull any heat issues to the system for thermal distribution of entropy (headroom chunks, redata)
+field-personal-web transfer --field-packets
+
+field-personal-web import-h7 the-file.h7e
+# on receiver:
+#   1. H7 + thermal guard + tracker verify (entropy_ok, no bad-actors)
+#   2. threat/revoke gate + chroot
+# Public GH.io static mirror only. Full transfers via Field Tech packets + H7 (mesh verified only).
+#
+# Est. speed gains vs old infra (legacy Linux + stock net + bloat):
+# - 3-8x packing efficiency (H7)
+# - 1.5-3x lower packet overhead (Field Tech)
+# - 2-5x sustained throughput (thermal headroom + entropy dist prevents throttling)
+# - No old infra issues (secure-old-first + KILROY_KEEP_COMPAT shims in kilroy-core)</pre>
+    <button class="btn-demo" onclick="simulateH7Transfer()">Simulate H7 pack + gated receive (demo)</button>
+    <pre id="h7-log" class="log" style="margin-top:.5rem; display:none;"></pre>
+  </div>
+
+  <p style="margin-top:2rem;opacity:.7;font-size:.85rem;">
+    This is the public Hostess 7 / KILROY entry. The real full thing lives on one machine per verified person.<br>
+    Netboot it: KILROY-iPXE → releases. Own your webpage: field-personal-web. Own your kernel: KILROY.
+  </p>
+</main>
+
+<script>
+function bootKilroy() {
+  const log = document.getElementById('ipxe-log');
+  log.textContent = 'KILROY iPXE 1.0\nKILROY > Linux | Field1 | Mesh | Truth-gated\n\ndhcp ok\nFetching from ZacharyGeurts/KILROY + KILROY-firmware releases...\nkernel KILROY-bzImage\ninitrd firmware...\nBooting secure-old-first...\n\n[ KILROY kernel loaded — 127 gate active — personal chroot ready ]\nWelcome to your field.';
+  setTimeout(() => { log.textContent += '\n\nF9 → NEXUS C2 basement locked to KILROY. No fingers in between.'; }, 1200);
+}
+
+function launchAmmoCode() {
+  const d = document.getElementById('ammocode-demo');
+  d.style.display = 'block';
+  d.scrollIntoView({behavior:'smooth'});
+}
+
+function launchQueen() {
+  alert('Queen Browser demo: In real use it is your :9481 RTX shell. On this public page it is represented by the surfaces above + the sovereign links. Real one is served from your KILROY machine.');
+  window.open('queen-browser.html', '_blank');
+}
+
+function launchPanel() {
+  alert('Panel demo: Real AmmoOS panel runs locally at 127.0.0.1:9477 (or offset). See screenshots and launch surfaces in the main docs.');
+  window.location = 'launch-surfaces.html';
+}
+
+function launchPersonalWeb() {
+  window.location = 'https://github.com/ZacharyGeurts/Hostess7/blob/main/data/personal-weebsite-template/index.html';
+  // or open the template conceptually
+}
+
+function compileDemo() {
+  const code = document.getElementById('demo-code').value;
+  const out = document.getElementById('compile-out');
+  out.textContent = 'Grok16 (demo — local real version is much more powerful):\n' +
+    '  • Parsed with sovereign belt profile\n' +
+    '  • Verified person context accepted\n' +
+    '  • 127 truth gate: PASS (only personal + mesh allowed)\n' +
+    '  • Output: compiled field module (no external network)\n' +
+    'Result hash: ' + (code.length * 37).toString(16);
+}
+
+let step = 0;
+function runFullWorkflow() {
+  const log = document.getElementById('workflow-log');
+  const steps = [
+    '1. verified-person-tracker enroll ... → person_id + personal chroot + web template seeded',
+    '2. field-personal-web init → ~/.../weebsite/index.html with your G1ID + name',
+    '3. field-dns registers weebsite.<you>.field + TXT github.io mirror',
+    '4. field-personal-web publish --to-github → pushed to your GH Pages',
+    '5. KILROY iPXE (top) can now netboot the real kernel/firmware from releases',
+    '6. AI (AmmoCode/Grok16) stays behind gate on your machine. Public site = mirror only.',
+    'Done. Your machine now has its own sovereign webpage + full OS stack.'
+  ];
+  log.textContent = '';
+  step = 0;
+  const interval = setInterval(() => {
+    if (step < steps.length) {
+      log.textContent += steps[step] + '\n';
+      log.scrollTop = log.scrollHeight;
+      step++;
+    } else {
+      clearInterval(interval);
+      log.textContent += '\n→ Open your real KILROY machine to experience the full non-demo version.';
+    }
+  }, 650);
+}
+
+// Easter egg: clicking header boots
+document.querySelector('.demo-header').addEventListener('click', () => bootKilroy());
+
+function simulateH7Transfer() {
+  const log = document.getElementById('h7-log');
+  log.style.display = 'block';
+  log.textContent = 'Packing weebsite (thermal checked)...\n';
+  setTimeout(() => {
+    log.textContent += 'Packed as pid-weebsite.h7e (protocol: h7-weebsite-transfer/v1)\n';
+    log.textContent += 'Attaching FieldClaim + G1ID snapshot\n';
+    setTimeout(() => {
+      log.textContent += 'No fields in conn? Use Field Tech packets + pull heat for thermal entropy dist...\n';
+      setTimeout(() => {
+        log.textContent += 'Receiver: verify + thermal guard...\n';
+        log.textContent += '  - H7 + tracker: PASS\n';
+        log.textContent += '  - thermal headroom / entropy_ok: PASS (distributed)\n';
+        log.textContent += '  - heat issues pulled to system\n';
+        log.textContent += 'Est gains: 2-5x throughput (H7 3-8x eff + Field packets 1.5-3x + no thermal throttle).\n';
+        log.textContent += 'Unpacking to received-weebsites/. Transfers moving via Field Tech packets. No old infra breakage (compat shims).';
+      }, 700);
+    }, 600);
+  }, 500);
+}
+</script>
+</body>
+</html>

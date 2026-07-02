@@ -1,0 +1,148 @@
+:root {
+  --bg: #040508;
+  --bar: #0a0e14;
+  --accent: #3ecf8e;
+  --border: rgba(62, 207, 142, 0.2);
+  --split: 58%;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: #e8f2ea;
+  font: 13px system-ui, sans-serif;
+}
+
+.pages-shell {
+  display: grid;
+  grid-template-rows: var(--split) 4px 1fr;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+}
+
+.pages-queen,
+.pages-ammoos {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pages-queen iframe,
+.pages-ammoos iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #020403;
+}
+
+.pages-split {
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  cursor: row-resize;
+  opacity: 0.35;
+}
+
+.pages-split:hover,
+.pages-split.dragging {
+  opacity: 0.85;
+}
+
+.pages-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 10px;
+  background: rgba(4, 5, 8, 0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.pages-shell:hover .pages-topbar,
+.pages-topbar:focus-within {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pages-logo {
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.pages-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: #9fb8a8;
+}
+
+.pages-badge.live {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pages-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+
+.pages-btn {
+  pointer-events: auto;
+  border: 1px solid var(--border);
+  background: #0f141c;
+  color: #cfe8d8;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 11px;
+}
+
+.pages-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pages-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at 50% 0%, #0a1812, #020403 70%);
+  color: #3ecf8e;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 2;
+  transition: opacity 0.35s;
+}
+
+.pages-loading.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .pages-shell {
+    grid-template-rows: 1fr 4px 42%;
+  }
+}

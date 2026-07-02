@@ -1,0 +1,227 @@
+/* Six-tool display wall — edge-to-edge viewport, 3×2 */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Kill legacy split-desktop rules if field-host-desktop.css is ever loaded */
+.hd-monitor.hd-monitor--solo {
+  flex: none !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+#hd-monitor.hd-monitor--solo {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  z-index: 1;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 70% at 20% 0%, rgba(53, 132, 228, 0.28), transparent 50%),
+    linear-gradient(180deg, #241f31 0%, #1a1624 100%);
+}
+
+#hd-monitor.hd-monitor--solo.hd-monitor--hidden {
+  display: none;
+}
+
+.fmd-root {
+  --fmd-bg: #040508;
+  --fmd-panel: #0a0c12;
+  --fmd-edge: rgba(148, 163, 184, 0.12);
+  --fmd-text: #e8edf7;
+  --fmd-dim: #7c8aa3;
+  --fmd-accent: #38bdf8;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background: var(--fmd-bg);
+  color: var(--fmd-text);
+  font-family: system-ui, sans-serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hd-monitor--solo .fmd-root,
+.hd-monitor--solo .fmd-root--six {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+}
+
+.fmd-root--six {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.fmd-root--six .fmd-grid--six {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  padding-bottom: calc(44px + env(safe-area-inset-bottom, 0));
+  box-sizing: border-box;
+}
+
+.fmd-panel--slot {
+  position: relative;
+  min-height: 0;
+  border-radius: 8px;
+  border: 1px solid var(--fmd-edge);
+  background: rgba(4, 5, 8, 0.65);
+  overflow: hidden;
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+}
+
+.fmd-panel--page .fmd-page-frame {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-height: 100%;
+  aspect-ratio: 16 / 10;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.fmd-panel--page .fmd-view {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  background: #0c1018;
+}
+
+.fmd-panel--slot:active {
+  cursor: grabbing;
+}
+
+.fmd-panel--slot.dragging {
+  opacity: 0.85;
+  box-shadow: 0 12px 32px rgba(56, 189, 248, 0.15);
+  z-index: 20;
+}
+
+.fmd-panel--slot.drop-target {
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.35);
+}
+
+.fmd-panel--empty {
+  border-style: dashed;
+  border-color: rgba(148, 163, 184, 0.25);
+}
+
+.fmd-slot-label {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fmd-dim);
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--fmd-edge);
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fmd-view {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  display: block;
+  background: #000;
+}
+
+.fmd-drop-hint {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fmd-dim);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 12px;
+}
+
+.fmd-dock {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0));
+  overflow-x: auto;
+  border-top: 1px solid var(--fmd-edge);
+  background: rgba(6, 8, 14, 0.88);
+  backdrop-filter: blur(6px);
+}
+
+.fmd-dock-btn {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--fmd-dim);
+  font-size: 0.62rem;
+  cursor: grab;
+  max-width: 72px;
+}
+
+.fmd-dock-btn:hover {
+  border-color: var(--fmd-edge);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--fmd-text);
+}
+
+.fmd-dock-btn.dragging {
+  opacity: 0.7;
+}
+
+.fmd-dock-btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 68px;
+}
+
+.fmd-dock-icon {
+  border-radius: 6px;
+  object-fit: contain;
+}

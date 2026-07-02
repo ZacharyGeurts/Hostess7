@@ -1,0 +1,168 @@
+.nes-theater {
+  display: grid;
+  gap: 12px;
+  padding: 8px 0 16px;
+}
+
+.nes-theater-stage {
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 24px 12px 12px;
+  background: linear-gradient(180deg, #0e1016 0%, #181c26 100%);
+  border-radius: 12px;
+  border: 1px solid #2a3040;
+  overflow: hidden;
+}
+
+.nes-theater-console {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%) translateY(40px);
+  opacity: 0;
+  transition: transform 2s ease, opacity 2s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.nes-theater-stage:hover .nes-theater-console,
+.nes-theater-stage.nes-show-console .nes-theater-console {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.nes-theater-console img {
+  height: 88px;
+  width: auto;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
+}
+
+.nes-theater-stack {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nes-theater-sleeve {
+  position: relative;
+  width: 200px;
+  height: 260px;
+  background: #0a0a0c;
+  border: 2px solid #2a2a32;
+  border-radius: 6px;
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.8);
+  overflow: visible;
+}
+
+.nes-theater-sleeve img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.nes-theater-booklet {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: 130px;
+  transform: translateX(-50%) translateY(72%);
+  opacity: 0.15;
+  transition: transform 2s ease, opacity 2s ease;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.nes-theater-stack:hover .nes-theater-booklet,
+.nes-theater-stack.nes-booklet-out .nes-theater-booklet {
+  transform: translateX(-50%) translateY(-8%);
+  opacity: 1;
+}
+
+.nes-theater-booklet img {
+  width: 100%;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.nes-theater-cart {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 90px;
+  transform: translate(-50%, -50%);
+  transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+  z-index: 4;
+}
+
+.nes-theater-cart img {
+  width: 100%;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
+}
+
+.nes-theater-stack.nes-inserting .nes-theater-cart {
+  transform: translate(-50%, 120%) scale(0.72);
+  opacity: 0;
+}
+
+.nes-theater-meta {
+  font-size: 12px;
+  color: #9aa4b2;
+  line-height: 1.5;
+}
+
+.nes-theater-meta strong {
+  color: #e8ecf2;
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.nes-theater-meta table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.nes-theater-meta td {
+  padding: 2px 6px 2px 0;
+  vertical-align: top;
+}
+
+.nes-theater-meta td:first-child {
+  color: #6b7585;
+  white-space: nowrap;
+}
+
+.nes-theater-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.nes-theater-badge--licensed { background: #1a3d2a; color: #6ee7a0; }
+.nes-theater-badge--unlicensed { background: #3d2a1a; color: #f0b060; }
+.nes-theater-badge--bootleg { background: #3d1a1a; color: #f08080; }
+.nes-theater-badge--rom { background: #1a2a3d; color: #80c0f0; }
+
+.nes-theater-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.nes-theater-card {
+  border: 1px solid #2a3040;
+  border-radius: 10px;
+  padding: 10px;
+  background: #12161e;
+}

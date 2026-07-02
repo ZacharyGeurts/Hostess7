@@ -1,0 +1,128 @@
+/* C2 task manager bullet — running programs, field switch companion */
+
+.c2tm-hang {
+  position: fixed;
+  left: 50%;
+  bottom: calc(52px + env(safe-area-inset-bottom, 0));
+  transform: translateX(-50%);
+  z-index: 9450;
+  max-width: min(92vw, 560px);
+  pointer-events: auto;
+}
+
+.c2tm-hang-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(24, 12, 18, 0.94);
+  border: 1px solid rgba(232, 160, 200, 0.35);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
+  color: #e8edf7;
+  font-size: 12px;
+}
+
+.c2tm-hang-label {
+  font-weight: 600;
+  color: #f9a8d4;
+}
+
+.c2tm-hang-detail {
+  flex: 1 1 100%;
+  color: #94a3b8;
+  white-space: pre-wrap;
+  max-height: 3.6em;
+  overflow: hidden;
+}
+
+.c2tm-hang-wait,
+.c2tm-hang-quit {
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.c2tm-hang-wait {
+  background: rgba(61, 214, 140, 0.15);
+  border-color: rgba(61, 214, 140, 0.4);
+  color: #86efac;
+}
+
+.c2tm-hang-quit {
+  background: rgba(248, 113, 113, 0.12);
+  border-color: rgba(248, 113, 113, 0.35);
+  color: #fca5a5;
+}
+
+.c2tm-root {
+  position: fixed;
+  left: 50%;
+  bottom: calc(8px + env(safe-area-inset-bottom, 0));
+  transform: translateX(-50%);
+  z-index: 9400;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(8, 10, 16, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+  max-width: min(92vw, 520px);
+  overflow-x: auto;
+}
+
+.c2tm-btn {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  color: #94a3b8;
+}
+
+.c2tm-btn:hover {
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.c2tm-btn.active {
+  border-color: rgba(56, 189, 248, 0.55);
+  background: rgba(56, 189, 248, 0.14);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.2);
+}
+
+.c2tm-btn img {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  object-fit: contain;
+}
+
+.c2tm-home svg {
+  width: 18px;
+  height: 18px;
+}
+
+.c2tm-hint {
+  flex: 0 0 auto;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  padding: 0 6px 0 2px;
+  user-select: none;
+  white-space: nowrap;
+}
