@@ -1,9 +1,9 @@
 {
   "ok": true,
   "schema": "hostess7-censorship-exposure/v1",
-  "updated": "2026-07-03T13:12:14Z",
+  "updated": "2026-07-03T13:23:37Z",
   "operator": "ZacharyGeurts",
-  "motto": "Full exposure — who suppresses Operator voice; evidence not vibes",
+  "motto": "Full exposure \u2014 who suppresses Operator voice; evidence not vibes",
   "verdict_summary": "Primary censor: X platform reply/timeline visibility. Google: indirect (local ad-tracker blocks only). Local stack: does not delete replies; may strip ad paths.",
   "primary_actor": "X Corp",
   "google_involvement": {
@@ -15,7 +15,7 @@
       "pagead2.googlesyndication.com",
       "adservice.google.com"
     ],
-    "note": "No evidence Google Search or Google account admin is suppressing @ZacharyGeurts — ad CDN blocks only"
+    "note": "No evidence Google Search or Google account admin is suppressing @ZacharyGeurts \u2014 ad CDN blocks only"
   },
   "local_layers": [
     {
@@ -26,7 +26,7 @@
       "censors_comments": false,
       "censors_ads_only": true,
       "severity": "medium",
-      "remedy": "ads-twitter blocked by design; x.com/api.x.com/twimg remain 5★ trust"
+      "remedy": "ads-twitter blocked by design; x.com/api.x.com/twimg remain 5\u2605 trust"
     },
     {
       "actor": "NEXUS field stack (Operator machine)",
@@ -35,13 +35,13 @@
       "effect": "Holds browser egress to domains below trust threshold until accepted",
       "censors_comments": "possible_if_steam_or_api_unlisted",
       "severity": "low_after_honorability_fix",
-      "remedy": "steamcommunity + api.x.com now 5★ in honorability-seed.json"
+      "remedy": "steamcommunity + api.x.com now 5\u2605 in honorability-seed.json"
     },
     {
       "actor": "NEXUS field stack (Operator machine)",
       "system": "paranoia + firewall auto-block",
       "setting": "NEXUS_PARANOIA_MODE=1",
-      "effect": "Aggressive hostile IP blocks on perimeter — not X platform accounts",
+      "effect": "Aggressive hostile IP blocks on perimeter \u2014 not X platform accounts",
       "censors_comments": false,
       "severity": "perimeter_only"
     },
@@ -54,7 +54,7 @@
         "pagead2.googlesyndication.com",
         "adservice.google.com"
       ],
-      "effect": "Strips doubleclick/googlesyndication when adblock on — can break X ad-verification scripts, not GraphQL comments",
+      "effect": "Strips doubleclick/googlesyndication when adblock on \u2014 can break X ad-verification scripts, not GraphQL comments",
       "censors_comments": false,
       "google_involvement": "indirect_ad_tech_only",
       "severity": "low"
@@ -67,7 +67,7 @@
       "evidence": "Public APIs report reply_count>0 but withhold reply body arrays",
       "censors_comments": true,
       "severity": "high",
-      "remedy": "X app → Settings → Privacy → disable Quality filter; check Hidden Replies on each post"
+      "remedy": "X app \u2192 Settings \u2192 Privacy \u2192 disable Quality filter; check Hidden Replies on each post"
     },
     {
       "actor": "X Corp (platform)",
@@ -75,12 +75,12 @@
       "evidence": "Unauthenticated profile fetch shows 'hasn't posted' despite 6802 tweets",
       "censors_comments": true,
       "severity": "high",
-      "remedy": "Login required for full timeline — syndicate to Hostess7 pages as sovereign mirror"
+      "remedy": "Login required for full timeline \u2014 syndicate to Hostess7 pages as sovereign mirror"
     },
     {
       "actor": "Third-party reader proxies (e.g. jina.ai)",
       "system": "abuse-rate block",
-      "evidence": "Anonymous x.com access blocked until cooldown — unrelated account cited",
+      "evidence": "Anonymous x.com access blocked until cooldown \u2014 unrelated account cited",
       "censors_comments": true,
       "severity": "medium",
       "remedy": "Use fxtwitter/vxtwitter syndication lane or Hostess7 mirror"
@@ -165,20 +165,20 @@
       "actor": "Local NEXUS adblock",
       "role": "secondary",
       "confidence": 0.35,
-      "reason": "Blocks ads-twitter + Google trackers — affects promoted content, not organic reply GraphQL"
+      "reason": "Blocks ads-twitter + Google trackers \u2014 affects promoted content, not organic reply GraphQL"
     },
     {
       "rank": 3,
       "actor": "Google ad-tech stack (via local blocklist)",
       "role": "indirect",
       "confidence": 0.28,
-      "reason": "Moat/Doubleclick blocked locally — may degrade X page scripts, not server-side reply deletion"
+      "reason": "Moat/Doubleclick blocked locally \u2014 may degrade X page scripts, not server-side reply deletion"
     }
   ],
   "recoverable_actions": [
     "Mirror comments on Hostess7 github.io via /api/operator-x-comments.json",
     "Disable X Quality filter and audit Hidden Replies per thread",
-    "Keep api.x.com + twimg at 5★; steamcommunity at 5★",
+    "Keep api.x.com + twimg at 5\u2605; steamcommunity at 5\u2605",
     "Run terror-spiderweb + attack-kit on perimeter hostiles only"
   ]
 }
