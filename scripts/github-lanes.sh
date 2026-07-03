@@ -56,7 +56,7 @@ cmd_verify() {
 cmd_push() {
   local branch="${1:-main}"
   export HOSTESS7_GIT_SKIP_API_TLS="${HOSTESS7_GIT_SKIP_API_TLS:-1}"
-  cmd_setup_remotes
+  cmd_setup_remotes >/dev/null
   python3 "$SECURE" push "$ROOT" --branch "$branch" --remote "git@github.com:${OWNER}/${REPO}.git"
 }
 
