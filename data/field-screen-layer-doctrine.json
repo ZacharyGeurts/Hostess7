@@ -1,10 +1,16 @@
 {
   "schema": "field-screen-layer/v1",
   "title": "Field screen layers — F9..F12 sovereign switch",
-  "motto": "AmmoOS stays on layer -1. Queen is layer 2 — standalone browser outside the OS. No Firefox.",
+  "motto": "Field One Only. AmmoOS at -1 (boot home · Archival Warehouse wallpaper). F9 -3 NEXUS C2, F10 -2 DNS, F11 Queen own browser space, F12 userland L2+. Layer 0 = Broadcaster (OBS rebranded) + AmmoNet + panel programs with themed chrome.",
   "policy": {
+    "field_one_only": true,
     "ammoos_layer": -1,
-    "queen_layer": 2,
+    "dns_layer": -2,
+    "os_software_layer": 0,
+    "queen_layer": 1,
+    "userland_min": 2,
+    "f12_cycles_userland": true,
+    "fast_switch_panel": true,
     "queen_standalone": true,
     "no_host_browser": true,
     "no_firefox": true,
@@ -23,61 +29,79 @@
     },
     {
       "z": -2,
-      "id": "kilroy-kernel",
-      "label": "KILROY Kernel",
+      "id": "dns-kilroy-lane",
+      "label": "DNS · KILROY lane",
       "fkey": "F10",
-      "role": "pc_core_kernel_page",
+      "role": "dns_network_lane",
       "surface": "kilroy-home",
       "inside_os": false
     },
     {
       "z": -1,
       "id": "ammoos-desktop",
-      "label": "AmmoOS Desktop",
-      "fkey": "F11",
+      "label": "Field One · AmmoOS",
+      "fkey": null,
       "role": "field_os_desktop",
       "surface": "field-host-desktop",
+      "wallpaper": "archival-warehouse",
       "inside_os": false
     },
     {
       "z": 0,
-      "id": "ammoos-warehouse",
-      "label": "Archival Warehouse",
+      "id": "os-software",
+      "label": "OS Software · Broadcaster · AmmoNet · Panels",
       "fkey": null,
-      "role": "official_shipping_updates",
-      "surface": "ammoos-warehouse",
-      "github": "ZacharyGeurts/H7updater",
-      "official": true
+      "role": "ammoos_release_programs",
+      "surface": "nexus-field-shell",
+      "inside_os": true,
+      "bundle": ["field-broadcaster", "ammonet-isp", "ammoos-ammonet-display"],
+      "broadcaster": {
+        "id": "field-broadcaster",
+        "label": "Broadcaster",
+        "rebrand": "OBS Studio verbatim",
+        "layer": 0
+      },
+      "ammonet": {
+        "id": "ammoos-ammonet-display",
+        "label": "AmmoNet display rail",
+        "surface": "/ammonet",
+        "layer": 0,
+        "minimize_to_taskbar": true
+      },
+      "panels": {
+        "layer": 0,
+        "chrome": "themed_menubar",
+        "launch": "nexus-field-shell"
+      }
     },
     {
       "z": 1,
-      "id": "os-inside",
-      "label": "Inside OS",
-      "fkey": null,
-      "role": "shell_program_windows",
-      "surface": "nexus-field-shell",
-      "inside_os": true
+      "id": "queen-browser",
+      "label": "Queen Browser",
+      "fkey": "F11",
+      "role": "field_gecko_browser",
+      "surface": "browser",
+      "inside_os": false,
+      "media": true
     },
     {
       "z": 2,
-      "id": "queen-browser",
-      "label": "Queen Browser",
+      "id": "userland",
+      "label": "Userland",
       "fkey": "F12",
-      "role": "standalone_secure_browser",
-      "surface": "browser",
-      "outside_os": true,
-      "external_window": true
+      "role": "operator_programs",
+      "cycle": true
     }
   ],
   "fkey_map": {
     "F9": -3,
     "F10": -2,
-    "F11": -1,
-    "F12": 2
+    "F11": 1,
+    "F12": "userland_cycle"
   },
   "surfaces_local": {
     "nexus_c2": "http://127.0.0.1:9481/world/queen-nexus-c2.html",
-    "kilroy_kernel": "http://127.0.0.1:9481/world/kilroy-home.html",
+    "dns_kilroy": "http://127.0.0.1:9481/world/kilroy-home.html",
     "ammoos_desktop": "http://127.0.0.1:9477/field",
     "queen_browser": "http://127.0.0.1:9481/world/browser.html"
   }

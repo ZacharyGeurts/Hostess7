@@ -817,6 +817,28 @@
       if (j.field_kernel) root.kernel = j.field_kernel;
       const out = j.output || j.error || "";
       if (out) appendLines(out, j.ok === false ? "err" : "out", sess);
+      if (j.open_url) {
+        const url = String(j.open_url);
+        const name = (j.module && j.module.label) || "DOS 4.0 module";
+        appendLine("Opening " + name + "…", "out", sess);
+        if (global.parent && global.parent !== global && global.parent.NexusFieldShell?.launch) {
+          global.parent.NexusFieldShell.launch({
+            id: "dos40-" + ((j.module && j.module.id) || "module"),
+            name: name,
+            exec: url,
+            shell: true,
+          });
+        } else if (global.NexusFieldShell?.launch) {
+          global.NexusFieldShell.launch({
+            id: "dos40-" + ((j.module && j.module.id) || "module"),
+            name: name,
+            exec: url,
+            shell: true,
+          });
+        } else {
+          global.location.href = url.startsWith("http") ? url : (global.location.origin + url);
+        }
+      }
       if (!j.ok && root.bell) {
         try {
           const ctx = new AudioContext();

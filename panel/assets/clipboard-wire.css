@@ -2,9 +2,9 @@
 .ncw-flyout {
   position: fixed;
   z-index: 96000;
-  min-width: 280px;
-  max-width: min(360px, 92vw);
-  max-height: min(72vh, 520px);
+  min-width: 300px;
+  max-width: min(380px, 94vw);
+  max-height: min(78vh, 540px);
   overflow: auto;
   border-radius: 12px;
   border: 1px solid rgba(120, 200, 140, 0.35);
@@ -28,9 +28,173 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 12px 14px 8px;
+  gap: 8px;
+  padding: 10px 12px 6px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ncw-flyout-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ncw-sovereign-chip {
+  flex-shrink: 0;
+  font: 10px ui-monospace, monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(120, 200, 140, 0.4);
+  background: rgba(0, 0, 0, 0.28);
+  color: #9fd4b0;
+  cursor: default;
+}
+
+.ncw-widget-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 8px 10px 4px;
+}
+
+.ncw-stat {
+  text-align: center;
+  padding: 6px 4px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ncw-stat strong {
+  display: block;
+  font-size: 16px;
+  line-height: 1.1;
+  color: #d8f5e0;
+}
+
+.ncw-stat span {
+  display: block;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(232, 244, 236, 0.45);
+  margin-top: 2px;
+}
+
+.ncw-stat--kbd .ncw-flyout-kbd { display: inline-block; margin-bottom: 2px; }
+
+.ncw-scheme-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.ncw-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 8px 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-height: 52px;
+}
+
+.ncw-widget-label {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.ncw-widget small {
+  font-size: 9px;
+  color: rgba(232, 244, 236, 0.45);
+  line-height: 1.25;
+}
+
+.ncw-widget:hover,
+.ncw-widget:focus-visible {
+  border-color: rgba(120, 200, 140, 0.35);
+  background: rgba(120, 200, 140, 0.12);
+  outline: none;
+}
+
+.ncw-widget--active {
+  border-color: rgba(120, 200, 140, 0.55);
+  background: rgba(120, 200, 140, 0.18);
+}
+
+.ncw-flyout-section--tight {
+  padding: 4px 8px 6px;
+}
+
+.fd40-picker {
+  position: fixed;
+  z-index: 95500;
+  min-width: 260px;
+  max-width: min(340px, 92vw);
+  border-radius: 10px;
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  background: linear-gradient(165deg, rgba(20, 18, 16, 0.98), rgba(28, 25, 22, 0.99));
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+  color: #e8e0d0;
+  font: 12px/1.35 system-ui, sans-serif;
+}
+
+.fd40-picker-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fd40-picker-head span {
+  font-size: 10px;
+  color: #f5c518;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fd40-picker-motto {
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 10px;
+  color: rgba(232, 224, 208, 0.55);
+}
+
+.fd40-mod {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: calc(100% - 16px);
+  margin: 2px 8px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fd40-mod span { font-weight: 600; font-size: 13px; }
+.fd40-mod small { font-size: 10px; opacity: 0.65; margin-top: 2px; }
+.fd40-mod:hover { border-color: rgba(245, 197, 24, 0.4); background: rgba(245, 197, 24, 0.1); }
+.fd40-mod--soon { opacity: 0.55; }
+.fd40-picker .fd40-mod:last-of-type { margin-bottom: 10px; }
+
+.fsb-ctx-div {
+  margin: 4px 8px;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .ncw-flyout-head h2 {

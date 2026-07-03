@@ -303,6 +303,16 @@ def _import_local(name: str, rel: str) -> Any | None:
         return None
 
 
+def _dos40_dispatch(cmd: str, cwd: Path) -> dict[str, Any] | None:
+    mod = _import_local("field_dos40_shell", "lib/field-dos40-shell.py")
+    if not mod or not hasattr(mod, "terminal_dispatch"):
+        return None
+    try:
+        return mod.terminal_dispatch(cmd)
+    except Exception as exc:
+        return {"ok": False, "output": str(exc)[:200], "cwd": str(cwd), "dos40": True}
+
+
 def _wiki_dispatch(cmd: str, cwd: Path) -> dict[str, Any] | None:
     low = cmd.strip().lower().split()[0] if cmd.strip() else ""
     if low not in ("wiki", "field-tech", "fieldtech"):
@@ -470,8 +480,10 @@ def terminal_status() -> dict[str, Any]:
         "themes_api": "/api/ammoos-themes",
         "minibrowser_proxy": "/browse/view",
         "menus": ["File", "Edit", "View", "Options", "Help"],
-        "programs": ["truth"],
-        "posture": "Field GNU Terminal — shell ≡ terminal · combinatronic optional · Ironclad truth",
+        "programs": ["truth", "mspaint", "modules", "load-module"],
+        "dos40": True,
+        "dos40_api": "/api/field-dos40",
+        "posture": "Field GNU Terminal — shell ≡ terminal · MS-DOS 4.0 modules · combinatronic optional · Ironclad truth",
         "combinatronic_commands": ["combinatorics", "combinatronic", "g16-combinatronics", "bash -c combinatorics"],
         "aliases": ["terminal", "gnu-terminal", "shell", "gnueol"],
     }
@@ -496,6 +508,10 @@ def dispatch_terminal(body: dict[str, Any]) -> dict[str, Any]:
         if err:
             return {"ok": False, "output": err, "cwd": str(cwd)}
         return {"ok": True, "output": "", "cwd": str(new_cwd)}
+
+    dos40 = _dos40_dispatch(cmd, cwd)
+    if dos40 is not None:
+        return {**dos40, "cwd": str(cwd)}
 
     wiki = _wiki_dispatch(cmd, cwd)
     if wiki is not None:

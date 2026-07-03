@@ -210,7 +210,7 @@
       shellOpts +
       "</select></div>" +
       '<div class="cp-row"><label>Wallpaper</label><select id="at-wallpaper">' +
-      ["default", "windows", "gnome", "kde", "macos", "field-dark"]
+      ["archival-warehouse", "default", "windows", "gnome", "kde", "macos", "field-dark"]
         .map(function (w) {
           return (
             '<option value="' +

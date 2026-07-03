@@ -36,6 +36,8 @@
     mediaIndex: null,
     mimeByExt: {},
     historyCursor: 0,
+    sovereignAt: "",
+    sovereignMs: 0,
   };
 
   let flyoutEl = null;
@@ -191,7 +193,8 @@
   function vaultAction(action, text, extra) {
     state.vaultOps += 1;
     const body = Object.assign({ action, text: text || "" }, extra || {});
-    return fetch(API, {
+    const fetchFn = global.FieldSovereignBus?.fetch || fetch;
+    return fetchFn(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -616,41 +619,73 @@
     return (row && row.label) || id;
   }
 
+  function schemeHint(id) {
+    const hints = {
+      emacs: "C-y yank · M-w kill-ring",
+      vi: ":y · p paste",
+      nano: "M-6 copy · C-u paste",
+      amiga: "OpenApple+C · solid paste",
+      standard: "Ctrl+C · Ctrl+V — easy mode",
+    };
+    return hints[id] || id;
+  }
+
+  function refreshSovereignChip() {
+    const fetchFn = global.FieldSovereignBus?.fetch || fetch;
+    fetchFn("/api/sovereign-time", { credentials: "same-origin" })
+      .then((r) => r.json())
+      .then((doc) => {
+        state.sovereignAt = doc.derived_utc || doc.sovereign_at || "";
+        state.sovereignMs = doc.elapsed_ms || 0;
+        const chip = flyoutEl && flyoutEl.querySelector("[data-ncw-sovereign]");
+        if (chip) {
+          const short = state.sovereignAt.length >= 19 ? state.sovereignAt.slice(11, 19) : "…";
+          chip.textContent = short;
+          chip.title = "Sovereign time · slowdowns are threats · " + (state.sovereignAt || "");
+        }
+      })
+      .catch(() => {});
+  }
+
   function renderFlyout() {
     const el = ensureFlyout();
-    const hist = (state.schemeHistory || []).filter((id) => id !== state.scheme).slice(0, 6);
-    const histHtml = hist.length
-      ? hist
-          .map(
-            (id) =>
-              `<button type="button" class="ncw-scheme-btn" data-ncw-scheme="${id}">` +
-              `<span>${esc(schemeLabel(id))}</span><small>recent</small></button>`,
-          )
-          .join("")
-      : `<p class="ncw-flyout-motto">No recent schemes yet — pick a style below.</p>`;
+    const hist = (state.schemeHistory || []).filter((id) => id !== state.scheme).slice(0, 4);
+    const histHtml = hist
+      .map(
+        (id) =>
+          `<button type="button" class="ncw-widget ncw-widget--scheme" data-ncw-scheme="${id}">` +
+          `<span class="ncw-widget-label">${esc(schemeLabel(id))}</span>` +
+          `<small>${esc(schemeHint(id))}</small></button>`,
+      )
+      .join("");
 
     const listHtml = (state.schemes || [])
       .map((s) => {
-        const active = s.id === state.scheme ? " ncw-scheme-btn--active" : "";
+        const active = s.id === state.scheme ? " ncw-widget--active" : "";
+        const grandma = s.id === "standard" ? " · for everyone" : s.id === "emacs" ? " · M-x soul" : "";
         return (
-          `<button type="button" class="ncw-scheme-btn${active}" data-ncw-scheme="${s.id}">` +
-          `<span>${esc(s.label || s.id)}</span><small>${esc(s.id)}</small></button>`
+          `<button type="button" class="ncw-widget ncw-widget--scheme${active}" data-ncw-scheme="${s.id}">` +
+          `<span class="ncw-widget-label">${esc(s.label || s.id)}</span>` +
+          `<small>${esc(schemeHint(s.id))}${grandma}</small></button>`
         );
       })
       .join("");
 
+    const sovShort = state.sovereignAt.length >= 19 ? state.sovereignAt.slice(11, 19) : "…";
+
     el.innerHTML =
       `<div class="ncw-flyout-head">` +
-      `<h2>Clipboard Wire</h2>` +
-      `<span class="ncw-flyout-active">${esc(state.schemeLabel || state.scheme)}</span>` +
+      `<div class="ncw-flyout-title"><h2>Clipboard</h2><span class="ncw-flyout-active">${esc(state.schemeLabel || state.scheme)}</span></div>` +
+      `<button type="button" class="ncw-sovereign-chip" data-ncw-sovereign title="Sovereign time">${esc(sovShort)}</button>` +
       `</div>` +
-      `<p class="ncw-flyout-motto">Amiga IFF · PCX variants · DOS · all filetypes · ${esc(state.flyoutChord)}</p>` +
-      (hist.length ? `<section class="ncw-flyout-section"><h3>Recent</h3>${histHtml}</section>` : "") +
-      `<section class="ncw-flyout-section"><h3>Editor soul</h3>${listHtml}</section>` +
-      `<div class="ncw-flyout-foot">` +
-      `AmmoOS is your clipboard · <span class="ncw-flyout-kbd">${esc(state.flyoutChord)}</span> toggle · ` +
-      `${state.historicCount || 0} text · ${state.mediaCount || 0} media` +
-      `</div>`;
+      `<div class="ncw-widget-row">` +
+      `<div class="ncw-stat"><strong>${state.historicCount || 0}</strong><span>text clips</span></div>` +
+      `<div class="ncw-stat"><strong>${state.mediaCount || 0}</strong><span>photos & files</span></div>` +
+      `<div class="ncw-stat ncw-stat--kbd"><span class="ncw-flyout-kbd">${esc(state.flyoutChord)}</span><span>toggle</span></div>` +
+      `</div>` +
+      (hist.length ? `<section class="ncw-flyout-section ncw-flyout-section--tight"><h3>Recent styles</h3><div class="ncw-scheme-grid">${histHtml}</div></section>` : "") +
+      `<section class="ncw-flyout-section ncw-flyout-section--tight"><h3>Copy & paste style</h3><div class="ncw-scheme-grid">${listHtml}</div></section>` +
+      `<div class="ncw-flyout-foot">AmmoOS clipboard · Amiga IFF · PCX · DOS · media vault</div>`;
 
     el.querySelectorAll("[data-ncw-scheme]").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -658,6 +693,7 @@
         if (id) applyScheme(id, true).then(() => renderFlyout());
       });
     });
+    refreshSovereignChip();
   }
 
   function esc(s) {

@@ -26,7 +26,7 @@ DEFAULTS: dict[str, Any] = {
     "ui_scale": DESKTOP_SCALE_DEFAULT,
     "ammoos_theme": "nexus_c2",
     "theme_override": "",
-    "wallpaper": "default",
+    "wallpaper": "archival-warehouse",
     "sort_desktop": "name",
     "show_desktop_icons": True,
     "fullscreen_programs": True,

@@ -34,6 +34,20 @@
     return iconEl(app, true);
   }
 
+  function apiUrl(path) {
+    if (global.H7Api) return global.H7Api(path);
+    if (global.H7Base) return global.H7Base(path);
+    return path;
+  }
+
+  function pageUrl(path) {
+    if (global.H7Page) return global.H7Page(path);
+    if (global.HOSTESS7_PAGES_BASE && String(path || "").startsWith("/")) {
+      return global.HOSTESS7_PAGES_BASE + path;
+    }
+    return path;
+  }
+
   const state = {
     data: null,
     menuOpen: false,
@@ -51,10 +65,31 @@
       .replace(/"/g, "&quot;");
   }
 
+  function pagesRuntime() {
+    return document.body?.dataset?.pagesRuntime === "1" || !!global.HOSTESS7_PAGES_BASE;
+  }
+
+  function pagesAssetBase() {
+    if (pagesRuntime()) return (global.HOSTESS7_PAGES_BASE || "/Hostess7") + "/assets";
+    return "/assets";
+  }
+
   function iconEl(app, small, size) {
-    const QIE = global.QueenIconEngine;
     const px = size || (small ? 20 : 28);
-    if (QIE?.programIconHtml) {
+    if (pagesRuntime() && app?.icon_url) {
+      const src = app.icon_url;
+      const live = !!(app && app.live);
+      if (live) {
+        return (
+          '<span class="fsb-icon-live-wrap' + (small ? " fsb-icon-live-wrap--sm" : "") + '">' +
+          '<img src="' + esc(src) + '" alt="" width="' + px + '" height="' + px + '" class="fsb-app-icon fsb-app-icon--live' + (small ? " fsb-app-icon--sm" : "") + '" loading="lazy" decoding="async" />' +
+          '<span class="fsb-live-ring" aria-hidden="true"></span></span>'
+        );
+      }
+      return '<img src="' + esc(src) + '" alt="" width="' + px + '" height="' + px + '" class="fsb-app-icon' + (small ? " fsb-app-icon--sm" : "") + '" loading="lazy" decoding="async" />';
+    }
+    const QIE = global.QueenIconEngine;
+    if (QIE?.programIconHtml && !pagesRuntime()) {
       return QIE.programIconHtml(app, px, { small: small || px <= 24, base: QIE.PANEL_ICONS })
         .replace(/qie-prog-icon/g, "qie-prog-icon fsb-app-icon")
         .replace(/qie-live-wrap/g, "qie-live-wrap fsb-icon-live-wrap")
@@ -129,10 +164,14 @@
   }
 
   function launchAppInner(app) {
-    const exec = app.exec || app.url;
+    let exec = app.exec || app.url;
     if (!exec) return;
+    if (global.FieldQueenNav?.secureUrl) {
+      exec = global.FieldQueenNav.secureUrl(exec, { id: app.id });
+    }
+    const launchApp = Object.assign({}, app, { exec: exec, url: exec });
     if (global.NexusFieldShell?.launch && (app.shell || exec.includes("embed=1") || app.view || exec.startsWith("/"))) {
-      global.NexusFieldShell.launch(app);
+      global.NexusFieldShell.launch(launchApp);
       return;
     }
     global.FieldHostDesktop?.trackRunning?.(app);
@@ -142,17 +181,17 @@
         return;
       }
       if (global.NexusFieldShell?.launch) {
-        global.NexusFieldShell.launch(app);
+        global.NexusFieldShell.launch(launchApp);
         return;
       }
       return;
     }
     if (exec.startsWith("/")) {
       if (global.NexusFieldShell?.launch) {
-        global.NexusFieldShell.launch(app);
+        global.NexusFieldShell.launch(launchApp);
         return;
       }
-      global.location.href = exec;
+      global.location.href = pageUrl(exec);
       return;
     }
     global.FieldHostDesktop?.toast?.("Launch: " + (app.name || exec));
@@ -164,12 +203,14 @@
     state.ctxTarget = null;
   }
 
-  function openCtx(x, y, items, target) {
+  function openCtx(x, y, items, target, ev) {
     const ctx = document.getElementById("fsb-ctx");
     if (!ctx) return;
     state.ctxTarget = target;
+    state.ctxEvent = ev || null;
     ctx.innerHTML = items
       .map(function (it) {
+        if (it.divider) return '<hr class="fsb-ctx-div" />';
         return (
           '<button type="button" data-action="' +
           esc(it.action) +
@@ -232,6 +273,95 @@
 
   function usesFlyoutMenu(m) {
     return !!(m && (m.flyout || m.layout === "flyout" || (m.style === "nexus_c2" && !m.tree)));
+  }
+
+  const OS_THEMES = {
+    ammoos: {
+      label: "AmmoOS",
+      c2: "ammoos",
+      dataAttr: "nexus-military-v8",
+      queen: "black_emerald_rose_2026",
+      htmlClass: [],
+    },
+    "dusty-night": {
+      label: "Dusty Night",
+      c2: "dusty-night",
+      dataAttr: "dusty-night",
+      queen: "black_emerald_rose_2026",
+      htmlClass: ["dusty-midnight"],
+    },
+  };
+
+  function savedOsTheme() {
+    try {
+      return localStorage.getItem("ammoos-os-theme") || "";
+    } catch (_e) {
+      return "";
+    }
+  }
+
+  function applyOsTheme(themeId, opts) {
+    opts = opts || {};
+    const cfg = OS_THEMES[themeId] || OS_THEMES.ammoos;
+    const root = document.documentElement;
+    root.dataset.osTheme = themeId;
+    root.dataset.ammoosTheme = cfg.dataAttr;
+    root.classList.remove("dusty-midnight");
+    (cfg.htmlClass || []).forEach(function (c) {
+      root.classList.add(c);
+    });
+    if (global.AmmoosThemes) {
+      const cat = global.AmmoosThemes.getCatalog?.();
+      const c2meta = cat?.c2_themes?.[cfg.c2] || cat?.c2_themes?.ammoos || cat?.c2_themes?.nexus_c2;
+      if (c2meta && global.AmmoosThemes.applyC2Theme) {
+        global.AmmoosThemes.applyC2Theme(cfg.c2, c2meta);
+      }
+      const qt = global.AmmoosThemes.themeById?.(cat, cfg.queen);
+      if (qt && global.AmmoosThemes.applyQueenTokens) {
+        global.AmmoosThemes.applyQueenTokens(qt);
+      }
+    }
+    if (!opts.silent) {
+      try {
+        localStorage.setItem("ammoos-os-theme", themeId);
+      } catch (_e) {}
+    }
+    document.querySelectorAll(".fsb-theme-swatch").forEach(function (btn) {
+      btn.classList.toggle("active", btn.dataset.theme === themeId);
+    });
+    if (state.data) state.data.theme = themeId;
+  }
+
+  function renderThemeSwatches(activeId) {
+    const id = activeId || savedOsTheme() || "ammoos";
+    return (
+      '<div class="fsb-theme-row" role="group" aria-label="Desktop theme">' +
+      '<span class="fsb-theme-label">Theme</span>' +
+      '<button type="button" class="fsb-theme-swatch' +
+      (id === "ammoos" ? " active" : "") +
+      '" data-theme="ammoos" title="AmmoOS — black · green · rose">' +
+      '<span class="fsb-theme-swatch-icon fsb-theme-swatch-icon--ammoos" aria-hidden="true"></span></button>' +
+      '<button type="button" class="fsb-theme-swatch' +
+      (id === "dusty-night" ? " active" : "") +
+      '" data-theme="dusty-night" title="Dusty Night — warm midnight blues">' +
+      '<span class="fsb-theme-swatch-icon fsb-theme-swatch-icon--dusty" aria-hidden="true"></span></button>' +
+      "</div>"
+    );
+  }
+
+  function bindThemeSwatches() {
+    document.querySelectorAll(".fsb-theme-swatch").forEach(function (btn) {
+      btn.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        applyOsTheme(btn.dataset.theme || "ammoos");
+        fetch(global.H7Base ? global.H7Base("/api/field-shell-settings") : "/api/field-shell-settings", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ammoos_theme: btn.dataset.theme === "dusty-night" ? "dusty-night" : "ammoos", os_theme: btn.dataset.theme }),
+        }).catch(function () {});
+      });
+    });
   }
 
   function renderMenuItems(apps, filter, iconSize) {
@@ -370,6 +500,7 @@
       menu.innerHTML =
         '<div class="fsb-menu-head fsb-menu-head--c2">' +
         '<span class="fsb-menu-brand">' + esc(state.data?.product || "AmmoOS") + " C2</span>" +
+        renderThemeSwatches(theme) +
         (m.search !== false
           ? '<input type="search" class="fsb-search" id="fsb-search" placeholder="Search programs…" autocomplete="off" />'
           : "") +
@@ -397,6 +528,7 @@
         });
       }
       bindMenuClicks(data);
+      bindThemeSwatches();
       document.querySelectorAll("[data-power]").forEach(function (btn) {
         btn.addEventListener("click", function () {
           toggleMenu(false);
@@ -422,6 +554,7 @@
       menu.innerHTML =
         '<div class="fsb-menu-head fsb-menu-head--c2">' +
         '<span class="fsb-menu-brand">' + esc(state.data?.product || "AmmoOS") + " C2</span>" +
+        renderThemeSwatches(theme) +
         (m.search !== false
           ? '<input type="search" class="fsb-search" id="fsb-search" placeholder="Search programs…" autocomplete="off" />'
           : "") +
@@ -445,6 +578,7 @@
         });
       }
       bindMenuClicks(data);
+      bindThemeSwatches();
       document.querySelectorAll("[data-power]").forEach(function (btn) {
         btn.addEventListener("click", function () {
           toggleMenu(false);
@@ -493,6 +627,7 @@
 
     menu.innerHTML =
       '<div class="fsb-menu-head">' +
+      renderThemeSwatches(theme) +
       (m.search !== false
         ? '<input type="search" class="fsb-search" id="fsb-search" placeholder="Search programs…" autocomplete="off" />'
         : "") +
@@ -545,6 +680,7 @@
     });
 
     bindMenuClicks(data);
+    bindThemeSwatches();
     document.querySelectorAll("[data-power]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         toggleMenu(false);
@@ -579,9 +715,19 @@
   function bindMenuClicks(data) {
     const byId = appIndex(data);
     document.querySelectorAll(".fsb-menu-item[data-app-id]").forEach(function (btn) {
+      const app = byId[btn.dataset.appId];
       btn.addEventListener("click", function () {
-        launchApp(byId[btn.dataset.appId]);
+        launchApp(app);
         toggleMenu(false);
+      });
+      btn.addEventListener("contextmenu", function (ev) {
+        ev.preventDefault();
+        openCtx(ev.clientX, ev.clientY, [
+          { label: "Open", action: "menu-open" },
+          { label: "Pin to taskbar", action: "pin" },
+          { label: "Run as Queen window", action: "menu-queen" },
+          { label: "Properties", action: "menu-props" },
+        ], app);
       });
     });
   }
@@ -590,8 +736,12 @@
     return iconEl(app, true);
   }
 
-  function handleTrayAction(app) {
+  function handleTrayAction(app, btn) {
     if (!app) return;
+    if (app.id === "field-audio-settings" && global.FieldStartbarAudio && btn) {
+      global.FieldStartbarAudio.toggle(btn);
+      return;
+    }
     if (app.action === "bookmarks") {
       if (global.FieldQueenNav?.openStandalone) {
         global.FieldQueenNav.openStandalone({ id: "queen-browser", name: "Bookmarks" });
@@ -623,8 +773,16 @@
       })
       .join("");
     tray.querySelectorAll(".fsb-tray-icon").forEach(function (btn) {
+      const app = byId[btn.dataset.trayId];
       btn.addEventListener("click", function () {
-        handleTrayAction(byId[btn.dataset.trayId]);
+        handleTrayAction(app, btn);
+      });
+      btn.addEventListener("contextmenu", function (ev) {
+        ev.preventDefault();
+        openCtx(ev.clientX, ev.clientY, [
+          { label: "Open", action: "quick-open" },
+          { label: "Properties", action: "menu-props" },
+        ], app);
       });
     });
   }
@@ -669,14 +827,14 @@
   }
 
   function persistQuickUnpin(appId) {
-    fetch("/api/field-taskbar-pins", {
+    fetch(apiUrl("/api/field-taskbar-pins"), {
       method: "POST",
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "unpin", id: appId }),
     })
       .then(function () {
-        return fetch("/api/field-host-desktop", { credentials: "same-origin" });
+        return fetch(apiUrl("/api/field-host-desktop"), { credentials: "same-origin" });
       })
       .then(function (r) { return r.json(); })
       .then(function (doc) {
@@ -731,6 +889,10 @@
         function () {
           state.activeTask = btn.dataset.taskId;
           renderTasks();
+          if (task && task.id === "ammoos-ammonet-display" && global.FieldAmmoNetDisplay?.toggle) {
+            global.FieldAmmoNetDisplay.toggle();
+            return;
+          }
           if (task && task.shellWin && global.NexusFieldShell?.toggle) {
             global.NexusFieldShell.toggle(task.shellWin);
             return;
@@ -774,25 +936,50 @@
   }
 
   function startIcon() {
-    const QIE = global.QueenIconEngine;
-    if (QIE?.programIconHtml) {
-      return (
-        QIE.programIconHtml({ id: "ammoos", icon: "queen-prog-ammoos", name: "AmmoOS" }, 28, { small: false, base: QIE.PANEL_ICONS })
-          .replace(/qie-prog-icon/g, "qie-prog-icon fsb-start-queen")
-      );
-    }
     return (
-      '<img class="fsb-start-queen" src="' +
-      QUEEN_ICON +
-      '" alt="" width="28" height="28" decoding="async" title="AmmoOS Start" />' +
+      '<span class="fsb-start-flag" aria-hidden="true">' +
+      '<svg class="fsb-start-flag-svg" viewBox="0 0 16 16" width="20" height="20" focusable="false">' +
+      '<rect x="0" y="0" width="7" height="7" fill="#e81224"/>' +
+      '<rect x="8" y="0" width="7" height="7" fill="#16c60c"/>' +
+      '<rect x="0" y="8" width="7" height="7" fill="#0078d4"/>' +
+      '<rect x="8" y="8" width="7" height="7" fill="#ffb900"/>' +
+      "</svg></span>" +
       '<span class="fsb-start-label">Start</span>'
     );
   }
 
+  function isAmmoDesktop() {
+    return (
+      document.documentElement.dataset.ammoosDesktop === "1" ||
+      document.body?.dataset?.pagesRuntime === "1" && /\/desktop\/?$/.test(global.location?.pathname || "")
+    );
+  }
+
+  function purgeDuplicateBars() {
+    if (!isAmmoDesktop()) return;
+    ["fitb-mount", "fitb-embedded", "h7-ammonet-strip", "h7-rtx-status-deck"].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    });
+    document.body.classList.remove("fitb-pad-bottom", "h7-final-internet");
+    document.documentElement.classList.remove("h7-final-internet");
+  }
+
+  /* DO NOT REMOVE — one Start + one taskbar on AmmoOS desktop (no ironclad duplicate bar). */
   function mount(root, data) {
+    if (!root) return;
+    purgeDuplicateBars();
+    if (document.getElementById("fsb-root")) {
+      state.data = data;
+      renderMenu(data);
+      renderQuick();
+      renderTrayIcons();
+      renderTasks();
+      return;
+    }
     state.data = data;
-    const theme = data.theme || "ammo-field";
-    document.documentElement.dataset.osTheme = theme;
+    const theme = savedOsTheme() || data.theme || "ammoos";
+    applyOsTheme(theme, { silent: true });
 
     root.innerHTML =
       '<nav class="fsb-root" aria-label="Field startbar">' +
@@ -822,6 +1009,7 @@
     setInterval(tickClock, 15000);
 
     if (
+      !isAmmoDesktop() &&
       global.FieldIroncladTaskbar?.injectIntoStartbar &&
       document.body?.dataset?.ironcladTaskbar !== "0" &&
       document.documentElement.dataset.ironcladTaskbar !== "0"
@@ -892,12 +1080,58 @@
       if (action === "focus" && target) {
         state.activeTask = target.id;
         renderTasks();
-        if (target.shellWin && global.NexusFieldShell?.focus) global.NexusFieldShell.focus(target.shellWin);
-        else if (target.exec) launchApp(target);
+        if (target.id === "ammoos-ammonet-display" && global.FieldAmmoNetDisplay?.restore) {
+          global.FieldAmmoNetDisplay.restore();
+        } else if (target.shellWin && global.NexusFieldShell?.focus) {
+          global.NexusFieldShell.focus(target.shellWin);
+        } else if (target.exec) launchApp(target);
         return;
       }
       if (action === "quick-open" && target) {
         launchApp(target);
+        return;
+      }
+      if (action === "menu-open" && target) {
+        launchApp(target);
+        toggleMenu(false);
+        return;
+      }
+      if (action === "menu-queen" && target) {
+        if (global.FieldQueenNav?.openStandalone) {
+          global.FieldQueenNav.openStandalone(target);
+        } else {
+          launchApp(target);
+        }
+        toggleMenu(false);
+        return;
+      }
+      if (action === "menu-props" && target) {
+        global.NexusFieldShell?.openProgramProperties?.(target) ||
+          global.FieldHostDesktop?.toast?.("Properties · " + (target.name || target.id));
+        return;
+      }
+      if (action === "desktop-pin" && target) {
+        if (global.FieldHostDesktop?.toggleDesktopPin) {
+          global.FieldHostDesktop.toggleDesktopPin(target);
+        }
+        return;
+      }
+      if (action === "desktop-open" && target) {
+        if (target.id === "queen-browser" && global.FieldHostDesktop?.openQueenBrowserClean) {
+          global.FieldHostDesktop.openQueenBrowserClean();
+        } else {
+          launchApp(target);
+        }
+        return;
+      }
+      if (action === "desktop-queen" && target) {
+        if (global.FieldQueenNav?.openStandalone) {
+          global.FieldQueenNav.openStandalone(target);
+        } else if (target.id === "queen-browser" && global.FieldHostDesktop?.openQueenBrowserClean) {
+          global.FieldHostDesktop.openQueenBrowserClean();
+        } else {
+          launchApp(target);
+        }
         return;
       }
       if (action === "quick-unpin" && target && target.id) {
@@ -918,6 +1152,9 @@
       }
       if (action === "control-panel") {
         launchApp({ id: "nexus-control-panel", name: "Control Panel", exec: "/control-panel" });
+        return;
+      }
+      if (global.FieldDos40Menu?.handleAction?.(action, state.ctxEvent)) {
         return;
       }
       global.NexusFieldShell?.handlePower?.(action) || global.FieldHostDesktop?.handlePower?.(action);
@@ -960,10 +1197,15 @@
   }
 
   function syncShellTasks(tasks, activeId) {
-    state.tasks = tasks || [];
+    const merged = (tasks || []).slice();
+    const ammonet = global.FieldAmmoNetDisplay?.taskApp?.();
+    if (ammonet && !merged.find(function (t) { return t.id === ammonet.id; })) {
+      merged.unshift(ammonet);
+    }
+    state.tasks = merged;
     if (activeId) {
       const hit = state.tasks.find(function (t) {
-        return t.shellWin === activeId;
+        return t.shellWin === activeId || t.id === activeId;
       });
       if (hit) state.activeTask = hit.id;
     }
@@ -975,5 +1217,9 @@
     trackRunning: trackRunning,
     launchApp: launchApp,
     syncShellTasks: syncShellTasks,
+    openCtx: openCtx,
+    closeCtx: closeCtx,
+    toggleMenu: toggleMenu,
+    applyOsTheme: applyOsTheme,
   };
 })(window);

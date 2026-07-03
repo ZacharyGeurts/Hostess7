@@ -37,9 +37,28 @@
   }
 
   const QUEEN_ICON = "/assets/ammoos-field-48.png";
+  function applyWallpaper(wp) {
+    const key = String(wp || "archival-warehouse").toLowerCase();
+    const root = document.documentElement;
+    const warehouse =
+      key === "archival-warehouse" ||
+      key === "ammoos-warehouse" ||
+      key === "warehouse" ||
+      key === "default";
+    root.dataset.ammoosWarehouse = warehouse ? "1" : "";
+    root.dataset.wallpaper = key;
+    const deco = document.getElementById("hd-warehouse-deco");
+    if (deco) deco.hidden = !warehouse;
+    const label = document.getElementById("hd-wall-label");
+    if (label && warehouse) {
+      label.textContent = "Field One · AmmoOS · Layer −1 · Archival Warehouse";
+    }
+  }
+
   const DESKTOP_DEFAULT_IDS = [
     "view",
     "queen-terminal",
+    "mspaint",
     "field-popcorn",
     "ammocode",
     "hostess7-folder",
@@ -397,13 +416,17 @@
       btn.addEventListener("contextmenu", function (ev) {
         ev.preventDefault();
         if (window.FieldStartbar?.openCtx) {
-          window.FieldStartbar.openCtx(ev.clientX, ev.clientY, [
+          const items = [
             { label: "Open", action: "desktop-open" },
             { label: "Open Queen window", action: "desktop-queen" },
             { label: app.pinned ? "Unpin from desktop" : "Pin to desktop", action: "desktop-pin" },
             { label: "Pin to taskbar", action: "pin" },
             { label: "Properties", action: "menu-props" },
-          ], app);
+          ];
+          if (global.FieldDos40Menu?.contextExtras) {
+            items.push.apply(items, global.FieldDos40Menu.contextExtras());
+          }
+          window.FieldStartbar.openCtx(ev.clientX, ev.clientY, items, app, ev);
           return;
         }
         toast("Right-click · " + app.name);
@@ -520,10 +543,7 @@
     document.documentElement.dataset.fieldScreenLayer = "-1";
     document.documentElement.dataset.fieldLayer = "-1";
     global.FieldScreenLayers?.switchTo?.(-1);
-    const label = document.getElementById("hd-wall-label");
-    if (label) {
-      label.textContent = "Field One · AmmoOS · Layer -1 · Classic Start";
-    }
+    applyWallpaper(doc?.shell?.settings?.wallpaper || "archival-warehouse");
     renderDesktopIcons(doc);
   }
 
@@ -632,6 +652,7 @@
   window.FieldHostDesktop = {
     refresh: refresh,
     applyDesktop: applyDesktop,
+    applyWallpaper: applyWallpaper,
     toast: toast,
     launchApp: launchApp,
     renderDesktopIcons: renderDesktopIcons,

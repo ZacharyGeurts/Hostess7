@@ -4997,6 +4997,23 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/sovereign-time":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "sovereign-time.py", ["status"], timeout=8)
+            stamp_meta = _nexus_py_json(INSTALL_ROOT / "lib" / "field-sovereign-stamp.py", ["json"], timeout=4)
+            if isinstance(payload, dict) and isinstance(stamp_meta, dict):
+                payload["stamp_policy"] = stamp_meta
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-dos40", "/api/field-dos40/"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dos40-shell.py", ["modules"], timeout=8)
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-mspaint", "/api/field-mspaint/"):
+            script = INSTALL_ROOT / "lib" / "field-mspaint.py"
+            if script.is_file():
+                payload = _nexus_py_json(script, ["json"], timeout=12)
+            else:
+                payload = {"schema": "field-mspaint/v1", "ok": False, "error": "field_mspaint_missing"}
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
@@ -7894,6 +7911,8 @@ class Handler(BaseHTTPRequestHandler):
             target = PANEL_DIR / "field-gnu-terminal-embed.html"
         elif path in ("/eol-code", "/eol-code/"):
             target = PANEL_DIR / "eol-code.html"
+        elif path in ("/mspaint", "/mspaint/"):
+            target = PANEL_DIR / "mspaint.html"
         elif path in ("/field-popcorn", "/field-popcorn/"):
             target = PANEL_DIR / "field-popcorn.html"
         elif path in ("/ammocode", "/ammocode/"):
@@ -9162,6 +9181,71 @@ class Handler(BaseHTTPRequestHandler):
                     capture_output=True,
                     text=True,
                     timeout=int(req.get("timeout") or 120),
+                    env=env,
+                    cwd=str(INSTALL_ROOT),
+                )
+                payload = json.loads(proc.stdout or "{}")
+            except subprocess.TimeoutExpired:
+                payload = {"ok": False, "error": "timeout"}
+            except json.JSONDecodeError:
+                payload = {"ok": False, "error": "bad_json", "detail": ((proc.stderr if proc else "") or "")[:200]}
+            code = 200 if payload.get("ok", True) else 400
+            self._send(code, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/sovereign-time", "/api/sovereign-time/"):
+            req = body if isinstance(body, dict) else {}
+            clock = _nexus_py_json(INSTALL_ROOT / "lib" / "sovereign-time.py", ["status"], timeout=8)
+            stamp_script = INSTALL_ROOT / "lib" / "field-sovereign-stamp.py"
+            stamp_row: dict = {}
+            if stamp_script.is_file():
+                proc = None
+                try:
+                    proc = subprocess.run(
+                        [sys.executable, str(stamp_script), "stamp"],
+                        input=json.dumps(req, ensure_ascii=False),
+                        capture_output=True,
+                        text=True,
+                        timeout=8,
+                        env=_field_stack_env(),
+                        cwd=str(INSTALL_ROOT),
+                    )
+                    stamp_row = json.loads(proc.stdout or "{}")
+                except (subprocess.TimeoutExpired, json.JSONDecodeError):
+                    stamp_row = {"ok": False, "error": "stamp_failed"}
+            payload = {**(clock if isinstance(clock, dict) else {}), **stamp_row}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-dos40", "/api/field-dos40/"):
+            script = INSTALL_ROOT / "lib" / "field-dos40-shell.py"
+            if not script.is_file():
+                self._send(503, json.dumps({"ok": False, "error": "field_dos40_missing"}), "application/json")
+                return
+            req = body if isinstance(body, dict) else {}
+            action = str(req.get("action") or "modules").lower()
+            if action in ("resolve", "load") and req.get("module"):
+                payload = _nexus_py_json(script, ["resolve", str(req.get("module"))], timeout=8)
+            else:
+                payload = _nexus_py_json(script, ["modules"], timeout=8)
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-mspaint", "/api/field-mspaint/"):
+            script = INSTALL_ROOT / "lib" / "field-mspaint.py"
+            if not script.is_file():
+                self._send(503, json.dumps({"ok": False, "error": "field_mspaint_missing"}), "application/json")
+                return
+            req = body if isinstance(body, dict) else {}
+            env = _field_stack_env()
+            proc = None
+            try:
+                proc = subprocess.run(
+                    [sys.executable, str(script), "dispatch"],
+                    input=json.dumps(req, ensure_ascii=False),
+                    capture_output=True,
+                    text=True,
+                    timeout=int(req.get("timeout") or 60),
                     env=env,
                     cwd=str(INSTALL_ROOT),
                 )
