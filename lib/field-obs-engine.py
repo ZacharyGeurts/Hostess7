@@ -2,6 +2,7 @@
 """OBS Studio engine — binary resolve, portable harden, launch (used by Broadcaster)."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import platform
@@ -257,13 +258,32 @@ def _harden_portable(ui: dict[str, Any]) -> dict[str, Any]:
     return {"ok": False, "portable": str(PORTABLE)}
 
 
+def _senses_mod() -> Any | None:
+    path = INSTALL / "lib" / "field-broadcaster-senses.py"
+    if not path.is_file():
+        return None
+    spec = importlib.util.spec_from_file_location("field_broadcaster_senses", path)
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def _launch_env(ui: dict[str, Any]) -> dict[str, str]:
-    return {
+    env = {
         **os.environ,
         "QT_AUTO_SCREEN_SCALE_FACTOR": "0",
         "QT_SCALE_FACTOR": str(ui.get("qt_scale_factor", 1.1)),
         "QT_FONT_DPI": str(int(96 * float(ui.get("qt_scale_factor", 1.1)))),
+        "BROADCASTER_PRODUCT": "Broadcaster",
+        "OBS_FIELD_ROOT": str(FIELD),
+        "BROADCASTER_FIELD_ROOT": str(FIELD),
     }
+    senses = _senses_mod()
+    if senses and hasattr(senses, "launch_env"):
+        env.update(senses.launch_env())
+    return env
 
 
 def _launch_argv(*, record: bool = False, virtualcam: bool = False, studio: bool = False) -> list[str]:
@@ -272,8 +292,8 @@ def _launch_argv(*, record: bool = False, virtualcam: bool = False, studio: bool
     binary = _resolve_binary()
     if not binary:
         return []
-    profile = capture.get("default_profile", "Field")
-    collection = capture.get("default_collection", "Field-Queen")
+    profile = capture.get("default_profile", "Broadcaster")
+    collection = capture.get("default_collection", "NEXUS-C2")
     if binary.startswith("flatpak "):
         argv = binary.split()
     else:
@@ -345,6 +365,13 @@ def launch(*, record: bool = False, virtualcam: bool = False, studio: bool = Fal
         return {"ok": False, "error": "obs_missing"}
     ui = ui_posture()
     hardened = _harden_portable(ui)
+    senses = _senses_mod()
+    senses_stack: dict[str, Any] = {}
+    if senses and hasattr(senses, "write_stack"):
+        try:
+            senses_stack = senses.write_stack(portable_dir=PORTABLE)
+        except Exception:
+            senses_stack = {}
     argv = _launch_argv(record=record, virtualcam=virtualcam, studio=studio)
     env = _launch_env(ui)
     try:
@@ -352,7 +379,17 @@ def launch(*, record: bool = False, virtualcam: bool = False, studio: bool = Fal
             argv, env=env, cwd=str(PORTABLE),
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True,
         )
-        return {"ok": True, "pid": proc.pid, "binary": binary, "argv": argv, "portable": hardened.get("portable"), "ui": ui}
+        return {
+            "ok": True,
+            "pid": proc.pid,
+            "binary": binary,
+            "argv": argv,
+            "portable": hardened.get("portable"),
+            "ui": ui,
+            "product": "Broadcaster",
+            "engine": "obs-studio",
+            "senses": senses_stack.get("obs_sources") or [],
+        }
     except OSError as exc:
         return {"ok": False, "error": str(exc), "argv": argv}
 

@@ -33,24 +33,59 @@ export GROK_LAB_PY="$PY"
 
 mkdir -p "$GROK_LAB_STATE"
 
+# Hostess 7 runs the lab — share in, no share out
+export HOSTESS7_LAB_SOVEREIGN="${HOSTESS7_LAB_SOVEREIGN:-1}"
+export HOSTESS7_LAB_EGRESS="${HOSTESS7_LAB_EGRESS:-0}"
+
 log() { printf '[grok-lab] %s\n' "$*"; }
 
+_h7_lab_gate() {
+  if [[ "${HOSTESS7_LAB_SOVEREIGN:-1}" == "0" ]]; then
+    return 0
+  fi
+  local py="${GROK_LAB_PY:-python3}"
+  local sovereign="${NL}/lib/hostess7-lab-sovereign.py"
+  if [[ -f "$sovereign" ]]; then
+    if ! "$py" "$sovereign" secure 2>/dev/null | grep -q '"ok": true'; then
+      log "Hostess 7 lab gate — securing connection (share in · no share out)…"
+      "$py" "$sovereign" connect >/dev/null 2>&1 || true
+    fi
+  fi
+}
+
 case "${1:-battery}" in
-  start)    log "Starting Final Eye (headless)…"; exec "$PY" "$NL/lib/grok-ai-lab.py" start ;;
+  start)
+    _h7_lab_gate
+    log "Starting Final Eye (headless) — Hostess 7 sovereign…"
+    exec "$PY" "$NL/lib/grok-ai-lab.py" start
+    ;;
   stop)     log "Stopping Final Eye…"; exec "$PY" "$NL/lib/grok-ai-lab.py" stop ;;
   boot|protect|boot-rekill)
-    log "Boot protection — revalidate kill list + RE-KILL at boot…"
+    _h7_lab_gate
+    log "Boot protection — Hostess 7 sovereign · RE-KILL at boot…"
     exec "$PY" "$NL/lib/grok-ai-lab.py" boot
     ;;
   revalidate)
     exec "$PY" "$NL/lib/field-attack-kit.py" revalidate-kill-list
     ;;
-  arm)      log "Lab arm — boot protection (set GROK_LAB_RELEASE_EYE=1 to release vision kills)…"; exec "$PY" "$NL/lib/grok-ai-lab.py" arm ;;
-  status)   exec "$PY" "$NL/lib/grok-ai-lab.py" status ;;
-  live)     log "Live loop — Final Eye + OCR brain + sanctuary…"; exec "$PY" "$NL/lib/grok-ai-lab.py" live "${2:-3}" ;;
+  arm)
+    _h7_lab_gate
+    log "Lab arm — Hostess 7 boss (set GROK_LAB_RELEASE_EYE=1 to release vision kills)…"
+    exec "$PY" "$NL/lib/grok-ai-lab.py" arm
+    ;;
+  status)
+    _h7_lab_gate
+    exec "$PY" "$NL/lib/grok-ai-lab.py" status
+    ;;
+  live)
+    _h7_lab_gate
+    log "Live loop — Final Eye + OCR brain + sanctuary (share in only)…"
+    exec "$PY" "$NL/lib/grok-ai-lab.py" live "${2:-3}"
+    ;;
   protect|battery|test)
-    log "=== Grok AI Lab protection battery ==="
-    log "home=127.0.0.1 perimeter=the_world coexist=1 kill_evil=1 new_internet=every_home"
+    _h7_lab_gate
+    log "=== Grok AI Lab protection battery — Hostess 7 sovereign ==="
+    log "home=127.0.0.1 share_in=1 share_out=0 boss=hostess7"
     exec "$PY" "$NL/lib/grok-ai-lab.py" battery
     ;;
   *)

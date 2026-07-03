@@ -47,7 +47,7 @@
   <header>
     <div>
       <h1>Card Catalog</h1>
-      <div class="sub">Auto-detected books · keywords placed · sort &amp; search for librarians · <a href="/field-library-bookshelf.html" style="color:var(--accent)">Bookshelf browser</a></div>
+      <div class="sub">Final Eye polish · auto-detected books · keywords placed · sort &amp; search for librarians &amp; nuns · <a href="/field-library-bookshelf.html" style="color:var(--accent)">Bookshelf browser</a></div>
     </div>
     <div class="toolbar">
       <input type="search" id="q" placeholder="Search title, author, call number, keywords…" aria-label="Search catalog" autocomplete="off" />
@@ -73,6 +73,7 @@
       <div class="empty">Select a catalog card.</div>
     </aside>
   </main>
+  <script src="/assets/field-library-eye.js?v=2"></script>
   <script>
     (function () {
       const qEl = document.getElementById("q");
@@ -101,13 +102,28 @@
         ].join(" · ");
       }
 
+      function eyeLine(c) {
+        if (window.FieldLibraryEye?.humanLine) {
+          return window.FieldLibraryEye.humanLine({
+            title: c.title,
+            author: c.author,
+            dewey: c.dewey,
+            shelf: c.shelf,
+            shelf_title: c.shelf_title,
+            tags: c.keywords || [],
+          });
+        }
+        return [c.title, c.author, c.shelf].filter(Boolean).join(" · ");
+      }
+
       function renderCard(c, active) {
         const kws = (c.keywords || []).slice(0, 5).map((k) => `<span class="kw">${esc(k)}</span>`).join("");
+        const line = eyeLine(c);
         return `<article class="catalog-card${active ? " active" : ""}" data-id="${esc(c.card_id || c.id)}">
           <div class="call">${esc(c.call_number || c.dewey || "—")}</div>
           <div class="title">${esc(c.title)}</div>
           <div class="author">${esc(c.author || "—")}</div>
-          <div class="meta">${esc(c.shelf || "")} · ${esc(c.format || "")}</div>
+          <div class="meta">${esc(line)}</div>
           <div>${kws}</div>
         </article>`;
       }
@@ -197,11 +213,12 @@
       btnDetect.addEventListener("click", async () => {
         btnDetect.disabled = true;
         btnDetect.textContent = "Detecting…";
-        await fetch("/api/card-catalog/detect", { cache: "no-store" });
+        const res = await fetch("/api/card-catalog/detect", { cache: "no-store" });
+        const doc = await res.json().catch(() => ({}));
         await loadPanel();
         await search();
         btnDetect.disabled = false;
-        btnDetect.textContent = "Detect & rebuild";
+        btnDetect.textContent = doc.rebuilt === false && doc.note ? "Detect (loopback)" : "Detect & rebuild";
       });
 
       loadPanel().then(search);

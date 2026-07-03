@@ -4,7 +4,7 @@ services:
       context: .
       args:
         WAR_PROFILE: "1"
-    image: hostess7:2.0.7h
+    image: hostess7:3.0.7-beta5
     container_name: hostess7
     restart: unless-stopped
     ports:
@@ -35,7 +35,7 @@ services:
       context: .
       args:
         WAR_PROFILE: "1"
-    image: hostess7:2.0.7h
+    image: hostess7:3.0.7-beta5
     container_name: hostess7-war
     restart: unless-stopped
     ports:

@@ -1,0 +1,125 @@
+{
+  "schema": "field-spatial-panel/v1",
+  "updated": "2026-07-03T10:19:27Z",
+  "autonomous_being": true,
+  "product": "Universal Protector",
+  "dimensions": "3D+T",
+  "lattice_axes": [
+    "x",
+    "y",
+    "z",
+    "t"
+  ],
+  "networks_of_networks": {
+    "planetary": {
+      "lattice_cells": 8,
+      "peak_amplitude": 0.0,
+      "peak_cell": {
+        "ix": 0,
+        "iy": 0,
+        "iz": 0,
+        "amplitude": 0.0,
+        "norm": {
+          "x": -0.4375,
+          "y": -0.4375,
+          "z": -0.4375
+        }
+      },
+      "field_energy": 0.0,
+      "net_of_nets": true,
+      "parent_bleed": null,
+      "role": "host-attack pins + approach vectors"
+    },
+    "field": {
+      "lattice_cells": 8,
+      "peak_amplitude": 0.0,
+      "peak_cell": {
+        "ix": 0,
+        "iy": 0,
+        "iz": 0,
+        "amplitude": 0.0,
+        "norm": {
+          "x": -0.4375,
+          "y": -0.4375,
+          "z": -0.4375
+        }
+      },
+      "field_energy": 0.0,
+      "net_of_nets": true,
+      "parent_bleed": null,
+      "role": "RF/DPI threat geometry"
+    },
+    "room": {
+      "lattice_cells": 8,
+      "peak_amplitude": 0.0,
+      "peak_cell": {
+        "ix": 0,
+        "iy": 0,
+        "iz": 0,
+        "amplitude": 0.0,
+        "norm": {
+          "x": -0.4375,
+          "y": -0.4375,
+          "z": -0.4375
+        }
+      },
+      "field_energy": 0.0,
+      "net_of_nets": true,
+      "parent_bleed": null,
+      "role": "local navigation mesh"
+    },
+    "body": {
+      "lattice_cells": 8,
+      "peak_amplitude": 0.6964,
+      "peak_cell": {
+        "ix": 4,
+        "iy": 4,
+        "iz": 7,
+        "amplitude": 0.6964,
+        "norm": {
+          "x": 0.0625,
+          "y": 0.0625,
+          "z": 0.4375
+        }
+      },
+      "field_energy": 1.9151,
+      "net_of_nets": true,
+      "parent_bleed": null,
+      "role": "limb/proxemic — autonomous being shell"
+    }
+  },
+  "scale_order": [
+    "planetary",
+    "field",
+    "room",
+    "body"
+  ],
+  "coupling_bleed": 0.22,
+  "coupling_applied": {},
+  "total_energy": 1.9151,
+  "delta_t": 0.0,
+  "temporal_4d": {
+    "samples": 8,
+    "slope": 0.0,
+    "acceleration": 0.0
+  },
+  "movement_vector": {
+    "approach": false,
+    "recede": false,
+    "stable": true,
+    "bearing_deg": null,
+    "geometry": "stable",
+    "trespass": false
+  },
+  "operator": {
+    "lat": 45.845976,
+    "lon": -87.055759
+  },
+  "target_count": 0,
+  "nearest_threat": null,
+  "eye_live": null,
+  "ear_live": null,
+  "humanoid_motion": 2,
+  "motto": "Spatial awareness is amplitude on a lattice, not a slow 3D CNN — nested chambers per scale.",
+  "explain": "Spatial awareness is a nested 3D lattice per scale — body, room, field, planetary — each an 8³ amplitude net. Parent nets bleed peak energy into child nets (networks-of-networks). Time is the fourth dimension: delta_t over history drives movement hints — approach, recede, stable. No slow 3D CNN — O(neighbors) coupling per tick, melded into Universal Protector."
+}

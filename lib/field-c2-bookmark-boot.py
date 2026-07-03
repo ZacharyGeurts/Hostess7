@@ -26,7 +26,37 @@ def _load_import_mod() -> Any | None:
     return mod
 
 
+def _export_host_bookmarks() -> dict[str, Any]:
+    path = QUEEN / "lib" / "queen-host-bookmark-export.py"
+    if not path.is_file():
+        return {"ok": False, "error": "host_export_missing"}
+    spec = importlib.util.spec_from_file_location("queen_host_bm_export", path)
+    if not spec or not spec.loader:
+        return {"ok": False, "error": "host_export_load_failed"}
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    if not hasattr(mod, "export_host_bookmarks"):
+        return {"ok": False, "error": "host_export_fn_missing"}
+    return mod.export_host_bookmarks()
+
+
 def boot_bookmarks(*, force: bool = False) -> dict[str, Any]:
+    clean_py = INSTALL / "lib" / "hostess7-internet-clean.py"
+    if clean_py.is_file():
+        spec = importlib.util.spec_from_file_location("h7_internet_clean_boot", clean_py)
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            if hasattr(mod, "internet_clean"):
+                out = mod.internet_clean(force=force)
+                return {
+                    "ok": out.get("ok", True),
+                    "schema": "field-c2-bookmark-boot/v1",
+                    "lane": "hostess7-internet-clean",
+                    "internet_clean": out,
+                    "import": out.get("import"),
+                    "host_export": out.get("export"),
+                }
     mod = _load_import_mod()
     if not mod:
         return {"ok": False, "error": "queen_browser_import_missing"}
@@ -37,7 +67,8 @@ def boot_bookmarks(*, force: bool = False) -> dict[str, Any]:
     if hasattr(mod, "organize_scrub"):
         scrub = mod.organize_scrub(out if isinstance(out, dict) else {})
         out = {**(out or {}), "scrub": scrub}
-    return {"ok": True, "schema": "field-c2-bookmark-boot/v1", "import": out}
+    export = _export_host_bookmarks()
+    return {"ok": True, "schema": "field-c2-bookmark-boot/v1", "import": out, "host_export": export}
 
 
 def main() -> int:

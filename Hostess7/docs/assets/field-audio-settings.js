@@ -60,6 +60,88 @@
       "</p>";
   }
 
+  function renderSoundcards(data) {
+    const el = $("fa-soundcards");
+    if (!el) return;
+    const s = data.settings || {};
+    const cards = (data.soundcards && data.soundcards.cards) || [];
+    const sel = s.soundcard_id || "host-live";
+    const card = cards.find(function (c) { return c.id === sel; }) || cards[0];
+    el.innerHTML =
+      '<div class="fa-card"><h3>Soundcard · CHIPS catalog</h3>' +
+      '<div class="fa-field"><label for="fa-card">History + live</label>' +
+      '<select class="fa-select" id="fa-card">' +
+      cards.map(function (c) {
+        return '<option value="' + esc(c.id) + '"' + (c.id === sel ? " selected" : "") + ">" + esc(c.name) + "</option>";
+      }).join("") +
+      "</select></div>" +
+      (card
+        ? "<p style='font-size:12px;color:var(--fa-dim)'>" +
+          esc((card.chips || []).join(", ") || "standard") +
+          " — " + esc((card.systems || []).join(", ")) +
+          "</p>"
+        : "") +
+      "</div>";
+    const cardSel = $("fa-card");
+    if (cardSel) {
+      cardSel.onchange = function () {
+        const picked = cards.find(function (c) { return c.id === cardSel.value; });
+        const patch = { soundcard_id: cardSel.value };
+        if (picked && picked.emulation) patch.format_profile = picked.emulation;
+        applySettings(patch);
+      };
+    }
+  }
+
+  function renderFormats(data) {
+    const el = $("fa-formats");
+    if (!el) return;
+    const profiles = (data.dac_chamber && data.dac_chamber.format_profiles) || [];
+    const cur = (data.settings || {}).format_profile || "surround_8ch";
+    el.innerHTML =
+      '<div class="fa-card"><h3>Format · default high 8ch</h3><div style="display:flex;flex-wrap:wrap;gap:8px">' +
+      profiles
+        .map(function (p) {
+          const on = p.id === cur ? " background:rgba(59,130,246,0.2)" : "";
+          return (
+            '<button type="button" class="fa-apply" data-prof="' + esc(p.id) + '" style="flex:1;min-width:120px' + on + '">' +
+            esc(p.label) + " · " + esc((p.channels || 2) + "ch") +
+            "</button>"
+          );
+        })
+        .join("") +
+      "</div></div>";
+    el.querySelectorAll("[data-prof]").forEach(function (btn) {
+      btn.onclick = function () {
+        applySettings({ format_profile: btn.dataset.prof });
+      };
+    });
+  }
+
+  function renderSpeakerTest(data) {
+    const el = $("fa-speaker-test");
+    if (!el) return;
+    const chans = ["FL", "FR", "FC", "LFE", "BL", "BR", "SL", "SR"];
+    el.innerHTML =
+      '<div class="fa-card"><h3>Speaker test · Dolby layout</h3><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">' +
+      chans
+        .map(function (ch) {
+          return '<button type="button" class="fa-apply" data-spk="' + ch + '">' + ch + "</button>";
+        })
+        .join("") +
+      "</div></div>";
+    el.querySelectorAll("[data-spk]").forEach(function (btn) {
+      btn.onclick = function () {
+        fetch("/api/field-audio-dac", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "test_tone", channel: btn.dataset.spk }),
+        }).catch(function () {});
+      };
+    });
+  }
+
   function renderDevices(data) {
     const el = $("fa-devices");
     if (!el) return;
@@ -261,8 +343,11 @@
   function render(data) {
     doc = data;
     renderRail(data);
+    renderSoundcards(data);
+    renderFormats(data);
     renderDevices(data);
     renderVolume(data);
+    renderSpeakerTest(data);
     renderAdvanced(data);
     const sub = $("fa-subtitle");
     if (sub) {

@@ -3,30 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Library Bookshelf — Dewey Shelves</title>
+  <title>Hostess 7 Library — Bookshelves for Everyone</title>
+  <meta name="description" content="Dewey shelves, card catalog, secure reader — whole library for humans and AI alike." />
   <link rel="stylesheet" href="/assets/field-foundation.css" />
   <link rel="stylesheet" href="/assets/field-nav-spine.css?v=1" />
   <link rel="stylesheet" href="/assets/field-ironclad-taskbar.css?v=1" />
-  <link rel="stylesheet" href="/assets/field-library-bookshelf.css?v=1" />
+  <link rel="stylesheet" href="/assets/field-library-bookshelf.css?v=2" />
 </head>
-<body class="bsb-body">
+<body class="bsb-body" data-ironclad-taskbar="1">
   <header class="bsb-header">
     <div>
-      <h1>Library Bookshelf</h1>
-      <div class="bsb-sub">Search your book · browse Dewey shelves · pull a volume · open to read</div>
+      <p class="bsb-eyebrow">Final Eye · Ironclad truth · Librarian Corps</p>
+      <h1>Hostess 7 Library</h1>
+      <div class="bsb-sub">Whole catalog for <strong>humans and AI</strong> — browse Dewey shelves, pull a volume, read in peace.</div>
     </div>
+    <nav class="bsb-nav" aria-label="Library surfaces">
+      <a href="/field-card-catalog.html" class="bsb-nav-link">Card catalog</a>
+      <a href="https://zacharygeurts.github.io/command/?embed=1#library" class="bsb-nav-link">C2 library deck</a>
+      <a href="/ammonet/" class="bsb-nav-link">AmmoNet</a>
+    </nav>
     <div class="bsb-toolbar">
-      <input type="search" id="bsb-search" placeholder="Search title, author, Dewey call number…" aria-label="Search library" autocomplete="off" />
-      <button type="button" class="bsb-btn" id="bsb-browse-btn">Browse shelves</button>
+      <input type="search" id="bsb-search" placeholder="Search title, author, Dewey, topic…" aria-label="Search library" autocomplete="off" />
+      <button type="button" class="bsb-btn" id="bsb-browse-btn">All shelves</button>
     </div>
   </header>
+
+  <div class="bsb-ticker-wrap" id="bsb-ticker" aria-label="Featured volumes — running shelf copy"></div>
+
   <div class="bsb-stats" id="bsb-stats">Loading library…</div>
 
   <main class="bsb-main">
     <section id="bsb-lobby" class="bsb-view" aria-label="Search and Dewey shelves">
       <div class="bsb-search-hits" id="bsb-search-hits" hidden></div>
       <div class="bsb-dewey-grid" id="bsb-dewey-grid"></div>
-      <div class="bsb-empty" id="bsb-lobby-empty" hidden>No books match your search.</div>
+      <div class="bsb-empty" id="bsb-lobby-empty" hidden>No books match your search — try a Dewey shelf or broader terms.</div>
     </section>
 
     <section id="bsb-shelf-view" class="bsb-view" hidden aria-label="Bookshelf">
@@ -41,11 +51,23 @@
       <div class="bsb-pulled" id="bsb-pulled">
         <div class="bsb-empty">Click a spine to pull a book from the shelf.</div>
       </div>
+      <div class="bsb-dual" id="bsb-dual" hidden>
+        <div class="bsb-human-panel">
+          <h3>For readers</h3>
+          <p class="bsb-human-blurb" id="bsb-human-blurb" aria-live="polite"></p>
+        </div>
+        <div class="bsb-ai-panel">
+          <h3>For AI retrieval</h3>
+          <code class="bsb-ai-line" id="bsb-ai-line"></code>
+          <p class="bsb-ai-note">Grounded passages · truth gate on loopback · same books, two lenses.</p>
+        </div>
+      </div>
     </section>
   </main>
 
-  <script src="/assets/h7-reader.js"></script>
-  <script src="/assets/field-library-bookshelf.js?v=1"></script>
+  <script src="/assets/field-library-eye.js?v=2"></script>
+  <script src="/assets/h7-reader.js?v=2"></script>
+  <script src="/assets/field-library-bookshelf.js?v=3"></script>
   <script src="/assets/ironclad-bus.js?v=1" defer></script>
   <script src="/assets/field-ironclad-taskbar.js?v=1" defer></script>
   <script src="/assets/field-nav-spine.js?v=1" defer></script>

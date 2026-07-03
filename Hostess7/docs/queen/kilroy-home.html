@@ -1,55 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" data-queen-surface="kilroy-home">
+<html lang="en" data-queen-theme="black_emerald_rose_2026" class="nexus-military-v8">
 <head>
-  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <script src="/Hostess7/pages-queen-hardening.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <base href="/Hostess7/queen/" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>KILROY</title>
-  <link rel="stylesheet" href="queen-branding.css" />
+  <title>KILROY — Layer -2</title>
+  <link rel="stylesheet" href="queen-styles.css" />
+  <link rel="stylesheet" href="queen-nexus-c2.css" />
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
   <style>
     html, body {
       margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(ellipse 120% 80% at 50% 0%, #0a1812 0%, #010302 55%, #000 100%);
-      color: #e8f2ea;
-      font: 14px system-ui, sans-serif;
+      min-height: 100%;
       overflow-x: hidden;
     }
-    .kh {
+    .kh-shell {
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(244, 114, 182, 0.04) 2px, rgba(244, 114, 182, 0.04) 3px),
+        radial-gradient(ellipse 90% 60% at 50% -10%, rgba(45, 90, 61, 0.35) 0%, transparent 55%),
+        linear-gradient(180deg, #0a0c08 0%, #060806 100%);
+      color: #e6efe0;
+      font: 14px/1.5 system-ui, sans-serif;
+    }
+    .kh-main {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 32px 24px 48px;
+      padding: 28px 20px 40px;
       text-align: center;
     }
     .kh-seal {
       max-width: 720px;
-      padding: 28px 32px 36px;
-      border: 1px solid rgba(26, 77, 50, 0.65);
-      border-radius: 16px;
-      background: linear-gradient(165deg, rgba(4, 12, 8, 0.92), rgba(2, 6, 4, 0.88));
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(62, 207, 142, 0.12);
+      width: 100%;
+      padding: 28px 28px 32px;
+      border: 1px solid rgba(244, 114, 182, 0.35);
+      border-radius: 14px;
+      background: linear-gradient(165deg, rgba(8, 14, 10, 0.94), rgba(4, 8, 6, 0.9));
+      box-shadow: 0 20px 56px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(94, 207, 122, 0.12);
     }
     .kh-eyebrow {
-      margin: 0 0 10px;
+      margin: 0 0 8px;
       font-size: 0.68rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: #3ecf8e;
+      color: #f472b6;
     }
     .kh-name {
-      margin: 0 0 8px;
-      font-size: clamp(2.4rem, 8vw, 3.6rem);
+      margin: 0 0 10px;
+      font-size: clamp(2.2rem, 7vw, 3.2rem);
       font-weight: 800;
-      letter-spacing: 0.18em;
-      color: #f8fafc;
-      text-shadow: 0 0 32px rgba(62, 207, 142, 0.35);
+      letter-spacing: 0.2em;
+      color: #5ecf7a;
+      text-shadow: 0 0 28px rgba(94, 207, 122, 0.3);
     }
     .kh-motto {
       margin: 0 0 18px;
-      font-size: 1rem;
       color: #c8d6ea;
       line-height: 1.55;
     }
@@ -63,15 +79,62 @@
     .kh-pill {
       padding: 5px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(62, 207, 142, 0.35);
+      border: 1px solid rgba(94, 207, 122, 0.35);
       background: rgba(4, 14, 9, 0.75);
       font-size: 0.72rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #3ecf8e;
+      color: #5ecf7a;
     }
     .kh-pill--rose {
-      border-color: rgba(244, 114, 182, 0.4);
+      border-color: rgba(244, 114, 182, 0.45);
+      color: #f472b6;
+    }
+    .kh-update {
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(94, 207, 122, 0.28);
+      background: rgba(6, 10, 8, 0.75);
+      text-align: left;
+    }
+    .kh-update h2 {
+      margin: 0 0 8px;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #5ecf7a;
+    }
+    .kh-update p {
+      margin: 0 0 12px;
+      font-size: 0.84rem;
+      color: #9aaa8c;
+      line-height: 1.5;
+    }
+    .kh-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .kh-btn {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(94, 207, 122, 0.4);
+      background: #121810;
+      color: #5ecf7a;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .kh-btn:hover {
+      border-color: #f472b6;
+      color: #f472b6;
+    }
+    .kh-btn--rose {
+      border-color: rgba(244, 114, 182, 0.45);
       color: #f472b6;
     }
     .kh-status {
@@ -80,57 +143,81 @@
       color: #94a3b8;
       line-height: 1.6;
     }
-    .kh-status strong { color: #3ecf8e; font-weight: 600; }
-    .kh-hint {
-      margin-top: 28px;
-      font-size: 0.78rem;
-      color: #64748b;
-      letter-spacing: 0.06em;
+    .kh-status strong { color: #5ecf7a; font-weight: 600; }
+    .kh-lic {
+      flex: 0 0 auto;
+      padding: 6px 12px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-align: center;
+      color: #9aaa8c;
+      border-top: 1px solid rgba(94, 207, 122, 0.2);
+      background: rgba(3, 5, 4, 0.95);
     }
-    .kh-hint kbd {
-      padding: 2px 7px;
-      border-radius: 4px;
-      border: 1px solid rgba(26, 77, 50, 0.55);
-      background: rgba(4, 10, 7, 0.8);
-      color: #3ecf8e;
-      font-family: inherit;
-      font-size: 0.72rem;
-    }
+    .kh-lic strong { color: #f472b6; }
+    .kh-lic a { color: #5ecf7a; text-decoration: none; }
   </style>
 </head>
-<body class="kh-page">
-  <main class="kh" aria-label="KILROY field home">
-    <div class="kh-seal">
-      <p class="kh-eyebrow">Hostess 7 2.0.7 · Main Project</p>
-      <h1 class="kh-name">KILROY</h1>
-      <p class="kh-motto">Hostess 7 is the canonical hub. Queen Browser is the shell — AmmoOS and other repos are Old Projects.</p>
-      <div class="kh-stack" aria-label="Stack layers">
-        <span class="kh-pill">KILROY</span>
-        <span class="kh-pill">ZNetwork</span>
-        <span class="kh-pill">Queen</span>
-        <span class="kh-pill kh-pill--rose">Old Projects · bookmark</span>
+<body data-pages-runtime="1" data-queen-surface="kilroy-home">
+  <div class="kh-shell">
+    <main class="kh-main" aria-label="KILROY field home">
+      <div class="kh-seal">
+        <p class="kh-eyebrow">Layer -2 · DNS · KILROY lane · F10</p>
+        <h1 class="kh-name">KILROY</h1>
+        <p class="kh-motto">DNS lane — loopback · defense · self-hosted Truth DNS + Field DHCP. We host these servers ourselves.</p>
+        <div class="kh-stack" aria-label="Stack layers">
+          <span class="kh-pill">NEXUS C2 · F9</span>
+          <span class="kh-pill kh-pill--rose">DNS · DHCP · F10</span>
+          <span class="kh-pill">Queen · F11</span>
+          <span class="kh-pill kh-pill--rose">Userland · F12</span>
+        </div>
+        <section class="kh-update" aria-label="Personal update lane">
+          <h2>Sovereign update</h2>
+          <p>War-ready operational — publish GitHub Pages, stack index, and layer surfaces from your lane only. All Rights Reserved.</p>
+          <div class="kh-actions">
+            <a class="kh-btn" id="kh-h7" href="https://zacharygeurts.github.io/H7updater/" target="_top" rel="noopener">H7updater</a>
+            <a class="kh-btn" href="queen-nexus-c2.html" target="_top">NEXUS C2</a>
+            <a class="kh-btn kh-btn--rose" id="kh-dns" href="/command?embed=1#dns" target="_top">DNS &amp; DHCP</a>
+            <a class="kh-btn kh-btn--rose" href="kilroy-universal-terminal.html" target="_top">Universal CLI</a>
+            <a class="kh-btn" href="https://github.com/ZacharyGeurts/Hostess7/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
+          </div>
+        </section>
+        <p class="kh-status" id="kh-status">Wiring <strong>ZNetwork</strong> keyboard hooks · <strong>Alt+Tab</strong> cycles Queen tabs…</p>
       </div>
-      <p class="kh-status" id="kh-status">Wiring <strong>ZNetwork</strong> keyboard hooks · <strong>Alt+Tab</strong> cycles Queen tabs · <strong>Ctrl+Alt+Del</strong> opens rescue…</p>
-      <p class="kh-hint">Open <kbd>☰ Bookmarks</kbd> top-left for Hostess 7 · Control · OS · AmmoOS fullscreen desktop</p>
-    </div>
-  </main>
+    </main>
+    <footer class="kh-lic" role="contentinfo">
+      <strong>© 2025–2026 Zachary Robert Geurts · All Rights Reserved</strong> · war-ready ·
+      <a href="https://github.com/ZacharyGeurts/Hostess7/blob/main/LICENSE">LICENSE</a>
+    </footer>
+  </div>
   <script>
     (function () {
-      const el = document.getElementById("kh-status");
-      const panel = "9477";
+      var el = document.getElementById("kh-status");
+      var h7 = document.getElementById("kh-h7");
+      var dns = document.getElementById("kh-dns");
+      var base = "";
+      try {
+        if (document.body && document.body.dataset.pagesRuntime === "1") {
+          base = (window.HOSTESS7_PAGES_BASE || "/Hostess7").replace(/\/$/, "");
+          if (h7) h7.href = base + "/h7updater/";
+          if (dns) dns.href = base + "/command/?embed=1#dns";
+        }
+      } catch (_) {}
+      var panel = base || "/Hostess7";
       Promise.allSettled([
-        fetch("/api/znetwork", { cache: "no-store" }),
-        fetch("/api/field-keyboard-sovereign", { cache: "no-store" }),
+        fetch(panel + "/api/znetwork", { cache: "no-store" }),
+        fetch(panel + "/api/field-keyboard-sovereign", { cache: "no-store" }),
       ]).then(function (results) {
-        const zn = results[0].status === "fulfilled" && results[0].value.ok;
-        const kb = results[1].status === "fulfilled" && results[1].value.ok;
+        var zn = results[0].status === "fulfilled" && results[0].value.ok;
+        var kb = results[1].status === "fulfilled" && results[1].value.ok;
         if (!el) return;
         if (zn && kb) {
           el.innerHTML = "<strong>ZNetwork</strong> active · keyboard sovereignty engaged · loopback held";
         } else if (zn) {
           el.innerHTML = "<strong>ZNetwork</strong> active · panel keyboard hooks pending";
         } else {
-          el.textContent = "Field stack warming — bookmarks hub reaches every surface";
+          el.textContent = "Field stack warming — use sovereign update lane above";
         }
       }).catch(function () {});
     })();

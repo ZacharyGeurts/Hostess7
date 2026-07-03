@@ -7,7 +7,7 @@
   <meta name="description" content="AmmoCode — lean code editor. Opens any text-era file · 268 extensions · g16 discern · NEXUS C2 theme." />
   <link rel="stylesheet" href="assets/ammocode-nexus-c2.css" />
   <link rel="stylesheet" href="assets/ammocode-syntax.css" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:* http://localhost:*; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:* http://localhost:* https://api.github.com https://raw.githubusercontent.com; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
 </head>
 <body>
   <div class="ac-shell">
@@ -126,11 +126,18 @@
     </div>
   </aside>
 
+  <script src="lib/pages-static.js"></script>
   <script src="lib/highlight.js"></script>
   <script src="lib/compile-alerts.js"></script>
   <script src="lib/g16.js"></script>
   <script src="lib/settings.js"></script>
   <script src="lib/ammocode-toolbar.js"></script>
   <script src="lib/ammocode-app.js"></script>
+  <footer class="ac-license" role="contentinfo">
+    <strong>© 2025–2026 Zachary Robert Geurts</strong>
+    <span class="ac-lic-rose">All Rights Reserved</span>
+    war-ready operational ·
+    <a href="https://github.com/ZacharyGeurts/Hostess7/blob/main/LICENSE">License</a>
+  </footer>
 </body>
 </html>

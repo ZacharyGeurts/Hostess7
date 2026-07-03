@@ -96,6 +96,8 @@ def _export_search_index(name: str, static_name: str, q: str) -> dict[str, Any]:
 def _export_ask_seeds() -> dict[str, Any]:
     seeds = (
         "What do you want first?",
+        "human UI hub BSP ironclad",
+        "what tasks should the assistant do",
         "KILROY field stack boot order",
         "truth floor and neural guardian",
         "hearing and speech for Hostess7",

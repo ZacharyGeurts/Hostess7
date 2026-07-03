@@ -6,6 +6,7 @@
   --qnc2-text: #e6efe0;
   --qnc2-dim: #9aaa8c;
   --qnc2-accent: #5ecf7a;
+  --qnc2-rose: #f472b6;
   --qnc2-gold: #b8956a;
   --qnc2-gap: 10px;
   --qnc2-bar-h: 40px;
@@ -37,8 +38,11 @@ html.nexus-military-v8 body {
   align-items: center;
   gap: 10px;
   padding: 0 12px;
-  background: linear-gradient(180deg, #141a10 0%, #0c100a 100%);
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(94, 207, 122, 0.05) 2px, rgba(94, 207, 122, 0.05) 3px),
+    linear-gradient(180deg, #141a10 0%, #0c100a 100%);
   border-bottom: 1px solid var(--qnc2-edge);
+  box-shadow: inset 0 -1px 0 rgba(244, 114, 182, 0.14);
   user-select: none;
 }
 
@@ -88,6 +92,18 @@ html.nexus-military-v8 body {
 
 .qnc2-styles {
   margin-left: auto;
+}
+
+.qnc2-lic {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--qnc2-dim);
+  white-space: nowrap;
+}
+
+.qnc2-lic strong {
+  color: var(--qnc2-rose);
 }
 
 .qnc2-status {

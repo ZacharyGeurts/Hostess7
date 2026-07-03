@@ -1,0 +1,682 @@
+{
+  "schema": "humanoid-motion-limb-registry/v1",
+  "updated": "2026-07-03T04:35:08Z",
+  "joint_count": 23,
+  "bone_count": 22,
+  "bones": [
+    [
+      "head",
+      "neck"
+    ],
+    [
+      "neck",
+      "spine_upper"
+    ],
+    [
+      "spine_upper",
+      "spine_mid"
+    ],
+    [
+      "spine_mid",
+      "spine_lower"
+    ],
+    [
+      "spine_lower",
+      "chest"
+    ],
+    [
+      "chest",
+      "hip"
+    ],
+    [
+      "neck",
+      "shoulder_l"
+    ],
+    [
+      "shoulder_l",
+      "elbow_l"
+    ],
+    [
+      "elbow_l",
+      "wrist_l"
+    ],
+    [
+      "wrist_l",
+      "hand_l"
+    ],
+    [
+      "neck",
+      "shoulder_r"
+    ],
+    [
+      "shoulder_r",
+      "elbow_r"
+    ],
+    [
+      "elbow_r",
+      "wrist_r"
+    ],
+    [
+      "wrist_r",
+      "hand_r"
+    ],
+    [
+      "hip",
+      "knee_l"
+    ],
+    [
+      "knee_l",
+      "ankle_l"
+    ],
+    [
+      "ankle_l",
+      "foot_l"
+    ],
+    [
+      "foot_l",
+      "toe_l"
+    ],
+    [
+      "hip",
+      "knee_r"
+    ],
+    [
+      "knee_r",
+      "ankle_r"
+    ],
+    [
+      "ankle_r",
+      "foot_r"
+    ],
+    [
+      "foot_r",
+      "toe_r"
+    ]
+  ],
+  "limbs": [
+    {
+      "id": "head",
+      "side": "center",
+      "zone": "head",
+      "limb_group": "head_neck",
+      "motor_limits": {},
+      "range_envelope": {
+        "flex": 35,
+        "lateral": 30,
+        "rotate": 80
+      },
+      "expansive": true,
+      "body_image": {
+        "x": 0.0,
+        "z": 0.8528,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "neck",
+      "side": "center",
+      "zone": "head",
+      "limb_group": "head_neck",
+      "motor_limits": {},
+      "range_envelope": {
+        "flex": 55,
+        "lateral": 45,
+        "rotate": 70
+      },
+      "expansive": true,
+      "body_image": {
+        "x": 0.0,
+        "z": 0.665,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "spine_upper",
+      "side": "center",
+      "zone": "spine",
+      "limb_group": "spine",
+      "motor_limits": {
+        "flex": 45,
+        "extend": 20,
+        "lateral": 15
+      },
+      "range_envelope": {
+        "flex": 52,
+        "extend": 25,
+        "lateral": 20
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 18.333333333333332,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.4074
+    },
+    {
+      "id": "spine_mid",
+      "side": "center",
+      "zone": "spine",
+      "limb_group": "spine",
+      "motor_limits": {
+        "flex": 55,
+        "extend": 15,
+        "lateral": 12
+      },
+      "range_envelope": {
+        "flex": 65,
+        "extend": 18,
+        "lateral": 16
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 18.333333333333332,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.3333
+    },
+    {
+      "id": "spine_lower",
+      "side": "center",
+      "zone": "spine",
+      "limb_group": "spine",
+      "motor_limits": {
+        "flex": 70,
+        "extend": 10,
+        "lateral": 8
+      },
+      "range_envelope": {
+        "flex": 85,
+        "extend": 12,
+        "lateral": 10
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 18.333333333333332,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.2619
+    },
+    {
+      "id": "chest",
+      "side": "center",
+      "zone": "spine",
+      "limb_group": "spine",
+      "motor_limits": {},
+      "range_envelope": {},
+      "expansive": false,
+      "body_image": {
+        "x": 0.0,
+        "z": 0.5133,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "hip",
+      "side": "center",
+      "zone": "centerline",
+      "limb_group": "pelvis",
+      "motor_limits": {
+        "flex": 120,
+        "extend": 30,
+        "abduct": 45
+      },
+      "range_envelope": {
+        "flex": 135,
+        "extend": 35,
+        "abduct": 52
+      },
+      "expansive": true,
+      "body_image": {
+        "x": 0.0,
+        "z": 0.4256,
+        "flex": 75.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.625
+    },
+    {
+      "id": "shoulder_l",
+      "side": "left",
+      "zone": "shoulders",
+      "limb_group": "left_arm",
+      "motor_limits": {
+        "flex": 180,
+        "abduct": 180
+      },
+      "range_envelope": {
+        "flex": 195,
+        "abduct": 195,
+        "rotate": 90
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.0
+    },
+    {
+      "id": "shoulder_r",
+      "side": "right",
+      "zone": "shoulders",
+      "limb_group": "right_arm",
+      "motor_limits": {
+        "flex": 180,
+        "abduct": 180
+      },
+      "range_envelope": {
+        "flex": 195,
+        "abduct": 195,
+        "rotate": 90
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.0
+    },
+    {
+      "id": "elbow_l",
+      "side": "left",
+      "zone": "elbows",
+      "limb_group": "left_arm",
+      "motor_limits": {},
+      "range_envelope": {
+        "flex": 150,
+        "extend": 10
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "elbow_r",
+      "side": "right",
+      "zone": "elbows",
+      "limb_group": "right_arm",
+      "motor_limits": {},
+      "range_envelope": {
+        "flex": 150,
+        "extend": 10
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "wrist_l",
+      "side": "left",
+      "zone": "hands",
+      "limb_group": "left_arm",
+      "motor_limits": {},
+      "range_envelope": {
+        "flex": 85,
+        "abduct": 25
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "wrist_r",
+      "side": "right",
+      "zone": "hands",
+      "limb_group": "right_arm",
+      "motor_limits": {},
+      "range_envelope": {
+        "flex": 85,
+        "abduct": 25
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "hand_l",
+      "side": "left",
+      "zone": "hands",
+      "limb_group": "left_arm",
+      "motor_limits": {},
+      "range_envelope": {},
+      "expansive": false,
+      "body_image": {
+        "x": -0.26,
+        "z": 0.4972,
+        "flex": 90.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "hand_r",
+      "side": "right",
+      "zone": "hands",
+      "limb_group": "right_arm",
+      "motor_limits": {},
+      "range_envelope": {},
+      "expansive": false,
+      "body_image": {
+        "x": 0.26,
+        "z": 0.4972,
+        "flex": 90.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "knee_l",
+      "side": "left",
+      "zone": "knees",
+      "limb_group": "left_leg",
+      "motor_limits": {
+        "flex": 140,
+        "extend": 5
+      },
+      "range_envelope": {
+        "flex": 155,
+        "extend": 8
+      },
+      "expansive": true,
+      "body_image": {
+        "x": -0.1,
+        "z": 0.2842,
+        "flex": 15.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.1071
+    },
+    {
+      "id": "knee_r",
+      "side": "right",
+      "zone": "knees",
+      "limb_group": "right_leg",
+      "motor_limits": {
+        "flex": 140,
+        "extend": 5
+      },
+      "range_envelope": {
+        "flex": 155,
+        "extend": 8
+      },
+      "expansive": true,
+      "body_image": {
+        "x": 0.1,
+        "z": 0.2842,
+        "flex": 15.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.1071
+    },
+    {
+      "id": "ankle_l",
+      "side": "left",
+      "zone": "ankles",
+      "limb_group": "left_leg",
+      "motor_limits": {
+        "flex": 50,
+        "extend": 30
+      },
+      "range_envelope": {
+        "flex": 58,
+        "extend": 35
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.0
+    },
+    {
+      "id": "ankle_r",
+      "side": "right",
+      "zone": "ankles",
+      "limb_group": "right_leg",
+      "motor_limits": {
+        "flex": 50,
+        "extend": 30
+      },
+      "range_envelope": {
+        "flex": 58,
+        "extend": 35
+      },
+      "expansive": true,
+      "body_image": {
+        "x": null,
+        "z": null,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": 0.0
+    },
+    {
+      "id": "foot_l",
+      "side": "left",
+      "zone": "feet",
+      "limb_group": "left_leg",
+      "motor_limits": {},
+      "range_envelope": {},
+      "expansive": false,
+      "body_image": {
+        "x": -0.11,
+        "z": 0.12,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "foot_r",
+      "side": "right",
+      "zone": "feet",
+      "limb_group": "right_leg",
+      "motor_limits": {},
+      "range_envelope": {},
+      "expansive": false,
+      "body_image": {
+        "x": 0.11,
+        "z": 0.12,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "toe_l",
+      "side": "left",
+      "zone": "toes",
+      "limb_group": "left_leg",
+      "motor_limits": {},
+      "range_envelope": {},
+      "expansive": false,
+      "body_image": {
+        "x": -0.11,
+        "z": 0.15,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    },
+    {
+      "id": "toe_r",
+      "side": "right",
+      "zone": "toes",
+      "limb_group": "right_leg",
+      "motor_limits": {},
+      "range_envelope": {},
+      "expansive": false,
+      "body_image": {
+        "x": 0.11,
+        "z": 0.15,
+        "flex": 0.0,
+        "abduct": 0.0,
+        "rotate": 0.0
+      },
+      "stretch_ratio": null
+    }
+  ],
+  "zone_map": {
+    "head": [
+      "head",
+      "neck"
+    ],
+    "spine": [
+      "spine_upper",
+      "spine_mid",
+      "spine_lower",
+      "chest"
+    ],
+    "shoulders": [
+      "shoulder_l",
+      "shoulder_r"
+    ],
+    "hands": [
+      "hand_l",
+      "hand_r",
+      "wrist_l",
+      "wrist_r"
+    ],
+    "elbows": [
+      "elbow_l",
+      "elbow_r"
+    ],
+    "centerline": [
+      "chest",
+      "spine_mid",
+      "hip"
+    ],
+    "hips": [
+      "hip"
+    ],
+    "knees": [
+      "knee_l",
+      "knee_r"
+    ],
+    "ankles": [
+      "ankle_l",
+      "ankle_r"
+    ],
+    "feet": [
+      "foot_l",
+      "foot_r"
+    ],
+    "toes": [
+      "toe_l",
+      "toe_r"
+    ]
+  },
+  "limb_groups": {
+    "head_neck": [
+      "head",
+      "neck"
+    ],
+    "spine": [
+      "spine_upper",
+      "spine_mid",
+      "spine_lower",
+      "chest"
+    ],
+    "left_arm": [
+      "shoulder_l",
+      "elbow_l",
+      "wrist_l",
+      "hand_l"
+    ],
+    "right_arm": [
+      "shoulder_r",
+      "elbow_r",
+      "wrist_r",
+      "hand_r"
+    ],
+    "pelvis": [
+      "hip"
+    ],
+    "left_leg": [
+      "knee_l",
+      "ankle_l",
+      "foot_l",
+      "toe_l"
+    ],
+    "right_leg": [
+      "knee_r",
+      "ankle_r",
+      "foot_r",
+      "toe_r"
+    ]
+  },
+  "range_policy": {
+    "mode": "expansive",
+    "training_envelope_multiplier": 1.15,
+    "identity_clamp": true,
+    "statement": "Training envelopes exceed motor limits for reach — motor commands still identity-clamped."
+  },
+  "self_protection": {
+    "protected_by": "self",
+    "sovereign_operator": "hostess7",
+    "outside_override": false,
+    "advisory_only_ingress": true,
+    "self_maintenance_module": "lib/hostess7-self-maintenance.py",
+    "statement": "Motion lanes accept counsel — never outside override. Self-maintenance and body-core sovereign paths only."
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "field-endpoint-registry-seed/v1",
+  "title": "Sovereign endpoint registry — backdated historic witness",
+  "owner": "ZacharyGeurts",
+  "note": "Imported into hash-chained ledger. ICANN is one layer; field owns loopback, APIs, mirrors, scripts.",
+  "seeded_at": "2026-01-01T00:00:00Z",
+  "entries": [
+    {
+      "layer": "service",
+      "kind": "canonical",
+      "entity_id": "field-dns",
+      "to_url": "127.0.0.1:53",
+      "witness": "field-sovereign-protocol-bridge",
+      "reason": "Truth DNS resolver — loopback only",
+      "at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "field-endpoint-registry",
+      "to_url": "/api/field-endpoint-registry",
+      "witness": "threat-panel-http",
+      "reason": "Public movement registry API",
+      "at": "2026-07-03T12:00:00Z"
+    },
+    {
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "field-github-everyone",
+      "to_url": "/api/field-github-everyone",
+      "witness": "threat-panel-http",
+      "reason": "GitHub for everyone civilian passthrough panel",
+      "at": "2026-07-03T00:00:00Z"
+    },
+    {
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "field-h7t-truth",
+      "to_url": "/api/field-h7t-truth",
+      "witness": "threat-panel-http",
+      "reason": "H7t truth chamber for foreign payloads",
+      "at": "2026-07-03T00:00:00Z"
+    },
+    {
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "field-botnet-registry",
+      "to_url": "/api/field-botnet-registry",
+      "witness": "threat-panel-http",
+      "reason": "Botnet member registry",
+      "at": "2026-02-01T00:00:00Z"
+    },
+    {
+      "layer": "icann_dns",
+      "kind": "canonical",
+      "entity_id": "zacharygeurts.github.io",
+      "from_url": null,
+      "to_url": "zacharygeurts.github.io",
+      "witness": "github-pages",
+      "reason": "GitHub Pages user domain — not ICANN registrar but field canonical",
+      "at": "2020-01-01T00:00:00Z"
+    },
+    {
+      "layer": "url",
+      "kind": "canonical",
+      "entity_id": "ammoos-canonical-manual",
+      "from_url": "https://github.com/ZacharyGeurts/AmmoOS",
+      "to_url": "https://zacharygeurts.github.io/AmmoOS/",
+      "witness": "ammoos-pages-hub",
+      "reason": "Canonical AmmoOS manual — all redirect stubs point here",
+      "at": "2026-01-15T00:00:00Z"
+    },
+    {
+      "layer": "cidr",
+      "kind": "canonical",
+      "entity_id": "github-git-cidr-pool",
+      "to_url": "192.30.252.0/22",
+      "witness": "github-known-hosts",
+      "reason": "Pinned GitHub git CIDR — DNS pin anti-MITM",
+      "at": "2026-03-01T00:00:00Z",
+      "meta": {"policy": "dns_pin_git_cidrs"}
+    },
+    {
+      "layer": "module",
+      "kind": "canonical",
+      "entity_id": "field-endpoint-registry",
+      "to_url": "lib/field-endpoint-registry.py",
+      "witness": "field-endpoint-registry-doctrine",
+      "reason": "Sovereign endpoint movement module",
+      "at": "2026-07-03T12:00:00Z"
+    },
+    {
+      "layer": "module",
+      "kind": "canonical",
+      "entity_id": "field-dns",
+      "to_url": "lib/field-dns.py",
+      "witness": "field-sovereign-protocol-bridge",
+      "reason": "Truth DNS implementation",
+      "at": "2026-01-01T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "neurochemicals": [
+    {
+      "id": "dopamine",
+      "class": "neurotransmitter",
+      "role": "Focus, reward, P1 drive, release motivation",
+      "baseline": 0.55,
+      "decay": 0.04,
+      "enhances": [
+        "prefrontal",
+        "next_action",
+        "release"
+      ],
+      "hemisphere_bias": "left"
+    },
+    {
+      "id": "acetylcholine",
+      "class": "neurotransmitter",
+      "role": "Learning, memory recall, OCR/visual attention",
+      "baseline": 0.5,
+      "decay": 0.035,
+      "enhances": [
+        "occipital",
+        "temporal",
+        "vision",
+        "medical"
+      ],
+      "hemisphere_bias": "right"
+    },
+    {
+      "id": "norepinephrine",
+      "class": "neurotransmitter",
+      "role": "Alertness, blocker urgency, terminal vigilance",
+      "baseline": 0.45,
+      "decay": 0.05,
+      "enhances": [
+        "broca",
+        "blocker",
+        "terminal"
+      ],
+      "hemisphere_bias": "left"
+    },
+    {
+      "id": "serotonin",
+      "class": "neurotransmitter",
+      "role": "Stability, balanced fusion, reduced noise",
+      "baseline": 0.6,
+      "decay": 0.03,
+      "enhances": [
+        "wernicke",
+        "legal",
+        "status"
+      ],
+      "hemisphere_bias": "both"
+    },
+    {
+      "id": "glutamate",
+      "class": "neurotransmitter",
+      "role": "Excitatory \u2014 fast callosum, cross-domain spark",
+      "baseline": 0.5,
+      "decay": 0.045,
+      "enhances": [
+        "beyond",
+        "callosum"
+      ],
+      "hemisphere_bias": "both"
+    },
+    {
+      "id": "gaba",
+      "class": "neurotransmitter",
+      "role": "Inhibitory \u2014 filter chatter, professional tone",
+      "baseline": 0.55,
+      "decay": 0.03,
+      "enhances": [
+        "counsel",
+        "legal"
+      ],
+      "hemisphere_bias": "left"
+    },
+    {
+      "id": "cortisol",
+      "class": "hormone",
+      "role": "Stress routing \u2014 elevate blockers and P1 under pressure",
+      "baseline": 0.3,
+      "decay": 0.06,
+      "enhances": [
+        "prefrontal",
+        "blocker"
+      ],
+      "hemisphere_bias": "left"
+    },
+    {
+      "id": "oxytocin",
+      "class": "hormone",
+      "role": "Trust, clinic empathy, collaborative synthesis",
+      "baseline": 0.4,
+      "decay": 0.035,
+      "enhances": [
+        "temporal",
+        "medical",
+        "clinic"
+      ],
+      "hemisphere_bias": "right"
+    },
+    {
+      "id": "endorphin",
+      "class": "neuropeptide",
+      "role": "Reward after GREEN/release \u2014 sustained positive arc",
+      "baseline": 0.35,
+      "decay": 0.04,
+      "enhances": [
+        "release",
+        "status"
+      ],
+      "hemisphere_bias": "both"
+    }
+  ],
+  "workspace_profiles": {
+    "default": {
+      "serotonin": 0.08,
+      "glutamate": 0.05
+    },
+    "field": {
+      "dopamine": 0.12,
+      "norepinephrine": 0.08
+    },
+    "vision": {
+      "acetylcholine": 0.14,
+      "glutamate": 0.06
+    },
+    "clinic": {
+      "oxytocin": 0.12,
+      "serotonin": 0.06
+    },
+    "counsel": {
+      "gaba": 0.1,
+      "serotonin": 0.08
+    },
+    "bench": {
+      "gaba": 0.14,
+      "serotonin": 0.1,
+      "acetylcholine": 0.06
+    },
+    "beyond": {
+      "glutamate": 0.1,
+      "dopamine": 0.05
+    },
+    "alert": {
+      "norepinephrine": 0.2,
+      "cortisol": 0.16,
+      "acetylcholine": 0.1
+    }
+  },
+  "updated": "2026-07-03T06:52:19.523081+00:00"
+}

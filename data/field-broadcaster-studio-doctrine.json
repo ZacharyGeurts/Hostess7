@@ -4,12 +4,13 @@
   "motto": "Final_Eye is our display and our camera. Secure wire to Queen CANVAS. All codecs. Kick-first platforms.",
   "product": "Broadcaster",
   "engine": "field-broadcaster-chamber",
-  "legacy_obs": false,
+  "legacy_obs": true,
+  "engine": "obs-studio",
   "ui": {
-    "layout": "studio_dual_view",
-    "theme": "ammoos_black_emerald_rose",
-    "dual_view": true,
-    "menu_bar": true
+    "layout": "verbatim_obs",
+    "native_shell": true,
+    "web_panel": "launcher_only",
+    "theme": "obs_default"
   },
   "source_kinds": ["final_eye_display", "final_eye", "display", "window", "camera", "audio_input", "audio_output", "browser", "image", "text", "media"],
   "vision": {

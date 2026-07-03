@@ -8,15 +8,33 @@
   const API = "/api/field-monster-monitor";
   const OCR_API = "/api/hostess7/ocr/status";
   const HISTORY = 48;
-  const TABS = [
+  const TABS_ALL = [
     { id: "graphs", label: "Graphs" },
     { id: "vision", label: "Vision" },
     { id: "security", label: "Security" },
+    { id: "tasks", label: "Tasks" },
     { id: "processes", label: "Processes" },
     { id: "resources", label: "Resources" },
     { id: "services", label: "Services" },
     { id: "rescue", label: "Rescue" },
   ];
+  const TABS_PAGES = [
+    { id: "rescue", label: "Rescue" },
+    { id: "security", label: "Security" },
+    { id: "services", label: "Surfaces" },
+  ];
+
+  function pagesRuntime() {
+    return document.body?.dataset?.pagesRuntime === "1" || !!global.HOSTESS7_PAGES_BASE;
+  }
+
+  function pagesBase() {
+    return (global.HOSTESS7_PAGES_BASE || "/Hostess7").replace(/\/$/, "");
+  }
+
+  function activeTabs() {
+    return pagesRuntime() ? TABS_PAGES : TABS_ALL;
+  }
 
   const state = {
     tab: "graphs",
@@ -41,8 +59,42 @@
   }
 
   async function api(path, opts) {
-    const res = await fetch(API + path, Object.assign({ credentials: "same-origin", cache: "no-store" }, opts || {}));
+    const url = global.H7Api ? global.H7Api(API + path) : API + path;
+    const res = await fetch(url, Object.assign({ credentials: "same-origin", cache: "no-store" }, opts || {}));
+    if (!res.ok) throw new Error(API + path + " HTTP " + res.status);
     return res.json();
+  }
+
+  function pagesFallbackDoc() {
+    const layer = global.FieldScreenLayers?.current?.() ?? -1;
+    const wins = document.querySelectorAll(".nfs-win:not(.minimized)").length;
+    return {
+      ok: true,
+      pages: true,
+      lane: "github-pages",
+      title: "Monster · Pages rescue",
+      cpu_pct: 0,
+      cpu_cores: navigator.hardwareConcurrency || 4,
+      loadavg: [0, 0, 0],
+      memory: { used_pct: 0, swap_used_pct: 0 },
+      process_count: 0,
+      uptime_sec: 0,
+      services: [
+        { id: "pages_desktop", name: "AmmoOS Desktop", port: 0, status: "live", up: true },
+        { id: "queen_browser", name: "Queen Browser", port: 0, status: "layer 1 · F11", up: true },
+        { id: "final_eye", name: "Final Eye", port: 0, status: "static block", up: true },
+        { id: "loopback_panel", name: "NEXUS Panel", port: 9477, status: "run ./nexus.sh panel", up: false },
+      ],
+      intel: {
+        security: {
+          security_hold: true,
+          freeze_underlying_os: false,
+          protections: ["github-secure", "final-eye-block", "pages-shim", "field-perimeter"],
+          motto: "Pages mirror — full Monster on loopback panel.",
+        },
+        pages: { layer: layer, shell_windows: wins, base: pagesBase() },
+      },
+    };
   }
 
   async function ocrStatus() {
@@ -89,7 +141,7 @@
     el.className = "monster-overlay";
     el.setAttribute("role", "dialog");
     el.setAttribute("aria-label", "Monster rescue panel");
-    const nav = TABS.map(function (t) {
+    const nav = activeTabs().map(function (t) {
       return (
         '<button type="button" class="monster-tab' +
         (t.id === state.tab ? " active" : "") +
@@ -447,14 +499,92 @@
     return html;
   }
 
+  function renderTasksTab(tasks) {
+    const hangs = tasks.hang_pending || [];
+    const orphans = tasks.orphans || [];
+    const fixes = tasks.fixes || [];
+    let html =
+      '<div class="monster-section"><h3 class="monster-section-title">Task manager <span>KGO · AmmoLang</span></h3>' +
+      '<p class="monster-sub">Kill-Grok-Orphans patterns + smart fixes for every field software. Launches above KILROY run through AmmoLang.</p>' +
+      '<div class="monster-action-grid">' +
+      '<button type="button" class="monster-action-card" data-task-refresh><strong>Refresh</strong>Rescan orphans &amp; fixes</button>' +
+      '<button type="button" class="monster-action-card pink" data-kill-orphans><strong>Kill orphans</strong>KGO sweep (dead Grok/GitHub)</button>' +
+      "</div></div>";
+    if (hangs.length) {
+      html += '<div class="monster-section"><h3 class="monster-section-title">Hung programs <span>' + hangs.length + "</span></h3>";
+      hangs.forEach(function (h) {
+        html +=
+          '<div class="monster-svc-row"><span class="monster-svc-name">' +
+          esc(h.label || h.id) +
+          '</span><span class="monster-sub">pid ' +
+          esc(h.pid) +
+          "</span>" +
+          '<button type="button" class="monster-btn" data-hang-wait="' +
+          esc(h.id) +
+          '">Wait</button> ' +
+          '<button type="button" class="monster-btn end" data-hang-quit="' +
+          esc(h.id) +
+          '">Nuke</button></div>';
+      });
+      html += "</div>";
+    }
+    if (orphans.length) {
+      html += '<div class="monster-section"><h3 class="monster-section-title">Orphans <span>' + orphans.length + "</span></h3><table class='monster-table'><thead><tr><th>PID</th><th>Reason</th><th>Command</th></tr></thead><tbody>";
+      orphans.forEach(function (o) {
+        html +=
+          "<tr><td>" +
+          esc(o.pid) +
+          "</td><td>" +
+          esc(o.reason) +
+          '</td><td class="cmd">' +
+          esc(o.cmd) +
+          "</td></tr>";
+      });
+      html += "</tbody></table></div>";
+    }
+    if (fixes.length) {
+      html += '<div class="monster-section"><h3 class="monster-section-title">Software fixes <span>' + fixes.length + "</span></h3>";
+      fixes.forEach(function (f) {
+        html +=
+          '<button type="button" class="monster-rescue-btn" data-apply-fix="' +
+          esc(f.id) +
+          '"><strong>' +
+          esc(f.software) +
+          "</strong>" +
+          esc(f.problem) +
+          " → " +
+          esc(f.fix) +
+          "</button>";
+      });
+      html += "</div>";
+    }
+    if (!hangs.length && !orphans.length && !fixes.length) {
+      html += '<p class="monster-sub">All clear — no hung tasks, orphans, or pending fixes.</p>';
+    }
+    return html;
+  }
+
   function renderRescue() {
+    const base = pagesBase();
+    const pagesNote = pagesRuntime()
+      ? '<p class="monster-sub">GitHub Pages lane — process kill and live graphs need loopback <code>./nexus.sh panel</code>. Rescue actions below work on this desktop.</p>'
+      : "";
     return (
+      pagesNote +
       '<div class="monster-rescue">' +
       '<button type="button" class="monster-rescue-btn" data-rescue="desktop"><strong>Show desktop</strong>Minimize all program windows</button>' +
-      '<button type="button" class="monster-rescue-btn" data-rescue="home"><strong>AmmoOS C2</strong>Return to field desktop</button>' +
-      '<button type="button" class="monster-rescue-btn pink" data-yield="host"><strong>Return to host OS</strong>Security hold — no freeze</button>' +
+      '<button type="button" class="monster-rescue-btn" data-rescue="ammoos"><strong>Field One</strong>AmmoOS layer -1</button>' +
+      '<button type="button" class="monster-rescue-btn" data-rescue="layer1"><strong>Queen Browser</strong>Layer 1 · F11</button>' +
+      '<button type="button" class="monster-rescue-btn" data-rescue="userland"><strong>Userland</strong>F12 cycle L2+</button>' +
+      '<button type="button" class="monster-rescue-btn" data-rescue="home"><strong>Field One desktop</strong>Return to layer -1</button>' +
+      '<button type="button" class="monster-rescue-btn" data-rescue="final-eye"><strong>Final Eye</strong>Secure vision block</button>' +
+      (pagesRuntime()
+        ? '<button type="button" class="monster-rescue-btn" data-rescue="github"><strong>GitHub secure</strong>Pinned Hostess7 lane</button>'
+        : '<button type="button" class="monster-rescue-btn pink" data-yield="host"><strong>Return to host OS</strong>Security hold — no freeze</button>') +
       '<button type="button" class="monster-rescue-btn" data-rescue="lock"><strong>Lock</strong>Open field lock screen</button>' +
-      '<button type="button" class="monster-rescue-btn" data-rescue="thermal"><strong>Thermal</strong>Open thermal manager</button>' +
+      (pagesRuntime()
+        ? ""
+        : '<button type="button" class="monster-rescue-btn" data-rescue="thermal"><strong>Thermal</strong>Open thermal manager</button>') +
       '<button type="button" class="monster-rescue-btn danger" data-rescue="shield"><strong>Shield scan</strong>Admin window shield enforce</button>' +
       "</div>"
     );
@@ -475,7 +605,12 @@
   async function render() {
     const main = document.getElementById("monster-main");
     if (!main) return;
-    const doc = await api("");
+    let doc;
+    try {
+      doc = await api("");
+    } catch (_) {
+      doc = pagesRuntime() ? pagesFallbackDoc() : { ok: false, cpu_pct: 0, memory: {}, loadavg: [], services: [], intel: {} };
+    }
     recordSample(doc);
 
     if (state.tab === "graphs") {
@@ -490,7 +625,14 @@
       return;
     }
     if (state.tab === "security") {
-      const intel = doc.intel || (await api("/intel"));
+      let intel = doc.intel;
+      if (!intel) {
+        try {
+          intel = await api("/intel");
+        } catch (_) {
+          intel = pagesFallbackDoc().intel;
+        }
+      }
       main.innerHTML = renderSecurityTab(intel);
       bindActions(main);
       return;
@@ -509,7 +651,35 @@
       bindActions(main);
       return;
     }
-    const procDoc = await api("/processes");
+    if (state.tab === "tasks") {
+      let tasks = { hang_pending: [], orphans: [], fixes: [] };
+      try {
+        tasks = await api("/tasks");
+      } catch (_) {
+        try {
+          const act = await api("/action", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "tasks" }),
+          });
+          tasks = act;
+        } catch (_2) {}
+      }
+      main.innerHTML = renderTasksTab(tasks);
+      bindActions(main);
+      return;
+    }
+    let procDoc = { processes: [] };
+    try {
+      procDoc = await api("/processes");
+    } catch (_) {
+      if (pagesRuntime()) {
+        main.innerHTML =
+          '<div class="monster-section"><h3 class="monster-section-title">Processes <span>unavailable</span></h3>' +
+          '<p class="monster-sub">Process table requires loopback panel. Use Rescue tab on GitHub Pages.</p></div>';
+        return;
+      }
+    }
     state.processes = procDoc.processes || [];
     main.innerHTML =
       '<div class="monster-section"><h3 class="monster-section-title">System <span>snapshot</span></h3>' +
@@ -572,9 +742,34 @@
       btn.addEventListener("click", function () {
         const act = btn.dataset.rescue;
         if (act === "desktop") global.NexusFieldShell?.showDesktop?.();
-        else if (act === "home") global.location.href = "/field";
-        else if (act === "lock") global.NexusFieldShell?.openProgram?.({ exec: "/field-lock" });
-        else if (act === "thermal") global.open("/Hostess7/queen/queen-thermal-manager.html", "_blank");
+        else if (act === "ammoos") global.FieldScreenLayers?.switchTo?.(-1);
+        else if (act === "layer1") {
+          if (global.FieldScreenLayers?.openQueen) global.FieldScreenLayers.openQueen();
+          else global.FieldScreenLayers?.switchTo?.(1);
+        }
+        else if (act === "userland") global.FieldScreenLayers?.cycleUserland?.();
+        else if (act === "home") {
+          const home = pagesRuntime() ? pagesBase() + "/desktop/" : "/field";
+          global.location.href = global.H7Page ? global.H7Page("/desktop/") : home;
+        } else if (act === "final-eye") {
+          const eye = pagesRuntime()
+            ? pagesBase() + "/queen/queen-final-eye-manager.html"
+            : "/Hostess7/queen/queen-final-eye-manager.html";
+          if (global.NexusFieldShell?.launch) {
+            global.NexusFieldShell.launch({ id: "final-eye", name: "Final Eye", exec: eye, shell: true });
+          } else {
+            global.location.href = eye;
+          }
+        } else if (act === "github") {
+          global.open("https://zacharygeurts.github.io/Hostess7/desktop/", "_blank", "noopener");
+        } else if (act === "lock") {
+          const lock = pagesRuntime() ? pagesBase() + "/field-lock/" : "/field-lock";
+          if (global.NexusFieldShell?.launch) {
+            global.NexusFieldShell.launch({ id: "field-lock", name: "Lock", exec: lock, shell: true });
+          } else {
+            global.location.href = lock;
+          }
+        } else if (act === "thermal") global.open("/Hostess7/queen/queen-thermal-manager.html", "_blank");
         else if (act === "shield")
           fetch("/api/admin-shield", { method: "GET", credentials: "same-origin" }).catch(function () {});
         close();
@@ -585,6 +780,61 @@
         if (btn.dataset.yield === "host") global.NexusFieldShell?.yieldToHost?.();
         else global.NexusFieldShell?.returnFromHost?.();
         close();
+        render();
+      });
+    });
+    root.querySelectorAll("[data-kill-orphans]").forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        if (!confirm("Kill all KGO-matched orphan processes?")) return;
+        btn.disabled = true;
+        try {
+          await api("/action", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "kill_orphans" }),
+          });
+        } catch (_) {}
+        btn.disabled = false;
+        render();
+      });
+    });
+    root.querySelectorAll("[data-task-refresh]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        render();
+      });
+    });
+    root.querySelectorAll("[data-apply-fix]").forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        btn.disabled = true;
+        try {
+          await api("/action", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "apply_fix", fix_id: btn.dataset.applyFix }),
+          });
+        } catch (_) {}
+        btn.disabled = false;
+        render();
+      });
+    });
+    root.querySelectorAll("[data-hang-wait]").forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        await api("/action", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "hang_respond", id: btn.dataset.hangWait, choice: "wait" }),
+        });
+        render();
+      });
+    });
+    root.querySelectorAll("[data-hang-quit]").forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        if (!confirm("Nuke hung program?")) return;
+        await api("/action", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "hang_respond", id: btn.dataset.hangQuit, choice: "quit" }),
+        });
         render();
       });
     });
@@ -613,13 +863,16 @@
 
   function open() {
     ensureOverlay();
+    if (pagesRuntime() && state.tab !== "rescue" && state.tab !== "security" && state.tab !== "services") {
+      state.tab = "rescue";
+    }
     state.open = true;
     document.getElementById("monster-overlay")?.classList.add("open");
     render();
     if (state.timer) clearInterval(state.timer);
     state.timer = setInterval(function () {
       if (state.open) render();
-    }, 4000);
+    }, pagesRuntime() ? 12000 : 4000);
   }
 
   function close() {

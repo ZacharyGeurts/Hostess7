@@ -1,0 +1,47 @@
+{
+  "schema": "field-broadcaster-senses-doctrine/v1",
+  "title": "Broadcaster sense drivers — Final_Eye · Final_Ear · Final_Mouth",
+  "product": "Broadcaster",
+  "motto": "OBS verbatim shell · sovereign sense drivers · ironclad scene guard · localhost sealed.",
+  "fork": {
+    "upstream": "obs-studio",
+    "ref": "30.0.2",
+    "brand": "Broadcaster",
+    "ui": "verbatim_obs",
+    "root": "OBS-Field"
+  },
+  "drivers": {
+    "final_eye": {
+      "role": "camera_and_display",
+      "module": "lib/field-broadcaster-final-eye.py",
+      "obs_source": "browser_source",
+      "ingress": "mjpeg",
+      "port_env": "FINAL_EYE_PORT",
+      "default_port": 9479,
+      "secure_localhost_only": true
+    },
+    "final_ear": {
+      "role": "audio_input",
+      "module": "lib/field-final-ear-block.py",
+      "obs_source": "pulse_input_capture",
+      "bridge": "Queen/lib/queen-earball.py",
+      "ironclad_ref": "Final_Ear/data/ear-truth-filter.json",
+      "optional": true
+    },
+    "final_mouth": {
+      "role": "voice_output_monitor",
+      "module": "lib/hostess7-mouth-neural.py",
+      "obs_source": "pulse_output_capture",
+      "bridge": "Queen/lib/queen-mouthball.py",
+      "optional": true
+    }
+  },
+  "security": {
+    "scene_guard": "OBS-FieldVoiceFilter",
+    "threat_hook": "lib/obs-threat-posterity-bridge.py",
+    "egress": "localhost_only",
+    "truth_before_permanency": true
+  },
+  "api": "/api/field-broadcaster/senses",
+  "stack_file": "field-broadcaster-senses-stack.json"
+}

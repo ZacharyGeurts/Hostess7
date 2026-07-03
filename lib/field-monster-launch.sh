@@ -29,6 +29,25 @@ if [[ ${#CMD[@]} -eq 0 ]]; then
   exit 2
 fi
 
+POLICY="${ROOT}/lib/field-monster-layer-policy.py"
+AML="${ROOT}/lib/ammolang-run.sh"
+if [[ -f "$POLICY" && -f "$AML" && "${MONSTER_SKIP_AML:-}" != "1" ]]; then
+  NEEDS="$("$PY" "$POLICY" needs_ammolang --label "${LABEL:-launch}" -- "${CMD[@]}" 2>/dev/null || true)"
+  if echo "$NEEDS" | grep -q '"needs_ammolang": true'; then
+    TARGET="monster:${LABEL:-launch}"
+    if [[ "${CMD[0]:-}" == *.py ]]; then
+      TARGET="py:${CMD[0]#"$ROOT"/}"
+      TARGET="${TARGET#./}"
+    elif [[ "${CMD[0]:-}" == *scripts/* || "${CMD[0]:-}" == *.sh ]]; then
+      TARGET="script:${CMD[0]#"$ROOT"/}"
+      TARGET="${TARGET#./}"
+    fi
+    export MONSTER_LABEL="${LABEL:-launch}"
+    export AML_BOUNDARY_ACTIVE=1
+    exec bash "$AML" exec "$TARGET" -- "${CMD[@]}"
+  fi
+fi
+
 ARGS=(run)
 [[ -n "$LABEL" ]] && ARGS+=(--label "$LABEL")
 [[ -n "$STALL" ]] && ARGS+=(--stall "$STALL")

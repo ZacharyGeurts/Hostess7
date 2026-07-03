@@ -1,0 +1,332 @@
+{
+  "version": 1,
+  "domains": [
+    {
+      "id": "isa_policy",
+      "title": "ISA & opcode policy",
+      "tags": [
+        "isa",
+        "opcode",
+        "assembly",
+        "instruction",
+        "mnemonic",
+        "chip"
+      ],
+      "body": "Hostess 7 indexes every assembly instruction per FieldChips CPU die \u2014 MOS 6502/6507, Z80, 8080, SM83, WDC65816, MC68000, x86 real/protected/long mode, MIPS R3000/VR4300, SH-4, PowerPC, ARM/AArch64, RISC-V RV32I, SPIR-V GPU. Lossless jsonl shards: cache/fieldstorage/brain/code/infinite/. Ingest: ./Hostess7.sh code-ingest seed. Native silicon: Navigator/engine/CHIPS/."
+    },
+    {
+      "id": "field_chips",
+      "title": "FieldChips platform map",
+      "tags": [
+        "chips",
+        "nes",
+        "snes",
+        "genesis",
+        "amiga",
+        "ps1",
+        "n64",
+        "dreamcast",
+        "xbox360"
+      ],
+      "body": "FieldChips.hpp maps consoles to CPU dies: NES 6502+2A03+2C02, SMS/Genesis Z80+68000, SNES 65816, PS1 MIPS R3000, N64 VR4300, Dreamcast SH-4, Xbox360 PowerPC+Xenos GPU wave. Common/: FieldChip6502, FieldChipZ80, FieldChipM68000, FieldChipSm83, FieldChipWdc65816. bench_chips.py QA gates GPU wave per platform."
+    },
+    {
+      "id": "x86_host",
+      "title": "Host x86 / libx86emu / Field die",
+      "tags": [
+        "x86",
+        "libx86emu",
+        "dos",
+        "dpmi",
+        "ammocode",
+        "ammoasm"
+      ],
+      "body": "AMOURANTHRTX runs DOS via libx86emu on Field canvas \u2014 real-mode INT 21h, DPMI PM32, FieldX86Native traps. AMMOASM (FieldAmmoAsm.hpp) assembles MASM subset to FieldAmmoObj. FieldPc.hpp documents undocumented opcode traps. Kilroy ELF64 loader for native guest programs."
+    },
+    {
+      "id": "lang_policy",
+      "title": "Programming languages policy",
+      "tags": [
+        "programming language",
+        "paradigm",
+        "typing",
+        "compiler",
+        "interpreter"
+      ],
+      "body": "Full language catalog: imperative, functional, logic, OOP, concurrent, GPU, HDL, markup, data. Each entry: paradigm, typing discipline, memory model, compilation target, AMOURANTHRTX relevance. Hostess routes code/language/asm queries to code brain \u2014 perfect understanding bar: opcode-level for silicon, semantic-level for languages."
+    },
+    {
+      "id": "toolchain",
+      "title": "AMOURANTHRTX toolchain",
+      "tags": [
+        "toolchain",
+        "cmake",
+        "linux.sh",
+        "release",
+        "qa",
+        "hostess7.sh"
+      ],
+      "body": "Build: cmake --build build. Gates: ./linux.sh release-2.0. Brain: pythong field_superintelligence.py. Talk: ./Hostess7.sh. Lossless brain under cache/fieldstorage/brain/. Code corpus QA: qa_code_corpus_test.py."
+    }
+  ],
+  "domain_count": 5,
+  "chips": [
+    {
+      "id": "mos6502",
+      "title": "MOS 6502",
+      "platforms": [
+        "nes",
+        "atari2600",
+        "apple2",
+        "c64"
+      ],
+      "bits": 8,
+      "tags": [
+        "6502",
+        "mos",
+        "accumulator"
+      ]
+    },
+    {
+      "id": "mos6507",
+      "title": "MOS 6507",
+      "platforms": [
+        "atari2600"
+      ],
+      "bits": 8,
+      "tags": [
+        "6507",
+        "6502",
+        "atari"
+      ]
+    },
+    {
+      "id": "z80",
+      "title": "Zilog Z80",
+      "platforms": [
+        "sms",
+        "msx",
+        "spectrum",
+        "genesis_sound"
+      ],
+      "bits": 8,
+      "tags": [
+        "z80",
+        "zilog",
+        "index registers"
+      ]
+    },
+    {
+      "id": "i8080",
+      "title": "Intel 8080",
+      "platforms": [
+        "cpm",
+        "arcade"
+      ],
+      "bits": 8,
+      "tags": [
+        "8080",
+        "intel"
+      ]
+    },
+    {
+      "id": "sm83",
+      "title": "Sharp SM83 (LR35902)",
+      "platforms": [
+        "gameboy"
+      ],
+      "bits": 8,
+      "tags": [
+        "sm83",
+        "gameboy",
+        "z80-like"
+      ]
+    },
+    {
+      "id": "wdc65816",
+      "title": "WDC 65C816",
+      "platforms": [
+        "snes"
+      ],
+      "bits": 16,
+      "tags": [
+        "65816",
+        "snes",
+        "6502 superset"
+      ]
+    },
+    {
+      "id": "m68000",
+      "title": "Motorola MC68000",
+      "platforms": [
+        "genesis",
+        "amiga"
+      ],
+      "bits": 32,
+      "tags": [
+        "68000",
+        "m68k",
+        "address registers"
+      ]
+    },
+    {
+      "id": "x86_16",
+      "title": "Intel x86 Real Mode",
+      "platforms": [
+        "dos",
+        "bios",
+        "ammocode"
+      ],
+      "bits": 16,
+      "tags": [
+        "x86",
+        "real mode",
+        "dos",
+        "libx86emu"
+      ]
+    },
+    {
+      "id": "x86_32",
+      "title": "Intel x86 Protected Mode",
+      "platforms": [
+        "dpmi",
+        "win32",
+        "field_die"
+      ],
+      "bits": 32,
+      "tags": [
+        "x86",
+        "protected",
+        "dpmi"
+      ]
+    },
+    {
+      "id": "x86_64",
+      "title": "AMD64 / x86-64",
+      "platforms": [
+        "linux_host",
+        "kilroy",
+        "native"
+      ],
+      "bits": 64,
+      "tags": [
+        "x86-64",
+        "amd64",
+        "long mode"
+      ]
+    },
+    {
+      "id": "mips_r3000",
+      "title": "MIPS R3000",
+      "platforms": [
+        "ps1"
+      ],
+      "bits": 32,
+      "tags": [
+        "mips",
+        "r3000",
+        "playstation"
+      ]
+    },
+    {
+      "id": "mips_vr4300",
+      "title": "MIPS VR4300",
+      "platforms": [
+        "n64"
+      ],
+      "bits": 64,
+      "tags": [
+        "mips",
+        "vr4300",
+        "n64"
+      ]
+    },
+    {
+      "id": "sh4",
+      "title": "Hitachi SH-4",
+      "platforms": [
+        "dreamcast"
+      ],
+      "bits": 32,
+      "tags": [
+        "sh4",
+        "dreamcast",
+        "superscalar"
+      ]
+    },
+    {
+      "id": "powerpc",
+      "title": "PowerPC",
+      "platforms": [
+        "xbox360",
+        "gamecube"
+      ],
+      "bits": 32,
+      "tags": [
+        "powerpc",
+        "ppc",
+        "xenon"
+      ]
+    },
+    {
+      "id": "arm32",
+      "title": "ARM 32-bit",
+      "platforms": [
+        "mobile",
+        "embedded"
+      ],
+      "bits": 32,
+      "tags": [
+        "arm",
+        "thumb",
+        "embedded"
+      ]
+    },
+    {
+      "id": "aarch64",
+      "title": "ARM AArch64",
+      "platforms": [
+        "mobile",
+        "apple_silicon"
+      ],
+      "bits": 64,
+      "tags": [
+        "aarch64",
+        "arm64"
+      ]
+    },
+    {
+      "id": "riscv32",
+      "title": "RISC-V RV32I",
+      "platforms": [
+        "embedded",
+        "fpga"
+      ],
+      "bits": 32,
+      "tags": [
+        "riscv",
+        "rv32i"
+      ]
+    },
+    {
+      "id": "spirv",
+      "title": "SPIR-V / GPU shader ISA",
+      "platforms": [
+        "vulkan",
+        "field_die_gpu"
+      ],
+      "bits": 32,
+      "tags": [
+        "spirv",
+        "gpu",
+        "shader",
+        "vulkan"
+      ]
+    }
+  ],
+  "chip_count": 18,
+  "opcode_count": 1187,
+  "language_count": 66,
+  "infinite_drive": true,
+  "disclaimer": "Hostess 7 code brain is educational synthesis \u2014 opcode tables aligned to FieldChips silicon and standard ISA references. Not a substitute for official vendor programmer manuals."
+}

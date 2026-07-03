@@ -1,6 +1,15 @@
 {
   "schema": "field-device-registry/v1",
   "title": "Field device registry — local authority + peer displays",
+  "motto": "Never more active devices than exist. Stale last_timestamp → AI evicts fakes.",
+  "policy": {
+    "never_exceed_existence": true,
+    "ai_evict_stale": true,
+    "stale_after_seconds": 86400,
+    "lan_stale_after_seconds": 7200,
+    "min_corroboration_sources": 1,
+    "existence_floor": 1
+  },
   "devices": [
     {
       "id": "local",

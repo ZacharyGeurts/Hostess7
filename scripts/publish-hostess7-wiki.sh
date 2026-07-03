@@ -80,10 +80,12 @@ if ! git -C "$WIKI_REPO" diff --cached --quiet; then
     commit -m "wiki: Hostess 7 ${VER} — brain · truth · counsel"
 fi
 
+PY="${PYTHONG:-$(command -v pythong || command -v python3)}"
+
 if [[ -f "$H7_SECURE" ]]; then
-  pythong "$H7_SECURE" verify
-  if pythong "$H7_SECURE" push "$WIKI_REPO" --branch master --remote "$WIKI_REMOTE" --force 2>/dev/null \
-    || pythong "$H7_SECURE" push "$WIKI_REPO" --branch main --remote "$WIKI_REMOTE" --force 2>/dev/null; then
+  "$PY" "$H7_SECURE" verify
+  if "$PY" "$H7_SECURE" push "$WIKI_REPO" --branch master --remote "$WIKI_REMOTE" --force 2>/dev/null \
+    || "$PY" "$H7_SECURE" push "$WIKI_REPO" --branch main --remote "$WIKI_REMOTE" --force 2>/dev/null; then
     echo "Wiki: https://github.com/${REPO}/wiki"
     exit 0
   fi

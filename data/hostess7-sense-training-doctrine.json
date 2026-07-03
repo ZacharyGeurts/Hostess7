@@ -26,7 +26,9 @@
         {"id": "eye_fusion", "label": "Eye↔Ear plate", "action": "fused_analyze", "evidence": {"mouth_correlation": 0.9}},
         {"id": "eye_notation", "label": "Staff & clef reading", "action": "music_notation", "clef": "treble", "line": 1},
         {"id": "eye_rhythm_visual", "label": "Rhythm notation sight", "action": "music_rhythm", "meter": "4/4"},
-        {"id": "eye_music_fusion", "label": "Eye↔Ear music plate", "action": "fused_analyze", "evidence": {"mouth_correlation": 0.88, "music_notation": true, "pitch_hz": 440}}
+        {"id": "eye_music_fusion", "label": "Eye↔Ear music plate", "action": "fused_analyze", "evidence": {"mouth_correlation": 0.88, "music_notation": true, "pitch_hz": 440}},
+        {"id": "eye_mechanical_camera", "label": "Auto-learn mechanical camera", "action": "mechanical_learn", "target": "camera"},
+        {"id": "eye_focal_zoom", "label": "Focal & zoom profile", "action": "mechanical_learn", "target": "camera", "evidence": {"mechanical": true}}
       ]
     },
     "final_ear": {
@@ -43,7 +45,9 @@
         {"id": "ear_music_spectrum", "label": "Music spectrum → pitch", "action": "spectrum", "seconds": 0.5, "evidence": {"music_theory": true, "fundamental_hz": 440}},
         {"id": "ear_interval", "label": "Interval recognition", "action": "music_interval", "interval": "perfect_fifth", "root": "A4"},
         {"id": "ear_harmonic_series", "label": "Harmonic series drill", "action": "music_drill", "battery": "ear_training"},
-        {"id": "ear_music_fusion", "label": "Ear↔Mouth music fusion", "action": "eye_ear_fusion", "evidence": {"mouth_correlation": 0.9, "music_interval": "perfect fifth", "pitch_hz": 440}}
+        {"id": "ear_music_fusion", "label": "Ear↔Mouth music fusion", "action": "eye_ear_fusion", "evidence": {"mouth_correlation": 0.9, "music_interval": "perfect fifth", "pitch_hz": 440}},
+        {"id": "ear_eardrum_learn", "label": "Auto-learn eardrum & body vibration", "action": "mechanical_learn", "target": "ear", "mechanism": "kinetic_eardrum"},
+        {"id": "ear_spectrum_color", "label": "Frequency + color spectrum cross", "action": "mechanical_learn", "target": "ear", "evidence": {"color_spectrum_cross": true}}
       ]
     },
     "final_mouth": {
@@ -68,7 +72,8 @@
         {"id": "mouth_rhythm_speech", "label": "Rhythmic speech · 4/4", "action": "speak", "text": "One two three four — field voice keeps the beat.", "pitch_semitones": 0},
         {"id": "mouth_melody_tts", "label": "Melody TTS lesson", "action": "mouth_train", "lesson": "text_to_speech", "evidence": {"melody": true, "meter": "4/4"}},
         {"id": "mouth_brain_music", "label": "Brain↔mouth music pattern", "action": "music_brain_pattern", "sequence": [0, 2, 4, 7]},
-        {"id": "mouth_music_fusion", "label": "Mouth·Ear·Eye music fusion", "action": "fusion", "evidence": {"mouth_correlation": 0.9, "ear_correlation": 0.88, "music_theory": true, "pitch_hz": 440}}
+        {"id": "mouth_music_fusion", "label": "Mouth·Ear·Eye music fusion", "action": "fusion", "evidence": {"mouth_correlation": 0.9, "ear_correlation": 0.88, "music_theory": true, "pitch_hz": 440}},
+        {"id": "mouth_ear_smarter", "label": "Mouth↔Ear smarter quorum", "action": "mechanical_learn", "target": "mouth_ear", "reinforce_triad": true}
       ]
     }
   },

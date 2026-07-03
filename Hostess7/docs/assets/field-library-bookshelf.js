@@ -34,6 +34,8 @@
     shelfPage: 0,
     selectedBook: null,
     facets: null,
+    bookCount: 0,
+    tickerLines: [],
     debounce: null,
   };
 
@@ -108,16 +110,31 @@
     $("bsb-shelf-view")?.toggleAttribute("hidden", name !== "shelf");
   }
 
+  function eye() {
+    return global.FieldLibraryEye || null;
+  }
+
   function renderStats() {
     const el = $("bsb-stats");
     if (!el) return;
-    const total = state.facets?.counts?.books || state.shelfTotal || "—";
-    const shelves = state.shelves.length || "—";
+    const total = state.facets?.counts?.books || state.bookCount || state.shelfTotal || "—";
+    const shelves = state.shelves.length || state.facets?.counts?.shelves || "—";
     el.innerHTML = [
-      `<span><strong>${total}</strong> books indexed</span>`,
+      `<span><strong>${total}</strong> books for everyone</span>`,
       `<span><strong>${shelves}</strong> Dewey shelves</span>`,
-      `<span>Ironclad Library · Autonomous Warfare corpus gate</span>`,
+      `<span>Humans · librarians · nuns · AI — same catalog, Final Eye polish</span>`,
     ].join(" · ");
+  }
+
+  function renderTicker(books) {
+    const host = $("bsb-ticker");
+    const fle = eye();
+    if (!host || !fle?.mountTicker) return;
+    const sample = (books || state.tickerLines || []).slice(0, 100);
+    if (!sample.length && state.shelves.length) {
+      sample.push("Welcome to the Hostess 7 Library — Dewey shelves for humans, librarians, nuns, and AI alike.");
+    }
+    fle.mountTicker(host, sample.map((b) => (typeof b === "string" ? b : fle.humanLine(b))));
   }
 
   function shelvesForClass(code) {
@@ -141,12 +158,13 @@
           empty?.removeAttribute("hidden");
         } else {
           empty?.setAttribute("hidden", "");
-          hitsEl.innerHTML = state.hits.map((b) =>
-            `<article class="bsb-hit" data-id="${esc(b.id)}" data-shelf="${esc(b.shelf || "")}" tabindex="0" role="button">
+          hitsEl.innerHTML = state.hits.map((b) => {
+            const line = eye()?.humanLine(b) || b.title || b.id;
+            return `<article class="bsb-hit" data-id="${esc(b.id)}" data-shelf="${esc(b.shelf || "")}" tabindex="0" role="button">
               <div class="title">${esc(b.title || b.id)}</div>
-              <div class="meta">${esc(b.author || "")} · Dewey ${esc(b.dewey || "?")} · ${esc(b.shelf_title || b.shelf || "")}</div>
-            </article>`
-          ).join("");
+              <div class="meta">${esc(line)}</div>
+            </article>`;
+          }).join("");
           bindHits();
         }
       }
@@ -222,7 +240,7 @@
   }
 
   async function loadFacets() {
-    const doc = await fetchJson("/api/dewey-index/facets");
+    let doc = await fetchJson("/api/dewey-index/facets");
     state.facets = doc;
     const shelfFacet = doc?.facets?.shelf || {};
     if (typeof shelfFacet === "object" && !Array.isArray(shelfFacet)) {
@@ -235,6 +253,20 @@
         }))
         .sort((a, b) => a.slug.localeCompare(b.slug));
     }
+    state.bookCount = doc?.counts?.books;
+    try {
+      const running = await fetchJson("/api/library/running-text");
+      state.tickerLines = running?.lines || [];
+    } catch (_) {}
+    if (!state.tickerLines?.length) {
+      try {
+        const compact = await fetchJson("/api/dewey-index/compact");
+        const books = compact?.books || [];
+        state.bookCount = state.bookCount || compact?.count || books.length;
+        state.tickerLines = eye()?.runningLines(books, 80) || [];
+      } catch (_) {}
+    }
+    renderTicker(state.tickerLines);
     renderStats();
     renderLobby();
   }
@@ -345,6 +377,9 @@
   function renderPulled(el) {
     if (!el || !state.selectedBook) return;
     const b = state.selectedBook;
+    const fle = eye();
+    const human = fle?.humanLine(b) || b.title || b.id;
+    const ai = fle?.aiLine(b) || "";
     const cs = coverStyle(b);
     const styleStr = Object.entries(cs).map(([k, v]) => k + ":" + v).join(";");
     const coverInner = b.cover
@@ -354,17 +389,26 @@
       <div class="bsb-cover" style="${styleStr}">${coverInner}</div>
       <div>
         <h3>${esc(b.title || b.id)}</h3>
-        <div class="author">${esc(b.author || "Hostess 7")}</div>
+        <div class="author">${esc(b.author || "Hostess 7 Library")}</div>
         <div class="dewey-line">Dewey ${esc(b.dewey || "?")} · ${esc(b.shelf_title || b.shelf || "")}</div>
-        <p style="color:var(--bsb-muted);font-size:0.88rem;margin:0">Pull complete — open to read in the secure H7 reader.</p>
+        <p style="color:var(--bsb-muted);font-size:0.9rem;margin:0;line-height:1.45">${esc(human)}</p>
         <div class="actions">
-          <button type="button" class="bsb-open-btn" id="bsb-open-book">Open my book</button>
+          <button type="button" class="bsb-open-btn" id="bsb-open-book"${b.ready === false ? "" : ""}>Open in reader</button>
           <button type="button" class="bsb-btn" id="bsb-return-spine">Return to shelf</button>
         </div>
       </div>`;
+    const dual = $("bsb-dual");
+    if (dual) {
+      dual.hidden = false;
+      const blurb = $("bsb-human-blurb");
+      const aiEl = $("bsb-ai-line");
+      if (blurb) blurb.textContent = human;
+      if (aiEl) aiEl.textContent = ai;
+    }
     $("bsb-open-book")?.addEventListener("click", () => openBook(b));
     $("bsb-return-spine")?.addEventListener("click", () => {
       state.selectedBook = null;
+      $("bsb-dual")?.setAttribute("hidden", "");
       pushRoute({ shelf: state.shelfSlug });
       renderShelf();
     });
@@ -393,6 +437,7 @@
   function goLobby() {
     state.shelfSlug = null;
     state.selectedBook = null;
+    $("bsb-dual")?.setAttribute("hidden", "");
     setView("lobby");
     pushRoute({ q: state.query || "" });
     renderLobby();

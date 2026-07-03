@@ -1,0 +1,192 @@
+/* Taskbar audio dropdown — full settings, soundcards, DAC mixer, speaker tests */
+
+.fsb-audio-pop {
+  position: fixed;
+  z-index: 100001;
+  width: min(420px, calc(100vw - 16px));
+  max-height: min(78vh, 640px);
+  overflow: auto;
+  padding: 12px 14px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(14, 18, 26, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+  color: #eef4ff;
+  font: 13px/1.4 system-ui, sans-serif;
+}
+
+.fsb-audio-pop[hidden] {
+  display: none !important;
+}
+
+.fsb-audio-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.fsb-audio-head h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.fsb-audio-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  white-space: nowrap;
+}
+
+.fsb-audio-section {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fsb-audio-section h3 {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #9aa8c0;
+}
+
+.fsb-audio-select,
+.fsb-audio-range {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fsb-audio-select {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: inherit;
+  border-radius: 8px;
+  padding: 7px 8px;
+  font: inherit;
+}
+
+.fsb-audio-chip-note {
+  margin: 6px 0 0;
+  font-size: 11px;
+  color: #9aa8c0;
+  line-height: 1.35;
+}
+
+.fsb-audio-formats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fsb-audio-fmt {
+  flex: 1 1 calc(50% - 6px);
+  min-width: 120px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.fsb-audio-fmt strong {
+  display: block;
+  font-size: 12px;
+}
+
+.fsb-audio-fmt span {
+  font-size: 10px;
+  color: #9aa8c0;
+}
+
+.fsb-audio-fmt.active {
+  border-color: rgba(59, 130, 246, 0.55);
+  background: rgba(59, 130, 246, 0.18);
+}
+
+.fsb-audio-mixer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.fsb-audio-mixer label {
+  display: block;
+  font-size: 10px;
+  color: #9aa8c0;
+  margin-bottom: 3px;
+}
+
+.fsb-audio-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.fsb-audio-speakers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.fsb-audio-spk {
+  padding: 8px 4px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fsb-audio-spk:hover,
+.fsb-audio-spk.testing {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.fsb-audio-spk--lfe {
+  grid-column: span 2;
+  background: rgba(244, 114, 182, 0.12);
+}
+
+.fsb-audio-foot {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.fsb-audio-link {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: #93c5fd;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.fsb-audio-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+}

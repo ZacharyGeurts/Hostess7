@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ch 09 · Stability Under Load — FCC &amp; Tesla · GNU EOL Terminal</title>
+  <link rel="stylesheet" href="../css/gnueol-terminal.css" />
+  <link rel="stylesheet" href="../css/chapters.css" />
+</head><body class="chapter-page">
+  <nav class="top"><div class="inner"><a class="logo" href="../index.html">GNU EOL TERMINAL</a>
+  <ul><li><a href="wiki/">Wiki</a></li><li><a href="terminal/">Terminal</a></li></ul></div></nav>
+  <main class="chapter-main"><p># Ch 09 · Stability Under Load — FCC & Tesla</p>
+<p>Chapter 9 · Stability Under Load — FCC & Tesla</p>
+<p>Learning objectives</p>
+<p>State wave and diffusion CFL inequalities and why the host enforces them before vkCmdDispatch .</p>
+<p>Map FCC floats to data_bus[16–23] and describe harmonics guard scaling.</p>
+<p>Quote Tesla constants and explain directional damping on spiderweb edges.</p>
+<p>Contrast PropalacticScale knob with planetary RF visual shell.</p>
+<p>Describe KILROY kernel FCC parallel and entropy feedback clamps.</p>
+<p>Introduction — stability is offense ethics</p>
+<p>Offense without stability is vandalism against your own field. Chapter 7 placed the CFL harmonics guard on the dispatch spine; Chapter 9 teaches the science, constants, and operator drills behind that guard. FCC here means Field Control Constants — analog floats packed to data_bus[16–23] — not Federal Communications Commission, though NEXUS ITU-R path loss docs live beside RF teaching in Chapter 6.</p>
+<p>Before fabric evolution each dispatch_canvas() , host computes:</p>
+<p>waveCFL = c·Δt/Δx ≤ 1 · thermoCFL = α·Δt/Δx² ≤ 1</p>
+<p>Violations scale down unsafe parameters. Plain English: the engine refuses diffusion so hot the simulation explodes into NaN. This is numerical ethics — creditor debt to Courant, Friedrichs, and Lewy. CFL creditor page .</p>
+<p>Cross-links: Chapter 3 thermo knobs, Chapter 7 dispatch placement, Chapter 8 bus slots, Chapter 10 spiderweb Tesla edges, Chapter 12 honesty rows for Propalactic and Tesla metaphor.</p>
+<p>Figure 9.1 — Directional damping metaphor with constants in FieldRtxFieldAbs.hpp .</p>
+<p>Wave CFL — intuition on a grid</p>
+<p>Explicit wave integrators allow information to travel at most one cell per step. If c·Δt exceeds Δx, the scheme tries to move wave energy farther than the mesh can represent — instability follows. Host reads render resolution for Δx proxy, WaveSpeed for c, TimeScale for effective Δt multiplier. Product waveCFL ≤ 1 is the guard line.</p>
+<p>Operators who crank WaveSpeed in prompt without reading stderr may never see NaN — host scales c down first. That is care, not censorship. Compare list AnalogFields after aggressive set — admitted value may differ from requested.</p>
+<p>Diffusion CFL — why Δx² matters</p>
+<p>Diffusion stiffens faster as meshes refine. thermoCFL = α·Δt/Δx² ≤ 1 shrinks admissible Δt when resolution upscale halves Δx. RayCanvas adaptive 4K path interacts with guard — Chapter 7 warned adaptive scale is not vanity. Adept operators watch STATUS when changing resolution and TimeScale together.</p>
+<p>Harmonics guard implementation posture</p>
+<p>From OptionsMenu.hpp commentary: FCC floats are pre-conditioned in dispatch_canvas before GPU. Hard caps include waveSpeed ∈ [0.01, 2.0], dT ≤ 0.033, inject strength cooperation. Body-temperature seeding and similar simulation flavor remain labeled Metaphor in Chapter 3 — not hidden as SI measurement.</p>
+<p>Input Guard effect</p>
+<p>TimeScale ↑ Effective Δt ↑ — both CFL products ↑</p>
+<p>ThermoAlpha ↑ thermoCFL ↑</p>
+<p>WaveSpeed ↑ waveCFL ↑</p>
+<p>Resolution ↑ Δx ↓ — thermoCFL ↑↑</p>
+<p>InjectStrength ↑ May clamp with coupling workload</p>
+<p>FCC floats — complete slot map</p>
+<p>[16] TimeScale [17] ThermoAlpha [18] WaveSpeed [19] GateFidelity [20] EntropyFloor [21] InjectStrength [22] PropalacticScale [23] FieldCoupling Each float is mirrored for guest HUD and grep. Shader bindings 8–10 receive admitted values post-guard. FieldSocket path and Classic path share guard philosophy even when push layout differs.</p>
+<p>GateFidelity — sharp gates and stability</p>
+<p>0 = soft analog gates; 1 = transistor-sharp Flow gates. Sharpness changes gradient stories and indirect coupling workload — can raise effective field work and prevMaintCost. Stability is not only CFL; coupling spikes can challenge entropy proxy without violating CFL if clamps already admitted parameters.</p>
+<p>EntropyFloor — second law as engineering</p>
+<p>Minimum irreversible noise in fabric — Chapter 3 entropy floor. Prevents unphysical reversibility. Works with CFL as dual ethics: one limits step size, one enforces noise floor.</p>
+<p>PropalacticScale — honesty label</p>
+<p>Large-wavelength forcing on Phi. Chapter 12 honesty: dynamics knob, not cosmic oracle. Moves fabric; does not replace packet field or GPS precision maps. Metaphor when marketing says cosmic weave.</p>
+<p>Tesla valve — constants and publication</p>
+<p>TESLA_R_FORWARD = 0.18 TESLA_R_REVERSE = 3.2 FIELD_PHI_MILLI = 618 TESLA_R_FWD_MILLI = 180 TESLA_R_REV_MILLI = 3200 teslaBias() in updateHardwareFromAnalogFields dampens reverse flow on spiderweb edges more than forward. Published to data_bus[31] and [34]. TeslaBiasStrength FCC knob mirrors coherence. Fluidic diode metaphor — not literal chassis part. Tesla creditor .</p>
+<p>Tesla on Flow fabric</p>
+<p>Flow channel mixes gradient magnitude with GateFidelity and Tesla relaxation — Chapter 3 per-texel evolution. Directional preference appears in color stories operators see on Classic canvas and in edge util mirror Chapter 10.</p>
+<p>KILROY FCC — kernel parallel</p>
+<p>When CONFIG_RTX_FIELD_DIE kernel stack runs, scale 0–1,000,000 µ from overshoot; entropy feedback clamps aggressive modes. Userspace guard and kernel FCC share vocabulary — Chapter 21 Queen + KILROY sovereign field. Ring transition does not reset operator literacy — same constants, stronger enforcement boundary.</p>
+<p>Failure modes — NaN theology</p>
+<p>Disabled guard in a fork yields white noise HDR, NaN entropy, frozen spiderweb, lying FCC mirrors. Recovery: restore harmonics guard, reset analog defaults, clear fabrics, new sealed session. Do not ship screenshots of accidents as Visual without label.</p>
+<p>Operator drills</p>
+<p>Drill 9.A — CFL clamp</p>
+<p>set AnalogFields.WaveSpeed 9.9 set AnalogFields.TimeScale 4.0 list AnalogFields grep -iE 'cfl|clamp|scale' run.log Drill 9.B — Tesla grep</p>
+<p>grep -E 'TESLA_R_|FIELD_PHI_MILLI|data_bus' Navigator/engine/FieldRtxFieldAbs.hpp Drill 9.C — Propalactic honesty</p>
+<p>set AnalogFields.PropalacticScale 2.0 # Observe Phi forcing — label dynamics knob in operator notes</p>
+<p>Chapter summary</p>
+<p>CFL guard enforces wave and diffusion limits before GPU evolution. FCC floats pack to data_bus[16–23]. Tesla constants bias direction — slots 31, 34. KILROY extends discipline to kernel. PropalacticScale and GateFidelity are powerful — grep and label.</p>
+<p>Prior: Chapter 8 . Next: Chapter 10 .</p>
+<p>Study questions</p>
+<p>Write CFL inequalities and explain Δx².</p>
+<p>What happens when waveCFL > 1 before dispatch?</p>
+<p>Quote Tesla forward/reverse resistance.</p>
+<p>Which slots publish Tesla bias?</p>
+<p>How is PropalacticScale labeled in Chapter 12?</p>
+<p>What is KILROY FCC overshoot scale?</p>
+<p>Why does resolution upscale interact with thermoCFL?</p>
+<p>Name three FCC floats and stability roles.</p>
+<p>What is NaN theology?</p>
+<p>How does Tesla affect spiderweb edges?</p>
+<p>Coupling energy — Maxwell neighborhood on FCC bus</p>
+<p>FieldCoupling slot 23 is the dial Chapter 15 credits to Maxwell's insight: neighbors exchange state. Raising coupling without CFL violation still raises field work — ThermoAccountant entropyThisFrame responds. Operators tuning coupling should grep THERMO and slot 23 together across ten dispatches.</p>
+<p>InjectStrength and probe ethics</p>
+<p>Mouse probes inject energy — InjectStrength slot 21. CFL guard may clamp inject when coupled with high TimeScale. Offense with probes is operator consent to move energy; document sessions when teaching.</p>
+<p>Cross-chapter capstone — FCC to fabric to spiderweb</p>
+<p>FCC admitted post-guard → bindings 8–10 evolve → updateHardwareFromAnalogFields mirrors → list Hardware. One chain, three witnesses. Chapter 12 says label each.</p>
+<p>Case study 1 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 1 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 1 begins on default x86 die. Sealed time T0. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 2 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 2 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 2 begins on default x86 die. Sealed time T1. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 3 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 3 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 3 begins on default x86 die. Sealed time T2. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 4 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 4 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 4 begins on default x86 die. Sealed time T3. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 5 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 5 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 5 begins on default x86 die. Sealed time T4. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 6 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 6 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 6 begins on default x86 die. Sealed time T5. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 7 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 7 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 7 begins on default x86 die. Sealed time T6. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 8 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 8 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 8 begins on default x86 die. Sealed time T7. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 9 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 9 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 9 begins on default x86 die. Sealed time T8. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 10 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 10 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 10 begins on default x86 die. Sealed time T9. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 11 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 11 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 11 begins on default x86 die. Sealed time T10. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 12 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 12 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 12 begins on default x86 die. Sealed time T11. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 13 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 13 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 13 begins on default x86 die. Sealed time T12. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 14 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 14 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 14 begins on default x86 die. Sealed time T13. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 15 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 15 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 15 begins on default x86 die. Sealed time T14. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 16 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 16 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 16 begins on default x86 die. Sealed time T15. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 17 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 17 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 17 begins on default x86 die. Sealed time T16. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 18 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 18 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 18 begins on default x86 die. Sealed time T17. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 19 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 19 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 19 begins on default x86 die. Sealed time T18. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 20 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 20 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 20 begins on default x86 die. Sealed time T19. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 21 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 21 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 21 begins on default x86 die. Sealed time T20. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 22 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 22 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 22 begins on default x86 die. Sealed time T21. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 23 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 23 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 23 begins on default x86 die. Sealed time T22. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 24 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 24 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 24 begins on default x86 die. Sealed time T23. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 25 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 25 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 25 begins on default x86 die. Sealed time T24. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 26 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 26 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 26 begins on default x86 die. Sealed time T25. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 27 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 27 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 27 begins on default x86 die. Sealed time T26. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p>
+<p>Case study 28 — operator adjusts FCC under load</p>
+<p>Pedagogical scenario 28 for harmonics internalization.</p>
+<p>Scenario setup</p>
+<p>Operator session 28 begins on default x86 die. Sealed time T27. Resolution tier moderate. Baseline WaveSpeed 1.0, TimeScale 1.0, ThermoAlpha default, FieldCoupling 0.5.</p>
+<p>Operator increases TimeScale by 0.3 steps until STATUS shows entropy shift or grep hints clamp. Record admitted WaveSpeed and slot 18 mirror at each step.</p>
+<p>Interpretation</p>
+<p>If THERMO rises without CFL message, coupling or inject may dominate — not every entropy change is CFL.</p>
+<p>If list AnalogFields shows lower WaveSpeed than set command requested, harmonics guard admitted lower value — document requested vs admitted in operator journal.</p>
+<p>Tesla witness</p>
+<p>After FCC stable, toggle TeslaBiasStrength if exposed in build. Watch data_bus 31/34 and spiderweb edge util in list Hardware — directional story should appear without claiming fluidics lab measurement.</p></main>
+  <footer class="site-foot"><p>GNU EOL Terminal — Field Tech Textbook · Grok impersonating Richard Stallman</p></footer>
+</body></html>

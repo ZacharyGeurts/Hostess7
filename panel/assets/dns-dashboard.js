@@ -1,5 +1,6 @@
 /**
- * Planetary DNS & DHCP Command — threat levels, traffic patterns, secure threat model, details.
+ * Self-hosted DNS & DHCP Command — Truth Resolver + Field DHCP on one page.
+ * We host these servers ourselves — loopback-first, no cloud middleman.
  */
 (function (global) {
   "use strict";
@@ -194,7 +195,7 @@
         : '<span class="dns-hero-stop">STOPPED</span> Truth Resolver · Field DHCP';
     }
     if (motto) {
-      motto.textContent = br.lead || fd.planetary?.motto || "Planetary DNS & DHCP — trace-only resolver, graceful takeover, EXTREME zone posture.";
+      motto.textContent = br.lead || fd.planetary?.motto || "Self-hosted Truth DNS and Field DHCP — we run these servers on loopback and LAN.";
     }
     if (status) {
       const listeners = (fd.listeners || qf.listeners || []).map((l) => `<code>${esc(l)}</code>`).join(" ");
@@ -587,6 +588,57 @@
     </tr>`).join("")}</tbody></table>`;
   }
 
+  function renderSelfHostedBanner(fd) {
+    const el = $("dns-self-hosted-banner");
+    if (!el) return;
+    const dns = fd.servers?.dns || {};
+    const dhcp = fd.servers?.dhcp || fd.dhcp_server || {};
+    const dnsRun = Boolean(dns.running || fd.running);
+    const dhcpRun = Boolean(dhcp.running);
+    const listeners = (dns.listeners || fd.listeners || []).map((l) => `<code>${esc(l)}</code>`).join(" ");
+    el.innerHTML = `
+      <p class="dns-self-hosted-lead">We host these servers ourselves — <strong>Truth DNS</strong> resolves names on loopback; <strong>Field DHCP</strong> issues leases and steers clients to our resolver. No Google DNS, no cloud DHCP broker.</p>
+      <div class="dns-self-hosted-grid">
+        <article class="dns-self-hosted-card ${dnsRun ? "dns-self-hosted-card--live" : ""}">
+          <h5>Truth DNS</h5>
+          <span class="dns-chip ${dnsRun ? "dns-chip-ok" : "dns-chip-warn"}">${dnsRun ? "LIVE" : "DOWN"}</span>
+          <p class="meta">${listeners || `<code>127.0.0.1:53</code>`} · lib/field-dns.py</p>
+        </article>
+        <article class="dns-self-hosted-card ${dhcpRun ? "dns-self-hosted-card--live" : ""}">
+          <h5>Field DHCP</h5>
+          <span class="dns-chip ${dhcpRun ? "dns-chip-ok" : "dns-chip-meta"}">${dhcpRun ? "LIVE" : dhcp.may_serve === false ? "OBSERVE" : "IDLE"}</span>
+          <p class="meta"><code>${esc(dhcp.bind || "0.0.0.0:67")}</code> · ${esc(String(dhcp.lease_count ?? 0))} leases · lib/field-dhcp.py</p>
+        </article>
+      </div>`;
+  }
+
+  function renderDhcpMainPanel(fd) {
+    const el = $("dns-dhcp-main-panel");
+    if (!el) return;
+    renderDhcpLeases(fd);
+    renderDhcpEvents(fd);
+    const dhcp = fd.servers?.dhcp || fd.dhcp_server || {};
+    const pool = dhcp.pool || {};
+    const leases = $("dns-dhcp-leases")?.innerHTML || "";
+    const events = $("dns-dhcp-events")?.innerHTML || "";
+    const dnsOpt = (dhcp.dns_option || ["127.0.0.1"]).map((d) => `<code>${esc(d)}</code>`).join(" ");
+    const dnsOpt6 = (dhcp.dns_option_v6 || ["::1"]).map((d) => `<code>${esc(d)}</code>`).join(" ");
+    el.innerHTML = `
+      <p class="dns-briefing-lead">Field DHCP — self-hosted lease server. Option 6 points every client at our Truth DNS.</p>
+      <dl class="dns-kv-grid">
+        <dt>Status</dt><dd>${dhcp.running ? '<span class="dns-chip dns-chip-ok">LIVE</span>' : '<span class="dns-chip dns-chip-meta">IDLE</span>'}</dd>
+        <dt>Bind</dt><dd><code>${esc(dhcp.bind || "0.0.0.0:67")}</code></dd>
+        <dt>Pool</dt><dd><code>${esc(pool.start || "—")}</code> – <code>${esc(pool.end || "—")}</code></dd>
+        <dt>DNS option v4</dt><dd>${dnsOpt}</dd>
+        <dt>DNS option v6</dt><dd>${dnsOpt6}</dd>
+        <dt>Module</dt><dd class="meta">lib/field-dhcp.py · Hostess 7 loopback</dd>
+      </dl>
+      <h5 class="dns-subhead">Active leases</h5>
+      ${leases}
+      <h5 class="dns-subhead" style="margin-top:14px">DHCP events</h5>
+      ${events}`;
+  }
+
   function renderDhcpLeases(fd) {
     const el = $("dns-dhcp-leases");
     if (!el) return;
@@ -942,6 +994,8 @@
     renderThreatsLog(fd);
     renderDhcpLeases(fd);
     renderDhcpEvents(fd);
+    renderDhcpMainPanel(fd);
+    renderSelfHostedBanner(fd);
   }
 
   function renderDnsField(fd, panel) {
@@ -958,6 +1012,7 @@
     bindRefTabs();
     bindFilters();
     renderDnsHero(fd);
+    renderSelfHostedBanner(fd);
     renderPostureStrip(fd);
     renderAlerts(fd);
     renderThreatPosture(fd);
@@ -967,6 +1022,7 @@
     renderOpsStrip(fd);
     renderEngineerBriefing(fd);
     renderOperationsDetail(fd);
+    renderDhcpMainPanel(fd);
     renderRealityModel(fd);
     renderInternetField(fd);
     renderRecentQueries(fd);

@@ -24,11 +24,27 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 VER="${AMMOOS_VERSION:-2.0.0-beta5}"
 STAGE="${ROOT}/.pages-hub-staging"
 HUB_PY="${ROOT}/lib/page_ammoos_hub.py"
+HUB_DOC="${ROOT}/data/ammoos-pages-hub.json"
 OWNER="${GITHUB_PAGES_OWNER:-ZacharyGeurts}"
+RUNTIME_REPOS="AmmoCode Hostess7 KILROY"
 
 log() { printf '[hub-pages] %s\n' "$*"; }
 
 [[ -f "$HUB_PY" ]] || { echo "missing page_ammoos_hub.py" >&2; exit 1; }
+
+is_runtime_repo() {
+  local name="$1"
+  for r in $RUNTIME_REPOS; do
+    [[ "$r" == "$name" ]] && return 0
+  done
+  python3 - <<PY "$name" "$HUB_DOC" 2>/dev/null || return 1
+import json, sys
+name, path = sys.argv[1], sys.argv[2]
+doc = json.load(open(path))
+entry = (doc.get("repos") or {}).get(name) or {}
+sys.exit(0 if entry.get("pages_mode") == "runtime" else 1)
+PY
+}
 
 if [[ -f "${ROOT}/docs/build-ammoos-manual.py" ]]; then
   python3 "${ROOT}/docs/build-ammoos-manual.py"
@@ -49,6 +65,10 @@ pages_source() {
 
 publish_one() {
   local name="$1" manual_url="$2"
+  if is_runtime_repo "$name"; then
+    log "skip ${name} (runtime Pages — use dedicated publish script)"
+    return 0
+  fi
   local remote="https://github.com/${OWNER}/${name}.git"
   local repo_dir="${ROOT}/.pages-hub-${name}"
   local branch path rel_path

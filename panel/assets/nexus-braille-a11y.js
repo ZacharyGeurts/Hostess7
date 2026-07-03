@@ -371,7 +371,7 @@
       "view-field-rf": "Field RF sentinel",
       "view-research": "Research tables",
       "view-signals": "Signals field",
-      "view-dns": "DNS and DHCP planetary command",
+      "view-dns": "Self-hosted DNS and DHCP command",
       "view-outside": "Outside egress gate",
       "view-library": "Library field books",
       "view-settings": "Settings",

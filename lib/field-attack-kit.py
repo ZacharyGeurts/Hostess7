@@ -1365,10 +1365,63 @@ def rekill_target(ip: str, vector: str = "HOSTILE", severity: str = "high") -> d
     }
 
 
+def qemu_bot_rekill() -> dict[str, Any]:
+    """RE-KILL orphan QEMU bot probes — secure transfer lane hygiene before publish."""
+    patterns = (
+        "qemu-world-pipeline",
+        "world-node-c2-kilroy-war-deploy",
+        "qemu-world-launch-one",
+        "qemu-system-x86_64.*-snapshot",
+    )
+    rekilled: list[str] = []
+    for pat in patterns:
+        try:
+            proc = subprocess.run(
+                ["pkill", "-f", pat],
+                capture_output=True,
+                text=True,
+                timeout=8,
+                check=False,
+            )
+            if proc.returncode == 0:
+                rekilled.append(pat)
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+    cool = INSTALL / "GrokLab" / "deploy" / "qemu-world-cool.sh"
+    cooled: dict[str, Any] = {}
+    if cool.is_file():
+        try:
+            proc = subprocess.run(
+                ["bash", str(cool), "suspend-idle"],
+                capture_output=True,
+                text=True,
+                timeout=30,
+                check=False,
+            )
+            if (proc.stdout or "").strip().startswith("{"):
+                cooled = json.loads(proc.stdout)
+            else:
+                cooled = {"ok": proc.returncode == 0}
+        except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+            cooled = {"ok": False}
+    doc = {
+        "ok": True,
+        "schema": "qemu-bot-rekill/v1",
+        "rekilled_patterns": rekilled,
+        "qemu_cool": cooled,
+        "rekilled_count": len(rekilled),
+    }
+    try:
+        (STATE / "qemu-bot-rekill.json").write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    except OSError:
+        pass
+    return doc
+
+
 def main() -> int:
     if len(sys.argv) < 2:
         print(
-            "usage: field-attack-kit.py [revalidate-kill-list|boot-rekill|autokill-certain|autokill-needs-die|forever-kill-enforce|forever-disable|crush-hot|auto-rekill|kill|disable|nokill|check-online|rekill <ip> ...]",
+            "usage: field-attack-kit.py [revalidate-kill-list|boot-rekill|autokill-certain|autokill-needs-die|forever-kill-enforce|forever-disable|crush-hot|auto-rekill|qemu-bot-rekill|kill|disable|nokill|check-online|rekill <ip> ...]",
             file=sys.stderr,
         )
         return 1
@@ -1388,6 +1441,10 @@ def main() -> int:
     if cmd in ("rekill-all-registered", "rekill-all"):
         max_ips = int(sys.argv[2]) if len(sys.argv) > 2 else AUTO_REKILL_MAX_IPS
         json.dump(rekill_all_registered(max_ips=max_ips), sys.stdout, indent=2)
+        sys.stdout.write("\n")
+        return 0
+    if cmd == "qemu-bot-rekill":
+        json.dump(qemu_bot_rekill(), sys.stdout, indent=2)
         sys.stdout.write("\n")
         return 0
     if cmd == "register-rekill" and len(sys.argv) >= 3:

@@ -1,7 +1,7 @@
-# ZNetwork — AmmoOS 2.0.0-beta4 stack companion
+# ZNetwork — AmmoOS 2.0.0-beta5 stack companion
 
 **Canonical code:** [ZacharyGeurts/AmmoOS](https://github.com/ZacharyGeurts/AmmoOS)  
-**AmmoOS release:** [v2.0.0-beta4](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta4)  
+**AmmoOS release:** [v2.0.0-beta5](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta5)  
 **Manual:** [io.html](https://zacharygeurts.github.io/AmmoOS/io.html)
 
 Smart relayer — field I/O and ZNetwork hub in AmmoOS manual
@@ -11,7 +11,7 @@ This component ships inside the **AmmoOS** tree. Clone AmmoOS, wire siblings, in
 ```bash
 git clone https://github.com/ZacharyGeurts/AmmoOS.git
 cd AmmoOS
-git checkout v2.0.0-beta4
+git checkout v2.0.0-beta5
 ./scripts/wire-stack.sh
 sudo ./install-all.sh
 ```

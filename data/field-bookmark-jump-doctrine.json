@@ -1,0 +1,54 @@
+{
+  "schema": "field-bookmark-jump/v1",
+  "title": "Secure bookmark jump — ensure stack then redirect",
+  "motto": "Host browser bookmarks never hit orphan ports — panel ensures, Queen gates, then wire moves. Hostess 7 default — clean the whole internet.",
+  "default_on_hostess7": true,
+  "hostess7_doctrine": "data/hostess7-internet-clean-doctrine.json",
+  "pages_base": "https://zacharygeurts.github.io/Hostess7",
+  "panel_port": 9477,
+  "queen_port": 9481,
+  "training_port": 9488,
+  "jumps": {
+    "h7-training-viewer": {
+      "title": "Training Viewer",
+      "ensure": "/api/hostess7-training-viewer/ensure",
+      "target": "http://127.0.0.1:9488/"
+    },
+    "cmd-field": {
+      "title": "NEXUS Field",
+      "ensure": "/api/health",
+      "target": "http://127.0.0.1:9477/field"
+    },
+    "cmd-deck": {
+      "title": "Field Command",
+      "ensure": "/api/health",
+      "target": "http://127.0.0.1:9477/command"
+    },
+    "cmd-c2": {
+      "title": "NEXUS C2",
+      "ensure": "/api/health",
+      "target": "http://127.0.0.1:9481/world/queen-nexus-c2.html",
+      "queen_wrap": true
+    },
+    "g16-compiler": {
+      "title": "Grok16 Compiler",
+      "ensure": "/api/hostess7/g16-online/ensure",
+      "target": "http://127.0.0.1:9477/combinatorics",
+      "pages_fallback": "https://zacharygeurts.github.io/Hostess7/g16-build-output/",
+      "https_secure": true
+    },
+    "h7-g16-online": {
+      "title": "Grok16 Online Compiler",
+      "ensure": "/api/hostess7/g16-online/ensure",
+      "target": "http://127.0.0.1:9477/g16-build-output",
+      "pages_fallback": "https://zacharygeurts.github.io/Hostess7/g16-build-output/",
+      "https_secure": true
+    }
+  },
+  "https_secure": {
+    "enabled": true,
+    "param": "https=1",
+    "label": "HTTPS+Secure",
+    "doctrine": "data/hostess7-secure-https-doctrine.json"
+  }
+}

@@ -21,7 +21,7 @@ unset -f _aml_find_root 2>/dev/null || true
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-VER="${STACK_VERSION:-2.0.0-beta5}"
+VER="${STACK_VERSION:-3.0.7-beta5}"
 TAG="${STACK_TAG:-v${VER}}"
 AMMOOS_REPO="${AMMOOS_REPO:-ZacharyGeurts/AmmoOS}"
 OWNER="${GITHUB_OWNER:-ZacharyGeurts}"

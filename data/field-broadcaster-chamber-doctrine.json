@@ -14,9 +14,18 @@
     "field-final-eye-canvas-bridge",
     "field-body-system"
   ],
+  "senses": {
+    "module": "lib/field-broadcaster-senses.py",
+    "final_eye": "camera_and_display",
+    "final_ear": "audio_input",
+    "final_mouth": "voice_output_monitor",
+    "optional": true
+  },
   "vision": {
     "camera_driver": "Final_Eye",
     "display_driver": "Final_Eye",
+    "audio_driver": "Final_Ear",
+    "voice_driver": "Final_Mouth",
     "canvas_egress": "Queen CANVAS",
     "canvas_bridge": "lib/field-final-eye-canvas-bridge.py",
     "ingress": "mjpeg",

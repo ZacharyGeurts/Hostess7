@@ -1,17 +1,17 @@
-# AmmoCode — AmmoOS 2.0.0-beta4 stack companion
+# AmmoCode — AmmoOS 2.0.0-beta5 stack companion
 
 **Canonical code:** [ZacharyGeurts/AmmoOS](https://github.com/ZacharyGeurts/AmmoOS)  
-**AmmoOS release:** [v2.0.0-beta4](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta4)  
+**AmmoOS release:** [v2.0.0-beta5](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta5)  
 **Manual:** [combinatronic.html](https://zacharygeurts.github.io/AmmoOS/combinatronic.html)
 
-Compiler GUI — combinatronic manual in AmmoOS
+Code editor running on GitHub Pages — g16 on loopback after clone
 
 This component ships inside the **AmmoOS** tree. Clone AmmoOS, wire siblings, install:
 
 ```bash
 git clone https://github.com/ZacharyGeurts/AmmoOS.git
 cd AmmoOS
-git checkout v2.0.0-beta4
+git checkout v2.0.0-beta5
 ./scripts/wire-stack.sh
 sudo ./install-all.sh
 ```

@@ -7,7 +7,7 @@
   const $ = (id) => document.getElementById(id);
 
   const LANES = [
-    { id: "training", title: "Training Viewer", hint: "Connected models graph · chambers", url: "http://127.0.0.1:9488/", api: null },
+    { id: "training", title: "Training Viewer", hint: "Connected models graph · chambers", url: "http://127.0.0.1:9477/bookmark-jump/?id=h7-training-viewer", api: null },
     { id: "brain", title: "Hostess Brain", hint: "Super intelligence · AI communique", url: "queen://hostess", api: "/api/field-brain" },
     { id: "guardian", title: "Neural Guardian", hint: "Truth · lie · deception discern", url: "http://127.0.0.1:9477/command#training", api: "/api/hostess7/training" },
     { id: "g16", title: "Grok16 Forever", hint: "Compiler · binutils · secure profiles", url: "queen://g16", api: "/api/power-sort" },

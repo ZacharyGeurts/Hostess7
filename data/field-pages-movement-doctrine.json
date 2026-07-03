@@ -1,0 +1,46 @@
+{
+  "schema": "field-pages-movement-doctrine/v1",
+  "title": "Pages movement registry — subset of field-endpoint-registry",
+  "alias_of": "field-endpoint-registry",
+  "parent_module": "lib/field-endpoint-registry.py",
+  "parent_doctrine": "data/field-endpoint-registry-doctrine.json",
+  "boss": "hostess7",
+  "motto": "Every Pages URL move is recorded: where it was, where it is, who witnessed it.",
+  "owner": "ZacharyGeurts",
+  "rules": {
+    "append_only_ledger": true,
+    "hash_chain_required": true,
+    "no_silent_relocate": true,
+    "public_export_required": true,
+    "mirror_must_reference_canonical": true
+  },
+  "movement_kinds": [
+    "seed_historic",
+    "canonical_pages",
+    "mirror_add",
+    "relocate",
+    "github_to_pages",
+    "publish_witness"
+  ],
+  "historic_sources": [
+    "data/field-pages-movement-registry-seed.json",
+    "data/ammoos-pages-hub.json",
+    "Hostess7/data/hostess7-old-projects.json",
+    "docs/github-favorites.json",
+    "H7updater/data/h7updater-stack-index.json",
+    "data/field-github-everyone-doctrine.json"
+  ],
+  "public_surfaces": {
+    "api_loopback": "/api/field-pages-movement",
+    "api_pages": "/api/field-pages-movement.json",
+    "ledger_pages": "/api/field-pages-movement-ledger.json",
+    "registry_pages": "/api/field-pages-movement-routes.json"
+  },
+  "publish_hooks": [
+    "scripts/publish-gnueol-terminal-github.sh",
+    "scripts/publish-hostess7-github.sh"
+  ],
+  "wire": "Hostess7/docs/pages-github-everyone-wire.js",
+  "layer": 0,
+  "ships_with": ["field-github-everyone", "field-github-resilience", "ammoos-pages-hub"]
+}

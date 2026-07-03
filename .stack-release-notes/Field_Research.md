@@ -1,7 +1,7 @@
-# Field Research — AmmoOS 2.0.0-beta4 stack companion
+# Field Research — AmmoOS 2.0.0-beta5 stack companion
 
 **Canonical code:** [ZacharyGeurts/AmmoOS](https://github.com/ZacharyGeurts/AmmoOS)  
-**AmmoOS release:** [v2.0.0-beta4](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta4)  
+**AmmoOS release:** [v2.0.0-beta5](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta5)  
 **Manual:** [combinatronic.html](https://zacharygeurts.github.io/AmmoOS/combinatronic.html)
 
 Combinatorics research — combinatronic manual in AmmoOS
@@ -11,7 +11,7 @@ This component ships inside the **AmmoOS** tree. Clone AmmoOS, wire siblings, in
 ```bash
 git clone https://github.com/ZacharyGeurts/AmmoOS.git
 cd AmmoOS
-git checkout v2.0.0-beta4
+git checkout v2.0.0-beta5
 ./scripts/wire-stack.sh
 sudo ./install-all.sh
 ```

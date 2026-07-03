@@ -28,7 +28,9 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "output_device": "",
     "monitor_device": "",
     "loopback_device": "",
-    "format_profile": "stereo",
+    "format_profile": "surround_8ch",
+    "quality": "high",
+    "soundcard_id": "host-live",
     "sample_rate": 48000,
     "buffer_frames": 1024,
     "periods": 3,
@@ -69,6 +71,16 @@ _EMU_MATRICES: dict[str, list[list[float]]] = {
 
 def enumerate_devices() -> dict[str, Any]:
     return fcc.enumerate_audio_devices()
+
+
+def _soundcards_slice() -> dict[str, Any]:
+    mod = fcc.mod("soundcards_cat", "field-soundcards-catalog.py")
+    if mod and hasattr(mod, "catalog"):
+        try:
+            return mod.catalog()
+        except Exception:
+            pass
+    return fcc.load(INSTALL / "data" / "field-soundcards-catalog.json", {})
 
 
 def format_profiles() -> list[dict[str, Any]]:
@@ -275,6 +287,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "devices": devs,
         "settings": cfg,
         "format_profiles": format_profiles(),
+        "soundcards": _soundcards_slice(),
         "active_profile": prof,
         "emulation": emulation_matrix(str(prof.get("id") or "stereo")),
         "vu": {"channels": prof.get("channels", 8), "levels": vu_levels(channels=int(prof.get("channels") or 8))},
@@ -298,6 +311,28 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
     if write:
         doc["permanency"] = fcc.save_permanent(PANEL, doc)
     return doc
+
+
+def test_tone(channel: str = "FL", *, duration_sec: float = 0.8) -> dict[str, Any]:
+    """Play test tone on a speaker channel — speaker-test or emulated."""
+    ch = str(channel or "FL").upper()
+    layout_map = {"FL": 1, "FR": 2, "FC": 3, "LFE": 4, "BL": 5, "BR": 6, "SL": 7, "SR": 8}
+    idx = layout_map.get(ch, 1)
+    cfg = load_settings()
+    out = str(cfg.get("output_device") or "default")
+    cmd = ["speaker-test", "-D", out if out != "default" else "default", "-c", "8", "-t", "wav", "-l", "1", "-s", "1", str(idx)]
+    code, _ = fcc.run(cmd, timeout=int(duration_sec * 3) + 4)
+    if code == 0:
+        return {"ok": True, "channel": ch, "index": idx, "method": "speaker-test", "output": out}
+    code2, _ = fcc.run(["paplay", "/usr/share/sounds/freedesktop/stereo/bell.oga"], timeout=4)
+    return {
+        "ok": code2 == 0,
+        "channel": ch,
+        "index": idx,
+        "method": "paplay_fallback" if code2 == 0 else "emulated",
+        "emulated": code != 0 and code2 != 0,
+        "note": "Use taskbar Web Audio test when no local speaker-test",
+    }
 
 
 def dispatch(body: dict[str, Any]) -> dict[str, Any]:
@@ -329,10 +364,25 @@ def dispatch(body: dict[str, Any]) -> dict[str, Any]:
 
     if action in ("set_profile", "profile", "format"):
         cfg = load_settings()
-        cfg["format_profile"] = str(body.get("format_profile") or body.get("profile_id") or "stereo")
+        cfg["format_profile"] = str(body.get("format_profile") or body.get("profile_id") or "surround_8ch")
         if "emulation_enabled" in body:
             cfg["emulation_enabled"] = bool(body["emulation_enabled"])
+        if "quality" in body:
+            cfg["quality"] = str(body["quality"])
         return apply_routing(cfg)
+
+    if action in ("set_soundcard", "soundcard"):
+        cfg = load_settings()
+        cfg["soundcard_id"] = str(body.get("soundcard_id") or body.get("card_id") or "")
+        prof = str(body.get("format_profile") or body.get("emulation") or "")
+        if prof:
+            cfg["format_profile"] = prof
+        if body.get("alsa_id") is not None:
+            cfg["alsa_card"] = str(body["alsa_id"])
+        return apply_routing(cfg)
+
+    if action in ("test_tone", "test", "speaker_test"):
+        return test_tone(str(body.get("channel") or body.get("speaker") or "FL"))
 
     if action in ("emulation", "matrix"):
         pid = str(body.get("format_profile") or body.get("profile_id") or load_settings().get("format_profile") or "stereo")

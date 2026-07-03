@@ -7,7 +7,7 @@
     threats: { code: "OP-THR", title: "Threats · Kill Chain", flow: ["threats/home-protector", "threats/local-holes", "threats/host-attack", "threats/human-dossier", "intel/field-rf"] },
     intel: { code: "OP-INT", title: "Intel · Trust & People", flow: ["intel/honor", "intel/people", "intel/field-rf", "intel/research"] },
     signals: { code: "OP-SIG", title: "Signals · Antenna", flow: ["signals", "intel/field-rf", "packets/monitor", "dns"] },
-    dns: { code: "OP-DNS", title: "DNS & DHCP · Planetary", flow: ["dns", "packets/monitor", "outside", "us"] },
+    dns: { code: "OP-DNS", title: "DNS & DHCP · Self-hosted", flow: ["dns", "packets/monitor", "outside", "us"] },
     outside: { code: "OP-OUT", title: "Outside · Egress Gate", flow: ["outside", "library", "dns", "packets/monitor"] },
     library: { code: "OP-LIB", title: "Library · Field Books", flow: ["library", "outside", "intel/research", "command"] },
     system: { code: "OP-SYS", title: "System · Settings & Logs", flow: ["system/settings", "system/logs", "command", "packets/monitor"] },

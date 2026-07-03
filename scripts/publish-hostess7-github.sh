@@ -194,9 +194,40 @@ git_publish_stage() {
       return 0
     fi
   fi
-  cd "$STAGE"
-  rm -rf .git
-  git init -b main
+  H7_SECURE="${ROOT}/Hostess7/scripts/hostess7_secure_git.py"
+  CLONE="${ROOT}/.hostess7-github-clone"
+  PUBLISH_DIR="$CLONE"
+  if [[ -f "$H7_SECURE" ]]; then
+    if ! python3 "$H7_SECURE" verify; then
+      log "secure git verify failed — enqueue for retry"
+      if [[ -f "$RES_PY" ]]; then
+        python3 "$RES_PY" enqueue "$(python3 -c "import json; print(json.dumps({'version':'${HOSTESS7_VERSION}','tag':'${TAG}','stage':'${STAGE}','remote':'${REMOTE}','reason':'verify_failed'}))")" 2>/dev/null || true
+      fi
+      return 0
+    fi
+    if [[ ! -d "${CLONE}/.git" ]]; then
+      log "clone Hostess7 — preserve commit history"
+      rm -rf "$CLONE"
+      if ! python3 "$H7_SECURE" clone "$CLONE" --remote "$REMOTE" --branch main; then
+        log "WARN clone failed — init fresh clone dir"
+        mkdir -p "$CLONE"
+        cd "$CLONE"
+        git init -b main
+        git config user.email "${GIT_USER_EMAIL:-gzac5314@users.noreply.github.com}"
+        git config user.name "${GIT_USER_NAME:-ZacharyGeurts}"
+        cd "$ROOT"
+      fi
+    fi
+    log "merge stage → clone (history preserved)"
+    rsync -a --delete --exclude='.git' "${STAGE}/" "${CLONE}/"
+    PUBLISH_DIR="$CLONE"
+  else
+    cd "$STAGE"
+    rm -rf .git
+    git init -b main
+    PUBLISH_DIR="$STAGE"
+  fi
+  cd "$PUBLISH_DIR"
   git config user.email "${GIT_USER_EMAIL:-gzac5314@users.noreply.github.com}"
   git config user.name "${GIT_USER_NAME:-ZacharyGeurts}"
   git add -A
@@ -211,17 +242,9 @@ git_publish_stage() {
   git config http.postBuffer 524288000
   git config http.lowSpeedLimit 0
   git config http.lowSpeedTime 999999
-  log "secure git push origin main"
-  H7_SECURE="${ROOT}/Hostess7/scripts/hostess7_secure_git.py"
+  log "secure git push origin main (history preserved)"
   if [[ -f "$H7_SECURE" ]]; then
-    if ! python3 "$H7_SECURE" verify; then
-      log "secure git verify failed — enqueue for retry"
-      if [[ -f "$RES_PY" ]]; then
-        python3 "$RES_PY" enqueue "$(python3 -c "import json; print(json.dumps({'version':'${HOSTESS7_VERSION}','tag':'${TAG}','stage':'${STAGE}','remote':'${REMOTE}','reason':'verify_failed'}))")" 2>/dev/null || true
-      fi
-      return 0
-    fi
-    python3 "$H7_SECURE" push "$STAGE" --branch main \
+    python3 "$H7_SECURE" push "$PUBLISH_DIR" --branch main \
       --remote "git@github.com:ZacharyGeurts/Hostess7.git" --tag "$TAG" --force
   else
     git push -u origin main --force

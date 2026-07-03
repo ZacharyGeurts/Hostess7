@@ -1,16 +1,108 @@
 {
   "schema": "field-programming-filetypes/v1",
   "version": "1.0.0",
-  "title": "SG stack \u2014 all programming filetypes",
+  "title": "SG stack — all programming filetypes",
   "canonical": "NewLatest/data/field-programming-filetypes.json",
-  "motto": "Discern \u2192 Run g16 \u00b7 Compile \u00b7 Open AmmoCode \u2014 every extension known",
+  "motto": "Discern → Run g16 · Compile · Open AmmoCode — every extension known",
   "pairing": {
     "grok16": "5.1.0",
-    "ammocode": "6.0.0",
+    "ammocode": "6.1.0",
     "amouranthrtx": "field-die"
   },
-  "extension_count": 243,
+  "extension_count": 268,
   "language_count": 107,
+  "media_index": "data/field-media-filetypes.json",
+  "media_format_count": 72,
+  "media_family_count": 11,
+  "text_eras": {
+    "motto": "AmmoCode opens any text file from any era — encoding ladder, binary guard, g16 discern",
+    "encodings": [
+      "utf-8-sig",
+      "utf-8",
+      "utf-16",
+      "utf-16-le",
+      "cp437",
+      "cp850",
+      "latin-1",
+      "ascii"
+    ],
+    "basename_plaintext": [
+      "dockerfile",
+      "containerfile",
+      "makefile",
+      "gnumakefile",
+      "autoexec.bat",
+      "config.sys",
+      "gemfile",
+      "rakefile",
+      "procfile",
+      "brewfile",
+      "cmakelists.txt",
+      "readme",
+      "license",
+      "changelog",
+      "authors",
+      "copying",
+      ".gitignore",
+      ".gitattributes",
+      ".env",
+      ".editorconfig",
+      ".dockerignore"
+    ],
+    "binary_extensions": [
+      ".exe",
+      ".dll",
+      ".so",
+      ".dylib",
+      ".o",
+      ".a",
+      ".obj",
+      ".lib",
+      ".zip",
+      ".gz",
+      ".bz2",
+      ".xz",
+      ".7z",
+      ".rar",
+      ".tar",
+      ".png",
+      ".jpg",
+      ".jpeg",
+      ".gif",
+      ".webp",
+      ".ico",
+      ".bmp",
+      ".pcx",
+      ".dcx",
+      ".tga",
+      ".iff",
+      ".ilbm",
+      ".lbm",
+      ".adf",
+      ".lha",
+      ".lzh",
+      ".neo",
+      ".pi1",
+      ".pi2",
+      ".pi3",
+      ".tiff",
+      ".pdf",
+      ".doc",
+      ".docx",
+      ".xls",
+      ".xlsx",
+      ".ppt",
+      ".pptx",
+      ".wasm",
+      ".class",
+      ".pyc",
+      ".pyo",
+      ".elf",
+      ".pe",
+      ".deb",
+      ".rpm"
+    ]
+  },
   "extensions": {
     ".R": "r",
     ".S": "asm",
@@ -119,7 +211,7 @@
     ".ipynb": "python",
     ".ixx": "cxx",
     ".jar": "java",
-    ".java": "kotlin",
+    ".java": "java",
     ".jl": "julia",
     ".js": "typescript",
     ".json": "json",
@@ -231,6 +323,31 @@
     ".timer": "systemd",
     ".tk": "tcl",
     ".toml": "toml",
+    ".txt": "plaintext",
+    ".nfo": "plaintext",
+    ".diz": "plaintext",
+    ".ans": "plaintext",
+    ".asc": "plaintext",
+    ".lst": "plaintext",
+    ".me": "markdown",
+    ".org": "markdown",
+    ".ltx": "plaintext",
+    ".vtt": "plaintext",
+    ".srt": "plaintext",
+    ".rtf": "plaintext",
+    ".prg": "plaintext",
+    ".1st": "plaintext",
+    ".text": "plaintext",
+    ".old": "plaintext",
+    ".bak": "plaintext",
+    ".faq": "plaintext",
+    ".bbs": "plaintext",
+    ".ivr": "plaintext",
+    ".pod": "plaintext",
+    ".info": "plaintext",
+    ".wri": "plaintext",
+    ".inf": "ini",
+    ".reg": "ini",
     ".tp": "turbo_pascal",
     ".tpu": "turbo_pascal",
     ".ts": "typescript",
@@ -254,7 +371,63 @@
     ".yaml": "yaml",
     ".yml": "yaml",
     ".zig": "zig",
-    ".zsh": "shell"
+    ".zsh": "shell",
+    ".pcx": "pcx",
+    ".dcx": "dcx",
+    ".iff": "amiga_iff",
+    ".ilbm": "amiga_iff",
+    ".lbm": "amiga_iff",
+    ".anim": "amiga_anim",
+    ".anm": "amiga_anim",
+    ".8svx": "amiga_8svx",
+    ".adf": "amiga_disk",
+    ".adz": "amiga_disk",
+    ".dms": "amiga_disk",
+    ".lha": "lha_archive",
+    ".lzh": "lha_archive",
+    ".lzx": "lzx_archive",
+    ".neo": "neochrome",
+    ".pi1": "degas",
+    ".pi2": "degas",
+    ".pi3": "degas",
+    ".tga": "tga",
+    ".cel": "cel",
+    ".fli": "cel",
+    ".flc": "cel",
+    ".wpg": "wpg",
+    ".xm": "tracker_xm",
+    ".s3m": "tracker_s3m",
+    ".it": "tracker_it",
+    ".669": "tracker_669",
+    ".med": "tracker_med",
+    ".okt": "tracker_okt",
+    ".mtm": "tracker_mtm",
+    ".stm": "tracker_stm",
+    ".far": "tracker_far",
+    ".amf": "tracker_amf",
+    ".tif": "tiff",
+    ".tiff": "tiff",
+    ".psd": "psd",
+    ".xbm": "xbm",
+    ".xpm": "xpm",
+    ".ppm": "ppm",
+    ".pgm": "pgm",
+    ".pbm": "pbm",
+    ".cur": "cur",
+    ".ani": "ani",
+    ".aiff": "aiff",
+    ".aif": "aiff",
+    ".mid": "midi",
+    ".midi": "midi",
+    ".avi": "avi",
+    ".mkv": "mkv",
+    ".mov": "mov",
+    ".wmv": "wmv",
+    ".flv": "flv",
+    ".mpg": "mpeg",
+    ".mpeg": "mpeg",
+    ".flac": "flac",
+    ".opus": "opus"
   },
   "mime_hints": {
     "text/javascript": "javascript",
@@ -275,7 +448,21 @@
     "application/x-sh": "shell",
     "text/x-glsl": "glsl",
     "application/x-spirv": "spirv",
-    "application/x-glsl-compute": "glsl_compute"
+    "application/x-glsl-compute": "glsl_compute",
+    "image/vnd.zbrush.pcx": "pcx",
+    "image/x-dcx": "dcx",
+    "image/x-iff": "amiga_iff",
+    "video/x-iff-animation": "amiga_anim",
+    "audio/x-iff": "amiga_8svx",
+    "audio/mod": "tracker_mod",
+    "application/x-amiga-disk-image": "amiga_disk",
+    "application/x-lzh-compressed": "lha_archive",
+    "image/x-neochrome": "neochrome",
+    "image/x-degas": "degas",
+    "image/x-tga": "tga",
+    "audio/xm": "tracker_xm",
+    "audio/s3m": "tracker_s3m",
+    "audio/it": "tracker_it"
   },
   "languages": [
     "ada",
@@ -384,229 +571,267 @@
     "xcconfig",
     "xml",
     "yaml",
-    "zig"
+    "zig",
+    "pcx",
+    "dcx",
+    "amiga_iff",
+    "amiga_anim",
+    "amiga_8svx",
+    "amiga_disk",
+    "lha_archive",
+    "lzx_archive",
+    "neochrome",
+    "degas",
+    "tga",
+    "cel",
+    "wpg",
+    "tracker_mod",
+    "tracker_xm",
+    "tracker_s3m",
+    "tracker_it",
+    "tracker_669",
+    "tracker_med",
+    "tiff",
+    "psd",
+    "midi",
+    "avi",
+    "mpeg",
+    "flac",
+    "aiff"
   ],
   "actions_by_language": {
     "ada": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "algol": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "ammoasm": {
       "default": "edit",
-      "run": "g16_run",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "ammolang": {
       "default": "edit",
-      "run": "fieldcc",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "apache": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "apl": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "arduino": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "asm": {
       "default": "edit",
-      "run": "g16_run",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "avro": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "awk": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "basic": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "c": {
       "default": "edit",
-      "run": "g16_run",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "clojure": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "cmake": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "cobol": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "coffeescript": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "cron": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "csharp": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "css": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "csv": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "cxx": {
       "default": "edit",
-      "run": "g16_run",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "d": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "dart": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "delphi": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "dhall": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "diff": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "dockerfile": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "elf": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "elixir": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "erlang": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "field": {
       "default": "edit",
-      "run": "fieldcc",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "forth": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "fortran": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
+      "edit": "ammocode"
+    },
+    "javascript": {
+      "default": "edit",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
+      "edit": "ammocode"
+    },
+    "pascal": {
+      "default": "edit",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "freebasic": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "fsharp": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "g16": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "glsl": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "glsl_compute": {
@@ -623,266 +848,266 @@
     },
     "go": {
       "default": "edit",
-      "run": "native_compile_run",
-      "compile": "native",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "graphql": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "grok_launch": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "groovy": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "haskell": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "hcl": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "hlsl": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "html": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "http": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "ini": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "java": {
       "default": "edit",
-      "run": "native_compile_run",
-      "compile": "native",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "json": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "julia": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "kotlin": {
       "default": "edit",
-      "run": "native_compile_run",
-      "compile": "native",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "lisp": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "log": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "lua": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "makefile": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "markdown": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "matlab": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "modula2": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "nginx": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "nim": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "ninja": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "nix": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "obj": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "objc": {
       "default": "edit",
-      "run": "g16_run",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "ocaml": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "pdb": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "pe": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "perl": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "php": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "plaintext": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "plist": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "prolog": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "protobuf": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "python": {
       "default": "edit",
-      "run": "gpy16",
-      "compile": "py_compile",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "r": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "racket": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "ruby": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "rust": {
       "default": "edit",
-      "run": "native_compile_run",
-      "compile": "native",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "scala": {
       "default": "edit",
-      "run": "native_compile_run",
-      "compile": "native",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "scheme": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "scss": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "shell": {
@@ -893,20 +1118,20 @@
     },
     "smalltalk": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "snobol": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "solidity": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "spirv": {
@@ -917,117 +1142,123 @@
     },
     "sql": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "svelte": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "swift": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "systemd": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "tcl": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "toml": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "tsv": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "turbo_pascal": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "typescript": {
       "default": "edit",
-      "run": "node",
-      "compile": "node_check",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "vba": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "verilog": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "vhdl": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "vue": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "vyper": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "wgsl": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "xcconfig": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "xml": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "yaml": {
       "default": "edit",
-      "run": "g16_check",
-      "compile": "g16",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
     },
     "zig": {
       "default": "edit",
-      "run": "native_compile_run",
-      "compile": "native",
+      "run": "secure_chamber",
+      "compile": "secure_chamber",
       "edit": "ammocode"
+    },
+    "cobol_copy": {
+      "default": "edit",
+      "edit": "ammocode",
+      "run": "secure_chamber",
+      "compile": "secure_chamber"
     }
   },
   "special_handlers": {
@@ -1047,5 +1278,9 @@
       "edit": "Open in AmmoCode"
     },
     "ammocode_url": "http://127.0.0.1:9555/?file={path}"
+  },
+  "g16": {
+    "version": "5.1.0",
+    "canonical_root": "NewLatest/Grok16"
   }
 }

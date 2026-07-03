@@ -230,11 +230,18 @@ def snapshot() -> dict[str, Any]:
         loadavg = [round(float(x), 2) for x in os.getloadavg()]
     except OSError:
         loadavg = [0.0, 0.0, 0.0]
+    tasks: dict[str, Any] = {}
+    kgo = _import_kgo()
+    if kgo and hasattr(kgo, "task_manager_panel"):
+        try:
+            tasks = kgo.task_manager_panel()
+        except Exception:
+            tasks = {}
     return {
         "schema": "field-monster-monitor/v1",
         "ok": True,
         "title": "Monster",
-        "motto": "Rescue system monitor — graphs, vision, security hold.",
+        "motto": "Rescue system monitor — graphs, vision, security hold, KGO orphans, AmmoLang fixes.",
         "updated": _now(),
         "cpu_pct": _cpu_pct(),
         "cpu_cores": _cpu_sample().get("cores", 1),
@@ -245,6 +252,15 @@ def snapshot() -> dict[str, Any]:
         "services": field_services(),
         "uptime_sec": _uptime_sec(),
         "intel": intel_snapshot(),
+        "tasks": {
+            "orphan_count": tasks.get("orphan_count", 0),
+            "fix_count": len(tasks.get("fixes") or []),
+            "hang_count": len(tasks.get("hang_pending") or []),
+        },
+        "layer_policy": {
+            "above_kilroy_ammolang": True,
+            "module": "lib/field-monster-layer-policy.py",
+        },
     }
 
 
@@ -313,8 +329,41 @@ def terminate_service(service_id: str) -> dict[str, Any]:
     return {"ok": any(r.get("ok") for r in results), "service": service_id, "results": results}
 
 
+def _import_kgo() -> Any:
+    bridge = INSTALL / "lib" / "field-monster-kgo-bridge.py"
+    if not bridge.is_file():
+        return None
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("monster_kgo", bridge)
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            return mod
+    except Exception:
+        pass
+    return None
+
+
+def task_panel() -> dict[str, Any]:
+    kgo = _import_kgo()
+    if kgo and hasattr(kgo, "task_manager_panel"):
+        panel = kgo.task_manager_panel()
+        panel["monitor"] = snapshot()
+        return panel
+    return {
+        "ok": True,
+        "schema": "field-monster-tasks/v1",
+        "hang_pending": [],
+        "orphans": [],
+        "fixes": [],
+        "monitor": snapshot(),
+    }
+
+
 def handle_action(body: dict[str, Any]) -> dict[str, Any]:
-    action = str(body.get("action") or "").lower()
+    action = str(body.get("action") or "").lower().replace("-", "_")
+    kgo = _import_kgo()
     if action == "kill":
         sig = 9 if str(body.get("force") or body.get("kill")) in ("1", "true", "yes", "kill") else 15
         return kill_process(int(body.get("pid") or 0), sig=sig, force=bool(body.get("force_field")))
@@ -322,6 +371,32 @@ def handle_action(body: dict[str, Any]) -> dict[str, Any]:
         return terminate_service(str(body.get("service") or ""))
     if action == "processes":
         return {"ok": True, "processes": list_processes(limit=int(body.get("limit") or 120))}
+    if action == "tasks":
+        return task_panel()
+    if action == "orphans" and kgo:
+        return kgo.scan_orphans(dry_run=bool(body.get("dry_run")))
+    if action == "kill_orphans" and kgo:
+        pids = body.get("pids")
+        if isinstance(pids, list):
+            return kgo.kill_orphans(pids=[int(p) for p in pids], dry_run=bool(body.get("dry_run")))
+        return kgo.kill_orphans(dry_run=bool(body.get("dry_run")))
+    if action == "fixes" and kgo:
+        return kgo.software_fixes()
+    if action == "apply_fix" and kgo:
+        return kgo.apply_fix(str(body.get("fix_id") or body.get("id") or ""))
+    if action == "hang_respond":
+        shell_py = INSTALL / "lib" / "field-monster-shell.py"
+        if shell_py.is_file():
+            try:
+                import importlib.util
+                spec = importlib.util.spec_from_file_location("monster_shell", shell_py)
+                if spec and spec.loader:
+                    mod = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(mod)
+                    if hasattr(mod, "handle_api"):
+                        return mod.handle_api(body)
+            except Exception as exc:
+                return {"ok": False, "error": str(exc)}
     return {"ok": False, "error": "unknown_action"}
 
 
@@ -339,6 +414,9 @@ def main() -> int:
         return 0
     if cmd == "intel":
         print(json.dumps(intel_snapshot(), ensure_ascii=False, indent=2))
+        return 0
+    if cmd == "tasks":
+        print(json.dumps(task_panel(), ensure_ascii=False, indent=2))
         return 0
     if cmd == "kill" and len(sys.argv) > 2:
         sig = 9 if "--force" in sys.argv else 15

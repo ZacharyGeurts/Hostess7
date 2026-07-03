@@ -1,0 +1,681 @@
+{
+  "schema": "hostess7-music-runtime/v1",
+  "battery_results": {
+    "pitch_rhythm": {
+      "ok": true,
+      "battery": "pitch_rhythm",
+      "passed": 10,
+      "total": 10,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "a4_freq",
+          "query": "A4 concert pitch frequency",
+          "kind": "pitch_freq",
+          "passed": true,
+          "got": 440.0,
+          "expected": 440,
+          "detail": ""
+        },
+        {
+          "id": "octave_ratio",
+          "query": "octave frequency ratio",
+          "kind": "harmonic_ratio",
+          "passed": true,
+          "got": 2.0,
+          "expected": 2,
+          "detail": ""
+        },
+        {
+          "id": "fifth_ratio",
+          "query": "perfect fifth ratio",
+          "kind": "harmonic_ratio",
+          "passed": true,
+          "got": 1.5,
+          "expected": 1.5,
+          "detail": ""
+        },
+        {
+          "id": "major_second",
+          "query": "major second semitones",
+          "kind": "interval_semitones",
+          "passed": true,
+          "got": 2,
+          "expected": 2,
+          "detail": ""
+        },
+        {
+          "id": "perfect_fifth",
+          "query": "perfect fifth semitones",
+          "kind": "interval_semitones",
+          "passed": true,
+          "got": 7,
+          "expected": 7,
+          "detail": ""
+        },
+        {
+          "id": "octave_interval",
+          "query": "octave semitones",
+          "kind": "interval_semitones",
+          "passed": true,
+          "got": 12,
+          "expected": 12,
+          "detail": ""
+        },
+        {
+          "id": "c_to_e",
+          "query": "C to E semitones",
+          "kind": "note_interval",
+          "passed": true,
+          "got": 4,
+          "expected": 4,
+          "detail": ""
+        },
+        {
+          "id": "meter_44",
+          "query": "4/4 time beats per bar",
+          "kind": "rhythm_meter",
+          "passed": true,
+          "got": 4,
+          "expected": 4,
+          "detail": ""
+        },
+        {
+          "id": "meter_34",
+          "query": "3/4 time beats per bar",
+          "kind": "rhythm_meter",
+          "passed": true,
+          "got": 3,
+          "expected": 3,
+          "detail": ""
+        },
+        {
+          "id": "tempo_allegro",
+          "query": "allegro BPM range low bound",
+          "kind": "tempo_bpm",
+          "passed": true,
+          "got": 120,
+          "expected": 120,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "harmony": {
+      "ok": true,
+      "battery": "harmony",
+      "passed": 7,
+      "total": 7,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "major_scale_degrees",
+          "query": "major scale semitone pattern count",
+          "kind": "scale_degrees",
+          "passed": true,
+          "got": 7,
+          "expected": 7,
+          "detail": ""
+        },
+        {
+          "id": "major_triad",
+          "query": "C major triad pitch classes",
+          "kind": "chord_quality",
+          "passed": true,
+          "got": "C,E,G",
+          "expected": "C,E,G",
+          "detail": ""
+        },
+        {
+          "id": "minor_triad",
+          "query": "A minor triad pitch classes",
+          "kind": "chord_quality",
+          "passed": true,
+          "got": "A,C,E",
+          "expected": "A,C,E",
+          "detail": ""
+        },
+        {
+          "id": "dom7",
+          "query": "G dominant seventh",
+          "kind": "chord_quality",
+          "passed": true,
+          "got": "G,B,D,F",
+          "expected": "G,B,D,F",
+          "detail": ""
+        },
+        {
+          "id": "circle_fifths",
+          "query": "circle of fifths step",
+          "kind": "interval_semitones",
+          "passed": true,
+          "got": 7,
+          "expected": 7,
+          "detail": ""
+        },
+        {
+          "id": "consonance_major_third",
+          "query": "major third consonance semitones",
+          "kind": "interval_semitones",
+          "passed": true,
+          "got": 4,
+          "expected": 4,
+          "detail": ""
+        },
+        {
+          "id": "dissonance_tritone",
+          "query": "tritone semitones",
+          "kind": "interval_semitones",
+          "passed": true,
+          "got": 6,
+          "expected": 6,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "crosswire_all": {
+      "ok": true,
+      "battery": "crosswire_all",
+      "passed": 12,
+      "total": 12,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "cw_programming",
+          "query": "programming music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Tempo as clock ticks; harmonics as signal processing; loops ",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_g16",
+          "query": "G16 music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Compiler phases as movements — lex/parse/emit as three-part ",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_biology",
+          "query": "biology music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Heartbeat rhythm, cochlear harmonics, vocal fold resonance.",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_engineering",
+          "query": "engineering music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Resonance, damping, and Fourier decomposition of structures.",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_combat",
+          "query": "combat music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Cadence, timing windows, auditory threat discrimination.",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_reality",
+          "query": "reality physics music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Standing waves, resonance frequencies, entropy as dissonance",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_field",
+          "query": "field technology music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Spectrum capture, pitch tracking, harmonic field plates.",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_geography",
+          "query": "geography music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "National anthems, regional scales, place-names as lyric cade",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_final_ear",
+          "query": "final ear music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Interval recognition, harmonic series, auditory spectrum→pit",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_final_mouth",
+          "query": "final mouth music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Pitch accuracy, rhythmic speech, TTS melody, vocal spectrum.",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_brain_guard",
+          "query": "brain guard music hook",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Melodic memory checksum — pattern completion seals brain_ver",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "cw_hook_count",
+          "query": "minimum crosswire hooks",
+          "kind": "crosswire_count",
+          "passed": true,
+          "got": 28,
+          "expected": true,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "ear_training": {
+      "ok": true,
+      "battery": "ear_training",
+      "passed": 5,
+      "total": 5,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "ear_perfect_fifth",
+          "query": "identify perfect fifth",
+          "kind": "ear_interval",
+          "passed": true,
+          "got": "perfect fifth",
+          "expected": "perfect fifth",
+          "detail": ""
+        },
+        {
+          "id": "ear_major_third",
+          "query": "identify major third",
+          "kind": "ear_interval",
+          "passed": true,
+          "got": "major third",
+          "expected": "major third",
+          "detail": ""
+        },
+        {
+          "id": "ear_octave",
+          "query": "identify octave",
+          "kind": "ear_interval",
+          "passed": true,
+          "got": "octave",
+          "expected": "octave",
+          "detail": ""
+        },
+        {
+          "id": "spectrum_fundamental",
+          "query": "A4 fundamental Hz",
+          "kind": "spectrum_pitch",
+          "passed": true,
+          "got": 440,
+          "expected": 440,
+          "detail": ""
+        },
+        {
+          "id": "harmonic_series_2",
+          "query": "second harmonic of A4",
+          "kind": "harmonic_partial",
+          "passed": true,
+          "got": 880,
+          "expected": 880,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "spectrum_pitch": {
+      "ok": true,
+      "battery": "spectrum_pitch",
+      "passed": 4,
+      "total": 4,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "c4_freq",
+          "query": "C4 frequency approximate",
+          "kind": "pitch_freq",
+          "passed": true,
+          "got": 261.63,
+          "expected": 261.63,
+          "detail": ""
+        },
+        {
+          "id": "g4_freq",
+          "query": "G4 frequency approximate",
+          "kind": "pitch_freq",
+          "passed": true,
+          "got": 392.0,
+          "expected": 392,
+          "detail": ""
+        },
+        {
+          "id": "pitch_class_c",
+          "query": "C pitch class",
+          "kind": "pitch_class",
+          "passed": true,
+          "got": 0,
+          "expected": 0,
+          "detail": ""
+        },
+        {
+          "id": "pitch_class_g",
+          "query": "G pitch class",
+          "kind": "pitch_class",
+          "passed": true,
+          "got": 7,
+          "expected": 7,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "vocal_production": {
+      "ok": true,
+      "battery": "vocal_production",
+      "passed": 4,
+      "total": 4,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "mouth_semitone_up",
+          "query": "raise pitch one semitone from A4",
+          "kind": "mouth_pitch",
+          "passed": true,
+          "got": 466.16,
+          "expected": 466.16,
+          "detail": ""
+        },
+        {
+          "id": "mouth_octave_down",
+          "query": "lower pitch one octave from A4",
+          "kind": "mouth_pitch",
+          "passed": true,
+          "got": 220.0,
+          "expected": 220,
+          "detail": ""
+        },
+        {
+          "id": "vocal_formant",
+          "query": "vocal tract resonance trained",
+          "kind": "doctrine_section",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "prosody_beat",
+          "query": "speech rhythm aligned to 4/4",
+          "kind": "rhythm_meter",
+          "passed": true,
+          "got": 4,
+          "expected": 4,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "rhythm_speech": {
+      "ok": true,
+      "battery": "rhythm_speech",
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "syllable_stress",
+          "query": "trochaic pattern beats",
+          "kind": "rhythm_pattern",
+          "passed": true,
+          "got": 2,
+          "expected": 2,
+          "detail": ""
+        },
+        {
+          "id": "melody_contour",
+          "query": "ascending major third semitones",
+          "kind": "interval_semitones",
+          "passed": true,
+          "got": 4,
+          "expected": 4,
+          "detail": ""
+        },
+        {
+          "id": "tts_melody",
+          "query": "TTS melody lesson present in sense doctrine",
+          "kind": "sense_music_step",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "memory_patterns": {
+      "ok": true,
+      "battery": "memory_patterns",
+      "passed": 2,
+      "total": 3,
+      "pass_rate": 66.7,
+      "fluent": false,
+      "mastered": false,
+      "rows": [
+        {
+          "id": "brain_seq_1",
+          "query": "complete melodic sequence",
+          "kind": "brain_sequence",
+          "passed": true,
+          "got": 9,
+          "expected": 9,
+          "detail": ""
+        },
+        {
+          "id": "brain_seq_2",
+          "query": "circle of fifths pitch class step",
+          "kind": "brain_sequence",
+          "passed": false,
+          "got": 14,
+          "expected": 2,
+          "detail": ""
+        },
+        {
+          "id": "brain_interval_recall",
+          "query": "recall perfect fifth",
+          "kind": "ear_interval",
+          "passed": true,
+          "got": "perfect fifth",
+          "expected": "perfect fifth",
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "brain_mapping": {
+      "ok": true,
+      "battery": "brain_mapping",
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "brain_guard_hook",
+          "query": "brain guard music crosswire",
+          "kind": "crosswire_track",
+          "passed": true,
+          "got": "Melodic memory checksum — pattern completion seals brain_ver",
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "brain_pattern_checksum",
+          "query": "melodic pattern checksum",
+          "kind": "brain_checksum",
+          "passed": true,
+          "got": 23,
+          "expected": 23,
+          "detail": ""
+        },
+        {
+          "id": "brain_hemisphere",
+          "query": "music memory maps to brain guard",
+          "kind": "crosswire_concept",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "notation_reading": {
+      "ok": true,
+      "battery": "notation_reading",
+      "passed": 4,
+      "total": 4,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "treble_clef",
+          "query": "treble clef line 1 note",
+          "kind": "notation_clef",
+          "passed": true,
+          "got": "E",
+          "expected": "E",
+          "detail": ""
+        },
+        {
+          "id": "bass_clef",
+          "query": "bass clef line 1 note",
+          "kind": "notation_clef",
+          "passed": true,
+          "got": "G",
+          "expected": "G",
+          "detail": ""
+        },
+        {
+          "id": "whole_note_beats",
+          "query": "whole note duration in 4/4",
+          "kind": "note_duration",
+          "passed": true,
+          "got": 4,
+          "expected": 4,
+          "detail": ""
+        },
+        {
+          "id": "quarter_note_beats",
+          "query": "quarter note duration in 4/4",
+          "kind": "note_duration",
+          "passed": true,
+          "got": 1,
+          "expected": 1,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "sense_fusion": {
+      "ok": true,
+      "battery": "sense_fusion",
+      "passed": 5,
+      "total": 5,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "ear_music_step",
+          "query": "ear music spectrum step",
+          "kind": "sense_music_step",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "mouth_music_step",
+          "query": "mouth melody TTS step",
+          "kind": "sense_music_step",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "eye_music_step",
+          "query": "eye notation step",
+          "kind": "sense_music_step",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "brain_music_step",
+          "query": "brain music pattern step",
+          "kind": "sense_music_step",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "fusion_quorum",
+          "query": "music evidence on sense fusion",
+          "kind": "doctrine_section",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    }
+  },
+  "proficiency": 0.0,
+  "music_drills": 0,
+  "session_rounds": 0,
+  "updated": "2026-07-03T04:34:22Z"
+}

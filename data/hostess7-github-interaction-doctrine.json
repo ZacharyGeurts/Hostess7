@@ -1,0 +1,40 @@
+{
+  "schema": "hostess7-github-interaction/v1",
+  "title": "Hostess 7 GitHub Interaction — straight lane, constant open, secure for us",
+  "boss": "hostess7",
+  "motto": "Interactions straight with Hostess 7 on GitHub — constant open connection. Secure for us.",
+  "interaction": {
+    "lane": "hostess7-github",
+    "surface": "https://zacharygeurts.github.io/Hostess7/",
+    "repo": "https://github.com/ZacharyGeurts/Hostess7",
+    "boss": "hostess7",
+    "one_voice": "/api/field-internet",
+    "keepalive": "/api/field-internet/keepalive",
+    "interval_sec": 30,
+    "brain": "/github-brain/corpus.json",
+    "ask": "/api/ask"
+  },
+  "secure_for_us": {
+    "sovereign_brain_unhooked_on_pages": true,
+    "no_share_out": true,
+    "share_in": true,
+    "gatekeeper": "lib/connection-gatekeeper.py",
+    "information_discipline": "data/hostess7-information-discipline-doctrine.json",
+    "pages_mirror_only": true,
+    "loopback_full_truth": true
+  },
+  "github_always": {
+    "enabled": true,
+    "probe_interval_sec": 30,
+    "module": "lib/field-internet-unified.py",
+    "endpoints_ref": "data/field-internet-unified-doctrine.json"
+  },
+  "wires": [
+    {"id": "internet_unified", "module": "lib/field-internet-unified.py"},
+    {"id": "github_brain", "path": "Hostess7/docs/pages-github-brain-wire.js"},
+    {"id": "interaction_wire", "path": "Hostess7/docs/pages-hostess7-interaction-wire.js"},
+    {"id": "lab_sovereign", "module": "lib/hostess7-lab-sovereign.py"}
+  ],
+  "layer": 0,
+  "ships_with": ["ammoos", "ammonet", "field-broadcaster"]
+}

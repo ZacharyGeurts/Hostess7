@@ -1,0 +1,25 @@
+{
+  "schema": "hostess7-secure-https/v1",
+  "title": "HTTPS+Secure — better than plain HTTPS, still HTTPS in name",
+  "motto": "TLS-named Pages URLs that gate through bookmark-jump before loopback — never raw http://127.0.0.1 in host browsers.",
+  "scheme_label": "HTTPS+Secure",
+  "url_form": "https://{pages_host}/bookmark-jump/?id={jump_id}&https=1",
+  "pages_base_default": "https://zacharygeurts.github.io/Hostess7",
+  "better_than_https": [
+    "panel_ensure_before_loopback",
+    "queen_wrap_for_world_surfaces",
+    "orphan_port_never_in_toolbar",
+    "telemetry_strip_on_import",
+    "hostess7_sovereign_gate"
+  ],
+  "still_https_in_name": true,
+  "bookmark_mode_default": "pages",
+  "purge_orphan_loopback": true,
+  "orphan_ports": [9477, 9481, 9488],
+  "firefox_toolbar_folder": "AmmoOS Field",
+  "paired": {
+    "bookmark_jump": "data/field-bookmark-jump-doctrine.json",
+    "internet_clean": "data/hostess7-internet-clean-doctrine.json",
+    "export_module": "Queen/lib/queen-host-bookmark-export.py"
+  }
+}

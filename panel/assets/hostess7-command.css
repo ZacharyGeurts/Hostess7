@@ -1,8 +1,13 @@
-/* GitHub Pages — hide live Super Intelligence deck; threat panel stays C2-native */
-html.h7-pages-lane #hostess7-command-deck,
-html.h7-pages-lane .h7-superintel,
-html.h7-pages-lane .nexus-universal-protector {
-  display: none !important;
+/* GitHub Pages C2 — show full deck; dim loopback-only controls */
+html.h7-pages-c2 #hostess7-command-deck,
+html.h7-pages-c2 .h7-superintel,
+html.h7-pages-c2 .nexus-universal-protector {
+  display: revert;
+}
+
+html.h7-pages-c2 #h7-iq-test:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 /* Hostess 7 Super Intelligence — Command tab primary deck */

@@ -68,6 +68,13 @@ def studio_posture(*, refresh: bool = False) -> dict[str, Any]:
     return cached
 
 
+def senses_posture() -> dict[str, Any]:
+    senses = fcc.mod("bc_senses", "field-broadcaster-senses.py")
+    if senses and hasattr(senses, "posture"):
+        return senses.posture()
+    return {"ok": False, "error": "senses_missing"}
+
+
 def audio_posture() -> dict[str, Any]:
     dac = fcc.mod("bc_audio_dac", "field-audio-dac-chamber.py")
     if dac and hasattr(dac, "dac_probe"):
@@ -117,6 +124,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
     refresh = write
     studio = studio_posture(refresh=refresh)
     eye = final_eye_posture(refresh=refresh)
+    senses = senses_posture()
     codecs = codecs_posture()
     plats = platforms_doc()
     canvas = canvas_posture(refresh=refresh)
@@ -136,6 +144,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         },
         "truth_gate": fcc.truth_gate(),
         "final_eye": eye,
+        "senses": senses,
         "canvas_wire": canvas,
         "codecs": codecs,
         "platforms": plats,

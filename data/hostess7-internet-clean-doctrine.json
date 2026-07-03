@@ -1,0 +1,39 @@
+{
+  "schema": "hostess7-internet-clean/v1",
+  "title": "Hostess 7 Internet Clean — secure bookmarks · telemetry strip · whole-web posture",
+  "motto": "Clean the whole internet — every host browser gets secure jumps; telemetry and fake caches get quarantined.",
+  "default_on_hostess7": true,
+  "boot_triggers": ["panel_start", "desktop_ready", "hostess7_on", "publish_preflight"],
+  "pages_base_default": "https://zacharygeurts.github.io/Hostess7",
+  "bookmark_mode": "pages",
+  "browsers": ["firefox", "chrome", "chromium", "brave", "edge", "vivaldi", "opera", "ie_html"],
+  "lanes": [
+    {"id": "browser_sweep", "module": "Queen/lib/queen-browser-import.py", "action": "sweep"},
+    {"id": "browser_scrub", "module": "Queen/lib/queen-browser-import.py", "action": "organize_scrub"},
+    {"id": "secure_export", "module": "Queen/lib/queen-host-bookmark-export.py", "action": "export"},
+    {"id": "secure_nav", "assets": ["panel/assets/field-queen-nav.js", "panel/assets/field-startbar.js"]}
+  ],
+  "telemetry_strip": true,
+  "secure_jump_required": true,
+  "https_secure": {
+    "enabled": true,
+    "scheme_label": "HTTPS+Secure",
+    "doctrine": "data/hostess7-secure-https-doctrine.json",
+    "purge_orphan_loopback": true
+  },
+  "g16_online": {
+    "module": "lib/hostess7-g16-online.py",
+    "api": "/api/hostess7/g16-online",
+    "pages": "https://zacharygeurts.github.io/Grok16/",
+    "hostess7_compiler": "https://zacharygeurts.github.io/Hostess7/g16-build-output/"
+  },
+  "ammonet": {
+    "product": "AmmoNet",
+    "doctrine": "data/ammonet-doctrine.json",
+    "final_internet": "data/final-internet-doctrine.json",
+    "module": "lib/ammonet-field.py",
+    "api": "/api/ammonet",
+    "pages_hub": "/ammonet/"
+  },
+  "notice": "All Rights Reserved — AmmoNet · Final Internet · HTTPS+Secure bookmarks · Hostess 7 default posture"
+}

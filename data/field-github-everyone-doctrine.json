@@ -27,9 +27,17 @@
   "fallback_chain": [
     "https://github.com",
     "https://raw.githubusercontent.com",
+    "https://zacharygeurts.github.io/GNUEOLTerminal/",
+    "https://zacharygeurts.github.io/Hostess7/gnueol-terminal/",
     "https://zacharygeurts.github.io/Hostess7/",
     "http://127.0.0.1:9477"
   ],
+  "repo_mirrors": {
+    "ZacharyGeurts/GNUEOLTerminal": [
+      "https://zacharygeurts.github.io/GNUEOLTerminal/",
+      "https://zacharygeurts.github.io/Hostess7/gnueol-terminal/"
+    ]
+  },
   "wires": [
     {"id": "github_legacy", "module": "lib/field-github-legacy.py", "api": "/api/field-github-legacy"},
     {"id": "github_resilience", "module": "lib/field-github-resilience.py", "api": "/api/field-github-resilience"},
@@ -40,6 +48,13 @@
     {"id": "field_dns", "module": "lib/field-dns.py", "api": "/api/field-dns"}
   ],
   "pages_wire": "Hostess7/docs/pages-github-everyone-wire.js",
+  "endpoint_registry": {
+    "module": "lib/field-endpoint-registry.py",
+    "doctrine": "data/field-endpoint-registry-doctrine.json",
+    "api": "/api/field-endpoint-registry",
+    "pages_api": "/api/field-endpoint-registry.json",
+    "rule": "All mirror chains and relocations must be in hash-chained public ledger — beyond ICANN"
+  },
   "api": "/api/field-github-everyone",
   "layer": 0,
   "ships_with": ["ammoos", "ammonet", "field-internet-unified", "field-botnet-dns-dhcp"]

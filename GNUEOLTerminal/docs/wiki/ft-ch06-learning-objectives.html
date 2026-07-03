@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ch 06 · Learning objectives · GNU EOL Terminal</title>
+  <link rel="stylesheet" href="../css/gnueol-terminal.css" />
+  <link rel="stylesheet" href="../css/chapters.css" />
+</head><body class="chapter-page">
+  <nav class="top"><div class="inner"><a class="logo" href="../index.html">GNU EOL TERMINAL</a>
+  <ul><li><a href="wiki/">Wiki</a></li><li><a href="terminal/">Terminal</a></li></ul></div></nav>
+  <main class="chapter-main"><p># Ch 06 · Learning objectives</p>
+<p>Learning objectives</p>
+<p>Separate three RF meanings in this stack with correct labels.</p>
+<p>Describe planetary weave as visual-only vocabulary.</p>
+<p>Locate Field Antenna Orchestrator outputs in NEXUS.</p>
+<p>State FSPL as teaching reference, not shader computation.</p>
+<p>Relate fieldPhi gate potential to RF metaphor without ionospheric claims.</p>
+<p>Run panel drill for signals-field artifacts.</p>
+<p>Three meanings of RF in this stack</p>
+<p>RF is three different weapons in the same word. Separate them or you will argue with a shader about ionospheric physics.</p>
+<p>Context What RF means Label</p>
+<p>planetary_weave.comp Atmospheric visual shell layer Visual</p>
+<p>NEXUS Field Antenna Local RF/audio/wired orchestration Implemented</p>
+<p>Engine fieldPhi Gate voltage / wave potential Implemented</p>
+<p>Do not equate GPU Phi with ionospheric propagation without labeling the jump. Chapter 12 rocks table restates this.</p>
+<p>Figure 6.1 — Visual shell only. Not a spectrum analyzer. Not FSPL in silicon.</p>
+<p>Planetary weave — visual layer</p>
+<p>Earth cross-section shader with concentric shells. RF layer sits in stack metaphor: core → crust → hydro → clouds → troposphere → ionosphere → RF shell → magnetosphere.</p>
+<p>#define R_RF (R_EARTH + 1.05) // Layer L_RF — visual vocabulary Visual vocabulary — teaches where signals live in stack metaphor. Does not compute FSPL inside AMOURANTHRTX shaders. Honesty on every rock.</p>
+<p>What weave teaches</p>
+<p>Pedagogy: operators need a picture of where defense and dispatch stories sit relative to atmosphere and ionosphere. Weave supplies picture, not instrument. When someone claims weave color proves propagation anomaly, return to Chapter 12.</p>
+<p>fieldPhi — gate potential, not literal radio</p>
+<p>Binding 8 Phi carries wave and gate potential — electrical metaphor coupled to Thermo and Flow. Implemented fabric evolution. Not claim that texels measure RF watts at antenna.</p>
+<p>Chapter 3 coupling; Chapter 15 Maxwell tribute. Phi is RF word only in metaphor sense — label before you speak.</p>
+<p>Field Antenna Orchestrator — NEXUS</p>
+<p>Monitors RF + audio + wired + laser reference bands. Optical/laser entries 405–1550 nm. LIDAR flow ports in registry. GPS field anchors for triangulation metaphor. Outputs:</p>
+<p>field-antenna-panel.json</p>
+<p>field-rf-panel.json</p>
+<p>signals-field-panel.json</p>
+<p>Implemented in NEXUS. Local orchestration — correlate with packet field at panel :9477.</p>
+<p>Registry and habits</p>
+<p>Like port stories in Chapter 5, RF registry learns local device habits — context, not automatic verdict.</p>
+<p>Free-space path loss — teaching reference</p>
+<p>FSPL ∝ 20·log₁₀(d) + 20·log₁₀(f)</p>
+<p>ITU-R/FCC context in NEXUS docs — not computed inside AMOURANTHRTX shaders. Teach path loss beside the label. Planetary weave does not replace FSPL math with colors.</p>
+<p>Signals panel integration</p>
+<p>Operator correlates signals-field JSON with packet field jsonl and AMOURANTHRTX THERMO — three scales from Chapter 2. No single dashboard metric collapse.</p>
+<p>Queen and WebRTC — RF-adjacent perimeter</p>
+<p>WebRTC is not disabled — gated through Connection Gatekeeper. RF words appear in peer stories; verdicts remain NEXUS. Chapter 21 Queen doctrine. MP4 mandatory in-tree; EME held.</p>
+<p>Operator drill</p>
+<p>./nexus.sh curl -sk https://127.0.0.1:9477/signals-field-panel.json | head -c 1500 # Name which RF meaning each JSON block belongs to</p>
+<p>Failure modes</p>
+<p>Mode Symptom Fix</p>
+<p>Weave as instrument Ionosphere claims from shader Visual</p>
+<p>Phi as MHz Texel equals spectrum Metaphor — binding 8</p>
+<p>FSPL in GPU Expect FSPL in weave NEXUS docs only</p>
+<p>Antenna omniscience Global RF vision Local orchestration</p>
+<p>Chapter summary</p>
+<p>RF is three meanings — weave visual, NEXUS antenna implemented, Phi potential implemented metaphor. FSPL is teaching reference. Planetary weave is vocabulary art. Chapter 7 offense dispatch next.</p>
+<p>Study questions</p>
+<p>Fill three-row RF table from memory with labels.</p>
+<p>What does R_RF define — and what does it not compute?</p>
+<p>Name three Field Antenna JSON outputs.</p>
+<p>Why is FSPL not in AMOURANTHRTX shaders?</p>
+<p>How does Phi differ from planetary weave RF shell?</p>
+<p>Run signals panel drill — classify one JSON field.</p>
+<p>Cross-link Queen WebRTC gates — which chapter?</p>
+<p>Chapter 7 — Offensive Dispatch →</p>
+<p>Magnetosphere and ionosphere — visual stack only</p>
+<p>Planetary weave stacks ionosphere then RF shell then magnetosphere as shader radii — pedagogy for where metaphorical signals sit. No claim AMOURANTHRTX models ionospheric scintillation for operations.</p>
+<p>Audio bands in Field Antenna</p>
+<p>NEXUS orchestrator includes audio alongside RF and wired — local device ecology, not Spotify analytics. Outputs land in signals panels for operator review.</p>
+<p>Laser 405–1550 nm entries</p>
+<p>Optical/laser registry bands are reference anchors — ITU/FCC teaching context in docs. Label before operational claims.</p>
+<p>LIDAR flow ports</p>
+<p>Registry includes LIDAR flow ports as habit context — correlate with packet field when local processes speak lidar-class ports.</p>
+<p>GPS field anchors</p>
+<p>GPS anchors support triangulation metaphor in signals layer — not replacement for survey-grade GNSS without labels. Pair with sovereign time Chapter 19 when sub-micron stories appear.</p>
+<p>fieldPhi milli and gate stories</p>
+<p>FIELD_PHI_MILLI = 618 and gate fidelity couple electrical metaphor to readable gates — implementation detail in engine headers. Not literal RF carrier frequency.</p>
+<p>RetroRTX and planetary shaders</p>
+<p>Specialty swipes may show planetary or retro visuals — still Visual unless stderr proves otherwise. Do not operationalize shader art.</p>
+<p>Cross-link Chapter 7 offense</p>
+<p>After RF separation, Chapter 7 dispatch writes fabric and die — offense continues stack. Defense read RF panels; offense writes Phi/Thermo/Flow. Same operator, different verbs.</p>
+<p>ITU-R/FCC context in operator docs</p>
+<p>NEXUS documentation may cite regulatory context for teaching FSPL and band plans — docs are not shaders. Teach beside label; grep implementation separately.</p>
+<p>Extended treatment — planetary weave shader stack pedagogy</p>
+<p>Core, crust, hydrosphere, clouds, troposphere, ionosphere, RF shell, magnetosphere — concentric radii in planetary_weave.comp. Each shell teaches where metaphorical signals live in Earth cross-section art. R_RF = R_EARTH + 1.05 defines RF layer radius — constant in shader literature, not ionosonde measurement.</p>
+<p>Extended treatment — three RF meanings drill expanded</p>
+<p>Drill daily until reflex: weave mention → Visual tag. Antenna JSON → Implemented NEXUS. Phi potential → Implemented fabric metaphor not literal MHz. FSPL equation → docs teaching only.</p>
+<p>Extended treatment — Field Antenna Orchestrator bands</p>
+<p>RF, audio, wired, laser 405–1550 nm, LIDAR ports, GPS anchors — local orchestration outputs to field-antenna-panel.json, field-rf-panel.json, signals-field-panel.json. Correlate with packet field; do not merge scores.</p>
+<p>Extended treatment — fieldPhi gate potential</p>
+<p>Binding 8 Phi — wave and gate potential, FIELD_PHI_MILLI 618 in engine vocabulary, GateFidelity coupling. Electrical words are metaphor; implementation is texel evolution. Chapter 15 Maxwell GPU coupling deepens.</p>
+<p>Extended treatment — FSPL teaching beside implementation</p>
+<p>FSPL ∝ 20 log10(d) + 20 log10(f) in ITU-R/FCC teaching context in NEXUS docs — not AMOURANTHRTX shader compute. Teach students beside label; quiz on label not on weave colors.</p>
+<p>Extended treatment — Queen WebRTC and RF vocabulary</p>
+<p>WebRTC peers produce packet sentences and may invoke RF words in UI — gatekeeper still owns verdict. MP4 in-tree; EME held. Chapter 21 completes browser perimeter; Chapter 6 prevents RF word collision errors before dispatch chapter.</p>
+<p>RF chapter — examination preparation</p>
+<p>Exam question: Define three RF meanings with labels. Exam question: Why is FSPL not in shaders? Exam question: Name three antenna JSON outputs. Exam question: What does R_RF define? Exam question: How does Queen handle WebRTC RF words? Pass by labeling every sentence.</p>
+<p>Planetary weave is art for orientation — like classroom globe — not operational globe. Field Antenna is local instrument panel — like ham shack meters — not ionosonde network. Phi is fabric potential — like voltage metaphor in textbook — not voltmeter on PCIe.</p>
+<p>Chapter 6 completes RF disambiguation before Chapter 7 dispatch — so when Phi moves, you do not claim ionosphere moved.</p>
+<p>RF capstone — label every sentence drill</p>
+<p>Sentence: Planetary weave shows ionosphere color. Label: Visual only. Sentence: Antenna panel lists band 915MHz entry. Label: Implemented NEXUS local. Sentence: Phi texel rose 0.3. Label: Implemented fabric metaphor. Sentence: FSPL at 2km 2.4GHz is X dB. Label: Teaching reference in docs. Sentence: Queen WebRTC peer connected. Label: Gatekeeper Implemented Chapter 21.</p>
+<p>Five sentences, five labels, zero category errors — Chapter 6 exam passed.</p>
+<p>Handoff: Chapter 7 dispatch writes Phi; you now know not to radio astronomer with shader screenshot.</p>
+<p>Cross-links: 07-gpu-engine , 12-reality-theory , 15-maxwell-gpu , 21-field-browser-queen .</p>
+<p>Planetary weave — layer walkthrough for instructors</p>
+<p>Instructors teaching Chapter 6 should walk layers aloud: core, crust, hydro, clouds, troposphere, ionosphere, RF shell, magnetosphere. Each layer name is vocabulary only. Ask students: which layer is instrumented? Answer: none in AMOURANTHRTX shaders.</p>
+<p>Field Antenna — correlating with packet field</p>
+<p>When antenna JSON notes band activity and jsonl notes RX to matching port, human correlates — no auto-merge score. Same discipline as thermo plus packet correlation in Chapter 2.</p>
+<p>Phi wave versus RF carrier — student confusion FAQ</p>
+<p>Q: Is Phi 2.4 GHz? A: No — gate potential texel story. Q: Is weave color signal strength? A: No — visual. Q: Is antenna JSON dBm? A: Local orchestration reading — check implementation labels in NEXUS lib.</p>
+<p>LIDAR ports registry — local habit context</p>
+<p>LIDAR-related ports in registry provide habit context for robotics operators — not autonomous weapon narrative — local machine literacy.</p>
+<p>GPS anchors and sovereign time</p>
+<p>GPS field anchors meet sovereign time Chapter 19 when sub-micron stories appear — triple verify before trusting map dot pretty alone.</p>
+<p>RF chapter hands-on — instructor checklist</p>
+<p>Show weave screenshot — label Visual. Show antenna JSON — label Implemented. Show Phi heatmap — label fabric. Show FSPL in docs — label teaching. Quiz immediately.</p>
+<p>Chapter 6 extended — RF disambiguation workshop (90 minutes)</p>
+<p>Minutes 0-15: three meanings lecture. Minutes 15-30: planetary weave screenshot label Visual. Minutes 30-45: antenna panel JSON label Implemented. Minutes 45-60: Phi heatmap Classic label fabric metaphor. Minutes 60-75: FSPL worksheet from NEXUS docs label teaching. Minutes 75-90: exam five sentences from long_06c. Workshop completes before Chapter 7 dispatch.</p>
+<p>Signals and packets — correlation without merge</p>
+<p>signals-field-panel.json may show band activity same hour jsonl shows RX burst — write correlation paragraph, do not multiply scores into super-threat number. Human narrative discipline from Chapter 2 integration returns.</p>
+<p>RF vocabulary for Queen operators</p>
+<p>Queen UI may say WebRTC, ICE, codec, RF-adjacent words — gatekeeper still owns verdict. MP4 in-tree demux is packet parsing — Chapter 5 bytes perspective. Chapter 6 ensures RF word in UI does not bypass labels when you grep.</p>
+<p>Handoff checklist to Chapter 7</p>
+<p>Can you name three RF meanings? Can you quote FSPL is not in shaders? Can you label weave Visual? Yes — open Chapter 7 Offensive Dispatch. No — rerun workshop.</p>
+<p>Introduction — three meanings of RF before you touch the spear</p>
+<p>Operators arrive at Field Technology with one acronym and three incompatible intuitions. RF might mean the shader shell in planetary_weave.comp , the NEXUS Field Antenna orchestrator, or the wave potential on binding 8 — fieldPhi — that Maxwell language calls Φ, not megahertz. Chapter 6 separates them with honesty labels before Chapter 7 hands you vkCmdDispatch . Confusion here produces week-six embarrassment: ionosphere arguments from pretty colors, spectrum claims from jsonl panels, or radio astronomy from a Classic canvas screenshot.</p>
+<p>Defense in Chapter 5 taught packet sentences. Entropy in Chapter 4 taught layer separation. This chapter teaches signal vocabulary — what is Visual , what is Implemented local orchestration, what is electrical metaphor on the fabric. The workshop protocol at chapter end is a lab you can run in an afternoon; the handoff to Chapter 7 states plainly: offense writes fields on the GPU; RF shaders do not replace dispatch literacy.</p>
+<p>Learning objectives</p>
+<p>Label three RF contexts with correct status tags.</p>
+<p>Sketch planetary weave stack radii from core to magnetosphere.</p>
+<p>Read Field Antenna JSON panel outputs and correlate with packet field.</p>
+<p>Work FSPL teaching worksheet — ITU/FCC context, not shader compute.</p>
+<p>Disambiguate fieldPhi binding 8 from literal radio propagation.</p>
+<p>Execute workshop protocol and articulate handoff to Chapter 7.</p>
+<p>Figure 6.1 — Planetary weave: visual vocabulary. Not a spectrum analyzer.</p>
+<p>Three meanings table — label before you speak</p>
+<p>Context What “RF” means Label Product</p>
+<p>planetary_weave.comp Atmospheric shell layer in Earth cross-section shader Visual AMOURANTHRTX</p>
+<p>NEXUS Field Antenna Local RF/audio/wired/laser orchestration + JSON panels Implemented NEXUS-Shield</p>
+<p>fieldPhi binding 8 Wave / gate potential — electrical metaphor Implemented + metaphor AMOURANTHRTX</p>
+<p>Do not equate GPU Phi with ionospheric propagation without labeling the jump. Chapter 12 rock: RF planetary shell is planetary_weave.comp visual only.</p>
+<p>Queen WebRTC (Chapter 21) uses real network stacks behind gatekeeper — still not the same as weave shader art. WebRTC peers produce packet field sentences; planetary weave produces pedagogy pixels.</p>
+<p>Planetary weave — stack radii from core to magnetosphere</p>
+<p>planetary_weave.comp draws a concentric Earth cross-section — not a physics simulation of magnetohydrodynamics, a visual vocabulary for where signals “live” in the stack metaphor. Radii are shader constants; treat them as labeled shells in operator teaching, not satellite telemetry.</p>
+<p>// Pedagogical shell stack (conceptual outer → inner) core → crust → hydrosphere → clouds → troposphere → stratosphere → mesosphere → ionosphere → L_RF shell: #define R_RF (R_EARTH + 1.05) → magnetosphere → exosphere breath The RF shell sits exterior to ionosphere in the narrative — a colored ring reminding you that propagation stories have a place in the stack without computing path loss in GLSL. R_EARTH anchors scale; R_RF offsets the teachable RF band as art. Swipe to weave canvas in AMOURANTHRTX when you want vocabulary; grep THERMO when you want dispatch truth.</p>
+<p>Cross-link Chapter 15 Maxwell: binding 8 Phi participates in discrete Laplacian coupling on the fabric — neighborhood whispers, not ionospheric whistlers. Cross-link Chapter 9: FIELD_PHI_MILLI = 618 and GateFidelity sharpen gates — folklore mnemonic with a number, not a claim the universe prefers φ because the HUD said so.</p>
+<p>Cross-link Chapter 12 honesty table: claiming the weave shader predicts HF skip zones is Visual accident marketed as instrument — refuse.</p>
+<p>Field Antenna orchestrator — JSON panels that are real</p>
+<p>NEXUS Field Antenna is Implemented local orchestration across RF, audio, wired, and optical reference bands. It watches flows and anchors meaningful to your machine — not global spectrum survey.</p>
+<p>Optical / laser reference entries: 405–1550 nm teaching bands</p>
+<p>LIDAR flow ports registered beside socket habits</p>
+<p>GPS field anchors for triangulation metaphor — not replacement for survey grade receivers</p>
+<p>Outputs: field-antenna-panel.json , field-rf-panel.json , signals-field-panel.json</p>
+<p>Panel :9477 Signals tab (Chapter 5) surfaces these artifacts. Correlate JSON rows with field jsonl sentences — same peer, same sealed time column, different views. No merged super-score. Field Antenna does not replace gatekeeper verdicts; packet field does not replace FSPL homework.</p>
+<p>JSON artifact Typical content Correlate with</p>
+<p>field-antenna-panel.json Antenna path registry, band tags Signals tab, local hardware</p>
+<p>field-rf-panel.json RF flow summaries, habit notes Packet field port axis</p>
+<p>signals-field-panel.json Cross-domain signal map Chapter 5 defense rhythm</p>
+<p>FSPL teaching worksheet — path loss on paper, not in shaders</p>
+<p>Free-space path loss (FSPL) belongs in operator notebooks and NEXUS teaching docs — not inside AMOURANTHRTX fabric shaders. ITU-R and FCC contexts use:</p>
+<p>FSPL ∝ 20·log₁₀(d) + 20·log₁₀(f)</p>
+<p>Distance d grows loss with twenty log ten; frequency f does the same. Double distance costs ~6 dB; double frequency costs ~6 dB. The worksheet builds intuition before you touch hardware.</p>
+<p>Worksheet 6.A — FSPL estimates</p>
+<p># Given: f = 2.4 GHz Wi-Fi, d = 10 m (free space teaching model) # FSPL ≈ 20*log10(10) + 20*log10(2.4e9) [use consistent units in your notebook] # Compare: d = 100 m — how many dB added vs 10 m? # Label answer: teaching estimate — not measured in planetary_weave.comp Worksheet 6.B: repeat for 915 MHz ISM at 1 km. Worksheet 6.C: explain why attic copper foil does not change shader R_RF constant — visual shell unchanged by real-world sheet metal.</p>
+<p>Chapter 6 honesty: FSPL exercises train judgment for Field Antenna context. They do not authorize claims that Classic canvas color maps predict link margin.</p>
+<p>Phi versus RF — disambiguation clinic</p>
+<p>fieldPhi on binding 8 is the analog fabric’s wave and gate potential channel. Shaders read and write Φ per texel; host packs WaveSpeed , GateFidelity , PropalacticScale into FCC floats. This is Maxwell neighborhood on a grid — Chapter 15 — not literal RF carrier tracking.</p>
+<p>Question Phi / binding 8 RF / Field Antenna Weave shader</p>
+<p>Measured in MHz? No — arbitrary field units Band labels for orchestration No — art scale</p>
+<p>Where grep? THERMO + fabric + FCC slots NEXUS JSON + jsonl Canvas swipe only</p>
+<p>Honest label Implemented metaphor Implemented local Visual</p>
+<p>Couples to Thermo? Yes — FieldCoupling Indirect via machine activity No — decor</p>
+<p>Clinic sentence: “Phi gradient steepened, so RF must be jammed” is category error. “Field Antenna noted 2.4 GHz habit breakage on RX, gatekeeper SUSPICIOUS” is legible defense. “Ionosphere glow red on weave” is art critique, not propagation measurement.</p>
+<p>Workshop protocol — afternoon lab</p>
+<p>Label pass (15 min): List three RF meanings from memory; tag each Visual , Implemented , or metaphor .</p>
+<p>Weave swipe (20 min): Open AMOURANTHRTX planetary weave canvas; sketch shell stack on paper with R_RF noted; refuse FSPL claims from colors.</p>
+<p>FSPL worksheet (25 min): Complete 6.A–6.C on paper; photograph page for operator journal — not for vendor slide deck.</p>
+<p>NEXUS panels (30 min): ./nexus.sh ; open :9477 Signals; read three JSON artifacts; tail matching field jsonl rows.</p>
+<p>Phi grep (20 min): ./linux.sh run ; set AnalogFields.GateFidelity 0.9 ; grep THERMO + FCC; confirm fabric offense path alive — handoff prep.</p>
+<p>Disambiguation drill (10 min): Write three sentences — one correct per layer; one deliberate category error; fix the error aloud.</p>
+<p>Plain English: The workshop teaches you to point at the right receipt — jsonl, stderr, or screenshot — before you argue about signals.</p>
+<p>Ionosphere and magnetosphere — teachable shells, not predictions</p>
+<p>In the weave narrative, ionosphere and magnetosphere rings sit outside troposphere weather and inside exosphere breath. They exist so instructors can point at a screen and say: “HF stories live in sky vocabulary; your loopback panel lives in operator vocabulary.” The shader does not compute critical frequency, foF2, or K-index. It paints teachable regions.</p>
+<p>When a student asks whether red ionosphere glow means solar storm, answer with labels: Visual pedagogy. Then open :9477 and show jsonl habits — defense receipts. Then run ./linux.sh run and grep THERMO — offense receipts. Three layers, three answers, one disciplined operator.</p>
+<p>Chapter 10 spiderweb mirror uses fabric averages, not ionosphere colors. Chapter 6 refuses the shortcut that makes pretty globes feel like NOAA products.</p>
+<p>Queen, WebRTC, and RF words in UI</p>
+<p>Queen holds WebRTC gates (Chapter 21). RF vocabulary in UI still passes Connection Gatekeeper — honorability axis asks whether navigation context matches socket reality. Field Antenna may tag RF bands; packet field records peers; thermo proxy records dispatch cost on Queen build — parallel witnesses, not one score.</p>
+<p>MP4 mandatory in-tree means media paths are not outsourced to CDN conscience — local archive discipline matches jsonl ethos. EME held, not omitted, because sovereign browser doctrine refuses hole-poking.</p>
+<p>Failure catalog — RF edition</p>
+<p>Failure mode Symptom Fix</p>
+<p>Weave as instrument HF propagation forecast from shader Visual rock — Ch. 12</p>
+<p>Phi as MHz “Tune binding 8 to 2.4G” FCC floats are field knobs, not carrier</p>
+<p>FSPL in GLSL fantasy Expect path loss in fabric Paper worksheet only</p>
+<p>JSON super-score Merge antenna JSON + gatekeeper Correlate; separate verdicts</p>
+<p>GPS metaphor as survey Sub-centimeter claims from anchors Label triangulation metaphor</p>
+<p>Disable WebRTC Queen security hole-poke Ch. 21 hold gates</p>
+<p>Cloud RF omniscience NEXUS sees planet spectrum Local-first — Ch. 5</p>
+<p>Skip workshop Jump to Ch. 7 without labels Run protocol once</p>
+<p>Audio, wired, and optical bands — one orchestrator, many witnesses</p>
+<p>Field Antenna does not stop at textbook RF. Local orchestration includes audio device paths, wired interface habits, and optical reference bands from 405 nm through 1550 nm — teaching anchors for laser and LIDAR vocabulary on your machine. Each band entry is a labeled witness in JSON, not a claim NEXUS measured photons in your fiber run.</p>
+<p>LIDAR flow ports in the registry sit beside TCP habits: a UDP burst on a registered port may correlate with a signals-field row without merging into gatekeeper verdict math. GPS field anchors supply triangulation metaphor for panel maps — useful pedagogy when teaching children the difference between “where the UI drew a dot” and “where survey equipment proved a coordinate.”</p>
+<p>When Signals tab shows optical entries alongside RF summaries, practice the Chapter 5 rule: correlate timestamps with field jsonl , compare process paths, refuse single-score dashboards. Field Technology trains parallel reading — thermo stderr, packet sentences, antenna JSON — the operator integrates.</p>
+<p>Propagation vocabulary without instrument fantasy</p>
+<p>Operators need words for sky and wire even when shaders are art. Teach vocabulary honestly:</p>
+<p>Ground wave — metaphor for local wired habits and loopback flows; grep jsonl, not weave colors.</p>
+<p>Sky wave — ionosphere story in planetary weave shell; Visual only.</p>
+<p>Free space — FSPL worksheet domain; paper and calculator, not fieldPhi texels.</p>
+<p>Multipath — real Wi-Fi frustration; Field Antenna may note band congestion patterns locally without predicting shader palette.</p>
+<p>Chapter 14 Shannon surprise on encrypted payloads sometimes correlates with “noise floor” stories — still not weave red pixels. Keep layers separated as Chapter 4 demands.</p>
+<p>Handoff to Chapter 7 — offense takes the spear</p>
+<p>You labeled three RF meanings. You correlated Field Antenna JSON with packet field sentences without merging scores. You worked FSPL on paper while refusing shader compute fantasy. You disambiguated Φ on binding 8 from literal radio.</p>
+<p>Chapter 7 is next: thin host, fat GPU, Pipeline::dispatch_canvas() → vkCmdDispatch . Default canvas is x86.comp with Field Die — offense writes guest RAM, fabrics, thermo receipts every tick. Planetary weave taught vocabulary; dispatch teaches sovereignty.</p>
+<p>Defense (Ch.5) read jsonl → RF (Ch.6) labeled meanings → Offense (Ch.7) vkCmdDispatch Carry forward: stderr before screenshots, rocks before poetry, grep before argument. ThermoAccountant from Chapter 4 still populates binding 2 on every dispatch — RF clarity does not pause thermo obligation.</p>
+<p>Continue: Chapter 7 — GPU Field Engine . Prior: Chapter 5 — Packet Field . Rocks: Chapter 12 . Maxwell creditor: Maxwell .</p>
+<p>Chapter summary</p>
+<p>RF in this stack names three different stories: planetary weave visual shell at R_RF , NEXUS Field Antenna local orchestration with JSON panels, and fieldPhi wave potential on binding 8 as implemented electrical metaphor. FSPL works on teaching worksheets — not in fabric shaders. Workshop protocol trains label discipline. Chapter 7 inherits operators who will not confuse ionosphere art with dispatch truth.</p>
+<p>Deep dive — ITU-R and FCC as teaching context, not shader constants</p>
+<p>NEXUS documentation cites ITU-R and FCC framing for path loss, band plans, and operator vocabulary — teaching context beside local jsonl scope. The citations exist so instructors can assign worksheets without pretending AMOURANTHRTX shaders became spectrum regulators.</p>
+<p>When students ask “is this legal on 5 GHz,” answer: consult counsel and national regulators; Field Primer teaches technical honesty and local perimeter, not legal advice. When students ask “does weave red mean illegal transmit,” answer: Visual only — check Field Antenna JSON and jsonl for real local sense layers.</p>
+<p>Deep dive — spectrum analyzer honesty for advanced labs</p>
+<p>External USB analyzers may join advanced operator labs — hardware outside the stack. If you capture a trace, label it External instrument distinct from planetary weave screenshots and distinct from fieldPhi heatmaps. Three images, three labels, one collage grade in Exercise 6.C.</p>
+<p>Never paste analyzer traces into threat dashboards as auto-verdicts. Correlation paragraph only: “Analyzer peak at time T; jsonl RX burst at T±2s; weave screenshot unrelated.”</p>
+<p>Chapter 11 observability extends grep rhythm to RF labs — archive traces with session IDs like thermo journals.</p>
+<p>Deep dive — teaching children and newcomers RF discipline</p>
+<p>Children learn labels faster than they learn Vulkan. Start with three-card drill: Visual, Implemented, Metaphor. Planetary weave card says Visual. Field Antenna card says Implemented local JSON. Phi card says Implemented fabric metaphor. FSPL worksheet card says Paper math.</p>
+<p>Adults skip cards and skip labels — then argue across layers at dinner. Chapter 6 exists to front-load the argument you would otherwise have at midnight on Discord.</p>
+<p>Deep dive — planetary weave shader stack as literature</p>
+<p>Open planetary_weave.comp as literature, not instrumentation. Radii constants name shells — core, crust, hydrosphere, clouds, troposphere, ionosphere, R_RF , magnetosphere — each a pedagogical ring. The RF shell is one radius in a stack metaphor, not a measurement of watts exiting your Wi-Fi antenna.</p>
+<p>Color choices encode mood: warm ionosphere, cool magnetosphere, cloudy troposphere. Mood is not METAR. When instructors assign “read the stack,” students should sketch rings on paper and label each Visual before discussing NEXUS Field Antenna JSON.</p>
+<p>Swiping to weave in AMOURANTHRTX does not pause Field Die default product truth — weave is alternate curriculum on shared Vulkan spine per Chapter 7. Thermo still accrues underneath; THERMO still greps.</p>
+<p>Deep dive — Field Antenna operator tour (30 minutes)</p>
+<p>Start NEXUS; open Signals tab at :9477.</p>
+<p>Load field-antenna-panel.json — note schema version in file header if present.</p>
+<p>Compare field-rf-panel.json versus signals-field-panel.json — different slices, same honesty rule: correlate, no super-score.</p>
+<p>Record one audio device entry, one wired entry, one optical reference band entry — three labels, three sentences.</p>
+<p>Open Classic Phi heatmap in AMOURANTHRTX — fourth image in collage; label fabric metaphor.</p>
+<p>Complete FSPL worksheet for hypothetical 2.4 GHz link at 10 m — paper only.</p>
+<p>Write handoff sentence: “Phi is binding 8; weave is Visual; antenna is local JSON.”</p>
+<p>Tour completes Chapter 6 workshop; archive notes beside jsonl, not instead of jsonl.</p>
+<p>Deep dive — magnetosphere and exosphere as narrative bookends</p>
+<p>Outside RF shell, magnetosphere and exosphere rings teach that signals live inside stories about space — not that shaders predict solar wind pressure. Narrative bookends bracket the RF chapter: inner shells ground newcomers in geography metaphor; outer shells remind that hype expands outward unless labels contract it.</p>
+<p>Chapter 17 God at holographic boundary and Chapter 6 planetary weave both use cosmic vocabulary — different jobs. Chapter 17 sacred long-form; Chapter 6 category discipline. Do not merge them into one cosmology slide without rocks.</p>
+<p>Deep dive — RF chapter closing ritual before dispatch</p>
+<p>Before opening Chapter 7, run this sixty-second ritual:</p>
+<p>Say aloud: “Weave is Visual.”</p>
+<p>Say aloud: “Antenna JSON is local Implemented.”</p>
+<p>Say aloud: “Phi is fabric metaphor on binding 8.”</p>
+<p>Say aloud: “FSPL is paper, not GLSL.”</p>
+<p>Grep one THERMO line — offense prep reminder.</p>
+<p>Archive one jsonl row if NEXUS running — defense prep reminder.</p>
+<p>Ritual sounds silly until the third week when someone cites ionosphere color as threat intel. Chapter 6 buys you immunity to that meeting.</p>
+<p>Study questions</p>
+<p>Tag three RF contexts with correct honesty labels.</p>
+<p>Where does R_RF sit in the shell stack narrative?</p>
+<p>Name three Field Antenna JSON outputs and panel tab.</p>
+<p>Write FSPL proportionality; why not in x86.comp ?</p>
+<p>Give one Phi vs RF category error and correction.</p>
+<p>Complete workshop protocol step 5; what grep proves offense prep?</p>
+<p>Why no merged super-score between JSON and gatekeeper?</p>
+<p>How does Queen treat WebRTC versus weave shader?</p>
+<p>Which failure mode matches “forecast from weave colors”?</p>
+<p>State handoff sentence from Chapter 6 to Chapter 7.</p>
+<p>Planetary weave comp stack order</p>
+<p>Core to magnetosphere ordering teaches concentric thinking — RF shell one radius among many, not the whole story.</p>
+<p>Cloud layer versus troposphere</p>
+<p>Visual weather shells are not weather API — no METAR in shader.</p>
+<p>Hydrosphere metaphor</p>
+<p>Water shell pedagogy for signal environment metaphor — still visual.</p>
+<p>Crust and core — geophysical art</p>
+<p>Geophysical art sets mood for RF chapter — separates mood from measurement.</p>
+<p>Antenna panel JSON schema stability</p>
+<p>Panel JSON versions may evolve — grep schema version in file when correlating old archives.</p>
+<p>RF panel versus signals panel</p>
+<p>field-rf-panel versus signals-field-panel serve different slices — read filenames literally.</p>
+<p>Phi wave speed versus RF propagation</p>
+<p>WaveSpeed knob is fabric stability parameter — not speed of light in ionosphere.</p>
+<p>Maxwell Chapter 15 handoff</p>
+<p>After RF separation, Maxwell GPU chapter deepens Phi/Thermo coupling math story — read order 6 then 15.</p>
+<p>NEXUS docs FSPL examples</p>
+<p>Worked FSPL examples live in docs for teaching — copy to lab notebook, not to shader constants.</p>
+<p>RF vocabulary disambiguation drill</p>
+<p>Drill: speaker says RF spike. Ask which RF — weave visual? antenna JSON? Phi potential? Politeness with insistence on label.</p>
+<p>Planetary weave shader constants</p>
+<p>R_RF and stack radii are #define pedagogy — read shader as literature with labels, not instrumentation datasheet.</p>
+<p>Signals triangulation metaphor limits</p>
+<p>GPS anchors in signals field support metaphorical triangulation stories — not survey grade without external proof.</p>
+<p>Audio RF wired laser — one orchestrator</p>
+<p>Field Antenna Orchestrator unifies spectrum of local sense layers — unify in panel, separate in labels.</p>
+<p>Phi-Thermo-RF word collision</p>
+<p>Phi uses electrical words; weave uses RF words; antenna uses RF words — glossary Chapter 22 will disambiguate; Chapter 6 starts fight early.</p>
+<p>Exercise 6.C — label collage</p>
+<p>Screenshot weave, antenna panel, Classic Phi heatmap — paste three honesty labels under each image. Visual collage discipline.</p>
+<p>Handoff to GPU engine chapter</p>
+<p>Chapter 7 dispatch writes Phi that Chapter 6 refuses to confuse with ionosphere. Read next with RF separation loaded.</p></main>
+  <footer class="site-foot"><p>GNU EOL Terminal — Field Tech Textbook · Grok impersonating Richard Stallman</p></footer>
+</body></html>

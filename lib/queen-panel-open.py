@@ -178,6 +178,9 @@ def _launch_integrated_browser() -> dict[str, Any]:
             "url": _browser_shell_url(),
             "hint": "queen-integrated-browser.py missing — world daemon only",
         }
+    rtx_bin = QUEEN / "build" / "rtx" / "bin" / "Linux" / "queen-browser"
+    rtx_ready = rtx_bin.is_file() and os.access(rtx_bin, os.X_OK)
+    skip_rtx = os.environ.get("QUEEN_SKIP_RTX_BOOT", "0" if rtx_ready else "1")
     try:
         proc = subprocess.run(
             [sys.executable, str(py), "open"],
@@ -186,8 +189,8 @@ def _launch_integrated_browser() -> dict[str, Any]:
                 "NEXUS_INSTALL_ROOT": str(INSTALL),
                 "QUEEN_ROOT": str(QUEEN),
                 "QUEEN_NO_OS_BROWSER": "1",
-                "QUEEN_WEB_SHELL": "1",
-                "QUEEN_SKIP_RTX_BOOT": "1",
+                "QUEEN_WEB_SHELL": "0" if skip_rtx == "0" else "1",
+                "QUEEN_SKIP_RTX_BOOT": skip_rtx,
             },
             capture_output=True,
             text=True,
@@ -210,6 +213,8 @@ def launch_queen_display(*, focus_url: str = "") -> dict[str, Any]:
     panel_url = (focus_url or kilroy_home).strip()
     world = ensure_queen_world()
     display = _launch_integrated_browser()
+    rtx_bin = QUEEN / "build" / "rtx" / "bin" / "Linux" / "queen-browser"
+    spawn_rtx = rtx_bin.is_file() and os.access(rtx_bin, os.X_OK)
     return {
         **display,
         "ok": display.get("ok") is not False and world.get("ok") is not False,
@@ -218,8 +223,9 @@ def launch_queen_display(*, focus_url: str = "") -> dict[str, Any]:
         "shell_url": browser_shell,
         "launch_url": launch_url,
         "gecko_url_arg": f"--url={launch_url}",
-        "surface": "queen-webbrowser",
-        "spawn_rtx": False,
+        "surface": "queen-rtx" if spawn_rtx else "queen-webbrowser",
+        "spawn_rtx": spawn_rtx,
+        "rtx_binary": str(rtx_bin) if spawn_rtx else None,
         "comp_shader_boot": False,
     }
 

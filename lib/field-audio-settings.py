@@ -22,6 +22,11 @@ PANEL_PATH = STATE_DIR / "field-audio-settings-panel.json"
 
 DEFAULT_SETTINGS = {
     "advanced": False,
+    "quality": "high",
+    "format_profile": "surround_8ch",
+    "soundcard_id": "host-live",
+    "subwoofer": True,
+    "dolby_emu": True,
     "default_sink": "",
     "default_source": "",
     "sink_volume": 1.0,
@@ -129,13 +134,17 @@ def snapshot(advanced: bool | None = None) -> dict[str, Any]:
     }
     if settings.get("advanced"):
         payload["advanced"] = _advanced_block(settings, backend)
+    sc_mod = fcc.mod("fa_soundcards", "field-soundcards-catalog.py")
+    payload["soundcards"] = sc_mod.catalog() if sc_mod and hasattr(sc_mod, "catalog") else {}
     if dac:
         probe = dac.dac_probe() if hasattr(dac, "dac_probe") else {}
+        panel = dac.build_panel(write=False) if hasattr(dac, "build_panel") else {}
         payload["dac_chamber"] = {
             "ui": "/field-audio-dac",
             "api": "/api/field-audio-dac",
-            "format_profiles": (fcc.load(INSTALL / "data" / "field-audio-dac-doctrine.json", {}).get("format_profiles") or []),
-            "active_profile": probe.get("active_profile") or {},
+            "format_profiles": panel.get("format_profiles") or (fcc.load(INSTALL / "data" / "field-audio-dac-doctrine.json", {}).get("format_profiles") or []),
+            "active_profile": probe.get("active_profile") or panel.get("active_profile") or {},
+            "soundcards": panel.get("soundcards") or payload.get("soundcards"),
         }
     return payload
 
@@ -184,6 +193,12 @@ def apply_settings(patch: dict[str, Any]) -> dict[str, Any]:
             dac_patch["output_device"] = patch["default_sink"]
         if patch.get("default_source"):
             dac_patch["input_device"] = patch["default_source"]
+        if patch.get("format_profile"):
+            dac_patch["format_profile"] = patch["format_profile"]
+        if patch.get("soundcard_id"):
+            dac_patch["soundcard_id"] = patch["soundcard_id"]
+        if patch.get("quality"):
+            dac_patch["quality"] = patch["quality"]
         if patch.get("sink_volume") is not None:
             dac_patch["output_gain_db"] = 20.0 * math.log10(max(0.01, float(patch["sink_volume"])))
         if patch.get("source_volume") is not None:

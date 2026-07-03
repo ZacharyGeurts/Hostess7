@@ -4,7 +4,10 @@
 (function (global) {
   "use strict";
 
-  const API = "/api/ammoos-themes";
+  const API = (function () {
+    if (global.H7Api) return global.H7Api("/api/ammoos-themes");
+    return "/api/ammoos-themes";
+  })();
   const STORAGE_KEY = "queen-styles-v1";
 
   const COLOR_FIELDS = [
@@ -155,7 +158,8 @@
     const root = document.documentElement;
     const attr = meta?.data_attr || id;
     root.dataset.ammoosTheme = attr;
-    root.dataset.osTheme = id === "nexus_c2" ? "" : id;
+    root.dataset.osTheme =
+      id === "nexus_c2" || id === "ammoos" ? "ammoos" : id === "dusty-night" ? "dusty-night" : id;
     const vars = meta?.vars || {};
     for (const [k, v] of Object.entries(vars)) {
       if (v != null) root.style.setProperty(k, String(v));

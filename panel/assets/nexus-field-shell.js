@@ -103,11 +103,20 @@
     return exec;
   }
 
+  function ammoosCommandUrl(exec, app) {
+    const raw = String(exec || "").trim();
+    if (!raw.startsWith("/command")) return raw;
+    if (raw.includes("embed=1")) return raw;
+    const hash = raw.includes("#") ? raw.split("#").slice(1).join("#") : "";
+    const view = app?.view || hash;
+    return "/command?embed=1" + (view ? "#" + view : hash ? "#" + hash : "");
+  }
+
   function resolveUrl(app) {
     const exec = String(app?.exec || app?.url || "").trim();
     if (!exec) return pageResolve("/field");
     if (app?.queenNavigate) return queenBrowserUrl();
-    if (exec.startsWith("/")) return pageResolve(exec);
+    if (exec.startsWith("/")) return pageResolve(ammoosCommandUrl(exec, app));
     if (app?.view) return pageResolve("/command?embed=1#" + app.view);
     if (/^https?:\/\//i.test(exec)) {
       if (pagesRuntime()) {

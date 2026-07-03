@@ -11,6 +11,7 @@ from typing import Any
 
 ROOT = Path(os.environ.get("OBS_FIELD_ROOT", Path(__file__).resolve().parents[1]))
 DOCTRINE = ROOT / "data" / "field-obs-doctrine.json"
+BC_DOCTRINE = ROOT / "data" / "field-broadcaster-doctrine.json"
 TIERS = ROOT / "data" / "field-obs-ui-tiers.json"
 GLOBAL_TPL = ROOT / "config" / "global.ini.template"
 BASIC_TPL = ROOT / "config" / "basic.ini.template"
@@ -46,7 +47,10 @@ def _rtx() -> bool:
 
 def write_portable(*, width: int = 1920, ui_scale_pct: int = 110, rtx_reduce: bool = False, state_dir: Path | None = None) -> dict[str, Any]:
     doctrine = _load(DOCTRINE, {})
-    capture = doctrine.get("capture") or {}
+    bc = _load(BC_DOCTRINE, {})
+    capture = bc.get("capture") or doctrine.get("capture") or {}
+    profile_name = capture.get("default_profile", "Broadcaster")
+    collection_name = capture.get("default_collection", "NEXUS-C2")
     tier = _tier(width)
     scale = float(tier.get("scale", 1.1)) * (ui_scale_pct / 100.0)
     rtx = _rtx()
@@ -61,14 +65,14 @@ def write_portable(*, width: int = 1920, ui_scale_pct: int = 110, rtx_reduce: bo
     portable = OUT_PORTABLE if state_dir is None else state_dir / "field-obs-portable"
     config_root = portable / "config" / "obs-studio"
     basic = config_root / "basic"
-    profile_dir = basic / "profiles" / "Field"
+    profile_dir = basic / "profiles" / profile_name
     scenes_dir = basic / "scenes"
     record_dir = portable / (capture.get("record_dir") or "recordings")
 
     for d in (config_root, profile_dir, scenes_dir, record_dir):
         d.mkdir(parents=True, exist_ok=True)
 
-    (portable / "portable_mode.txt").write_text("Field OBS portable\n", encoding="utf-8")
+    (portable / "portable_mode.txt").write_text("Broadcaster portable — OBS fork for AmmoOS\n", encoding="utf-8")
 
     if GLOBAL_TPL.is_file():
         shutil.copy2(GLOBAL_TPL, config_root / "global.ini")
@@ -79,8 +83,11 @@ def write_portable(*, width: int = 1920, ui_scale_pct: int = 110, rtx_reduce: bo
         text = text.replace("ENCODER", rec_enc)
         (profile_dir / "basic.ini").write_text(text, encoding="utf-8")
 
-    if SCENE_TPL.is_file():
-        shutil.copy2(SCENE_TPL, scenes_dir / "Field-Queen.json")
+    scene_tpl = ROOT / "config" / f"{collection_name}.scene.json"
+    if not scene_tpl.is_file():
+        scene_tpl = SCENE_TPL
+    if scene_tpl.is_file():
+        shutil.copy2(scene_tpl, scenes_dir / f"{collection_name}.json")
 
     qss_src = ROOT / "themes" / "field-obs.qss"
     qss_dst = portable / "field-obs.qss"
@@ -95,8 +102,9 @@ def write_portable(*, width: int = 1920, ui_scale_pct: int = 110, rtx_reduce: bo
         "portable": str(portable),
         "config": str(config_root),
         "recordings": str(record_dir),
-        "profile": capture.get("default_profile", "Field"),
-        "collection": capture.get("default_collection", "Field-Queen"),
+        "profile": profile_name,
+        "collection": collection_name,
+        "product": bc.get("product") or "Broadcaster",
         "qt_scale": round(scale, 3),
         "tier": tier.get("id"),
         "encoder": rec_enc,
@@ -104,6 +112,21 @@ def write_portable(*, width: int = 1920, ui_scale_pct: int = 110, rtx_reduce: bo
         "ui_scale_pct": ui_scale_pct,
     }
     (portable / "field-obs-ui.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+    install = Path(os.environ.get("NEXUS_INSTALL_ROOT", ROOT.parent / "NewLatest"))
+    senses_py = install / "lib" / "field-broadcaster-senses.py"
+    if senses_py.is_file():
+        try:
+            import subprocess
+            import sys as _sys
+            env = {**os.environ, "FIELD_BROADCASTER_PORTABLE_DIR": str(portable), "NEXUS_STATE_DIR": str(state_dir or portable.parent)}
+            proc = subprocess.run(
+                [_sys.executable, str(senses_py), "write"],
+                capture_output=True, text=True, timeout=45, env=env,
+            )
+            if proc.returncode == 0 and proc.stdout.strip():
+                meta["senses"] = json.loads(proc.stdout)
+        except Exception:
+            pass
     return meta
 
 

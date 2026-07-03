@@ -444,7 +444,7 @@
         <header class="h7r-top"></header>
         <div class="h7r-body-wrap"><article class="h7r-body" tabindex="0" aria-live="polite" aria-atomic="true"></article></div>
         <aside class="h7r-bookmarks" id="h7r-bookmarks" hidden aria-label="Bookmarks"></aside>
-        <aside class="h7r-lies-index" id="h7r-lies-index" hidden aria-label="Deception Index — Autonomous Warfare corpus gate"></aside>
+        <aside class="h7r-lies-index" id="h7r-lies-index" hidden aria-label="Care index — passages to read twice with your librarian"></aside>
         <div class="h7r-truth-panel" id="h7r-truth-panel" hidden role="complementary" aria-label="Ironclad truth readout for selected sentence"></div>
         <div class="h7r-braille-strip" id="h7r-braille-strip" hidden aria-label="Braille line for refreshable display"></div>
         <footer class="h7r-bottom"></footer>
@@ -517,7 +517,7 @@
         <label>Font <select class="h7r-font" aria-label="Font">${fontOpts}</select></label>
         <label>Ratio <select class="h7r-ratio" aria-label="Page ratio">${ratioOpts}</select></label>
         <button type="button" class="h7r-bm-toolbar" title="Bookmark this page (Ctrl+D)">🔖</button>
-        <button type="button" class="h7r-lies-toolbar" title="Deception index — LIKELY_FALSE flags">Deception</button>
+        <button type="button" class="h7r-lies-toolbar" title="Care index — passages worth a second look">Care index</button>
         ${state.appendixPage ? `<button type="button" class="h7r-appendix-jump" title="Jump to appendix">Appendix p${state.appendixPage}</button>` : ""}
       </div>`;
 
@@ -602,11 +602,11 @@
       panel.hidden = true;
       return;
     }
-    const libName = state.lieLibrarian?.name || "Lie Librarian — Ironclad Deception Index";
+    const libName = state.lieLibrarian?.name || "Librarian Corps — Care Index";
     const total = state.liesIndex?.total_lie_count || entries.length;
     panel.innerHTML = `
-      <div class="h7r-lies-head">Deception Index — ${esc(libName)} <button type="button" class="h7r-lies-close">×</button></div>
-      <p class="h7r-lies-note">${total} flagged claim(s) · Autonomous Warfare corpus gate · verify before fielding · p.${state.pageChars} chars/page</p>
+      <div class="h7r-lies-head">Care Index — ${esc(libName)} <button type="button" class="h7r-lies-close">×</button></div>
+      <p class="h7r-lies-note">${total} passage(s) to read twice · ask your librarian or nun in charge · p.${state.pageChars} chars/page</p>
       <ol class="h7r-lies-list">${entries.map((e) => {
         const fh = e.for_humans || {};
         const label = fh.likely_label || (e.likely_false ? "likely false" : "uncertain");
@@ -680,6 +680,10 @@
     return parts.map((s) => s.trim()).filter((s) => s.length >= 8);
   }
 
+  function polishLine(text) {
+    return global.FieldLibraryEye?.polish ? global.FieldLibraryEye.polish(text) : String(text ?? "");
+  }
+
   function renderBlockHtml(block, sentenceBase = 0) {
     const figRe = /!\[([^\]]*)\]\(h7fig:([a-zA-Z0-9_.-]+)\)/g;
     if (figRe.test(block)) {
@@ -693,10 +697,10 @@
       }).replace(/^### (.+)$/gm, "<h3 class='h7r-h3'>$1</h3>").replace(/^## (.+)$/gm, "<h2 class='h7r-h2'>$1</h2>").replace(/^# (.+)$/gm, "<h1 class='h7r-h1'>$1</h1>");
     }
     const sents = splitSentences(block);
-    if (!sents.length) return esc(block);
+    if (!sents.length) return esc(polishLine(block));
     return sents.map((s, i) => {
       const gidx = sentenceBase + i;
-      return `<span class="h7r-sentence" tabindex="0" role="button" data-sentence-index="${gidx}" data-page="${state.page}" aria-label="Truth check page ${state.page} sentence ${i + 1}">${esc(s)}</span>`;
+      return `<span class="h7r-sentence" tabindex="0" role="button" data-sentence-index="${gidx}" data-page="${state.page}" aria-label="Truth check page ${state.page} sentence ${i + 1}">${esc(polishLine(s))}</span>`;
     }).join(" ");
   }
 
@@ -706,10 +710,10 @@
       return renderBlockHtml(t, sentenceBase);
     }
     const sents = splitSentences(t);
-    if (!sents.length) return esc(t);
+    if (!sents.length) return esc(polishLine(t));
     return sents.map((s, i) => {
       const gidx = sentenceBase + i;
-      return `<span class="h7r-sentence" tabindex="0" role="button" data-sentence-index="${gidx}" data-page="${state.page}" aria-label="Truth check page ${state.page} sentence ${i + 1}">${esc(s)}</span>`;
+      return `<span class="h7r-sentence" tabindex="0" role="button" data-sentence-index="${gidx}" data-page="${state.page}" aria-label="Truth check page ${state.page} sentence ${i + 1}">${esc(polishLine(s))}</span>`;
     }).join(" ");
   }
 

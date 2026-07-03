@@ -1,0 +1,26 @@
+{
+  "schema": "field-soundcards-catalog/v1",
+  "title": "Soundcards — history, chips, emulation",
+  "section": "soundcards",
+  "chips_catalog_section": "soundcards",
+  "default_profile": "surround_8ch",
+  "default_quality": "high",
+  "cards": [
+    {"id": "host-live", "name": "This machine (live)", "era": "present", "bus": "auto", "channels": 8, "quality": "high", "chips": [], "systems": ["AmmoOS", "Hostess 7"], "emulation": null, "live": true},
+    {"id": "sb-awe64-gold", "name": "Creative Sound Blaster AWE64 Gold", "era": "1997", "bus": "ISA/PCI", "channels": 2, "quality": "standard", "chips": ["emu8000", "sb16-dsp"], "systems": ["DOS", "Windows 9x", "Linux OSS"], "emulation": "sb16_emu"},
+    {"id": "sb-live-value", "name": "Creative Sound Blaster Live! Value", "era": "1999", "bus": "PCI", "channels": 6, "quality": "high", "chips": ["emu10k1"], "systems": ["Windows", "Linux ALSA emu10k1"], "emulation": "emu10k1_emu"},
+    {"id": "sb-audigy2-zs", "name": "Creative Sound Blaster Audigy 2 ZS", "era": "2003", "bus": "PCI", "channels": 8, "quality": "high", "chips": ["emu10k2"], "systems": ["Windows", "Linux", "Gaming rigs"], "emulation": "surround_71"},
+    {"id": "ensoniq-audiopci", "name": "Ensoniq AudioPCI ES1371", "era": "1998", "bus": "PCI", "channels": 2, "quality": "standard", "chips": ["ensoniq-esp-r2"], "systems": ["Windows", "Linux ens1371"], "emulation": "stereo"},
+    {"id": "yamaha-ymf724", "name": "Yamaha YMF724 SuperSound", "era": "1999", "bus": "PCI", "channels": 6, "quality": "standard", "chips": ["ymf724"], "systems": ["Windows", "DOS FM"], "emulation": "surround_51"},
+    {"id": "via-ac97", "name": "VIA AC'97 Codec", "era": "2001", "bus": "AC97", "channels": 6, "quality": "standard", "chips": ["ac97"], "systems": ["PC motherboards", "Linux ac97"], "emulation": "surround_51"},
+    {"id": "intel-hda", "name": "Intel HD Audio (Azalia)", "era": "2004", "bus": "HDA", "channels": 8, "quality": "high", "chips": ["ich7-azalia"], "systems": ["Modern PC", "Linux snd-hda-intel"], "emulation": "surround_8ch"},
+    {"id": "realtek-alc1220", "name": "Realtek ALC1220", "era": "2017", "bus": "HDA", "channels": 8, "quality": "high", "chips": ["alc1220"], "systems": ["Enthusiast boards", "Linux", "Windows"], "emulation": "surround_8ch"},
+    {"id": "creative-ae-7", "name": "Creative Sound Blaster AE-7", "era": "2019", "bus": "PCIe", "channels": 8, "quality": "high", "chips": ["sound-core3d"], "systems": ["Windows", "Linux"], "emulation": "dolby_digital_emu"},
+    {"id": "creative-ae-9", "name": "Creative Sound Blaster AE-9", "era": "2020", "bus": "PCIe", "channels": 8, "quality": "high", "chips": ["sound-core3d", "dac-xamp"], "systems": ["Enthusiast DAC", "Windows"], "emulation": "atmos_emu"},
+    {"id": "focusrite-scarlett", "name": "Focusrite Scarlett 18i20", "era": "2018", "bus": "USB", "channels": 8, "quality": "high", "chips": ["usb-audio-class"], "systems": ["Studio", "Linux", "OBS"], "emulation": "surround_8ch"},
+    {"id": "commodore-sid", "name": "Commodore 64 SID (6581)", "era": "1982", "bus": "onboard", "channels": 3, "quality": "retro", "chips": ["mos-6581-sid"], "systems": ["C64", "chiptune"], "emulation": "stereo"},
+    {"id": "snes-spc700", "name": "SNES SPC700 Audio", "era": "1990", "bus": "cartridge", "channels": 8, "quality": "retro", "chips": ["spc700"], "systems": ["SNES", "emulators"], "emulation": "stereo"},
+    {"id": "amiga-paula", "name": "Amiga Paula", "era": "1985", "bus": "onboard", "channels": 4, "quality": "retro", "chips": ["paula-8364"], "systems": ["Amiga", "tracker scene"], "emulation": "stereo"},
+    {"id": "neo-geo-ym2610", "name": "Neo Geo YM2610", "era": "1990", "bus": "arcade", "channels": 6, "quality": "retro", "chips": ["ym2610"], "systems": ["Neo Geo", "MVS"], "emulation": "surround_51"}
+  ]
+}

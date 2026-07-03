@@ -1,0 +1,481 @@
+{
+  "version": 1,
+  "hostess": "Hostess 7",
+  "role": "Smart Boss",
+  "updated": "2026-07-01T19:50:32.988019+00:00",
+  "head": "33ac0cb4",
+  "tree_version": "?",
+  "philosophy": {
+    "noise_ratio": 0.94,
+    "truth_ratio": 0.06,
+    "truth_floor_score": 30,
+    "mantra": "94% lies, 6% truth \u2014 infinite out the TRUTH with local corroboration."
+  },
+  "brain_snapshot": {
+    "scanned": "2026-07-01T19:50:32.451493+00:00",
+    "head": "33ac0cb4",
+    "version": "?",
+    "reach": {
+      "updated": "2026-07-01T19:50:32.461626+00:00",
+      "host": "default-X870-Pro-RS",
+      "os": "Linux 6.14.0-37-generic",
+      "arch": "x86_64",
+      "exec_enabled": false,
+      "hostess7_root": "/home/default/Desktop/SG/NewLatest/Hostess7",
+      "sg_root": "/home/default/Desktop/SG",
+      "amouranthrtx_root": null,
+      "roots": [
+        {
+          "role": "hostess7",
+          "path": "/home/default/Desktop/SG/NewLatest/Hostess7",
+          "exists": true,
+          "git": false,
+          "head": null,
+          "dirty": null,
+          "launcher": "/home/default/Desktop/SG/NewLatest/Hostess7/Hostess7.sh"
+        },
+        {
+          "role": "sg",
+          "path": "/home/default/Desktop/SG",
+          "exists": true,
+          "git": false,
+          "head": null,
+          "dirty": null
+        }
+      ],
+      "tools": {
+        "git": "/usr/bin/git",
+        "pythong": "/home/default/Desktop/SG/Grok16/bin/pythong",
+        "make": "/usr/bin/make",
+        "ninja": "/home/default/.local/bin/ninja",
+        "bash": "/usr/bin/bash",
+        "sh": "/usr/bin/sh",
+        "rsync": "/usr/bin/rsync",
+        "curl": "/usr/bin/curl",
+        "wget": "/usr/bin/wget",
+        "tar": "/usr/bin/tar",
+        "gzip": "/usr/bin/gzip",
+        "unzip": "/usr/bin/unzip",
+        "which": "/usr/bin/which",
+        "uname": "/usr/bin/uname",
+        "ldd": "/usr/bin/ldd",
+        "gcc": "/usr/bin/gcc",
+        "g++": "/usr/bin/g++"
+      },
+      "path": "/usr/bin:/bin:/home/default/Desktop/SG/Grok16/bin:/home/default/Desktop/SG/NewLatest/PythonG/bin:/home/default/.local/bin:/home/default/.grok/bin:/home/default/.grok/bin:/home/default/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/default/.lmstudio/bin:/home/default/.lmstudio/bin:/home/default/.lmstudio/bin:/home/default/.lmstudio/bin"
+    },
+    "legal": {
+      "version": 7,
+      "domains": 25,
+      "lexicon": 64,
+      "formal_mode": true,
+      "infinite_indexed": 160,
+      "infinite_bytes": 63401,
+      "catalog_seed": 160
+    },
+    "medical": {
+      "version": 2,
+      "domains": 19,
+      "infinite_indexed": 29,
+      "papers_catalog_seed": 29
+    },
+    "physics": {
+      "version": 1,
+      "domains": 13
+    },
+    "beyond": {
+      "total": 38,
+      "by_category": {
+        "brain": 6,
+        "science": 9,
+        "technology": 7,
+        "humanities": 10,
+        "arts": 3,
+        "applied": 3
+      },
+      "version": 5
+    },
+    "detective": {
+      "version": 2,
+      "domains": 11
+    },
+    "vision": {
+      "version": 4,
+      "domains": [
+        {
+          "id": "vision_foundations",
+          "title": "Computer vision foundations",
+          "tags": [
+            "vision",
+            "see",
+            "image",
+            "pixel",
+            "frame",
+            "camera",
+            "perception",
+            "visual"
+          ],
+          "body": "Vision transforms light into structured understanding: sampling (resolution, HDR), filtering (denoise, sharpen), features (edges, corners, textures), and semantics (classification, detection, segmentation). Pipelines: capture \u2192 preprocess \u2192 model/inference \u2192 postprocess \u2192 action. Accuracy requires calibration \u2014 geometry, color space, temporal coherence. On AMOURANTHRTX the die framebuffer is authoritative: FieldSnapDump PPM readback, OCR on guest VGA, 4K default 3840\u00d72160 in FieldDosViewport and aos_chrome.inc viewport mapping."
+        },
+        {
+          "id": "motion_foundations",
+          "title": "Motion & dynamics",
+          "tags": [
+            "motion",
+            "movement",
+            "animation",
+            "velocity",
+            "physics",
+            "flow",
+            "track",
+            "fps"
+          ],
+          "body": "Motion is change across time: translational and rotational kinematics, acceleration, jerk, angular velocity \u03c9, centripetal acceleration v\u00b2/r. Optical flow (Lucas-Kanade, Farneback) estimates per-pixel velocity fields; object tracking (Kalman, IOU, SORT/DeepSORT) maintains identity across frames. Integrators: Euler (simple), Verlet (stable), semi-implicit for games; Field fabric uses fluid/entropy-forward integration on Pipeline.hpp. Temporal stability beats raw FPS \u2014 Tesla valve logic damps oscillation. Keen: CPU IP motion OR GpuLaunch title blit (FieldRtxPm.hpp). Bench: bench_dos_suite.py --4k."
+        },
+        {
+          "id": "action_foundations",
+          "title": "Action & interaction",
+          "tags": [
+            "action",
+            "click",
+            "input",
+            "mouse",
+            "keyboard",
+            "gesture",
+            "hit",
+            "interact"
+          ],
+          "body": "Action closes the perception loop: sense state \u2192 decide \u2192 act. UI actions: pointer down/up, hit testing, focus, keyboard pump, menu dispatch. AMOURANTHRTX action stack: FieldInput.hpp maps mouse through FieldDosViewport; FieldWmChrome taskbarChromeCapturesPointer; FieldTaskbarLayout mirrors aos_taskbar_layout.inc for C++ hit tests at 4K; FieldEmuFileDialog pumpMouse for open/save; FieldWinFrame pumpMouse for menu actions. QA gates: qa_taskbar_click_test, qa_ocr_click_test, qa_aos_ocr_test, qa_aos_gui_test."
+        },
+        {
+          "id": "ocr_perception",
+          "title": "OCR & visual QA",
+          "tags": [
+            "ocr",
+            "text",
+            "read",
+            "screen",
+            "hud",
+            "chrome",
+            "snap",
+            "ppm"
+          ],
+          "body": "OCR extracts text from rendered frames for ground-truth QA without human eyes in the loop. FieldSnapDump.hpp: GPU HDR framebuffer \u2192 PPM for AmouranthOS visual QA. Scripts: qa_aos_ocr_test.py (NES/AmmoFiles, guest VGA authoritative in headless), qa_ocr_click_test.py (click toolkit alignment), qa_nes_ocr_test.py. Headless GPU snap may be dark \u2014 guest VGA path via qa_amouranthos_test is authoritative for NES chrome. Clock and 40px tab hits align to 4K taskbar layout in compute shaders (aos_sdf_chrome.inc)."
+        },
+        {
+          "id": "viewport_4k",
+          "title": "4K viewport & display motion",
+          "tags": [
+            "4k",
+            "3840",
+            "2160",
+            "viewport",
+            "scale",
+            "zoom",
+            "display",
+            "resolution"
+          ],
+          "body": "Default canvas: 3840\u00d72160 \u2014 FieldDosViewport.hpp winW/renderW, FieldDosDisplay displayPixelW, SDL3.hpp dispW/dispH, OptionsMenu DefaultWidth 3840. autoZoom4K scales panel placement; SCALE shell command in FieldRtxShell for 1.0\u201312.0 zoom and double-click stamp. aosViewport() in aos_chrome.inc maps storage image coords to dispatched framebuffer \u2014 taskbar anchors to viewport_h. FieldLayer.hpp sets 4K on enable. Motion at 4K: bench_dos_suite --4k measures frames_per_sec vs 1080p baseline."
+        },
+        {
+          "id": "wm_compositor",
+          "title": "Window manager & compositor action",
+          "tags": [
+            "wm",
+            "window",
+            "compositor",
+            "taskbar",
+            "dock",
+            "chrome",
+            "desktop",
+            "aos"
+          ],
+          "body": "AmmoOS WM: FieldWmCompositor, FieldWmDock (taskbar-aware cascade), FieldWmChrome hit routing, FieldAmouranthWm, FieldTaskbarLayout left-docked 1024-grid row heights for 4K uiSc. Pipeline packs data_bus bits: desktop (12) vs console-shell taskbar (29). EnableDesktop / EnableTaskbar in OptionsMenu \u2014 shell live with taskbar/clock per CANVAS log. Actions: Start menu, program launch (FieldAmouranthLaunch), exit confirm, folder view DnD."
+        },
+        {
+          "id": "guest_vga",
+          "title": "Guest VGA & emulator visual path",
+          "tags": [
+            "vga",
+            "guest",
+            "nes",
+            "ega",
+            "blit",
+            "framebuffer",
+            "paint",
+            "chrome"
+          ],
+          "body": "Guest programs paint into die framebuffer \u2014 not host WM overlay alone. Keen: GpuLaunch forceTitleBlit, keen_ip_progress probe, keenTitleBlitSeeded (FieldGpuLaunch.hpp). NES: guest VGA authoritative for headless OCR; GPU WM chrome optional. qa_keen_host_test: keen_title_paint=1 keen_ip_progress=1. Visual action truth = what the guest die actually rendered, verified by snap + OCR + progress probes."
+        },
+        {
+          "id": "field_wave_motion",
+          "title": "Field wave motion & analog canvas",
+          "tags": [
+            "wave",
+            "field",
+            "fabric",
+            "entropy",
+            "phi",
+            "thermo",
+            "analog",
+            "dispatch"
+          ],
+          "body": "Field canvas motion is physics-grounded: FieldFabric dispatchExtended, entropy fabric predict, wave phases in FieldStorage, mouse probe injection in Pipeline (heat/vortex/phase kick). Analog field phi evolves per frame \u2014 not discrete UI ticks only. Hostess7 native bus bit 28 ticks every frame; METRIC every 64 frames. Motion + vision unify on one canvas: shaders (CANVAS.comp/x86.comp), die execution, WM chrome overlay."
+        },
+        {
+          "id": "action_qa_matrix",
+          "title": "Vision-action QA matrix",
+          "tags": [
+            "qa",
+            "test",
+            "green",
+            "release",
+            "verify",
+            "bench"
+          ],
+          "body": "Release-2.0 vision/action gates: qa_taskbar_click_test (40px tab hits), qa_aos_gui_test, qa_font_sdf_test (JetBrains Mono SDF), qa_amouranthos_test (AOS + guest path), qa_ocr_click_test, qa_aos_ocr_test, qa_love_demo_test. Run: ./linux.sh release-2.0 \u2192 GREEN ALL. Visual suite: ./seetests.sh aos. Failure pattern: host GPU snap dark in headless \u2014 trust guest VGA + click OCR separately."
+        },
+        {
+          "id": "robotics_actions",
+          "title": "Robotics & embodied action (general)",
+          "tags": [
+            "robot",
+            "embodied",
+            "manipulation",
+            "planning",
+            "slam",
+            "depth",
+            "stereo"
+          ],
+          "body": "Embodied vision-action loop: perceive (RGB-D, IMU) \u2192 localize (SLAM) \u2192 plan (collision-free path) \u2192 act (joint torques, grippers). AMOURANTHRTX maps metaphorically: pointer as end-effector, hit test as collision, launch queue as action planner, Field brain as policy host. For physical robots: calibrate extrinsics, latency budget, safety interlocks \u2014 outside die scope."
+        },
+        {
+          "id": "brain_imaging_sdf",
+          "title": "Brain imaging \u2014 SDF plate recall (Queen \u00b7 Hostess 7)",
+          "tags": [
+            "brain imaging",
+            "imaging",
+            "sdf",
+            "plate",
+            "recall",
+            "ocr",
+            "queen",
+            "hostess",
+            "neural"
+          ],
+          "body": "Queen DARPA Robot Brain runs Hostess 7 as Forever Watchguard Angel. Brain imaging here is procedural: each 900\u20131200 word Mayer segment folds to an analytic SDF plate (PGM + .sdf.json) under brain/sdf/plates/. Vision net forward-passes the plate \u2014 OCR, caption_stub, segment_registry.jsonl \u2014 for recall without reopening full prose. Pairs with hostess7-neural-stack brain_imaging series (sdf_fold, plate_ocr, sdl_text). Commands: ./Hostess7.sh sdf-teach seed \u00b7 sdf-segment <file>."
+        },
+        {
+          "id": "spatial_3d_reality",
+          "title": "3D spatial reality & world frames",
+          "tags": [
+            "3d",
+            "spatial",
+            "reality",
+            "world",
+            "frame",
+            "transform",
+            "quaternion",
+            "matrix"
+          ],
+          "body": "3D spatial reality models persistent world coordinates: world frame W, body B, camera C, screen S. Rigid transforms T = [R|t] compose; quaternions avoid gimbal lock for smooth rotation interpolation. Consistency rule: one authoritative world frame per scene; all projections trace back through transform chain. Right hemisphere Hostess 7 bias handles holistic spatial synthesis; left hemisphere verifies transform math. Full physics corpus: cache/fieldstorage/brain/physics/corpus.json \u2014 kinematics through depth/SLAM."
+        },
+        {
+          "id": "depth_stereo_vision",
+          "title": "Depth, stereo & metric vision",
+          "tags": [
+            "depth",
+            "stereo",
+            "disparity",
+            "rgbd",
+            "point cloud",
+            "metric",
+            "calibration"
+          ],
+          "body": "Binocular stereo: disparity d relates depth Z = fB/d (focal length f, baseline B). Monocular depth networks infer scale-ambiguous geometry; metric depth needs calibration or fusion. RGB-D sensors (structured light, ToF) feed point clouds; ICP and voxel downsampling for registration. NeRF/Gaussian splatting reconstruct 3D from multi-view 2D \u2014 emerging spatial reality capture. On canvas: guest die state is 3D-emulated; 2D framebuffer is observed projection for OCR and click QA."
+        },
+        {
+          "id": "scene_motion_perception",
+          "title": "Scene motion & event perception",
+          "tags": [
+            "scene",
+            "event",
+            "optical flow",
+            "background",
+            "foreground",
+            "segmentation",
+            "temporal"
+          ],
+          "body": "Background subtraction and foreground segmentation isolate moving entities. Temporal filtering reduces flicker; optical flow clusters coherent motion regions. Event cameras (DVS) encode log-intensity changes \u2014 microsecond temporal resolution for fast motion. Video understanding: action recognition, trajectory prediction, occlusion reasoning. Field wave motion couples spatial cells across frames \u2014 analog phi evolution, not discrete sprite ticks only."
+        },
+        {
+          "id": "physics_motion_vision_bridge",
+          "title": "Physics\u2013vision\u2013motion bridge",
+          "tags": [
+            "physics",
+            "vision",
+            "motion",
+            "force",
+            "simulation",
+            "render",
+            "predict"
+          ],
+          "body": "Predictive perception: forward models estimate next frame from forces and velocities. Inverse problems: infer 3D pose/motion from 2D observations (structure from motion, PnP). Rendering pipeline applies lighting, BRDF, shadows \u2014 physics-grounded appearance. AMOURANTHRTX unifies thermo/fluid Field fabric (Pipeline) with vision QA (OCR, snap) and WM spatial hit tests \u2014 one canvas, multiple physics layers (die, shader, chrome)."
+        },
+        {
+          "id": "tv_broadcast_video",
+          "title": "Television & broadcast video",
+          "tags": [
+            "tv",
+            "television",
+            "broadcast",
+            "ntsc",
+            "pal",
+            "atsc",
+            "hdmi",
+            "crt",
+            "signal"
+          ],
+          "body": "Analog TV: NTSC 525/60 (US/Japan), PAL 625/50 (EU) \u2014 interlaced fields, color subcarrier, horizontal/vertical sync, blanking intervals. Digital: ATSC/DVB-T/ISDB-T; MPEG transport streams; HDMI/DisplayPort carry uncompressed or compressed TMDS/LVDS to panels. Chroma subsampling 4:2:0 in broadcast \u2014 Hostess 7 prioritizes lossless 4:4:4 in die framebuffer. SMPTE color bars: calibration reference for gain/phase. Talk window: /gfx tv renders bar pattern."
+        },
+        {
+          "id": "pixel_framebuffer",
+          "title": "Pixels & framebuffer truth",
+          "tags": [
+            "pixel",
+            "framebuffer",
+            "rgba",
+            "rgb",
+            "stride",
+            "pitch",
+            "bpp",
+            "lossless"
+          ],
+          "body": "Pixel: smallest addressable picture element \u2014 RGB888, RGBA8888, BGRA, 565 packed formats. Framebuffer: width \u00d7 height \u00d7 bytes_per_pixel + stride (row pitch may exceed width\u00d7bpp). Lossless capture: PPM P6 raw RGB, PNG deflate without loss, TIFF \u2014 preferred over JPEG for QA truth. FieldSnapDump.hpp: GPU framebuffer \u2192 PPM readback \u2014 authoritative pixel evidence. 3840\u00d72160 default die canvas; each pixel is ground truth for OCR and click hit tests. Hostess 7 talk window renders pixel grids and PPM\u2192ASCII in scroll area."
+        },
+        {
+          "id": "lossless_storage_vision",
+          "title": "Lossless storage & vision pipeline",
+          "tags": [
+            "lossless",
+            "storage",
+            "persist",
+            "ppm",
+            "png",
+            "ingest",
+            "archive"
+          ],
+          "body": "Policy: lossless-first \u2014 json/jsonl brain shards, field_wave.persist, PPM/PNG snaps, flac/wav audio. Deprioritize lossy JPEG/WebP for ingest unless sole source; re-capture lossless when possible. cache/fieldstorage/brain/ holds corpora; infinite drives use jsonl index lines \u2014 verbatim statute/paper text. Talk window /storage audits bytes + renders bar chart. TEAM drive + team_drive.img for bulk lossless archive."
+        },
+        {
+          "id": "panel_display_hdmi",
+          "title": "Panels, HDMI & display chain",
+          "tags": [
+            "hdmi",
+            "displayport",
+            "lcd",
+            "oled",
+            "refresh",
+            "hdr",
+            "gamma",
+            "color space"
+          ],
+          "body": "Display chain: GPU die \u2192 compositor \u2192 WM chrome \u2192 panel. HDMI 2.1: 4K120, VRR, HDR10/HLG metadata. sRGB vs Display P3 vs BT.2020 \u2014 gamma EOTF, tone mapping for HDR. SDL3 dispW/dispH and FieldDosViewport map logical pixels to physical output. Overscan/underscan on TV vs monitor \u2014 safe title area for guest VGA text."
+        },
+        {
+          "id": "hostess_talk_window",
+          "title": "Hostess 7 talk window \u2014 one being",
+          "tags": [
+            "talk",
+            "window",
+            "scroll",
+            "graphics",
+            "gfx",
+            "ui",
+            "communicate"
+          ],
+          "body": "One talk window does all: law, medicine, detective, TV, pixels, physics, storage, updates. Scrollable transcript top, question bar bottom \u2014 text and block graphics in same pane. ./Hostess7.sh with no args opens talk UI. Slash: /storage /updates /gfx /legal-ingest /help. Natural language routes to hemisphered brain; vision/TV/pixel queries auto-attach graphics. Hostess 7 is one being \u2014 L\u2194R callosum, not separate apps."
+        }
+      ],
+      "domain_count": 20,
+      "disclaimer": "Vision/action/motion/3D spatial corpus grounds AMOURANTHRTX perception stack and general CV/robotics/physics-motion education."
+    },
+    "chemistry": {
+      "ok": true
+    },
+    "legal_catalog": 160,
+    "medical_catalog": 29,
+    "staging": {
+      "legal_bulk": 0,
+      "medical_bulk": 0
+    },
+    "field_wave": false
+  },
+  "updates": [
+    {
+      "id": "field-stack-learn",
+      "priority": "P0",
+      "lane": "field_stack",
+      "truth_score": 100.0,
+      "signal": "KILROY bottom \u00b7 kill tech in kernel \u00b7 boot order \u00b7 field mirror",
+      "action": "./Hostess7.sh stack-learn && ./Hostess7.sh stack status",
+      "why": "SG field stack changed: unified device field, .nexus-field-drive mirror, nexus-field-early + nexus-genius services, F9 order, grandma-safe underlay. Teach corpus so every operator knows how everything works."
+    },
+    {
+      "id": "self-advisory-loop",
+      "priority": "P1",
+      "lane": "hostess",
+      "truth_score": 100.0,
+      "signal": "Phase 5 self-improvement",
+      "action": "./Hostess7.sh updates",
+      "why": "Hostess 7 advises Her own updates \u2014 re-run after every ingest, release, or turnover."
+    },
+    {
+      "id": "reach-scan",
+      "priority": "P1",
+      "lane": "hostess",
+      "truth_score": 95.0,
+      "signal": "reach 2 roots \u00b7 tools 17",
+      "action": "./Hostess7.sh reach",
+      "why": "Hostess7 reads outside herself \u2014 SG, AMOURANTHRTX, OS PATH \u2014 before self-update."
+    },
+    {
+      "id": "self-update-apply",
+      "priority": "P1",
+      "lane": "hostess",
+      "truth_score": 92.0,
+      "signal": "HOSTESS7_EXEC gate \u2014 QA + Field 1 sync + git pull",
+      "action": "./Hostess7.sh self-update apply",
+      "why": "Let Hostess7 execute allowlisted OS commands to update herself (QA, field sync, git pull)."
+    },
+    {
+      "id": "infinite-truth-extract",
+      "priority": "P2",
+      "lane": "field_physics",
+      "truth_score": 81.0,
+      "signal": "truth_ratio=0.06 noise_ratio=0.94",
+      "action": "Drop public-domain bulk \u2192 staging \u2192 legal-ingest|medical-ingest bulk \u2192 vacuum",
+      "why": "Fast internet is ~94% noise \u2014 Hostess 7 infinite-drives the ~6% truth via local catalog seed + QA gate + shard index. Torrent/bulk only after seed GREEN."
+    },
+    {
+      "id": "field-github-ship",
+      "priority": "P1",
+      "lane": "hostess",
+      "truth_score": 54.0,
+      "signal": "field drive sync for GitHub",
+      "action": "./Hostess7.sh field sync && ./Hostess7.sh self-update apply",
+      "why": "Field 1 sync to TEAM NVMe; compaction via ./Hostess7.sh field compact."
+    },
+    {
+      "id": "release-gate",
+      "priority": "P1",
+      "lane": "qa_chips",
+      "truth_score": 54.0,
+      "signal": "GREEN ALL truth check",
+      "action": "./linux.sh release-2.0",
+      "why": "QA gate corroborates local truth before scaling infinite ingest from the network."
+    }
+  ],
+  "top_action": "./Hostess7.sh stack-learn && ./Hostess7.sh stack status",
+  "update_count": 7
+}

@@ -40,10 +40,10 @@ def sync_readme(version: str) -> None:
     if not README.is_file():
         return
     text = README.read_text(encoding="utf-8")
-    text = re.sub(r"Hostess 7 2\.0\.7[a-z]", f"Hostess 7 {version}", text, count=1)
-    text = re.sub(r"\*\*Version:\*\* `2\.0\.7[a-z]`", f"**Version:** `{version}`", text, count=1)
+    text = re.sub(r"# Hostess 7 [^\n—]+", f"# Hostess 7 {version} — KILROY Field Brain (Main Project)", text, count=1)
+    text = re.sub(r"\*\*Version:\*\* `[^`]+`", f"**Version:** `{version}`", text, count=1)
     text = re.sub(
-        r"\[RELEASE-2\.0\.7[a-z]\.md\]\(RELEASE-2\.0\.7[a-z]\.md\)",
+        r"\[RELEASE-[^\]]+\.md\]\(RELEASE-[^\)]+\.md\)",
         f"[RELEASE-{version}.md](RELEASE-{version}.md)",
         text,
         count=1,

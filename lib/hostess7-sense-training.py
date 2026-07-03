@@ -175,6 +175,51 @@ def _run_music_step(step: dict[str, Any]) -> dict[str, Any]:
     return music.run_sense_step(step)
 
 
+def _run_mechanical_learn(step: dict[str, Any]) -> dict[str, Any]:
+    ml_py = INSTALL / "lib" / "field-sense-mechanical-learn.py"
+    neural = QUEEN / "lib" / "queen-sense-neural.py"
+    target = str(step.get("target") or "all")
+    argv = ["learn-all"]
+    if target == "camera":
+        argv = ["learn-camera"]
+    elif target == "ear":
+        argv = ["learn-ear", str(step.get("mechanism") or "kinetic_eardrum")]
+    elif target == "mouth_ear":
+        argv = ["mouth-ear"]
+    if ml_py.is_file():
+        try:
+            proc = subprocess.run(
+                [sys.executable, str(ml_py), *argv],
+                capture_output=True,
+                text=True,
+                timeout=120,
+                env=_env(),
+                cwd=str(INSTALL),
+            )
+            result = json.loads(proc.stdout or "{}")
+        except (subprocess.TimeoutExpired, json.JSONDecodeError, OSError) as exc:
+            result = {"ok": False, "error": str(exc)[:120]}
+    else:
+        result = {"ok": False, "error": "mechanical_learn_missing"}
+    if neural.is_file() and step.get("reinforce_triad"):
+        try:
+            proc = subprocess.run(
+                [sys.executable, str(neural), "dispatch"],
+                input=json.dumps({"action": "mechanical_learn", "auto": True, **step}, ensure_ascii=False),
+                capture_output=True,
+                text=True,
+                timeout=120,
+                env=_env(),
+                cwd=str(QUEEN),
+            )
+            neural_out = json.loads(proc.stdout or "{}")
+            result["neural"] = neural_out
+            result["ok"] = bool(result.get("ok")) and neural_out.get("ok", True)
+        except (subprocess.TimeoutExpired, json.JSONDecodeError, OSError):
+            pass
+    return result
+
+
 def _step_ok(result: dict[str, Any], *, action: str = "") -> bool:
     """Training pass — verify steps accept sealed ZOCR code when mesh/bench is advisory."""
     if str(action).startswith("music_"):
@@ -214,6 +259,8 @@ def run_sense_track(track_id: str) -> dict[str, Any]:
         action = str(body.get("action") or "")
         if action in MUSIC_ACTIONS:
             result = _run_music_step(step)
+        elif action == "mechanical_learn":
+            result = _run_mechanical_learn(step)
         else:
             result = _dispatch(bridge, body, timeout=180 if action in ("eye_ear_fusion", "fused_analyze") else 90)
         ok = _step_ok(result, action=action)

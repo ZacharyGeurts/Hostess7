@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:*; frame-ancestors 'none'; base-uri 'self'" />
   <meta name="referrer" content="no-referrer" />
-  <title>Hostess 7 · DNS Engineer Admin</title>
+  <title>Hostess 7 · Self-Hosted DNS &amp; DHCP</title>
   <style>
     :root {
       --bg: #000;
@@ -127,9 +127,9 @@
   <div class="wrap" data-admin-shield="1" data-front-hook="nexus">
     <header class="hero" id="page-hero">
       <div>
-        <p class="eyebrow">Hostess 7 · DNS Engineer Admin</p>
-        <h1 id="hero-title">Information only — no remote controls</h1>
-        <p class="motto" id="motto">Ports 7 · 77 · 777 — everything upfront so you can end the call fast.</p>
+        <p class="eyebrow">Self-hosted servers · Field One</p>
+        <h1 id="hero-title">Truth DNS · Field DHCP</h1>
+        <p class="motto" id="motto">We host these ourselves — loopback resolver and LAN DHCP on one engineer page. Ports 7 · 77 · 777.</p>
       </div>
       <div class="hero-pills" id="hero-pills"></div>
     </header>
@@ -173,12 +173,30 @@
 
       <div class="grid-2">
         <article class="card">
-          <h2>Truth Resolver · operations</h2>
+          <h2>Truth DNS · self-hosted resolver</h2>
           <dl class="kv" id="resolver-panel"></dl>
         </article>
         <article class="card">
+          <h2>Field DHCP · self-hosted leases</h2>
+          <dl class="kv" id="dhcp-panel"></dl>
+          <div class="table-wrap" id="dhcp-leases-panel"></div>
+        </article>
+      </div>
+
+      <article class="card">
+        <h2>DHCP events · discover / offer / ack</h2>
+        <div class="table-wrap" id="dhcp-events-panel"></div>
+      </article>
+
+      <div class="grid-2">
+        <article class="card">
           <h2>Multipoint secure ID</h2>
           <div class="table-wrap" id="multipoint-panel"></div>
+        </article>
+        <article class="card">
+          <h2>Combined posture</h2>
+          <p class="port-hint">DNS option 6 on every lease steers clients to our Truth Resolver — no third-party DNS.</p>
+          <dl class="kv" id="combined-panel"></dl>
         </article>
       </div>
 
@@ -249,11 +267,15 @@
   function renderHero(dns) {
     const br = dns.engineer_briefing || {};
     const run = dns.running;
+    const dhcp = dns.dhcp_server || dns.servers?.dhcp || {};
+    const dhcpRun = Boolean(dhcp.running);
     $("hero-title").innerHTML = run
-      ? '<span style="color:#4de88a">RUNNING</span> · Truth Resolver'
-      : '<span style="color:#ff8a9a">STOPPED</span> · Truth Resolver';
+      ? '<span style="color:#4de88a">DNS LIVE</span> · ' + (dhcpRun ? '<span style="color:#4de88a">DHCP LIVE</span>' : '<span style="color:#ff8a9a">DHCP IDLE</span>')
+      : '<span style="color:#ff8a9a">STOPPED</span> · Self-hosted stack';
     $("hero-pills").innerHTML = [
-      ["Status", run ? "LIVE" : "DOWN", run ? "ok" : "bad"],
+      ["Truth DNS", run ? "LIVE" : "DOWN", run ? "ok" : "bad"],
+      ["Field DHCP", dhcpRun ? "LIVE" : "IDLE", dhcpRun ? "ok" : ""],
+      ["Leases", String(dhcp.lease_count ?? 0), ""],
       ["Planetary", dns.planetary_security_level || "—", ""],
       ["Internet", (dns.internet_recognized || 0) + "/" + (dns.internet_slots || 0), ""],
       ["RFC", (br.quick_facts?.rfc_enforced || 0) + "/" + (br.quick_facts?.rfc_total || 0), ""]
@@ -296,6 +318,47 @@
       ["Foreign", br.foreign_blocked || 0]
     ].map(function (p) {
       return "<div class='stat'><span>" + esc(p[0]) + "</span><strong>" + esc(String(p[1])) + "</strong></div>";
+    }).join("");
+  }
+  function renderDhcp(dns) {
+    const dhcp = dns.dhcp_server || dns.servers?.dhcp || {};
+    const pool = dhcp.pool || {};
+    const rows = [
+      ["Status", dhcp.running ? "LIVE" : dhcp.may_serve === false ? "OBSERVING" : "IDLE"],
+      ["Bind", dhcp.bind || "0.0.0.0:67"],
+      ["Pool", (pool.start || "—") + " – " + (pool.end || "—")],
+      ["Leases", String(dhcp.lease_count ?? 0)],
+      ["DNS option v4", (dhcp.dns_option || ["127.0.0.1"]).join(", ")],
+      ["DNS option v6", (dhcp.dns_option_v6 || ["::1"]).join(", ")],
+      ["Module", "lib/field-dhcp.py"]
+    ];
+    $("dhcp-panel").innerHTML = rows.map(function (r) {
+      return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>";
+    }).join("");
+    const leaseRows = dns.dhcp_leases_detailed || dhcp.leases_detailed || [];
+    $("dhcp-leases-panel").innerHTML = leaseRows.length
+      ? "<table><thead><tr><th>MAC</th><th>IP</th><th>Hostname</th><th>Expires</th></tr></thead><tbody>" +
+        leaseRows.map(function (r) {
+          return "<tr><td><code>" + esc(r.mac || "—") + "</code></td><td><code>" + esc(r.ip || "—") + "</code></td><td>" +
+            esc(r.hostname || "—") + "</td><td class='meta'>" + esc((r.expires || r.expiry || "—").toString().slice(0, 19)) + "</td></tr>";
+        }).join("") + "</tbody></table>"
+      : "<p class='meta'>No active leases — pool ready when Field DHCP starts.</p>";
+    const evRows = dns.dhcp_events || dhcp.lease_history_events || [];
+    $("dhcp-events-panel").innerHTML = evRows.length
+      ? "<table><thead><tr><th>Time</th><th>Event</th><th>MAC</th><th>IP</th></tr></thead><tbody>" +
+        evRows.slice(0, 40).map(function (r) {
+          return "<tr><td>" + esc((r.ts || "").slice(11, 19)) + "</td><td><span class='chip'>" + esc(r.event || r.type || "—") + "</span></td><td><code>" +
+            esc(r.mac || "—") + "</code></td><td><code>" + esc(r.ip || "—") + "</code></td></tr>";
+        }).join("") + "</tbody></table>"
+      : "<p class='meta'>No DHCP events yet.</p>";
+    const combined = [
+      ["Hosted by", "Hostess 7 · loopback-first"],
+      ["DNS module", "lib/field-dns.py"],
+      ["DHCP module", "lib/field-dhcp.py"],
+      ["Client steer", "DHCP option 6 → Truth DNS only"]
+    ];
+    $("combined-panel").innerHTML = combined.map(function (r) {
+      return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>";
     }).join("");
   }
   function renderResolver(dns) {
@@ -401,6 +464,7 @@
     renderAlerts(dns);
     renderStats(dns);
     renderResolver(dns);
+    renderDhcp(dns);
     renderMultipoint(dns);
     renderInternet(dns);
     renderRecent(dns);

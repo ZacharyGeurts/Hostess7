@@ -796,6 +796,12 @@ def _refresh_shell_dock() -> None:
     _import_call(INSTALL / "lib" / "field-shell-dock.py", "field_shell_dock", "posture")
 
 
+def _refresh_gnu_terminal() -> None:
+    if os.environ.get("NEXUS_GNU_TERMINAL_PLATE", "1").strip().lower() in ("0", "false", "no", "off"):
+        return
+    _import_call(INSTALL / "lib" / "field-gnu-terminal-iron-plate.py", "field_gnu_terminal_iron_plate", "posture")
+
+
 def _refresh_field_popcorn() -> None:
     if os.environ.get("NEXUS_FIELD_POPCORN", "1").strip().lower() in ("0", "false", "no", "off"):
         return
@@ -1264,6 +1270,7 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
             _refresh_if_allowed("c2_taskbar", _refresh_c2_taskbar)
             _refresh_if_allowed("field_host_desktop", _refresh_field_host_desktop)
             _refresh_if_allowed("shell_dock", _refresh_shell_dock)
+            _refresh_if_allowed("gnu_terminal", _refresh_gnu_terminal)
             _refresh_if_allowed("field_popcorn", _refresh_field_popcorn)
             _refresh_if_allowed("field_ellie_fier", _refresh_field_ellie_fier)
             _refresh_if_allowed("field_g16_launch", _refresh_field_g16_launch)

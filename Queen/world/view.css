@@ -506,7 +506,7 @@ html, body {
   .qf-folder-menu { display: none; }
   .qf-crumb { display: none; }
   .qf-split { grid-template-columns: 1fr !important; }
-  .qf-tree, .qf-divider { display: none; }
+  .qf-sidebar, .qf-divider { display: none; }
   .qf-main { grid-template-rows: minmax(0, 1fr) 0 0; }
   .qf-main .qf-preview,
   .qf-main .qf-preview-divider { display: none; }
@@ -622,6 +622,27 @@ html, body {
   grid-template-columns: minmax(180px, 26%) 5px minmax(0, 1fr);
   min-height: 0;
   overflow: hidden;
+}
+
+.qf-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.qf-places {
+  flex: 0 0 auto;
+}
+
+.qf-tree-head {
+  flex: 0 0 auto;
+  padding: 6px 10px 4px;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-top: 1px solid var(--line);
 }
 
 .qf-list {

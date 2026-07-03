@@ -24,7 +24,12 @@
     return isAmmoHome() && !!document.getElementById("fsb-root");
   }
 
+  function isAmmoDesktop() {
+    return document.documentElement.dataset.ammoosDesktop === "1";
+  }
+
   function shouldShowIronclad() {
+    if (isAmmoDesktop()) return false;
     if (document.body?.dataset?.ironcladTaskbar === "0") return false;
     if (document.documentElement?.dataset?.ironcladTaskbar === "0") return false;
     if (document.body?.dataset?.forceIroncladTaskbar === "1") return true;
@@ -204,7 +209,11 @@
 
   function init() {
     if (!BUS) return;
-    if (document.body?.dataset?.ironcladTaskbar === "0" || document.documentElement?.dataset?.ironcladTaskbar === "0") {
+    if (
+      isAmmoDesktop() ||
+      document.body?.dataset?.ironcladTaskbar === "0" ||
+      document.documentElement?.dataset?.ironcladTaskbar === "0"
+    ) {
       return;
     }
     bindFocusGate();

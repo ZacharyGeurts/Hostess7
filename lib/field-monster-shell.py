@@ -617,6 +617,32 @@ def _resolve_hang(session_id: str, label: str, detail: str, pid: int, *, stall_s
     return "wait"
 
 
+def _maybe_wrap_ammolang(cmd: list[str], label: str) -> list[str]:
+    """Layer above KILROY → AmmoLang boundary before Monster guarded exec."""
+    if os.environ.get("MONSTER_SKIP_AML", "").strip() in ("1", "true", "yes"):
+        return cmd
+    if os.environ.get("AML_BOUNDARY_ACTIVE", "").strip() in ("1", "true", "yes"):
+        return cmd
+    policy_py = INSTALL / "lib" / "field-monster-layer-policy.py"
+    if not policy_py.is_file() or not cmd:
+        return cmd
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("monster_layer_policy", policy_py)
+        if not spec or not spec.loader:
+            return cmd
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if hasattr(mod, "needs_ammolang") and mod.needs_ammolang(label=label, cmd=cmd):
+            if hasattr(mod, "ammolang_wrap"):
+                wrapped = mod.ammolang_wrap(label, cmd)
+                _log({"op": "ammolang_wrap", "label": label, "from": cmd[:3], "to": wrapped[:4]})
+                return wrapped
+    except Exception:
+        pass
+    return cmd
+
+
 def run_guarded(
     cmd: list[str],
     *,
@@ -630,6 +656,7 @@ def run_guarded(
     """Launch through Monster — stall prompts, full kill on quit. Never raises."""
     session_id = uuid.uuid4().hex[:12]
     lbl = (label or (cmd[-1] if cmd else "program"))[:120]
+    cmd = _maybe_wrap_ammolang(list(cmd), lbl)
     to = float(timeout or DEFAULT_TIMEOUT)
     stall = float(stall_sec or DEFAULT_STALL)
     env = {**os.environ, **(env or {})}

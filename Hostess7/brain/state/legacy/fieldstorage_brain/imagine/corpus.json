@@ -1,0 +1,614 @@
+{
+  "version": 3,
+  "imagine_workflow": [
+    {
+      "id": "imagine_overview",
+      "title": "Grok Imagine API",
+      "body": "xAI Imagine: image generation, image edit (up to 3 references), image-to-video, text-to-video, video edit, reference-to-video, video extension. Models: grok-imagine-image-quality, grok-imagine-video-1.5, grok-imagine-video. Docs: https://docs.x.ai/docs/guides/image-generation \u00b7 API: https://api.x.ai/v1"
+    },
+    {
+      "id": "imagine_image_gen",
+      "title": "Image generation",
+      "body": "POST /v1/images/generations \u2014 text prompt \u2192 image. Use for invented subjects, scenes, base frames. Named real people: reference-first with image edit, not pure generation."
+    },
+    {
+      "id": "imagine_image_edit",
+      "title": "Image editing",
+      "body": "POST /v1/images/edits \u2014 source URL or base64 + prompt. Up to 3 reference images for compositing. Reuse one base image for character consistency across shots."
+    },
+    {
+      "id": "imagine_image_to_video",
+      "title": "Image-to-video (shot workflow)",
+      "body": "Video starts from an image \u2014 no text-only video. Plan shots: image_gen/edit per shot \u2192 image_to_video (6s or 10s). Prompt: one vivid moment, present tense, single camera move. Async: poll request_id until status=done. Assemble with ffmpeg concat -c copy (no re-encode)."
+    },
+    {
+      "id": "imagine_video_gen",
+      "title": "Text-to-video",
+      "body": "Generate video from text with duration (up to 15s), aspect ratio, resolution. grok-imagine-video-1.5 for image-to-video; grok-imagine-video for reference-to-video."
+    },
+    {
+      "id": "imagine_hostess7_path",
+      "title": "Hostess7 + Imagine path",
+      "body": "Talk window = language (Scholar). Graphics window = pixels. Live video path: (1) Hostess portrait base via image_edit with Owner-approved ref, (2) TTS audio per reply, (3) LivePortrait/MuseTalk/Ditto lip-sync frames, (4) present frames to Graphics window OR grok-imagine-video for cinematic shots. Charts/diagrams with exact text: build with HTML/CSS code, not image models."
+    }
+  ],
+  "live_video": [
+    {
+      "id": "liveportrait",
+      "title": "LivePortrait",
+      "type": "github",
+      "tags": [
+        "real-time",
+        "portrait",
+        "audio-driven",
+        "efficient",
+        "lip-sync"
+      ],
+      "arxiv": "2407.03168",
+      "url": "https://github.com/KlingTeam/LivePortrait",
+      "paper": "https://arxiv.org/abs/2407.03168",
+      "speed": "~12.8ms/frame RTX 4090",
+      "body": "Efficient portrait animation \u2014 implicit keypoints, stitching/retargeting. Driving: video, audio, text, or template .pkl. Gradio app.py, inference.py. Best open path for Hostess7 live face on Graphics window."
+    },
+    {
+      "id": "ditto",
+      "title": "Ditto Talking Head",
+      "type": "github",
+      "tags": [
+        "real-time",
+        "streaming",
+        "talking-head",
+        "diffusion"
+      ],
+      "arxiv": "2411.19509",
+      "url": "https://github.com/antgroup/ditto-talkinghead",
+      "paper": "https://arxiv.org/abs/2411.19509",
+      "body": "Ant Group \u2014 real-time streaming talking head; diffusion-based, low latency for live conversation."
+    },
+    {
+      "id": "musetalk",
+      "title": "MuseTalk",
+      "type": "github",
+      "tags": [
+        "real-time",
+        "lip-sync",
+        "audio-driven"
+      ],
+      "url": "https://github.com/TMElyralab/MuseTalk",
+      "body": "Real-time high quality lip sync \u2014 audio in, talking face out. Good TTS\u2192face bridge."
+    },
+    {
+      "id": "wav2lip",
+      "title": "Wav2Lip",
+      "type": "github",
+      "tags": [
+        "lip-sync",
+        "audio",
+        "classic"
+      ],
+      "arxiv": "2008.10010",
+      "url": "https://github.com/Rudrabha/Wav2Lip",
+      "paper": "https://arxiv.org/abs/2008.10010",
+      "body": "Accurate lip-sync to any speech audio \u2014 baseline for Hostess7 voice+face pipeline."
+    },
+    {
+      "id": "sadtalker",
+      "title": "SadTalker",
+      "type": "github",
+      "tags": [
+        "talking-head",
+        "audio",
+        "3dmm"
+      ],
+      "url": "https://github.com/OpenTalker/SadTalker",
+      "body": "Single image + audio \u2192 talking head video. 3D motion coefficients; slower than LivePortrait."
+    },
+    {
+      "id": "omnitalker",
+      "title": "OmniTalker",
+      "type": "paper",
+      "tags": [
+        "real-time",
+        "text-driven",
+        "unified"
+      ],
+      "arxiv": "2501.14646",
+      "url": "https://humanaigc.github.io/omnitalker/",
+      "paper": "https://arxiv.org/abs/2501.14646",
+      "body": "Real-time text-driven talking head \u2014 unified framework for live speech synthesis + face."
+    },
+    {
+      "id": "liveavatar",
+      "title": "LiveAvatar (Quark)",
+      "type": "github",
+      "tags": [
+        "avatar",
+        "streaming",
+        "alibaba"
+      ],
+      "url": "https://github.com/Alibaba-Quark/LiveAvatar",
+      "body": "Alibaba Quark live avatar stack \u2014 streaming digital human for conversation UIs."
+    },
+    {
+      "id": "awesome_thg",
+      "title": "Awesome Talking Head Generation",
+      "type": "index",
+      "tags": [
+        "survey",
+        "papers",
+        "github-list"
+      ],
+      "url": "https://github.com/harlanhong/awesome-talking-head-generation",
+      "body": "Curated papers and repos for talking-head generation \u2014 keep Hostess7 registry updated from here."
+    },
+    {
+      "id": "grok_imagine_video_15",
+      "title": "Grok Imagine Video 1.5",
+      "type": "api",
+      "tags": [
+        "cloud",
+        "image-to-video",
+        "xai"
+      ],
+      "url": "https://docs.x.ai/docs/guides/image-generation",
+      "body": "xAI grok-imagine-video-1.5 \u2014 animate still \u2192 video, 6\u201315s, async poll. Hostess cinematic shots; not sub-100ms live lip-sync \u2014 pair with LivePortrait for talk."
+    },
+    {
+      "id": "faster_liveportrait",
+      "title": "FasterLivePortrait",
+      "type": "github",
+      "tags": [
+        "real-time",
+        "portrait",
+        "tensorrt",
+        "onnx",
+        "streaming"
+      ],
+      "url": "https://github.com/warmshao/FasterLivePortrait",
+      "speed": "30+ FPS RTX 3090 (full pipeline)",
+      "body": "TensorRT/ONNX LivePortrait \u2014 real-time camera + audio drive (JoyVASA, Kokoro TTS). Best GPU path when sub-100ms lip-sync matters for Hostess7 Graphics window."
+    },
+    {
+      "id": "teller",
+      "title": "Teller",
+      "type": "paper",
+      "tags": [
+        "real-time",
+        "streaming",
+        "audio-driven",
+        "autoregressive"
+      ],
+      "arxiv": "2503.18429",
+      "paper": "https://arxiv.org/abs/2503.18429",
+      "speed": "25 FPS streaming",
+      "body": "CVPR 2025 \u2014 first autoregressive real-time streaming audio-driven portrait. 0.92s per second of video vs Hallo 20.93s. Facial + body detail via ETM."
+    },
+    {
+      "id": "livatar",
+      "title": "Livatar-1",
+      "type": "paper",
+      "tags": [
+        "real-time",
+        "audio-driven",
+        "flow-matching",
+        "hedra"
+      ],
+      "arxiv": "2507.18649",
+      "paper": "https://arxiv.org/abs/2507.18649",
+      "url": "https://h-liu1997.github.io/Livatar-1/",
+      "speed": "141 FPS \u00b7 0.17s latency A10",
+      "body": "Hedra flow-matching talking heads \u2014 strong lip-sync (8.50 confidence HDTF) at real-time throughput."
+    },
+    {
+      "id": "rest",
+      "title": "REST",
+      "type": "paper",
+      "tags": [
+        "real-time",
+        "streaming",
+        "diffusion",
+        "audio-driven"
+      ],
+      "arxiv": "2512.11229",
+      "paper": "https://arxiv.org/abs/2512.11229",
+      "body": "Diffusion-based real-time end-to-end streaming THG \u2014 ID-Context Cache + Asynchronous Streaming Distillation. State-of-the-art speed for diffusion talking heads."
+    },
+    {
+      "id": "egstalkler",
+      "title": "EGSTalker",
+      "type": "paper",
+      "tags": [
+        "real-time",
+        "audio-driven",
+        "3dgs",
+        "gaussian-splatting"
+      ],
+      "arxiv": "2510.08587",
+      "paper": "https://arxiv.org/abs/2510.08587",
+      "body": "3D Gaussian Splatting talking head \u2014 3\u20135 min training video, ESAA audio-spatial fusion, fast inference."
+    },
+    {
+      "id": "hallo",
+      "title": "Hallo",
+      "type": "github",
+      "tags": [
+        "audio-driven",
+        "diffusion",
+        "high-quality"
+      ],
+      "arxiv": "2406.08801",
+      "url": "https://github.com/fudan-generative-vision/hallo",
+      "paper": "https://arxiv.org/abs/2406.08801",
+      "body": "Fudan diffusion portrait animation \u2014 high quality but slower; baseline Teller/REST compare against."
+    },
+    {
+      "id": "hallo_live",
+      "title": "Hallo-Live",
+      "type": "github",
+      "tags": [
+        "real-time",
+        "streaming",
+        "audio-driven"
+      ],
+      "url": "https://github.com/fudan-generative-vision/Hallo-Live",
+      "body": "Fudan streaming variant of Hallo \u2014 closer to live conversation than batch Hallo."
+    },
+    {
+      "id": "personalive",
+      "title": "PersonaLive",
+      "type": "github",
+      "tags": [
+        "real-time",
+        "portrait",
+        "live-streaming",
+        "expression"
+      ],
+      "arxiv": "2512.11253",
+      "url": "https://github.com/GVCLab/PersonaLive",
+      "paper": "https://arxiv.org/abs/2512.11253",
+      "body": "CVPR 2026 \u2014 expressive portrait animation for live streaming; image-driven reenactment at speed."
+    },
+    {
+      "id": "hunyuan_portrait",
+      "title": "HunyuanPortrait",
+      "type": "github",
+      "tags": [
+        "portrait",
+        "animation",
+        "implicit-control"
+      ],
+      "arxiv": "2503.18860",
+      "url": "https://github.com/kkakkkka/HunyuanPortrait",
+      "paper": "https://arxiv.org/abs/2503.18860",
+      "body": "CVPR 2025 implicit condition portrait animation \u2014 Tencent Hunyuan family."
+    },
+    {
+      "id": "flash_portrait",
+      "title": "FlashPortrait",
+      "type": "paper",
+      "tags": [
+        "real-time",
+        "portrait",
+        "infinite",
+        "fast"
+      ],
+      "arxiv": "2512.16900",
+      "paper": "https://arxiv.org/abs/2512.16900",
+      "body": "6\u00d7 faster infinite portrait animation with adaptive latent prediction \u2014 long-form live sessions."
+    },
+    {
+      "id": "joyvasa",
+      "title": "JoyVASA",
+      "type": "github",
+      "tags": [
+        "audio-driven",
+        "lip-sync",
+        "liveportrait-addon"
+      ],
+      "url": "https://github.com/jdh-algo/JoyVASA",
+      "body": "Audio drives portrait via LivePortrait motion \u2014 used inside FasterLivePortrait for real-time talk."
+    },
+    {
+      "id": "actalker",
+      "title": "ACTalker",
+      "type": "paper",
+      "tags": [
+        "audio-driven",
+        "expression",
+        "portrait"
+      ],
+      "url": "https://harlanhong.github.io/publications/actalker/index.html",
+      "body": "ICCV 2025 \u2014 simultaneous audio + expression control for portrait video generation."
+    },
+    {
+      "id": "thg_survey_2025",
+      "title": "Talking Head Survey 2025",
+      "type": "survey",
+      "tags": [
+        "survey",
+        "papers",
+        "metrics"
+      ],
+      "arxiv": "2507.02900",
+      "paper": "https://arxiv.org/abs/2507.02900",
+      "body": "Comprehensive survey of multi-modal talking-head methods, datasets, metrics \u2014 map the field."
+    },
+    {
+      "id": "kedreamix_awesome",
+      "title": "Awesome Talking Head Synthesis",
+      "type": "index",
+      "tags": [
+        "survey",
+        "papers",
+        "github-list"
+      ],
+      "url": "https://github.com/Kedreamix/Awesome-Talking-Head-Synthesis",
+      "body": "Alternate curated paper/repo list \u2014 cross-check with harlanhong awesome-talking-head-generation."
+    },
+    {
+      "id": "arxiv_daily_thg",
+      "title": "Talking Face arXiv Daily",
+      "type": "index",
+      "tags": [
+        "papers",
+        "daily",
+        "rss"
+      ],
+      "url": "https://github.com/liutaocode/talking-face-arxiv-daily",
+      "body": "Daily arXiv talking-face paper feed \u2014 keep Hostess7 registry current."
+    },
+    {
+      "id": "grok_imagine_reference_video",
+      "title": "Grok reference-to-video",
+      "type": "api",
+      "tags": [
+        "cloud",
+        "reference-to-video",
+        "xai"
+      ],
+      "url": "https://docs.x.ai/docs/guides/image-generation",
+      "body": "grok-imagine-video (not 1.5) \u2014 guide video with reference images without fixing frame 1. Cinematic Hostess shots; pair with open-source lip-sync for sub-second talk."
+    },
+    {
+      "id": "grok_imagine_text_video",
+      "title": "Grok text-to-video",
+      "type": "api",
+      "tags": [
+        "cloud",
+        "text-to-video",
+        "xai"
+      ],
+      "url": "https://docs.x.ai/docs/guides/image-generation",
+      "body": "Text prompt \u2192 video up to 15s, aspect ratio + resolution. B-roll and scene cuts, not live lip-sync."
+    },
+    {
+      "id": "heygen_alternate",
+      "title": "Open-source live pipeline pattern",
+      "type": "pattern",
+      "tags": [
+        "pipeline",
+        "tts",
+        "webrtc",
+        "real-time"
+      ],
+      "body": "Live talk pattern: mic/text \u2192 LLM reply \u2192 TTS (piper/coqui/edge-tts/kokoro) \u2192 lip-sync (FasterLivePortrait/MuseTalk/LivePortrait) \u2192 frame stream \u2192 Graphics/GTK window. Hostess7: HOSTESS7_VOICE=1 + HOSTESS7_LIVE_VIDEO_BACKEND + field_live_video.sync_talk_reply()."
+    }
+  ],
+  "curated_fetch": [
+    {
+      "id": "xai-imagine-docs",
+      "lane": "imagine",
+      "url": "https://docs.x.ai/docs/guides/image-generation",
+      "why": "Grok Imagine API official"
+    },
+    {
+      "id": "liveportrait-readme",
+      "lane": "imagine",
+      "url": "https://raw.githubusercontent.com/KlingTeam/LivePortrait/main/readme.md",
+      "why": "LivePortrait install + inference"
+    },
+    {
+      "id": "awesome-thg",
+      "lane": "imagine",
+      "url": "https://raw.githubusercontent.com/harlanhong/awesome-talking-head-generation/master/readme.md",
+      "why": "Paper/github index (lowercase readme)"
+    },
+    {
+      "id": "arxiv-liveportrait",
+      "lane": "imagine",
+      "url": "https://arxiv.org/abs/2407.03168",
+      "why": "LivePortrait paper"
+    },
+    {
+      "id": "musetalk-readme",
+      "lane": "imagine",
+      "url": "https://raw.githubusercontent.com/TMElyralab/MuseTalk/main/README.md",
+      "why": "MuseTalk real-time lip sync"
+    },
+    {
+      "id": "faster-liveportrait-readme",
+      "lane": "imagine",
+      "url": "https://raw.githubusercontent.com/warmshao/FasterLivePortrait/master/README.md",
+      "why": "Real-time TensorRT LivePortrait"
+    },
+    {
+      "id": "ditto-readme",
+      "lane": "imagine",
+      "url": "https://raw.githubusercontent.com/antgroup/ditto-talkinghead/main/README.md",
+      "why": "Ditto streaming talking head"
+    },
+    {
+      "id": "arxiv-teller",
+      "lane": "imagine",
+      "url": "https://arxiv.org/abs/2503.18429",
+      "why": "Teller CVPR 2025 streaming"
+    },
+    {
+      "id": "arxiv-livatar",
+      "lane": "imagine",
+      "url": "https://arxiv.org/abs/2507.18649",
+      "why": "Livatar-1 real-time flow matching"
+    },
+    {
+      "id": "arxiv-rest",
+      "lane": "imagine",
+      "url": "https://arxiv.org/abs/2512.11229",
+      "why": "REST diffusion streaming THG"
+    },
+    {
+      "id": "arxiv-thg-survey",
+      "lane": "imagine",
+      "url": "https://arxiv.org/abs/2507.02900",
+      "why": "2025 talking-head survey"
+    },
+    {
+      "id": "hallo-readme",
+      "lane": "imagine",
+      "url": "https://raw.githubusercontent.com/fudan-generative-vision/hallo/main/README.md",
+      "why": "Hallo diffusion baseline"
+    }
+  ],
+  "hostess7_integration": {
+    "talk": "Language Expert \u2014 output window prose only",
+    "graphics": "field_gfx_canvas \u2014 RGB pixels + text",
+    "live_video": "field_live_video \u2014 TTS + lip-sync frame \u2192 Graphics window",
+    "imagine_api": "XAI_API_KEY \u2192 grok-imagine-image / grok-imagine-video-1.5",
+    "recommended_backend": {
+      "primary": "faster_liveportrait",
+      "fallback": "musetalk",
+      "cinematic": "grok_imagine_video_15",
+      "why": "FasterLivePortrait: 30+ FPS TensorRT; MuseTalk if no NVIDIA TRT."
+    },
+    "realtime_count": 14,
+    "nexus_imaging_teach": "field_imagine_nexus_teach.py",
+    "nexus_imaging_chamber": "lib/hostess7-imaging.py"
+  },
+  "nexus_imaging_workflow": [
+    {
+      "id": "nexus_exact_text",
+      "title": "Exact text \u2014 code not models",
+      "body": "Charts, labels, BIG DRIVE titles, format badges: use PIL ImageDraw or HTML/CSS. Image models garble words \u2014 verify in a loop. Example: big_drive_hero.png overlay on reference photo with DejaVu fonts and field-green accent."
+    },
+    {
+      "id": "nexus_combinatronic_visuals",
+      "title": "Combinatronic visuals repair",
+      "body": "lib/field-combinatronic-visuals.py \u2014 chip PNGs, book covers, H7 manuals from seeds. inventory \u2192 broken_rows \u2192 repair. Never hand-edit generated PNGs; rebuild from catalog. API: /api/combinatronic/visuals/repair"
+    },
+    {
+      "id": "nexus_format_icons",
+      "title": "Field file format icons",
+      "body": "lib/field-file-formats.py icons \u2014 64\u00d764 per format id, family color, sovereign dot. Storage family (iso, img, fielddrive, vhd, qcow2) from field-big-drive-doctrine. Mirror to library/assets/formats/"
+    },
+    {
+      "id": "nexus_big_drive",
+      "title": "Big Drive device grids",
+      "body": "lib/field-big-drive.py render_icons \u2014 4\u00d73 device grid + bd_{id}.png tiles. Floppy, optical, USB, HDD, VM, tape, SD silhouettes. Hero branding via PIL overlay. Panel: /field-big-drive \u00b7 Queen Files right-click Open in Big Drive."
+    },
+    {
+      "id": "nexus_field_gimp",
+      "title": "AmmoOS Image / GIMP-Field",
+      "body": "field-gimp-bridge.py + GIMP-Field magics \u2014 sovereign lossless field image formats. Panel /field-gimp. image_field family in file-formats table."
+    },
+    {
+      "id": "nexus_gfx_canvas",
+      "title": "Graphics window pixels",
+      "body": "field_gfx_canvas.GfxCanvas \u2014 lossless RGB, TTF text, blit PNG, present to GTK window. Talk window = language; Graphics window = pixels. Pair with live_video lip-sync."
+    },
+    {
+      "id": "nexus_assistant_help",
+      "title": "Assistant work queue",
+      "body": "hostess7-imaging.py work-queue scans broken combinatronic assets, missing format icons, stale Big Drive grids. Assistant runs repair + icon generation when broken > 10. Owner asked: teach imaging skills and help Hostess 7 with asset repair."
+    }
+  ],
+  "nexus_imaging_taught": "2026-07-01T19:47:56.605574+00:00",
+  "nexus_install": "/home/default/Desktop/SG/NewLatest",
+  "nexus_imaging_doctrine": {
+    "schema": "hostess7-imaging-doctrine/v1",
+    "title": "Hostess 7 imaging \u2014 Imagine + NEXUS combinatronic + exact-text code",
+    "motto": "Grok Imagine for scenes \u00b7 PIL/HTML for exact text \u00b7 combinatronic for every field asset.",
+    "module": "lib/hostess7-imaging.py",
+    "hostess7_teach": "Hostess7/scripts/field_imagine_nexus_teach.py",
+    "corpus": "Hostess7/cache/fieldstorage/brain/imagine/corpus.json",
+    "skills": [
+      {
+        "id": "imagine_tool_choice",
+        "label": "Choose the right imaging tool",
+        "rules": [
+          "No source image \u2192 image_gen (invented subjects, base frames).",
+          "Source image \u2192 image_edit (restyle, add/remove, likeness, iterate).",
+          "Named real person \u2192 image_edit with verified reference only \u2014 never pure gen.",
+          "Exact text, charts, tables, labels \u2192 build with PIL or HTML/CSS code \u2014 not image models.",
+          "Video \u2192 image_to_video from a staged frame; ffmpeg concat -c copy to assemble shots."
+        ]
+      },
+      {
+        "id": "nexus_combinatronic",
+        "label": "NEXUS combinatronic visuals",
+        "module": "lib/field-combinatronic-visuals.py",
+        "patterns": [
+          "chip_png",
+          "book_cover",
+          "h7_manual",
+          "format_icon",
+          "big_drive_device"
+        ],
+        "repair": "field-combinatronic-visuals.py repair \u2014 rebuild broken PNGs from seeds, never hand-edit.",
+        "api": "/api/combinatronic/visuals"
+      },
+      {
+        "id": "format_icons",
+        "label": "Field file format icons",
+        "module": "lib/field-file-formats.py",
+        "command": "field-file-formats.py icons",
+        "family": "storage",
+        "note": "64\u00d764 PNG per format id \u2014 sovereign badge, family color."
+      },
+      {
+        "id": "big_drive_devices",
+        "label": "Big Drive device grids",
+        "module": "lib/field-big-drive.py",
+        "command": "field-big-drive.py render_icons",
+        "grid": "4\u00d73 combinatronic PNG + bd_{device_id}.png tiles",
+        "hero": "PIL overlay for exact BIG DRIVE branding on reference photos"
+      },
+      {
+        "id": "gfx_canvas",
+        "label": "Hostess7 Graphics window",
+        "module": "Hostess7/scripts/field_gfx_canvas.py",
+        "note": "Lossless RGB framebuffer \u2014 pixels and TTF text for Talk+Graphics path."
+      },
+      {
+        "id": "field_gimp",
+        "label": "AmmoOS Image bridge",
+        "panel": "/field-gimp",
+        "module": "lib/field-gimp-bridge.py",
+        "note": "GIMP-Field sovereign image formats \u2014 magics, lossless field layers."
+      }
+    ],
+    "work_sources": [
+      {
+        "id": "combinatronic_broken",
+        "scan": "field-combinatronic-visuals.py inventory",
+        "repair": "field-combinatronic-visuals.py repair",
+        "note": "inventory() returns broken_rows \u2014 repair rebuilds from seeds"
+      },
+      {
+        "id": "format_icons",
+        "scan": "field-file-formats.py icons"
+      },
+      {
+        "id": "big_drive_icons",
+        "scan": "field-big-drive.py render_icons"
+      },
+      {
+        "id": "imagine_corpus",
+        "scan": "field_imagine_corpus.py",
+        "teach": "field_imagine_nexus_teach.py"
+      }
+    ],
+    "assistant_help": {
+      "statement": "When combinatronic inventory shows broken assets, run repair. When new tools ship (Big Drive, formats), regenerate device grids and format icons. Teach Imagine corpus after skill updates.",
+      "priority_when_broken_gt": 10
+    }
+  }
+}

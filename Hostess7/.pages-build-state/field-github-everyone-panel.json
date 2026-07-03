@@ -1,0 +1,377 @@
+{
+  "ok": true,
+  "schema": "field-github-everyone-panel/v1",
+  "title": "GitHub for everyone — botnet civilian passthrough, DNS truth, Pages mirrors",
+  "motto": "Everyone needs GitHub — repos, Pages, raw, API, git — open for all through the field botnet",
+  "updated": "2026-07-03T09:44:46Z",
+  "boss": "hostess7",
+  "for_everyone": {
+    "enabled": true,
+    "civilian_passthrough": true,
+    "dns_always_allow": true,
+    "legal_ports_auto": true,
+    "pages_mirror_fallback": true,
+    "h7t_for_foreign_repos": true,
+    "note": "Sovereign ZacharyGeurts stack runs native; everyone else gets GitHub + H7t chamber for foreign payloads"
+  },
+  "github_domains": [
+    "github.com",
+    "api.github.com",
+    "raw.githubusercontent.com",
+    "codeload.github.com",
+    "objects.githubusercontent.com",
+    "github.io",
+    "githubassets.com",
+    "githubusercontent.com",
+    "ssh.github.com"
+  ],
+  "github_service_ports": [
+    22,
+    443,
+    9418
+  ],
+  "fallback_chain": [
+    "https://github.com",
+    "https://raw.githubusercontent.com",
+    "https://zacharygeurts.github.io/GNUEOLTerminal/",
+    "https://zacharygeurts.github.io/Hostess7/gnueol-terminal/",
+    "https://zacharygeurts.github.io/Hostess7/",
+    "http://127.0.0.1:9477"
+  ],
+  "github_open": true,
+  "open_count": 9,
+  "legacy": {
+    "ok": true,
+    "schema": "field-github-legacy-panel/v1",
+    "title": "GitHub legacy secure lane — old stack + old browsers, stable open connection",
+    "motto": "All of GitHub stays open — canonical + legacy repos — TLS secure, old clients welcome",
+    "updated": "2026-07-03T09:44:45Z",
+    "boss": "hostess7",
+    "stable_connection": true,
+    "github_always": {
+      "schema": "field-github-legacy-probe/v1",
+      "updated": "2026-07-03T08:20:26Z",
+      "ok": true,
+      "stable": true,
+      "always_open": true,
+      "open_count": 9,
+      "canonical_open": 4,
+      "legacy_open": 5,
+      "legacy_total": 5,
+      "total_probed": 9,
+      "total_catalog": 30,
+      "fast": true,
+      "secure_legacy": {
+        "tls_required": true,
+        "allow_old_user_agents": true,
+        "pages_mirror_when_repo_slow": true,
+        "probe_methods": [
+          "HEAD",
+          "GET_RANGE",
+          "GET"
+        ],
+        "fast_sample_legacy": 5
+      },
+      "endpoints": [
+        {
+          "id": "github_com",
+          "url": "https://github.com",
+          "role": "canonical_git",
+          "legacy": false,
+          "ok": true,
+          "status": 403,
+          "elapsed_ms": 356,
+          "method": "HEAD",
+          "probe_chain": "HEAD",
+          "always_open": true
+        },
+        {
+          "id": "api_github",
+          "url": "https://api.github.com",
+          "role": "api",
+          "legacy": false,
+          "ok": true,
+          "status": 429,
+          "elapsed_ms": 241,
+          "method": "HEAD",
+          "probe_chain": "HEAD",
+          "always_open": true
+        },
+        {
+          "id": "hostess7_repo",
+          "url": "https://github.com/ZacharyGeurts/Hostess7",
+          "role": "main_repo",
+          "legacy": false,
+          "ok": true,
+          "status": 403,
+          "elapsed_ms": 295,
+          "method": "HEAD",
+          "probe_chain": "HEAD",
+          "always_open": true
+        },
+        {
+          "id": "hostess7_pages",
+          "url": "https://zacharygeurts.github.io/Hostess7/",
+          "role": "pages_runtime",
+          "legacy": false,
+          "ok": true,
+          "status": 200,
+          "elapsed_ms": 262,
+          "method": "HEAD",
+          "probe_chain": "HEAD",
+          "always_open": true
+        },
+        {
+          "id": "command_stack_repo",
+          "url": "https://github.com/ZacharyGeurts/command",
+          "role": "stack_repo",
+          "legacy": true,
+          "title": "NEXUS C2 Basement",
+          "ok": true,
+          "status": 403,
+          "elapsed_ms": 510,
+          "method": "HEAD",
+          "probe_chain": "HEAD",
+          "always_open": true
+        },
+        {
+          "id": "h7updater_stack_repo",
+          "url": "https://github.com/ZacharyGeurts/H7updater",
+          "role": "stack_repo",
+          "legacy": true,
+          "title": "H7 Updater",
+          "ok": true,
+          "status": 403,
+          "elapsed_ms": 437,
+          "method": "HEAD",
+          "probe_chain": "HEAD",
+          "always_open": true
+        },
+        {
+          "id": "ammoos_stack_repo",
+          "url": "https://github.com/ZacharyGeurts/AmmoOS",
+          "role": "stack_repo",
+          "legacy": true,
+          "title": "AmmoOS",
+          "ok": true,
+          "status": 403,
+          "elapsed_ms": 254,
+          "method": "HEAD",
+          "probe_chain": "HEAD",
+          "always_open": true
+        },
+        {
+          "id": "queen_stack_repo",
+          "url": "https://github.com/ZacharyGeurts/Queen",
+          "role": "stack_repo",
+          "legacy": true,
+          "title": "Queen Browser",
+          "ok": true,
+          "status": 403,
+          "elapsed_ms": 371,
+          "method": "HEAD",
+          "probe_chain": "HEAD",
+          "always_open": true
+        },
+        {
+          "id": "grok16_stack_repo",
+          "url": "https://github.com/ZacharyGeurts/Grok16",
+          "role": "stack_repo",
+          "legacy": true,
+          "title": "Grok16",
+          "ok": true,
+          "status": 403,
+          "elapsed_ms": 317,
+          "method": "HEAD",
+          "probe_chain": "HEAD",
+          "always_open": true
+        }
+      ],
+      "always_allow_domains": [
+        "github.com",
+        "api.github.com",
+        "raw.githubusercontent.com",
+        "codeload.github.com",
+        "objects.githubusercontent.com",
+        "github.io",
+        "githubassets.com",
+        "githubusercontent.com"
+      ],
+      "cached": true
+    },
+    "catalog_count": 32,
+    "always_allow_domains": [
+      "github.com",
+      "api.github.com",
+      "raw.githubusercontent.com",
+      "codeload.github.com",
+      "objects.githubusercontent.com",
+      "github.io",
+      "githubassets.com",
+      "githubusercontent.com"
+    ],
+    "api": "/api/field-github-legacy",
+    "fast": true
+  },
+  "resilience": {
+    "ok": true,
+    "schema": "field-github-resilience-panel/v1",
+    "title": "GitHub resilience — loopback authority + publish queue when control plane is down",
+    "updated": "2026-07-03T09:44:45Z",
+    "boss": "hostess7",
+    "probe": {
+      "schema": "field-github-resilience-probe/v1",
+      "updated": "2026-07-03T09:44:45Z",
+      "ok": true,
+      "degraded_ok": false,
+      "github_push_ready": true,
+      "open_count": 6,
+      "weight_open": 13,
+      "pages_open": true,
+      "raw_open": true,
+      "loopback": {
+        "ok": false,
+        "tcp": {
+          "ok": false,
+          "host": "127.0.0.1",
+          "port": 9477,
+          "error": "[Errno 111] Connection refused"
+        },
+        "api": {
+          "ok": false
+        },
+        "base": "http://127.0.0.1:9477",
+        "authority": null
+      },
+      "authority": "https://zacharygeurts.github.io/Hostess7/",
+      "probes": [
+        {
+          "id": "pages",
+          "url": "https://zacharygeurts.github.io/Hostess7/",
+          "role": "pages",
+          "weight": 3,
+          "ok": true,
+          "status": 200,
+          "elapsed_ms": 96
+        },
+        {
+          "id": "raw",
+          "url": "https://raw.githubusercontent.com/ZacharyGeurts/Hostess7/main/VERSION",
+          "role": "raw",
+          "weight": 2,
+          "ok": true,
+          "status": 200,
+          "elapsed_ms": 86
+        },
+        {
+          "id": "api",
+          "url": "https://api.github.com/zen",
+          "role": "api",
+          "weight": 2,
+          "ok": true,
+          "status": 403,
+          "elapsed_ms": 227
+        },
+        {
+          "id": "github_https",
+          "url": "https://github.com/",
+          "role": "web",
+          "weight": 1,
+          "ok": true,
+          "status": 429,
+          "elapsed_ms": 231
+        },
+        {
+          "id": "ssh_tunnel",
+          "host": "ssh.github.com",
+          "port": 443,
+          "role": "git_push",
+          "weight": 3,
+          "ok": true,
+          "elapsed_ms": 132
+        },
+        {
+          "id": "ssh_direct",
+          "host": "github.com",
+          "port": 22,
+          "role": "git_push",
+          "weight": 2,
+          "ok": true,
+          "elapsed_ms": 100
+        }
+      ],
+      "fast": true
+    },
+    "loopback_authority": {
+      "host": "127.0.0.1",
+      "port": 9477,
+      "base": "http://127.0.0.1:9477",
+      "apis": [
+        "/api/status",
+        "/api/field-github-resilience",
+        "/api/field-github-legacy",
+        "/api/field-internet",
+        "/api/field-botnet-dns-dhcp"
+      ]
+    },
+    "authority": "https://zacharygeurts.github.io/Hostess7/",
+    "degraded_ok": false,
+    "github_push_ready": true,
+    "publish_queue": {
+      "pending": 0,
+      "entries": 0,
+      "path": "/home/default/Desktop/SG/NewLatest/.nexus-state/hostess7-publish-queue.json"
+    },
+    "api": "/api/field-github-resilience",
+    "pages_fallback": "https://zacharygeurts.github.io/Hostess7/",
+    "fast": true
+  },
+  "internet": {
+    "ok": true,
+    "api": "/api/field-internet"
+  },
+  "botnet": {
+    "ok": true,
+    "dns_dhcp": {
+      "dns": {
+        "ok": false,
+        "running": false,
+        "self_hosted": true,
+        "truthful": true,
+        "listeners": [
+          "127.0.0.1#53"
+        ],
+        "schema": "field-dns/v2"
+      },
+      "dhcp": {
+        "ok": false,
+        "running": false,
+        "bind": "0.0.0.0:67",
+        "lease_count": 0,
+        "dns_option": [
+          "127.0.0.1"
+        ],
+        "dns_option_v6": [
+          "::1"
+        ],
+        "schema": "field-dhcp/v2"
+      },
+      "combined": false
+    },
+    "for_everyone": {
+      "civilian_passthrough": true,
+      "dns_truth": true,
+      "dhcp_field": true,
+      "stable": true,
+      "secure": true
+    },
+    "api": "/api/field-botnet-dns-dhcp"
+  },
+  "h7t": {
+    "api": "/api/field-h7t-truth",
+    "rule": "foreign/non-safe payloads → truthed H7t chamber; GitHub stays open for everyone"
+  },
+  "pages_wire": "Hostess7/docs/pages-github-everyone-wire.js",
+  "api": "/api/field-github-everyone",
+  "fast": true
+}

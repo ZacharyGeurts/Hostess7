@@ -1,0 +1,39 @@
+{
+  "schema": "field-sense-mechanical-learn/v1",
+  "title": "Sense mechanical auto-learn — camera focal/zoom · eardrum · body vibration · mouth↔ear smarter",
+  "boss": "hostess7",
+  "motto": "Final Eye learns any mechanical camera; Final Ear learns eardrum and body vibrations; Mouth and Ear cross-train under ironclad seal",
+  "eye": {
+    "module": "lib/field-sense-mechanical-learn.py",
+    "probe": ["v4l2", "dev_video", "v4l2_ctl"],
+    "controls": ["zoom_absolute", "focus_absolute", "pan_absolute", "tilt_absolute", "exposure_auto", "iris_absolute"],
+    "learn_on_detect": true,
+    "final_eye_bridge": "Final_Eye/zocr_watch.py capabilities"
+  },
+  "ear": {
+    "mechanisms": ["kinetic_eardrum", "phased_array", "binaural_hrtf", "body_vibration", "color_spectrum_cross"],
+    "spectrum_bands_hz": [20, 60, 250, 1000, 4000, 12000, 20000],
+    "body_vibration": {"accel_band_hz": [4, 80], "contact_mic": true},
+    "final_ear_bridge": "Final_Ear/zocr_virtual_ear.py",
+    "spectrum_bridge": "Final_Ear/zocr_ear_spectrum.py"
+  },
+  "mouth_ear_smarter": {
+    "rule": "Mouth spectrum + Ear eardrum + Eye color spectrum → sense_neural_wire quorum",
+    "cross_features": ["mouth_correlation", "viseme_bind", "fundamental_hz", "color_temperature_k"],
+    "min_quorum": 0.75,
+    "wire": "Queen/lib/queen-sense-neural.py"
+  },
+  "secure": {
+    "ironclad": "lib/ironclad-immediate.py",
+    "seal": ["field-final-eye-block", "field-final-ear-block", "field-final-mouth-block"],
+    "sense_neural": "Queen/lib/queen-sense-neural.py",
+    "api": "/api/field-sense-mechanical-learn"
+  },
+  "state": {
+    "learned_cameras": ".nexus-state/sense-mechanical-cameras.json",
+    "learned_ears": ".nexus-state/sense-mechanical-ears.json",
+    "mouth_ear_quorum": ".nexus-state/sense-mouth-ear-quorum.json"
+  },
+  "layer": 0,
+  "ships_with": ["hostess7-sense-training", "field-sense-package-meld", "queen-sense-neural"]
+}

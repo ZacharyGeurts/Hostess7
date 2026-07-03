@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KILROY Universal Terminal</title>
+  <link rel="stylesheet" href="queen-gnu-terminal.css" />
+  <link rel="stylesheet" href="kilroy-universal-terminal.css" />
+  <style>html, body { margin: 0; height: 100%; background: #030806; }</style>
+</head>
+<body>
+  <div id="kut-mount" style="height:100%"></div>
+  <script src="kilroy-universal-shell.js"></script>
+  <script src="kilroy-universal-terminal.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var p = new URLSearchParams(location.search);
+      KilroyUniversalTerminal.mount(document.getElementById("kut-mount"), { cwd: p.get("cwd") || "" });
+    });
+  </script>
+</body>
+</html>

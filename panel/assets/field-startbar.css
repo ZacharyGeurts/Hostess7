@@ -2,6 +2,7 @@
 
 .fsb-root {
   --fsb-h: 44px;
+  --fsb-start-rise: 10px;
   --fsb-bg: rgba(18, 22, 32, 0.92);
   --fsb-edge: rgba(255, 255, 255, 0.12);
   --fsb-text: #eef4ff;
@@ -32,6 +33,8 @@
   color: var(--fsb-text);
   user-select: none;
   touch-action: manipulation;
+  align-items: flex-end;
+  overflow: visible;
 }
 
 html[data-os-theme="ammo-c2"] .fsb-root {
@@ -49,6 +52,27 @@ html[data-os-theme="ammo-field"] .fsb-root {
 html[data-os-theme="ammo-deep"] .fsb-root {
   --fsb-bg: rgba(29, 32, 40, 0.95);
   --fsb-accent: #3daee9;
+}
+
+html[data-os-theme="ammoos"] .fsb-root,
+html[data-os-theme="nexus-military-v8"] .fsb-root,
+html[data-os-theme=""] .fsb-root {
+  --fsb-bg: rgba(10, 8, 6, 0.94);
+  --fsb-accent: #c47830;
+  --fsb-edge: rgba(120, 72, 48, 0.42);
+  --fsb-menu-bg: rgba(12, 10, 8, 0.98);
+  --fsb-active: rgba(219, 112, 147, 0.28);
+  --fsb-text: #f0e6dc;
+  --fsb-dim: #b8957a;
+}
+
+html[data-os-theme="dusty-night"] .fsb-root {
+  --fsb-bg: rgba(14, 18, 28, 0.94);
+  --fsb-accent: #4de88a;
+  --fsb-edge: rgba(138, 200, 232, 0.22);
+  --fsb-menu-bg: rgba(16, 22, 32, 0.98);
+  --fsb-text: #e8edf7;
+  --fsb-dim: #8ac8e8;
 }
 
 html[data-os-theme="ammo-rose"] .fsb-root {
@@ -149,8 +173,11 @@ html[data-os-theme="ammo-rose"] .fsb-root {
 .fsb-start-wrap {
   position: relative;
   display: flex;
-  align-items: stretch;
+  align-items: flex-end;
   flex-shrink: 0;
+  z-index: 100003;
+  height: calc(var(--fsb-h) + var(--fsb-start-rise));
+  margin-top: calc(-1 * var(--fsb-start-rise));
 }
 
 .fsb-start {
@@ -158,14 +185,14 @@ html[data-os-theme="ammo-rose"] .fsb-root {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-width: calc(var(--fsb-h) + 8px);
-  height: 100%;
+  min-width: calc(var(--fsb-h) + 22px);
+  height: calc(var(--fsb-h) + var(--fsb-start-rise) - 2px);
   border: 1px solid rgba(34, 197, 94, 0.35);
   background: linear-gradient(180deg, rgba(8, 20, 14, 0.95) 0%, rgba(4, 10, 8, 0.98) 100%);
   color: var(--fsb-text);
   cursor: pointer;
-  border-radius: var(--fsb-radius);
-  padding: 0 12px;
+  border-radius: 0 16px 16px 0;
+  padding: 0 14px 0 10px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(34, 197, 94, 0.12);
   transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
@@ -191,23 +218,110 @@ html[data-os-theme="ammo-rose"] .fsb-root {
   color: rgba(232, 242, 234, 0.92);
 }
 
-/* Active classic Start button for the desired AmmoOS desktop look */
+/* Classic Start — raised Windows-style pill; AmmoNet bar stays on the taskbar row */
 .fsb-start-classic, .fsb-start[data-classic="1"] {
-  background: #c0c0c0 !important;
-  color: #000 !important;
-  border: 2px outset #dfdfdf !important;
-  box-shadow: 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+  background: linear-gradient(180deg, #3cb371 0%, #2e8b57 38%, #228b45 62%, #1a6b38 100%) !important;
+  color: #fff !important;
+  border: 1px solid #0d4a28 !important;
+  border-radius: 0 10px 10px 0 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.28),
+    0 2px 6px rgba(0, 0, 0, 0.35) !important;
+  min-width: calc(var(--fsb-h) + 24px);
+  padding: 0 16px 0 12px !important;
+  gap: 8px !important;
 }
 .fsb-start-classic .fsb-start-label, .fsb-start[data-classic="1"] .fsb-start-label {
-  color: #000 !important;
+  color: #fff !important;
   text-transform: none;
   font-weight: 700;
+  font-size: 13px;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+.fsb-start-classic .fsb-start-flag {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset;
 }
 
-.fsb-start-queen {
-  width: 28px;
-  height: 28px;
+.fsb-start-classic:hover, .fsb-start[data-classic="1"]:hover,
+.fsb-start-classic[aria-expanded="true"], .fsb-start[data-classic="1"][aria-expanded="true"] {
+  background: linear-gradient(180deg, #48c97d 0%, #34a065 40%, #269652 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.22),
+    0 0 10px rgba(34, 197, 94, 0.35) !important;
+}
+.fsb-start-classic .fsb-start-orb, .fsb-start[data-classic="1"] .fsb-start-orb {
+  display: none !important;
+}
+.fsb-start-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   flex-shrink: 0;
+}
+.fsb-start-flag-svg {
+  display: block;
+  border-radius: 1px;
+}
+
+.fsb-start-orb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: radial-gradient(circle at 35% 30%, #5cff9a 0%, #16a34a 42%, #0a3d22 100%);
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    inset 0 -3px 6px rgba(0, 0, 0, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    0 0 10px rgba(34, 197, 94, 0.55);
+  flex-shrink: 0;
+}
+
+.fsb-start-queen,
+.qie-cartoony,
+.fsb-start-orb .fsb-start-queen,
+.fsb-start-orb .qie-prog-icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  filter: saturate(1.45) contrast(1.18) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55));
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Cartoony stack-wide icon treatment */
+.qie-prog-icon,
+.qie-file-icon,
+.fsb-app-icon,
+.fsb-quick-svg,
+.hd-icon-cartoony .hd-app-icon,
+.hd-icon-cartoony .qie-prog-icon,
+.fsb-menu-item--flyout .qie-prog-icon {
+  filter: saturate(1.38) contrast(1.12) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.42));
+  border-radius: 10px;
+}
+
+.fsb-menu-item--flyout .qie-prog-icon,
+.hd-icon-glyph .qie-prog-icon,
+.hd-icon-glyph .hd-app-icon {
+  width: 72px !important;
+  height: 72px !important;
+  border: 2px solid rgba(120, 255, 180, 0.35);
+  background: rgba(8, 16, 12, 0.55);
+  padding: 4px;
+  box-sizing: border-box;
 }
 
 .fsb-tasks {
@@ -412,6 +526,10 @@ html[data-os-theme="ammo-rose"] .fsb-root {
 }
 
 /* Start menu panel */
+.fsb-menu.open {
+  z-index: 100001;
+}
+
 .fsb-menu {
   position: fixed;
   left: 8px;
@@ -429,7 +547,8 @@ html[data-os-theme="ammo-rose"] .fsb-root {
   backdrop-filter: blur(20px);
 }
 
-.fsb-menu--flyout {
+.fsb-menu--flyout,
+.fsb-menu--tree {
   position: absolute;
   left: 0;
   bottom: calc(100% + 8px);
@@ -441,8 +560,30 @@ html[data-os-theme="ammo-rose"] .fsb-root {
   animation: fsb-flyout-in 0.16s ease-out;
 }
 
-.fsb-menu--flyout.open {
+.fsb-menu--flyout.open,
+.fsb-menu--tree.open {
   display: flex;
+}
+
+.fsb-menu--tree {
+  width: min(480px, calc(100vw - 24px));
+  border-color: rgba(196, 120, 48, 0.35);
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(219, 112, 147, 0.12);
+}
+
+.fsb-menu-body--tree {
+  padding: 8px 10px 12px;
+}
+
+.fsb-menu-folders {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.fsb-tree-folder--desktop > summary {
+  background: linear-gradient(90deg, rgba(196, 120, 48, 0.18), rgba(219, 112, 147, 0.08));
 }
 
 @keyframes fsb-flyout-in {
@@ -631,6 +772,7 @@ html[data-os-theme="macos"] .fsb-menu:not(.fsb-menu--flyout) {
 
 /* Context menu */
 .fsb-ctx {
+  z-index: 100010;
   position: fixed;
   z-index: 9100;
   min-width: 160px;
@@ -680,6 +822,61 @@ html[data-os-theme="macos"] .fsb-menu:not(.fsb-menu--flyout) {
   border-radius: 4px;
 }
 
+.fsb-theme-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 2px 2px;
+}
+
+.fsb-theme-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fsb-dim);
+  margin-right: 4px;
+}
+
+.fsb-theme-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 2px solid var(--fsb-edge);
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+}
+
+.fsb-theme-swatch:hover { transform: translateY(-1px); }
+
+.fsb-theme-swatch.active {
+  border-color: var(--fsb-accent);
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.35), 0 0 12px rgba(244, 114, 182, 0.25);
+}
+
+.fsb-theme-swatch-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: block;
+}
+
+.fsb-theme-swatch-icon--ammoos {
+  background: radial-gradient(circle at 35% 30%, #5cff9a 0%, #16a34a 38%, #0a1a10 72%);
+  border: 1px solid rgba(244, 114, 182, 0.45);
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.fsb-theme-swatch-icon--dusty {
+  background: linear-gradient(145deg, #1a2840 0%, #2a4060 45%, #4a6888 100%);
+  border: 1px solid rgba(138, 200, 232, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
 /* NEXUS C2 start menu */
 .fsb-menu-head--c2 { display: flex; flex-direction: column; gap: 8px; }
 .fsb-menu-brand { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fsb-accent); }
@@ -690,6 +887,30 @@ html[data-os-theme="macos"] .fsb-menu:not(.fsb-menu--flyout) {
 .fsb-tree-branch--host { opacity: 0.92; }
 .fsb-tree-label { cursor: pointer; padding: 10px 12px; font-size: 0.82rem; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
 .fsb-tree-label::-webkit-details-marker { display: none; }
+
+/* AmmoNet bar anchors bottom — taskbar + classic Start sit above it on Y */
+html.h7-final-internet {
+  --h7-ammonet-h: 36px;
+}
+
+html.h7-final-internet .fsb-root {
+  bottom: calc(var(--h7-ammonet-h) + env(safe-area-inset-bottom, 0));
+  padding-bottom: 0;
+  z-index: 99990;
+}
+
+html.h7-final-internet .fsb-menu,
+html.h7-final-internet .fsb-menu--flyout {
+  bottom: calc(var(--fsb-h) + var(--h7-ammonet-h) + 10px + env(safe-area-inset-bottom, 0));
+}
+
+html.h7-final-internet #hd-toast {
+  bottom: calc(var(--fsb-h) + var(--h7-ammonet-h) + 8px + env(safe-area-inset-bottom, 0));
+}
+
+html.h7-final-internet .hd-desktop {
+  padding-bottom: calc(var(--fsb-h) + var(--h7-ammonet-h) + env(safe-area-inset-bottom, 0));
+}
 .fsb-tree-count { font-size: 0.68rem; color: var(--fsb-dim); font-weight: 400; }
 .fsb-menu-sub { padding: 0 8px 8px; font-size: 0.72rem; color: var(--fsb-dim); }
 .fsb-tree-branch .fsb-menu-grid--section { padding: 0 8px 10px; }

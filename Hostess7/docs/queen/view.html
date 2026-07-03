@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" data-queen-theme="black_emerald_rose_2026">
 <head>
-  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <script src="/Hostess7/pages-queen-hardening.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <base href="/Hostess7/queen/" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>View</title>
@@ -9,12 +14,13 @@
   <link rel="stylesheet" href="queen-syntax.css" data-queen-theme="1" />
   <link rel="stylesheet" href="queen-viewer.css" data-queen-theme="1" />
   <link rel="stylesheet" href="view.css" />
+  <link rel="stylesheet" href="view-classic.css" />
   <link rel="stylesheet" href="queen-zoom-lightbox.css" />
   <link rel="stylesheet" href="queen-nes-cartridge-theater.css" />
   <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:*; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'" />
 </head>
-<body data-queen-surface="files" data-telemetry="off">
+<body data-pages-runtime="1" data-queen-surface="files" data-view-theme="classic" data-telemetry="off">
   <div class="qf-app" id="qf-app">
     <header class="qf-top">
       <span class="qf-brand">View</span>
@@ -31,7 +37,7 @@
     <nav class="qf-nav" aria-label="Navigation">
       <button type="button" id="qf-back" title="Back" aria-label="Back">←</button>
       <button type="button" id="qf-forward" title="Forward" aria-label="Forward">→</button>
-      <button type="button" id="qf-dock-pin" title="Dock folder">⊕ Dock</button>
+      <button type="button" id="qf-dock-pin" title="Pin folder to sidebar">📌 Pin</button>
       <select id="qf-mobile-root" class="qf-mobile-select" aria-label="Root folder"></select>
       <select id="qf-mobile-jump" class="qf-mobile-select" aria-label="Quick jump" hidden></select>
     </nav>
@@ -42,7 +48,11 @@
       <span class="qf-hotbar-label">Wishlist</span>
     </div>
     <div class="qf-split" id="qf-split">
-      <aside class="qf-tree" id="qf-tree" aria-label="Folder tree"></aside>
+      <aside class="qf-sidebar" id="qf-sidebar" aria-label="Sidebar">
+        <nav class="qf-places" id="qf-places" aria-label="Places"></nav>
+        <div class="qf-tree-head">Folders</div>
+        <div class="qf-tree" id="qf-tree" aria-label="Folder tree"></div>
+      </aside>
       <div class="qf-divider" id="qf-divider" role="separator" aria-orientation="vertical" tabindex="0"></div>
       <div class="qf-main" id="qf-main">
         <section class="qf-list" aria-label="Files">

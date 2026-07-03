@@ -84,10 +84,11 @@
   }
 
   function boot() {
-    if (pagesRuntime()) return;
     ensureBanner();
     refresh().catch(() => {});
-    setInterval(() => refresh().catch(() => {}), REFRESH_MS);
+    if (!global.__NEXUS_UP_REFRESH__) {
+      global.__NEXUS_UP_REFRESH__ = setInterval(() => refresh().catch(() => {}), REFRESH_MS);
+    }
   }
 
   global.NexusUniversalProtector = { boot, refresh };

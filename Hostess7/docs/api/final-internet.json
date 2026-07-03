@@ -1,0 +1,40 @@
+{
+  "schema": "final-internet/v1",
+  "title": "Final Internet \u2014 safe fields for everyone",
+  "motto": "Leave hostile pipes. Move to safe fields. Hostess 7 holds the lane \u2014 AmmoNet is the ISP.",
+  "migration": {
+    "from": "legacy_internet",
+    "to": "safe_fields",
+    "stages": [
+      "internet_clean",
+      "secure_bookmarks",
+      "queen_browser",
+      "znetwork_relayer",
+      "ammonet_isp"
+    ],
+    "default_on_boot": true
+  },
+  "safe_fields": {
+    "dns_truth": "lib/field-dns.py",
+    "dhcp_field": "lib/field-dhcp.py",
+    "gatekeeper": "lib/connection-gatekeeper.py",
+    "steel_plates": "lib/field-steel-neural-plates.py",
+    "plate_meld": "lib/field-plate-meld.py",
+    "universal_protector": "lib/universal-protector.py"
+  },
+  "public_surfaces": {
+    "pages_base": "https://zacharygeurts.github.io/Hostess7",
+    "ammonet": "/Hostess7/ammonet/",
+    "final_internet": "/Hostess7/final-internet/",
+    "command": "/Hostess7/command/",
+    "command_url": "https://zacharygeurts.github.io/command/",
+    "desktop": "/Hostess7/desktop/",
+    "queen": "/Hostess7/queen/browser.html",
+    "training_room": "/Hostess7/training-room/",
+    "bookmark_jump": "/Hostess7/bookmark-jump/"
+  },
+  "operator_message": "Final Internet is operational for everyone on GitHub Pages \u2014 AmmoNet ISP hub lists every Hostess 7 surface. Run ./nexus.sh panel for live steel plate meld.",
+  "ok": true,
+  "pages": true,
+  "pages_base": "/Hostess7"
+}

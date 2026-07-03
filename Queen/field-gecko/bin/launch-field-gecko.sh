@@ -24,9 +24,34 @@ fi
 
 export QUEEN_ROOT="${QUEEN}"
 export SG_ROOT="${SG_ROOT:-${SG}}"
-export QUEEN_WEB_SHELL=1
-export QUEEN_SKIP_RTX_BOOT=1
 export QUEEN_NO_OS_BROWSER=1
+
+_resolve_bin_early() {
+  local c
+  for c in \
+    "${ROOT}/bin/queen-browser" \
+    "${ROOT}/bin/queen-field-engine" \
+    "${QUEEN}/build/field-gecko/bin/queen-browser" \
+    "${QUEEN}/build/rtx/bin/Linux/queen-browser" \
+    /usr/local/bin/queen-browser \
+    /usr/bin/queen-browser; do
+    if [[ -x "$c" ]]; then
+      echo "$c"
+      return 0
+    fi
+  done
+  return 1
+}
+
+if _EARLY_BIN="$(_resolve_bin_early 2>/dev/null)"; then
+  export QUEEN_SKIP_RTX_BOOT=0
+  export QUEEN_WEB_SHELL=0
+  export QUEEN_ENGINE_BINARY="${_EARLY_BIN}"
+else
+  export QUEEN_SKIP_RTX_BOOT=1
+  export QUEEN_WEB_SHELL=1
+fi
+unset -f _resolve_bin_early 2>/dev/null || true
 export NEXUS_EMBED_PANEL_IN_ENGINE=0
 export NEXUS_C2_KIOSK="${KIOSK}"
 export NEXUS_C2_DESKTOP_LAUNCH="${C2_DESKTOP}"
@@ -109,6 +134,31 @@ QUEEN_ARGS=(--no-remote --profile "${PROFILE}" --class QueenBrowser --name Queen
 if [[ "${KIOSK}" == "1" ]]; then
   QUEEN_ARGS+=(--kiosk)
 fi
+
+# Queen Field Engine — faster, safer, stronger than stock Firefox (always on).
+QUEEN_FIELD_PREFS=(
+  --setpref=gfx.webrender.all=true
+  --setpref=layers.acceleration.force-enabled=true
+  --setpref=media.autoplay.default=0
+  --setpref=media.eme.enabled=true
+  --setpref=media.peerconnection.enabled=true
+  --setpref=privacy.trackingprotection.enabled=true
+  --setpref=privacy.trackingprotection.socialtracking.enabled=true
+  --setpref=privacy.trackingprotection.cryptomining.enabled=true
+  --setpref=privacy.trackingprotection.fingerprinting.enabled=true
+  --setpref=dom.security.https_only_mode=true
+  --setpref=toolkit.telemetry.enabled=false
+  --setpref=datareporting.healthreport.uploadEnabled=false
+  --setpref=browser.safebrowsing.malware.enabled=true
+  --setpref=browser.safebrowsing.phishing.enabled=true
+  --setpref=browser.tabs.unloadOnLowMemory=false
+  --setpref=network.dns.disablePrefetch=false
+  --setpref=network.prefetch-next=true
+  --setpref=dom.ipc.processCount=8
+  --setpref=dom.ipc.processCount.web=4
+)
+QUEEN_ARGS+=("${QUEEN_FIELD_PREFS[@]}")
+
 if [[ "${QUEEN_BENCHMARK_MODE:-0}" == "1" ]]; then
   QUEEN_ARGS+=(
     --width=1920

@@ -146,15 +146,28 @@
     }
   }
 
+  function isPagesStatic() {
+    return !!(global.AmmoCodeG16?.cfg?.()?.pagesStatic || document.documentElement.getAttribute("data-ammocode-pages"));
+  }
+
   async function loadThemes() {
+    let j = null;
     try {
       const r = await fetch("/api/syntax-themes", { cache: "no-store" });
-      if (!r.ok) return;
-      const j = await r.json();
-      state.editorThemes = j.editor_themes || {};
-      state.syntaxThemes = j.syntax_themes || {};
-      state.editorThemeKeys = Object.keys(state.editorThemes);
-      state.syntaxThemeKeys = Object.keys(state.syntaxThemes);
+      if (r.ok) j = await r.json();
+    } catch (_) {}
+    if (!j) {
+      try {
+        const r = await fetch("data/ammocode-syntax-themes.json", { cache: "no-store" });
+        if (r.ok) j = await r.json();
+      } catch (_) {}
+    }
+    if (!j) return;
+    state.editorThemes = j.editor_themes || {};
+    state.syntaxThemes = j.syntax_themes || {};
+    state.editorThemeKeys = Object.keys(state.editorThemes);
+    state.syntaxThemeKeys = Object.keys(state.syntaxThemes);
+    try {
       const edSel = $("ac-set-editor-theme");
       const synSel = $("ac-set-syntax-theme");
       if (edSel) {
@@ -210,16 +223,24 @@
   }
 
   async function loadFiletypes() {
+    let doc = null;
     try {
       const r = await fetch("/api/filetypes");
-      if (r.ok) {
-        state.filetypes = await r.json();
-        if (global.AmmoCodeHighlight?.mergeExtensions && state.filetypes.extensions) {
-          global.AmmoCodeHighlight.mergeExtensions(state.filetypes.extensions);
-        }
-        $("ac-ext-count").textContent = `${Object.keys(state.filetypes.extensions || {}).length} extensions`;
-      }
+      if (r.ok) doc = await r.json();
     } catch (_) {}
+    if (!doc) {
+      try {
+        const r = await fetch("data/field-programming-filetypes.json", { cache: "no-store" });
+        if (r.ok) doc = await r.json();
+      } catch (_) {}
+    }
+    if (!doc) return;
+    state.filetypes = doc;
+    if (global.AmmoCodeHighlight?.mergeExtensions && state.filetypes.extensions) {
+      global.AmmoCodeHighlight.mergeExtensions(state.filetypes.extensions);
+    }
+    const n = doc.extension_count || Object.keys(state.filetypes.extensions || {}).length;
+    $("ac-ext-count").textContent = `${n} extensions`;
   }
 
   function langFromPath(path) {
@@ -661,7 +682,12 @@
 
   async function boot() {
     document.documentElement.classList.add("ac-nexus-c2", "ac-theme-nexus-c2");
-    global.AmmoCodeG16?.config?.({ apiBase: API, beltProfile: "belt_2_0" });
+    const pagesStatic = isPagesStatic();
+    global.AmmoCodeG16?.config?.({
+      apiBase: pagesStatic ? "" : API,
+      beltProfile: "belt_2_0",
+      pagesStatic,
+    });
     bindDrawer();
     bindEditor();
     await loadThemes();
@@ -674,10 +700,28 @@
       iconSize: state.settings.iconSize,
       onAction: onToolbarAction,
     });
-    const ping = await api("ping", {});
+    let ping = { ok: false };
+    if (!pagesStatic) {
+      try {
+        ping = await api("ping", {});
+      } catch (_) {}
+    } else {
+      try {
+        const vr = await fetch("data/ammocode-version.json", { cache: "no-store" });
+        if (vr.ok) ping = await vr.json();
+      } catch (_) {}
+      ping = {
+        ok: true,
+        version: ping.version || "6.1.0",
+        grok16: false,
+        nondestructive: true,
+        save_model: "browser_export_only",
+        extensions: state.filetypes?.extension_count || Object.keys(state.filetypes?.extensions || {}).length,
+      };
+    }
     const g16El = $("ac-g16-pill");
     if (g16El) {
-      g16El.textContent = ping.grok16 ? "g16 ready" : "g16 offline";
+      g16El.textContent = pagesStatic ? "pages editor" : ping.grok16 ? "g16 ready" : "g16 offline";
       g16El.className = "ac-pill " + (ping.grok16 ? "ok" : "warn");
     }
     $("ac-version").textContent = `v${ping.version || "6.1.0"}`;
@@ -695,7 +739,11 @@
     if (file) await openPath(file);
     else paint();
     const saveHint = ping.save_model === "browser_export_only" ? " · export to save" : "";
-    setStatus(`ready${saveHint} · loopback only`);
+    setStatus(
+      pagesStatic
+        ? `GitHub Pages editor · export to save · clone for g16 run/compile`
+        : `ready${saveHint} · loopback only`
+    );
   }
 
   document.addEventListener("DOMContentLoaded", boot);

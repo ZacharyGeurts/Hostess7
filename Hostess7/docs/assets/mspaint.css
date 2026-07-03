@@ -1,0 +1,213 @@
+/* MSPaint — classic gray chrome · DOS 4.0 module */
+
+:root {
+  --msp-chrome: #c0c0c0;
+  --msp-dark: #808080;
+  --msp-light: #ffffff;
+  --msp-shadow: #404040;
+  --msp-canvas-bg: #ffffff;
+  --msp-text: #000000;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font: 13px/1.3 "Segoe UI", system-ui, sans-serif;
+  color: var(--msp-text);
+  background: var(--msp-chrome);
+}
+
+.msp-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 2px solid;
+  border-color: var(--msp-light) var(--msp-shadow) var(--msp-shadow) var(--msp-light);
+}
+
+.msp-menubar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  background: var(--msp-chrome);
+  border-bottom: 1px solid var(--msp-dark);
+  flex-shrink: 0;
+}
+
+.msp-menu-btn {
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 2px 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.msp-menu-btn:hover,
+.msp-menu-btn:focus-visible {
+  border-color: var(--msp-light) var(--msp-shadow) var(--msp-shadow) var(--msp-light);
+  outline: none;
+}
+
+.msp-title {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--msp-dark);
+  padding-right: 8px;
+}
+
+.msp-sovereign {
+  font: 10px ui-monospace, monospace;
+  padding: 2px 6px;
+  border: 1px solid var(--msp-dark);
+  background: #e8e8e8;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.msp-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  background: var(--msp-chrome);
+  border-bottom: 2px solid;
+  border-color: var(--msp-light) var(--msp-shadow) var(--msp-shadow) var(--msp-light);
+  flex-shrink: 0;
+}
+
+.msp-tool {
+  width: 28px;
+  height: 28px;
+  border: 2px solid;
+  border-color: var(--msp-light) var(--msp-shadow) var(--msp-shadow) var(--msp-light);
+  background: var(--msp-chrome);
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.msp-tool--active {
+  border-color: var(--msp-shadow) var(--msp-light) var(--msp-light) var(--msp-shadow);
+  background: #a8a8a8;
+}
+
+.msp-size {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  font-size: 11px;
+}
+
+.msp-size input { width: 80px; }
+
+.msp-workspace {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  background: #606060;
+  padding: 8px;
+  gap: 8px;
+}
+
+.msp-palette {
+  flex: 0 0 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 6px;
+  background: var(--msp-chrome);
+  border: 2px solid;
+  border-color: var(--msp-light) var(--msp-shadow) var(--msp-shadow) var(--msp-light);
+}
+
+.msp-pal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3px;
+}
+
+.msp-pal-swatch {
+  width: 28px;
+  height: 28px;
+  border: 2px solid;
+  border-color: var(--msp-shadow) var(--msp-light) var(--msp-light) var(--msp-shadow);
+  cursor: pointer;
+  padding: 0;
+}
+
+.msp-pal-swatch--fg {
+  outline: 2px solid #000;
+  outline-offset: 1px;
+}
+
+.msp-pal-custom label {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  gap: 2px;
+}
+
+.msp-pal-custom input[type="color"] {
+  width: 100%;
+  height: 24px;
+  border: 1px solid var(--msp-dark);
+  padding: 0;
+}
+
+.msp-canvas-wrap {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  background: #404040;
+  border: 2px solid;
+  border-color: var(--msp-shadow) var(--msp-light) var(--msp-light) var(--msp-shadow);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#msp-canvas {
+  display: block;
+  background: var(--msp-canvas-bg);
+  image-rendering: pixelated;
+  cursor: crosshair;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.msp-status {
+  padding: 3px 8px;
+  font-size: 11px;
+  background: var(--msp-chrome);
+  border-top: 1px solid var(--msp-light);
+  flex-shrink: 0;
+}
+
+.msp-dropdown {
+  position: fixed;
+  z-index: 9000;
+  min-width: 160px;
+  background: var(--msp-chrome);
+  border: 2px solid;
+  border-color: var(--msp-light) var(--msp-shadow) var(--msp-shadow) var(--msp-light);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.msp-dropdown button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.msp-dropdown button:hover { background: #000080; color: #fff; }

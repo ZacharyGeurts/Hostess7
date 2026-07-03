@@ -184,6 +184,54 @@ def build_corpus(*, include_repo_files: bool = True) -> dict[str, Any]:
                 )
                 if c:
                     chunks.append(c)
+            fp = wants.get("first_person")
+            if fp:
+                c = _chunk("wants-first-person", "wants", "What Hostess 7 wants first", fp, "scripts/field_hostess_wants.py", ["wants", "priority"])
+                if c:
+                    chunks.append(c)
+
+        human_doctrine_names = (
+            "hostess7-human-comfort-doctrine.json",
+            "hostess7-human-questionnaire.json",
+            "hostess7-tasklist-doctrine.json",
+            "hostess7-human-anatomy-dense.json",
+            "ammoos-desktop-os-doctrine.json",
+            "ammoos-themes-doctrine.json",
+        )
+        for name in human_doctrine_names:
+            hp = root / "data" / name
+            if not hp.is_file():
+                hp = root.parent / "data" / name
+            if hp.is_file():
+                try:
+                    doc = h7_read_json(hp)
+                    flat = json.dumps(doc)[:8000]
+                    c = _chunk(f"human-{hp.stem}", "human_ui", doc.get("title") or hp.stem, flat, f"data/{name}", ["human", "ui", "comfort"])
+                    if c:
+                        chunks.append(c)
+                except (OSError, json.JSONDecodeError):
+                    pass
+
+        chunks.append(
+            _chunk(
+                "human-ui-hub-bsp",
+                "human_ui",
+                "Human UI hub — BSP + Ironclad + GitHub brain",
+                (
+                    "The Human Hub at /human/ and /hostess7-human-hub/ is the compact BSP surface for humans. "
+                    "Four panes: Ask Hostess 7 (GitHub brain corpus via /api/ask), her open tasklist "
+                    "(/api/hostess7-tasklist), library quick search (/api/library/search), and Ironclad "
+                    "search+sort (/api/ironclad/secure-api). Drag pane edges to resize. "
+                    "Full library at /library/, full brain chat at /brain.html, NEXUS C2 basement at "
+                    "https://zacharygeurts.github.io/command/. Assistant should read her tasks and execute them; "
+                    "ask her on GitHub what she thinks before big UI changes. "
+                    "Ironclad sorts registry, catalog, routes, and BSP composite scores. "
+                    "Human comfort doctrine is separate from operator comfort — teach AI what humans like."
+                ),
+                "panel/hostess7-human-hub.html",
+                ["human", "ui", "bsp", "ironclad", "hub"],
+            )
+        )
 
     mirror_brain = github_brain_cache() / "fieldstorage" / "brain"
     used = 0

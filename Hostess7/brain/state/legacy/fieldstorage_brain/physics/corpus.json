@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "domains": [
+    {
+      "id": "kinematics",
+      "title": "Kinematics \u2014 motion without forces",
+      "tags": [
+        "motion",
+        "kinematics",
+        "velocity",
+        "acceleration",
+        "displacement",
+        "trajectory",
+        "fps"
+      ],
+      "body": "Position r(t), velocity v = dr/dt, acceleration a = dv/dt. 1D/2D/3D vectors; projectile motion; circular motion (centripetal a = v\u00b2/r). Frame choice matters: inertial vs non-inertial (fictitious forces in rotating frames). Discrete motion on canvas: \u0394x per frame, sub-step integration for stability. AMOURANTHRTX bench_dos_suite frames_per_sec measures realized motion rate vs target timestep."
+    },
+    {
+      "id": "dynamics",
+      "title": "Dynamics \u2014 forces and Newtonian mechanics",
+      "tags": [
+        "force",
+        "newton",
+        "momentum",
+        "torque",
+        "friction",
+        "collision",
+        "impulse"
+      ],
+      "body": "\u03a3F = ma; momentum p = mv conserved in isolated systems; impulse J = \u222bF dt = \u0394p. Rotational analog: \u03c4 = I\u03b1, angular momentum L = r \u00d7 p. Friction: static vs kinetic; restitution in collisions (e coefficient). Constraints: joints, contacts \u2014 stability needs implicit or sub-stepped solvers. Field Pipeline applies fluid-like forces on fabric cells \u2014 organic damping, not rigid-body only."
+    },
+    {
+      "id": "lagrangian_hamiltonian",
+      "title": "Analytical mechanics",
+      "tags": [
+        "lagrangian",
+        "hamiltonian",
+        "action",
+        "constraint",
+        "generalized",
+        "phase space"
+      ],
+      "body": "Lagrangian L = T \u2212 V with generalized coordinates q; Euler-Lagrange d/dt(\u2202L/\u2202q\u0307) \u2212 \u2202L/\u2202q = 0. Hamiltonian H = T + V; canonical equations q\u0307 = \u2202H/\u2202p, \u1e57 = \u2212\u2202H/\u2202q. Symmetries \u2192 conservation (Noether). Action principle \u03b4\u222bL dt = 0 unifies mechanics. Useful for robotics, orbital mechanics, and stable integrators (symplectic)."
+    },
+    {
+      "id": "thermodynamics_entropy",
+      "title": "Thermodynamics & entropy",
+      "tags": [
+        "thermodynamics",
+        "entropy",
+        "heat",
+        "temperature",
+        "energy",
+        "enthalpy",
+        "boltzmann"
+      ],
+      "body": "Laws: energy conservation, entropy of isolated systems never decreases, absolute zero unreachable, entropy \u2192 0 as T \u2192 0 (third, Nernst). Microscopic: S = k ln \u03a9 (Boltzmann); macroscopic: dS = \u03b4Q_rev/T. Free energy F = U \u2212 TS drives spontaneous processes at fixed T. Field canvas models entropy-forward fabric evolution \u2014 Pipeline thermo/phi dispatch aligns with second-law intuition: dissipation, mixing, irreversible coarse-graining on the analog field."
+    },
+    {
+      "id": "waves_optics",
+      "title": "Waves, optics & electromagnetism",
+      "tags": [
+        "wave",
+        "optics",
+        "maxwell",
+        "light",
+        "frequency",
+        "interference",
+        "diffraction",
+        "em"
+      ],
+      "body": "Wave equation \u2202\u00b2u/\u2202t\u00b2 = c\u00b2\u2207\u00b2u; superposition; standing waves; dispersion \u03c9(k). Geometric optics: Snell, lenses, focal length; aberrations at high NA. Physical optics: interference, diffraction limit, polarization. Maxwell equations unify E and B; EM waves c = 1/\u221a(\u03b5\u2080\u03bc\u2080). Field wave.persist phases and resonance table in super physics() \u2014 logical_gib vs phase anchor."
+    },
+    {
+      "id": "fluid_continuum",
+      "title": "Fluid & continuum motion",
+      "tags": [
+        "fluid",
+        "navier",
+        "stokes",
+        "pressure",
+        "viscosity",
+        "turbulence",
+        "flow"
+      ],
+      "body": "Continuity \u2202\u03c1/\u2202t + \u2207\u00b7(\u03c1v) = 0; Navier-Stokes \u03c1(\u2202v/\u2202t + v\u00b7\u2207v) = \u2212\u2207p + \u03bc\u2207\u00b2v + f. Reynolds number Re = \u03c1vL/\u03bc predicts laminar vs turbulent transition. Bernoulli along streamlines (inviscid): p + \u00bd\u03c1v\u00b2 + \u03c1gh constant. Pipeline.hpp fluid dynamics + Tesla valve logic \u2014 stable organic motion on canvas, not game-tick jitter."
+    },
+    {
+      "id": "quantum_basics",
+      "title": "Quantum mechanics foundations",
+      "tags": [
+        "quantum",
+        "schrodinger",
+        "wavefunction",
+        "superposition",
+        "measurement",
+        "spin"
+      ],
+      "body": "State \u03c8; Born rule P = |\u03c8|\u00b2; Hermitian observables; uncertainty \u0394x\u0394p \u2265 \u210f/2. Time evolution i\u210f\u2202\u03c8/\u2202t = \u0124\u03c8; stationary states E\u03c8 = \u0124\u03c8. Tunneling, spin-\u00bd, Pauli exclusion \u2014 chemistry and solid-state emerge here. Measurement collapse is interpretational; decoherence explains classical limits. Not simulated on AMOURANTHRTX die \u2014 classical/continuum Field physics is authoritative for canvas."
+    },
+    {
+      "id": "relativity",
+      "title": "Relativity \u2014 special & general",
+      "tags": [
+        "relativity",
+        "lorentz",
+        "spacetime",
+        "curvature",
+        "gravity",
+        "einstein"
+      ],
+      "body": "Special: invariant interval s\u00b2 = c\u00b2t\u00b2 \u2212 x\u00b2 \u2212 y\u00b2 \u2212 z\u00b2; E\u00b2 = (pc)\u00b2 + (mc\u00b2)\u00b2. Time dilation, length contraction, velocity addition at v \u226a c \u2192 Galilean. General: matter curves spacetime; geodesics are free-fall paths; GPS needs GR corrections. Weak-field limit recovers Newtonian gravity. Strong field: black holes, gravitational waves."
+    },
+    {
+      "id": "spatial_3d_foundations",
+      "title": "3D spatial reality \u2014 coordinates & transforms",
+      "tags": [
+        "3d",
+        "spatial",
+        "coordinate",
+        "transform",
+        "matrix",
+        "vector",
+        "basis",
+        "reality"
+      ],
+      "body": "3D reality is modeled as points in \u211d\u00b3 with chosen basis (world, body, camera, screen). Rigid transform: rotation R (orthogonal, det=+1) + translation t; homogeneous 4\u00d74 matrices compose. Rotations: Euler angles (gimbal lock), axis-angle, unit quaternions (slerp-friendly). Right-handed conventions: x right, y up, z out of screen (graphics) or z forward (robotics \u2014 declare one). Scale, shear, and non-uniform scaling break orthogonality \u2014 decompose for animation pipelines."
+    },
+    {
+      "id": "projection_imaging",
+      "title": "3D \u2192 2D projection & imaging geometry",
+      "tags": [
+        "projection",
+        "camera",
+        "pinhole",
+        "fov",
+        "intrinsic",
+        "extrinsic",
+        "calibration"
+      ],
+      "body": "Pinhole model: x_img = f X/Z + c_x; distortion (radial/tangential) corrected via calibration. Intrinsic matrix K; extrinsic [R|t] maps world \u2192 camera. Perspective divide w; orthographic for CAD overlays. FieldDosViewport maps storage image coords to dispatched framebuffer \u2014 aosViewport() in aos_chrome.inc. 4K 3840\u00d72160 default; autoZoom4K and SCALE shell command adjust apparent spatial scale on canvas."
+    },
+    {
+      "id": "depth_stereo_pointcloud",
+      "title": "Depth, stereo & point clouds",
+      "tags": [
+        "depth",
+        "stereo",
+        "lidar",
+        "point cloud",
+        "rgbd",
+        "disparity",
+        "voxel"
+      ],
+      "body": "Depth Z per pixel; stereo disparity d = fB/Z (baseline B, focal f). Structured light / ToF / LiDAR produce metric point clouds {p_i \u2208 \u211d\u00b3}. ICP aligns clouds; voxel grids downsample; octrees accelerate spatial queries. SLAM fuses odometry + landmarks into consistent 3D map. AMOURANTHRTX metaphor: die framebuffer as observed 2D projection of 3D guest state; OCR reads projected text."
+    },
+    {
+      "id": "spatial_reasoning_scene",
+      "title": "Spatial reasoning & scene understanding",
+      "tags": [
+        "scene",
+        "layout",
+        "occlusion",
+        "affordance",
+        "spatial",
+        "reasoning",
+        "geometry"
+      ],
+      "body": "Scene graphs: objects, relations (on, in, left-of), support surfaces, occlusion ordering. Affordances: what actions geometry permits (grasp, navigate, click). Mental rotation and spatial working memory \u2014 right-hemisphere bias in Hostess 7 workspace model. Hit testing on WM chrome is 2D screen-space collision with 3D layout implied by z-order and dock geometry. Consistent spatial reality requires one world frame, calibrated time, and reversible transform logs."
+    },
+    {
+      "id": "field_canvas_physics",
+      "title": "Field canvas physics integration",
+      "tags": [
+        "field",
+        "canvas",
+        "fabric",
+        "dispatch",
+        "entropy",
+        "phi",
+        "pipeline",
+        "analog"
+      ],
+      "body": "FieldFabric dispatchExtended evolves analog phi per frame; mouse probe injects heat/vortex/phase kick. Entropy fabric predict; wave phases in FieldStorage; field_wave.persist couples to resonance.json. super physics() mirrors bench_storage METRIC bo_gain, logical_gib transforms, entropy_arrow forward. Vision + motion + spatial + thermo unify on one canvas \u2014 shaders (CANVAS.comp/x86.comp), die, WM overlay. Hostess7 native bus bit 28; hemispheres L\u2194R for code evidence vs spatial synthesis."
+    }
+  ],
+  "domain_count": 13,
+  "disclaimer": "Physics corpus grounds motion, forces, waves, thermodynamics, and 3D spatial reality for Hostess 7 \u2014 educational synthesis tied to AMOURANTHRTX Field canvas where noted."
+}

@@ -28,18 +28,51 @@ DANGEROUS = re.compile(
     re.I,
 )
 
-ALLOWED_BASES = frozenset({
-    "ls", "pwd", "echo", "cat", "head", "tail", "grep", "find", "wc", "whoami",
-    "date", "env", "which", "file", "stat", "tree", "du", "df", "uname",
-    "g16", "g16-gcc", "g16-g++", "g16-as", "g16-ld", "g16-objdump", "g16-nm",
-    "gpy-16", "pythong", "python", "python3",
-    "git", "make", "bash", "sh", "clear", "history", "true", "false", "test",
-    "dirname", "basename", "realpath", "readlink",
-    "kilroy", "kilroy-status", "kernel", "discern",
-    "ammolang-run.sh", "export", "cd",
-})
-
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", str(QUEEN.parent / "NewLatest")))
+
+
+def _universal_shell_mod() -> Any | None:
+    script = INSTALL / "lib" / "kilroy-universal-shell.py"
+    if not script.is_file():
+        script = QUEEN.parent / "NewLatest" / "lib" / "kilroy-universal-shell.py"
+    if not script.is_file():
+        return None
+    try:
+        spec = importlib.util.spec_from_file_location("kilroy_universal_shell", script)
+        if not spec or not spec.loader:
+            return None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+    except Exception:
+        return None
+
+
+def _allowed_bases() -> frozenset[str]:
+    base = {
+        "ls", "pwd", "echo", "cat", "head", "tail", "grep", "find", "wc", "whoami",
+        "date", "env", "which", "file", "stat", "tree", "du", "df", "uname",
+        "g16", "g16-gcc", "g16-g++", "g16-as", "g16-ld", "g16-objdump", "g16-nm",
+        "gpy-16", "pythong", "python", "python3",
+        "git", "make", "bash", "sh", "clear", "history", "true", "false", "test",
+        "dirname", "basename", "realpath", "readlink",
+        "kilroy", "kilroy-status", "kernel", "discern",
+        "combinatorics", "combinatronic", "g16-combinatronics", "wiki", "field-tech", "fieldtech",
+        "ammolang-run.sh", "export", "cd",
+        "dir", "type", "cls", "copy", "del", "erase", "md", "chdir", "ren", "move",
+        "findstr", "where", "ver", "cp", "mv", "rm", "mkdir", "help", "hostname",
+        "py", "gmake", "rg", "locate", "set", "printenv", "source", "tree",
+    }
+    us = _universal_shell_mod()
+    if us and hasattr(us, "all_aliases"):
+        try:
+            base |= set(us.all_aliases())
+        except Exception:
+            pass
+    return frozenset(base)
+
+
+ALLOWED_BASES = _allowed_bases()
 
 _KILROY_PROC_PREFIX = "/proc/kilroy_field/"
 
@@ -250,6 +283,76 @@ def _discern_command(text: str, cwd: Path) -> dict[str, Any]:
         return {"ok": False, "output": str(exc)[:200], "cwd": str(cwd)}
 
 
+def _import_local(name: str, rel: str) -> Any | None:
+    script = INSTALL / rel
+    if not script.is_file():
+        return None
+    try:
+        spec = importlib.util.spec_from_file_location(name, script)
+        if not spec or not spec.loader:
+            return None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+    except Exception:
+        return None
+
+
+def _wiki_dispatch(cmd: str, cwd: Path) -> dict[str, Any] | None:
+    low = cmd.strip().lower().split()[0] if cmd.strip() else ""
+    if low not in ("wiki", "field-tech", "fieldtech"):
+        return None
+    base = "https://zacharygeurts.github.io/GNUEOLTerminal"
+    lines = [
+        "Field Tech Terminal — GNUEOL Classic Schooler Wiki",
+        f"  book:  {base}/",
+        f"  wiki:  {base}/wiki/",
+        "  topics: emacs · bash · coreutils · ssh · gpl · field-tech",
+        "",
+        "Grok impersonates RMS in the textbook — disclosed in preface.",
+        "Shell ≡ terminal. Combinatronic optional. Type combinatorics when you want the engine.",
+    ]
+    return {"ok": True, "output": "\n".join(lines), "cwd": str(cwd), "wiki": True}
+
+
+def _combinatronic_dispatch(cmd: str, cwd: Path) -> dict[str, Any] | None:
+    """Route combinatorics/combinatronic and shell -c variants to compatibility layers."""
+    stripped = cmd.strip()
+    if not stripped:
+        return None
+    parts = stripped.split()
+    low = parts[0].lower()
+    if low in ("bash", "sh") and len(parts) >= 3 and parts[1] == "-c":
+        inner = " ".join(parts[2:]).strip().strip("'\"")
+        return _combinatronic_dispatch(inner, cwd)
+    if low not in ("combinatorics", "combinatronic", "g16-combinatronics"):
+        return None
+    layers = _import_local("field_compatibility_layers", "lib/field-compatibility-layers.py")
+    comb = _import_local("field_combinatorics_comb", "lib/field-combinatorics-comb.py")
+    lines = [
+        "GNU Terminal → combinatronic bridge",
+        "  shell ≡ terminal — same surface; combinatronic is optional",
+        "",
+    ]
+    if layers and hasattr(layers, "status"):
+        try:
+            st = layers.status()
+            lines.append(f"Compatibility layers: {st.get('layer_count', len(st.get('layers') or []))} live")
+            for row in (st.get("layers") or [])[:6]:
+                if isinstance(row, dict):
+                    lines.append(f"  · {row.get('id', '?')}: {row.get('posture', row.get('label', ''))}")
+        except Exception as exc:
+            lines.append(f"layers: {exc}")
+    if comb and hasattr(comb, "panel"):
+        try:
+            panel = comb.panel(write=False)
+            lines.append(f"Combinatorics comb: cycle={panel.get('cycle_id', '—')} ironclad_chips={panel.get('ironclad_chips_total', '—')}")
+        except Exception:
+            pass
+    lines.extend(["", "Open /compatibility-layers for full panel · type help for CLI families"])
+    return {"ok": True, "output": "\n".join(lines), "cwd": str(cwd), "combinatronic": True}
+
+
 def _format_kernel_status() -> str:
     k = _kernel_slice()
     lines = [
@@ -302,9 +405,21 @@ def terminal_status() -> dict[str, Any]:
     kernel = _kernel_slice()
     default = _default_cwd()
     themes = _queen_themes()
+    us = _universal_shell_mod()
+    universal = None
+    if us and hasattr(us, "_load_doctrine"):
+        try:
+            universal = us._load_doctrine()
+            universal["alias_count"] = len(us.all_aliases()) if hasattr(us, "all_aliases") else 0
+        except Exception:
+            universal = None
     return {
         "ok": True,
-        "schema": "queen-gnu-terminal/v1",
+        "schema": "queen-gnu-terminal/v2",
+        "shell_terminal_identical": True,
+        "combinatronic_optional": True,
+        "universal_cli": True,
+        "universal": universal,
         "cwd_default": str(default),
         "sg_root": str(SG),
         "kilroy_root": kernel.get("kilroy_root"),
@@ -323,7 +438,9 @@ def terminal_status() -> dict[str, Any]:
         "queen_styles": "/gui/queen-styles-themes.json",
         "minibrowser_proxy": "/browse/view",
         "menus": ["File", "Edit", "View", "Options", "Help"],
-        "posture": "Queen GNU Terminal — ANSI palette, Queen Styles, KILROY cwd, proc witness when loaded",
+        "posture": "KILROY Universal Terminal — shell ≡ terminal · combinatronic optional · ANSI · Queen Styles",
+        "combinatronic_commands": ["combinatorics", "combinatronic", "g16-combinatronics", "bash -c combinatorics"],
+        "aliases": ["terminal", "gnu-terminal", "shell", "gnueol"],
     }
 
 
@@ -347,20 +464,53 @@ def dispatch_terminal(body: dict[str, Any]) -> dict[str, Any]:
             return {"ok": False, "output": err, "cwd": str(cwd)}
         return {"ok": True, "output": "", "cwd": str(new_cwd)}
 
+    wiki = _wiki_dispatch(cmd, cwd)
+    if wiki is not None:
+        return wiki
+
+    comb = _combinatronic_dispatch(cmd, cwd)
+    if comb is not None:
+        return comb
+
     low = cmd.lower().split()[0]
-    if low in ("kilroy", "kilroy-status", "kernel"):
-        return {"ok": True, "output": _format_kernel_status(), "cwd": str(cwd), "field_kernel": _kernel_slice()}
     if low == "discern":
         rest = cmd.split(maxsplit=1)[1] if len(cmd.split()) > 1 else ""
         return _discern_command(rest, cwd)
 
-    ok, reason = _command_allowed(cmd)
+    us = _universal_shell_mod()
+    run_cmd = cmd
+    resolved_meta: dict[str, Any] | None = None
+    if us and hasattr(us, "dispatch"):
+        try:
+            uni = us.dispatch(
+                cmd,
+                cwd=cwd,
+                env=_field_env(),
+                kilroy_status_fn=_format_kernel_status,
+            )
+            resolved_meta = uni.get("resolved")
+            if uni.get("clear"):
+                return {"ok": True, "clear": True, "cwd": str(cwd), "resolved": resolved_meta}
+            if uni.get("output") is not None and not uni.get("delegate"):
+                return {
+                    "ok": uni.get("ok", True),
+                    "output": uni.get("output", ""),
+                    "cwd": str(cwd),
+                    "resolved": resolved_meta,
+                    "field_kernel": _kernel_slice() if resolved_meta and resolved_meta.get("canonical") == "kilroy_status" else None,
+                }
+            if uni.get("posix_line"):
+                run_cmd = str(uni["posix_line"])
+        except Exception:
+            pass
+
+    ok, reason = _command_allowed(run_cmd)
     if not ok:
-        return {"ok": False, "output": reason, "cwd": str(cwd)}
+        return {"ok": False, "output": reason, "cwd": str(cwd), "resolved": resolved_meta}
 
     try:
         proc = subprocess.run(
-            cmd,
+            run_cmd,
             shell=True,
             cwd=str(cwd),
             capture_output=True,
@@ -376,6 +526,8 @@ def dispatch_terminal(body: dict[str, Any]) -> dict[str, Any]:
             "returncode": proc.returncode,
             "cwd": str(cwd),
             "field_kernel": _kernel_slice(),
+            "resolved": resolved_meta,
+            "ran": run_cmd if run_cmd != cmd else None,
         }
     except subprocess.TimeoutExpired:
         return {"ok": False, "output": "Command timed out.", "cwd": str(cwd)}

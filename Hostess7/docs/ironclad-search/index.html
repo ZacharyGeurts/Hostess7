@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="ironclad-search" data-force-ironclad-taskbar="1">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Ironclad Search — AmmoOS Program</title>
+  <link rel="stylesheet" href="/Hostess7/assets/field-ironclad-taskbar.css?v=1" />
+  <style>
+    html, body { margin: 0; min-height: 100dvh; background: #0a0e12; color: #e8f2ea; font: 14px system-ui, sans-serif; }
+    .ic-prog { padding: 20px; max-width: 960px; margin: 0 auto; }
+    .ic-prog h1 { font-size: 1.25rem; margin: 0 0 8px; color: #7dd3fc; }
+    .ic-prog p { color: #94a3b8; margin: 0 0 16px; }
+    .fitb-root { position: static !important; max-width: 100%; }
+    body.fitb-pad-bottom { padding-bottom: 0; }
+  </style>
+</head>
+<body data-pages-runtime="1" data-no-ironclad-taskbar="0">
+  <div class="ic-prog">
+    <h1>Ironclad Search</h1>
+    <p>Full desktop program — registry, catalog, CHIPS, routes. Not injected into the AmmoOS taskbar.</p>
+  </div>
+  <div id="fitb-mount"></div>
+  <script src="/Hostess7/assets/ironclad-bus.js?v=1"></script>
+  <script src="/Hostess7/assets/field-ironclad-taskbar.js?v=1"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.FieldIroncladTaskbar?.mountStandalone) window.FieldIroncladTaskbar.mountStandalone();
+    });
+  </script>
+  <script src="/Hostess7/pages-field-boot.js"></script>
+  <script src="/Hostess7/pages-c2-wire.js"></script>
+  <script src="/Hostess7/pages-queen-rtx-bridge.js"></script>
+  <script src="/Hostess7/pages-ammonet-wire.js"></script>
+  <script src="/Hostess7/pages-github-brain-wire.js"></script>
+  <script src="/Hostess7/pages-hostess7-interaction-wire.js"></script>
+</body>
+</html>

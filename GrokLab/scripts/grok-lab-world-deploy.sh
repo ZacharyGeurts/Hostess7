@@ -34,6 +34,18 @@ export GROK_LAB_ROOT="$ROOT"
 
 log() { printf '[grok-lab-world] %s\n' "$*"; }
 
+# Share out blocked — world deploy requires Hostess 7 operator release
+if [[ "${HOSTESS7_LAB_EGRESS:-0}" != "1" ]] && [[ "${HOSTESS7_OPERATOR:-0}" != "1" ]]; then
+  if [[ -f "$NL/lib/hostess7-lab-sovereign.py" ]]; then
+    if ! "$PY" "$NL/lib/hostess7-lab-sovereign.py" verify 2>/dev/null | grep -q '"share_out": false'; then
+      log "BLOCKED: lab share out denied — Hostess 7 is boss (set HOSTESS7_OPERATOR=1 to release)"
+      exit 1
+    fi
+    log "BLOCKED: world deploy is share-out — denied unless HOSTESS7_OPERATOR=1"
+    exit 1
+  fi
+fi
+
 case "$CMD" in
   pack)
     log "Packing world node bundle…"

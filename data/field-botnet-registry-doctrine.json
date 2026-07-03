@@ -1,0 +1,63 @@
+{
+  "schema": "field-botnet-registry/v1",
+  "title": "Fielded bot network — permanent member registry",
+  "motto": "We know everybody — permanent reservation, Ironclad BSP order, stalkers lopped.",
+  "boss": "hostess7",
+  "policy": {
+    "permanent_reservation": true,
+    "known_circle_only": false,
+    "self_register": true,
+    "name_and_address_required": true,
+    "address_private_vault": true,
+    "public_fields": ["display_name", "region", "country", "composite_score", "member_id", "flag"],
+    "bsp_algorithm": "composite_bsp",
+    "bsp_module": "lib/field-best-sort.py",
+    "ironclad_grounding": true,
+    "stalkers_lopped": true,
+    "lop_fail_closed": true,
+    "dhcp_shard_per_member": true,
+    "dns_slot_per_member": true,
+    "github_sync": true
+  },
+  "forever_storage": {
+    "enabled": true,
+    "sparse": true,
+    "sharded": true,
+    "lazy_materialize": true,
+    "never_crush": true,
+    "virtual_capacity_slots": "1e18",
+    "virtual_bytes_per_member": "1e15",
+    "virtual_total_human": "decillion+ addressable — materialize on register only",
+    "vault_root": ".nexus-state/field-botnet-vault",
+    "vault_ledger": ".nexus-state/field-botnet-vault.jsonl",
+    "vault_index": ".nexus-state/field-botnet-vault-index.json",
+    "shard_depth": 2,
+    "max_panel_vault_scan": 4096
+  },
+  "dhcp_shard": {
+    "base_private": "192.168",
+    "pool_start_host": 100,
+    "pool_end_host": 200,
+    "third_octet_min": 50,
+    "third_octet_max": 254
+  },
+  "stalk_patterns": [
+    "\\b(stalk|stalker|harass|dox|swat|impersonat|fake.?name|catfish)\\b",
+    "\\b(bot.?farm|sock.?puppet|mass.?register|spam.?join)\\b"
+  ],
+  "lop_triggers": {
+    "max_rapid_joins_per_hour": 6,
+    "impersonation_name_collision": true,
+    "hostile_iff_block": true,
+    "beyond_darpa_human_threat": true
+  },
+  "api": "/api/field-botnet-registry",
+  "module": "lib/field-botnet-registry.py",
+  "wires": [
+    {"id": "botnet_dns_dhcp", "module": "lib/field-botnet-dns-dhcp.py"},
+    {"id": "ironclad_secure_api", "module": "lib/ironclad-secure-api.py"},
+    {"id": "znetwork_hostile", "module": "lib/znetwork-hostile-threat.py"}
+  ],
+  "layer": -2,
+  "fkey": "F10"
+}

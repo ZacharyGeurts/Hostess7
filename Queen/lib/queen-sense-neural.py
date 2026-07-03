@@ -462,10 +462,36 @@ def dispatch(body: dict[str, Any]) -> dict[str, Any]:
         if action == "subbit_verify":
             return mod.dispatch({"action": "verify"})
         return mod.dispatch(body)
+    if action in ("mechanical_learn", "mechanical", "learn_mechanical", "auto_learn"):
+        ml_py = INSTALL / "lib" / "field-sense-mechanical-learn.py"
+        if not ml_py.is_file():
+            ml_py = SG / "NewLatest" / "lib" / "field-sense-mechanical-learn.py"
+        if ml_py.is_file():
+            mod = _load_mod("field_sense_mechanical_learn", ml_py)
+            if hasattr(mod, "learn_all"):
+                learned = mod.learn_all(auto=body.get("auto", True) is not False)
+                fused = fused_analyze({
+                    **body,
+                    "secure_path": True,
+                    "evidence": {
+                        **(body.get("evidence") or {}),
+                        "mechanical_learn": True,
+                        "mouth_correlation": 0.9,
+                        "speech_present": True,
+                    },
+                })
+                return {
+                    "ok": learned.get("ok") and fused.get("ok", True),
+                    "schema": "queen-sense-neural-mechanical/v1",
+                    "mechanical_learn": learned,
+                    "fused": {k: fused.get(k) for k in ("ok", "cross_agree", "invincible_quorum", "truth_percent")},
+                    "authority": hostess_authority(),
+                }
+        return {"ok": False, "error": "mechanical_learn_module_missing"}
     return {
         "ok": False,
         "error": "unknown_action",
-        "actions": ["status", "authority", "analyze", "encourage", "encourage_triad", "countermeasure", "equipment", "subbit_verify"],
+        "actions": ["status", "authority", "analyze", "encourage", "encourage_triad", "countermeasure", "equipment", "subbit_verify", "mechanical_learn"],
     }
 
 

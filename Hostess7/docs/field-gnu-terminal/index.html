@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="gnu-terminal">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AmmoOS Terminal</title>
+  <link rel="stylesheet" href="/Hostess7/assets/nexus-theme.css?v=1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-gnu-terminal.css?v=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:*; frame-src 'self' https:; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
+  <style>
+    html, body { margin: 0; height: 100%; background: #030806; }
+    #fgt-embed-root { height: 100%; min-height: 320px; }
+  </style>
+</head>
+<body>
+  <div id="fgt-embed-root"></div>
+  <script src="/Hostess7/assets/ironclad-bus.js?v=1"></script>
+  <script src="/Hostess7/assets/ammoos-theme-engine.js?v=1"></script>
+  <script src="/Hostess7/assets/kilroy-universal-shell.js?v=1"></script>
+  <script src="/Hostess7/assets/field-gnu-terminal.js?v=1"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(location.search);
+      const cwd = params.get("cwd") || "";
+      void globalThis.FieldGnuTerminal?.mount(document.getElementById("fgt-embed-root"), { cwd })?.then(() => {
+        if (cwd) return globalThis.FieldGnuTerminal?.runCommand?.(`cd ${cwd.replace(/"/g, '\\"')}`);
+      });
+    });
+  </script>
+  <script src="/Hostess7/pages-field-boot.js"></script>
+  <script src="/Hostess7/pages-c2-wire.js"></script>
+  <script src="/Hostess7/pages-queen-rtx-bridge.js"></script>
+  <script src="/Hostess7/pages-ammonet-wire.js"></script>
+  <script src="/Hostess7/pages-github-brain-wire.js"></script>
+  <script src="/Hostess7/pages-hostess7-interaction-wire.js"></script>
+</body>
+</html>

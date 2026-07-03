@@ -31,6 +31,77 @@
   background: #060806;
 }
 
+.nfs-win--panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.nfs-win--panel iframe {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+}
+
+.nfs-win--queen iframe {
+  height: 100%;
+}
+
+.nfs-chrome {
+  --nfs-chrome-h: 32px;
+  flex: 0 0 var(--nfs-chrome-h);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  border-bottom: 1px solid rgba(94, 207, 122, 0.28);
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(94, 207, 122, 0.04) 2px, rgba(94, 207, 122, 0.04) 3px),
+    linear-gradient(180deg, #141a10 0%, #0a0c08 100%);
+  font: 600 11px/1 system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5ecf7a;
+  pointer-events: auto;
+}
+
+.nfs-chrome[data-theme="ammo-rose"] {
+  border-bottom-color: rgba(244, 114, 182, 0.3);
+  color: #f9a8d4;
+}
+
+.nfs-chrome-icon {
+  border-radius: 3px;
+}
+
+.nfs-chrome-layer {
+  font-size: 9px;
+  opacity: 0.75;
+  padding: 2px 5px;
+  border: 1px solid rgba(94, 207, 122, 0.25);
+  border-radius: 4px;
+}
+
+.nfs-chrome-spacer {
+  flex: 1 1 auto;
+}
+
+.nfs-chrome-btn {
+  width: 26px;
+  height: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 4px;
+  background: rgba(8, 10, 14, 0.85);
+  color: #e8edf7;
+  font: 13px/1 system-ui, sans-serif;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nfs-chrome-btn:hover {
+  border-color: rgba(94, 207, 122, 0.5);
+  color: #5ecf7a;
+}
+
 .nfs-win--peek {
   inset: 0 0 6px 0;
 }

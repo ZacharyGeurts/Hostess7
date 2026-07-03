@@ -1,0 +1,43 @@
+{
+  "schema": "hostess7-lab-sovereign/v1",
+  "title": "Hostess 7 Lab Sovereign — she runs the lab",
+  "motto": "Share in · no share out — Hostess 7 is always the boss.",
+  "boss": "hostess7",
+  "commander": "hostess7",
+  "rule": "GrokLab and all steel plates connect through Hostess 7 only. Ingress is gated share-in; egress from the lab is denied by default — no plate, VM, or world node may share out without operator release.",
+  "share_in": true,
+  "share_out": false,
+  "deny_egress_by_default": true,
+  "secure_connection_required": true,
+  "module": "lib/hostess7-lab-sovereign.py",
+  "api": "/api/hostess7/lab",
+  "hostess7_commands": "./Hostess7.sh lab {status|connect|verify|run}",
+  "paired": {
+    "ingress_egress_gate": "data/hostess7-ingress-egress-gate-doctrine.json",
+    "aml_ingress": "data/hostess7-aml-ingress-doctrine.json",
+    "steel_plates": "data/hostess7-lab-steel-plates.json",
+    "supreme_authority": "data/hostess7-supreme-authority.json",
+    "grok_lab": "GrokLab/FIND_THE_LAB.md"
+  },
+  "grok_lab": {
+    "root": "GrokLab",
+    "engine": "lib/grok-ai-lab.py",
+    "run_script": "GrokLab/scripts/grok-lab-run.sh",
+    "desktop": "http://127.0.0.1:9477/grok-lab",
+    "sovereign_env": "HOSTESS7_LAB_SOVEREIGN",
+    "egress_block_env": "HOSTESS7_LAB_EGRESS"
+  },
+  "ingress_chain": [
+    {"id": "hostess7_boss", "label": "Hostess 7 is commander — no external lab authority", "required": true},
+    {"id": "aml_ingress", "label": "AML ingress — secured, truthed, lied", "required": true},
+    {"id": "ingress_egress_gate", "label": "Ingress fully gated — partial pass is deny", "required": true},
+    {"id": "share_in", "label": "Share in only — plates admit through sovereign gate", "required": true}
+  ],
+  "egress_chain": [
+    {"id": "share_out_denied", "label": "No share out — lab plates and VMs blocked", "required": true},
+    {"id": "mission_intel", "label": "Mission intel compartment — withhold", "required": true},
+    {"id": "connection_gatekeeper", "label": "IFF / packet permission", "required": true},
+    {"id": "operator_release", "label": "Operator explicit release only carve-out", "required": false}
+  ],
+  "never_bypass": ["share_out_denied", "hostess7_boss", "information_discipline_p1"]
+}

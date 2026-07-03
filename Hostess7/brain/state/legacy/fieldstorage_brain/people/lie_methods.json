@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "updated": "2026-07-01T19:47:51.133846+00:00",
+  "method_count": 18,
+  "by_era": {
+    "past": 6,
+    "present": 6,
+    "future": 6
+  },
+  "by_category": {
+    "verbal": 2,
+    "physiological": 2,
+    "nonverbal": 1,
+    "interview": 1,
+    "acoustic": 1,
+    "computational": 4,
+    "digital": 3,
+    "multimodal": 2,
+    "statistical": 1,
+    "research": 1
+  },
+  "methods": [
+    {
+      "id": "scan_statement_analysis",
+      "era": "past",
+      "name": "SCAN \u2014 Scientific Content Analysis",
+      "category": "verbal",
+      "reliability": "moderate",
+      "body": "Linguistic structure analysis: unexpected shifts, missing affect, altered time order, extraneous detail, passive distancing. Trained analysts; not single-cue proof."
+    },
+    {
+      "id": "cbca",
+      "era": "past",
+      "name": "CBCA \u2014 Criteria-Based Content Analysis",
+      "category": "verbal",
+      "reliability": "moderate",
+      "body": "Structured credibility criteria for statements; used in some European jurisdictions."
+    },
+    {
+      "id": "polygraph",
+      "era": "past",
+      "name": "Polygraph (psychophysiological arousal)",
+      "category": "physiological",
+      "reliability": "low_court",
+      "body": "Measures GSR, BP, respiration under questioning. Arousal \u2260 lie. Generally inadmissible in US federal criminal trials (Daubert)."
+    },
+    {
+      "id": "ekman_microexpressions",
+      "era": "past",
+      "name": "Ekman microexpression leakage",
+      "category": "nonverbal",
+      "reliability": "moderate",
+      "body": "Fleeting universal affect; training improves detection modestly; context-dependent."
+    },
+    {
+      "id": "reid_interrogation",
+      "era": "past",
+      "name": "Reid technique behavioral cues",
+      "category": "interview",
+      "reliability": "contested",
+      "body": "Behavioral symptom analysis during accusatory interrogation \u2014 high false-confession risk."
+    },
+    {
+      "id": "voice_stress_analysis",
+      "era": "past",
+      "name": "Voice stress analysis (VSA)",
+      "category": "acoustic",
+      "reliability": "weak",
+      "body": "Fundamental frequency perturbation claims; weak scientific support for courtroom use."
+    },
+    {
+      "id": "hostess_corroboration",
+      "era": "present",
+      "name": "Hostess 7 computational corroboration",
+      "category": "computational",
+      "reliability": "high_local",
+      "body": "94% noise / 6% truth filter. Cross-check claim against local files, QA GREEN, infinite drive index, git HEAD, hash verification. truth_score floor 30."
+    },
+    {
+      "id": "nlp_inconsistency_flags",
+      "era": "present",
+      "name": "NLP inconsistency heuristics",
+      "category": "computational",
+      "reliability": "moderate",
+      "body": "Absolute language, credibility appeals, hearsay without source, confidence mismatch, long claims without evidence anchors."
+    },
+    {
+      "id": "osint_triangulation",
+      "era": "present",
+      "name": "OSINT triangulation",
+      "category": "digital",
+      "reliability": "moderate",
+      "body": "Independent public sources, archived pages, WHOIS, metadata vs content, timeline alignment."
+    },
+    {
+      "id": "digital_forensics_hash",
+      "era": "present",
+      "name": "Digital forensics + hash chain",
+      "category": "digital",
+      "reliability": "high",
+      "body": "SHA-256 verification, write-blocked imaging, chain of custody, log correlation UTC."
+    },
+    {
+      "id": "multimodal_baseline",
+      "era": "present",
+      "name": "Multimodal baseline deviation",
+      "category": "multimodal",
+      "reliability": "moderate",
+      "body": "Compare speech rate, pause pattern, gesture rate under low-stakes vs high-stakes topics."
+    },
+    {
+      "id": "bayesian_claim_fusion",
+      "era": "present",
+      "name": "Bayesian claim fusion",
+      "category": "statistical",
+      "reliability": "moderate",
+      "body": "Combine independent evidence channels with base-rate priors; output posterior deception risk."
+    },
+    {
+      "id": "llm_self_consistency",
+      "era": "future",
+      "name": "LLM self-consistency probing",
+      "category": "computational",
+      "reliability": "emerging",
+      "body": "Re-ask claim variants; measure semantic drift, contradiction density, and evidence citation stability across paraphrases."
+    },
+    {
+      "id": "multimodal_fusion_ai",
+      "era": "future",
+      "name": "Multimodal deception fusion (video+audio+text)",
+      "category": "multimodal",
+      "reliability": "emerging",
+      "body": "Joint embedding of face, voice, transcript; calibrated on labeled datasets; human review gate."
+    },
+    {
+      "id": "blockchain_attestation",
+      "era": "future",
+      "name": "Blockchain / signed attestation trails",
+      "category": "digital",
+      "reliability": "emerging",
+      "body": "Timestamped signed statements; detect retroactive edits; not truth alone \u2014 provenance only."
+    },
+    {
+      "id": "graph_contradiction",
+      "era": "future",
+      "name": "Knowledge-graph contradiction mining",
+      "category": "computational",
+      "reliability": "emerging",
+      "body": "Entity-relationship graph over claims; flag cycles, impossible timelines, mutual exclusivity."
+    },
+    {
+      "id": "federated_lie_benchmark",
+      "era": "future",
+      "name": "Federated lie-detection benchmarks",
+      "category": "research",
+      "reliability": "emerging",
+      "body": "Privacy-preserving cross-site calibration; reduces overfit to single lab polygraph datasets."
+    },
+    {
+      "id": "neuro_markers",
+      "era": "future",
+      "name": "Neuroimaging deception markers (fMRI/EEG)",
+      "category": "physiological",
+      "reliability": "research",
+      "body": "Laboratory signal patterns; not portable field lie detection; ethical and consent barriers."
+    }
+  ],
+  "disclaimer": "Lie detection methods are educational. No method alone proves deception. Corroborate with independent evidence. Owner reviews all bad-person flags."
+}

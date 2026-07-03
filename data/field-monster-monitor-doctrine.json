@@ -1,7 +1,7 @@
 {
   "schema": "field-monster-monitor-doctrine/v1",
-  "title": "Monster — system monitor & rescue",
-  "motto": "Ctrl+Alt+Del opens full task and services panel — kill, terminate, rescue.",
+  "title": "Monster — system monitor, task manager & rescue",
+  "motto": "Ctrl+Alt+Del opens tasks, orphans, fixes — KGO + AmmoLang + every software.",
   "module": "lib/field-monster-monitor.py",
   "g16": {
     "version": "5.1.0",
@@ -13,7 +13,30 @@
     "status": "/api/field-monster-monitor",
     "processes": "/api/field-monster-monitor/processes",
     "services": "/api/field-monster-monitor/services",
+    "tasks": "/api/field-monster-monitor/tasks",
     "action": "/api/field-monster-monitor/action"
+  },
+  "integrations": {
+    "kill_grok_orphans": {
+      "module": "lib/field-monster-kgo-bridge.py",
+      "patterns": [
+        "Kill-Grok-Orphans/data/kgo-patterns.json",
+        "data/field-monster-kgo-patterns.json"
+      ],
+      "watchdog": "Kill-Grok-Orphans/python/kgo_watchdog.py"
+    },
+    "endpoint_registry": {
+      "module": "lib/field-endpoint-registry.py",
+      "api": "/api/field-endpoint-registry"
+    },
+    "ammolang": {
+      "module": "lib/ammolang-run.sh",
+      "build": "lib/field-ammolang-build.py"
+    },
+    "layer_policy": {
+      "module": "lib/field-monster-layer-policy.py",
+      "rule": "Every launch above KILROY runs through AmmoLang boundary"
+    }
   },
   "cad_hook": {
     "chords": ["Control+Alt+Delete", "Control+Shift+Escape"],
@@ -21,10 +44,10 @@
     "require_keyboard_sovereign": false
   },
   "ui": {
-    "tabs": ["graphs", "vision", "security", "processes", "resources", "services", "rescue"],
+    "tabs": ["graphs", "vision", "security", "tasks", "processes", "resources", "services", "rescue"],
     "theme": "chrome_black_green_pink",
     "product_name": "Monster",
-    "lineage": "AmmoOS native — graphs, vision OCR, security hold, tasks, rescue",
+    "lineage": "AmmoOS native — graphs, vision OCR, security hold, KGO orphans, AmmoLang fixes",
     "default_tab": "graphs",
     "security_hold": {
       "freeze_underlying_os": false,
@@ -37,6 +60,8 @@
     "field-host-desktop",
     "queen-world",
     "field-monster-monitor",
-    "start-field-stack"
+    "field-monster-shell",
+    "start-field-stack",
+    "kilroy-core"
   ]
 }

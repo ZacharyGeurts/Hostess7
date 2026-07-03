@@ -116,44 +116,7 @@ def _host_id() -> str:
 
 
 def _device_registry() -> dict[str, Any]:
-    reg = STATE / "field-device-registry.json"
-    seed = INSTALL / "data" / "field-device-registry-seed.json"
-    doc = _load(reg, _load(seed, {"schema": "field-device-registry/v1", "devices": []}))
-    devices = list(doc.get("devices") or [])
-    host = _host_id()
-    found = False
-    for dev in devices:
-        if dev.get("self") or dev.get("id") in (host, "local"):
-            dev.update({
-                "id": host,
-                "hostname": socket.gethostname(),
-                "machine": platform.machine(),
-                "panel_port": int(os.environ.get("NEXUS_THREAT_PANEL_PORT", "9477")),
-                "queen_port": int(os.environ.get("QUEEN_WORLD_PORT", "9481")),
-                "self": True,
-                "last_seen": _now(),
-            })
-            found = True
-            break
-    if not found:
-        devices.insert(0, {
-            "id": host,
-            "role": "primary",
-            "display_name": "This host",
-            "kind": "workstation",
-            "hostname": socket.gethostname(),
-            "machine": platform.machine(),
-            "panel_port": int(os.environ.get("NEXUS_THREAT_PANEL_PORT", "9477")),
-            "queen_port": int(os.environ.get("QUEEN_WORLD_PORT", "9481")),
-            "self": True,
-            "display_open": True,
-            "drop_in": True,
-            "last_seen": _now(),
-        })
-    doc["devices"] = devices
-    doc["ts"] = _now()
-    _write_atomic(reg, doc)
-    return doc
+    return _run_py("field-device-registry.py", "json", timeout=20)
 
 
 def posture() -> dict[str, Any]:

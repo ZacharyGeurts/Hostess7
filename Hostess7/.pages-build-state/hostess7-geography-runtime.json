@@ -1,0 +1,531 @@
+{
+  "schema": "hostess7-geography-runtime/v1",
+  "battery_results": {
+    "postal_addresses": {
+      "ok": true,
+      "battery": "postal_addresses",
+      "passed": 24,
+      "total": 24,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "us_white_house_country",
+          "query": "country for White House address",
+          "kind": "address_country",
+          "passed": true,
+          "got": "US",
+          "expected": "US",
+          "detail": ""
+        },
+        {
+          "id": "us_white_house_zip",
+          "query": "postal code White House",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "20500",
+          "expected": "20500",
+          "detail": ""
+        },
+        {
+          "id": "uk_downing_postcode",
+          "query": "UK Downing Street postcode",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "SW1A 2AA",
+          "expected": "SW1A 2AA",
+          "detail": ""
+        },
+        {
+          "id": "ca_parliament_city",
+          "query": "Canadian parliament city",
+          "kind": "address_city",
+          "passed": true,
+          "got": "Ottawa",
+          "expected": "Ottawa",
+          "detail": ""
+        },
+        {
+          "id": "jp_imperial_postal",
+          "query": "Tokyo Imperial Palace postal",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "100-0001",
+          "expected": "100-0001",
+          "detail": ""
+        },
+        {
+          "id": "de_reichstag_city",
+          "query": "Reichstag city",
+          "kind": "address_city",
+          "passed": true,
+          "got": "Berlin",
+          "expected": "Berlin",
+          "detail": ""
+        },
+        {
+          "id": "au_sydney_postcode",
+          "query": "Sydney Opera postcode",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "2000",
+          "expected": "2000",
+          "detail": ""
+        },
+        {
+          "id": "in_delhi_pin",
+          "query": "Rashtrapati Bhavan PIN",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "110004",
+          "expected": "110004",
+          "detail": ""
+        },
+        {
+          "id": "br_brasilia_region",
+          "query": "Brasília federal district",
+          "kind": "address_region",
+          "passed": true,
+          "got": "DF",
+          "expected": "DF",
+          "detail": ""
+        },
+        {
+          "id": "sg_postal",
+          "query": "Marina Bay Sands postal",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "018956",
+          "expected": "018956",
+          "detail": ""
+        },
+        {
+          "id": "nz_wellington",
+          "query": "NZ Beehive city",
+          "kind": "address_city",
+          "passed": true,
+          "got": "Wellington",
+          "expected": "Wellington",
+          "detail": ""
+        },
+        {
+          "id": "ru_hermitage_city",
+          "query": "Hermitage city",
+          "kind": "address_city",
+          "passed": true,
+          "got": "Saint Petersburg",
+          "expected": "Saint Petersburg",
+          "detail": ""
+        },
+        {
+          "id": "za_cape_postal",
+          "query": "Table Mountain postal",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "8001",
+          "expected": "8001",
+          "detail": ""
+        },
+        {
+          "id": "mx_cdmx_postal",
+          "query": "Mexico Zócalo postal",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "06000",
+          "expected": "06000",
+          "detail": ""
+        },
+        {
+          "id": "ie_dublin_postcode",
+          "query": "Trinity College Dublin postcode",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "D02 VR66",
+          "expected": "D02 VR66",
+          "detail": ""
+        },
+        {
+          "id": "kr_seoul_postal",
+          "query": "Gyeongbokgung postal",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "03045",
+          "expected": "03045",
+          "detail": ""
+        },
+        {
+          "id": "cn_beijing_postal",
+          "query": "Forbidden City postal",
+          "kind": "address_postal",
+          "passed": true,
+          "got": "100009",
+          "expected": "100009",
+          "detail": ""
+        },
+        {
+          "id": "ae_dubai_city",
+          "query": "Burj Khalifa city",
+          "kind": "address_city",
+          "passed": true,
+          "got": "Dubai",
+          "expected": "Dubai",
+          "detail": ""
+        },
+        {
+          "id": "format_us",
+          "query": "US address format id",
+          "kind": "address_format",
+          "passed": true,
+          "got": "us_street_city_state_zip",
+          "expected": "us_street_city_state_zip",
+          "detail": ""
+        },
+        {
+          "id": "format_uk",
+          "query": "UK address format id",
+          "kind": "address_format",
+          "passed": true,
+          "got": "uk_street_town_postcode",
+          "expected": "uk_street_town_postcode",
+          "detail": ""
+        },
+        {
+          "id": "hemisphere_sydney",
+          "query": "Sydney hemisphere",
+          "kind": "hemisphere",
+          "passed": true,
+          "got": "south_east",
+          "expected": "south_east",
+          "detail": ""
+        },
+        {
+          "id": "hemisphere_london",
+          "query": "London hemisphere",
+          "kind": "hemisphere",
+          "passed": true,
+          "got": "north_west",
+          "expected": "north_west",
+          "detail": ""
+        },
+        {
+          "id": "corpus_count",
+          "query": "address corpus minimum size",
+          "kind": "corpus_count",
+          "passed": true,
+          "got": 107,
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "countries_breadth",
+          "query": "countries represented at least 30",
+          "kind": "countries_count",
+          "passed": true,
+          "got": 40,
+          "expected": true,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "world_geography": {
+      "ok": true,
+      "battery": "world_geography",
+      "passed": 18,
+      "total": 18,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "capital_france",
+          "query": "capital of France",
+          "kind": "capital",
+          "passed": true,
+          "got": "Paris",
+          "expected": "Paris",
+          "detail": ""
+        },
+        {
+          "id": "capital_japan",
+          "query": "capital of Japan",
+          "kind": "capital",
+          "passed": true,
+          "got": "Tokyo",
+          "expected": "Tokyo",
+          "detail": ""
+        },
+        {
+          "id": "capital_brazil",
+          "query": "capital of Brazil",
+          "kind": "capital",
+          "passed": true,
+          "got": "Brasília",
+          "expected": "Brasília",
+          "detail": ""
+        },
+        {
+          "id": "capital_australia",
+          "query": "capital of Australia",
+          "kind": "capital",
+          "passed": true,
+          "got": "Canberra",
+          "expected": "Canberra",
+          "detail": ""
+        },
+        {
+          "id": "capital_canada",
+          "query": "capital of Canada",
+          "kind": "capital",
+          "passed": true,
+          "got": "Ottawa",
+          "expected": "Ottawa",
+          "detail": ""
+        },
+        {
+          "id": "continent_egypt",
+          "query": "continent Egypt",
+          "kind": "continent",
+          "passed": true,
+          "got": "Africa",
+          "expected": "Africa",
+          "detail": ""
+        },
+        {
+          "id": "continent_japan",
+          "query": "continent Japan",
+          "kind": "continent",
+          "passed": true,
+          "got": "Asia",
+          "expected": "Asia",
+          "detail": ""
+        },
+        {
+          "id": "continent_brazil",
+          "query": "continent Brazil",
+          "kind": "continent",
+          "passed": true,
+          "got": "South America",
+          "expected": "South America",
+          "detail": ""
+        },
+        {
+          "id": "river_paris",
+          "query": "river through Paris",
+          "kind": "river",
+          "passed": true,
+          "got": "Seine",
+          "expected": "Seine",
+          "detail": ""
+        },
+        {
+          "id": "river_london",
+          "query": "river through London",
+          "kind": "river",
+          "passed": true,
+          "got": "Thames",
+          "expected": "Thames",
+          "detail": ""
+        },
+        {
+          "id": "river_cairo",
+          "query": "river through Cairo",
+          "kind": "river",
+          "passed": true,
+          "got": "Nile",
+          "expected": "Nile",
+          "detail": ""
+        },
+        {
+          "id": "mountain_everest",
+          "query": "highest peak Earth standard model",
+          "kind": "peak",
+          "passed": true,
+          "got": "Mount Everest",
+          "expected": "Mount Everest",
+          "detail": ""
+        },
+        {
+          "id": "ocean_pacific",
+          "query": "largest ocean globe model",
+          "kind": "ocean",
+          "passed": true,
+          "got": "Pacific",
+          "expected": "Pacific",
+          "detail": ""
+        },
+        {
+          "id": "latitude_equator",
+          "query": "equator latitude",
+          "kind": "latitude_fact",
+          "passed": true,
+          "got": 0,
+          "expected": 0,
+          "detail": ""
+        },
+        {
+          "id": "prime_meridian",
+          "query": "Greenwich longitude",
+          "kind": "longitude_fact",
+          "passed": true,
+          "got": 0,
+          "expected": 0,
+          "detail": ""
+        },
+        {
+          "id": "time_zone_utc",
+          "query": "UTC reference meridian city",
+          "kind": "utc_city",
+          "passed": true,
+          "got": "Greenwich",
+          "expected": "Greenwich",
+          "detail": ""
+        },
+        {
+          "id": "great_wall_country",
+          "query": "Great Wall country",
+          "kind": "landmark_country",
+          "passed": true,
+          "got": "China",
+          "expected": "China",
+          "detail": ""
+        },
+        {
+          "id": "amazon_continent",
+          "query": "Amazon basin continent",
+          "kind": "basin_continent",
+          "passed": true,
+          "got": "South America",
+          "expected": "South America",
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    },
+    "flat_earth": {
+      "ok": true,
+      "battery": "flat_earth",
+      "passed": 12,
+      "total": 12,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "fe_planar",
+          "query": "flat earth surface shape",
+          "kind": "flat_claim",
+          "passed": true,
+          "got": "flat, plane, sphere",
+          "expected": "flat",
+          "detail": ""
+        },
+        {
+          "id": "fe_ice_wall",
+          "query": "flat earth Antarctic boundary",
+          "kind": "flat_claim",
+          "passed": true,
+          "got": "ice, wall, antarctic",
+          "expected": "ice wall",
+          "detail": ""
+        },
+        {
+          "id": "fe_firmament",
+          "query": "flat earth sky structure",
+          "kind": "flat_claim",
+          "passed": true,
+          "got": "firmament, dome",
+          "expected": "firmament",
+          "detail": ""
+        },
+        {
+          "id": "fe_no_spin",
+          "query": "flat earth daily rotation",
+          "kind": "flat_claim",
+          "passed": true,
+          "got": "rotate, spin, equator",
+          "expected": "no spin",
+          "detail": ""
+        },
+        {
+          "id": "fe_local_sun",
+          "query": "flat earth sun model",
+          "kind": "flat_claim",
+          "passed": true,
+          "got": "sun, local, circuit",
+          "expected": "local circuit",
+          "detail": ""
+        },
+        {
+          "id": "fe_horizon",
+          "query": "flat earth horizon explanation",
+          "kind": "flat_claim",
+          "passed": true,
+          "got": "horizon, eye, level",
+          "expected": "eye level",
+          "detail": ""
+        },
+        {
+          "id": "fe_map_projection",
+          "query": "flat earth favored map",
+          "kind": "flat_claim",
+          "passed": true,
+          "got": "azimuthal, equidistant, pole",
+          "expected": "azimuthal equidistant",
+          "detail": ""
+        },
+        {
+          "id": "fe_water_level",
+          "query": "flat earth water argument",
+          "kind": "flat_claim",
+          "passed": true,
+          "got": "water, level, seek",
+          "expected": "level water",
+          "detail": ""
+        },
+        {
+          "id": "fe_geocode_contrast",
+          "query": "geocoder assumes what shape",
+          "kind": "globe_contrast",
+          "passed": true,
+          "got": "Geocoders (Census, Nominatim) assume WGS",
+          "expected": "WGS84",
+          "detail": ""
+        },
+        {
+          "id": "fe_operator_coords",
+          "query": "field operator location stores",
+          "kind": "globe_contrast",
+          "passed": true,
+          "got": "Field operator location stores lat/lon —",
+          "expected": "lat/lon",
+          "detail": ""
+        },
+        {
+          "id": "fe_claim_count",
+          "query": "flat earth claims trained minimum",
+          "kind": "flat_claim_count",
+          "passed": true,
+          "got": 12,
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "fe_section_present",
+          "query": "flat earth section in doctrine",
+          "kind": "doctrine_section",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:22Z"
+    }
+  },
+  "proficiency": 0.0,
+  "address_drills": 0,
+  "session_rounds": 0,
+  "updated": "2026-07-03T04:34:22Z"
+}

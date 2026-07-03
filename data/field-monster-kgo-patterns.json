@@ -1,0 +1,60 @@
+{
+  "schema": "field-monster-kgo-patterns/v1",
+  "description": "Monster extensions — dead GitHub push orphans + stuck publish lanes",
+  "patterns": [
+    {
+      "id": "git-push-stuck",
+      "match": "git push",
+      "shell_only": true,
+      "github_related": true,
+      "reason": "Stuck git push orphan — GitHub transport hung"
+    },
+    {
+      "id": "gh-auth-stuck",
+      "match": "gh repo",
+      "shell_only": true,
+      "github_related": true,
+      "reason": "Stuck gh CLI orphan"
+    },
+    {
+      "id": "publish-hostess7-stuck",
+      "match": "publish-hostess7-github.sh",
+      "shell_only": true,
+      "github_related": true,
+      "reason": "Stuck Hostess7 Pages publish orphan"
+    },
+    {
+      "id": "publish-gnueol-stuck",
+      "match": "publish-gnueol-terminal-github.sh",
+      "shell_only": true,
+      "github_related": true,
+      "reason": "Stuck GNUEOLTerminal publish orphan"
+    },
+    {
+      "id": "hostess7-secure-git-stuck",
+      "match": "hostess7_secure_git.py",
+      "shell_only": true,
+      "github_related": true,
+      "reason": "Stuck secure git push orphan"
+    },
+    {
+      "id": "rsync-pages-stuck",
+      "match": "hostess7_pages_surfaces_build",
+      "shell_only": true,
+      "reason": "Stuck Pages surfaces build orphan"
+    },
+    {
+      "id": "cursor-grok-dead",
+      "match": ".cursor-server",
+      "shell_only": true,
+      "reason": "Dead Cursor Grok agent subprocess"
+    },
+    {
+      "id": "mcp-github-dead",
+      "match": "github-mcp",
+      "shell_only": true,
+      "github_related": true,
+      "reason": "Dead GitHub MCP transport orphan"
+    }
+  ]
+}

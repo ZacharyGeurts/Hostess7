@@ -54,6 +54,83 @@
     return m + ":" + String(s).padStart(2, "0");
   }
 
+  /** TotalTime detail — scales up for epic lengths; funny at bazillion scale. */
+  function fmtTotalTimeDetail(sec) {
+    if (!isFinite(sec) || sec < 0) return "TotalTime 0:00";
+    if (sec < 3600) return "TotalTime " + fmtTime(sec);
+    const d = Math.floor(sec / 86400);
+    const h = Math.floor((sec % 86400) / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = Math.floor(sec % 60);
+    if (d >= 365) {
+      const yrs = (sec / (86400 * 365.25)).toFixed(1);
+      return "TotalTime " + yrs + " yr · " + d + "d " + h + "h — a bazillion";
+    }
+    if (d >= 30) {
+      return "TotalTime " + d + "d " + h + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0") + " · epic";
+    }
+    if (d > 0) {
+      return "TotalTime " + d + "d " + h + "h " + m + "m " + s + "s";
+    }
+    return "TotalTime " + fmtTime(sec);
+  }
+
+  function ratingStable(it) {
+    const rs = it.rating_stable || {};
+    if (rs.time_sec != null || rs.duration_sec != null) return rs;
+    const custom = it.custom || {};
+    const viewing = it.viewing || {};
+    const stable =
+      it.thumb_mode === "custom" && custom.time_sec != null
+        ? custom.time_sec
+        : viewing.time_sec != null
+          ? viewing.time_sec
+          : null;
+    const dur = it.duration_sec;
+    return {
+      time_sec: stable,
+      duration_sec: dur,
+      pct: dur > 0 && stable != null ? (stable / dur) * 100 : null,
+      source: it.thumb_mode === "custom" && custom.time_sec != null ? "custom" : "viewing",
+    };
+  }
+
+  function cardTimeSliderHtml(it) {
+    if (it.kind === "image") return "";
+    const rs = ratingStable(it);
+    const dur = Number(rs.duration_sec || it.duration_sec);
+    if (!isFinite(dur) || dur <= 0) return "";
+    const stable = rs.time_sec;
+    const pct =
+      stable != null && dur > 0 ? Math.min(100, Math.max(0, (stable / dur) * 100)) : 0;
+    const resumePct =
+      it.resume_sec > 3 && dur > 0 ? Math.min(100, Math.max(0, (it.resume_sec / dur) * 100)) : null;
+    const totalLabel = fmtTotalTimeDetail(dur);
+    const atLabel = stable != null ? " @ " + fmtTime(stable) : "";
+    return (
+      '<div class="pc-card-time-stack">' +
+      '<span class="pc-card-time-label" title="' +
+      esc(totalLabel + atLabel) +
+      '">' +
+      esc(totalLabel) +
+      (stable != null ? '<em class="pc-card-time-at"> @ ' + esc(fmtTime(stable)) + "</em>" : "") +
+      "</span>" +
+      '<div class="pc-card-time-rail" role="img" aria-label="' +
+      esc(totalLabel + atLabel) +
+      '">' +
+      '<div class="pc-card-time-fill" style="width:' +
+      pct.toFixed(2) +
+      '%"></div>' +
+      (stable != null
+        ? '<div class="pc-card-time-pin" style="left:' + pct.toFixed(2) + '%"></div>'
+        : "") +
+      (resumePct != null && Math.abs(resumePct - pct) > 2
+        ? '<div class="pc-card-time-resume" style="left:' + resumePct.toFixed(2) + '%"></div>'
+        : "") +
+      "</div></div>"
+    );
+  }
+
   function sourceLabel(id) {
     return SOURCE_LABELS[id] || id || "Unknown";
   }
@@ -149,8 +226,9 @@
   function cardThumbHtml(it) {
     const url = it.thumb_url || (it.kind === "image" ? streamUrl(it.id) : null);
     const badge = it.thumb_mode === "custom" && it.has_custom ? '<span class="pc-card-badge">Custom</span>' : "";
+    const slider = cardTimeSliderHtml(it);
     const resume =
-      it.resume_sec > 3
+      !slider && it.resume_sec > 3
         ? '<span class="pc-card-resume">▶ ' + esc(fmtTime(it.resume_sec)) + "</span>"
         : "";
     if (url) {
@@ -162,7 +240,9 @@
         resume +
         '<img src="' +
         esc(url) +
-        '" alt="" loading="lazy" decoding="async" /></div>'
+        '" alt="" loading="lazy" decoding="async" />' +
+        slider +
+        "</div>"
       );
     }
     const glyph = it.kind === "audio" ? "♪" : it.kind === "video" ? "▶" : "◻";
@@ -173,6 +253,7 @@
       badge +
       resume +
       glyph +
+      slider +
       "</div>"
     );
   }
@@ -268,6 +349,7 @@
     if (!dataUrl) return;
     await persistThumb("viewing", dataUrl, {
       time_sec: el && el.currentTime != null ? el.currentTime : 0,
+      duration_sec: el && isFinite(el.duration) ? el.duration : undefined,
       title: current.name,
     });
   }
@@ -280,6 +362,7 @@
     if (!dataUrl) return;
     await persistThumb("custom", dataUrl, {
       time_sec: video.currentTime,
+      duration_sec: isFinite(video.duration) ? video.duration : undefined,
       title: (current?.name || "") + " @ " + fmtTime(video.currentTime),
     });
     thumbMode = "custom";
@@ -310,7 +393,11 @@
     const out = await api(API + "/position", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ media_id: current.id, position_sec: t }),
+      body: JSON.stringify({
+        media_id: current.id,
+        position_sec: t,
+        duration_sec: isFinite(el.duration) ? el.duration : undefined,
+      }),
     });
     if (out.ok && out.meta) {
       mergeItemMeta(current.id, out.meta);
@@ -394,7 +481,11 @@
           esc(fmtSize(it.size)) +
           " · ." +
           esc(it.ext) +
-          (it.viewing?.time_sec ? " · pause " + esc(fmtTime(it.viewing.time_sec)) : "") +
+          (it.duration_sec
+            ? " · " + esc(fmtTotalTimeDetail(it.duration_sec))
+            : it.viewing?.time_sec
+              ? " · pause " + esc(fmtTime(it.viewing.time_sec))
+              : "") +
           "</span></div></button>"
         );
       })
@@ -555,7 +646,7 @@
 
   function updateSeekUI(t, dur) {
     const pct = dur > 0 ? (t / dur) * 100 : 0;
-    $("pc-time").textContent = fmtTime(t) + " / " + fmtTime(dur);
+    $("pc-time").textContent = fmtTime(t) + " / " + fmtTotalTimeDetail(dur).replace(/^TotalTime\s*/, "");
     $("pc-seek-fill").style.width = pct + "%";
     $("pc-seek-thumb").style.left = pct + "%";
   }

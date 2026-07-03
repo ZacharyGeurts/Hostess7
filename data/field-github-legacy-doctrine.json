@@ -1,0 +1,40 @@
+{
+  "schema": "field-github-legacy/v1",
+  "title": "GitHub legacy secure lane — old stack + old browsers, stable open connection",
+  "boss": "hostess7",
+  "motto": "All of GitHub stays open — canonical + legacy repos — TLS secure, old clients welcome",
+  "always_allow_domains": [
+    "github.com",
+    "api.github.com",
+    "raw.githubusercontent.com",
+    "codeload.github.com",
+    "objects.githubusercontent.com",
+    "github.io",
+    "githubassets.com",
+    "githubusercontent.com"
+  ],
+  "canonical_endpoints": [
+    {"id": "github_com", "url": "https://github.com", "role": "canonical_git"},
+    {"id": "api_github", "url": "https://api.github.com", "role": "api"},
+    {"id": "hostess7_repo", "url": "https://github.com/ZacharyGeurts/Hostess7", "role": "main_repo"},
+    {"id": "hostess7_pages", "url": "https://zacharygeurts.github.io/Hostess7/", "role": "pages_runtime"},
+    {"id": "command_pages", "url": "https://zacharygeurts.github.io/command/", "role": "c2_pages"},
+    {"id": "ammoos_pages", "url": "https://zacharygeurts.github.io/AmmoOS/", "role": "manual"}
+  ],
+  "legacy_catalog": [
+    "data/ammoos-pages-hub.json",
+    "Hostess7/data/hostess7-old-projects.json"
+  ],
+  "secure_legacy": {
+    "tls_required": true,
+    "allow_old_user_agents": true,
+    "pages_mirror_when_repo_slow": true,
+    "probe_methods": ["HEAD", "GET_RANGE", "GET"],
+    "fast_sample_legacy": 5
+  },
+  "api": "/api/field-github-legacy",
+  "wires": [
+    {"id": "internet_unified", "module": "lib/field-internet-unified.py"},
+    {"id": "field_dns", "module": "lib/field-dns.py"}
+  ]
+}

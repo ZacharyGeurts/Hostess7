@@ -289,6 +289,90 @@ def build_exploring_chemistry() -> str:
     ])
 
 
+def build_exploring_image_generation() -> str:
+    v = _veh_mod()
+    return "\n".join([
+        "# Exploring Image Generation",
+        "", "![Cover](h7fig:cover)", "",
+        "**The tell-all field manual** — cartoons, fine art, perfect human realism, and video.",
+        "For Hostess 7, Final_Eye, and any super-intelligence that must implement imaging *now*.",
+        f"- **Updated:** {v._now()}",
+        "- **Boss:** Hostess 7 (secure) · Final_Eye (vision lane, isolated)",
+        "- **Doctrine:** `data/hostess7-imaging-doctrine.json` · `data/exploring-image-generation-doctrine.json`",
+        "", "---", "",
+        v._section("1. Choose the right tool (non-negotiable)", v._table(
+            ["Situation", "Tool", "Never"],
+            [
+                ["Invented scene, no source frame", "image_gen / text-to-image", "Claim it is a photograph"],
+                ["Edit likeness, wardrobe, style", "image_edit + verified refs (≤3)", "Pure gen for named real people"],
+                ["Exact labels, charts, UI text", "PIL / HTML/CSS / TTF render", "Ask diffusion to spell"],
+                ["Cartoon / cel / vector look", "image_gen + style-locked prompt", "One-shot without style sheet"],
+                ["Photoreal human", "image_edit from approved base OR gen + anatomy QA", "Ship without skin/hair/light QA"],
+                ["Motion", "image_to_video from staged still", "Text-only video without anchor frame"],
+            ],
+        )),
+        v._section("2. Cartoons and stylized art", v._bullet_list([
+            "Lock a style sheet: line weight, palette, eye rule, background density — reuse across shots.",
+            "Character consistency: one base frame → image_edit iterations; store seed + prompt envelope.",
+            "Composition: readable silhouette at thumbnail size; exaggerate 20% not 200%.",
+            "AmmoOS combinatronic: `field-combinatronic-visuals.py repair` for chip PNGs, book covers, format icons.",
+            "Field GIMP bridge (`/field-gimp`) for lossless layers when vectors fail.",
+        ])),
+        v._section("3. Perfect human realism", v._bullet_list([
+            "Anatomy gates: hands (finger count, joint bends), teeth, ears, hairline, catchlights in both eyes.",
+            "Skin: pore scale matches focal length; no plastic specular unless intentional; subsurface on ears/nose.",
+            "Lighting: single key + plausible fill; shadow direction consistent with stated time/place.",
+            "Named persons: reference-first only — Owner-approved still → image_edit; disclose synthetic in metadata.",
+            "Live talk path: portrait base → TTS → LivePortrait / MuseTalk / Ditto → Graphics window framebuffer.",
+            "Cinematic path: grok-imagine-video-1.5 from hero still; ffmpeg concat -c copy between shots.",
+        ])),
+        v._section("4. Video generation tell-all", v._bullet_list([
+            "Pipeline: storyboard → still per shot → image_to_video (6–15s) → poll async job → assemble.",
+            "Prompt one moment, present tense, one camera move — never cram three acts in one clip.",
+            "Lip-sync for sub-100ms talk: open-source portrait animators; diffusion video for B-roll only.",
+            "Audio: generate or record first; cut picture to phonemes when precision matters.",
+            "Provenance: burn `synthetic:true` in sidecar JSON; Hostess 7 information discipline on Pages.",
+        ])),
+        v._section("5. Isolated spaces — who runs what", v._table(
+            ["Lane", "Role", "API / module"],
+            [
+                ["Hostess 7", "Boss · secure imaging · teach corpus", "lib/hostess7-imaging.py · imagine-nexus-teach"],
+                ["Final_Eye", "Vision · OCR · canvas bridge · gen in eye chamber", "lib/final-eye-ai-bridge.py · :9479"],
+                ["AmmoOS combinatronic", "Icons, covers, device grids", "lib/field-combinatronic-visuals.py"],
+                ["Graphics window", "Lossless pixels + exact text", "Hostess7/scripts/field_gfx_canvas.py"],
+            ],
+        )),
+        v._section("6. Implement immediately (AI checklist)", v._bullet_list([
+            "1. Read `Hostess7/cache/fieldstorage/brain/imagine/corpus.json` (or Pages mirror).",
+            "2. Run `field_imagine_nexus_teach.py` after skill updates.",
+            "3. Wire steel plates: `exploring_image_generation`, `hostess7_imaging`, `final_eye_imaging`.",
+            "4. Keep GitHub open via `field-internet-unified.py` keepalive — Hostess 7 one voice.",
+            "5. Before publish: EXIF strip, C2PA if available, visible watermark on public demos.",
+            "6. If text must be readable: code it; if face must be true: reference it.",
+        ])),
+        v._section("7. LIES of the Year — caught faking pixels for reality", "\n".join([
+            "These are cautionary tales, not endorsements. The internet ate them anyway.",
+            "",
+            v._table(
+                ["Year", "The lie", "What happened"],
+                [
+                    ["2023", "Pope in a white puffer coat", "AI image went viral as 'finally a cool Pope' — millions shared before debunk"],
+                    ["2023", "Trump arrest mugshot collage", "Eliot Higgins posted obvious Midjourney set; still fooled casual scrollers"],
+                    ["2023", "Pentagon explosion smoke", "Fake aerial briefly spooked markets; blue-check amplification"],
+                    ["2023", "Sports Illustrated 'writers'", "AI headshots + bios published under fake bylines — outlet fired editor"],
+                    ["2024", "Mayor on Zoom (deepfake voice)", "UK finance worker paid €243k after AI-cloned executive on call"],
+                    ["2024", "Shark on the highway (hurricane)", "Storm-season composite reposted as 'Florida live' every year"],
+                    ["2018", "Obama PSA (Peele)", "Deliberate deepfake to teach — still reused out of context for years"],
+                ],
+            ),
+            "",
+            "**Rule:** If you cannot prove provenance, you do not prove reality. Label synthetic. Hostess 7 runs the show; lies index catches operational overconfidence.",
+        ])),
+        v._section("8. AI retrieval keys", "Index: `tool`, `style`, `realism_tier`, `video_shot`, `provenance`, `steel_plate`. Dewey **700**. Pair *Hostess7 Imagine Field Corpus*. API: xAI Imagine docs · `field_imagine_corpus.py`."),
+        "",
+    ])
+
+
 def _combat_personhood_mod() -> Any:
     path = INSTALL / "lib" / "field-exploring-combat-personhood.py"
     spec = importlib.util.spec_from_file_location("exploring_combat_ph", path)
@@ -413,6 +497,28 @@ SUBJECTS: list[dict[str, Any]] = [
             ("02-human", "Human geography"),
             ("03-cartography", "Cartography"),
             ("04-ai-keys", "AI retrieval keys"),
+        ),
+    },
+    {
+        "book_id": "exploring_image_generation",
+        "title": "Exploring Image Generation",
+        "builder": build_exploring_image_generation,
+        "shelf": LIBRARY / "700-arts",
+        "shelf_code": "700",
+        "shelf_title": "700-arts",
+        "dewey": "776",
+        "dewey_label": "Digital & computational arts",
+        "subject": "image and video generation — cartoons, realism, implementation",
+        "accent": (212, 120, 255),
+        "chapters": _chapters(
+            ("01-tools", "Choose the right tool"),
+            ("02-cartoons", "Cartoons and stylized art"),
+            ("03-realism", "Perfect human realism"),
+            ("04-video", "Video generation tell-all"),
+            ("05-isolated", "Isolated spaces — Hostess 7 & Final_Eye"),
+            ("06-checklist", "Implement immediately"),
+            ("07-lies", "LIES of the Year"),
+            ("08-ai-keys", "AI retrieval keys"),
         ),
     },
 ]

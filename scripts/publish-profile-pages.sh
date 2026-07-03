@@ -36,10 +36,11 @@ fi
 git -C "$CLONE" pull --ff-only origin main 2>/dev/null || true
 mkdir -p "${CLONE}/docs"
 rsync -a --delete "${SRC}/" "${CLONE}/docs/"
+[[ -f "${ROOT}/profile/README.md" ]] && cp "${ROOT}/profile/README.md" "${CLONE}/README.md"
 cd "$CLONE"
-git add docs/
+git add docs/ README.md 2>/dev/null || git add docs/
 git diff --cached --quiet && { echo "Profile pages up to date"; exit 0; }
 git -c user.email="gzac5314@users.noreply.github.com" -c user.name="ZacharyGeurts" \
-  commit -m "pages: profile stack v${VER}"
+  commit -m "profile: Hostess7 3.0.7-beta5 hub · God Bless · stack v${VER}"
 git push origin main
 echo "Profile: https://zacharygeurts.github.io/ZacharyGeurts/"

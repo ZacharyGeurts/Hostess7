@@ -1,0 +1,142 @@
+{
+  "schema": "field-io-packet-panel/v1",
+  "updated": "2026-07-03T10:20:21Z",
+  "title": "Field I/O Packet — sovereign in, notify when out ready",
+  "meld_citation": "ironclad:meld:2",
+  "ok": false,
+  "truth_gate": {
+    "schema": "field-io-truth-gate/v1",
+    "pass_ok": false,
+    "meld_citation": "ironclad:meld:2",
+    "ironclad": {
+      "ok": false,
+      "id": "ironclad",
+      "realized": true,
+      "immutable": true,
+      "canonical_hash": "df82e0ec4ad9168d5499416d20911b8f6574f5d2e547ca66f3dcfeacc2d7c402",
+      "detail": "hash_mismatch_after_realized"
+    },
+    "field_sanity": {
+      "ok": false,
+      "id": "field_sanity",
+      "pass_ok": false,
+      "absorbed": true,
+      "integral": true,
+      "ironclad_sealed": false,
+      "layers_in": 0
+    },
+    "g1id_baselines": {
+      "ok": false,
+      "id": "g1id_baselines",
+      "required_ok": false,
+      "count": 1
+    },
+    "voltage_regulation": {
+      "ok": true,
+      "id": "voltage_regulation",
+      "operate_at_present_rail": true,
+      "grid_blocked": true,
+      "no_conversion": true,
+      "no_entropy": true,
+      "voltage_is_voltage": true,
+      "voltage_started_at": "2026-07-03T04:34:06Z"
+    },
+    "advisory": {
+      "schema": "field-truth-gate-advisory/v1",
+      "advisory_only": true,
+      "never_defeats_gate": true,
+      "ts": "2026-07-03T10:20:20Z",
+      "component_count": 0,
+      "live_count": 0,
+      "degraded_count": 0,
+      "mapped_count": 0,
+      "hostess7_priority": 1,
+      "hostess7_self_maintained": null,
+      "hostess7_self_maintenance_due": null,
+      "eye_maintenance_due": null,
+      "eye_vision_active": null,
+      "nav_mode": null,
+      "components": [],
+      "counsel": "0 lanes live, 0 degraded, 0 on last-known map. Advisory enriches share and counsel — Ironclad gate unchanged."
+    },
+    "beyond_darpa_security": {
+      "schema": "beyond-darpa-truth-gate-advisory/v1",
+      "advisory_only": true,
+      "never_defeats_gate": true,
+      "tier": "beyond_darpa_lockheed",
+      "human_threats": [
+        "social_engineering",
+        "compromised_keystroke",
+        "compromised_voice",
+        "insider_malice",
+        "paste_injection",
+        "credential_phishing",
+        "operator_coercion"
+      ],
+      "machine_threats": [
+        "c2_beacon",
+        "malware_dropper",
+        "automated_scan",
+        "bot_swarm",
+        "ai_prompt_injection",
+        "supply_chain_tamper",
+        "ddos_surge",
+        "non_loopback_probe"
+      ],
+      "fail_closed": true,
+      "all_systems": true,
+      "all_data": true,
+      "counsel": "Beyond DARPA · Lockheed tier — user AND machine secured. Human keystroke/voice situational; machine C2/malware presumed hostile. Advisory enriches counsel — Ironclad gate unchanged.",
+      "ts": "2026-07-03T10:20:21Z"
+    },
+    "advisory_never_defeats_gate": true,
+    "file_write_forbidden": true,
+    "output_stream_only": true,
+    "await_output_forbidden": true,
+    "no_hacks": true,
+    "checked_at": "2026-07-03T10:20:21Z"
+  },
+  "policy": {
+    "sovereign_time_in_only": true,
+    "await_output_forbidden": true,
+    "notify_when_ready": true,
+    "file_write_forbidden": true,
+    "output_stream_only": true,
+    "conversation_out_only": true,
+    "baseline_read_gated": true,
+    "ironclad_required": true,
+    "field_sanity_required": true,
+    "voltage_regulation_required": true,
+    "sdf_share_after_evaluation_only": true,
+    "no_hacks": true,
+    "grid_reentry_forbidden": true
+  },
+  "notify": {
+    "schema": "field-io-notify/v1",
+    "notify": false,
+    "await_forbidden": true,
+    "pending_count": 0,
+    "message": "no_pending_notify"
+  },
+  "pending_count": 0,
+  "await_output_forbidden": true,
+  "voltage_regulation": {
+    "ok": true,
+    "id": "voltage_regulation",
+    "operate_at_present_rail": true,
+    "grid_blocked": true,
+    "no_conversion": true,
+    "no_entropy": true,
+    "voltage_is_voltage": true,
+    "voltage_started_at": "2026-07-03T04:34:06Z"
+  },
+  "conversation_stream": {
+    "path": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/field-io-conversation.stream.jsonl",
+    "count": 0,
+    "recent": []
+  },
+  "pending_out": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/field-io-pending-out.jsonl",
+  "sdf_export": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/field-io-sdf-export.jsonl",
+  "ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/field-io-packet-ledger.jsonl",
+  "doctrine_ref": "data/field-io-packet-doctrine.json"
+}

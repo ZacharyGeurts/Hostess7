@@ -285,21 +285,46 @@ def build_local_network(*, interfaces: list[dict[str, Any]] | None = None) -> di
         "dns_dhcp_servers": _dns_servers(),
     }
     sources = [(name, rows) for name, rows in tables.items()]
-    devices = _merge_devices(sources)
+    raw_devices = _merge_devices(sources)
     table_stats = {name: len(rows) for name, rows in tables.items()}
     hostname = socket.gethostname()
+
+    stable_doc: dict[str, Any] = {}
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "field_device_registry", INSTALL / "lib" / "field-device-registry.py"
+        )
+        if spec and spec.loader:
+            reg_mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(reg_mod)
+            stable_doc = reg_mod.build_lan_stable(raw_devices)
+    except Exception:
+        stable_doc = {}
+
+    devices = stable_doc.get("devices") or raw_devices
+    device_count = int(stable_doc.get("device_count") or len(devices))
+    existence = stable_doc.get("devices_in_existence") or {}
+    evicted_count = int(stable_doc.get("evicted_count") or 0)
+
     doc = {
         "schema": "us-local-network/v1",
         "updated": _now(),
         "title": "Local network",
         "motto": "Learned from ARP, DHCP, home protector, equipment room, gatekeeper — your LAN on US.",
         "hostname": hostname,
-        "device_count": len(devices),
+        "device_count": device_count,
+        "raw_device_count": len(raw_devices),
+        "devices_in_existence": existence,
+        "evicted_fake_count": evicted_count,
         "subnets": _subnets(interfaces or []),
         "devices": devices,
         "tables_learned": table_stats,
         "tables_total_rows": sum(table_stats.values()),
         "sources": list(tables.keys()),
+        "ai_note": stable_doc.get("ai_note")
+        or "Active LAN devices never exceed devices_in_existence; stale entries evicted as fake.",
     }
     tmp = PANEL_CACHE.with_suffix(".tmp")
     tmp.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

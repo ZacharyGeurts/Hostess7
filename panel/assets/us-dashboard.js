@@ -341,18 +341,23 @@
     const tableChips = Object.entries(tables).map(([k, v]) =>
       `<span class="us-hist-chip">${esc(k)}=${esc(String(v))}</span>`
     ).join("");
+    const existence = lan.devices_in_existence?.count;
+    const evicted = lan.evicted_fake_count ?? 0;
     el.innerHTML = `<div class="meta" style="margin-bottom:8px;">
-      ${esc(lan.hostname || "—")} · ${esc(String(lan.device_count ?? devices.length))} devices ·
+      ${esc(lan.hostname || "—")} · ${esc(String(lan.device_count ?? devices.length))} active devices
+      ${existence != null ? ` · ≤${esc(String(existence))} in existence` : ""}
+      ${evicted ? ` · ${esc(String(evicted))} stale fakes evicted` : ""} ·
       ${esc(String(lan.tables_total_rows ?? 0))} rows learned
     </div>
     <div class="us-histogram" style="margin-bottom:10px;">${tableChips || ""}</div>
     ${subnets.length ? `<div class="meta" style="margin-bottom:8px;">Subnets: ${subnets.map((s) => `<code>${esc(s.cidr)}</code> on ${esc(s.iface)}`).join(" · ")}</div>` : ""}
-    <table class="us-table"><thead><tr><th>IP</th><th>MAC</th><th>Role</th><th>Sources</th></tr></thead><tbody>
+    <table class="us-table"><thead><tr><th>IP</th><th>MAC</th><th>Role</th><th>Sources</th><th>Last seen</th></tr></thead><tbody>
       ${devices.slice(0, 48).map((d) => `<tr>
         <td><code>${esc(d.ip || "—")}</code></td>
         <td class="meta">${esc(d.mac || "—")}</td>
         <td>${esc(d.role || d.label || "device")}</td>
         <td class="meta">${(d.sources || d.tables || []).map((s) => `<code>${esc(s)}</code>`).join(" ")}</td>
+        <td class="meta">${esc((d.last_timestamp || d.last_seen || "—").replace("T", " ").replace("Z", ""))}</td>
       </tr>`).join("")}
     </tbody></table>
     ${devices.length > 48 ? `<div class="meta" style="margin-top:6px;">+${devices.length - 48} more devices</div>` : ""}`;

@@ -61,8 +61,13 @@ def _save_atomic(path: Path, doc: dict[str, Any]) -> None:
     tmp.replace(path)
 
 
+def _web_studio_enabled() -> bool:
+    """Web chamber UI is opt-in; Broadcaster defaults to OBS Studio verbatim."""
+    return os.environ.get("FIELD_BROADCASTER_WEB_STUDIO", "0") in ("1", "true", "yes")
+
+
 def _legacy_obs() -> bool:
-    return os.environ.get("FIELD_BROADCASTER_LEGACY_OBS", "0") in ("1", "true", "yes")
+    return not _web_studio_enabled()
 
 
 def _chamber_mod() -> Any | None:
@@ -151,22 +156,69 @@ def ui_posture(**kwargs: Any) -> dict[str, Any]:
     return obs.ui_posture(**kwargs)
 
 
+def prepare_obs_source() -> dict[str, Any]:
+    """Clone OBS Studio upstream for OBS-Field rewrite (verbatim UI from source)."""
+    clone = FIELD / "forge" / "clone-upstream.sh"
+    upstream = FIELD / "upstream" / "obs-studio"
+    out: dict[str, Any] = {
+        "ok": False,
+        "product": "Broadcaster",
+        "engine": "obs-studio",
+        "upstream": str(upstream),
+        "clone_script": str(clone),
+    }
+    if upstream.is_dir() and (upstream / "CMakeLists.txt").is_file():
+        out.update({
+            "ok": True,
+            "message": "OBS source tree present",
+            "hint": f"Compile: {FIELD / 'build-field-obs.sh'}",
+        })
+        return out
+    if not clone.is_file():
+        out["error"] = "clone_script_missing"
+        return out
+    try:
+        proc = subprocess.run(
+            ["bash", str(clone)],
+            capture_output=True,
+            text=True,
+            timeout=300,
+            cwd=str(FIELD),
+            env={**os.environ, "OBS_FIELD_ROOT": str(FIELD), "SG_ROOT": str(SG)},
+        )
+        out["rc"] = proc.returncode
+        tail = (proc.stdout or proc.stderr or "")[-800:]
+        out["log_tail"] = tail
+        if proc.returncode == 0 and (upstream / "CMakeLists.txt").is_file():
+            out.update({
+                "ok": True,
+                "message": "OBS upstream cloned",
+                "hint": f"Build native shell: bash {FIELD / 'build-field-obs.sh'}",
+            })
+        else:
+            out["error"] = "clone_failed"
+            out["hint"] = tail or "clone-upstream.sh failed"
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        out["error"] = str(exc)
+    return out
+
+
 def launch(*, record: bool = False, virtualcam: bool = False, studio: bool = False, go_live: bool = False) -> dict[str, Any]:
-    if not _legacy_obs():
+    if _web_studio_enabled():
         st = _studio_mod()
         if st:
             if record:
-                return {**st.start_record(), "product": "Broadcaster", "engine": "studio"}
+                return {**st.start_record(), "product": "Broadcaster", "engine": "web_studio"}
             if go_live:
-                return {**st.go_live(), "product": "Broadcaster", "engine": "studio"}
-            return {"ok": True, "product": "Broadcaster", "engine": "studio", "panel": st.posture()}
+                return {**st.go_live(), "product": "Broadcaster", "engine": "web_studio"}
+            return {"ok": True, "product": "Broadcaster", "engine": "web_studio", "panel": st.posture()}
     obs = _obs_core()
     os.environ.update(_with_broadcaster_env())
     out = obs.launch(record=record or go_live, virtualcam=virtualcam, studio=studio)
     if isinstance(out, dict):
         out["product"] = "Broadcaster"
         out["go_live"] = go_live or record
-        out["engine"] = "obs_legacy"
+        out["engine"] = "obs-studio"
     return out
 
 
@@ -374,9 +426,21 @@ def posture() -> dict[str, Any]:
     threat = engine_block.get("threat_summary") or (posterity.get("threat_ledger") or {}).get("summary") or {}
     streaming = bool(engine_block.get("running"))
     scenes = 1 if engine_block.get("stack") else 0
+    senses_snap: dict[str, Any] = {}
+    senses_py = INSTALL / "lib" / "field-broadcaster-senses.py"
+    if senses_py.is_file():
+        try:
+            spec = importlib.util.spec_from_file_location("bc_senses_posture", senses_py)
+            if spec and spec.loader:
+                sm = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(sm)
+                if hasattr(sm, "posture"):
+                    senses_snap = sm.posture()
+        except Exception:
+            senses_snap = {}
 
     doc = {
-        "schema": "field-broadcaster/v1",
+        "schema": "field-broadcaster/v3",
         "ts": _now(),
         "ok": bool(obs_base.get("ok")),
         "product": doctrine.get("product") or "Broadcaster",
@@ -402,6 +466,14 @@ def posture() -> dict[str, Any]:
             "plugin_installed": engine_block.get("field_plugin_installed"),
             "filters": engine_block.get("filters") or [],
             "scene_guard": (doctrine.get("engine") or {}).get("scene_guard_filter"),
+            "ui": "verbatim_obs",
+        },
+        "senses": senses_snap,
+        "fork": doctrine.get("fork") or {},
+        "build": {
+            "upstream": str(FIELD / "upstream" / "obs-studio"),
+            "script": str(FIELD / "build-field-obs.sh"),
+            "clone": str(FIELD / "forge" / "clone-upstream.sh"),
         },
         "scene_guard": {
             "stack": engine_block.get("stack"),
@@ -434,6 +506,9 @@ def main() -> int:
         return 0
     if cmd in ("launch", "go-live", "golive"):
         print(json.dumps(launch(go_live=cmd != "launch"), ensure_ascii=False, indent=2))
+        return 0
+    if cmd == "build":
+        print(json.dumps(prepare_obs_source(), ensure_ascii=False, indent=2))
         return 0
     if cmd == "record":
         print(json.dumps(launch(record=True), ensure_ascii=False, indent=2))
@@ -472,7 +547,7 @@ def main() -> int:
         print(json.dumps(audio.posture(), ensure_ascii=False, indent=2))
         return 0
     print(
-        "usage: field-broadcaster.py [json|launch|go-live|record|virtualcam|studio|us|audio|settings JSON]",
+        "usage: field-broadcaster.py [json|launch|go-live|record|virtualcam|studio|build|us|audio|settings JSON]",
         file=sys.stderr,
     )
     return 2

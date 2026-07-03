@@ -163,9 +163,19 @@
     launchAppInner(app);
   }
 
+  function ammoosCommandUrl(exec, app) {
+    const raw = String(exec || "").trim();
+    if (!raw.startsWith("/command")) return raw;
+    if (raw.includes("embed=1")) return raw;
+    const hash = raw.includes("#") ? raw.split("#").slice(1).join("#") : "";
+    const view = app?.view || hash;
+    return "/command?embed=1" + (view ? "#" + view : hash ? "#" + hash : "");
+  }
+
   function launchAppInner(app) {
     let exec = app.exec || app.url;
     if (!exec) return;
+    exec = ammoosCommandUrl(exec, app);
     if (global.FieldQueenNav?.secureUrl) {
       exec = global.FieldQueenNav.secureUrl(exec, { id: app.id });
     }
@@ -390,15 +400,49 @@
       .join("");
   }
 
+  function categoryLabel(cat) {
+    return String(cat || "")
+      .replace(/^NEXUS · /, "")
+      .replace(/^AmmoOS · /, "")
+      .replace(/^GitHub · /, "GitHub · ");
+  }
+
+  function renderDesktopFolders(m, collapsed) {
+    const folders = m.desktop_folders || [];
+    if (!folders.length) return "";
+    let html = '<div class="fsb-menu-folders">';
+    folders.forEach(function (folder) {
+      const kids = folder.children || [];
+      if (!kids.length) return;
+      html +=
+        '<details class="fsb-tree-branch fsb-tree-folder fsb-tree-folder--desktop"' +
+        (collapsed ? "" : " open") +
+        ">" +
+        '<summary class="fsb-tree-label">' +
+        folderIconEl() +
+        esc(folder.name) +
+        ' <span class="fsb-tree-count">' +
+        kids.length +
+        "</span></summary>" +
+        '<div class="fsb-menu-grid fsb-menu-grid--section">' +
+        renderMenuItems(kids) +
+        "</div></details>";
+    });
+    html += "</div>";
+    return html;
+  }
+
   function renderFlyoutSections(m) {
     const cats = m.category_order || Object.keys(m.categories || {});
     const groups = m.categories || {};
     const host = m.host_categories || {};
-    let html = '<div class="fsb-flyout-sections">';
+    let html = "";
+    html += renderDesktopFolders(m, false);
+    html += '<div class="fsb-flyout-sections">';
     cats.forEach(function (cat) {
       const items = groups[cat];
       if (!items || !items.length) return;
-      const label = cat.replace(/^NEXUS · /, "").replace(/^AmmoOS · /, "");
+      const label = categoryLabel(cat);
       html +=
         '<section class="fsb-flyout-section">' +
         '<div class="fsb-flyout-section-label">' + esc(label) + "</div>" +
@@ -427,12 +471,13 @@
     const cats = m.category_order || Object.keys(m.categories || {});
     const groups = m.categories || {};
     const host = m.host_categories || {};
-    const collapsed = state.data?.startbar?.start_menu_collapsed !== false;
+    const collapsed = state.data?.startbar?.start_menu_collapsed === true;
     let html = '<div class="fsb-menu-tree">';
+    html += renderDesktopFolders(m, collapsed);
     cats.forEach(function (cat) {
       const items = groups[cat];
       if (!items || !items.length) return;
-      const label = cat.replace(/^NEXUS · /, "").replace(/^AmmoOS · /, "");
+      const label = categoryLabel(cat);
       html +=
         '<details class="fsb-tree-branch fsb-tree-folder"' + (collapsed ? "" : " open") + ">" +
         '<summary class="fsb-tree-label">' + folderIconEl() +
@@ -499,7 +544,7 @@
       menu.classList.add("fsb-menu--flyout");
       menu.innerHTML =
         '<div class="fsb-menu-head fsb-menu-head--c2">' +
-        '<span class="fsb-menu-brand">' + esc(state.data?.product || "AmmoOS") + " C2</span>" +
+        '<span class="fsb-menu-brand">' + esc(state.data?.product || "AmmoOS") + " · classic Start</span>" +
         renderThemeSwatches(theme) +
         (m.search !== false
           ? '<input type="search" class="fsb-search" id="fsb-search" placeholder="Search programs…" autocomplete="off" />'
@@ -551,9 +596,10 @@
           "</div>";
       }
       body += renderTreeSections(m, apps);
+      menu.classList.add("fsb-menu--tree");
       menu.innerHTML =
         '<div class="fsb-menu-head fsb-menu-head--c2">' +
-        '<span class="fsb-menu-brand">' + esc(state.data?.product || "AmmoOS") + " C2</span>" +
+        '<span class="fsb-menu-brand">' + esc(state.data?.product || "AmmoOS") + " · classic Start</span>" +
         renderThemeSwatches(theme) +
         (m.search !== false
           ? '<input type="search" class="fsb-search" id="fsb-search" placeholder="Search programs…" autocomplete="off" />'
@@ -574,6 +620,11 @@
           document.querySelectorAll(".fsb-menu-tree .fsb-menu-item").forEach(function (btn) {
             const name = (btn.textContent || "").toLowerCase();
             btn.style.display = !q || name.includes(q) ? "" : "none";
+          });
+          document.querySelectorAll(".fsb-menu-tree .fsb-tree-branch").forEach(function (branch) {
+            const visible = branch.querySelectorAll('.fsb-menu-item:not([style*="display: none"])').length;
+            branch.style.display = visible || !q ? "" : "none";
+            if (q && visible) branch.open = true;
           });
         });
       }
@@ -987,7 +1038,7 @@
       '<button type="button" class="fsb-start fsb-start-classic" id="fsb-start" aria-label="Start menu (classic active)" aria-expanded="false" aria-haspopup="true" data-classic="1">' +
       startIcon() +
       "</button>" +
-      '<div class="fsb-menu fsb-menu--flyout" id="fsb-menu" role="dialog" aria-label="Programs" aria-hidden="true"></div>' +
+      '<div class="fsb-menu fsb-menu--tree" id="fsb-menu" role="dialog" aria-label="AmmoOS Start menu" aria-hidden="true"></div>' +
       "</div>" +
       '<div class="fsb-quick" id="fsb-quick" role="toolbar" aria-label="Quick launch"></div>' +
       '<div class="fsb-tasks" id="fsb-tasks" role="list"></div>' +

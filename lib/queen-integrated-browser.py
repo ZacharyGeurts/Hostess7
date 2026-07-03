@@ -223,13 +223,16 @@ def launch_integrated_display() -> dict[str, Any]:
             "hint": "field-gecko launcher missing — open shell via Queen world",
         }
     c2_url = _c2_field_url()
+    rtx_bin = QUEEN / "build" / "rtx" / "bin" / "Linux" / "queen-browser"
+    rtx_ready = rtx_bin.is_file() and os.access(rtx_bin, os.X_OK)
+    skip_rtx = os.environ.get("QUEEN_SKIP_RTX_BOOT", "0" if rtx_ready else "1")
     env = {
         **os.environ,
         "QUEEN_ROOT": str(QUEEN),
         "NEXUS_INSTALL_ROOT": str(INSTALL),
         "SG_ROOT": str(SG),
-        "QUEEN_WEB_SHELL": "1",
-        "QUEEN_SKIP_RTX_BOOT": "1",
+        "QUEEN_WEB_SHELL": "0" if skip_rtx == "0" else "1",
+        "QUEEN_SKIP_RTX_BOOT": skip_rtx,
         "QUEEN_NO_OS_BROWSER": "1",
         "NEXUS_EMBED_PANEL_IN_ENGINE": "0",
         "NEXUS_C2_DESKTOP_LAUNCH": os.environ.get("NEXUS_C2_DESKTOP_LAUNCH", "0"),
@@ -250,11 +253,13 @@ def launch_integrated_display() -> dict[str, Any]:
         )
         return {
             "ok": True,
-            "engine": "queen-field-gecko",
+            "engine": "queen-rtx" if rtx_ready else "queen-field-gecko",
             "display": "integrated",
             "shell_url": shell,
             "profile": str(FIELD_GECKO / "profile"),
             "comp_shader_boot": False,
+            "spawn_rtx": rtx_ready,
+            "rtx_binary": str(rtx_bin) if rtx_ready else None,
             "world": world,
             "seed": seed,
         }

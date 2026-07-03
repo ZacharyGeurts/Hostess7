@@ -135,15 +135,15 @@ def list_displays() -> list[dict[str, Any]]:
 
 
 def device_registry() -> dict[str, Any]:
-    doc = _load(REGISTRY, _load(SEED, {"schema": "field-device-registry/v1", "devices": []}))
+    doc = _run_py("field-device-registry.py", "json", timeout=20)
     host = _host_id()
+    displays = list_displays()
     for dev in doc.get("devices") or []:
         if dev.get("self"):
-            dev["displays"] = list_displays()
-            dev["last_seen"] = _now()
-    doc["ts"] = _now()
+            dev["displays"] = displays
     doc["local_id"] = host
-    _write_atomic(REGISTRY, doc)
+    if doc.get("devices"):
+        _write_atomic(REGISTRY, doc)
     return doc
 
 

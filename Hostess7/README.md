@@ -1,8 +1,11 @@
-# Hostess 7 2.0.7h — KILROY Field Brain (Main Project)
+# Hostess 7 3.0.7-beta5 — KILROY Field Brain (Main Project)— KILROY Field Brain (Main Project)
 
-**Version:** `2.0.7h` · **Release:** [RELEASE-2.0.7h.md](RELEASE-2.0.7h.md) · **Roadmap:** [docs/ROADMAP-3.0.md](docs/ROADMAP-3.0.md)  
-**GitHub Pages (full package):** https://zacharygeurts.github.io/Hostess7/  
-**Repo:** https://github.com/ZacharyGeurts/Hostess7
+God Bless.
+
+**The last computer for the world** — full field stack on GitHub Pages: https://zacharygeurts.github.io/Hostess7/
+
+**Version:** `3.0.7-beta5` · **Release:** [RELEASE-3.0.7-beta5.md](RELEASE-3.0.7-beta5.md) · **Roadmap:** [docs/ROADMAP-3.0.md](docs/ROADMAP-3.0.md)  
+**Repo:** https://github.com/ZacharyGeurts/Hostess7 · **GNU manual:** https://zacharygeurts.github.io/GNUEOLTerminal/wiki/
 
 Hostess 7 is the **main project**. AmmoOS, Grok16, Queen, and other stack repos are **Old Projects** — see [docs/old-projects.html](docs/old-projects.html).
 
@@ -22,7 +25,7 @@ Open http://127.0.0.1:8080/ for live agents + KILROY + Queen. GitHub Pages runs 
 ```bash
 ./Hostess7.sh github-brain build   # mirror sovereign → docs/github-brain (read-only)
 ./Hostess7.sh h7-optimise --apply  # H7s JSON + PNG recompress before push
-./Hostess7.sh publish-source       # 2.0.7e → main + gh-pages (H7 optimise baked in)
+./Hostess7.sh publish-source       # 3.0.7-beta5 → main + gh-pages
 ```
 
 **Codespaces (one-click boot):** https://github.com/codespaces/new?repo=ZacharyGeurts/Hostess7  
@@ -45,15 +48,6 @@ docker compose up -d --build
 docker compose logs -f
 ```
 
-**Tarball:**
-
-```bash
-./Hostess7.sh embed pack
-# → dist/hostess7-2.0.7e-embed.tar.gz
-tar -xzf dist/hostess7-2.0.7e-embed.tar.gz && cd hostess7-2.0.7e-embed
-bash scripts/install-hostess7-embed.sh
-```
-
 Unified state lives in `brain/state/` (cortex + snapshots). See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/API.md](docs/API.md).
 
 ## SG Field Stack
@@ -67,25 +61,6 @@ KILROY kernel at the bottom — self-defensive tamper verify, periodic update la
 
 Boot order: `kilroy_kernel → unified_device_field → underlay → guest_os`. KILROY is `127.0.0.1` on any computer.
 
-## 2.0.7e native vs legacy
-
-| Native (package) | Legacy (`Hostess7.sh`) |
-|------------------|------------------------|
-| `hostess7-core status` | `./Hostess7.sh boot` |
-| `hostess7-core cohesion` | `./Hostess7.sh cohesion` |
-| `curl /api/war-train` | `./Hostess7.sh war-realism wargame` |
-| `brain/state/` | `cache/fieldstorage/` (auto-migrated) |
-
 ## Commands
 
-```bash
-./Hostess7.sh boot              # full boot — brain + web
-./Hostess7.sh web               # foreground web UI
-./Hostess7.sh war-realism panel # OODA + ROE wargaming (2.0.7e)
-./Hostess7.sh warfare-train protect-friendlies
-./Hostess7.sh stack status      # KILROY / panel / Queen health
-./Hostess7.sh                   # talk window (terminal + gfx)
-hostess7-core brain             # /api/brain payload (cohesion + war realism)
-```
-
-**License:** GPL v3 or 3% commercial (gzac5314@gmail.com)
+See `./Hostess7.sh help` · [docs/API.md](docs/API.md) · [wiki](https://github.com/ZacharyGeurts/Hostess7/wiki)

@@ -2,7 +2,8 @@
   "schema": "ammoos-themes/v1",
   "title": "AmmoOS Themes — single index for every surface",
   "motto": "One catalog · Queen Styles · C2 shell · editor · terminal · file-type properties",
-  "default_ammoos_theme": "nexus_c2",
+  "default_ammoos_theme": "ammoos",
+  "lead_desktop_themes": ["ammoos", "dusty-night"],
   "default_queen_styles": "black_emerald_rose_2026",
   "default_editor_theme": "nexus_c2",
   "default_syntax_theme": "nexus_c2",
@@ -34,6 +35,38 @@
     {"id": "file_types", "label": "File types", "hint": "Right-click properties by extension"}
   ],
   "c2_themes": {
+    "ammoos": {
+      "label": "AmmoOS",
+      "built_in": true,
+      "lead": true,
+      "css": "panel/assets/ammoos-c2-themes.css",
+      "data_attr": "nexus-military-v8",
+      "os_theme": "ammoos",
+      "vars": {
+        "--qf-bg-deep": "#040508",
+        "--qf-bg": "#0a0e12",
+        "--qf-bg-mid": "#111820",
+        "--qf-panel": "#0a0c12",
+        "--qf-emerald-glow": "#22c55e",
+        "--qf-rose-soft": "#f472b6"
+      }
+    },
+    "dusty-night": {
+      "label": "Dusty Night",
+      "built_in": true,
+      "css": "panel/assets/dusty-midnight.css",
+      "data_attr": "dusty-night",
+      "os_theme": "dusty-night",
+      "html_class": "dusty-midnight",
+      "vars": {
+        "--qf-bg-deep": "#0a0c14",
+        "--qf-bg": "#121820",
+        "--qf-bg-mid": "#1a2230",
+        "--qf-panel": "#101620",
+        "--qf-emerald-glow": "#4de88a",
+        "--qf-rose-soft": "#8ac8e8"
+      }
+    },
     "nexus_c2": {
       "label": "NEXUS C2 Military",
       "built_in": true,

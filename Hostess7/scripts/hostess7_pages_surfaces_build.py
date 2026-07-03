@@ -693,6 +693,27 @@ def _desktop_html() -> str:
     return html
 
 
+def _stage_gnueol_terminal_mirror() -> int:
+    """Mirror GNUEOLTerminal docs on Hostess7 Pages when github.com or GNUEOL Pages is slow."""
+    src = NL / "GNUEOLTerminal" / "docs"
+    dest = DOCS / "gnueol-terminal"
+    if not src.is_dir():
+        return 0
+    forge = NL / "GNUEOLTerminal" / "scripts" / "forge-gnu-wiki-manual.py"
+    build = NL / "GNUEOLTerminal" / "scripts" / "build-site.py"
+    if forge.is_file() and build.is_file():
+        try:
+            subprocess.run([sys.executable, str(forge)], cwd=str(NL / "GNUEOLTerminal"), check=False, timeout=120)
+            subprocess.run([sys.executable, str(build)], cwd=str(NL / "GNUEOLTerminal"), check=False, timeout=120)
+        except (subprocess.TimeoutExpired, OSError):
+            pass
+    if dest.exists():
+        shutil.rmtree(dest)
+    shutil.copytree(src, dest)
+    (dest / ".nojekyll").touch(exist_ok=True)
+    return sum(1 for _ in dest.rglob("*") if _.is_file())
+
+
 def _write_desktop_indices() -> None:
     html = _desktop_html()
     for dest in (AMMOOS_DOCS, DESKTOP_DOCS, DOCS / "field"):
@@ -1847,6 +1868,51 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     (API / "field-github-legacy.json").write_text(json.dumps(github_legacy, indent=2) + "\n", encoding="utf-8")
     files.append("field-github-legacy.json")
 
+    everyone_ctr = _run_nl_script_json("lib/field-everyone-counter.py", ["json"], timeout=12)
+    if not everyone_ctr.get("schema"):
+        everyone_ctr = {**stub, "schema": "field-everyone-counter/v1", "ok": True, "everyone_total": 0}
+    else:
+        everyone_ctr["pages"] = True
+        everyone_ctr["pages_base"] = PAGES_BASE
+    (API / "field-everyone-counter.json").write_text(
+        json.dumps(everyone_ctr, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-everyone-counter.json")
+
+    endpoint_reg = _run_nl_script_json("lib/field-endpoint-registry.py", ["json"], timeout=45)
+    if not endpoint_reg.get("schema"):
+        endpoint_reg = {
+            **stub,
+            "schema": "field-endpoint-registry-public/v1",
+            "ok": True,
+            "title": "Sovereign endpoint registry",
+            "motto": "No endpoint moves silently — beyond ICANN",
+            "api": "/api/field-endpoint-registry",
+        }
+    else:
+        endpoint_reg["pages"] = True
+        endpoint_reg["pages_base"] = PAGES_BASE
+    (API / "field-endpoint-registry.json").write_text(
+        json.dumps(endpoint_reg, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-endpoint-registry.json")
+    pages_alias = _run_nl_script_json("lib/field-endpoint-registry.py", ["pages"], timeout=20)
+    if pages_alias.get("schema"):
+        pages_alias["pages"] = True
+        pages_alias["pages_base"] = PAGES_BASE
+        (API / "field-pages-movement.json").write_text(
+            json.dumps(pages_alias, indent=2) + "\n", encoding="utf-8"
+        )
+        files.append("field-pages-movement.json")
+    routes_pub = _run_nl_script_json("lib/field-endpoint-registry.py", ["routes"], timeout=15)
+    if routes_pub.get("schema"):
+        routes_pub["pages"] = True
+        routes_pub["pages_base"] = PAGES_BASE
+        (API / "field-endpoint-registry-routes.json").write_text(
+            json.dumps(routes_pub, indent=2) + "\n", encoding="utf-8"
+        )
+        files.append("field-endpoint-registry-routes.json")
+
     field_keepalive = _run_nl_script_json("lib/field-internet-unified.py", ["keepalive"], timeout=35)
     if not field_keepalive.get("schema"):
         field_keepalive = {
@@ -1929,6 +1995,7 @@ def build() -> dict[str, Any]:
     queen_n = _rsync_queen()
     assets_n = _rsync_panel_assets()
     zacs_n = _stage_zacs_png()
+    gnueol_n = _stage_gnueol_terminal_mirror()
     panel_n = _stage_panel_surfaces()
     command_publish = _write_command_basement_pages()
     _write_desktop_indices()
@@ -1942,6 +2009,7 @@ def build() -> dict[str, Any]:
         "panel_surfaces": panel_n,
         "command_basement": command_publish,
         "zacs_png": zacs_n,
+        "gnueol_terminal_mirror": gnueol_n,
         "api_files": api_files,
         "pages_base": PAGES_BASE,
         "command_pages_base": COMMAND_PAGES_BASE,

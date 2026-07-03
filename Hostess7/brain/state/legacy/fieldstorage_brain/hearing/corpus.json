@@ -1,0 +1,407 @@
+{
+  "version": 1,
+  "hearing_workflow": [
+    {
+      "id": "hearing_overview",
+      "title": "Hearing in Hostess7",
+      "body": "Hearing = listen (STT) + understand (Wernicke) + speak (Broca/TTS). hostess7_voice.py: arecord + whisper listen; spd-say/edge-tts speak. CMUdict phonetics in english brain. HOSTESS7_VOICE=1 HOSTESS7_LISTEN=1."
+    },
+    {
+      "id": "hearing_pipeline",
+      "title": "Listen \u2192 think \u2192 speak pipeline",
+      "body": "Mic/text \u2192 whisper STT \u2192 Language Expert reply \u2192 TTS \u2192 optional lip-sync Graphics. Web: /api/listen /api/speak /api/ask. Hearing corpus + H7 library for acoustics/psych."
+    },
+    {
+      "id": "hearing_lossless",
+      "title": "Lossless audio-adjacent storage",
+      "body": "Brain JSON FLD1, books H7B, Field WRDT1 \u2014 all lossless round-trip. Phonetic lexicon and textbook text preserve every character on pack/unpack."
+    },
+    {
+      "id": "hearing_gac1",
+      "title": "GAC1 / ZOCRAM1 sovereign audio",
+      "body": "Final_Ear GAC1 inside ZOCRAM1 (.zocr) \u2014 predictive frames, sealed segments, sovereign time. Better than naked PCM: provenance weave, cochlear-safe profiles, Shannon entropy per segment. Queen POST /api/queen-earball action gac1|pack_audio|verify_audio. Hostess7 bridge: field_final_ear_bridge.py listen \u2192 eye_ear_fusion."
+    },
+    {
+      "id": "hearing_secure_path",
+      "title": "Secure neural path \u2014 Eye\u2194Ear",
+      "body": "Sovereign time seals every tick; eye\u2194ear sync never desync (SQUIDGIE on drift). Signal intel: encoded carriers, mixed interference, deceit composite. Queen /api/sense-neural analyze + /api/queen-earball secure_identify. HOSTESS7_FINAL_EAR=1 routes listen_once through secure identify."
+    }
+  ],
+  "hearing": [
+    {
+      "id": "whisper",
+      "title": "OpenAI Whisper",
+      "type": "github",
+      "tags": [
+        "stt",
+        "speech-recognition",
+        "listen",
+        "open-source"
+      ],
+      "url": "https://github.com/openai/whisper",
+      "paper": "https://arxiv.org/abs/2212.04356",
+      "body": "Robust speech recognition \u2014 Hostess7 listen_once() via whisper CLI + arecord."
+    },
+    {
+      "id": "wav2vec2",
+      "title": "wav2vec 2.0",
+      "type": "paper",
+      "tags": [
+        "stt",
+        "self-supervised",
+        "speech"
+      ],
+      "arxiv": "2006.11477",
+      "paper": "https://arxiv.org/abs/2006.11477",
+      "url": "https://github.com/facebookresearch/fairseq",
+      "body": "Self-supervised speech representations \u2014 foundation for modern STT."
+    },
+    {
+      "id": "speechbrain",
+      "title": "SpeechBrain",
+      "type": "github",
+      "tags": [
+        "stt",
+        "tts",
+        "hearing",
+        "toolkit"
+      ],
+      "url": "https://github.com/speechbrain/speechbrain",
+      "body": "All-in-one speech toolkit \u2014 ASR, speaker ID, enhancement, separation."
+    },
+    {
+      "id": "piper_tts",
+      "title": "Piper TTS",
+      "type": "github",
+      "tags": [
+        "tts",
+        "speak",
+        "fast",
+        "offline"
+      ],
+      "url": "https://github.com/rhasspy/piper",
+      "body": "Fast local neural TTS \u2014 low-latency voice for Hostess7 replies."
+    },
+    {
+      "id": "edge_tts",
+      "title": "edge-tts",
+      "type": "github",
+      "tags": [
+        "tts",
+        "speak",
+        "free"
+      ],
+      "url": "https://github.com/rany2/edge-tts",
+      "body": "Microsoft Edge voices via Python \u2014 free high-quality TTS without API key."
+    },
+    {
+      "id": "kokoro_tts",
+      "title": "Kokoro-82M",
+      "type": "github",
+      "tags": [
+        "tts",
+        "speak",
+        "lightweight"
+      ],
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M",
+      "body": "Compact TTS \u2014 used in FasterLivePortrait text-driven video; good Hostess voice."
+    },
+    {
+      "id": "cmudict",
+      "title": "CMU Pronouncing Dictionary",
+      "type": "dataset",
+      "tags": [
+        "phonetics",
+        "pronunciation",
+        "hearing",
+        "arpabet"
+      ],
+      "url": "https://github.com/cmusphinx/cmudict",
+      "body": "ARPAbet phoneme labels \u2014 field_english_lexicon pronunciation lookup."
+    },
+    {
+      "id": "openstax_hearing_psych",
+      "title": "OpenStax Psychology \u2014 Hearing",
+      "type": "textbook",
+      "tags": [
+        "textbook",
+        "free",
+        "psychoacoustics",
+        "ear"
+      ],
+      "url": "https://openstax.org/books/psychology-2e/pages/5-4-hearing",
+      "body": "Free OER \u2014 sound waves, ear anatomy, pitch, loudness, localization."
+    },
+    {
+      "id": "openstax_hearing_physics",
+      "title": "OpenStax College Physics \u2014 Hearing",
+      "type": "textbook",
+      "tags": [
+        "textbook",
+        "free",
+        "acoustics",
+        "decibel"
+      ],
+      "url": "https://openstax.org/books/college-physics-2e/pages/17-6-hearing",
+      "body": "Free OER \u2014 intensity, decibels, hearing range, ultrasound/infrasound."
+    },
+    {
+      "id": "understanding_acoustics",
+      "title": "Understanding Acoustics",
+      "type": "textbook",
+      "tags": [
+        "textbook",
+        "free",
+        "acoustics",
+        "oer"
+      ],
+      "url": "https://library.oapen.org/bitstream/20.500.12657/42912/1/2020_Book_UnderstandingAcoustics.pdf",
+      "body": "Open-access acoustics textbook \u2014 waves, resonance, rooms, perception."
+    },
+    {
+      "id": "psychoacoustics_springer",
+      "title": "Psychoacoustics (Springer open)",
+      "type": "textbook",
+      "tags": [
+        "textbook",
+        "psychoacoustics",
+        "perception"
+      ],
+      "url": "https://link.springer.com/book/10.1007/978-3-030-44787-8",
+      "body": "How the brain hears \u2014 masking, critical bands, spatial hearing."
+    },
+    {
+      "id": "webrtc_vad",
+      "title": "WebRTC VAD",
+      "type": "github",
+      "tags": [
+        "vad",
+        "listen",
+        "streaming",
+        "real-time"
+      ],
+      "url": "https://github.com/wiseman/py-webrtcvad",
+      "body": "Voice activity detection \u2014 when Owner is speaking vs silence."
+    },
+    {
+      "id": "silero_vad",
+      "title": "Silero VAD",
+      "type": "github",
+      "tags": [
+        "vad",
+        "listen",
+        "onnx"
+      ],
+      "url": "https://github.com/snakers4/silero-vad",
+      "body": "Lightweight VAD \u2014 gate whisper STT to save CPU in live talk."
+    },
+    {
+      "id": "auditory_scene_analysis",
+      "title": "Auditory Scene Analysis",
+      "type": "book",
+      "tags": [
+        "perception",
+        "cocktail-party",
+        "hearing"
+      ],
+      "body": "Bregman \u2014 how we separate voices in noise; cocktail-party problem for Hostess listen."
+    },
+    {
+      "id": "asha_hearing",
+      "title": "ASHA Hearing & Speech",
+      "type": "reference",
+      "tags": [
+        "clinical",
+        "audiology",
+        "speech"
+      ],
+      "url": "https://www.asha.org/public/hearing/",
+      "body": "American Speech-Language-Hearing Association \u2014 clinical hearing reference."
+    },
+    {
+      "id": "librosa",
+      "title": "librosa",
+      "type": "github",
+      "tags": [
+        "audio",
+        "analysis",
+        "spectrogram",
+        "python"
+      ],
+      "url": "https://github.com/librosa/librosa",
+      "body": "Audio feature extraction \u2014 mel spectrograms for speech/hearing ML."
+    },
+    {
+      "id": "coqui_tts",
+      "title": "Coqui TTS",
+      "type": "github",
+      "tags": [
+        "tts",
+        "speak",
+        "neural"
+      ],
+      "url": "https://github.com/coqui-ai/TTS",
+      "body": "Neural TTS with voice cloning \u2014 optional Hostess custom voice."
+    },
+    {
+      "id": "gutenberg_sound_music",
+      "title": "The Standard Operaglass (music & hearing)",
+      "type": "textbook",
+      "tags": [
+        "textbook",
+        "free",
+        "music",
+        "children-adjacent"
+      ],
+      "url": "https://www.gutenberg.org/cache/epub/16225/pg16225.txt",
+      "body": "Public-domain music reference \u2014 pitch, opera, ear training context for H7 shelf."
+    },
+    {
+      "id": "gutenberg_child_garden",
+      "title": "The Secret Garden",
+      "type": "textbook",
+      "tags": [
+        "children",
+        "free",
+        "literature",
+        "read-aloud"
+      ],
+      "url": "https://www.gutenberg.org/cache/epub/113/pg113.txt",
+      "body": "Children's classic \u2014 read-aloud TTS practice, language + hearing together."
+    },
+    {
+      "id": "gutenberg_peter_pan",
+      "title": "Peter Pan",
+      "type": "textbook",
+      "tags": [
+        "children",
+        "free",
+        "literature"
+      ],
+      "url": "https://www.gutenberg.org/cache/epub/16/pg16.txt",
+      "body": "Children's classic for Hostess7 library \u2014 Owner read-aloud and STT drills."
+    },
+    {
+      "id": "gutenberg_pinocchio",
+      "title": "Pinocchio",
+      "type": "textbook",
+      "tags": [
+        "children",
+        "free",
+        "literature"
+      ],
+      "url": "https://www.gutenberg.org/cache/epub/500/pg500.txt",
+      "body": "Children's classic \u2014 short chapters good for listen/speak sessions."
+    },
+    {
+      "id": "gutenberg_wind_willows",
+      "title": "The Wind in the Willows",
+      "type": "textbook",
+      "tags": [
+        "children",
+        "free",
+        "literature"
+      ],
+      "url": "https://www.gutenberg.org/cache/epub/289/pg289.txt",
+      "body": "Beloved children's book \u2014 rhythm and prosody for TTS tuning."
+    },
+    {
+      "id": "wikibooks_music",
+      "title": "Wikibooks Music",
+      "type": "textbook",
+      "tags": [
+        "textbook",
+        "free",
+        "music",
+        "hearing"
+      ],
+      "url": "https://en.wikibooks.org/wiki/Music",
+      "body": "Free music theory \u2014 ties pitch perception to hearing brain."
+    },
+    {
+      "id": "hearing_survey_2025",
+      "title": "Audio-Driven Facial Animation Survey",
+      "type": "survey",
+      "tags": [
+        "survey",
+        "audio",
+        "speech",
+        "video"
+      ],
+      "arxiv": "2403.06421",
+      "paper": "https://arxiv.org/abs/2403.06421",
+      "url": "https://github.com/zwx8981/ADTH-QA",
+      "body": "Perceptual quality metrics for audio-driven video \u2014 bridges hearing + live video."
+    },
+    {
+      "id": "hostess7_listen_env",
+      "title": "Hostess7 hearing env",
+      "type": "pattern",
+      "tags": [
+        "listen",
+        "tts",
+        "hostess7"
+      ],
+      "body": "HOSTESS7_VOICE=1 speak replies \u00b7 HOSTESS7_LISTEN=1 whisper capture \u00b7 HOSTESS7_WEB=1 browser talk \u00b7 ./Hostess7.sh hearing-learn"
+    }
+  ],
+  "curated_fetch": [
+    {
+      "id": "openstax-hearing-psych",
+      "lane": "hearing",
+      "url": "https://openstax.org/books/psychology-2e/pages/5-4-hearing",
+      "why": "Free hearing psychology"
+    },
+    {
+      "id": "openstax-hearing-physics",
+      "lane": "hearing",
+      "url": "https://openstax.org/books/college-physics-2e/pages/17-6-hearing",
+      "why": "Free hearing physics"
+    },
+    {
+      "id": "whisper-readme",
+      "lane": "hearing",
+      "url": "https://raw.githubusercontent.com/openai/whisper/main/README.md",
+      "why": "Whisper STT"
+    },
+    {
+      "id": "piper-readme",
+      "lane": "hearing",
+      "url": "https://raw.githubusercontent.com/rhasspy/piper/master/README.md",
+      "why": "Piper TTS"
+    },
+    {
+      "id": "speechbrain-readme",
+      "lane": "hearing",
+      "url": "https://raw.githubusercontent.com/speechbrain/speechbrain/develop/README.md",
+      "why": "Speech toolkit"
+    },
+    {
+      "id": "cmudict-readme",
+      "lane": "hearing",
+      "url": "https://raw.githubusercontent.com/cmusphinx/cmudict/master/README",
+      "why": "Pronunciation dict"
+    },
+    {
+      "id": "edge-tts-readme",
+      "lane": "hearing",
+      "url": "https://raw.githubusercontent.com/rany2/edge-tts/master/README.md",
+      "why": "Free TTS"
+    },
+    {
+      "id": "arxiv-whisper",
+      "lane": "hearing",
+      "url": "https://arxiv.org/abs/2212.04356",
+      "why": "Whisper paper"
+    }
+  ],
+  "hostess7_integration": {
+    "listen": "hostess7_voice.listen_once \u2014 arecord + whisper",
+    "speak": "hostess7_voice.speak \u2014 spd-say / edge-tts",
+    "phonetics": "field_english_lexicon \u2014 CMUdict ARPAbet",
+    "library": "field_library \u2014 free hearing/music/children .H7 books",
+    "final_ear_bridge": "field_final_ear_bridge.py \u2014 Queen earball + secure identify",
+    "gac1": "ZOCRAM1/GAC1 via /api/queen-earball",
+    "secure_identify": "eye_ear_fusion under sovereign time"
+  }
+}

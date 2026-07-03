@@ -1,0 +1,215 @@
+{
+  "schema": "hostess7-reality-physics-runtime/v1",
+  "physics_sim": {
+    "com_y": -34.897019,
+    "com_vy": -22.713696,
+    "mass_kg": 68.0,
+    "grounded": false,
+    "kinetic_j": 17541.008286,
+    "potential_j": 23351.176401,
+    "energy_drift_pct": 1.2478,
+    "stance_stability": 0.0,
+    "ticks": 184,
+    "gravity_m_s2": 9.80665,
+    "dt_s": 0.0166667,
+    "energy_ok": true
+  },
+  "battery_results": {
+    "gravity": {
+      "ok": true,
+      "battery": "gravity",
+      "passed": 4,
+      "total": 4,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "free_fall_1s",
+          "query": "free fall distance 1 second earth gravity",
+          "kind": "kinematic",
+          "passed": true,
+          "got": 4.903325,
+          "expected": 4.903325,
+          "detail": ""
+        },
+        {
+          "id": "energy_conservation",
+          "query": "energy conservation drop 2m earth gravity",
+          "kind": "energy",
+          "passed": true,
+          "got": 6.2631142413339385,
+          "expected": 6.26449,
+          "detail": ""
+        },
+        {
+          "id": "weight_68kg",
+          "query": "weight force 68 kg earth gravity",
+          "kind": "force",
+          "passed": true,
+          "got": 666.8521999999999,
+          "expected": 666.8522,
+          "detail": ""
+        },
+        {
+          "id": "projectile_peak",
+          "query": "vertical toss 5 m/s peak height",
+          "kind": "projectile",
+          "passed": true,
+          "got": 1.2746452662224104,
+          "expected": 1.2755,
+          "detail": ""
+        }
+      ],
+      "updated": "2026-07-03T04:34:21Z"
+    },
+    "thermodynamics": {
+      "ok": true,
+      "battery": "thermodynamics",
+      "passed": 4,
+      "total": 4,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "landauer_300k",
+          "query": "Landauer limit joules per bit at 300K",
+          "kind": "landauer",
+          "passed": true,
+          "got": 2.870978885078724e-21,
+          "expected": 2.87e-21,
+          "detail": ""
+        },
+        {
+          "id": "first_law_closed",
+          "query": "first law closed system delta U zero",
+          "kind": "first_law",
+          "passed": true,
+          "got": 0.0,
+          "expected": null,
+          "detail": ""
+        },
+        {
+          "id": "carnot_efficiency",
+          "query": "Carnot efficiency hot 500K cold 300K",
+          "kind": "carnot",
+          "passed": true,
+          "got": 0.4,
+          "expected": 0.4,
+          "detail": ""
+        },
+        {
+          "id": "thermal_headroom",
+          "query": "field thermal guard headroom present",
+          "kind": "live_thermal",
+          "passed": true,
+          "got": 100.0,
+          "expected": null,
+          "detail": "headroom=100.0%"
+        }
+      ],
+      "updated": "2026-07-03T04:34:21Z"
+    },
+    "entropy": {
+      "ok": true,
+      "battery": "entropy",
+      "passed": 4,
+      "total": 4,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "shannon_uniform_4",
+          "query": "Shannon entropy uniform 4 symbols",
+          "kind": "shannon",
+          "passed": true,
+          "got": 2.0,
+          "expected": 2.0,
+          "detail": ""
+        },
+        {
+          "id": "shannon_certain",
+          "query": "Shannon entropy certain outcome",
+          "kind": "shannon",
+          "passed": true,
+          "got": -0.0,
+          "expected": null,
+          "detail": ""
+        },
+        {
+          "id": "second_law_isolated",
+          "query": "second law isolated entropy non-decreasing",
+          "kind": "second_law",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "field_entropy_norm",
+          "query": "field physics entropy norm bounded",
+          "kind": "live_entropy",
+          "passed": true,
+          "got": 0.5,
+          "expected": null,
+          "detail": "entropy_norm=0.5"
+        }
+      ],
+      "updated": "2026-07-03T04:34:21Z"
+    },
+    "field_technology": {
+      "ok": true,
+      "battery": "field_technology",
+      "passed": 4,
+      "total": 4,
+      "pass_rate": 100.0,
+      "fluent": true,
+      "mastered": true,
+      "rows": [
+        {
+          "id": "landauer_doctrine",
+          "query": "thermal guard doctrine Landauer constant",
+          "kind": "doctrine_landauer",
+          "passed": true,
+          "got": 2.87e-21,
+          "expected": 2.87e-21,
+          "detail": ""
+        },
+        {
+          "id": "joules_per_op",
+          "query": "field joules per op positive",
+          "kind": "live_joules",
+          "passed": true,
+          "got": 1.2e-09,
+          "expected": 1e-12,
+          "detail": "joules_per_op=1.2e-09"
+        },
+        {
+          "id": "incremental_redata",
+          "query": "incremental redata policy enforced",
+          "kind": "policy",
+          "passed": true,
+          "got": true,
+          "expected": true,
+          "detail": ""
+        },
+        {
+          "id": "fabric_entropy_slot",
+          "query": "field fabric entropy slot mapped",
+          "kind": "fabric_map",
+          "passed": true,
+          "got": null,
+          "expected": null,
+          "detail": "entropy slot mapped"
+        }
+      ],
+      "updated": "2026-07-03T04:34:21Z"
+    }
+  },
+  "proficiency": 0.0,
+  "total_ticks": 184,
+  "grounded_ticks": 0,
+  "updated": "2026-07-03T04:35:14Z"
+}

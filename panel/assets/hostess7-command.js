@@ -16,16 +16,29 @@
 
   function applyPagesLane() {
     if (!pagesRuntime()) return;
-    document.documentElement.classList.add("h7-pages-lane");
+    document.documentElement.classList.add("h7-pages-c2");
+    document.documentElement.classList.remove("h7-pages-lane");
     const deck = document.getElementById("hostess7-command-deck");
-    if (deck) deck.hidden = true;
+    if (deck) deck.hidden = false;
     const iq = document.getElementById("h7-iq-test");
     if (iq) {
       iq.disabled = true;
       iq.title = "IQ battery requires live Hostess7 API";
     }
     const sync = document.getElementById("h7-command-sync");
-    if (sync) sync.title = "Sync requires live Hostess7 API";
+    if (sync) {
+      sync.title = "Sync GitHub mind — KILROY · iPXE · ZNetwork · DNS · DHCP stack (sovereign brain unhooked)";
+      sync.disabled = false;
+    }
+    const status = document.getElementById("h7-command-status");
+    if (status && !status.dataset.pagesLane) {
+      status.dataset.pagesLane = "1";
+      status.textContent = "GitHub mind · NEXUS C2 · sovereign brain unhooked";
+    }
+    const tag = document.getElementById("h7-superintel-tagline");
+    if (tag && tag.textContent.includes("Loading field brain")) {
+      tag.textContent = "GitHub mind lane — update stack from Sync GitHub · publish via pages-build";
+    }
   }
   let thinking = false;
   let voiceOn = true;
@@ -832,6 +845,17 @@
   function renderStatus(doc) {
     const st = $("h7-command-status");
     if (!st || !doc) return;
+    if (pagesRuntime()) {
+      const gh = doc.github_main_version || doc.github?.main_version || doc.github?.github_main_version || "—";
+      st.innerHTML = [
+        `<span data-tip="Published Hostess7 GitHub mind — read-only mirror.">Mind <strong>GitHub</strong></span>`,
+        `<span data-tip="Sovereign cache/fieldstorage brain is unhooked on Pages.">Local <strong>unhooked</strong></span>`,
+        `<span data-tip="KILROY · iPXE · ZNetwork · DNS · DHCP stack wired on Sync GitHub.">Stack <strong>C2</strong></span>`,
+        `<span data-tip="Hostess7 Pages version.">v<strong>${esc(gh)}</strong></span>`,
+      ].join("");
+      if (global.decorateTips) global.decorateTips(st);
+      return;
+    }
     const gh = doc.github_main_version || doc.github?.github_main_version || "—";
     const local = doc.local_version || "—";
     const brain = doc.hostess7_available ? (doc.agents_on ? "Agents7 live" : "Superintel") : "Field fallback";
@@ -932,10 +956,24 @@
     const btn = $("h7-command-sync");
     if (btn) { btn.disabled = true; btn.textContent = "Syncing…"; }
     try {
-      await dispatch({ action: "sync_github" });
-      const panel = await fetch(API, { cache: "no-store" }).then((r) => r.json());
-      renderHostess7Command(panel);
-      updateLocalSlice(panel);
+      const j = await dispatch({ action: "sync_github" });
+      if (pagesRuntime() && global.Hostess7GithubBrain?.syncStackMind) {
+        await global.Hostess7GithubBrain.syncStackMind();
+      }
+      if (j?.reply) {
+        const base = global.lastPanelData?.hostess7_command || {};
+        const transcript = (base.transcript || []).concat([
+          { role: "hostess7", text: j.reply, ts: new Date().toISOString(), meta: { engine: "github-mirror", stack: j.stack } },
+        ]);
+        const merged = { ...base, transcript, github_main_version: j.github?.main_version || base.github_main_version };
+        updateLocalSlice(merged);
+        renderHostess7Command(merged);
+        speak(j.reply.slice(0, 800));
+      } else {
+        const panel = await fetch(API, { cache: "no-store" }).then((r) => r.json());
+        renderHostess7Command(panel);
+        updateLocalSlice(panel);
+      }
     } catch (_) { /* best-effort */ }
     finally {
       if (btn) { btn.disabled = false; btn.textContent = "Sync GitHub"; }

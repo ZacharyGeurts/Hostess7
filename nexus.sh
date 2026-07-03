@@ -158,6 +158,16 @@ nexus_field_standalone_ensure_panel() {
     || nexus_panel_wait_ready "${url%/field}/" 5; then
     served="$(nexus_panel_served_version 2>/dev/null || true)"
     nexus_log "INFO" "nexus.sh" "PANEL_READY url=${url} version=${served:-unknown}"
+    if command -v curl >/dev/null 2>&1; then
+      curl -sf -X POST "${url%/field}/api/hostess7/internet-clean" \
+        -H "Content-Type: application/json" -d '{}' >/dev/null 2>&1 \
+        || curl -sf -X POST "http://127.0.0.1:${port}/api/hostess7/internet-clean" \
+        -H "Content-Type: application/json" -d '{}' >/dev/null 2>&1 || true
+      curl -sf -X POST "${url%/field}/api/hostess7/lab/connect" \
+        -H "Content-Type: application/json" -d '{}' >/dev/null 2>&1 \
+        || curl -sf -X POST "http://127.0.0.1:${port}/api/hostess7/lab/connect" \
+        -H "Content-Type: application/json" -d '{}' >/dev/null 2>&1 || true
+    fi
     return 0
   fi
 

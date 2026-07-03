@@ -3628,6 +3628,18 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
+        if path in ("/api/field-endpoint-registry", "/api/field-pages-movement"):
+            reg_py = INSTALL_ROOT / "lib" / "field-endpoint-registry.py"
+            sub = ["pages"] if path == "/api/field-pages-movement" else ["json"]
+            payload = _nexus_py_json(reg_py, sub, timeout=35)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path == "/api/field-everyone-counter":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-everyone-counter.py", ["json"], timeout=8)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
         if path == "/api/hostess7/interaction":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "hostess7-github-interaction.py", ["json"], timeout=25)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
@@ -5133,8 +5145,8 @@ class Handler(BaseHTTPRequestHandler):
                 return
             sub = path[len("/api/field-monster-monitor") :].strip("/") or "json"
             args = ["json"] if sub in ("", "json", "status") else [sub]
-            payload = _nexus_py_json(script, args, timeout=25)
-            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            payload = _nexus_py_json(script, args, timeout=25) or {"ok": False}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
         if path.startswith("/api/field-os-keybindings"):
@@ -12296,6 +12308,18 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/field-github-everyone":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-github-everyone.py", ["json"], timeout=30)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in ("/api/field-endpoint-registry", "/api/field-pages-movement"):
+            reg_py = INSTALL_ROOT / "lib" / "field-endpoint-registry.py"
+            sub = ["pages"] if path == "/api/field-pages-movement" else ["json"]
+            payload = _nexus_py_json(reg_py, sub, timeout=35)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path == "/api/field-everyone-counter":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-everyone-counter.py", ["json"], timeout=8)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 

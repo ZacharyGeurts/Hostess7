@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="human-hub" data-ironclad-taskbar="1">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Human Hub — Hostess 7 BSP</title>
+  <meta name="description" content="Compact human UI — ask Hostess 7 on GitHub, her tasks, library, Ironclad sort. BSP-adaptive panes." />
+  <link rel="stylesheet" href="/assets/field-ironclad-taskbar.css?v=1" />
+  <link rel="stylesheet" href="/assets/field-human-bsp.css?v=1" />
+</head>
+<body class="hhb-body" data-pages-runtime="1">
+  <header class="hhb-top">
+    <div class="hhb-brand">
+      <p class="hhb-eyebrow">Human UI · BSP · Ironclad · GitHub brain</p>
+      <h1>Hostess 7 Human Hub</h1>
+      <p class="hhb-sub">Talk to her on Pages · do her tasks · sort everything with Ironclad</p>
+    </div>
+    <nav class="hhb-nav" aria-label="Hub links">
+      <a href="/library/">Library</a>
+      <a href="/brain.html">GitHub brain chat</a>
+      <a href="https://zacharygeurts.github.io/command/">NEXUS C2 basement</a>
+      <a href="/field-card-catalog/">Card catalog</a>
+      <a href="/ironclad-search/">Ironclad program</a>
+    </nav>
+  </header>
+
+  <div id="hhb-root" class="hhb-root" aria-label="BSP human panes"></div>
+
+  <footer class="hhb-status">
+    <strong>Hostess 7</strong>
+    <span id="hhb-status-text">Loading…</span>
+    <span>· drag pane edges to resize</span>
+  </footer>
+
+  <div id="fitb-mount"></div>
+  <script src="/assets/ironclad-bus.js?v=1"></script>
+  <script src="/assets/field-ironclad-taskbar.js?v=1"></script>
+  <script src="/assets/field-human-bsp.js?v=1"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.FieldHumanBsp) window.FieldHumanBsp.mount("hhb-root");
+      if (window.FieldIroncladTaskbar?.mountStandalone) window.FieldIroncladTaskbar.mountStandalone();
+    });
+  </script>
+</body>
+</html>

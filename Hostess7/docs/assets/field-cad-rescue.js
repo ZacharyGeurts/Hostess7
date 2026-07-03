@@ -7,7 +7,9 @@
 
   function isRunningOs() {
     const path = global.location?.pathname || "";
-    return path === "/field" || path === "/field/" || path === "/";
+    if (path === "/field" || path === "/field/" || path === "/") return true;
+    if (document.documentElement.dataset.ammoosDesktop === "1") return true;
+    return /\/desktop\/?$/.test(path) || /\/Hostess7\/desktop\/?$/.test(path);
   }
 
   function hasOsFocus() {

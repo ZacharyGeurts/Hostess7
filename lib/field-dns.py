@@ -126,9 +126,24 @@ def _load_blocklist() -> set[str]:
     return blocked
 
 
+def _is_github_always_allowed(qname: str) -> bool:
+    name = qname.lower().rstrip(".")
+    if not name:
+        return False
+    for suffix in (
+        "github.com", "github.io", "githubusercontent.com", "githubassets.com",
+        "api.github.com", "raw.githubusercontent.com", "codeload.github.com",
+    ):
+        if name == suffix or name.endswith("." + suffix):
+            return True
+    return False
+
+
 def _is_blocked(qname: str, blocked: set[str]) -> bool:
     name = qname.lower().rstrip(".")
     if not name:
+        return False
+    if _is_github_always_allowed(name):
         return False
     if name in blocked:
         return True

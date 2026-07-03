@@ -1,0 +1,102 @@
+{
+  "schema": "hostess7-presume-propagate/v1",
+  "updated": "2026-07-03T10:19:52Z",
+  "mandatory": true,
+  "rule": "Every listed module honors presume commits — uninterruptable actions, resources still devoted.",
+  "not_go_away": "Presume does NOT mean dismiss, abandon, or release resources.",
+  "sovereign_binding": {
+    "uninterruptable_once_decided": true,
+    "outside_influence_blocked": true,
+    "override_authority": [
+      "hostess7",
+      "operator"
+    ],
+    "release_requires": "explicit release by binding authority — never external cancel",
+    "motto": "Decide once. Finish the action. Outside voices cannot revoke the decision."
+  },
+  "targets": [
+    {
+      "id": "system_core",
+      "module": "lib/hostess7-system-core.py",
+      "bind": "pillar_verify",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    },
+    {
+      "id": "mouth_neural",
+      "module": "lib/hostess7-mouth-neural.py",
+      "bind": "run_mouth_training",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    },
+    {
+      "id": "speaking_training",
+      "module": "lib/hostess7-speaking-training.py",
+      "bind": "run_speaking_training",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    },
+    {
+      "id": "training",
+      "module": "lib/hostess7-training.py",
+      "bind": "run_track",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    },
+    {
+      "id": "cool_smooth",
+      "module": "lib/hostess7-cool-smooth.py",
+      "bind": "build_panel",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    },
+    {
+      "id": "control_balancer",
+      "module": "lib/hostess7-control-balancer.py",
+      "bind": "build_panel",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    },
+    {
+      "id": "brain_guard",
+      "module": "lib/hostess7-brain-guard.py",
+      "bind": "witness",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    },
+    {
+      "id": "mouthball",
+      "module": "Queen/lib/queen-mouthball.py",
+      "bind": "dispatch",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    },
+    {
+      "id": "threat_panel",
+      "module": "lib/threat-panel-http.py",
+      "bind": "api",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    },
+    {
+      "id": "exploring_self",
+      "module": "lib/field-exploring-hostess7.py",
+      "bind": "pack_edition",
+      "present": true,
+      "honors_uninterruptable": true,
+      "resources_devoted": true
+    }
+  ],
+  "targets_present": 10,
+  "targets_total": 10,
+  "propagated": true
+}

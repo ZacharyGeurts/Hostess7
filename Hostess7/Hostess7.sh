@@ -120,6 +120,13 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh library-organize      Sort free books — fiction, children, STEM shelves
   ./Hostess7.sh sg-hub                SG/Hostess7 main folder manifest + TEAM sync hint
   ./Hostess7.sh online-security       GitHub Pages security checklist
+  ./Hostess7.sh ammonet [panel|meld|publish]  AmmoNet ISP — Final Internet · steel plates · public modules
+  ./Hostess7.sh final-internet [panel]        Alias for ammonet — safe fields migration hub
+  ./Hostess7.sh internet-clean [force]  Default posture — secure bookmarks · Firefox Chrome Brave Edge · telemetry strip
+  ./Hostess7.sh secure-bookmarks        Alias for internet-clean — host browser toolbar export
+  ./Hostess7.sh lab [status|connect|verify|run CMD]  Lab sovereign — share in · no share out · Hostess 7 is boss
+  ./Hostess7.sh g16-online [panel|ensure|probe]  Grok16 online compiler — Pages + local g16 for Hostess 7
+  ./Hostess7.sh secure-bookmarks-purge   Remove orphan loopback bookmarks · re-export HTTPS+Secure to Firefox
   ./Hostess7.sh github [status|invite|bootstrap]  Bot @hostess7 repo access
   ./Hostess7.sh github-secure [verify|audit|route|publish|push|clone]  Pinned SSH — no MITM/redirect
   ./Hostess7.sh queen-github-secure [verify|status]  Queen Browser GitHub pin check
@@ -294,7 +301,45 @@ main() {
     case "${1:-}" in
         -h|--help|help) usage ;;
         on|start|power-on)
-            exec pythong "$AGENTS" on
+            pythong "$AGENTS" on
+            python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-internet-clean.py" json 2>/dev/null || true
+            python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-lab-sovereign.py" boot 2>/dev/null || true
+            exit 0
+            ;;
+        ammonet|final-internet|final_internet|ammonet-field)
+            shift
+            exec python3 "${NEXUS_INSTALL_ROOT}/lib/ammonet-field.py" "${1:-panel}" "${@:2}"
+            ;;
+        internet-clean|internet_clean|secure-bookmarks|secure_bookmarks|clean-internet)
+            shift
+            exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-internet-clean.py" "${1:-json}" "${@:2}"
+            ;;
+        g16-online|g16_online|grok16-online|grok16_online)
+            shift
+            case "${1:-panel}" in
+                ensure|boot|online) exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-g16-online.py" ensure ;;
+                probe) exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-g16-online.py" probe ;;
+                *) exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-g16-online.py" panel ;;
+            esac
+            ;;
+        secure-bookmarks-purge|bookmark-purge|purge-bookmarks)
+            exec python3 "${NEXUS_INSTALL_ROOT}/Queen/lib/queen-host-bookmark-export.py" purge
+            python3 "${NEXUS_INSTALL_ROOT}/Queen/lib/queen-host-bookmark-export.py" export 2>/dev/null || true
+            exit 0
+            ;;
+        lab|lab-sovereign|lab_sovereign|grok-lab|grok_lab)
+            shift
+            case "${1:-status}" in
+                connect|wire) exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-lab-sovereign.py" connect ;;
+                verify|policy) exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-lab-sovereign.py" verify ;;
+                secure|connection) exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-lab-sovereign.py" secure ;;
+                run)
+                    shift
+                    exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-lab-sovereign.py" run "${1:-status}"
+                    ;;
+                boot) exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-lab-sovereign.py" boot ;;
+                *) exec python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-lab-sovereign.py" panel ;;
+            esac
             ;;
         off|stop|power-off)
             exec pythong "$AGENTS" off

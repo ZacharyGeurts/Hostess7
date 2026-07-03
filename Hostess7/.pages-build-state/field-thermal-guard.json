@@ -1,0 +1,61 @@
+{
+  "schema": "field-thermal-guard/v1",
+  "ts": "2026-07-03T10:16:52Z",
+  "headroom_pct": 100.0,
+  "max_joules_per_second": 45.0,
+  "joules_per_field_op": 1.2e-09,
+  "max_global_redata_chunk": 8192,
+  "current_power_w": 0.0,
+  "peak_c": 90.0,
+  "rapl_watts": null,
+  "anomaly": {
+    "schema": "field-thermal-anomaly/v1",
+    "ts": "2026-07-03T10:16:52Z",
+    "active": false,
+    "thermal_level": "ok",
+    "peak_c": 88.125,
+    "rapl_watts": null
+  },
+  "incremental_only": true,
+  "monolithic_blast_forbidden": true,
+  "speed_impact": "none_under_normal_load",
+  "max_ops_per_second_at_budget": 37500000000.0,
+  "calibration": {
+    "status": "pending",
+    "tool": "lib/field-thermal-calibrate.py"
+  },
+  "metrics": {
+    "schema": "field-thermal-metrics/v1",
+    "ts": "2026-07-03T10:16:52Z",
+    "certainty_score": 1.0,
+    "certainty_label": "high",
+    "safe_global_redata_certainty_pct": 100.0,
+    "replaces_old_estimate": "857x_peak_risk_unguarded",
+    "burst_derating_ratio": 1012.5,
+    "budget_headroom_ops_per_s": 37500000000,
+    "sustained_field_ops_per_s": 44000000,
+    "headroom_multiplier": 852.3,
+    "canvas_pixels_4k_uhd": 8294400,
+    "redata_chunk": 8192,
+    "incremental_passes_4k": 1013,
+    "dispatch_gain_band_pct": [
+      35,
+      60
+    ],
+    "quality_scale": 1.0,
+    "cold_path_overhead_pct": 0.0,
+    "monolithic_blast_forbidden": true,
+    "peak_c": 91.875,
+    "hotspot_advisory": false,
+    "layers": {
+      "engine_guard": 1.0,
+      "incremental_redata": 1.0,
+      "hwmon_feedback": 1.0,
+      "gatekeeper_wired": 1.0,
+      "boot_enforced": 1.0,
+      "grok16_bridge": 1.0
+    }
+  },
+  "certainty_score": 1.0,
+  "certainty_label": "high"
+}

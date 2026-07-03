@@ -1,0 +1,86 @@
+{
+  "schema": "field-endpoint-registry-doctrine/v1",
+  "title": "Sovereign endpoint registry — everything witnessed, beyond ICANN",
+  "boss": "hostess7",
+  "motto": "No endpoint moves silently: DNS, IP, port, URL, Pages, loopback, API, module, file — from→to in public hash chain.",
+  "owner": "ZacharyGeurts",
+  "scope": "More than ICANN: sovereign truth for all routable identities the field stack owns or mirrors.",
+  "rules": {
+    "append_only_ledger": true,
+    "hash_chain_required": true,
+    "no_silent_relocate": true,
+    "public_export_required": true,
+    "mirror_must_reference_canonical": true,
+    "icann_is_one_layer_not_the_ceiling": true
+  },
+  "layers": [
+    {"id": "icann_dns", "title": "ICANN DNS — domains, delegations, root hints", "beyond_icann": false},
+    {"id": "ip", "title": "IPv4/IPv6 host assignments", "beyond_icann": true},
+    {"id": "cidr", "title": "CIDR blocks — GitHub pins, botnet pools", "beyond_icann": true},
+    {"id": "port", "title": "Legal port reservations — IANA + field context", "beyond_icann": true},
+    {"id": "url", "title": "HTTP/HTTPS canonical URLs", "beyond_icann": true},
+    {"id": "pages", "title": "GitHub Pages canonical + mirrors", "beyond_icann": true},
+    {"id": "loopback", "title": "127.0.0.1 / ::1 services", "beyond_icann": true},
+    {"id": "api", "title": "Threat panel / Pages API routes", "beyond_icann": true},
+    {"id": "module", "title": "lib/*.py sovereign modules", "beyond_icann": true},
+    {"id": "file", "title": "data/ path relocations", "beyond_icann": true},
+    {"id": "service", "title": "Named stack services", "beyond_icann": true},
+    {"id": "repo", "title": "Git repositories", "beyond_icann": true},
+    {"id": "mirror", "title": "Fallback chains", "beyond_icann": true},
+    {"id": "script", "title": "Canonical script paths", "beyond_icann": true}
+  ],
+  "movement_kinds": [
+    "seed_historic",
+    "canonical",
+    "relocate",
+    "mirror_add",
+    "delegate",
+    "port_reserve",
+    "api_wire",
+    "merge_map",
+    "retire",
+    "publish_witness",
+    "github_to_pages"
+  ],
+  "historic_sources": [
+    "data/field-endpoint-registry-seed.json",
+    "data/field-pages-movement-registry-seed.json",
+    "data/ammoos-pages-hub.json",
+    "Hostess7/data/hostess7-old-projects.json",
+    "docs/github-favorites.json",
+    "H7updater/data/h7updater-stack-index.json",
+    "data/field-github-everyone-doctrine.json",
+    "data/dns-legal-rfc-seed.json",
+    "data/field-botnet-legal-ports-doctrine.json",
+    "data/field-github-resilience-doctrine.json",
+    "Hostess7/data/github-known-hosts.json",
+    "data/field-scripts-registry.json",
+    "data/folder-consolidation-manifest.json",
+    "data/field-tools-registry.json"
+  ],
+  "public_surfaces": {
+    "api_loopback": "/api/field-endpoint-registry",
+    "api_pages": "/api/field-endpoint-registry.json",
+    "ledger_pages": "/api/field-endpoint-registry-ledger.json",
+    "routes_pages": "/api/field-endpoint-registry-routes.json",
+    "pages_alias": "/api/field-pages-movement"
+  },
+  "publish_hooks": [
+    "scripts/publish-gnueol-terminal-github.sh",
+    "scripts/publish-hostess7-github.sh"
+  ],
+  "wires": [
+    "Hostess7/docs/pages-github-everyone-wire.js",
+    "lib/field-github-everyone.py",
+    "lib/field-dns.py",
+    "lib/field-botnet-registry.py"
+  ],
+  "layer_z": 0,
+  "ships_with": [
+    "field-github-everyone",
+    "field-github-resilience",
+    "field-dns",
+    "field-botnet-legal-ports",
+    "ammoos-pages-hub"
+  ]
+}

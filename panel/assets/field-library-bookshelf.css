@@ -32,14 +32,121 @@ body.bsb-body {
   justify-content: space-between;
 }
 
+.bsb-eyebrow {
+  margin: 0 0 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(201, 162, 39, 0.85);
+}
+
 .bsb-header h1 {
   margin: 0;
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-weight: 600;
   letter-spacing: 0.02em;
 }
 
-.bsb-sub { color: var(--bsb-muted); font-size: 0.86rem; margin-top: 0.2rem; }
+.bsb-sub { color: var(--bsb-muted); font-size: 0.9rem; margin-top: 0.25rem; line-height: 1.45; }
+.bsb-sub strong { color: var(--bsb-text); font-weight: 600; }
+
+.bsb-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  align-items: center;
+}
+
+.bsb-nav-link {
+  color: var(--bsb-accent);
+  text-decoration: none;
+  font-size: 0.84rem;
+  border-bottom: 1px solid transparent;
+}
+
+.bsb-nav-link:hover { border-bottom-color: var(--bsb-accent); }
+
+.bsb-ticker-wrap {
+  overflow: hidden;
+  border-bottom: 1px solid var(--bsb-line);
+  background: linear-gradient(90deg, #121820, #1a1410 40%, #121820);
+  min-height: 36px;
+}
+
+.fle-ticker {
+  overflow: hidden;
+  padding: 8px 0;
+}
+
+.fle-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: fle-scroll 120s linear infinite;
+}
+
+.fle-ticker-text {
+  white-space: nowrap;
+  font-size: 0.82rem;
+  color: rgba(232, 228, 220, 0.88);
+  letter-spacing: 0.02em;
+  padding-right: 3rem;
+}
+
+@keyframes fle-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.bsb-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 720px) {
+  .bsb-dual { grid-template-columns: 1fr; }
+}
+
+.bsb-human-panel,
+.bsb-ai-panel {
+  padding: 1rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid var(--bsb-line);
+  background: rgba(20, 26, 36, 0.75);
+}
+
+.bsb-human-panel h3,
+.bsb-ai-panel h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bsb-accent);
+  font-weight: 600;
+}
+
+.bsb-human-blurb {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--bsb-text);
+}
+
+.bsb-ai-line {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #9ab8c8;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.bsb-ai-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+  color: var(--bsb-muted);
+}
 
 .bsb-toolbar {
   display: flex;

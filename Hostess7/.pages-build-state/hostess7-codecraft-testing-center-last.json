@@ -1,0 +1,82 @@
+{
+  "ok": true,
+  "schema": "hostess7-codecraft-testing-center-run/v1",
+  "updated": "2026-07-03T10:19:09Z",
+  "passed": false,
+  "required_passed": 1,
+  "required_total": 6,
+  "gates": [
+    {
+      "id": "codecraft_battery",
+      "label": "Codecraft self-eval battery",
+      "required": true,
+      "passed": false,
+      "detail": {
+        "ok": false,
+        "error": "[Errno 2] No such file or directory: 'pythong'"
+      }
+    },
+    {
+      "id": "programming_battery",
+      "label": "Programming stack battery",
+      "required": true,
+      "passed": false,
+      "detail": {
+        "ok": false,
+        "error": "[Errno 2] No such file or directory: 'pythong'"
+      }
+    },
+    {
+      "id": "g16_battery",
+      "label": "G16 compiler battery",
+      "required": true,
+      "passed": false,
+      "detail": {
+        "ok": false,
+        "error": "[Errno 2] No such file or directory: 'pythong'"
+      }
+    },
+    {
+      "id": "programming_panel",
+      "label": "Programming tier gate",
+      "required": true,
+      "passed": false,
+      "detail": {
+        "ok": false,
+        "error": "[Errno 2] No such file or directory: 'pythong'"
+      }
+    },
+    {
+      "id": "g16_panel",
+      "label": "G16 fluency gate",
+      "required": true,
+      "passed": false,
+      "detail": {
+        "ok": false,
+        "error": "[Errno 2] No such file or directory: 'pythong'"
+      }
+    },
+    {
+      "id": "brain_guard",
+      "label": "Brain guard witness",
+      "required": false,
+      "passed": false,
+      "detail": {
+        "ok": false,
+        "error": "[Errno 2] No such file or directory: 'pythong'"
+      }
+    },
+    {
+      "id": "py_compile_lib",
+      "label": "hostess7 modules compile clean",
+      "required": true,
+      "passed": true,
+      "detail": {
+        "compiled": true,
+        "failures": []
+      }
+    }
+  ],
+  "smoke_tests": [],
+  "disclaimer": "Codecraft analysis is educational — operator approves production changes. Testing center validates quality in advance; it does not auto-deploy without your authority."
+}

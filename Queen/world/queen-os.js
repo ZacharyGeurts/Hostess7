@@ -411,11 +411,48 @@
     return doc;
   }
 
+  async function preflightNavigate(url) {
+    const u = String(url || "");
+    const panel = document.body?.dataset?.nexusPanelPort || "9477";
+    const panelRoot = `http://127.0.0.1:${panel}`;
+    if (u.includes(":9488") && !u.includes("/bookmark-jump")) {
+      try {
+        const r = await fetch(`${panelRoot}/api/hostess7-training-viewer/ensure`, {
+          method: "POST",
+          credentials: "omit",
+          headers: { "Content-Type": "application/json" },
+          body: "{}",
+        });
+        const doc = await r.json();
+        if (!doc.ok) throw new Error(doc.error || "training_viewer_unavailable");
+      } catch (e) {
+        const jump = `${panelRoot}/bookmark-jump/?id=h7-training-viewer`;
+        if ($("qb-status")) $("qb-status").textContent = "Training Viewer — ensuring via secure jump…";
+        return jump;
+      }
+    }
+    if (u.includes(":9477") && !u.includes("/bookmark-jump") && !u.includes("/api/")) {
+      try {
+        await fetch(`${panelRoot}/api/health`, { cache: "no-store" });
+      } catch (_) {
+        if ($("qb-status")) $("qb-status").textContent = "Panel :9477 offline — start NEXUS C2 first";
+        throw new Error("panel_offline");
+      }
+    }
+    return url;
+  }
+
   async function navigate(url, extra) {
     if (global.QueenFieldSanity?.stripFieldDepth) {
       url = global.QueenFieldSanity.stripFieldDepth(url);
     } else if (typeof url === "string" && url.includes("field_depth")) {
       url = url.replace(/([?&])field_depth=\d+/g, "").replace(/\?&/, "?").replace(/[?&]$/, "");
+    }
+    try {
+      url = await preflightNavigate(url);
+    } catch (e) {
+      if ($("qb-status")) $("qb-status").textContent = e.message || String(e);
+      return { ok: false, error: e.message };
     }
     if (benchmarkMode() && isTopLevelBenchUrl(url)) {
       window.location.assign(url);
@@ -650,22 +687,43 @@
   let _terminalScriptPromise = null;
 
   function ensureTerminalReady() {
-    if (globalThis.QueenGnuTerminal?.init) return Promise.resolve();
+    if (globalThis.QueenGnuTerminal?.init && globalThis.QueenGnuTerminal.mount !== globalThis.KilroyUniversalTerminal?.mount) {
+      return Promise.resolve();
+    }
     if (_terminalScriptPromise) return _terminalScriptPromise;
     _terminalScriptPromise = new Promise((resolve, reject) => {
-      const existing = document.querySelector('script[src*="queen-gnu-terminal.js"]');
-      if (existing) {
-        existing.addEventListener("load", () => resolve(), { once: true });
-        existing.addEventListener("error", reject, { once: true });
-        if (globalThis.QueenGnuTerminal) resolve();
-        return;
-      }
-      const s = document.createElement("script");
-      s.src = "queen-gnu-terminal.js";
-      s.defer = true;
-      s.onload = () => resolve();
-      s.onerror = () => reject(new Error("queen-gnu-terminal.js load failed"));
-      document.body.appendChild(s);
+      const loadCss = (href) =>
+        new Promise((res, rej) => {
+          if (document.querySelector('link[href*="' + href + '"]')) {
+            res();
+            return;
+          }
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = href;
+          link.onload = () => res();
+          link.onerror = () => rej(new Error(href + " load failed"));
+          document.head.appendChild(link);
+        });
+      const loadOne = (src) =>
+        new Promise((res, rej) => {
+          if (document.querySelector('script[src*="' + src + '"]')) {
+            res();
+            return;
+          }
+          const s = document.createElement("script");
+          s.src = src;
+          s.defer = true;
+          s.onload = () => res();
+          s.onerror = () => rej(new Error(src + " load failed"));
+          document.body.appendChild(s);
+        });
+      loadCss("queen-gnu-terminal.css")
+        .then(() => loadOne("kilroy-universal-shell.js"))
+        .then(() => loadOne("queen-gnu-terminal.js"))
+        .then(() => loadOne("kilroy-universal-terminal.js"))
+        .then(() => resolve())
+        .catch(reject);
     });
     return _terminalScriptPromise;
   }
@@ -693,7 +751,15 @@
       globalThis.QueenGameRoom.refresh();
     }
     if (isTerminal) {
-      void ensureTerminalReady().then(() => globalThis.QueenGnuTerminal?.init?.());
+      void ensureTerminalReady().then(() => {
+        const host = document.getElementById("qgt-shell");
+        if (host && !host.dataset.kutMounted) {
+          host.innerHTML = "";
+          void (globalThis.KilroyUniversalTerminal?.mount || globalThis.QueenGnuTerminal?.mount)?.(host);
+        } else {
+          globalThis.KilroyUniversalTerminal?.init?.() || globalThis.QueenGnuTerminal?.init?.();
+        }
+      });
     }
   }
 

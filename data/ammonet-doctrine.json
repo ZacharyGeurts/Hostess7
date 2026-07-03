@@ -1,0 +1,48 @@
+{
+  "schema": "ammonet-doctrine/v1",
+  "title": "AmmoNet — sovereign field ISP",
+  "product": "AmmoNet",
+  "tagline": "The new ISP — safe fields, steel plates, Hostess 7 for everyone",
+  "version": "1.0.0",
+  "evolves": "znetwork-doctrine/v4",
+  "motto": "100% pipe through safe fields — relayer owns ingress/egress; civilians pass; threats nuked.",
+  "isp_posture": {
+    "pipe_percent_target": 100,
+    "sole_stack_on_field": true,
+    "civilian_passthrough": true,
+    "safe_fields_default": true,
+    "final_internet": "data/final-internet-doctrine.json",
+    "one_voice": "data/field-internet-unified-doctrine.json",
+    "github_always_open": true
+  },
+  "layers": [
+    {"id": "hardware", "label": "Hardware", "z": 0},
+    {"id": "ammonet", "label": "AmmoNet ISP", "z": 1, "api": "/api/ammonet"},
+    {"id": "znetwork", "label": "ZNetwork relayer", "z": 2, "api": "/api/znetwork"},
+    {"id": "queen", "label": "Queen Browser RTX", "z": 3},
+    {"id": "ammoos", "label": "AmmoOS", "z": 4},
+    {"id": "hostess7", "label": "Hostess 7", "z": 5, "boss": true}
+  ],
+  "surface_catalog": "data/ammonet-public-surfaces.json",
+  "public_modules": [
+    {"id": "internet_clean", "label": "Internet Clean", "api": "/api/hostess7/internet-clean", "pages": "/bookmark-jump/"},
+    {"id": "command_c2", "label": "NEXUS C2 Basement", "pages": "/command/", "pages_url": "https://zacharygeurts.github.io/command/"},
+    {"id": "desktop", "label": "AmmoOS Desktop", "pages": "/desktop/"},
+    {"id": "queen_browser", "label": "Queen Browser", "pages": "/queen/browser.html"},
+    {"id": "training_room", "label": "Training Room", "pages": "/training-room/"},
+    {"id": "g16_compiler", "label": "Grok16 Online", "pages": "/g16-build-output/"},
+    {"id": "internet_unified", "label": "Field Internet Unified", "api": "/api/field-internet", "module": "lib/field-internet-unified.py", "boss": "hostess7"},
+    {"id": "hostess7_github_interaction", "label": "Hostess 7 GitHub Interaction", "api": "/api/hostess7/interaction", "pages": "https://zacharygeurts.github.io/Hostess7/", "boss": "hostess7"},
+    {"id": "botnet_dns_dhcp", "label": "Bot Network DNS+DHCP", "api": "/api/field-botnet-dns-dhcp", "module": "lib/field-botnet-dns-dhcp.py", "boss": "hostess7", "layer": -2},
+    {"id": "lab_sovereign", "label": "Lab Sovereign", "api": "/api/hostess7/lab"},
+    {"id": "final_eye", "label": "Final Eye", "api": "/api/queen-eyeball"},
+    {"id": "steel_plates", "label": "Steel Plates", "api": "/api/steel-plates"},
+    {"id": "plate_meld", "label": "Plate Meld", "api": "/api/plate-meld"},
+    {"id": "qemu_lane", "label": "QEMU Secure Transfer", "api": "/api/qemu-world-status"},
+    {"id": "znetwork_vault", "label": "Secure Vault", "pages": "/field-znetwork-vault/"}
+  ],
+  "module": "lib/ammonet-field.py",
+  "api": "/api/ammonet",
+  "pages_hub": "/ammonet/",
+  "notice": "All Rights Reserved — AmmoNet · Final Internet · Hostess 7"
+}

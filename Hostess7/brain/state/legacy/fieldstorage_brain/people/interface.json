@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "design": "tag-first people brain \u2014 folders only for Owner review workflow",
+  "panels": {
+    "browse": "Filter by tags (disposition, role, virtue) \u2014 not folder tree",
+    "lookup": "One file per person: entities/{id}.json \u2014 name, urls, claims, lie_profile",
+    "review": "review/ folder \u2014 bad-person candidates for ZacharyGeurts approval",
+    "assess": "Run lie-method stack on claim \u2192 update lie_profile on entity",
+    "celebrities": "Tag celebrity + respect level \u2014 H7 learns admiration not worship"
+  },
+  "commands": {
+    "cli": [
+      "./Hostess7.sh people status",
+      "./Hostess7.sh people list [--tag liar]",
+      "./Hostess7.sh people lookup <name|id>",
+      "./Hostess7.sh people add <name> --tag celebrity --url <url>",
+      "./Hostess7.sh people tag <id> <tag>",
+      "./Hostess7.sh people assess <id> \"claim text\"",
+      "./Hostess7.sh people review",
+      "./Hostess7.sh personality",
+      "./Hostess7.sh lie-methods"
+    ],
+    "talk": [
+      "/people status",
+      "/people lookup Amouranth",
+      "/people review",
+      "/personality",
+      "/lie-methods"
+    ]
+  },
+  "review_workflow": [
+    "1. Entity tagged liar|terrorist|bad \u2192 copy to review/{id}.json",
+    "2. Owner runs ./Hostess7.sh people review",
+    "3. Owner: people approve <id> or people reject <id>",
+    "4. Approved \u2192 owner_approved tag; Rejected \u2192 flag removed, review file archived"
+  ],
+  "disclaimer": "People registry is Owner-curated intelligence \u2014 not public accusation, not legal verdict. Educational lie scoring only. Respect celebrities; do not harass. Bad tags require Owner review.",
+  "updated": "2026-07-02T19:40:36.355313+00:00"
+}

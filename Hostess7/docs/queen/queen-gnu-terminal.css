@@ -253,14 +253,14 @@ body.qw-terminal-mode .qb-viewport {
 
 .qgt-deck {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 72px min(360px, 32vw) 14px;
+  grid-template-columns: minmax(0, 1fr) 72px min(360px, 32vw) 20px;
   flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 
 .qgt-deck[data-miniview="0"] {
-  grid-template-columns: minmax(0, 1fr) min(360px, 32vw) 14px;
+  grid-template-columns: minmax(0, 1fr) min(360px, 32vw) 20px;
 }
 
 .qgt-deck[data-miniview="0"] .qgt-miniview {
@@ -268,7 +268,7 @@ body.qw-terminal-mode .qb-viewport {
 }
 
 .qgt-deck[data-mini="0"] {
-  grid-template-columns: minmax(0, 1fr) 72px 14px;
+  grid-template-columns: minmax(0, 1fr) 72px 20px;
 }
 
 .qgt-deck[data-mini="0"] .qgt-minibrowser-pane {
@@ -276,7 +276,7 @@ body.qw-terminal-mode .qb-viewport {
 }
 
 .qgt-deck[data-miniview="0"][data-mini="0"] {
-  grid-template-columns: minmax(0, 1fr) 14px;
+  grid-template-columns: minmax(0, 1fr) 20px;
 }
 
 .qgt-main {
@@ -545,28 +545,72 @@ body.qw-terminal-mode .qb-viewport {
   cursor: pointer;
 }
 
+.qgt-mini-frame {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: none;
+  background: #030806;
+}
+
 .qgt-scrolltrack {
-  position: relative;
-  background: rgba(8, 14, 10, 0.95);
-  border-left: 1px solid rgba(62, 207, 142, 0.12);
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: linear-gradient(180deg, rgba(6, 12, 8, 0.98) 0%, rgba(4, 10, 6, 0.98) 100%);
+  border-left: 1px solid rgba(62, 207, 142, 0.18);
   touch-action: none;
+  user-select: none;
+}
+
+.qgt-scrollbtn {
+  flex-shrink: 0;
+  border: none;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.12);
+  background: rgba(12, 24, 16, 0.92);
+  color: rgba(160, 230, 190, 0.85);
+  font: 10px/1 var(--qm-mono, monospace);
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.qgt-scrollbtn--down {
+  border-bottom: none;
+  border-top: 1px solid rgba(62, 207, 142, 0.12);
+}
+
+.qgt-scrollbtn:hover {
+  background: rgba(34, 197, 94, 0.22);
+  color: #e8fff0;
+}
+
+.qgt-scrollthumb-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 48px;
+  margin: 2px 0;
+  cursor: pointer;
 }
 
 .qgt-scrollthumb {
   position: absolute;
-  left: 2px;
-  right: 2px;
-  min-height: 24px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #3ecf8e 0%, #22c55e 100%);
-  border: 1px solid rgba(180, 255, 210, 0.2);
-  box-shadow: 0 0 10px var(--qgt-green-glow);
+  left: 3px;
+  right: 3px;
+  min-height: 28px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #3ecf8e 0%, #22c55e 55%, #15803d 100%);
+  border: 1px solid rgba(180, 255, 210, 0.28);
+  box-shadow: 0 0 12px var(--qgt-green-glow), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  cursor: grab;
 }
 
-.qgt-scrolltrack:hover .qgt-scrollthumb,
 .qgt-scrolltrack.dragging .qgt-scrollthumb {
-  background: linear-gradient(180deg, #5dffa8 0%, #3ecf8e 100%);
+  cursor: grabbing;
+  background: linear-gradient(180deg, #6dffb8 0%, #3ecf8e 55%, #22c55e 100%);
+}
+
+.qgt-scrolltrack:hover .qgt-scrollthumb {
+  box-shadow: 0 0 16px var(--qgt-green-glow), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .qgt-embed {
@@ -583,11 +627,21 @@ body.qw-terminal-mode .qb-viewport {
   box-shadow: 0 0 12px var(--qgt-green-glow);
 }
 
+.qgt-status-cli {
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--qgt-green-dim);
+  padding: 1px 6px;
+  border: 1px solid rgba(62, 207, 142, 0.2);
+  border-radius: 4px;
+}
+
 @media (max-width: 900px) {
   .qgt-deck,
   .qgt-deck[data-miniview="1"],
   .qgt-deck[data-mini="1"] {
-    grid-template-columns: minmax(0, 1fr) 14px;
+    grid-template-columns: minmax(0, 1fr) 20px;
   }
   .qgt-miniview,
   .qgt-minibrowser-pane {

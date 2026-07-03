@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+"""Fast unified everyone counter — botnet + GitHub + executables · distributed field."""
+from __future__ import annotations
+
+import json
+import os
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", Path(__file__).resolve().parents[1]))
+STATE = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state"))
+PANEL = STATE / "field-everyone-counter-panel.json"
+CACHE_TTL = float(os.environ.get("EVERYONE_COUNTER_TTL_SEC", "0.8"))
+
+
+def _utc() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _load(path: Path, default: Any = None) -> Any:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+        return default if default is not None else {}
+
+
+def _save(path: Path, doc: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(path)
+
+
+def _run_json(rel: str, args: list[str], *, timeout: float = 6.0) -> dict[str, Any]:
+    py = INSTALL / rel
+    if not py.is_file():
+        return {}
+    try:
+        import subprocess
+        proc = subprocess.run(
+            [sys.executable, str(py), *args],
+            cwd=str(INSTALL),
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)},
+        )
+        raw = (proc.stdout or "").strip()
+        if raw.startswith("{"):
+            return json.loads(raw)
+    except Exception:
+        pass
+    return {}
+
+
+def _executable_count() -> dict[str, Any]:
+    scripts = _load(INSTALL / "data" / "field-scripts-registry.json", {})
+    canonical = scripts.get("canonical") or {}
+    tools = _load(INSTALL / "data" / "field-tools-registry.json", {})
+    tool_n = len(tools.get("tools") or tools.get("entries") or [])
+    host = _load(INSTALL / "data" / "field-host-desktop-doctrine.json", {})
+    programs = host.get("programs") or host.get("shell_programs") or []
+    prog_n = len(programs) if isinstance(programs, list) else 0
+    favorites = _load(INSTALL / "docs" / "github-favorites.json", {})
+    fav_n = len(favorites.get("favorites") or [])
+    sealed = _load(STATE / "field-executable-seal-index.json", {})
+    sealed_n = int(sealed.get("count") or len(sealed.get("executables") or []))
+    count = max(len(canonical), prog_n, sealed_n) + min(tool_n, 48)
+    if count == 0:
+        count = len(canonical) + prog_n
+    return {
+        "count": count,
+        "canonical_scripts": len(canonical),
+        "shell_programs": prog_n,
+        "tools": tool_n,
+        "github_favorites": fav_n,
+        "sealed_executables": sealed_n,
+    }
+
+
+def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
+    if fast and PANEL.is_file():
+        cached = _load(PANEL, {})
+        if cached.get("schema") == "field-everyone-counter/v1":
+            age = time.time() - float(cached.get("_cached_at") or 0)
+            if age < CACHE_TTL:
+                cached["cached"] = True
+                cached["cache_age_ms"] = int(age * 1000)
+                return cached
+
+    botnet = _load(STATE / "field-botnet-dns-dhcp-panel.json", {})
+    if not botnet.get("bot_network") and fast:
+        botnet = _run_json("lib/field-botnet-dns-dhcp.py", ["keepalive"], timeout=4.0)
+    bot_nodes = int((botnet.get("bot_network") or {}).get("node_count") or 0)
+    reg = _load(STATE / "field-botnet-registry.json", {})
+    reg_members = len(reg.get("members") or [])
+
+    gh_legacy = _load(STATE / "field-github-legacy-probe.json", {})
+    if not gh_legacy.get("open_count"):
+        gh_legacy = _load(STATE / "field-internet-github.json", {})
+    gh_open = int(gh_legacy.get("open_count") or gh_legacy.get("canonical_open") or 0)
+    gh_everyone = _load(STATE / "field-github-everyone-panel.json", {})
+    gh_people = max(gh_open, int(gh_everyone.get("open_count") or 0), reg_members)
+    favorites = _load(INSTALL / "docs" / "github-favorites.json", {})
+    gh_stack = len(favorites.get("favorites") or [])
+
+    exe = _executable_count()
+    exe_n = int(exe.get("count") or 0)
+
+    loopback = 1
+    distributed_extra = max(0, bot_nodes - reg_members) if bot_nodes else 0
+    everyone_total = bot_nodes + gh_people + exe_n + loopback
+
+    perf = _load(STATE / "field-performance-flyout-cache.json", {})
+    if not perf.get("cpu_pct") and fast:
+        perf = _run_json("lib/field-performance-flyout.py", ["json"], timeout=3.0)
+
+    doc = {
+        "ok": True,
+        "schema": "field-everyone-counter/v1",
+        "title": "Everyone — botnet · GitHub · executables",
+        "motto": "Fast live counter — distributed botnet + GitHub for everyone + sealed executables",
+        "updated": _utc(),
+        "boss": "hostess7",
+        "version": _load(INSTALL / "data" / "hostess7-platform-release.json", {}).get("version"),
+        "distributed_botnet": {
+            "enabled": True,
+            "nodes": bot_nodes,
+            "registry_members": reg_members,
+            "distributed_relay": distributed_extra,
+            "dns_dhcp_stable": bool((botnet.get("dns_dhcp") or {}).get("combined")),
+            "github_open": bool((botnet.get("github_control_plane") or {}).get("github_open")),
+        },
+        "lanes": {
+            "botnet": {"count": bot_nodes, "label": "Botnet nodes"},
+            "github_people": {"count": gh_people, "label": "GitHub people", "stack_repos": gh_stack, "open_endpoints": gh_open},
+            "executable_people": {"count": exe_n, "label": "Executable programs", **exe},
+            "loopback_sovereign": {"count": loopback, "label": "This field"},
+        },
+        "everyone_total": everyone_total,
+        "perf": {
+            "cpu_pct": perf.get("cpu_pct"),
+            "mem_pct": (perf.get("memory") or {}).get("used_pct"),
+            "load": (perf.get("loadavg") or [None])[0],
+        },
+        "services": {
+            "dns": (botnet.get("dns_dhcp") or {}).get("dns", {}).get("running"),
+            "dhcp": (botnet.get("dns_dhcp") or {}).get("dhcp", {}).get("running"),
+            "panel": True,
+        },
+        "api": "/api/field-everyone-counter",
+        "poll_ms": 1000,
+        "fast": fast,
+        "_cached_at": time.time(),
+    }
+    if write:
+        _save(PANEL, doc)
+    return doc
+
+
+def main() -> int:
+    cmd = (sys.argv[1] if len(sys.argv) > 1 else "json").strip().lower()
+    if cmd in ("json", "panel", "fast"):
+        print(json.dumps(snapshot(write=True, fast=True), indent=2))
+        return 0
+    if cmd == "full":
+        print(json.dumps(snapshot(write=True, fast=False), indent=2))
+        return 0
+    print(json.dumps({"usage": "field-everyone-counter.py [json|fast|full]"}, indent=2))
+    return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

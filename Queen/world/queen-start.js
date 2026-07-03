@@ -39,7 +39,7 @@
       programs: [
         { id: "hostess-hub", label: "AI Training Hub", hint: "Every AI lane", url: "/world/queen-hostess7-hub.html" },
         { id: "hostess", label: "Hostess Brain", hint: "Super intelligence", url: "queen://hostess" },
-        { id: "hostess-training", label: "Training Viewer", hint: "Connected models", url: "http://127.0.0.1:9488/" },
+        { id: "hostess-training", label: "Training Viewer", hint: "Connected models", url: "http://127.0.0.1:9477/bookmark-jump/?id=h7-training-viewer" },
         { id: "eyeball", label: "Final_Eye", hint: "Vision NN", url: "queen://eyeball" },
         { id: "final-ear-manager", label: "Final Ear", hint: "Audio NN", url: "/world/queen-final-ear-manager.html" },
         { id: "forge", label: "Forge", hint: "Build deck", url: "/gui/queen-build-deck.html" },

@@ -1,0 +1,602 @@
+{
+  "schema": "grok15-language-core-panel/v1",
+  "updated": "2026-07-03T10:24:11Z",
+  "ok": true,
+  "motto": "One explaining core, thin per-language deltas — 57 languages, zero repeated boilerplate.",
+  "condensed": true,
+  "facet": "language_core",
+  "counts": {
+    "languages": 58,
+    "grok16_languages": 79,
+    "core_modules": 43,
+    "core_leaves": 58,
+    "compression_ratio": 1.35,
+    "redundant_chars_avoided_est": 40280,
+    "condensed_chars_est": 267680
+  },
+  "core_shelf": "library/dewey/000-computer-science/explaining_core",
+  "shared_sections": [
+    "canonical_atoms",
+    "secure_chamber",
+    "reading_guide",
+    "g16_compile_path",
+    "performance_notes",
+    "research_references",
+    "pitfalls_base",
+    "nexus_where"
+  ],
+  "sample_modules": [
+    {
+      "id": "lang_core:basic",
+      "family": "basic",
+      "label": "Basic",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 6,
+      "command_surface": 312,
+      "leaves": [
+        {
+          "id": "lang_core:basic",
+          "lang_id": "basic",
+          "label": "Basic",
+          "command_count": 59,
+          "delta_count": 59,
+          "extends": null,
+          "driver": "g16-qbasic",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:qbasic",
+          "lang_id": "qbasic",
+          "label": "Qbasic",
+          "command_count": 84,
+          "delta_count": 25,
+          "extends": "basic",
+          "driver": "g16-qbasic",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:quickbasic",
+          "lang_id": "quickbasic",
+          "label": "Quickbasic",
+          "command_count": 35,
+          "delta_count": 10,
+          "extends": "qbasic",
+          "driver": "g16-qbasic",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:freebasic",
+          "lang_id": "freebasic",
+          "label": "Freebasic",
+          "command_count": 28,
+          "delta_count": 18,
+          "extends": "quickbasic",
+          "driver": "g16-fpc",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:visual_basic",
+          "lang_id": "visual_basic",
+          "label": "Visual Basic",
+          "command_count": 79,
+          "delta_count": 20,
+          "extends": "basic",
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:vba",
+          "lang_id": "vba",
+          "label": "Vba",
+          "command_count": 27,
+          "delta_count": 7,
+          "extends": "visual_basic",
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:c",
+      "family": "c",
+      "label": "C",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 4,
+      "command_surface": 157,
+      "leaves": [
+        {
+          "id": "lang_core:c",
+          "lang_id": "c",
+          "label": "C",
+          "command_count": 46,
+          "delta_count": 46,
+          "extends": null,
+          "driver": "g16-cc",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:cxx",
+          "lang_id": "cxx",
+          "label": "Cxx",
+          "command_count": 47,
+          "delta_count": 47,
+          "extends": null,
+          "driver": "g16-cxx",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:objc",
+          "lang_id": "objc",
+          "label": "Objc",
+          "command_count": 30,
+          "delta_count": 30,
+          "extends": null,
+          "driver": "g16-objc",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:asm",
+          "lang_id": "asm",
+          "label": "Asm",
+          "command_count": 34,
+          "delta_count": 34,
+          "extends": null,
+          "driver": "g16-as",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:cobol",
+      "family": "cobol",
+      "label": "Cobol",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 2,
+      "command_surface": 57,
+      "leaves": [
+        {
+          "id": "lang_core:cobol",
+          "lang_id": "cobol",
+          "label": "Cobol",
+          "command_count": 26,
+          "delta_count": 26,
+          "extends": null,
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:cobol_copy",
+          "lang_id": "cobol_copy",
+          "label": "Cobol Copy",
+          "command_count": 31,
+          "delta_count": 5,
+          "extends": "cobol",
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:field",
+      "family": "field",
+      "label": "Field",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 2,
+      "command_surface": 78,
+      "leaves": [
+        {
+          "id": "lang_core:field",
+          "lang_id": "field",
+          "label": "Field",
+          "command_count": 20,
+          "delta_count": 20,
+          "extends": null,
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:ammolang",
+          "lang_id": "ammolang",
+          "label": "Ammolang",
+          "command_count": 58,
+          "delta_count": 38,
+          "extends": "field",
+          "driver": "g16-aml",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:java",
+      "family": "java",
+      "label": "Java",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 2,
+      "command_surface": 74,
+      "leaves": [
+        {
+          "id": "lang_core:java",
+          "lang_id": "java",
+          "label": "Java",
+          "command_count": 38,
+          "delta_count": 38,
+          "extends": null,
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:kotlin",
+          "lang_id": "kotlin",
+          "label": "Kotlin",
+          "command_count": 36,
+          "delta_count": 36,
+          "extends": null,
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:javascript",
+      "family": "javascript",
+      "label": "Javascript",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 2,
+      "command_surface": 105,
+      "leaves": [
+        {
+          "id": "lang_core:javascript",
+          "lang_id": "javascript",
+          "label": "Javascript",
+          "command_count": 46,
+          "delta_count": 46,
+          "extends": null,
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:typescript",
+          "lang_id": "typescript",
+          "label": "Typescript",
+          "command_count": 59,
+          "delta_count": 13,
+          "extends": "javascript",
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:pascal",
+      "family": "pascal",
+      "label": "Pascal",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 4,
+      "command_surface": 262,
+      "leaves": [
+        {
+          "id": "lang_core:pascal",
+          "lang_id": "pascal",
+          "label": "Pascal",
+          "command_count": 48,
+          "delta_count": 48,
+          "extends": null,
+          "driver": "g16-fpc",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:turbo_pascal",
+          "lang_id": "turbo_pascal",
+          "label": "Turbo Pascal",
+          "command_count": 81,
+          "delta_count": 33,
+          "extends": "pascal",
+          "driver": "g16-fpc",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:delphi",
+          "lang_id": "delphi",
+          "label": "Delphi",
+          "command_count": 71,
+          "delta_count": 23,
+          "extends": "pascal",
+          "driver": "g16-fpc",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        },
+        {
+          "id": "lang_core:modula2",
+          "lang_id": "modula2",
+          "label": "Modula2",
+          "command_count": 62,
+          "delta_count": 14,
+          "extends": "pascal",
+          "driver": "g16-fpc",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:ada",
+      "family": "ada",
+      "label": "Ada",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 1,
+      "command_surface": 29,
+      "leaves": [
+        {
+          "id": "lang_core:ada",
+          "lang_id": "ada",
+          "label": "Ada",
+          "command_count": 29,
+          "delta_count": 29,
+          "extends": null,
+          "driver": "g16-gnat",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:algol",
+      "family": "algol",
+      "label": "Algol",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 1,
+      "command_surface": 19,
+      "leaves": [
+        {
+          "id": "lang_core:algol",
+          "lang_id": "algol",
+          "label": "Algol",
+          "command_count": 19,
+          "delta_count": 19,
+          "extends": null,
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:apl",
+      "family": "apl",
+      "label": "Apl",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 1,
+      "command_surface": 29,
+      "leaves": [
+        {
+          "id": "lang_core:apl",
+          "lang_id": "apl",
+          "label": "Apl",
+          "command_count": 29,
+          "delta_count": 29,
+          "extends": null,
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:clojure",
+      "family": "clojure",
+      "label": "Clojure",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 1,
+      "command_surface": 27,
+      "leaves": [
+        {
+          "id": "lang_core:clojure",
+          "lang_id": "clojure",
+          "label": "Clojure",
+          "command_count": 27,
+          "delta_count": 27,
+          "extends": null,
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    },
+    {
+      "id": "lang_core:csharp",
+      "family": "csharp",
+      "label": "Csharp",
+      "kind": "language_core_family",
+      "facet": "language_core",
+      "member_count": 1,
+      "command_surface": 37,
+      "leaves": [
+        {
+          "id": "lang_core:csharp",
+          "lang_id": "csharp",
+          "label": "Csharp",
+          "command_count": 37,
+          "delta_count": 37,
+          "extends": null,
+          "driver": "g16-interp",
+          "secure_chamber": true,
+          "condensed_from": [
+            "combinatronic_seed",
+            "grok16_languages"
+          ]
+        }
+      ],
+      "condensed_from": [
+        "combinatronic_seed",
+        "grok16_languages",
+        "explaining_series"
+      ]
+    }
+  ],
+  "posture": "Grok15 language core — 58 langs → 43 family modules (1.35× condense); explaining_core hoists shared boilerplate",
+  "elapsed_ms": 14.54
+}

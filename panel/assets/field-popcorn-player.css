@@ -220,6 +220,76 @@ html, body {
   color: var(--pc-green);
   border: 1px solid rgba(63,185,80,0.35);
 }
+
+/* Library card — mini seek rail at thumbnail resolution (rating stable pause moment) */
+.pc-card-time-stack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 6px 5px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.78) 38%, rgba(0, 0, 0, 0.92) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+.pc-card-time-label {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 8px;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  text-align: center;
+  color: rgba(238, 242, 255, 0.94);
+  text-shadow: 0 1px 4px #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pc-card-time-label em.pc-card-time-at {
+  font-style: normal;
+  color: var(--pc-green);
+}
+.pc-card-time-rail {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: visible;
+}
+.pc-card-time-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--pc-green), rgba(244, 114, 182, 0.88));
+  box-shadow: 0 0 6px rgba(63, 185, 80, 0.35);
+}
+.pc-card-time-pin,
+.pc-card-time-resume {
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.pc-card-time-pin {
+  background: var(--pc-chrome);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.4), var(--pc-glow-pink);
+  z-index: 2;
+}
+.pc-card-time-resume {
+  width: 4px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 1px;
+  background: var(--pc-green);
+  box-shadow: 0 0 4px rgba(63, 185, 80, 0.55);
+  z-index: 1;
+}
 .pc-card-badge {
   position: absolute;
   top: 8px;

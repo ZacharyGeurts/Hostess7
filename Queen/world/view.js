@@ -6,6 +6,25 @@
   "use strict";
 
   const API = "/api/queen-file-browser";
+  const DESKTOP_PIN_KEY = "field-desktop-pins-v1";
+  const PLACE_ICONS = {
+    kilroy: "🏠",
+    sg: "💻",
+    queen: "👑",
+    hostess7: "📦",
+    grok16: "⚡",
+    amouranthrtx: "🔬",
+    zocr: "📷",
+    final_eye: "👁",
+    final_ear: "👂",
+  };
+  const PLACE_LABELS = {
+    kilroy: "Home",
+    sg: "Computer",
+    queen: "Queen",
+    hostess7: "Hostess 7",
+    grok16: "Grok16",
+  };
   const state = {
     path: "",
     roots: [],
@@ -474,6 +493,71 @@
       },
     ];
     await persistHotbar(slots);
+  }
+
+  function placeLabel(root) {
+    return PLACE_LABELS[root.id] || root.label || root.id;
+  }
+
+  function renderPlaces() {
+    const el = $("qf-places");
+    if (!el) return;
+    const roots = state.roots || [];
+    if (!roots.length) {
+      el.innerHTML = "";
+      return;
+    }
+    el.innerHTML =
+      '<div class="qf-places-head">Places</div>' +
+      '<ul class="qf-places-list">' +
+      roots
+        .map((r) => {
+          const active = state.path && state.path.startsWith(r.path);
+          const ico = PLACE_ICONS[r.id] || "📁";
+          return `<li><button type="button" class="qf-place${active ? " active" : ""}" data-path="${esc(r.path)}">
+            <span class="qf-place-ico">${ico}</span>
+            <span class="qf-place-label">${esc(placeLabel(r))}</span>
+          </button></li>`;
+        })
+        .join("") +
+      "</ul>";
+    el.querySelectorAll("[data-path]").forEach((btn) => {
+      btn.addEventListener("click", () => openPath(btn.dataset.path));
+    });
+  }
+
+  async function pinPathToTaskbar(path, label) {
+    const name = label || path.split("/").filter(Boolean).pop() || "Folder";
+    try {
+      sessionStorage.setItem("field-view-taskbar-path", JSON.stringify({ path, name }));
+      const r = await fetch("/api/field-taskbar-pins", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({ action: "pin", id: "view" }),
+      });
+      const out = await r.json();
+      $("qf-status-right").textContent = out.ok !== false
+        ? `Pinned to taskbar · ${name}`
+        : out.error || "taskbar pin failed";
+    } catch (_) {
+      $("qf-status-right").textContent = "Taskbar pin unavailable";
+    }
+  }
+
+  function pinFolderToDesktop(path, label) {
+    const name = label || path.split("/").filter(Boolean).pop() || "Folder";
+    const pin = { type: "folder", path, name, ts: Date.now() };
+    try {
+      const raw = localStorage.getItem("field-view-folder-pins-v1");
+      const slots = raw ? JSON.parse(raw) : [];
+      const list = Array.isArray(slots) ? slots.filter((s) => s.path !== path) : [];
+      list.unshift(pin);
+      localStorage.setItem("field-view-folder-pins-v1", JSON.stringify(list.slice(0, 24)));
+      $("qf-status-right").textContent = `Pinned to desktop · ${name}`;
+    } catch (_) {
+      $("qf-status-right").textContent = "Desktop pin saved locally";
+    }
   }
 
   function renderTree(tree, container) {
@@ -1044,7 +1128,27 @@
     }
     items.push({ id: "hotbar", label: "Add to wishlist", action: () => addToHotbar(entry) });
     if (isDir) {
-      items.push({ id: "dock", label: "Dock folder", action: () => api({ action: "dock_push", path: entry.path }).then((o) => { if (o.ok) { state.dock = o.dock?.slots || []; renderDock(); } }) });
+      items.push({
+        id: "dock",
+        label: "Pin to sidebar",
+        action: () =>
+          api({ action: "dock_push", path: entry.path }).then((o) => {
+            if (o.ok) {
+              state.dock = o.dock?.slots || [];
+              renderDock();
+            }
+          }),
+      });
+      items.push({
+        id: "desk-pin",
+        label: "Pin to desktop",
+        action: () => pinFolderToDesktop(entry.path, entry.name),
+      });
+      items.push({
+        id: "bar-pin",
+        label: "Pin to taskbar",
+        action: () => pinPathToTaskbar(entry.path, entry.name),
+      });
     }
     items.push({ id: "copy", label: "Copy path", action: () => copyPath(entry.path) });
     if (!isDir) {
@@ -1314,6 +1418,7 @@
     }
     state.path = out.path;
     state.launchables = out.launchables || [];
+    renderPlaces();
     renderCrumbs(state.path);
     renderMobilePickers();
     renderLaunchablesPanel(state.launchables);
@@ -1860,6 +1965,7 @@
     renderFolderMenu();
     renderHotbar();
     renderDock();
+    renderPlaces();
     updateNavButtons();
     renderMobilePickers();
     const navPath = state.nav?.stack?.[state.nav?.index ?? -1];

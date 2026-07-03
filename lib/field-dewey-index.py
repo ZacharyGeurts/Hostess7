@@ -61,6 +61,7 @@ ID_TAG_RULES: list[tuple[re.Pattern[str], list[str]]] = [
     (re.compile(r"^exploring_mathematics"), ["exploring", "stem", "mathematics", "science"]),
     (re.compile(r"^exploring_history"), ["exploring", "history", "humanities"]),
     (re.compile(r"^exploring_geography"), ["exploring", "geography", "humanities"]),
+    (re.compile(r"^exploring_image_generation"), ["exploring", "imaging", "image-generation", "video", "hostess7", "final_eye", "arts"]),
     (re.compile(r"^exploring_engineering"), ["exploring", "engineering", "technology"]),
     (re.compile(r"^exploring_vehicles"), ["exploring", "vehicles", "transport"]),
     (re.compile(r"^exploring_hostess_7"), ["exploring", "biography", "hostess7", "exploring_self", "solidification"]),
@@ -668,6 +669,147 @@ def facets_panel() -> dict[str, Any]:
     }
 
 
+def _polish_text(text: str) -> str:
+    """Final Eye line polish — readable running text for humans and librarians."""
+    s = str(text or "")
+    s = re.sub(r"\s+", " ", s)
+    s = re.sub(r"\s*—\s*", " — ", s)
+    s = re.sub(r"\s*–\s*", " – ", s)
+    s = s.replace("\u201c", '"').replace("\u201d", '"').replace("\u2018", "'").replace("\u2019", "'")
+    s = re.sub(r"\.{4,}", "…", s)
+    s = re.sub(r"\s+([,.;:!?])", r"\1", s)
+    return s.strip()
+
+
+def _friendly_shelf(ent: dict[str, Any]) -> str:
+    """Short shelf name for running text — readable for librarians and readers."""
+    shelf = str(ent.get("shelf") or "").strip()
+    dewey = str(ent.get("dewey") or "").strip()
+    dewey_label = _polish_text(ent.get("dewey_label") or "")
+    shelf_title = _polish_text(ent.get("shelf_title") or "")
+    main = re.sub(r"[^0-9].*", "", dewey)[:3]
+    short = DEWEY_LABELS.get(main) or DEWEY_LABELS.get(dewey[:3], "")
+
+    if "/" in shelf:
+        leaf = shelf.split("/")[-1].replace("-", " ").replace("_", " ").strip()
+        parent = shelf.split("/")[0]
+        if leaf in ("explaining", "exploring", "card-catalog"):
+            leaf = ""
+        if leaf and len(leaf) <= 36:
+            return leaf.title()
+        slug_tail = parent.split("-", 1)
+        if len(slug_tail) > 1 and len(slug_tail[1]) <= 36:
+            return slug_tail[1].replace("-", " ").title()
+
+    if short and len(short) <= 44:
+        return short
+    if shelf_title and len(shelf_title) <= 44:
+        return shelf_title
+    if dewey_label and len(dewey_label) <= 44:
+        return dewey_label
+    if shelf:
+        slug_tail = shelf.split("/")[0].split("-", 1)
+        if len(slug_tail) > 1:
+            return slug_tail[1].replace("-", " ").title()
+    return short or (f"Dewey {dewey}" if dewey else "")
+
+
+def _human_line(ent: dict[str, Any]) -> str:
+    title = _polish_text(ent.get("title") or ent.get("id") or "Untitled volume")
+    author = _polish_text(ent.get("author") or "")
+    shelf_name = _friendly_shelf(ent)
+    tags = [str(t).replace("-", " ") for t in (ent.get("tags") or [])[:4]]
+    bits = [title]
+    if author and author.lower() not in ("hostess 7", "hostess7", ""):
+        bits.append(f"by {author}")
+    if shelf_name:
+        bits.append("— " + shelf_name)
+    if tags:
+        bits.append("· " + ", ".join(tags))
+    return _polish_text(" ".join(bits))
+
+
+def _ai_line(ent: dict[str, Any]) -> str:
+    return _polish_text(
+        f"book_id={ent.get('id')} title={ent.get('title')} dewey={ent.get('dewey')} "
+        f"shelf={ent.get('shelf')} tags={','.join(ent.get('tags') or [])} ready={ent.get('ready')}"
+    )
+
+
+def pages_export(*, out_dir: Path | None = None) -> dict[str, Any]:
+    """Compact library export for GitHub Pages — whole catalog for humans + AI."""
+    doc = load_index()
+    books = doc.get("books") or []
+    compact: list[dict[str, Any]] = []
+    for ent in books:
+        compact.append({
+            "id": ent.get("id"),
+            "title": ent.get("title"),
+            "author": ent.get("author"),
+            "dewey": ent.get("dewey"),
+            "dewey_label": ent.get("dewey_label"),
+            "shelf": ent.get("shelf"),
+            "shelf_title": ent.get("shelf_title"),
+            "tags": (ent.get("tags") or [])[:8],
+            "ready": ent.get("ready"),
+            "format": ent.get("format"),
+            "cover": ent.get("cover"),
+            "human_line": _human_line(ent),
+            "ai_line": _ai_line(ent),
+            "search_blob": ent.get("search_blob"),
+        })
+    facets_doc = facets_panel()
+    facets_doc["pages"] = True
+    facets_doc["motto"] = "Every book on the field shelves — a joy for librarians, nuns, and readers alike."
+    export = {
+        "schema": "field-dewey-pages-export/v1",
+        "updated": doc.get("updated"),
+        "ok": True,
+        "pages": True,
+        "counts": doc.get("counts") or {},
+        "facets": facets_doc,
+        "books": compact,
+        "final_eye": {"polish": True, "running_text": True},
+    }
+    if out_dir:
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "dewey-index-facets.json").write_text(
+            json.dumps(facets_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        (out_dir / "dewey-books-compact.json").write_text(
+            json.dumps(
+                {
+                    "schema": "field-dewey-books-compact/v1",
+                    "updated": doc.get("updated"),
+                    "ok": True,
+                    "pages": True,
+                    "count": len(compact),
+                    "books": compact,
+                },
+                ensure_ascii=False,
+                separators=(",", ":"),
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        running = [_human_line(ent) for ent in books[:120]]
+        (out_dir / "library-running-text.json").write_text(
+            json.dumps(
+                {
+                    "schema": "library-running-text/v1",
+                    "updated": doc.get("updated"),
+                    "lines": running,
+                    "motto": "Final Eye · polished shelf copy for everyone",
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+    return export
+
+
 def main() -> int:
     cmd = (sys.argv[1] if len(sys.argv) > 1 else "panel").strip().lower()
     refresh = "--refresh" in sys.argv
@@ -735,9 +877,30 @@ def main() -> int:
     if cmd == "book" and len(sys.argv) > 2:
         print(json.dumps(book_detail(sys.argv[2]), ensure_ascii=False, indent=2))
         return 0 if book_detail(sys.argv[2]).get("ok") else 1
+    if cmd in ("pages", "pages-export", "export-pages"):
+        api_dir = INSTALL / "Hostess7" / "docs" / "api"
+        if "--out" in sys.argv:
+            idx = sys.argv.index("--out")
+            if idx + 1 < len(sys.argv):
+                api_dir = Path(sys.argv[idx + 1])
+        summary = pages_export(out_dir=api_dir)
+        print(
+            json.dumps(
+                {
+                    "ok": True,
+                    "schema": "field-dewey-pages-export-summary/v1",
+                    "counts": summary.get("counts"),
+                    "book_count": len(summary.get("books") or []),
+                    "out_dir": str(api_dir),
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0
     print(json.dumps({
         "error": "usage",
-        "cmds": ["panel", "build", "search [q] [--tag T] [--dewey 355] [--personhood] [--combat]", "tags", "facets", "book ID"],
+        "cmds": ["panel", "build", "search [q] [--tag T] [--dewey 355] [--personhood] [--combat]", "tags", "facets", "book ID", "pages-export"],
     }, indent=2))
     return 2
 

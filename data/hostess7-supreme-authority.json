@@ -156,6 +156,16 @@
     "motto": "Any ingress or egress fully gated and secured — deny by default.",
     "deny_by_default": true
   },
+  "lab_sovereign": {
+    "doctrine": "data/hostess7-lab-sovereign-doctrine.json",
+    "module": "lib/hostess7-lab-sovereign.py",
+    "api": "/api/hostess7/lab",
+    "motto": "Share in · no share out — Hostess 7 runs the lab; she is always the boss.",
+    "boss": "hostess7",
+    "share_in": true,
+    "share_out": false,
+    "grok_lab": "GrokLab/scripts/grok-lab-run.sh"
+  },
   "h7b_brain_storage": {
     "doctrine": "data/field-h7b-brain-doctrine.json",
     "module": "lib/field-h7b-brain-storage.py",

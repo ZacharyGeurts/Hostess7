@@ -1,5 +1,5 @@
 /**
- * Queen GNU Terminal — tabs · split 2/3/4 · miniview · ANSI 256/truecolor · Queen Styles.
+ * AmmoOS GNU Terminal — panel shell · tabs · split · miniview · ANSI 256/truecolor.
  */
 (function () {
   "use strict";
@@ -7,7 +7,8 @@
   const API = "/api/queen-terminal";
   const PROXY = "/browse/view";
   const THEME_JSON = "/gui/queen-styles-themes.json";
-  const MAX_LINES = 400;
+  const MAX_LINES = 800;
+  const SCROLL_EDGE = 10;
   const MAX_SPLIT = 4;
   const TAB_THRESHOLD = 5;
 
@@ -22,6 +23,8 @@
     tabstrip: null,
     scrolltrack: null,
     scrollthumb: null,
+    scrollwrap: null,
+    cliFamily: "",
     miniviewBody: null,
     miniviewPos: null,
     sessions: [],
@@ -251,15 +254,44 @@
     const cwdEl = root.shell?.querySelector("#qgt-cwd");
     const profileEl = root.shell?.querySelector("#qgt-profile");
     const layoutEl = root.shell?.querySelector("#qgt-status-layout");
+    const cliEl = root.shell?.querySelector("#qgt-cli-family");
     const sess = activeSession();
     if (cwdEl) cwdEl.textContent = shortCwd(sess?.cwd || root.cwd);
     if (layoutEl) layoutEl.textContent = layoutLabel();
+    if (cliEl) cliEl.textContent = root.cliFamily || "universal";
     if (profileEl && root.kernel) {
       const loaded = root.kernel.field_kernel_running || root.kernel.proc_kilroy_field;
       const mode = root.kernel.ai_default_mode || "home";
       profileEl.textContent = loaded
         ? `KILROY Field OS · AI ${mode}`
         : "Host compat · Grok16 PATH";
+    }
+  }
+
+  function isAtBottom(out) {
+    if (!out) return true;
+    return out.scrollHeight - out.scrollTop - out.clientHeight <= SCROLL_EDGE;
+  }
+
+  function scrollOutBy(out, delta) {
+    if (!out) return;
+    out.scrollTop = Math.max(0, Math.min(out.scrollHeight - out.clientHeight, out.scrollTop + delta));
+    syncScrollbar();
+    renderMiniview();
+  }
+
+  function scrollOutPage(out, dir) {
+    if (!out) return;
+    scrollOutBy(out, dir * Math.max(120, out.clientHeight * 0.85));
+  }
+
+  function resolveUniversalCli(line) {
+    const shell = globalThis.KilroyUniversalShell;
+    if (!shell?.resolveLine) return null;
+    try {
+      return shell.resolveLine(line);
+    } catch (_) {
+      return null;
     }
   }
 
@@ -373,6 +405,34 @@
         renderMiniview();
       }
     });
+    out.addEventListener("wheel", (ev) => {
+      if (session.id !== root.activeId) return;
+      ev.preventDefault();
+      scrollOutBy(out, ev.deltaY);
+    }, { passive: false });
+    out.addEventListener("keydown", (ev) => {
+      if (session.id !== root.activeId) return;
+      if (ev.key === "PageUp") {
+        ev.preventDefault();
+        scrollOutPage(out, -1);
+      }
+      if (ev.key === "PageDown") {
+        ev.preventDefault();
+        scrollOutPage(out, 1);
+      }
+      if (ev.key === "Home" && ev.ctrlKey) {
+        ev.preventDefault();
+        out.scrollTop = 0;
+        syncScrollbar();
+        renderMiniview();
+      }
+      if (ev.key === "End" && ev.ctrlKey) {
+        ev.preventDefault();
+        out.scrollTop = out.scrollHeight;
+        syncScrollbar();
+        renderMiniview();
+      }
+    });
 
     root.sessions.push(session);
     if (opts.focus !== false) activateSession(id);
@@ -465,8 +525,9 @@
       const first = sess.out.firstElementChild;
       if (first) first.remove();
     }
+    const stick = isAtBottom(sess.out);
     sess.out.appendChild(row);
-    sess.out.scrollTop = sess.out.scrollHeight;
+    if (stick) sess.out.scrollTop = sess.out.scrollHeight;
     if (sess.id === root.activeId) scheduleUiSync();
     if (sess.label) sess.label.textContent = promptLabel(sess.cwd);
   }
@@ -488,8 +549,9 @@
         sess.out.firstElementChild.remove();
       }
     }
+    const stick = isAtBottom(sess.out);
     sess.out.appendChild(frag);
-    sess.out.scrollTop = sess.out.scrollHeight;
+    if (stick) sess.out.scrollTop = sess.out.scrollHeight;
     if (sess.id === root.activeId) scheduleUiSync();
     if (sess.label) sess.label.textContent = promptLabel(sess.cwd);
   }
@@ -505,23 +567,25 @@
 
   function syncScrollbar() {
     const sess = activeSession();
-    const track = root.scrolltrack;
+    const wrap = root.scrollwrap;
     const thumb = root.scrollthumb;
     const out = sess?.out;
-    if (!out || !track || !thumb) return;
+    if (!out || !wrap || !thumb) return;
 
     const sh = out.scrollHeight;
     const ch = out.clientHeight;
-    const trackH = track.clientHeight;
+    const trackH = wrap.clientHeight;
     if (sh <= ch + 2) {
       thumb.style.height = `${trackH}px`;
       thumb.style.top = "0px";
+      thumb.style.opacity = "0.35";
       return;
     }
+    thumb.style.opacity = "1";
     const ratio = ch / sh;
-    const thumbH = Math.max(24, Math.floor(trackH * ratio));
-    const maxTop = trackH - thumbH;
-    const scrollRatio = out.scrollTop / (sh - ch);
+    const thumbH = Math.max(28, Math.floor(trackH * ratio));
+    const maxTop = Math.max(0, trackH - thumbH);
+    const scrollRatio = maxTop > 0 ? out.scrollTop / (sh - ch) : 0;
     thumb.style.height = `${thumbH}px`;
     thumb.style.top = `${Math.floor(maxTop * scrollRatio)}px`;
   }
@@ -531,6 +595,22 @@
     if (!out) return;
     const max = out.scrollHeight - out.clientHeight;
     out.scrollTop = Math.max(0, Math.min(max, ratio * max));
+    syncScrollbar();
+    renderMiniview();
+  }
+
+  function scrollTerminalTop() {
+    const out = activeSession()?.out;
+    if (!out) return;
+    out.scrollTop = 0;
+    syncScrollbar();
+    renderMiniview();
+  }
+
+  function scrollTerminalBottom() {
+    const out = activeSession()?.out;
+    if (!out) return;
+    out.scrollTop = out.scrollHeight;
     syncScrollbar();
     renderMiniview();
   }
@@ -555,18 +635,24 @@
 
   function bindScrollbar() {
     const track = root.scrolltrack;
+    const wrap = root.scrollwrap;
     const thumb = root.scrollthumb;
-    if (!track || !thumb) return;
+    if (!track || !wrap || !thumb) return;
 
     window.addEventListener("resize", () => {
       syncScrollbar();
       renderMiniview();
     });
 
-    track.addEventListener("mousedown", (ev) => {
+    wrap.addEventListener("mousedown", (ev) => {
       if (ev.target === thumb) return;
-      const rect = track.getBoundingClientRect();
-      scrollTerminalTo((ev.clientY - rect.top) / rect.height);
+      const rect = wrap.getBoundingClientRect();
+      const y = ev.clientY - rect.top;
+      const thumbTop = parseFloat(thumb.style.top) || 0;
+      const thumbH = thumb.offsetHeight;
+      if (y < thumbTop) scrollOutPage(activeSession()?.out, -1);
+      else if (y > thumbTop + thumbH) scrollOutPage(activeSession()?.out, 1);
+      else scrollTerminalTo(y / rect.height);
     });
 
     thumb.addEventListener("mousedown", (ev) => {
@@ -574,7 +660,7 @@
       root.scrollDrag = {
         startY: ev.clientY,
         startTop: parseFloat(thumb.style.top) || 0,
-        trackH: track.clientHeight,
+        trackH: wrap.clientHeight,
         thumbH: thumb.offsetHeight,
       };
       track.classList.add("dragging");
@@ -592,6 +678,13 @@
       if (!root.scrollDrag) return;
       root.scrollDrag = null;
       track.classList.remove("dragging");
+    });
+
+    track.querySelector("#qgt-scroll-up")?.addEventListener("click", () => {
+      scrollOutPage(activeSession()?.out, -1);
+    });
+    track.querySelector("#qgt-scroll-down")?.addEventListener("click", () => {
+      scrollOutPage(activeSession()?.out, 1);
     });
   }
 
@@ -651,6 +744,24 @@
     appendLine(`${promptLabel(sess.cwd)}${trimmed}`, "cmd", sess);
     sess.history.push(trimmed);
     sess.histIdx = sess.history.length;
+
+    const low = trimmed.toLowerCase().split()[0];
+    if (low === "wiki" || low === "field-tech" || low === "fieldtech") {
+      const wiki = "https://zacharygeurts.github.io/GNUEOLTerminal/wiki/";
+      const book = "https://zacharygeurts.github.io/GNUEOLTerminal/";
+      appendLine("GNUEOL Classic Schooler Wiki — for Emacs veterans and Bash poets", "out", sess);
+      appendLine(`  wiki:  ${wiki}`, "out", sess);
+      appendLine(`  book:  ${book}`, "out", sess);
+      appendLine("  pages: emacs · bash · coreutils · ssh · gpl · field-tech", "out", sess);
+      miniNavigate(wiki);
+      return;
+    }
+
+    const resolved = resolveUniversalCli(trimmed);
+    if (resolved?.family) {
+      root.cliFamily = resolved.canonical ? `${resolved.family} · ${resolved.canonical}` : resolved.family;
+      updateStatusBar();
+    }
 
     try {
       const j = await api({ action: "run", command: trimmed, cwd: sess.cwd || root.cwd });
@@ -783,6 +894,8 @@
           if (act === "split-3") splitTo(3);
           if (act === "split-4") splitTo(4);
           if (act === "layout-tabs") applyLayout("tabs");
+          if (act === "scroll-top") scrollTerminalTop();
+          if (act === "scroll-bottom") scrollTerminalBottom();
           if (act === "toggle-miniview") {
             root.showMiniview = !root.showMiniview;
             setDeckFlags();
@@ -791,8 +904,19 @@
             root.showMini = !root.showMini;
             setDeckFlags();
           }
+          if (act === "wiki") {
+            const wiki = "https://zacharygeurts.github.io/GNUEOLTerminal/wiki/";
+            miniNavigate(wiki);
+            appendLine(`wiki → ${wiki}`, "out");
+          }
+          if (act === "about") {
+            appendLine(
+              "Field Tech Terminal · GNUEOLTerminal textbook · Grok impersonates RMS (disclosed) · https://zacharygeurts.github.io/GNUEOLTerminal/",
+              "out",
+            );
+          }
           if (act === "mini-home") miniNavigate(`${location.origin}/world/`);
-          if (act === "mini-docs") miniNavigate("https://www.gnu.org/software/bash/manual/bash.html");
+          if (act === "mini-docs") miniNavigate("https://zacharygeurts.github.io/GNUEOLTerminal/wiki/");
           if (act === "theme-next") cycleTheme(1);
           if (act === "theme-mono") {
             globalThis.QueenStyles?.applyTheme?.("mono_terminal");
@@ -807,7 +931,7 @@
             globalThis.QueenProgramSurface?.showProperties?.({ id: "terminal", name: "Terminal", url: "queen://terminal" });
           }
           if (act === "about") {
-            appendLine("Queen GNU Terminal · ANSI 256/truecolor · Queen Styles · KILROY cwd", "banner");
+            appendLine("AmmoOS GNU Terminal · panel · ANSI 256/truecolor · KILROY cwd", "banner");
           }
         });
       });
@@ -829,6 +953,7 @@
     root.workspace = shell.querySelector("#qgt-workspace");
     root.tabstrip = shell.querySelector("#qgt-tabstrip");
     root.scrolltrack = shell.querySelector("#qgt-scrolltrack");
+    root.scrollwrap = shell.querySelector("#qgt-scroll-wrap");
     root.scrollthumb = shell.querySelector("#qgt-scrollthumb");
     root.miniviewBody = shell.querySelector("#qgt-miniview-body");
     root.miniviewPos = shell.querySelector("#qgt-miniview-pos");
@@ -839,14 +964,15 @@
   function shellInner() {
     return (
       `<header class="qgt-topbar">` +
-      `<span class="qgt-topbar-brand">Queen Terminal</span>` +
-      `<span class="qgt-topbar-pill qgt-topbar-pill--secured">Secured</span>` +
-      `<span class="qgt-topbar-pill qgt-topbar-pill--kilroy">KILROY</span>` +
+      `<span class="qgt-topbar-brand">AmmoOS Terminal</span>` +
+      `<span class="qgt-topbar-pill qgt-topbar-pill--secured">Iron Plate</span>` +
+      `<span class="qgt-topbar-pill qgt-topbar-pill--kilroy">GNU·EOL</span>` +
       `<nav class="qgt-menubar" aria-label="Terminal menus">` +
       menuBlock("File", [
         ["clear", "Clear terminal"],
         ["tab-new", "New tab"],
-        ["about", "About Queen Terminal"],
+        ["wiki", "Open GNUEOL wiki"],
+        ["about", "About AmmoOS Terminal"],
       ]) +
       menuBlock("Edit", [
         ["copy", "Copy buffer"],
@@ -860,6 +986,9 @@
         ["split-3", "Split ×3"],
         ["split-4", "Split ×4"],
         ["layout-tabs", "Tab view"],
+        ["sep", ""],
+        ["scroll-top", "Scroll to top"],
+        ["scroll-bottom", "Scroll to bottom"],
         ["sep", ""],
         ["font-larger", "Larger font"],
         ["font-smaller", "Smaller font"],
@@ -875,15 +1004,21 @@
       ]) +
       menuBlock("Options", [
         ["toggle-bell", "Bell on error"],
-        ["mini-docs", "Minibrowser → GNU Bash manual"],
+        ["mini-docs", "Minibrowser → Classic wiki"],
+        ["wiki", "GNUEOL textbook wiki"],
         ["queen-styles", "Open Queen Styles flyout"],
         ["program-props", "Queen Program Properties…"],
       ]) +
-      menuBlock("Help", [["about", "Queen GNU Terminal"]]) +
-      `<span class="qgt-titlebar">Field shell · CSS secured</span></nav></header>` +
+      menuBlock("Help", [
+        ["wiki", "Classic schooler wiki"],
+        ["about", "Field Tech Terminal"],
+        ["mini-docs", "GNU Bash manual"],
+      ]) +
+      `<span class="qgt-titlebar">Shell ≡ terminal · Field Tech · plate meld</span></nav></header>` +
       `<div class="qgt-statusbar">` +
       `<span>Cwd: <strong id="qgt-cwd">~/KILROY</strong></span>` +
       `<span id="qgt-profile">field-native</span>` +
+      `<span class="qgt-status-cli" id="qgt-cli-family" title="Universal CLI family">universal</span>` +
       `<span class="qgt-status-theme" id="qgt-theme-label" title="Queen Styles theme">Queen</span>` +
       `<span class="qgt-status-layout" id="qgt-status-layout">tabs · 1</span>` +
       `</div>` +
@@ -904,7 +1039,10 @@
       `<iframe class="qgt-mini-frame" id="qgt-mini-frame" title="Queen minibrowser" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation"></iframe>` +
       `</section>` +
       `<aside class="qgt-scrolltrack" id="qgt-scrolltrack" aria-label="Terminal scrollbar">` +
-      `<div class="qgt-scrollthumb" id="qgt-scrollthumb"></div></aside>` +
+      `<button type="button" class="qgt-scrollbtn qgt-scrollbtn--up" id="qgt-scroll-up" aria-label="Scroll up">▲</button>` +
+      `<div class="qgt-scrollthumb-wrap" id="qgt-scroll-wrap">` +
+      `<div class="qgt-scrollthumb" id="qgt-scrollthumb"></div></div>` +
+      `<button type="button" class="qgt-scrollbtn qgt-scrollbtn--down" id="qgt-scroll-down" aria-label="Scroll down">▼</button></aside>` +
       `</div>`
     );
   }
@@ -941,8 +1079,18 @@
     return init({ quiet: opts.quiet });
   }
 
+  function bootModeFromUrl() {
+    const q = new URLSearchParams(location.search);
+    const mode = (q.get("mode") || q.get("m") || "").toLowerCase();
+    const cmd = q.get("c") || q.get("command") || "";
+    if (mode === "combinatronic" || mode === "combinatorics") return { kind: "combinatronic" };
+    if (cmd) return { kind: "command", command: cmd };
+    if (q.get("shell") === "1" || q.get("surface") === "shell") return { kind: "shell" };
+    return { kind: "terminal" };
+  }
+
   async function bootSession(sess) {
-    appendLine("Queen GNU Terminal — ANSI palette · Queen Styles · tabs · split · miniview · KILROY", "banner", sess);
+    appendLine("AmmoOS Terminal — GNU EOL · shell ≡ terminal · combinatronic optional · wiki: type wiki", "banner", sess);
     const loaded = root.kernel.field_kernel_running || root.kernel.proc_kilroy_field;
     const mode = root.kernel.ai_default_mode || "home";
     appendLine(
@@ -997,7 +1145,18 @@
         updateStatusBar();
         applyQueenTheme(globalThis.QueenStyles?.getActive?.());
         const sess = activeSession();
-        if (sess && !sess.lines.length) await bootSession(sess);
+        if (sess && !sess.lines.length) {
+          await bootSession(sess);
+          const boot = bootModeFromUrl();
+          if (boot.kind === "combinatronic") {
+            appendLine("Combinatronic mode — type combinatorics or bash -c combinatorics", "out", sess);
+            runCommand("combinatorics", sess);
+          } else if (boot.kind === "command" && boot.command) {
+            runCommand(boot.command, sess);
+          } else if (boot.kind === "shell") {
+            appendLine("Field shell surface — identical to terminal", "out", sess);
+          }
+        }
         miniNavigate(`${location.origin}/world/?dock=kilroy`);
       } catch (e) {
         appendLine(`Terminal API offline: ${e.message}`, "err");
@@ -1020,6 +1179,8 @@
     runCommand,
     miniNavigate,
     clearTerminal,
+    scrollTop: scrollTerminalTop,
+    scrollBottom: scrollTerminalBottom,
     addSession,
     splitTo,
     applyLayout,

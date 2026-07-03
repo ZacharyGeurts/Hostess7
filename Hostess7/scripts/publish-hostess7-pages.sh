@@ -19,7 +19,7 @@ export NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-${ROOT}/..}"
 export SG_ROOT="${SG_ROOT:-$(cd "${NEXUS_INSTALL_ROOT}/.." && pwd)}"
 export HOSTESS7_LICENSE_MODE=war
 
-log "build surfaces (Queen + AmmoOS) + brain corpus + API export"
+log "build full stack surfaces (Queen + AmmoOS) + brain corpus + API export"
 "$PY" "$ROOT/scripts/hostess7_pages_surfaces_build.py"
 "$PY" "$ROOT/scripts/hostess7_pages_brain_build.py" --full
 "$PY" "$ROOT/scripts/hostess7_pages_api_export.py"
@@ -47,23 +47,34 @@ rsync -a --delete \
   --exclude='.git' \
   "${DOCS_SRC}/" "${PAGES_REPO}/"
 
-cd "$PAGES_REPO"
-git add -A
-if git diff --cached --quiet; then
-  log "GitHub Pages already up to date"
-else
-  git -c user.email="gzac5314@users.noreply.github.com" -c user.name="ZacharyGeurts" \
-    commit -m "pages: Hostess7 full package v${HOSTESS7_VERSION}"
-  if [[ -n "${GITHUB_ACTIONS:-}" && -n "${GITHUB_TOKEN:-}" ]]; then
-    git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${OWNER}/Hostess7.git"
-    git push origin "$PAGES_BRANCH" --force
-  elif [[ -f "$H7_SECURE" ]]; then
-    "$PY" "$H7_SECURE" push "$PAGES_REPO" --branch "$PAGES_BRANCH" \
-      --remote "$PAGES_REMOTE" --force
+if [[ "${HOSTESS7_PUSH_GH_PAGES:-0}" == "1" ]]; then
+  cd "$PAGES_REPO"
+  git add -A
+  if git diff --cached --quiet; then
+    log "gh-pages branch already up to date"
   else
-    git push origin "$PAGES_BRANCH" 2>/dev/null || git push -u origin "$PAGES_BRANCH"
+    git -c user.email="gzac5314@users.noreply.github.com" -c user.name="ZacharyGeurts" \
+      commit -m "pages: Hostess7 full package v${HOSTESS7_VERSION}"
+    if [[ -n "${GITHUB_ACTIONS:-}" && -n "${GITHUB_TOKEN:-}" ]]; then
+      git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${OWNER}/Hostess7.git"
+      git push origin "$PAGES_BRANCH" --force
+    elif [[ -f "$H7_SECURE" ]]; then
+      "$PY" "$H7_SECURE" push "$PAGES_REPO" --branch "$PAGES_BRANCH" \
+        --remote "$PAGES_REMOTE" --force
+    else
+      git push origin "$PAGES_BRANCH" 2>/dev/null || git push -u origin "$PAGES_BRANCH"
+    fi
+    log "pushed gh-pages (legacy lane — opt-in HOSTESS7_PUSH_GH_PAGES=1)"
   fi
-  log "pushed gh-pages"
+else
+  log "skipping gh-pages push — primary lane is Actions workflow (pages.yml)"
+fi
+
+if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+  log "CI uses Actions artifact deploy (pages.yml) — skipping gh-pages branch push to avoid dual-deploy race"
+  log "guard → scripts/hostess7-pages-deploy-guard.py"
+  "$PY" "$ROOT/scripts/hostess7-pages-deploy-guard.py"
+  exit 0
 fi
 
 log "live → https://zacharygeurts.github.io/Hostess7/"
