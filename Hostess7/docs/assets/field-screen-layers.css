@@ -1,0 +1,63 @@
+/* Field screen layers — fullscreen stack below taskbar */
+
+.fsl-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9050;
+  pointer-events: none;
+  background: #060a0d;
+}
+
+.fsl-root:not([hidden]) {
+  pointer-events: auto;
+}
+
+html:not(.nfs-taskbar-hidden) .fsl-root {
+  bottom: calc(var(--fsb-h, 44px) + env(safe-area-inset-bottom, 0));
+}
+
+.fsl-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #0a1014;
+}
+
+.fsl-bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 12px;
+  font: 600 11px/1.2 system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  color: #c8ffda;
+  background: linear-gradient(180deg, #1a2830 0%, #101820 100%);
+  border-bottom: 1px solid rgba(120, 255, 180, 0.22);
+}
+
+.fsl-bar .fsl-z {
+  opacity: 0.72;
+  font-weight: 500;
+}
+
+.fsl-bar .fsl-kbd {
+  margin-left: auto;
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.fsl-frame {
+  flex: 1 1 auto;
+  width: 100%;
+  border: none;
+  background: #0d1117;
+}

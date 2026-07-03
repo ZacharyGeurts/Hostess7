@@ -1,5 +1,5 @@
 /**
- * Field Queen Nav — all web I/O through Queen Browser inside NEXUS C2. Never the client OS browser.
+ * Field Queen Nav — all web I/O through Queen Browser. Never a host browser (no Firefox).
  */
 (function (global) {
   "use strict";
@@ -7,11 +7,19 @@
   const QUEEN_PORT = "9481";
   const PANEL_PORT = "9477";
 
+  function pagesRuntime() {
+    return document.body?.dataset?.pagesRuntime === "1" || !!global.HOSTESS7_PAGES_BASE;
+  }
+
   function queenBrowserBase() {
+    if (pagesRuntime()) {
+      return (global.HOSTESS7_PAGES_BASE || "/Hostess7") + "/queen/browser.html";
+    }
     return "http://127.0.0.1:" + QUEEN_PORT + "/world/browser.html";
   }
 
   function panelBase() {
+    if (pagesRuntime()) return global.HOSTESS7_PAGES_BASE || "/Hostess7";
     return "http://127.0.0.1:" + PANEL_PORT;
   }
 
@@ -118,6 +126,19 @@
   function openStandalone(app, opts) {
     opts = opts || {};
     const name = (app && app.name) || "Queen Browser";
+    const url = (opts.focus_url || app?.exec || queenBrowserBase()).trim();
+    if (pagesRuntime()) {
+      const features =
+        "width=1280,height=840,menubar=no,toolbar=no,location=yes,resizable=yes,scrollbars=yes,status=yes";
+      try {
+        global.open(url, "QueenBrowser", features);
+      } catch (_) {
+        global.location.href = url;
+      }
+      global.FieldHostDesktop?.toast?.("Opened · " + name);
+      global.FieldStartbar?.trackRunning?.(app || { id: "queen-browser", name: name });
+      return Promise.resolve({ ok: true, engine: "queen-browser", pages: true, url: url });
+    }
     return fetch("/api/queen-browser/open", {
       method: "POST",
       credentials: "same-origin",

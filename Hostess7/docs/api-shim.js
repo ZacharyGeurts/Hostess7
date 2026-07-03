@@ -84,6 +84,16 @@
       if (method === "POST") return okStub({ saved: true, lane: "pages-queen-browser" });
       return jsonResponse(await loadStatic("/api/queen-browser.json"));
     }
+    if (path === "/api/queen-browser/open" && method === "POST") {
+      const base = global.HOSTESS7_PAGES_BASE || "/Hostess7";
+      return okStub({
+        engine: "queen-browser",
+        self_contained: true,
+        shell_url: base + "/queen/browser.html",
+        layer: 2,
+        pages: true,
+      });
+    }
     if (path === "/api/queen-boot") {
       return jsonResponse(await loadStatic("/api/queen-boot.json"));
     }

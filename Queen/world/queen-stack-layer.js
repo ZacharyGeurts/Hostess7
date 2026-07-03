@@ -38,7 +38,7 @@
         doc.motto || "Field stack layers",
         safe ? "Hardware: no breaks" : "Hardware: check wire",
         doc.ammoos_inside_queen ? "AmmoOS inside Queen" : "AmmoOS placement check",
-        "NEXUS C2 → ZNetwork → CANVAS → Queen → AmmoOS",
+        "Screen layers F9..F12 · -3 C2 · -2 KILROY · -1 AmmoOS · 2 Queen",
       ].join(" — ");
       strip.classList.toggle("qb-stack-ok", !!doc.ok);
       strip.classList.toggle("qb-stack-warn", !doc.ok);

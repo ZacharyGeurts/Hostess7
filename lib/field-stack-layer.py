@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", str(ROOT)))
 STATE = Path(os.environ.get("NEXUS_STATE_DIR", "/var/lib/nexus-shield"))
 DOCTRINE = INSTALL / "data" / "field-stack-layer-doctrine.json"
+SCREEN_DOCTRINE = INSTALL / "data" / "field-screen-layer-doctrine.json"
 LOOPBACK = os.environ.get("NEXUS_LOOPBACK", "127.0.0.1")
 
 
@@ -237,12 +238,17 @@ def posture() -> dict[str, Any]:
         "queen_shell",
     ]
     visible_layers = [l for l in layers_out if not (l.get("id") == "znetwork")]
+    screen_doc = _load(SCREEN_DOCTRINE, {})
+    if not screen_doc:
+        screen_doc = _load(ROOT / "data" / "field-screen-layer-doctrine.json", {})
     return {
         "schema": "field-stack-layer/v1",
         "ok": all_ok and hardware_safe,
         "ts": _now(),
         "motto": DOCTRINE_DOC.get("motto", ""),
         "statement": DOCTRINE_DOC.get("statement", ""),
+        "screen_layers": screen_doc.get("layers") or (DOCTRINE_DOC.get("screen_layers") or {}),
+        "screen_fkey_map": screen_doc.get("fkey_map") or (DOCTRINE_DOC.get("screen_layers") or {}).get("fkey_map"),
         "hardware_safe": hardware_safe,
         "sovereign_core_fused": ["nexus_c2", "kilroy", "ammoos"],
         "queen_shell_outer_only": True,

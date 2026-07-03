@@ -583,9 +583,16 @@
       forwardOpenWindow(data.item || { url, name: data.title || data.name || "Program", icon: data.icon });
     }
     if (action === "dock" && data.dock) {
-      const dockUrl = url || `${location.origin}/world/?dock=${encodeURIComponent(data.dock)}`;
-      globalThis.QueenOS?.world?.setDockTab?.(data.dock);
-      globalThis.QueenOS?.browser?.navigate?.(`/world/?dock=${encodeURIComponent(data.dock)}`);
+      const d = data.dock;
+      if (d === "terminal") {
+        const embed = `${location.origin}/world/queen-gnu-terminal-embed.html`;
+        globalThis.QueenOS?.browser?.navigate?.(embed);
+        globalThis.QueenOS?.browser?.newTab?.(embed);
+        return;
+      }
+      const dockUrl = url || `${location.origin}/world/?dock=${encodeURIComponent(d)}`;
+      globalThis.QueenOS?.world?.setDockTab?.(d);
+      globalThis.QueenOS?.browser?.navigate?.(`/world/?dock=${encodeURIComponent(d)}`);
       if (!globalThis.QueenOS?.world?.setDockTab) {
         globalThis.QueenOS?.browser?.newTab?.(dockUrl);
       }
@@ -749,9 +756,11 @@
         toggleViewportFullscreen();
         return;
       }
-      if (e.key === "F11") {
+      if (["F9", "F10", "F11", "F12"].includes(e.key) && global.FieldScreenLayers?.switchTo) {
         e.preventDefault();
-        toggleViewportFullscreen();
+        e.stopPropagation();
+        const layer = global.FieldScreenLayers.FKEY_TO_LAYER[e.key];
+        if (layer != null) global.FieldScreenLayers.switchTo(layer);
         return;
       }
       if (e.key === "F5") {

@@ -3,7 +3,19 @@
   "title": "Field stack — KILROY PC core · AmmoOS desktop · Queen standalone browser",
   "version": "2.0.0",
   "motto": "Hardware untouched. KILROY boots the field (ZNetwork absorbed). AmmoOS loads on AMOURANTHRTX desktop. Queen is its own browser.",
-  "statement": "KILROY is the PC core — network lane, loopback, defense. AmmoOS is the field OS with AMOURANTHRTX display technology for the desktop. Queen Browser is a standalone secured shell on :9481 — not a container for AmmoOS.",
+  "statement": "KILROY is the PC core — network lane, loopback, defense. AmmoOS is the field OS with AMOURANTHRTX display technology for the desktop. Queen Browser is a standalone secured shell on :9481 — layer 2, outside the OS. No Firefox.",
+  "screen_layers": {
+    "doctrine": "data/field-screen-layer-doctrine.json",
+    "fkey_map": { "F9": -3, "F10": -2, "F11": -1, "F12": 2 },
+    "layers": {
+      "-3": { "id": "nexus-c2", "label": "NEXUS C2", "fkey": "F9" },
+      "-2": { "id": "kilroy-kernel", "label": "KILROY Kernel", "fkey": "F10" },
+      "-1": { "id": "ammoos-desktop", "label": "AmmoOS Desktop", "fkey": "F11" },
+      "1": { "id": "os-inside", "label": "Inside OS", "inside_os": true },
+      "2": { "id": "queen-browser", "label": "Queen Browser", "fkey": "F12", "outside_os": true },
+      "3+": { "id": "programmer", "label": "Programmer layers", "reserved": true }
+    }
+  },
   "hardware_guard": {
     "no_breaks": true,
     "flash_spi_rom": false,

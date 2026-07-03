@@ -1,0 +1,74 @@
+{
+  "schema": "field-screen-layer/v1",
+  "title": "Field screen layers — F9..F12 sovereign switch",
+  "motto": "AmmoOS stays on layer -1. Queen is layer 2 — standalone browser outside the OS. No Firefox.",
+  "policy": {
+    "ammoos_layer": -1,
+    "queen_layer": 2,
+    "queen_standalone": true,
+    "no_host_browser": true,
+    "no_firefox": true,
+    "fkeys_capture": ["F9", "F10", "F11", "F12"],
+    "programmer_layers_min": 3
+  },
+  "layers": [
+    {
+      "z": -3,
+      "id": "nexus-c2",
+      "label": "NEXUS C2",
+      "fkey": "F9",
+      "role": "command_security_defense",
+      "surface": "queen-nexus-c2",
+      "inside_os": false
+    },
+    {
+      "z": -2,
+      "id": "kilroy-kernel",
+      "label": "KILROY Kernel",
+      "fkey": "F10",
+      "role": "pc_core_kernel_page",
+      "surface": "kilroy-home",
+      "inside_os": false
+    },
+    {
+      "z": -1,
+      "id": "ammoos-desktop",
+      "label": "AmmoOS Desktop",
+      "fkey": "F11",
+      "role": "field_os_desktop",
+      "surface": "field-host-desktop",
+      "inside_os": false
+    },
+    {
+      "z": 1,
+      "id": "os-inside",
+      "label": "Inside OS",
+      "fkey": null,
+      "role": "shell_program_windows",
+      "surface": "nexus-field-shell",
+      "inside_os": true
+    },
+    {
+      "z": 2,
+      "id": "queen-browser",
+      "label": "Queen Browser",
+      "fkey": "F12",
+      "role": "standalone_secure_browser",
+      "surface": "browser",
+      "outside_os": true,
+      "external_window": true
+    }
+  ],
+  "fkey_map": {
+    "F9": -3,
+    "F10": -2,
+    "F11": -1,
+    "F12": 2
+  },
+  "surfaces_local": {
+    "nexus_c2": "http://127.0.0.1:9481/world/queen-nexus-c2.html",
+    "kilroy_kernel": "http://127.0.0.1:9481/world/kilroy-home.html",
+    "ammoos_desktop": "http://127.0.0.1:9477/field",
+    "queen_browser": "http://127.0.0.1:9481/world/browser.html"
+  }
+}

@@ -44,6 +44,14 @@
     }
   }
 
+  function qUrl(p) {
+    if (!p) return p;
+    if (/^https?:\/\//i.test(p) || p.startsWith('//')) return p;
+    const pn = (global.location.pathname || '');
+    const b = pn.includes('/Hostess7/') ? '/Hostess7/queen/' : (pn.includes('/world/') ? '/world/' : '');
+    return b + String(p).replace(/^\//, '').replace(/^world\//, '');
+  }
+
   async function api(body) {
     const r = await fetch(API, {
       method: "POST",
@@ -294,13 +302,20 @@
         shellPost("desktop_window", url, { program_id: launch.program_id, name: launch.name });
         return launch;
       }
-      global.open(url, "_blank", "noopener");
+      // Use Queen browser for pages — full Queen chrome, never a host browser
+      const qurl = `${location.origin}${qUrl("browser.html")}?url=${encodeURIComponent(url)}`;
+      if (inQueenShell()) {
+        shellPost("new_tab", qurl) || (global.location.href = qurl);
+      } else {
+        global.open(qurl, "_blank", "noopener");
+      }
       return launch;
     }
 
     if (launch.new_tab || opts?.newTab) {
       if (shellPost("new_tab", url)) return launch;
-      global.open(url, "_blank", "noopener");
+      const qurl = `${location.origin}${qUrl("browser.html")}?url=${encodeURIComponent(url)}`;
+      global.open(qurl, "_blank", "noopener");
       return launch;
     }
 
@@ -321,7 +336,9 @@
       global.location.href = `${global.location.origin}${url}`;
       return launch;
     }
-    global.location.href = url;
+    // Prefer Queen browser chrome for external pages
+    const qurl = `${location.origin}/world/browser.html?url=${encodeURIComponent(url)}`;
+    global.location.href = qurl;
     return launch;
   }
 

@@ -288,6 +288,7 @@
       w.minimized = true;
     });
     state.activeId = null;
+    global.FieldScreenLayers?.markInsideOs?.(false);
     renderWindows();
     syncTaskbar();
   }
@@ -355,6 +356,7 @@
     };
     state.windows.push(win);
     state.activeId = id;
+    global.FieldScreenLayers?.markInsideOs?.(true);
     renderWindows();
     syncTaskbar();
     global.FieldStartbar?.trackRunning?.(app);

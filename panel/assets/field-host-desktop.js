@@ -111,7 +111,7 @@
         return;
       }
     }
-    // Always prefer our Queen browser (standard web engine we own via GDI/RTX) for pages — never host Firefox.
+    // Always route web through Queen Browser — never a host browser.
     if (inQueenFrame() && exec.startsWith("/")) {
       const action = exec.includes("/desktop") || exec.includes("/field") ? "home" : "new_tab";
       if (queenShell(action, exec)) {
@@ -240,26 +240,15 @@
   }
 
   function openQueenBrowserClean() {
-    // Open Queen as a normal separate browser window with the main page loaded.
-    // "Main 127 page" -> the Queen browser shell (our controlled browser).
-    const base = pagesRuntime() ? (window.HOSTESS7_PAGES_BASE || "/Hostess7") : "http://127.0.0.1:9481/world";
-    const url = pagesRuntime() ? base + "/queen/browser.html" : base + "/browser.html";
-    const features = 'width=1280,height=820,menubar=yes,toolbar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes';
-    let w;
-    try {
-      w = window.open(url, 'QueenBrowser', features);
-    } catch (e) {}
-    if (!w) {
-      // fallback
-      w = window.open(url, '_blank');
+    if (window.FieldScreenLayers?.openQueen) {
+      window.FieldScreenLayers.openQueen();
+      return;
     }
-    // Dock / track on our simulated taskbar if possible
-    try {
-      const qapp = { id: 'queen', name: 'Queen Browser', url: url };
-      if (window.FieldStartbar && window.FieldStartbar.trackRunning) window.FieldStartbar.trackRunning(qapp);
-      if (window.FieldStartbar && window.FieldStartbar.launchApp) window.FieldStartbar.launchApp(qapp);
-    } catch (_) {}
-    toast('Queen opened in new window');
+    if (window.FieldQueenNav?.openStandalone) {
+      window.FieldQueenNav.openStandalone({ id: "queen-browser", name: "Queen Browser", c2_embedded: false });
+      return;
+    }
+    toast("Queen Browser unavailable");
   }
 
   function engageKeyboardSovereign() {
