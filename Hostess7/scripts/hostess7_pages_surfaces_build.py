@@ -36,6 +36,10 @@ DESKTOP_DOCS = DOCS / "desktop"
 ASSETS_DOCS = DOCS / "assets"
 API = DOCS / "api"
 PAGES_BASE = os.environ.get("HOSTESS7_PAGES_BASE", "/Hostess7")
+PAGES_DESKTOP_THEME = "nexus-military-v8"
+PAGES_DESKTOP_ICON_IDS = ("view", "queen-terminal", "queen-browser", "field-broadcaster")
+PAGES_DESKTOP_UI_SCALE = 200
+PAGES_DESKTOP_ICON_SIZE = 96
 
 
 def _ts() -> str:
@@ -243,11 +247,12 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
     policy["launch_url"] = f"{PAGES_BASE}/desktop/"
     policy["show_desktop_icons"] = True
     policy["desktop_icons_in_start"] = False
-    policy["desktop_ui_scale_default"] = 125
-    policy["desktop_icon_size_default"] = 63
+    policy["desktop_ui_scale_default"] = PAGES_DESKTOP_UI_SCALE
+    policy["desktop_icon_size_default"] = PAGES_DESKTOP_ICON_SIZE
     doc["product"] = "Hostess7"
     doc["version"] = H7_VERSION
     doc["main_project"] = True
+    doc["theme"] = PAGES_DESKTOP_THEME
 
     shell = doc.setdefault("shell", {})
     shell["boot_program"] = ""
@@ -256,10 +261,11 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
     shell["queen_browser_only"] = False
     shell_settings = shell.setdefault("settings", {})
     if isinstance(shell_settings, dict):
-        shell_settings["ui_scale"] = 125
-        shell_settings["desktop_icon_size"] = 63
+        shell_settings["ui_scale"] = PAGES_DESKTOP_UI_SCALE
+        shell_settings["desktop_icon_size"] = PAGES_DESKTOP_ICON_SIZE
         shell_settings["fullscreen_desktop"] = True
         shell_settings["show_desktop_icons"] = True
+        shell_settings["ammoos_theme"] = PAGES_DESKTOP_THEME
 
     for key in ("programs", "icon_dock", "start_menu", "field_apps"):
         items = doc.get(key)
@@ -300,17 +306,20 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
             if isinstance(app, dict) and app.get("id") == "hostess7-training-viewer":
                 app.pop("ensure_api", None)
 
-    doc["desktop_icons"] = [
+    for app in programs:
+        if isinstance(app, dict) and app.get("id"):
+            app["pinned"] = app.get("id") in PAGES_DESKTOP_ICON_IDS
+
+    desktop_pool = [
         a
         for a in programs
-        if a.get("pinned")
+        if a.get("id") in PAGES_DESKTOP_ICON_IDS
         and not a.get("ghost")
         and not a.get("clipboard_ghost")
-        and a.get("id") not in ("nexus-c2-desktop",)
         and a.get("launcher_visible") is not False
     ]
-    if qb and not any(i.get("id") == "queen-browser" for i in doc["desktop_icons"]):
-        doc["desktop_icons"].insert(0, qb)
+    by_id = {a.get("id"): a for a in desktop_pool if a.get("id")}
+    doc["desktop_icons"] = [by_id[i] for i in PAGES_DESKTOP_ICON_IDS if i in by_id]
 
     tray = doc.get("startbar", {}).get("tray_icons") or doc.get("tray_icons") or []
     for icon in tray:
@@ -622,13 +631,13 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
         "settings": {
             "taskbar_auto_hide": False,
             "taskbar_peek": True,
-            "ui_scale": 125,
-            "desktop_icon_size": 63,
+            "ui_scale": PAGES_DESKTOP_UI_SCALE,
+            "desktop_icon_size": PAGES_DESKTOP_ICON_SIZE,
             "fullscreen_desktop": True,
             "show_desktop_icons": True,
             "queen_browser_only": False,
-            "ammoos_theme": "ammo-field",
-            "ammo_ui_boost_note": f"Hostess 7 {H7_VERSION} desktop +25%; Queen launches from icon",
+            "ammoos_theme": PAGES_DESKTOP_THEME,
+            "ammo_ui_boost_note": f"Hostess 7 {H7_VERSION} desktop 200% taskbar; 4 cartoony icons; classic Start",
         },
         "displays": [{"id": "default", "name": "GitHub Pages", "resolution": "1920×1080", "primary": True}],
     }

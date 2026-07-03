@@ -114,37 +114,52 @@ html[data-os-theme="ammo-rose"] .hd-desktop {
   align-items: flex-start;
 }
 
-.hd-icon {
+.hd-icon, .hd-icon-cartoony {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  width: 88px;
-  padding: 8px 4px;
-  border: 1px solid transparent;
-  border-radius: 6px;
+  gap: 2px;
+  width: 110px;
+  min-width: 110px;
+  padding: 6px 2px;
+  border: none !important;
+  border-radius: 4px;
   background: transparent;
-  color: var(--hd-text);
+  color: #e0f0ff;
   cursor: pointer;
   font: inherit;
-  font-size: 11px;
+  font-size: 10px;
   text-align: center;
-  line-height: 1.2;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  line-height: 1.1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
   touch-action: manipulation;
 }
 
 .hd-icon:hover,
-.hd-icon.selected {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.12);
+.hd-icon.selected,
+.hd-icon-cartoony:hover,
+.hd-icon-cartoony.selected {
+  background: rgba(0, 200, 255, 0.12) !important;
+  outline: 1px dotted rgba(100, 220, 255, 0.4);
 }
 
-.hd-icon img {
-  width: 40px;
-  height: 40px;
+.hd-icon-cartoony > div {
+  font-size: 82px !important;
+  width: 96px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: none;
+  text-shadow: 0 0 4px rgba(0,0,0,0.7);
+}
+
+.hd-icon img, .hd-icon span[style*="font-size"] {
+  width: 96px;
+  height: 88px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  font-size: 82px;
+  line-height: 1;
 }
 
 .hd-icon-live-wrap {
@@ -180,18 +195,18 @@ html[data-os-theme="ammo-rose"] .hd-desktop {
 }
 
 .hd-icon-fallback {
-  width: 40px;
-  height: 40px;
+  width: 96px;
+  height: 96px;
   border-radius: 10px;
   background: linear-gradient(135deg, #3b82f6, #8b5cf6);
   display: grid;
   place-items: center;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 48px;
 }
 
 .hd-icon span {
-  max-width: 80px;
+  max-width: 110px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

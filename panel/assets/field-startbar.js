@@ -797,7 +797,7 @@
     root.innerHTML =
       '<nav class="fsb-root" aria-label="Field startbar">' +
       '<div class="fsb-start-wrap">' +
-      '<button type="button" class="fsb-start" id="fsb-start" aria-label="Start menu" aria-expanded="false" aria-haspopup="true">' +
+      '<button type="button" class="fsb-start fsb-start-classic" id="fsb-start" aria-label="Start menu (classic active)" aria-expanded="false" aria-haspopup="true" data-classic="1">' +
       startIcon() +
       "</button>" +
       '<div class="fsb-menu fsb-menu--flyout" id="fsb-menu" role="dialog" aria-label="Programs" aria-hidden="true"></div>' +

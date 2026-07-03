@@ -1,11 +1,11 @@
 /**
- * AmmoOS C2 desktop — apply 125% UI (+25%) on load. Does not affect Queen Browser.
+ * AmmoOS C2 desktop — apply 200% UI (100% bigger taskbar + Start) on load. Queen Browser unchanged.
  */
 (function () {
   "use strict";
 
-  var DESKTOP_SCALE = 125;
-  var DESKTOP_ICON = 63;
+  var DESKTOP_SCALE = 200;
+  var DESKTOP_ICON = 96;
 
   function applyEarly() {
     var root = document.documentElement;
