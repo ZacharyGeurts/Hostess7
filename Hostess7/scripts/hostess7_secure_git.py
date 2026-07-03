@@ -59,8 +59,14 @@ _BLOCKING_CONFIG = (
     (re.compile(r"^https\.proxy=", re.I), "https.proxy redirect"),
     (re.compile(r"^core\.sshcommand=", re.I), "core.sshCommand override"),
     (re.compile(r"^core\.gitproxy=", re.I), "core.gitProxy redirect"),
-    (re.compile(r"^remote\..*\.url=.*@(?!github\.com)", re.I), "non-github remote"),
-    (re.compile(r"^remote\..*\.url=https?://(?!github\.com)", re.I), "non-github https remote"),
+    (
+        re.compile(r"^remote\..*\.url=.*@(?!github\.com|ssh\.github\.com)", re.I),
+        "non-github remote",
+    ),
+    (
+        re.compile(r"^remote\..*\.url=https?://(?!github\.com)", re.I),
+        "non-github https remote",
+    ),
 )
 _WARN_CONFIG = (
     (re.compile(r"^credential(\..*)?\.helper=", re.I), "credential helper (bypassed by secure git)"),
@@ -534,19 +540,23 @@ def push_repo(cwd: Path, *, branch: str = "main", remote: str, tag: str | None =
         )
         return {"lane": lane, "route": route, "remote": remote_url, **r}
 
-    order: list[tuple[str, str | None, str]] = []
-    if lanes_doc.get("recommended") == "ssh_direct_22":
-        order.append(("ssh_direct_22", "direct", remote))
-    if lanes_doc.get("recommended") == "ssh_tunnel_443" or not order:
-        order.append(("ssh_tunnel_443", "tunnel", remote))
-    if ("ssh_direct_22", "direct", remote) not in order:
-        order.append(("ssh_direct_22", "direct", remote))
-
+    candidates: list[tuple[str, str | None, str]] = [
+        ("ssh_tunnel_443", "tunnel", remote),
+        ("ssh_direct_22", "direct", remote),
+    ]
     m = re.match(r"git@github\.com:([^/]+)/([^/]+?)(?:\.git)?$", remote)
     if m:
         https = _https_remote(m.group(1), m.group(2).replace(".git", ""))
         if https:
-            order.append(("https_token", "https", https))
+            candidates.append(("https_token", "https", https))
+    rec = lanes_doc.get("recommended")
+    order: list[tuple[str, str | None, str]] = []
+    for item in candidates:
+        if item[0] == rec:
+            order.insert(0, item)
+    for item in candidates:
+        if item not in order:
+            order.append(item)
 
     seen: set[tuple[str, str | None]] = set()
     for lane, route, url in order:
