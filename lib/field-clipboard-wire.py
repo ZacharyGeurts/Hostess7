@@ -21,6 +21,33 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from hardware_wire_registry import WIRE_ALLOWED
 from proc_threat_match import proc_hits_any
 
+try:
+    from field_programming_filetypes import clipboard_mimes, media_discern, media_status, mime_for_path
+except ImportError:
+    import importlib.util
+
+    _ft_path = Path(__file__).resolve().parent / "field-programming-filetypes.py"
+    _ft_spec = importlib.util.spec_from_file_location("field_programming_filetypes", _ft_path)
+    _ft_mod = importlib.util.module_from_spec(_ft_spec) if _ft_spec and _ft_spec.loader else None
+    if _ft_mod and _ft_spec and _ft_spec.loader:
+        _ft_spec.loader.exec_module(_ft_mod)
+        clipboard_mimes = _ft_mod.clipboard_mimes
+        media_discern = _ft_mod.media_discern
+        media_status = _ft_mod.media_status
+        mime_for_path = _ft_mod.mime_for_path
+    else:
+        def clipboard_mimes() -> list[str]:
+            return []
+
+        def media_discern(path: str = "", *, mime: str = "") -> dict[str, Any]:
+            return {"ok": False}
+
+        def media_status() -> dict[str, Any]:
+            return {"ok": False}
+
+        def mime_for_path(path: str, *, clipboard: bool = True) -> str:
+            return mimetypes.guess_type(path)[0] or "application/octet-stream"
+
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", "/usr/local/lib/nexus-shield"))
 STATE = Path(os.environ.get("NEXUS_STATE_DIR", "/var/lib/nexus-shield"))
 SG_ROOT = Path(os.environ.get("GROK16_SG_ROOT", os.environ.get("SG_ROOT", INSTALL.parent.parent)))
@@ -165,8 +192,12 @@ def _media_ring_max() -> int:
 
 
 def _allowed_mimes() -> set[str]:
-    raw = _policy().get("media_mimes") or []
-    return {str(x).lower() for x in raw}
+    raw = list(_policy().get("media_mimes") or [])
+    try:
+        raw.extend(clipboard_mimes())
+    except Exception:
+        pass
+    return {str(x).lower() for x in raw if x}
 
 
 def _kind_from_mime(mime: str) -> str:
@@ -268,10 +299,17 @@ def copy_media_bytes(data: bytes, mime: str, *, name: str = "", action: str = "c
         return {"ok": False, "error": "media_vault_disabled"}
     mime = (mime or "application/octet-stream").split(";")[0].strip().lower()
     allowed = _allowed_mimes()
-    if allowed and mime not in allowed and not mime.startswith("image/") and not mime.startswith("video/"):
+    if name:
+        hinted = mime_for_path(name, clipboard=True)
+        if hinted and hinted != "application/octet-stream":
+            mime = hinted
+    if allowed and mime not in allowed and not any(
+        mime.startswith(p) for p in ("image/", "video/", "audio/", "application/")
+    ):
         guess = mimetypes.guess_type(name or "file.bin")[0]
         if guess:
             mime = guess.lower()
+    meta = media_discern(name or f"blob.{mime.split('/')[-1]}", mime=mime)
     if len(data) > _media_max_bytes():
         return {"ok": False, "error": "media_too_large", "max_bytes": _media_max_bytes(), "size": len(data)}
     MEDIA_DIR.mkdir(parents=True, exist_ok=True)
@@ -292,7 +330,11 @@ def copy_media_bytes(data: bytes, mime: str, *, name: str = "", action: str = "c
             "kind": kind,
             "size": len(data),
             "name": name or "",
-            "preview": preview[: _historic_preview_len()],
+            "format": meta.get("format") if meta.get("ok") else None,
+            "format_label": meta.get("label") if meta.get("ok") else None,
+            "family": meta.get("family") if meta.get("ok") else None,
+            "variants": meta.get("variants") if meta.get("ok") else [],
+            "preview": (meta.get("label") or preview)[: _historic_preview_len()],
             "preview_b64": preview_b64,
             "ts": _now(),
         },
@@ -318,6 +360,10 @@ def copy_media_bytes(data: bytes, mime: str, *, name: str = "", action: str = "c
         "size": len(data),
         "media_url": f"/api/field-clipboard/media?id={media_id}",
         "preview_b64": preview_b64,
+        "format": meta.get("format") if meta.get("ok") else None,
+        "format_label": meta.get("label") if meta.get("ok") else None,
+        "family": meta.get("family") if meta.get("ok") else None,
+        "variants": meta.get("variants") if meta.get("ok") else [],
         "historic": hist,
         "count": len(entries),
     }
@@ -760,6 +806,8 @@ def handle_dispatch(body: dict[str, Any]) -> dict[str, Any]:
         return set_scheme(str(body.get("scheme")))
     if act in ("panel", "json", "status"):
         return panel_json()
+    if act in ("media_index", "media_filetypes", "filetypes"):
+        return media_status()
     if act:
         text = body.get("text")
         if text is not None:

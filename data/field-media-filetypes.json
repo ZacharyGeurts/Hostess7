@@ -1,0 +1,426 @@
+{
+  "schema": "field-media-filetypes/v1",
+  "title": "AmmoOS clipboard & vault — all media eras",
+  "motto": "Amiga IFF · PCX every variant · DOS · Atari · Mac · we do them all",
+  "clipboard": {
+    "accept_all_registered": true,
+    "max_bytes": 67108864,
+    "ring_max": 16
+  },
+  "families": {
+    "amiga": {
+      "label": "Commodore Amiga",
+      "era": "1985-1994",
+      "formats": ["iff_ilbm", "iff_anim", "iff_8svx", "iff_smus", "amiga_mod", "amiga_disk", "amiga_font", "amiga_icon"]
+    },
+    "dos_pcx": {
+      "label": "PC Paintbrush / ZSoft PCX lineage",
+      "era": "1982-1996",
+      "formats": ["pcx", "pcx_vga", "pcx_ega", "pcx_cga", "pcx_mono", "dcx"]
+    },
+    "dos_graphics": {
+      "label": "DOS & BBS graphics",
+      "era": "1981-1999",
+      "formats": ["bmp", "gif", "tga", "cel", "pic", "wpg", "gem_img", "ansi_art", "nfo_art"]
+    },
+    "atari_st": {
+      "label": "Atari ST / NeoChrome / Degas",
+      "era": "1985-1993",
+      "formats": ["neochrome", "degas_pi", "tny", "tiny"]
+    },
+    "mac_classic": {
+      "label": "Classic Macintosh",
+      "era": "1984-1998",
+      "formats": ["macpaint", "pict", "icns"]
+    },
+    "tracker": {
+      "label": "Tracker modules (Amiga · PC)",
+      "era": "1987-2000",
+      "formats": ["amiga_mod", "xm", "s3m", "it", "669", "med", "okt", "mtm", "stm", "far", "amf"]
+    },
+    "modern_raster": {
+      "label": "Modern raster",
+      "formats": ["png", "jpeg", "webp", "avif", "heic", "tiff", "svg", "psd"]
+    },
+    "modern_video": {
+      "label": "Video containers",
+      "formats": ["mp4", "webm", "mkv", "avi", "mov", "ogv", "m4v", "wmv", "flv", "mpg"]
+    },
+    "modern_audio": {
+      "label": "Audio",
+      "formats": ["wav", "mp3", "ogg", "flac", "aac", "m4a", "aiff", "mid", "midi"]
+    },
+    "archive": {
+      "label": "Archives (clipboard file payloads)",
+      "formats": ["zip", "lha", "lzx", "gz", "tar", "7z", "rar"]
+    }
+  },
+  "formats": {
+    "iff_ilbm": {
+      "label": "IFF ILBM — interleaved bitmap",
+      "family": "amiga",
+      "mime": "image/x-iff",
+      "kind": "image",
+      "variants": ["std", "ham", "ham6", "ham8", "ehb", "deep", "24bit", "ham10"],
+      "extensions": [".iff", ".ilbm", ".lbm"],
+      "clipboard": true,
+      "notes": "Deluxe Paint Amiga · Brilliance · Photon Paint"
+    },
+    "iff_anim": {
+      "label": "IFF ANIM / ANBM animation",
+      "family": "amiga",
+      "mime": "video/x-iff-animation",
+      "kind": "video",
+      "extensions": [".anim", ".anbm", ".anm"],
+      "clipboard": true
+    },
+    "iff_8svx": {
+      "label": "IFF 8SVX / 16SVX / 32SVX sample",
+      "family": "amiga",
+      "mime": "audio/x-iff",
+      "kind": "audio",
+      "extensions": [".8svx", ".16svx", ".32svx", ".svx"],
+      "clipboard": true
+    },
+    "iff_smus": {
+      "label": "IFF SMUS / MUS music",
+      "family": "amiga",
+      "mime": "audio/x-iff-smus",
+      "kind": "audio",
+      "extensions": [".smus", ".mus"],
+      "clipboard": true
+    },
+    "amiga_mod": {
+      "label": "Amiga SoundTracker / ProTracker MOD",
+      "family": "tracker",
+      "mime": "audio/mod",
+      "kind": "audio",
+      "extensions": [".mod"],
+      "clipboard": true,
+      "dual_use": "tracker_mod_vs_modula2"
+    },
+    "amiga_disk": {
+      "label": "Amiga disk image",
+      "family": "amiga",
+      "mime": "application/x-amiga-disk-image",
+      "kind": "file",
+      "extensions": [".adf", ".adz", ".dms", ".fd", ".hdf", ".hdz"],
+      "clipboard": true
+    },
+    "amiga_font": {
+      "label": "Amiga bitmap font",
+      "family": "amiga",
+      "mime": "application/x-amiga-font",
+      "kind": "file",
+      "extensions": [".font", ".amigafont"],
+      "clipboard": true
+    },
+    "amiga_icon": {
+      "label": "Amiga icon / drawer",
+      "family": "amiga",
+      "mime": "image/x-amiga-icon",
+      "kind": "image",
+      "extensions": [".info", ".icon"],
+      "clipboard": true
+    },
+    "pcx": {
+      "label": "PC Paintbrush PCX (RLE)",
+      "family": "dos_pcx",
+      "mime": "image/vnd.zbrush.pcx",
+      "kind": "image",
+      "variants": ["rle", "uncompressed", "v2", "v3", "v5"],
+      "extensions": [".pcx"],
+      "clipboard": true,
+      "notes": "ZSoft PCX — 1/2/4/8 bpp, optional 256-color VGA palette tail"
+    },
+    "pcx_vga": {
+      "label": "PCX VGA 256-color (768-byte palette)",
+      "family": "dos_pcx",
+      "mime": "image/vnd.zbrush.pcx",
+      "kind": "image",
+      "variants": ["256_palette_tail"],
+      "extensions": [".pcx"],
+      "clipboard": true
+    },
+    "pcx_ega": {
+      "label": "PCX EGA 16-color",
+      "family": "dos_pcx",
+      "mime": "image/vnd.zbrush.pcx",
+      "kind": "image",
+      "variants": ["ega_16"],
+      "extensions": [".pcx"],
+      "clipboard": true
+    },
+    "pcx_cga": {
+      "label": "PCX CGA 4-color / Hercules mono",
+      "family": "dos_pcx",
+      "mime": "image/vnd.zbrush.pcx",
+      "kind": "image",
+      "variants": ["cga_4", "herc_mono"],
+      "extensions": [".pcx"],
+      "clipboard": true
+    },
+    "pcx_mono": {
+      "label": "PCX monochrome",
+      "family": "dos_pcx",
+      "mime": "image/vnd.zbrush.pcx",
+      "kind": "image",
+      "variants": ["mono_1bpp"],
+      "extensions": [".pcx"],
+      "clipboard": true
+    },
+    "dcx": {
+      "label": "DCX multi-page PCX fax stack",
+      "family": "dos_pcx",
+      "mime": "image/x-dcx",
+      "kind": "image",
+      "extensions": [".dcx"],
+      "clipboard": true
+    },
+    "bmp": {
+      "label": "Windows/OS2 BMP DIB",
+      "family": "dos_graphics",
+      "mime": "image/bmp",
+      "kind": "image",
+      "variants": ["os2_1x", "os2_2x", "windows_v3", "windows_v4", "rle8", "rle4"],
+      "extensions": [".bmp", ".dib"],
+      "clipboard": true
+    },
+    "gif": {
+      "label": "CompuServe GIF",
+      "family": "dos_graphics",
+      "mime": "image/gif",
+      "kind": "image",
+      "variants": ["87a", "89a", "interlaced", "animated"],
+      "extensions": [".gif"],
+      "clipboard": true
+    },
+    "tga": {
+      "label": "Truevision TGA Targa",
+      "family": "dos_graphics",
+      "mime": "image/x-tga",
+      "kind": "image",
+      "variants": ["colormap", "truecolor", "rle"],
+      "extensions": [".tga", ".tpic", ".vda", ".icb", ".vst"],
+      "clipboard": true
+    },
+    "cel": {
+      "label": "Autodesk Animator FLI/CEL",
+      "family": "dos_graphics",
+      "mime": "image/x-cel",
+      "kind": "image",
+      "extensions": [".cel", ".fli", ".flc"],
+      "clipboard": true
+    },
+    "pic": {
+      "label": "PIC / PICT / PC Paint",
+      "family": "dos_graphics",
+      "mime": "image/x-pict",
+      "kind": "image",
+      "extensions": [".pic", ".pict", ".pct"],
+      "clipboard": true
+    },
+    "wpg": {
+      "label": "WordPerfect Graphics WPG",
+      "family": "dos_graphics",
+      "mime": "image/x-wpg",
+      "kind": "image",
+      "extensions": [".wpg"],
+      "clipboard": true
+    },
+    "gem_img": {
+      "label": "GEM IMG / Ventura",
+      "family": "dos_graphics",
+      "mime": "image/x-gem",
+      "kind": "image",
+      "extensions": [".img", ".gem"],
+      "clipboard": true,
+      "notes": "Not Amiga ADF — GEM raster when magic matches"
+    },
+    "ansi_art": {
+      "label": "ANSI / ASCII art scene file",
+      "family": "dos_graphics",
+      "mime": "text/x-ansi-art",
+      "kind": "text",
+      "extensions": [".ans", ".asc", ".ice", ".xb", ".bbs"],
+      "clipboard": true
+    },
+    "nfo_art": {
+      "label": "NFO / DIZ warez art",
+      "family": "dos_graphics",
+      "mime": "text/x-nfo",
+      "kind": "text",
+      "extensions": [".nfo", ".diz"],
+      "clipboard": true
+    },
+    "neochrome": {
+      "label": "NeoChrome ST / .NEO",
+      "family": "atari_st",
+      "mime": "image/x-neochrome",
+      "kind": "image",
+      "extensions": [".neo", ".nch"],
+      "clipboard": true
+    },
+    "degas_pi": {
+      "label": "Degas Elite PI1/PI2/PI3",
+      "family": "atari_st",
+      "mime": "image/x-degas",
+      "kind": "image",
+      "extensions": [".pi1", ".pi2", ".pi3", ".degas"],
+      "clipboard": true
+    },
+    "tny": {
+      "label": "Tiny Stuff TNY",
+      "family": "atari_st",
+      "mime": "image/x-tny",
+      "kind": "image",
+      "extensions": [".tny", ".tiny"],
+      "clipboard": true
+    },
+    "macpaint": {
+      "label": "MacPaint MAC",
+      "family": "mac_classic",
+      "mime": "image/x-macpaint",
+      "kind": "image",
+      "extensions": [".mac", ".macp"],
+      "clipboard": true
+    },
+    "pict": {
+      "label": "Apple Macintosh PICT",
+      "family": "mac_classic",
+      "mime": "image/x-pict",
+      "kind": "image",
+      "extensions": [".pict", ".pct"],
+      "clipboard": true
+    },
+    "icns": {
+      "label": "Apple ICNS icon container",
+      "family": "mac_classic",
+      "mime": "image/icns",
+      "kind": "image",
+      "extensions": [".icns"],
+      "clipboard": true
+    },
+    "xm": {
+      "label": "FastTracker II XM",
+      "family": "tracker",
+      "mime": "audio/xm",
+      "kind": "audio",
+      "extensions": [".xm"],
+      "clipboard": true
+    },
+    "s3m": {
+      "label": "ScreamTracker S3M",
+      "family": "tracker",
+      "mime": "audio/s3m",
+      "kind": "audio",
+      "extensions": [".s3m"],
+      "clipboard": true
+    },
+    "it": {
+      "label": "Impulse Tracker IT",
+      "family": "tracker",
+      "mime": "audio/it",
+      "kind": "audio",
+      "extensions": [".it"],
+      "clipboard": true
+    },
+    "669": {
+      "label": "Composer 669",
+      "family": "tracker",
+      "mime": "audio/669",
+      "kind": "audio",
+      "extensions": [".669"],
+      "clipboard": true
+    },
+    "med": {
+      "label": "OctaMED MED",
+      "family": "tracker",
+      "mime": "audio/x-med",
+      "kind": "audio",
+      "extensions": [".med"],
+      "clipboard": true
+    },
+    "okt": {
+      "label": "Oktalyzer OKT",
+      "family": "tracker",
+      "mime": "audio/okt",
+      "kind": "audio",
+      "extensions": [".okt"],
+      "clipboard": true
+    },
+    "mtm": {
+      "label": "MultiTracker MTM",
+      "family": "tracker",
+      "mime": "audio/mtm",
+      "kind": "audio",
+      "extensions": [".mtm"],
+      "clipboard": true
+    },
+    "stm": {
+      "label": "ScreamTracker STM",
+      "family": "tracker",
+      "mime": "audio/stm",
+      "kind": "audio",
+      "extensions": [".stm"],
+      "clipboard": true
+    },
+    "far": {
+      "label": "Farandole Composer FAR",
+      "family": "tracker",
+      "mime": "audio/far",
+      "kind": "audio",
+      "extensions": [".far"],
+      "clipboard": true
+    },
+    "amf": {
+      "label": "DSMI AMF",
+      "family": "tracker",
+      "mime": "audio/amf",
+      "kind": "audio",
+      "extensions": [".amf"],
+      "clipboard": true
+    },
+    "png": {"label": "PNG", "family": "modern_raster", "mime": "image/png", "kind": "image", "extensions": [".png"], "clipboard": true},
+    "jpeg": {"label": "JPEG/JFIF", "family": "modern_raster", "mime": "image/jpeg", "kind": "image", "extensions": [".jpg", ".jpeg", ".jpe", ".jfif"], "clipboard": true},
+    "webp": {"label": "WebP", "family": "modern_raster", "mime": "image/webp", "kind": "image", "extensions": [".webp"], "clipboard": true},
+    "avif": {"label": "AVIF", "family": "modern_raster", "mime": "image/avif", "kind": "image", "extensions": [".avif"], "clipboard": true},
+    "heic": {"label": "HEIC/HEIF", "family": "modern_raster", "mime": "image/heic", "kind": "image", "extensions": [".heic", ".heif"], "clipboard": true},
+    "tiff": {"label": "TIFF", "family": "modern_raster", "mime": "image/tiff", "kind": "image", "extensions": [".tif", ".tiff"], "clipboard": true},
+    "svg": {"label": "SVG", "family": "modern_raster", "mime": "image/svg+xml", "kind": "image", "extensions": [".svg"], "clipboard": true},
+    "psd": {"label": "Adobe Photoshop PSD", "family": "modern_raster", "mime": "image/vnd.adobe.photoshop", "kind": "image", "extensions": [".psd"], "clipboard": true},
+    "xbm": {"label": "X11 XBM bitmap", "family": "dos_graphics", "mime": "image/x-xbitmap", "kind": "image", "extensions": [".xbm"], "clipboard": true},
+    "xpm": {"label": "X11 XPM pixmap", "family": "dos_graphics", "mime": "image/x-xpixmap", "kind": "image", "extensions": [".xpm"], "clipboard": true},
+    "ppm": {"label": "Netpbm PPM", "family": "dos_graphics", "mime": "image/x-portable-pixmap", "kind": "image", "extensions": [".ppm"], "clipboard": true},
+    "pgm": {"label": "Netpbm PGM", "family": "dos_graphics", "mime": "image/x-portable-graymap", "kind": "image", "extensions": [".pgm"], "clipboard": true},
+    "pbm": {"label": "Netpbm PBM", "family": "dos_graphics", "mime": "image/x-portable-bitmap", "kind": "image", "extensions": [".pbm"], "clipboard": true},
+    "ico": {"label": "Windows ICO", "family": "dos_graphics", "mime": "image/x-icon", "kind": "image", "extensions": [".ico"], "clipboard": true},
+    "cur": {"label": "Windows CUR cursor", "family": "dos_graphics", "mime": "image/x-win-bitmap", "kind": "image", "extensions": [".cur"], "clipboard": true},
+    "ani": {"label": "Windows ANI animated cursor", "family": "dos_graphics", "mime": "application/x-navi-animation", "kind": "image", "extensions": [".ani"], "clipboard": true},
+    "mp4": {"label": "MPEG-4 MP4", "family": "modern_video", "mime": "video/mp4", "kind": "video", "extensions": [".mp4", ".m4v"], "clipboard": true},
+    "webm": {"label": "WebM", "family": "modern_video", "mime": "video/webm", "kind": "video", "extensions": [".webm"], "clipboard": true},
+    "mkv": {"label": "Matroska MKV", "family": "modern_video", "mime": "video/x-matroska", "kind": "video", "extensions": [".mkv"], "clipboard": true},
+    "avi": {"label": "AVI", "family": "modern_video", "mime": "video/x-msvideo", "kind": "video", "extensions": [".avi"], "clipboard": true},
+    "mov": {"label": "QuickTime MOV", "family": "modern_video", "mime": "video/quicktime", "kind": "video", "extensions": [".mov", ".qt"], "clipboard": true},
+    "ogv": {"label": "Ogg Video", "family": "modern_video", "mime": "video/ogg", "kind": "video", "extensions": [".ogv"], "clipboard": true},
+    "wmv": {"label": "Windows WMV", "family": "modern_video", "mime": "video/x-ms-wmv", "kind": "video", "extensions": [".wmv"], "clipboard": true},
+    "flv": {"label": "Flash FLV", "family": "modern_video", "mime": "video/x-flv", "kind": "video", "extensions": [".flv"], "clipboard": true},
+    "mpg": {"label": "MPEG-1/2", "family": "modern_video", "mime": "video/mpeg", "kind": "video", "extensions": [".mpg", ".mpeg", ".mpe"], "clipboard": true},
+    "wav": {"label": "WAV PCM", "family": "modern_audio", "mime": "audio/wav", "kind": "audio", "extensions": [".wav"], "clipboard": true},
+    "mp3": {"label": "MP3", "family": "modern_audio", "mime": "audio/mpeg", "kind": "audio", "extensions": [".mp3"], "clipboard": true},
+    "ogg": {"label": "Ogg Vorbis/Opus", "family": "modern_audio", "mime": "audio/ogg", "kind": "audio", "extensions": [".ogg", ".opus"], "clipboard": true},
+    "flac": {"label": "FLAC", "family": "modern_audio", "mime": "audio/flac", "kind": "audio", "extensions": [".flac"], "clipboard": true},
+    "aac": {"label": "AAC", "family": "modern_audio", "mime": "audio/aac", "kind": "audio", "extensions": [".aac"], "clipboard": true},
+    "m4a": {"label": "M4A", "family": "modern_audio", "mime": "audio/mp4", "kind": "audio", "extensions": [".m4a"], "clipboard": true},
+    "aiff": {"label": "AIFF (Amiga/mac classic)", "family": "modern_audio", "mime": "audio/aiff", "kind": "audio", "extensions": [".aiff", ".aif", ".aifc"], "clipboard": true},
+    "mid": {"label": "MIDI", "family": "modern_audio", "mime": "audio/midi", "kind": "audio", "extensions": [".mid", ".midi"], "clipboard": true},
+    "zip": {"label": "ZIP archive", "family": "archive", "mime": "application/zip", "kind": "file", "extensions": [".zip"], "clipboard": true},
+    "lha": {"label": "LHA/LZH Amiga archive", "family": "archive", "mime": "application/x-lzh-compressed", "kind": "file", "extensions": [".lha", ".lzh"], "clipboard": true},
+    "lzx": {"label": "LZX Amiga archive", "family": "archive", "mime": "application/x-lzx", "kind": "file", "extensions": [".lzx"], "clipboard": true},
+    "gz": {"label": "GZip", "family": "archive", "mime": "application/gzip", "kind": "file", "extensions": [".gz"], "clipboard": true},
+    "tar": {"label": "TAR", "family": "archive", "mime": "application/x-tar", "kind": "file", "extensions": [".tar"], "clipboard": true},
+    "7z": {"label": "7-Zip", "family": "archive", "mime": "application/x-7z-compressed", "kind": "file", "extensions": [".7z"], "clipboard": true},
+    "rar": {"label": "RAR", "family": "archive", "mime": "application/vnd.rar", "kind": "file", "extensions": [".rar"], "clipboard": true},
+    "pdf": {"label": "PDF", "family": "modern_raster", "mime": "application/pdf", "kind": "file", "extensions": [".pdf"], "clipboard": true}
+  }
+}

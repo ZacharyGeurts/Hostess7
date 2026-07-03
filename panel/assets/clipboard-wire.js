@@ -33,6 +33,8 @@
     historicCount: 0,
     mediaCount: 0,
     mediaActiveId: null,
+    mediaIndex: null,
+    mimeByExt: {},
     historyCursor: 0,
   };
 
@@ -230,9 +232,34 @@
     return new Blob([arr], { type: mime });
   }
 
+  function extFromName(name) {
+    const m = String(name || "").toLowerCase().match(/(\.[a-z0-9]{1,8})$/i);
+    return m ? m[1] : "";
+  }
+
+  function formatLabelForName(name, mime) {
+    const ext = extFromName(name);
+    if (ext && state.mimeByExt[ext]) {
+      const row = (state.mediaIndex && state.mediaIndex.formats) || {};
+      for (const id in row) {
+        const fmt = row[id];
+        if ((fmt.extensions || []).map((e) => e.toLowerCase()).includes(ext)) {
+          return fmt.label || id;
+        }
+      }
+    }
+    return mime ? mime.split("/").pop() : "media";
+  }
+
   function mediaTargetFromEvent(ev) {
     const t = (ev && ev.target) || document.activeElement;
     if (!t || !t.closest) return null;
+    const link = t.closest("a[href]");
+    if (link && link.href) {
+      const href = link.getAttribute("href") || link.href;
+      const ext = extFromName(href);
+      if (ext && state.mimeByExt[ext]) return { tag: "LINK", href, download: link.download || "" };
+    }
     const img = t.closest("img");
     if (img && img.src) return img;
     const video = t.closest("video");
@@ -251,6 +278,16 @@
 
   async function blobFromElement(el) {
     if (!el) return null;
+    if (el.tag === "LINK" && el.href) {
+      try {
+        const res = await fetch(el.href, { credentials: "same-origin" });
+        if (res.ok) {
+          const blob = await res.blob();
+          return { blob, name: el.download || el.href.split("/").pop() || "file" };
+        }
+      } catch (_) {}
+      return null;
+    }
     const tag = (el.tagName || "").toUpperCase();
     if (tag === "IMG") {
       try {
@@ -279,10 +316,10 @@
       canvas.height = el.videoHeight || el.clientHeight || 1;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(el, 0, 0, canvas.width, canvas.height);
-      return new Promise((resolve) => canvas.toBlob((b) => resolve(b), "image/png"));
+      return new Promise((resolve) => canvas.toBlob((b) => resolve(b && { blob: b, name: "frame.png" }), "image/png"));
     }
     if (tag === "CANVAS") {
-      return new Promise((resolve) => el.toBlob((b) => resolve(b), "image/png"));
+      return new Promise((resolve) => el.toBlob((b) => resolve(b && { blob: b, name: "canvas.png" }), "image/png"));
     }
     return null;
   }
@@ -329,7 +366,13 @@
     if (doc && doc.ok) {
       state.mediaCount = doc.count || state.mediaCount;
       state.mediaActiveId = doc.media_id || state.mediaActiveId;
-      lsSet(LS_MEDIA, { media_id: doc.media_id, mime: doc.mime, kind: doc.kind, at: Date.now() });
+      lsSet(LS_MEDIA, {
+        media_id: doc.media_id,
+        mime: doc.mime,
+        kind: doc.kind,
+        format_label: doc.format_label,
+        at: Date.now(),
+      });
       state.historicCount = (doc.historic && doc.historic.count) || state.historicCount;
     }
     return doc;
@@ -396,9 +439,16 @@
     let mime = "";
     let name = "";
     if (el) {
-      blob = await blobFromElement(el);
-      mime = blob && blob.type;
-      name = el.getAttribute && (el.getAttribute("alt") || el.getAttribute("title") || el.src || "") || "";
+      const got = await blobFromElement(el);
+      if (got && got.blob) {
+        blob = got.blob;
+        mime = got.blob.type;
+        name = got.name || "";
+      } else if (got && got.type) {
+        blob = got;
+        mime = got.type;
+        name = el.getAttribute && (el.getAttribute("alt") || el.getAttribute("title") || el.src || "") || "";
+      }
     }
     if (!blob) {
       const clip = await readSystemClipboard();
@@ -409,9 +459,23 @@
     }
     if (!blob) return false;
     await writeSystemClipboard(blob, mime);
-    await storeMediaBlob(blob, mime, name);
-    flashPasteToast("Copied " + (mime.split("/")[0] || "media") + " to secured vault");
+    const doc = await storeMediaBlob(blob, mime, name);
+    const label = (doc && doc.format_label) || formatLabelForName(name, mime);
+    flashPasteToast("Copied " + label + " to secured vault");
     return true;
+  }
+
+  async function copyFileList(files) {
+    if (!files || !files.length) return false;
+    let any = false;
+    for (const file of files) {
+      if (!file) continue;
+      await writeSystemClipboard(file, file.type);
+      await storeMediaBlob(file, file.type, file.name);
+      flashPasteToast("Copied " + formatLabelForName(file.name, file.type) + " to vault");
+      any = true;
+    }
+    return any;
   }
 
   async function pasteMediaFirst() {
@@ -580,7 +644,7 @@
       `<h2>Clipboard Wire</h2>` +
       `<span class="ncw-flyout-active">${esc(state.schemeLabel || state.scheme)}</span>` +
       `</div>` +
-      `<p class="ncw-flyout-motto">Secured vault · historic ring · ${esc(state.flyoutChord)}</p>` +
+      `<p class="ncw-flyout-motto">Amiga IFF · PCX variants · DOS · all filetypes · ${esc(state.flyoutChord)}</p>` +
       (hist.length ? `<section class="ncw-flyout-section"><h3>Recent</h3>${histHtml}</section>` : "") +
       `<section class="ncw-flyout-section"><h3>Editor soul</h3>${listHtml}</section>` +
       `<div class="ncw-flyout-foot">` +
@@ -792,6 +856,23 @@
     });
   }
 
+  function loadMediaIndex() {
+    return fetch("/api/field-filetypes/media", { credentials: "same-origin" })
+      .then((r) => r.json())
+      .then((doc) => {
+        if (!doc.ok) return dispatchClipboard({ action: "media_index" });
+        return doc;
+      })
+      .catch(() => dispatchClipboard({ action: "media_index" }))
+      .then((doc) => {
+        if (doc && doc.ok) {
+          state.mediaIndex = doc;
+          state.mimeByExt = doc.mime_by_extension || {};
+        }
+        return doc;
+      });
+  }
+
   function board() {
     if (state.boarded) return state;
     ["keydown", "keyup"].forEach((t) => {
@@ -802,6 +883,28 @@
       window.addEventListener(t, onClipboardEvent, true);
       document.addEventListener(t, onClipboardEvent, true);
     });
+    document.addEventListener(
+      "drop",
+      (ev) => {
+        if (!onWireSurface(ev.target)) return;
+        const files = ev.dataTransfer && ev.dataTransfer.files;
+        if (files && files.length) {
+          ev.preventDefault();
+          copyFileList(files);
+        }
+      },
+      true,
+    );
+    document.addEventListener(
+      "dragover",
+      (ev) => {
+        if (!onWireSurface(ev.target)) return;
+        if (ev.dataTransfer && ev.dataTransfer.types && ev.dataTransfer.types.includes("Files")) {
+          ev.preventDefault();
+        }
+      },
+      true,
+    );
     markSovereign();
     state.boarded = true;
     return state;
@@ -809,7 +912,7 @@
 
   function init() {
     if (isSovereignSurface()) state.sovereign = true;
-    Promise.all([loadScheme(), loadSchemes()]).finally(() => {
+    Promise.all([loadScheme(), loadSchemes(), loadMediaIndex()]).finally(() => {
       board();
       if (state.sovereign) {
         fetch(API, {
@@ -840,7 +943,9 @@
     toggleFlyout,
     copyMedia: copyMediaFromContext,
     pasteMedia: pasteMediaFirst,
+    copyFileList,
     storeMediaBlob,
+    loadMediaIndex,
     setScheme(scheme) {
       return applyScheme(scheme, true);
     },

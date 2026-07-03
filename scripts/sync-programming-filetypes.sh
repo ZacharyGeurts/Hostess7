@@ -23,6 +23,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SG="$(cd "${ROOT}/.." && pwd)"
 CANON="${ROOT}/data/field-programming-filetypes.json"
+MEDIA="${ROOT}/data/field-media-filetypes.json"
 
 [[ -f "$CANON" ]] || { echo "missing $CANON" >&2; exit 1; }
 
@@ -37,6 +38,19 @@ for t in "${targets[@]}"; do
   cp "$CANON" "$t"
   echo "sync → $t"
 done
+
+if [[ -f "$MEDIA" ]]; then
+  media_targets=(
+    "${ROOT}/Grok16/data/field-media-filetypes.json"
+    "${ROOT}/AmmoCode/data/field-media-filetypes.json"
+    "${ROOT}/.nexus-state/field-media-filetypes.json"
+  )
+  for t in "${media_targets[@]}"; do
+    mkdir -p "$(dirname "$t")"
+    cp "$MEDIA" "$t"
+    echo "sync media → $t"
+  done
+fi
 
 # Refresh g16-universal-extensions from canonical extensions block
 python3 - <<PY

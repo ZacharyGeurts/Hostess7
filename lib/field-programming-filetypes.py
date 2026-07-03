@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import json
+import mimetypes
 import os
 import subprocess
 import sys
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +17,7 @@ from sg_paths import grok16_root
 
 GROK16 = grok16_root()
 DB_PATH = ROOT / "data" / "field-programming-filetypes.json"
+MEDIA_DB_PATH = ROOT / "data" / "field-media-filetypes.json"
 
 
 def _load() -> dict[str, Any]:
@@ -119,6 +122,136 @@ def read_text_file(path: str) -> dict[str, Any]:
         "size": len(raw),
         "text_open": True,
     }
+
+
+@lru_cache(maxsize=1)
+def _load_media() -> dict[str, Any]:
+    doc = _load()
+    rel = str(doc.get("media_index") or "data/field-media-filetypes.json")
+    for base in (ROOT, GROK16):
+        cand = base / rel
+        if cand.is_file():
+            return json.loads(cand.read_text(encoding="utf-8"))
+    if MEDIA_DB_PATH.is_file():
+        return json.loads(MEDIA_DB_PATH.read_text(encoding="utf-8"))
+    return {"formats": {}, "families": {}}
+
+
+@lru_cache(maxsize=1)
+def _media_mime_by_extension() -> dict[str, str]:
+    out: dict[str, str] = {}
+    for fmt in (_load_media().get("formats") or {}).values():
+        if not isinstance(fmt, dict):
+            continue
+        mime = str(fmt.get("mime") or "").strip().lower()
+        if not mime:
+            continue
+        for ext in fmt.get("extensions") or []:
+            key = str(ext).lower()
+            if not key.startswith("."):
+                key = f".{key}"
+            if key not in out:
+                out[key] = mime
+    return out
+
+
+@lru_cache(maxsize=1)
+def _media_format_by_extension() -> dict[str, dict[str, Any]]:
+    out: dict[str, dict[str, Any]] = {}
+    for fid, fmt in (_load_media().get("formats") or {}).items():
+        if not isinstance(fmt, dict):
+            continue
+        row = {**fmt, "id": fid}
+        for ext in fmt.get("extensions") or []:
+            key = str(ext).lower()
+            if not key.startswith("."):
+                key = f".{key}"
+            if key not in out:
+                out[key] = row
+    return out
+
+
+def media_status() -> dict[str, Any]:
+    media = _load_media()
+    formats = media.get("formats") or {}
+    families = media.get("families") or {}
+    exts = _media_mime_by_extension()
+    return {
+        "schema": "field-media-filetypes/v1",
+        "ok": True,
+        "title": media.get("title"),
+        "motto": media.get("motto"),
+        "format_count": len(formats),
+        "family_count": len(families),
+        "extension_count": len(exts),
+        "families": [
+            {"id": k, **(v if isinstance(v, dict) else {})}
+            for k, v in families.items()
+        ],
+        "clipboard_mimes": clipboard_mimes(),
+        "mime_by_extension": exts,
+    }
+
+
+def clipboard_mimes() -> list[str]:
+    mimes: set[str] = set()
+    for mime in _media_mime_by_extension().values():
+        mimes.add(mime)
+    policy = (_load_media().get("clipboard") or {})
+    if policy.get("accept_all_registered"):
+        return sorted(mimes)
+    return sorted(mimes)
+
+
+def media_discern(path: str = "", *, mime: str = "") -> dict[str, Any]:
+    suf = Path(path).suffix.lower() if path else ""
+    by_ext = _media_format_by_extension()
+    row = by_ext.get(suf) if suf else None
+    if row:
+        return {
+            "ok": True,
+            "format": row.get("id"),
+            "label": row.get("label"),
+            "family": row.get("family"),
+            "mime": row.get("mime"),
+            "kind": row.get("kind") or "file",
+            "variants": row.get("variants") or [],
+            "clipboard": bool(row.get("clipboard", True)),
+        }
+    if mime:
+        for fid, fmt in (_load_media().get("formats") or {}).items():
+            if isinstance(fmt, dict) and str(fmt.get("mime") or "").lower() == mime.lower():
+                return {
+                    "ok": True,
+                    "format": fid,
+                    "label": fmt.get("label"),
+                    "family": fmt.get("family"),
+                    "mime": mime,
+                    "kind": fmt.get("kind") or "file",
+                    "variants": fmt.get("variants") or [],
+                    "clipboard": bool(fmt.get("clipboard", True)),
+                }
+    return {"ok": False, "format": None, "kind": "file"}
+
+
+def mime_for_path(path: str, *, clipboard: bool = True) -> str:
+    suf = Path(path).suffix.lower()
+    if clipboard:
+        hit = _media_mime_by_extension().get(suf)
+        if hit:
+            return hit
+    guess = mimetypes.guess_type(path)[0]
+    if guess:
+        return guess
+    doc = _load()
+    if suf in (doc.get("extensions") or {}):
+        return "application/octet-stream"
+    return "application/octet-stream"
+
+
+def is_clipboard_media_path(path: str) -> bool:
+    suf = Path(path).suffix.lower()
+    return suf in _media_mime_by_extension()
 
 
 def discern(path: str = "", *, mime: str = "", content: str = "") -> str:
@@ -299,8 +432,20 @@ def main() -> int:
             "schema": "field-programming-filetypes/v1",
             "extensions": len(doc.get("extensions") or {}),
             "languages": len(doc.get("languages") or []),
+            "media_formats": len((_load_media().get("formats") or {})),
+            "media_extensions": len(_media_mime_by_extension()),
             "db": str(DB_PATH),
+            "media_db": str(MEDIA_DB_PATH),
         }, indent=2))
+        return 0
+    if cmd == "media":
+        print(json.dumps(media_status(), indent=2))
+        return 0
+    if cmd == "media-discern" and len(sys.argv) > 2:
+        print(json.dumps(media_discern(sys.argv[2]), indent=2))
+        return 0
+    if cmd == "clipboard-mimes":
+        print(json.dumps({"mimes": clipboard_mimes()}, indent=2))
         return 0
     if cmd == "discern" and len(sys.argv) > 2:
         print(discern(sys.argv[2]))
@@ -314,7 +459,10 @@ def main() -> int:
     if cmd == "compile" and len(sys.argv) > 2:
         print(json.dumps(compile_path(sys.argv[2]), indent=2))
         return 0 if compile_path(sys.argv[2]).get("ok") else 1
-    print(json.dumps({"error": "usage", "cmds": ["status", "discern", "actions", "run", "compile"]}, indent=2))
+    print(json.dumps({
+        "error": "usage",
+        "cmds": ["status", "discern", "actions", "run", "compile", "media", "media-discern", "clipboard-mimes"],
+    }, indent=2))
     return 2
 
 

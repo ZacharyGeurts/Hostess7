@@ -3050,6 +3050,15 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-filetypes/media", "/api/field-filetypes/media/"):
+            script = INSTALL_ROOT / "lib" / "field-programming-filetypes.py"
+            if script.is_file():
+                payload = _nexus_py_json(script, ["media"], timeout=30)
+            else:
+                payload = {"ok": False, "error": "field_programming_filetypes_missing"}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
         if path.startswith("/api/field-clipboard/media"):
             import re as _re
 
@@ -8625,6 +8634,7 @@ class Handler(BaseHTTPRequestHandler):
             media_actions = {
                 "copy_media", "media_copy", "paste_media", "media_paste",
                 "media_history", "media_list", "media_clear",
+                "media_index", "media_filetypes", "filetypes",
             }
             if scheme:
                 payload = _nexus_py_json(script, ["scheme", scheme], timeout=20)
