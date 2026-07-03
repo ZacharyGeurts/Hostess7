@@ -26,6 +26,7 @@
 
   function shouldShowIronclad() {
     if (document.body?.dataset?.ironcladTaskbar === "0") return false;
+    if (document.documentElement?.dataset?.ironcladTaskbar === "0") return false;
     if (document.body?.dataset?.forceIroncladTaskbar === "1") return true;
     if (isRunningOs()) return true;
     return !!(document.hasFocus && document.hasFocus());
@@ -203,6 +204,9 @@
 
   function init() {
     if (!BUS) return;
+    if (document.body?.dataset?.ironcladTaskbar === "0" || document.documentElement?.dataset?.ironcladTaskbar === "0") {
+      return;
+    }
     bindFocusGate();
     if (document.getElementById("fsb-root")) injectIntoStartbar();
     else if (!isAmmoHome() || document.body?.dataset?.forceIroncladTaskbar === "1") mountStandalone();

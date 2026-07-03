@@ -821,7 +821,11 @@
     tickClock();
     setInterval(tickClock, 15000);
 
-    if (global.FieldIroncladTaskbar?.injectIntoStartbar) {
+    if (
+      global.FieldIroncladTaskbar?.injectIntoStartbar &&
+      document.body?.dataset?.ironcladTaskbar !== "0" &&
+      document.documentElement.dataset.ironcladTaskbar !== "0"
+    ) {
       global.FieldIroncladTaskbar.injectIntoStartbar();
     }
 

@@ -9,12 +9,13 @@
     "-3": { label: "NEXUS C2", fkey: "F9" },
     "-2": { label: "KILROY Kernel", fkey: "F10" },
     "-1": { label: "AmmoOS Desktop", fkey: "F11" },
+    "0": { label: "Archival Warehouse · Official", fkey: null, official: true },
     "1": { label: "Inside OS", fkey: null },
     "2": { label: "Queen Browser", fkey: "F12", external: true },
   };
 
   const FKEY_TO_LAYER = { F9: -3, F10: -2, F11: -1, F12: 2 };
-  const STACK_LAYERS = [-3, -2];
+  const STACK_LAYERS = [-3, -2, 0];
 
   const state = { active: -1, root: null, frames: {}, wired: false };
 
@@ -39,6 +40,7 @@
     if (layer === -3) return q + "/queen-nexus-c2.html";
     if (layer === -2) return q + "/kilroy-home.html";
     if (layer === -1) return pagesRuntime() ? p + "/desktop/" : p + "/field";
+    if (layer === 0) return p + "/ammoos-warehouse";
     if (layer === 2) return q + "/browser.html";
     return null;
   }
@@ -143,6 +145,10 @@
     if (layer === 1) {
       state.active = 1;
       document.documentElement.dataset.fieldScreenLayer = "1";
+      return;
+    }
+    if (layer === 0) {
+      showStackLayer(0);
       return;
     }
     if (layer === -1) {

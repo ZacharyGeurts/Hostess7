@@ -310,7 +310,7 @@
     document.documentElement.dataset.osTheme = doc.theme || "ammo-field";
     const label = document.getElementById("hd-wall-label");
     if (label) {
-      label.textContent = "AmmoOS 2.0 — View · Terminal · Browser · Broadcaster · Classic Start";
+      label.textContent = "Archival Warehouse · 4 icons · Classic Start · Layer -1";
     }
     renderDesktopIcons(doc);
   }
