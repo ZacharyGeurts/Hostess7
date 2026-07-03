@@ -193,9 +193,26 @@ def ocr_image_path(
             kwargs["whitelist"] = whitelist
         text = str(zocr.ocr_image(fp, **kwargs) or "")
         row = zocr.write_capture(label=label or fp.stem, image=fp, ocr_text=text, copy_image=True)
-        row["ok"] = bool(text) or bool(row.get("ocr_len"))
+        inspect_row: dict[str, Any] = {}
+        try:
+            mil = final_eye_root() / "zocr_military_eol.py"
+            if mil.is_file():
+                import importlib.util
+                spec = importlib.util.spec_from_file_location("zocr_mil_core", mil)
+                if spec and spec.loader:
+                    m = importlib.util.module_from_spec(spec)
+                    if str(mil.parent) not in sys.path:
+                        sys.path.insert(0, str(mil.parent))
+                    spec.loader.exec_module(m)
+                    inspect_row = m.inspect_image(fp)
+        except Exception:
+            inspect_row = {}
+        visual_ok = bool(inspect_row.get("visual_ok") or inspect_row.get("ok"))
+        row["ok"] = visual_ok or bool(text) or bool(row.get("ocr_len"))
         row["text"] = text
-        row["engine"] = "Final_Eye/zocr.py"
+        row["engine"] = "Hostess7/MilitaryEOL"
+        row["military_eol"] = True
+        row["inspect"] = inspect_row or None
         row["format"] = row.get("format") or "h7/7"
         row["final_eye_root"] = str(final_eye_root())
         row["ocr_options"] = {k: v for k, v in {"psm": psm, "oem": oem, "lang": lang, "whitelist": whitelist}.items() if v}
@@ -411,6 +428,29 @@ def _hostess7_seal() -> Any | None:
     return mod
 
 
+def inspect_image_path(path: Path | str, *, lane_body: dict[str, Any] | None = None) -> dict[str, Any]:
+    gate = _ocr_lane_gate(lane_body, subaction="inspect")
+    if gate:
+        return gate
+    fp = Path(path).expanduser()
+    if not fp.is_file():
+        return {"ok": False, "error": "file_missing", "path": str(fp)}
+    mil = final_eye_root() / "zocr_military_eol.py"
+    if mil.is_file():
+        try:
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("zocr_mil_inspect", mil)
+            if spec and spec.loader:
+                m = importlib.util.module_from_spec(spec)
+                if str(mil.parent) not in sys.path:
+                    sys.path.insert(0, str(mil.parent))
+                spec.loader.exec_module(m)
+                return m.inspect_image(fp)
+        except Exception as exc:
+            return {"ok": False, "error": type(exc).__name__, "path": str(fp)}
+    return {"ok": False, "error": "military_eol_missing", "final_eye_root": str(final_eye_root())}
+
+
 def final_eye_dispatch(body: dict[str, Any]) -> dict[str, Any]:
     """Direct Final_Eye lane — Hostess 7 handshake required."""
     bridge = _ai_bridge()
@@ -460,6 +500,9 @@ def final_eye_dispatch(body: dict[str, Any]) -> dict[str, Any]:
         return {"ok": bool(look.get("ok")), "look": look, "robotics": robotics}
     if sub in ("smoke", "browser-smoke", "browser_smoke", "final-eye-smoke"):
         return final_eye_browser_smoke()
+    if sub in ("inspect", "inspect_image", "icon_audit", "glyph"):
+        path = str(body.get("path") or body.get("image") or "")
+        return inspect_image_path(path, lane_body=body)
     if sub in ("ocr", "tesseract", "recognize", "recognise", "scan", "extract", "extract_text",
                "text_from_image", "image_to_string", "image_to_text", "hocr", "pdf", "tsv", "boxes", "box", "osd"):
         return ocr_with_format(body)

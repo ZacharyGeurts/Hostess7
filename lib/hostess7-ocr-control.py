@@ -344,6 +344,12 @@ def dispatch(body: dict[str, Any]) -> dict[str, Any]:
             return _sense_meld()
         return _plate_meld()
 
+    if action in ("inspect_image", "inspect", "icon_audit"):
+        path = str(body.get("path") or body.get("image") or body.get("file") or "")
+        if not path:
+            return {"ok": False, "error": "path_required"}
+        return _final_eye_dispatch({"subaction": "inspect", "path": path})
+
     if action in ("ocr_image", "ocr", "read"):
         path = str(body.get("path") or body.get("image") or body.get("file") or "")
         if not path:

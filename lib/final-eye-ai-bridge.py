@@ -150,6 +150,8 @@ def detect_ai_connections() -> dict[str, Any]:
             "grok_agent": grok_agent,
             "mcp": mcp,
             "tesseract_available": bool(tesseract_bin),
+            "military_eol": final_eye_live,
+            "military_eol_replaces_tesseract": True,
         },
         "doctrine": str(DOCTRINE) if DOCTRINE.is_file() else None,
     }

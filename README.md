@@ -18,6 +18,16 @@ Hostess 7 is the sovereign brain and operator package for the SG field stack. Th
 | **Queen** | RTX browser shell `:9481` |
 | **KILROY** | Field boot kernel |
 | **ZNetwork** | Smart relayer · field I/O |
+| **Final_Eye** | Hostess 7 eyes — Military EOL vision (replaces tesseract) |
+| **Final_Ear** | Hostess 7 hearing — Military EOL ear lane |
+| **Final_Mouth** | Hostess 7 speech — Military EOL mouth lane |
+
+**Senses stack:** `Final_Eye` · `Final_Ear` · `Final_Mouth` publish to GitHub as sovereign sense repos. Vision uses **Military EOL** (`Hostess7/MilitaryEOL`) — PIL inspect + sealed neural assist, not deprecated system tesseract. Icon audits store in `SG/ZACS/`.
+
+```bash
+python3 scripts/field-desktop-icon-audit.py    # Final_Eye → SG/ZACS manifest
+bash scripts/publish-senses-github.sh          # push Eye · Ear · Mouth repos
+```
 
 ---
 
@@ -83,9 +93,13 @@ Historic truth corpus gates new information. Lie detection and Ironclad witness 
 
 ## License
 
-**All Rights Reserved** — see [LICENSE](LICENSE).
+**All Rights Reserved** — Hostess 7 and this field stack package are proprietary.
 
-Copyright © 2025–2026 Zachary Robert Geurts. No use, copy, modification, distribution, or commercial exploitation without prior written permission.
+See [LICENSE](LICENSE) (same terms as [LICENSE-HOSTESS7](LICENSE-HOSTESS7)).
+
+Copyright © 2025–2026 Zachary Robert Geurts. **No permission is granted** to use, copy, modify, merge, publish, distribute, sublicense, sell, or otherwise exploit any portion of this software, documentation, training corpora, or brain storage without prior written permission from the copyright holder.
+
+Sibling sense repos (`Final_Eye`, `Final_Ear`, `Final_Mouth`) remain separately licensed; integration points here do not grant rights to those trees.
 
 Contact: [gzac5314@gmail.com](mailto:gzac5314@gmail.com)
 

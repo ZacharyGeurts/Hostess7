@@ -140,6 +140,20 @@ def main() -> int:
         print(json.dumps(row, ensure_ascii=False, indent=2))
         return 0
 
+    if mode in ("inspect", "icon") and payload.get("path"):
+        row = _via_hostess7({"action": "inspect_image", "path": payload["path"]})
+        if not row.get("ok"):
+            mil = _LIB / "hostess7-military-eol-ocr.py"
+            if mil.is_file():
+                import importlib.util
+                spec = importlib.util.spec_from_file_location("h7_mil_inspect", mil)
+                if spec and spec.loader:
+                    mod = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(mod)
+                    row = mod.inspect_image(payload["path"])
+        _emit(row, plain="--plain" in (payload.get("extra") or []))
+        return 0 if row.get("ok") else 1
+
     if mode == "ocr" and payload.get("path"):
         extra = payload.get("extra") or []
         opts: dict[str, Any] = {}
@@ -155,6 +169,15 @@ def main() -> int:
             i += 1
         body = {"action": "ocr_image", "path": payload["path"], **opts}
         row = _via_hostess7(body)
+        if not row.get("ok"):
+            mil = _LIB / "hostess7-military-eol-ocr.py"
+            if mil.is_file():
+                import importlib.util
+                spec = importlib.util.spec_from_file_location("h7_mil_ocr", mil)
+                if spec and spec.loader:
+                    mod = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(mod)
+                    row = mod.ocr_image(payload["path"], psm=str(opts.get("psm") or "6"))
         plain = "--plain" in extra or "-plain" in extra
         _emit(row, plain=plain)
         return 0 if (row.get("ok") or row.get("text") or row.get("ocr")) else 1

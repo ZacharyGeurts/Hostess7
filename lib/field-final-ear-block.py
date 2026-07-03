@@ -100,17 +100,18 @@ def _final_eye_ocr_html(html_path: Path, needles: list[str]) -> dict[str, Any]:
         text = html_path.read_text(encoding="utf-8", errors="replace")
     hits = [n for n in needles if n.lower() in text.lower()]
     ocr_mod = _import_py(eye, "zocr_feb")
-    tesseract_ok = bool(ocr_mod and getattr(ocr_mod, "tesseract_available", lambda: False)())
+    military_ok = bool(ocr_mod and getattr(ocr_mod, "tesseract_available", lambda: False)())
     return {
         "schema": "field-final-ear-ocr/v1",
-        "engine": "Final_Eye/zocr.py",
+        "engine": "Hostess7/MilitaryEOL",
         "html_path": str(html_path),
         "html_exists": html_path.is_file(),
         "needles": needles,
         "hits": hits,
         "hit_count": len(hits),
         "ok": html_path.is_file() and len(hits) >= max(3, len(needles) - 1),
-        "tesseract_available": tesseract_ok,
+        "military_eol": military_ok,
+        "tesseract_available": military_ok,
     }
 
 
