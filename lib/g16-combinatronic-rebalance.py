@@ -94,6 +94,10 @@ def _balance_mod() -> Any | None:
     return _import_mod("comb_balance", "field-combinatronic-balance.py")
 
 
+def _live_map_mod() -> Any | None:
+    return _import_mod("live_map", "field-combinatronic-live-map.py")
+
+
 def rebalance(*, refresh: bool = True, force: bool = False) -> dict[str, Any]:
     """Refresh chip + program batteries, rebalance unified leaf ordering."""
     t0 = __import__("time").perf_counter()
@@ -467,8 +471,95 @@ def combinamatrix_build(*, refresh: bool = True) -> dict[str, Any]:
     return {"schema": "g16-combinatronic-rebalance/v1", "action": "combinamatrix", "ok": False, "error": "combinamatrix_missing"}
 
 
-def optimal(*, full: bool = False) -> dict[str, Any]:
+def snap(*, force: bool = False) -> dict[str, Any]:
+    """Live combinatronic snap — fingerprint match snaps placements into place."""
+    t0 = __import__("time").perf_counter()
+    live = _live_map_mod()
+    bal = _balance_mod()
+
+    if live and hasattr(live, "snap") and not force:
+        snap_out = live.snap(force=False, allow_delta=True)
+        gate = snap_out.get("balance_gate") or {}
+        if snap_out.get("snapped"):
+            elapsed = round((__import__("time").perf_counter() - t0) * 1000, 3)
+            return {
+                "schema": "g16-combinatronic-live-snap/v1",
+                "updated": _now(),
+                "action": "snap",
+                "ok": True,
+                "snapped": True,
+                "fast_path": snap_out.get("fast_path", True),
+                "live_combinatronic": True,
+                "reason": snap_out.get("reason", "fingerprint_match"),
+                "placement_hash": snap_out.get("placement_hash"),
+                "corpus_hash": snap_out.get("corpus_hash"),
+                "balance_gate": gate or snap_out.get("balance_gate"),
+                "snap": snap_out,
+                "elapsed_ms": elapsed,
+                "motto": "Live combinatronic — snap into mapped places, no full cycle.",
+            }
+        if not snap_out.get("needs_full"):
+            elapsed = round((__import__("time").perf_counter() - t0) * 1000, 3)
+            return {
+                "schema": "g16-combinatronic-live-snap/v1",
+                "updated": _now(),
+                "action": "snap",
+                "ok": bool(snap_out.get("ok")),
+                "snapped": bool(snap_out.get("snapped")),
+                "live_combinatronic": True,
+                "balance_gate": gate,
+                "snap": snap_out,
+                "elapsed_ms": elapsed,
+            }
+
+    gate: dict[str, Any] = {}
+    if bal and hasattr(bal, "gate_refresh"):
+        gate = bal.gate_refresh(True, force=force)
+    rebalance_out = rebalance(refresh=not gate.get("skip_reorganize"), force=force)
+    capture: dict[str, Any] = {}
+    if live and hasattr(live, "capture_placements"):
+        capture = live.capture_placements(source="snap_rebalance")
+    elapsed = round((__import__("time").perf_counter() - t0) * 1000, 3)
+    return {
+        "schema": "g16-combinatronic-live-snap/v1",
+        "updated": _now(),
+        "action": "snap",
+        "ok": rebalance_out.get("ok", True),
+        "snapped": False,
+        "seeded_map": bool(capture.get("placement_hash")),
+        "live_combinatronic": True,
+        "balance_gate": gate,
+        "rebalance": rebalance_out,
+        "capture": {"placement_hash": capture.get("placement_hash"), "domain_count": capture.get("domain_count")},
+        "elapsed_ms": elapsed,
+        "motto": "Snap seeded live map from rebalance — next call snaps fast.",
+    }
+
+
+def optimal(*, full: bool = False, force: bool = False) -> dict[str, Any]:
     """Full optimal cycle: growth → sequence → ammolang → rebalance → … → spider_wire → studio."""
+    if not force and not full:
+        live = _live_map_mod()
+        if live and hasattr(live, "snap"):
+            snap_out = live.snap(force=False, allow_delta=True)
+            if snap_out.get("snapped"):
+                return {
+                    "schema": "g16-combinatronic-optimal/v1",
+                    "updated": _now(),
+                    "action": "optimal",
+                    "full": False,
+                    "ok": True,
+                    "skipped": True,
+                    "live_combinatronic": True,
+                    "fast_path": bool(snap_out.get("fast_path")),
+                    "reason": snap_out.get("reason", "live_snap"),
+                    "balance_gate": snap_out.get("balance_gate"),
+                    "snap": snap_out,
+                    "elapsed_ms": snap_out.get("elapsed_ms"),
+                    "steps": [{"step": "live_snap", **snap_out}],
+                    "motto": "Optimal gated — live map snap, corpus unchanged.",
+                }
+
     steps: list[dict[str, Any]] = []
     steps.append(growth_scan())
     steps.append(dimensions_consolidate(metadata_only=not full))
@@ -489,23 +580,36 @@ def optimal(*, full: bool = False) -> dict[str, Any]:
         action = "full" if full else "cycle"
         sc = studio.run_action(action)
         steps.append({"step": f"studio_{action}", "ok": sc.get("ok"), "action": action})
-    return {
+    out = {
         "schema": "g16-combinatronic-optimal/v1",
         "updated": _now(),
         "action": "optimal",
         "full": full,
         "ok": all(s.get("ok", True) for s in steps),
         "steps": steps,
+        "live_combinatronic": True,
         "motto": "Rebalance · condense · combine · connect — the amazing optimal g16 fashion.",
     }
+    live = _live_map_mod()
+    if live and hasattr(live, "capture_placements"):
+        cap = live.capture_placements(source="optimal")
+        out["live_map"] = {
+            "placement_hash": cap.get("placement_hash"),
+            "corpus_hash": cap.get("corpus_hash"),
+            "domain_count": cap.get("domain_count"),
+        }
+    return out
 
 
 def main() -> int:
-    cmd = (sys.argv[1] if len(sys.argv) > 1 else "optimal").strip().lower()
+    cmd = (sys.argv[1] if len(sys.argv) > 1 else "snap").strip().lower()
     full = "--full" in sys.argv[2:]
+    force = "--force" in sys.argv[2:]
     refresh = "--refresh" in sys.argv[2:] or cmd in ("rebalance", "optimal", "combine")
     handlers = {
-        "rebalance": lambda: rebalance(refresh=refresh),
+        "snap": lambda: snap(force=force),
+        "live": lambda: snap(force=force),
+        "rebalance": lambda: rebalance(refresh=refresh, force=force),
         "condense": lambda: condense(metadata_only=not full),
         "combine": combine,
         "connect": connect,
@@ -524,15 +628,16 @@ def main() -> int:
         "universal_neural": lambda: teach_universal_neural(force=full),
         "sequence": lambda: sequence_build(fill="--no-fill" not in sys.argv),
         "ammolang": lambda: ammolang_panel(refresh=refresh),
-        "optimal": lambda: optimal(full=full),
-        "all": lambda: optimal(full=full),
+        "optimal": lambda: optimal(full=full, force=force),
+        "all": lambda: optimal(full=full, force=force),
     }
     fn = handlers.get(cmd)
     if not fn:
         print(json.dumps({
             "error": "usage",
             "cmds": list(handlers.keys()),
-            "flags": ["--refresh", "--full"],
+            "flags": ["--refresh", "--full", "--force"],
+            "default": "snap",
         }, ensure_ascii=False, indent=2))
         return 2
     print(json.dumps(fn(), ensure_ascii=False, indent=2))

@@ -100,7 +100,7 @@
               title,
             });
             if (global.location.pathname.includes("queen-game-room")) return;
-            global.location.href = "/world/queen-game-room.html";
+            global.location.href = "/queen-game-room.html";
             return;
           }
           global.QueenZoomLightbox?.open?.(

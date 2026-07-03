@@ -13,11 +13,21 @@
       "layer": 1,
       "role": "Meld seal — base truth plate",
       "module": "lib/ironclad-immediate.py",
-      "removable": false
+      "removable": false,
+      "fkey": "F1"
+    },
+    {
+      "id": "presume_path",
+      "layer": 2,
+      "role": "Direct chip path above Ironclad — no presumption, clock-stop video sync",
+      "module": "lib/field-chips-presume-path.py",
+      "removable": false,
+      "fkey": "F2",
+      "integrity": "lossless"
     },
     {
       "id": "iron_plate",
-      "layer": 2,
+      "layer": 3,
       "role": "Iron Plate organize — THE sort (composite_bsp) on chip_paths",
       "module": "lib/iron-plate-organize.py",
       "sort_context": "chip_paths",
@@ -27,7 +37,7 @@
     },
     {
       "id": "steel_plate",
-      "layer": 3,
+      "layer": 4,
       "role": "Steel Neural Plates — combinatoric depth for every chip domain",
       "module": "lib/field-steel-neural-plates.py",
       "facet": "ironclad_chips",
@@ -35,7 +45,7 @@
     },
     {
       "id": "steel_family_plates",
-      "layer": 4,
+      "layer": 5,
       "role": "Steel family plates — rewrite fewer slots, full leaf index per family",
       "module": "lib/field-chips-plate-stack.py",
       "removable": true,

@@ -61,6 +61,8 @@ def main() -> int:
             if not url:
                 continue
             blob = _fetch(url)
+            if (not blob or len(blob) < 16) and "/master/" in url:
+                blob = _fetch(url.replace("/master/", "/main/"))
             if not blob or len(blob) < 16:
                 continue
             expect = str(src.get("sha256") or "")

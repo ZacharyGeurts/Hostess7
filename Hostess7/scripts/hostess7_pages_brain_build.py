@@ -20,8 +20,27 @@ def _ts() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def _combinatronic_snap() -> dict[str, Any]:
+    """Live combinatronic snap before brain mirror — avoids 16+ min optimal cycles."""
+    import importlib.util
+
+    auto_py = ROOT.parent / "lib" / "field-brain-combinatronic-auto.py"
+    if not auto_py.is_file():
+        return {"ok": False, "skipped": True, "hint": "brain_auto_missing"}
+    spec = importlib.util.spec_from_file_location("brain_comb_auto", auto_py)
+    if not spec or not spec.loader:
+        return {"ok": False, "skipped": True}
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    if hasattr(mod, "auto_brain_combinatronic"):
+        return mod.auto_brain_combinatronic(context="pages_brain_build")
+    return {"ok": False, "skipped": True}
+
+
 def build(*, full: bool = True) -> dict[str, Any]:
+    comb = _combinatronic_snap()
     doc = build_corpus(include_repo_files=True)
+    doc["combinatronic_auto"] = comb
     st = status_mirror()
     st_path = DOCS / "status.json"
     boot_path = DOCS / "boot.json"

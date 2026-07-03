@@ -276,6 +276,22 @@ def assess_needs() -> dict[str, Any]:
     else:
         gaps.append({"id": "final_ear_live", "label": "Final_Ear live — hear footwork, breath, impact cues", "priority": "high", "from": "sense"})
 
+    input_tr = _mod("tr_input", "hostess7-input-training.py")
+    input_gaps: dict[str, Any] = {}
+    if input_tr and hasattr(input_tr, "assess_gaps"):
+        try:
+            input_gaps = input_tr.assess_gaps()
+        except Exception:
+            input_gaps = {}
+    for g in input_gaps.get("gaps") or []:
+        gid = str(g.get("id") or "")
+        if gid and gid not in known_ids and gid not in satisfied:
+            gaps.append(dict(g))
+            known_ids.add(gid)
+    for sid in input_gaps.get("satisfied") or []:
+        if sid not in satisfied:
+            satisfied.append(sid)
+
     floor_checks = {
         "footwork_proprioception": lambda: bool((floor_rt.get("footwork") or {}).get("live") or (floor and hasattr(floor, "footwork_proprioception"))),
         "sparring_opponent_ai": lambda: bool((floor_rt.get("sparring") or {}).get("count") or "sparring_opponent_ai" in floor_done),
@@ -379,6 +395,42 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
     return doc
 
 
+def arcade_input_training(*, ticks: int = 16, system: str = "nes", spawn_rtx: bool = False) -> dict[str, Any]:
+    """Train keyboard/mouse/gamepad/hand for Arcade Battalion play."""
+    inp = _mod("tr_inp_train", "hostess7-input-training.py")
+    if not inp:
+        return {"ok": False, "error": "input_training_missing"}
+    rows: list[dict[str, Any]] = []
+    if hasattr(inp, "train_tick"):
+        rows.append(inp.train_tick(ticks=max(8, ticks)))
+    hand = _mod("tr_inp_hand", "hostess7-hand-core.py")
+    if hand and hasattr(hand, "train_hands"):
+        rows.append({"step": "train_hands", **hand.train_hands(ticks=max(12, ticks))})
+    play = inp.play_with_us(system=system, spawn_rtx=spawn_rtx) if hasattr(inp, "play_with_us") else {}
+    return {
+        "ok": True,
+        "action": "arcade_input_training",
+        "system": system,
+        "ticks": ticks,
+        "steps": rows,
+        "input_panel": inp.build_panel(write=True) if hasattr(inp, "build_panel") else {},
+        "play_with_us": play,
+        "earth_mandate": earth_mandate(),
+        "message": "Input training live — keyboard, mouse, gamepad, hand wired for Arcade Battalion.",
+    }
+
+
+def play_with_us(*, system: str = "nes", spawn_rtx: bool = True) -> dict[str, Any]:
+    """Hostess 7 joins operators in Queen Game Room — SAP + emulator verify."""
+    inp = _mod("tr_play", "hostess7-input-training.py")
+    if not inp or not hasattr(inp, "play_with_us"):
+        return {"ok": False, "error": "input_training_missing"}
+    row = inp.play_with_us(system=system, spawn_rtx=spawn_rtx)
+    row["earth_mandate"] = earth_mandate()
+    row["training_room"] = "hostess7"
+    return row
+
+
 def dispatch(body: dict[str, Any]) -> dict[str, Any]:
     action = str(body.get("action") or "status").strip().lower().replace("-", "_")
     if action in ("status", "json", "panel"):
@@ -398,14 +450,26 @@ def dispatch(body: dict[str, Any]) -> dict[str, Any]:
         )
     if action in ("earth", "earth_mandate", "mandate"):
         return {"ok": True, **earth_mandate()}
+    if action in ("arcade_input", "input_training", "train_input", "controller_training"):
+        return arcade_input_training(
+            ticks=int(body.get("ticks") or 16),
+            system=str(body.get("system") or "nes"),
+            spawn_rtx=body.get("spawn_rtx", False) is True,
+        )
+    if action in ("play_with_us", "play", "arcade_play", "join_game"):
+        return play_with_us(
+            system=str(body.get("system") or "nes"),
+            spawn_rtx=body.get("spawn_rtx", True) is not False,
+        )
     return {"ok": False, "error": "unknown_action", "action": action}
 
 
 def main() -> int:
     cmd = (sys.argv[1] if len(sys.argv) > 1 else "json").strip().lower()
     if cmd == "dispatch":
+        raw = sys.argv[2] if len(sys.argv) >= 3 else (sys.stdin.read() or "{}")
         try:
-            body = json.loads(sys.stdin.read() or "{}")
+            body = json.loads(raw)
         except json.JSONDecodeError:
             print(json.dumps({"ok": False, "error": "bad_json"}, ensure_ascii=False))
             return 1

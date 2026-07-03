@@ -995,12 +995,46 @@ def _the_sort_paths(paths: list[dict[str, Any]], *, sort_meta: dict[str, Any] | 
     return out
 
 
+def _presume_path_mod() -> Any | None:
+    path = INSTALL / "lib" / "field-chips-presume-path.py"
+    if not path.is_file():
+        return None
+    try:
+        spec = importlib.util.spec_from_file_location("chips_presume_path", path)
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            return mod
+    except Exception:
+        return None
+    return None
+
+
 def predict_code_paths(chips: list[dict[str, Any]], *, skip_reorganize: bool = False) -> dict[str, Any]:
     """Hard-percentage paths + THE sort (composite_bsp) — Ironclad truth connected."""
     seed = _load(PATH_PREDICT_SEED, {})
     doctrine = _load(DOCTRINE, {})
     cpp = doctrine.get("code_path_prediction") or {}
+    pp_doc = doctrine.get("presume_pathing") or {}
     iron = _ironclad_truth()
+    if skip_reorganize or pp_doc.get("prefer_direct_when_balanced"):
+        pp = _presume_path_mod()
+        if pp and hasattr(pp, "build_presume_paths"):
+            direct = pp.build_presume_paths(chips)
+            if direct.get("paths"):
+                return {
+                    **direct,
+                    "schema": "field-chip-path-predict/v1",
+                    "hard_percent": False,
+                    "presume": False,
+                    "chip_is_truth": True,
+                    "direct_path_only": True,
+                    "the_sort": False,
+                    "algorithm": "presume_path_direct",
+                    "ironclad": iron,
+                    "ironclad_citation": IRONCLAD_CITE,
+                    "combinatorics_boost": _combinatorics_posture_boost(),
+                }
     raw = _predict_path_weights(chips)
     if not raw:
         return {

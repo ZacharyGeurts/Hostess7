@@ -544,7 +544,7 @@ def run_tests() -> list[tuple[str, str]]:
         results,
     )
 
-    grc, grhtml = _get("/world/queen-game-room.html")
+    grc, grhtml = _get("/queen-game-room.html")
     assert_true(grc == 200 and b"queen-game-room.js" in grhtml, "game room web page", results)
     assert_true(
         any((s.get("info_url") or "").startswith("/world/queen-system-info.html") for s in (grdoc.get("systems") or [])),

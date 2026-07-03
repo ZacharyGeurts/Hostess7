@@ -16,12 +16,14 @@
     "github_always_open": true
   },
   "layers": [
-    {"id": "hardware", "label": "Hardware", "z": 0},
+    {"id": "botnet", "label": "Field Botnet", "z": -2, "api": "/api/field-botnet-dns-dhcp"},
+    {"id": "hardware", "label": "Hardware · CHIPS", "z": 0},
     {"id": "ammonet", "label": "AmmoNet ISP", "z": 1, "api": "/api/ammonet"},
     {"id": "znetwork", "label": "ZNetwork relayer", "z": 2, "api": "/api/znetwork"},
-    {"id": "queen", "label": "Queen Browser RTX", "z": 3},
-    {"id": "ammoos", "label": "AmmoOS", "z": 4},
-    {"id": "hostess7", "label": "Hostess 7", "z": 5, "boss": true}
+    {"id": "developer", "label": "Developers & third-party", "z": 3, "examples": ["steam", "steam_bridge"], "doctrine": "data/field-steam-bridge-doctrine.json"},
+    {"id": "queen_gameroom", "label": "Queen Game Room · SAP", "z": 4, "api": "/api/game-room"},
+    {"id": "ammoos", "label": "AmmoOS panels", "z": 5, "route": "/field"},
+    {"id": "hostess7", "label": "Hostess 7", "z": "infinity", "boss": true, "panels_only": true, "doctrine": "data/field-layer-stack-doctrine.json"}
   ],
   "surface_catalog": "data/ammonet-public-surfaces.json",
   "public_modules": [
@@ -39,6 +41,7 @@
     {"id": "steel_plates", "label": "Steel Plates", "api": "/api/steel-plates"},
     {"id": "plate_meld", "label": "Plate Meld", "api": "/api/plate-meld"},
     {"id": "qemu_lane", "label": "QEMU Secure Transfer", "api": "/api/qemu-world-status"},
+    {"id": "arcade_battalion", "label": "Arcade Battalion · SAP lobby", "api": "/api/field-arcade-battalion", "pages": "/queen-game-room.html"},
     {"id": "znetwork_vault", "label": "Secure Vault", "pages": "/field-znetwork-vault/"}
   ],
   "module": "lib/ammonet-field.py",

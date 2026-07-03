@@ -1,0 +1,75 @@
+{
+  "schema": "hostess7-input-training/v1",
+  "title": "Hostess 7 input training — keyboard, mouse, gamepad, hand",
+  "motto": "She learns how we play — stereoscopic vision always on, depth for every 3D frame.",
+  "stereoscopic_vision": {
+    "always_on": true,
+    "module": "lib/field-stereo-vision.py",
+    "device_doctrine": "data/field-stereo-device-doctrine.json",
+    "default_preset": "stereo_human",
+    "gaming_preset": "stereo_human",
+    "baseline_mm": 65,
+    "eyes_per_device": 2,
+    "failover_simulate": true,
+    "enjoy_3d": true,
+    "motto": "Two Final Eyes per device — simulate stereo if one fails when left/right is known.",
+    "webcam_tv_watch": {
+      "enabled": true,
+      "api_action": "tv_watch",
+      "motto": "Point a webcam at the TV — Hostess 7 sees, learns distance and depth."
+    }
+  },
+  "commander": "hostess7",
+  "module": "lib/hostess7-input-training.py",
+  "modalities": ["keyboard", "mouse", "gamepad", "hand", "voice", "stereo_vision", "final_eye", "final_ear", "final_mouth"],
+  "primary_modalities": ["keyboard", "mouse", "gamepad", "hand", "voice"],
+  "voice_games": {
+    "doctrine": "data/field-voice-games-doctrine.json",
+    "default_game": "seaman",
+    "default_system": "dreamcast",
+    "motto": "Final Ear hears · Final Mouth speaks — Seaman and every voice game."
+  },
+  "senses_modules": {
+    "final_eye": "lib/final-eye-ocr-core.py",
+    "final_ear": "lib/field-final-ear-block.py",
+    "final_mouth": "lib/field-final-mouth-block.py",
+    "final_hands": "lib/final-hands.py"
+  },
+  "peripherals_catalog": "data/field-game-peripherals-catalog.json",
+  "peripherals_combinatronic": "lib/field-game-peripherals-combinatronic.py",
+  "proficiency_target": 0.72,
+  "train_ticks_per_ingest": 2,
+  "controller_setup": {
+    "canonical": "/queen-game-room.html#arcade",
+    "module": "Queen/world/queen-controller-setup.js",
+    "doctrine": "data/field-controller-setup-doctrine.json"
+  },
+  "sap_relay": {
+    "api": "/api/sap",
+    "game_room": "/api/game-room",
+    "arcade_battalion": "/api/field-arcade-battalion"
+  },
+  "steel_plate": {
+    "facet": "hostess7_input",
+    "battery": "hostess7-input-training.json",
+    "bridge_keys": ["modality", "system", "proficiency", "chip_id"]
+  },
+  "game_systems": ["nes", "snes", "genesis", "sms", "a2600", "dreamcast"],
+  "keyboard_keys_watch": ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space", "Enter", "z", "x", "a", "s"],
+  "hand_grips": ["open", "power", "precision", "trigger"],
+  "needs_catalog": [
+    {"id": "input_keyboard", "label": "Keyboard arcade lane — arrow/WASD + action keys", "priority": "high"},
+    {"id": "input_mouse", "label": "Mouse aim lane — click rhythm and pointer speed", "priority": "high"},
+    {"id": "input_gamepad", "label": "Gamepad SAP lane — buttons, axes, rumble witness", "priority": "high"},
+    {"id": "input_hand", "label": "Hand dexterity lane — touch/pointer to grip mapping", "priority": "high"},
+    {"id": "stereo_vision", "label": "Stereoscopic vision always on — depth for 3D graphics", "priority": "high"},
+    {"id": "webcam_tv_watch", "label": "Webcam at TV — distance and depth learning lane", "priority": "high"},
+    {"id": "arcade_play_ready", "label": "Arcade Battalion play-ready — SAP relay + emulator verify", "priority": "high"},
+    {"id": "final_ear_live", "label": "Final_Ear live — hear zapper clicks and power pad stomps", "priority": "high"},
+    {"id": "final_mouth_live", "label": "Final_Mouth live — callouts and team comms in SAP lobby", "priority": "high"},
+    {"id": "voice_games", "label": "Voice games — Seaman (Dreamcast) and mic-driven titles via Mouth+Ear", "priority": "high"},
+    {"id": "final_hands_mechanical", "label": "Final Hands mechanical lane — grips and finger chains", "priority": "high"},
+    {"id": "peripheral_mastery", "label": "Peripheral mastery — Odyssey to Menacer combinatronic", "priority": "high"},
+    {"id": "play_universe_ready", "label": "Play universe ready — every game with or without operators", "priority": "high"}
+  ]
+}

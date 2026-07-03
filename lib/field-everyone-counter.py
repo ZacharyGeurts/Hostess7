@@ -110,6 +110,11 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
     exe = _executable_count()
     exe_n = int(exe.get("count") or 0)
 
+    arcade = _run_json("lib/field-arcade-battalion.py", ["lobby"], timeout=20.0)
+    lobby = arcade.get("lobby") or {}
+    sap_beacons = int(lobby.get("sap_beacons") or len(arcade.get("sap_sessions") or []))
+    qemu_witnesses = int(lobby.get("qemu_witnesses") or len(arcade.get("qemu_witnesses") or []))
+
     loopback = 1
     distributed_extra = max(0, bot_nodes - reg_members) if bot_nodes else 0
     everyone_total = bot_nodes + gh_people + exe_n + loopback
@@ -139,6 +144,16 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
             "github_people": {"count": gh_people, "label": "GitHub people", "stack_repos": gh_stack, "open_endpoints": gh_open},
             "executable_people": {"count": exe_n, "label": "Executable programs", **exe},
             "loopback_sovereign": {"count": loopback, "label": "This field"},
+        },
+        "arcade_lobby": {
+            "enabled": True,
+            "sap_beacons": sap_beacons,
+            "qemu_witnesses": qemu_witnesses,
+            "game_room_live": bool(lobby.get("game_room_ok")),
+            "pump_running": bool(lobby.get("pump_running")),
+            "system": lobby.get("system"),
+            "layer_stack": (arcade.get("layer_stack") or {}).get("motto"),
+            "api": "/api/field-arcade-battalion",
         },
         "everyone_total": everyone_total,
         "perf": {

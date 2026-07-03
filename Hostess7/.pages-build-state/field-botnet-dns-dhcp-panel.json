@@ -3,7 +3,7 @@
   "schema": "field-botnet-dns-dhcp-panel/v1",
   "title": "Fielded bot network — secure stable DNS & DHCP for everyone through GitHub",
   "motto": "Any and all bot-net nodes — Truth DNS + Field DHCP — stable for everyone · GitHub control plane",
-  "updated": "2026-07-03T10:23:50Z",
+  "updated": "2026-07-03T12:41:57Z",
   "boss": "hostess7",
   "layer": -2,
   "fkey": "F10",
@@ -26,7 +26,7 @@
     "pages_probe": {
       "ok": true,
       "status": 200,
-      "elapsed_ms": 327,
+      "elapsed_ms": 97,
       "url": "https://zacharygeurts.github.io/Hostess7/"
     },
     "pages_runtime": "https://zacharygeurts.github.io/Hostess7/",
@@ -1175,7 +1175,7 @@
     "schema": "field-botnet-legal-ports-panel/v1",
     "title": "Botnet legal port auto-allow — IANA-registered civilian egress for everyone",
     "motto": "Real legal ports pass automatically through the field botnet — stalker lop only for confirmed malware sockets",
-    "updated": "2026-07-03T10:23:41Z",
+    "updated": "2026-07-03T12:41:45Z",
     "stalker_lop_count": 14,
     "context_port_count": 9,
     "for_everyone": {
@@ -1203,7 +1203,7 @@
     "title": "H7t — truthed isolation format for non-sovereign payloads",
     "format": "h7t/1",
     "motto": "Not our safe stuff → truthed → H7t → 100× benefits in the chamber without touching the real deal",
-    "updated": "2026-07-03T10:23:42Z",
+    "updated": "2026-07-03T12:41:45Z",
     "safe_stack_prefixes": [
       "Hostess7/",
       "lib/field-",
@@ -1233,33 +1233,36 @@
     "ok": true,
     "schema": "field-github-resilience-panel/v1",
     "title": "GitHub resilience — loopback authority + publish queue when control plane is down",
-    "updated": "2026-07-03T10:23:49Z",
+    "updated": "2026-07-03T12:41:57Z",
     "boss": "hostess7",
     "probe": {
       "schema": "field-github-resilience-probe/v1",
-      "updated": "2026-07-03T10:23:49Z",
+      "updated": "2026-07-03T12:41:57Z",
       "ok": true,
-      "degraded_ok": false,
-      "github_push_ready": true,
-      "open_count": 6,
-      "weight_open": 13,
+      "degraded_ok": true,
+      "github_push_ready": false,
+      "open_count": 2,
+      "weight_open": 5,
       "pages_open": true,
       "raw_open": true,
       "loopback": {
-        "ok": false,
+        "ok": true,
         "tcp": {
-          "ok": false,
+          "ok": true,
           "host": "127.0.0.1",
           "port": 9477,
-          "error": "[Errno 111] Connection refused"
+          "elapsed_ms": 0
         },
         "api": {
-          "ok": false
+          "ok": false,
+          "status": 501,
+          "elapsed_ms": 3,
+          "url": "http://127.0.0.1:9477/api/field-internet"
         },
         "base": "http://127.0.0.1:9477",
-        "authority": null
+        "authority": "http://127.0.0.1:9477"
       },
-      "authority": "https://zacharygeurts.github.io/Hostess7/",
+      "authority": "http://127.0.0.1:9477",
       "probes": [
         {
           "id": "pages",
@@ -1268,7 +1271,7 @@
           "weight": 3,
           "ok": true,
           "status": 200,
-          "elapsed_ms": 121
+          "elapsed_ms": 100
         },
         {
           "id": "raw",
@@ -1277,25 +1280,23 @@
           "weight": 2,
           "ok": true,
           "status": 200,
-          "elapsed_ms": 226
+          "elapsed_ms": 97
         },
         {
           "id": "api",
           "url": "https://api.github.com/zen",
           "role": "api",
           "weight": 2,
-          "ok": true,
-          "status": 429,
-          "elapsed_ms": 519
+          "ok": false,
+          "error": "<urlopen error timed out>"
         },
         {
           "id": "github_https",
           "url": "https://github.com/",
           "role": "web",
           "weight": 1,
-          "ok": true,
-          "status": 403,
-          "elapsed_ms": 582
+          "ok": false,
+          "error": "<urlopen error timed out>"
         },
         {
           "id": "ssh_tunnel",
@@ -1303,8 +1304,8 @@
           "port": 443,
           "role": "git_push",
           "weight": 3,
-          "ok": true,
-          "elapsed_ms": 213
+          "ok": false,
+          "error": "timed out"
         },
         {
           "id": "ssh_direct",
@@ -1312,8 +1313,8 @@
           "port": 22,
           "role": "git_push",
           "weight": 2,
-          "ok": true,
-          "elapsed_ms": 137
+          "ok": false,
+          "error": "timed out"
         }
       ],
       "fast": true
@@ -1330,9 +1331,9 @@
         "/api/field-botnet-dns-dhcp"
       ]
     },
-    "authority": "https://zacharygeurts.github.io/Hostess7/",
-    "degraded_ok": false,
-    "github_push_ready": true,
+    "authority": "http://127.0.0.1:9477",
+    "degraded_ok": true,
+    "github_push_ready": false,
     "publish_queue": {
       "pending": 0,
       "entries": 0,
@@ -1347,7 +1348,7 @@
     "schema": "field-github-everyone-panel/v1",
     "title": "GitHub for everyone — botnet civilian passthrough, DNS truth, Pages mirrors",
     "motto": "Everyone needs GitHub — repos, Pages, raw, API, git — open for all through the field botnet",
-    "updated": "2026-07-03T10:23:50Z",
+    "updated": "2026-07-03T12:41:57Z",
     "boss": "hostess7",
     "for_everyone": {
       "enabled": true,

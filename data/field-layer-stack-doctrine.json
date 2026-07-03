@@ -1,0 +1,64 @@
+{
+  "schema": "field-layer-stack/v1",
+  "title": "Field layer stack — developers above, Hostess 7 at infinity",
+  "motto": "Layer 3 and up is for developers and third-party. Hostess 7 is layer ∞ — we view her through panels from down here.",
+  "fkey_stack": {
+    "F12": "hostess7",
+    "F11": "layer3_cycle",
+    "F10": "znetwork",
+    "F9": "ammonet",
+    "F8": "presume_path",
+    "F7": "hardware",
+    "F6": "field_one",
+    "F5": "botnet",
+    "F4": "nexus_c2",
+    "F3": "iron_plate",
+    "F2": "presume_direct",
+    "F1": "ironclad_chips"
+  },
+  "layer_3_input": {
+    "exclusive": true,
+    "yield_fkeys": true,
+    "escape_fkey": "F12",
+    "fullscreen_allowed": true,
+    "controllers": true
+  },
+  "hostess7": {
+    "layer": "infinity",
+    "symbol": "∞",
+    "fkey": "F12",
+    "view_mode": "panels_only",
+    "never_direct_touch": true,
+    "surfaces": [
+      "/field",
+      "/api/field-everyone-counter",
+      "/api/field-botnet-dns-dhcp",
+      "/brain.html",
+      "/combinatorics-studio/"
+    ],
+    "note": "Sovereign counsel runs loopback; public Pages mirror is read-only github-brain."
+  },
+  "layers": [
+    {"z": -2, "id": "botnet", "label": "Field Botnet", "dns_dhcp": true, "qemu_little_guys": true},
+    {"z": -1, "id": "underlay", "label": "Packet field · gatekeeper · legal ports"},
+    {"z": 0, "id": "hardware", "label": "Iron plates · CHIPS · RTX"},
+    {"z": 0.5, "id": "presume_path", "label": "CHIPS direct path · above Ironclad", "module": "lib/field-chips-presume-path.py", "fkey": "F2", "integrity": "lossless"},
+    {"z": 1, "id": "ammonet", "label": "AmmoNet ISP", "api": "/api/ammonet"},
+    {"z": 2, "id": "znetwork", "label": "ZNetwork relayer", "api": "/api/znetwork"},
+    {"z": 3, "id": "developer", "label": "Developers & third-party", "fkey": "F11", "fkey_cycle": true, "input_exclusive": true, "examples": ["steam", "epic", "gog", "itch", "external_sdk"]},
+    {"z": 4, "id": "queen_gameroom", "label": "Queen Game Room · CHIPS · SAP", "fkey": "F11", "fkey_cycle": true, "input_exclusive": true, "api": "/api/game-room"},
+    {"z": 5, "id": "ammoos", "label": "AmmoOS panels · Start menu · flyouts", "fkey": "F11", "fkey_cycle": true, "route": "/field"},
+    {"z": "infinity", "id": "hostess7", "label": "Hostess 7", "boss": true, "panels_only": true}
+  ],
+  "layer_3_plus": {
+    "rule": "Third-party runtimes live at layer 3+ — never merge into sovereign brain.",
+    "steam": {"layer": 3, "bridge": "data/field-steam-bridge-doctrine.json", "lane": "steam_bridge"},
+    "libretro": {"layer": 3, "optional": true, "note": "Catalog reference only unless operator installs"},
+    "external_api": {"layer": 3, "h7t_truth": true}
+  },
+  "arcade_battalion": {
+    "module": "lib/field-arcade-battalion.py",
+    "api": "/api/field-arcade-battalion",
+    "doctrine": "data/field-arcade-battalion-doctrine.json"
+  }
+}

@@ -13,10 +13,9 @@ from typing import Any
 
 from hostess7 import __version__
 from hostess7.h7_io import read_json as h7_read_json
-from hostess7.paths import hostess7_root
+from hostess7.paths import hostess7_root, sovereign_brain_dir, storage_dir
 
 SCHEMA = "hostess7-github-brain/v1"
-SOVEREIGN_STORAGE = "cache/fieldstorage"
 GITHUB_BRAIN_CACHE = "cache/github-brain"
 GITHUB_BRAIN_DOCS = "docs/github-brain"
 
@@ -62,7 +61,8 @@ def github_brain_docs() -> Path:
 
 
 def sovereign_storage() -> Path:
-    return hostess7_root() / SOVEREIGN_STORAGE
+    """Desktop fieldstorage first — sovereign brain migrated off SG tree."""
+    return storage_dir()
 
 
 def is_github_brain_mode() -> bool:
@@ -106,7 +106,7 @@ def _chunk(cid: str, domain: str, title: str, text: str, source: str, tags: list
 
 def mirror_sovereign_snapshot() -> dict[str, Any]:
     """Copy sovereign brain JSON → github-brain cache (read-only snapshot)."""
-    src = sovereign_storage() / "brain"
+    src = sovereign_brain_dir()
     dst = github_brain_cache() / "fieldstorage" / "brain"
     copied = 0
     if src.is_dir():
@@ -144,7 +144,7 @@ def build_corpus(*, include_repo_files: bool = True) -> dict[str, Any]:
             (
                 "This is the GitHub brain — a read-only mirror of Hostess 7 doctrine and corpus. "
                 "It answers the same way but lives in docs/github-brain on Pages. "
-                "Public chat never writes to cache/fieldstorage/brain, brain/state, or superintel. "
+                "Public chat never writes to Desktop/hostess7-brain, brain/state, or superintel. "
                 "Sovereign brain stays on loopback after ./Hostess7.sh boot."
             ),
             "hostess7/github_brain",

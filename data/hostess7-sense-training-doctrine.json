@@ -47,7 +47,8 @@
         {"id": "ear_harmonic_series", "label": "Harmonic series drill", "action": "music_drill", "battery": "ear_training"},
         {"id": "ear_music_fusion", "label": "Ear↔Mouth music fusion", "action": "eye_ear_fusion", "evidence": {"mouth_correlation": 0.9, "music_interval": "perfect fifth", "pitch_hz": 440}},
         {"id": "ear_eardrum_learn", "label": "Auto-learn eardrum & body vibration", "action": "mechanical_learn", "target": "ear", "mechanism": "kinetic_eardrum"},
-        {"id": "ear_spectrum_color", "label": "Frequency + color spectrum cross", "action": "mechanical_learn", "target": "ear", "evidence": {"color_spectrum_cross": true}}
+        {"id": "ear_spectrum_color", "label": "Frequency + color spectrum cross", "action": "mechanical_learn", "target": "ear", "evidence": {"color_spectrum_cross": true}},
+        {"id": "ear_voice_game", "label": "Voice game hear — Seaman mic lane", "action": "spectrum", "seconds": 0.8, "evidence": {"voice_game": "seaman", "game": "seaman"}}
       ]
     },
     "final_mouth": {
@@ -73,7 +74,8 @@
         {"id": "mouth_melody_tts", "label": "Melody TTS lesson", "action": "mouth_train", "lesson": "text_to_speech", "evidence": {"melody": true, "meter": "4/4"}},
         {"id": "mouth_brain_music", "label": "Brain↔mouth music pattern", "action": "music_brain_pattern", "sequence": [0, 2, 4, 7]},
         {"id": "mouth_music_fusion", "label": "Mouth·Ear·Eye music fusion", "action": "fusion", "evidence": {"mouth_correlation": 0.9, "ear_correlation": 0.88, "music_theory": true, "pitch_hz": 440}},
-        {"id": "mouth_ear_smarter", "label": "Mouth↔Ear smarter quorum", "action": "mechanical_learn", "target": "mouth_ear", "reinforce_triad": true}
+        {"id": "mouth_ear_smarter", "label": "Mouth↔Ear smarter quorum", "action": "mechanical_learn", "target": "mouth_ear", "reinforce_triad": true},
+        {"id": "mouth_voice_game", "label": "Voice game speak — Seaman dialogue", "action": "speak", "text": "Fushigi desu ne… I am listening.", "evidence": {"voice_game": "seaman", "game": "seaman"}}
       ]
     }
   },

@@ -118,7 +118,7 @@
     }
     document.title = `${sys.label || doc.system_id} · Queen CHIPS`;
 
-    if (launch) launch.href = urls.game_room || `/world/queen-game-room.html?system=${doc.system_id}`;
+    if (launch) launch.href = urls.game_room || `/queen-game-room.html?system=${doc.system_id}`;
     if (catalog) catalog.href = urls.catalog_stack || urls.chips_catalog || "/Hostess7/queen/queen-chips-catalog.html";
 
     if (status) {

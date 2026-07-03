@@ -37,8 +37,18 @@
       credentials: "same-origin",
       cache: "no-store",
     });
-    if (!r.ok) throw new Error("EOL API " + r.status);
-    return r.json();
+    const raw = await r.text();
+    if (!raw.trim()) {
+      return { ok: false, error: "empty_response", http_status: r.status, schema: "field-eol-code-panel/v1" };
+    }
+    try {
+      const doc = JSON.parse(raw);
+      if (!r.ok && doc.ok !== false) doc.ok = false;
+      if (!r.ok) doc.http_status = r.status;
+      return doc;
+    } catch (_e) {
+      return { ok: false, error: "bad_json", http_status: r.status, detail: raw.slice(0, 160) };
+    }
   }
 
   function badge(status) {
@@ -142,12 +152,44 @@
     el.scrollTop = el.scrollHeight;
   }
 
+  function renderWiring(wiring) {
+    const el = $("eol-wiring");
+    if (!el || !wiring) return;
+    const gaps = wiring.gaps || [];
+    const summary = wiring.summary || {};
+    el.innerHTML =
+      `<div class="eol-wiring-summary">` +
+      `<span>paths <strong>${summary.code_paths || 0}</strong></span>` +
+      `<span>wired <strong>${summary.wired || 0}</strong></span>` +
+      `<span>gaps <strong>${summary.gap_count || gaps.length}</strong></span>` +
+      `<span>icons miss <strong>${summary.missing_icons || 0}</strong></span>` +
+      `<span>open-file <strong>${summary.open_file_dialogs || 0}</strong></span>` +
+      `</div>` +
+      gaps
+        .slice(0, 120)
+        .map(
+          (g) =>
+            `<div class="eol-wiring-row eol-wiring--${esc(g.kind || "gap")}">` +
+            `<span class="eol-badge eol-badge--${esc(g.severity || "pending")}">${esc(g.kind || "gap")}</span>` +
+            `<span class="eol-path">${esc(g.id || g.path || "")}</span>` +
+            `<span class="eol-truth">${esc(g.hint || g.detail || "")}</span>` +
+            `</div>`,
+        )
+        .join("");
+  }
+
   function paint(doc, opts) {
     state.panel = doc;
     renderRuler(doc.layers);
     renderStats(doc.tree?.summary, doc.ironclad, doc.generation);
     renderTree(doc);
+    renderWiring(doc.wiring);
     renderLog(doc.runtime?.log || [], opts && opts.newLog);
+    if (globalThis.FieldRtxSmoothScroll) {
+      FieldRtxSmoothScroll.wire($("eol-tree"), { infinite: true, wheelGain: 0.9 });
+      FieldRtxSmoothScroll.wire($("eol-log"), { wheelGain: 0.85 });
+      FieldRtxSmoothScroll.wire($("eol-wiring"), { wheelGain: 0.85 });
+    }
     const gen = doc.generation || 0;
     if (gen !== state.lastGen) state.lastGen = gen;
   }

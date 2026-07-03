@@ -1,0 +1,23 @@
+{
+  "schema": "field-arcade-battalion/v1",
+  "title": "Arcade Battalion — botnet little guys + Queen Game Room multiplayer mesh",
+  "motto": "QEMU witnesses, SAP lockstep, everyone counter lobby — play everything on the field network.",
+  "boss": "hostess7",
+  "layer_stack": "data/field-layer-stack-doctrine.json",
+  "components": {
+    "botnet": {"api": "/api/field-botnet-dns-dhcp", "registry": "/api/field-botnet-registry"},
+    "qemu": {"api": "/api/qemu-world-status", "roles": ["sap_relay", "frame_witness", "rom_caravan"]},
+    "game_room": {"api": "/api/game-room", "queen_port": 9481},
+    "sap": {"api": "/api/sap", "doctrine": "Queen/data/queen-sap-doctrine.json"},
+    "everyone": {"api": "/api/field-everyone-counter", "lobby": true},
+    "steam_bridge": {"layer": 3, "doctrine": "data/field-steam-bridge-doctrine.json"}
+  },
+  "tournament": {
+    "combinatorics_studio": true,
+    "auto_host_sap": true,
+    "publish_beacon": true
+  },
+  "systems_active": ["nes", "snes", "genesis", "sms", "a2600", "amiga", "dos", "steam_bridge"],
+  "api": "/api/field-arcade-battalion",
+  "module": "lib/field-arcade-battalion.py"
+}

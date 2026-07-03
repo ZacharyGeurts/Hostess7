@@ -25,18 +25,31 @@
     "snes": {
       "label": "Super Nintendo",
       "filename": "snes-test.smc",
+      "fallback": "snes-test.sfc",
       "title": "SNES test ROM",
       "kind": "homebrew_qa",
       "extensions": [".smc", ".sfc"],
-      "sources": []
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/ArtemioUrbina/240pTestSuite/master/bin/snestest.sfc",
+          "save_as": "snes-test.sfc",
+          "sha256": ""
+        }
+      ]
     },
     "genesis": {
       "label": "Genesis",
-      "filename": "genesis-test.md",
+      "filename": "genesis-test.bin",
+      "fallback": "68000test.bin",
       "title": "Genesis 68000 test",
       "kind": "homebrew_qa",
-      "extensions": [".md", ".bin", ".gen"],
+      "extensions": [".bin", ".gen", ".md"],
       "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/frankvl/68K-MiniTest/main/bin/68000TEST.BIN",
+          "save_as": "genesis-test.bin",
+          "sha256": ""
+        },
         {
           "url": "https://raw.githubusercontent.com/frankvl/68K-MiniTest/master/bin/68000TEST.BIN",
           "save_as": "genesis-test.bin",
@@ -50,7 +63,13 @@
       "title": "SMS test",
       "kind": "homebrew_qa",
       "extensions": [".sms", ".bin"],
-      "sources": []
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/ArtemioUrbina/240pTestSuite/master/bin/smstest.sms",
+          "save_as": "sms-test.sms",
+          "sha256": ""
+        }
+      ]
     },
     "a2600": {
       "label": "Atari 2600",
@@ -58,7 +77,13 @@
       "title": "Atari 2600 test",
       "kind": "homebrew_qa",
       "extensions": [".a26", ".bin"],
-      "sources": []
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/ArtemioUrbina/240pTestSuite/master/bin/a26test.a26",
+          "save_as": "a2600-test.a26",
+          "sha256": ""
+        }
+      ]
     },
     "gameboy": {
       "label": "Game Boy",

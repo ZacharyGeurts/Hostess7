@@ -1,28 +1,50 @@
 {
   "schema": "field-os-keybindings/v1",
   "title": "AmmoOS OS keybindings",
-  "motto": "F-keys sovereign · Ironclad desktop dispatch · kernel witness optional",
+  "motto": "F12 Hostess 7 · F11 layer 3+ cycle · stack descends F10–F1 · layer 3+ owns all input",
   "policy": {
     "kernel_listener": true,
     "desktop_capture": true,
     "ironclad_sort": true,
-    "fkey_layers": "field-screen-layers.js"
+    "fkey_layers": "field-screen-layers.js",
+    "layer_3_input_exclusive": true,
+    "layer_3_min": 3,
+    "escape_fkey": "F12"
+  },
+  "stack_fkeys": {
+    "F12": {"z": "infinity", "id": "hostess7", "label": "Hostess 7"},
+    "F11": {"z": 3, "id": "layer3_cycle", "label": "Layer 3+", "cycle": true},
+    "F10": {"z": 2, "id": "znetwork", "label": "ZNetwork"},
+    "F9": {"z": 1, "id": "ammonet", "label": "AmmoNet"},
+    "F8": {"z": 0.5, "id": "presume_path", "label": "Presume path"},
+    "F7": {"z": 0, "id": "hardware", "label": "Hardware · EOL"},
+    "F6": {"z": -1, "id": "field_one", "label": "Field One"},
+    "F5": {"z": -2, "id": "botnet", "label": "Botnet · DNS"},
+    "F4": {"z": -3, "id": "nexus_c2", "label": "NEXUS C2"},
+    "F3": {"z": 0, "id": "iron_plate", "label": "Iron plate"},
+    "F2": {"z": 0.5, "id": "presume_direct", "label": "Presume direct"},
+    "F1": {"z": 0, "id": "ironclad_chips", "label": "Ironclad CHIPS"}
   },
   "bindings": [
-    {"id": "f9_nexus_c2", "keys": ["F9"], "action": "launch", "target": "nexus-c2", "layer": -3, "desktop": true},
-    {"id": "f10_dns_lane", "keys": ["F10"], "action": "launch", "target": "kilroy-dns", "layer": -2, "desktop": true},
-    {"id": "f11_queen_browser", "keys": ["F11"], "action": "kilroy_browser", "target": "queen-browser", "layer": 1, "desktop": true},
-    {"id": "f12_userland", "keys": ["F12"], "action": "cycle_userland", "layer": 2, "desktop": true},
-    {"id": "f9_underlay_kernel", "keys": ["F9"], "action": "launch", "target": "underlay-f9", "kernel": true},
+    {"id": "f12_hostess7", "keys": ["F12"], "action": "launch", "target": "hostess7", "layer": "infinity", "desktop": true},
+    {"id": "f11_layer3_cycle", "keys": ["F11"], "action": "cycle_layer3_plus", "layer": 3, "desktop": true},
+    {"id": "f10_znetwork", "keys": ["F10"], "action": "launch", "target": "znetwork", "layer": 2, "desktop": true},
+    {"id": "f9_ammonet", "keys": ["F9"], "action": "launch", "target": "ammonet", "layer": 1, "desktop": true},
+    {"id": "f8_presume_path", "keys": ["F8"], "action": "launch", "target": "chips-presume-path", "layer": 0.5, "desktop": true},
+    {"id": "f7_eol_code", "keys": ["F7"], "action": "launch", "target": "eol-code", "layer": 0, "desktop": true},
+    {"id": "f6_field_one", "keys": ["F6"], "action": "desktop", "target": "field-one", "layer": -1, "desktop": true},
+    {"id": "f5_botnet", "keys": ["F5"], "action": "launch", "target": "kilroy-dns", "layer": -2, "desktop": true},
+    {"id": "f4_nexus_c2", "keys": ["F4"], "action": "launch", "target": "nexus-c2", "layer": -3, "desktop": true},
     {"id": "ctrl_alt_t", "keys": ["Control", "Alt", "t"], "action": "launch", "target": "queen-terminal", "desktop": true},
-    {"id": "ctrl_alt_b", "keys": ["Control", "Alt", "b"], "action": "launch", "target": "field-broadcaster", "desktop": true},
-    {"id": "ctrl_alt_space_clipboard", "keys": ["Control", "Alt", "Space"], "action": "clipboard_flyout", "target": "field-clipboard-wire", "desktop": true, "global": true}
+    {"id": "ctrl_alt_b", "keys": ["Control", "Alt", "b"], "action": "launch", "target": "field-broadcaster", "desktop": true}
   ],
   "launch_targets": {
+    "hostess7": {"id": "hostess7", "exec": "http://127.0.0.1:9477/brain.html", "label": "Hostess 7"},
+    "eol-code": {"id": "eol-code", "exec": "http://127.0.0.1:9477/eol-code", "label": "EOL Code"},
+    "chips-presume-path": {"id": "chips-presume-path", "exec": "http://127.0.0.1:9477/api/chips/presume-path", "label": "Presume path"},
     "nexus-c2": {"id": "nexus-c2", "exec": "http://127.0.0.1:9481/world/queen-nexus-c2.html", "label": "NEXUS C2"},
-    "kilroy-dns": {"id": "kilroy-home", "exec": "http://127.0.0.1:9481/world/kilroy-home.html", "label": "DNS · KILROY lane"},
-    "queen-browser": {"id": "queen-browser", "exec": "http://127.0.0.1:9481/world/browser.html", "label": "Queen Browser"},
-    "underlay-f9": {"id": "underlay-f9", "exec": "http://127.0.0.1:9477/underlay-f9", "label": "Underlay F9"},
+    "kilroy-dns": {"id": "kilroy-home", "exec": "http://127.0.0.1:9481/world/kilroy-home.html", "label": "DNS · KILROY"},
+    "controller-setup": {"id": "controller-setup", "exec": "/queen-game-room.html#arcade", "label": "Arcade controller setup"},
     "queen-terminal": {"id": "queen-terminal", "exec": "http://127.0.0.1:9477/field-gnu-terminal-embed.html", "label": "AmmoOS Terminal"},
     "field-broadcaster": {"id": "field-broadcaster", "exec": "http://127.0.0.1:9477/field-broadcaster", "label": "Broadcaster"}
   }

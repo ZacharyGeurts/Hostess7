@@ -1,0 +1,46 @@
+{
+  "schema": "field-stereo-device/v1",
+  "title": "Stereoscopic devices — two Final Eyes per host, webcam TV watch",
+  "motto": "Two eyes per device; simulate stereo when one fails if left/right is known; or point a webcam at the TV and learn distance and depth.",
+  "rule": "Dual Final Eyes (living=left, truth=right) on every operator device. Mono failover synthesizes the missing eye. Webcam-at-TV is a first-class learning lane.",
+  "eyes_per_device": 2,
+  "failover_simulate": true,
+  "devices": [
+    {
+      "device_id": "host_primary",
+      "label": "Host operator display",
+      "eyes": [
+        {"id": "left", "role": "left", "final_eye_slot": "living", "profile": "human", "enabled": true},
+        {"id": "right", "role": "right", "final_eye_slot": "truth", "profile": "human", "enabled": true}
+      ],
+      "baseline_mm": 65,
+      "failover_simulate": true
+    }
+  ],
+  "webcam_tv_watch": {
+    "enabled": true,
+    "motto": "Point a webcam at the TV — Hostess 7 sees the game, learns distance and depth.",
+    "role": "optional_stereo_pair",
+    "capture_tools": ["fswebcam", "ffmpeg", "v4l2"],
+    "default_device": "/dev/video0",
+    "frame_dir": "tv-watch-frames",
+    "tv_profile": {
+      "diagonal_in": 55,
+      "aspect_w": 16,
+      "aspect_h": 9,
+      "distance_m": null,
+      "calibrated": false,
+      "focal_px": null
+    },
+    "depth": {
+      "method": "screen_geometry_stereo_simulate",
+      "baseline_mm": 65,
+      "min_screen_fill": 0.12
+    },
+    "learn": {
+      "witness_stereo": true,
+      "ingest_modality": "stereo_vision",
+      "train_ticks": 4
+    }
+  }
+}

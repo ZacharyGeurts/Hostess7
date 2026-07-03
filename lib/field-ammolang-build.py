@@ -697,7 +697,7 @@ def _invoke_py_direct(
         rc = 0 if rc else 1
     stdout = buf_out.getvalue()
     stderr = buf_err.getvalue()
-    return {
+    row: dict[str, Any] = {
         "ok": rc == 0,
         "rc": rc,
         "stdout": stdout,
@@ -706,6 +706,22 @@ def _invoke_py_direct(
         "module": module,
         "action": action,
     }
+    guard_py = INSTALL / "lib" / "field-json-guard.py"
+    if guard_py.is_file():
+        try:
+            gspec = importlib.util.spec_from_file_location("_jg_aml_invoke", guard_py)
+            if gspec and gspec.loader:
+                jg = importlib.util.module_from_spec(gspec)
+                gspec.loader.exec_module(jg)
+                if hasattr(jg, "parse_stdout_json"):
+                    parsed = jg.parse_stdout_json(stdout)
+                    if isinstance(parsed, dict) and parsed.get("schema"):
+                        row["parsed"] = parsed
+                        if "ok" in parsed:
+                            row["ok"] = bool(parsed.get("ok"))
+        except Exception:
+            pass
+    return row
 
 
 def _exec_assert(ctx: BuildContext, spec: str) -> dict[str, Any]:

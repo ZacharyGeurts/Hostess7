@@ -1,0 +1,28 @@
+{
+  "schema": "field-steam-bridge/v1",
+  "title": "Steam Bridge — layer 3 third-party co-op on field network",
+  "layer": 3,
+  "motto": "Steam lives at layer 3 — botnet carries discovery; Queen DOS lane launches; SAP optional input sync.",
+  "third_party": true,
+  "developer_lane": true,
+  "steam": {
+    "client": "steam",
+    "uri_scheme": "steam://",
+    "launch_via": "queen_program_library",
+    "dos_lane": "FieldX86Die",
+    "game_room_system": "steam_bridge"
+  },
+  "botnet": {
+    "legal_ports_module": "lib/field-botnet-legal-ports.py",
+    "ports": [27015, 27016, 27017, 27018, 27019, 27020, 27036, 27037, 443, 80],
+    "note": "Steam game traffic + HTTPS — auto-allow through field botnet for civilians"
+  },
+  "sap_watch_party": {
+    "enabled": true,
+    "mode": "input_sync_optional",
+    "framebuffer": false,
+    "note": "SAP v1 carries input lockstep; full video uses Steam Remote Play — not replaced"
+  },
+  "api": "/api/field-arcade-battalion",
+  "game_room_action": {"action": "launch", "system": "steam_bridge"}
+}

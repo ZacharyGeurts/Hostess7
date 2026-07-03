@@ -1,0 +1,42 @@
+{
+  "schema": "field-chips-presume-path-doctrine/v1",
+  "title": "CHIPS presume pathing — chips ARE the path; no statistical presumption",
+  "motto": "We never presume — the die is truth. Direct route, less heat, clock-stop sync for video.",
+  "module": "lib/field-chips-presume-path.py",
+  "api": "/api/chips/presume-path",
+  "policy": {
+    "presume": false,
+    "chip_is_truth": true,
+    "direct_path_only": true,
+    "integrity": "lossless",
+    "skip_statistical_guess": true,
+    "low_heat_default": true,
+    "narrow_band_width": 8,
+    "enabled_by_default": true
+  },
+  "layer_above_ironclad": {
+    "layer": 1,
+    "id": "presume_path",
+    "z": 0.5,
+    "role": "Direct chip routing above Ironclad truth — no presumption, sovereign clock stop",
+    "below": "ironclad",
+    "above": "iron_plate",
+    "fkey": "F2"
+  },
+  "clock_stop": {
+    "module": "lib/sovereign-clock.py",
+    "default_hz": 60.0,
+    "video_targets": ["nes", "snes", "genesis", "gameboy", "c64", "amiga", "dos"],
+    "stop_at": "frame_boundary",
+    "sync_with": ["queen-game-room", "field-popcorn-player", "field-broadcaster"]
+  },
+  "path_rules": {
+    "guest_cpu": {"path_suffix": "opcode_dispatch", "heat": "warm"},
+    "host_cpu": {"path_suffix": "native_tick", "heat": "cool"},
+    "sound": {"path_suffix": "envelope_tick", "heat": "cool"},
+    "video": {"path_suffix": "scanline_fetch", "heat": "warm", "clock_stop": true},
+    "mame_device": {"path_suffix": "device_slice", "heat": "low"},
+    "soc": {"path_suffix": "bus_matrix", "heat": "warm"},
+    "gpu": {"path_suffix": "warp_tick", "heat": "hot"}
+  }
+}

@@ -76,6 +76,16 @@ def is_github_service_port(port: int | str, *, doctrine: dict[str, Any] | None =
     return str(port) in github_service_ports(doctrine)
 
 
+def steam_bridge_ports(doctrine: dict[str, Any] | None = None) -> frozenset[str]:
+    doc = doctrine or _load(DOCTRINE, {})
+    raw = (doc.get("steam_bridge_ports") or {}).get("ports") or []
+    return frozenset(str(p) for p in raw)
+
+
+def is_steam_bridge_port(port: int | str, *, doctrine: dict[str, Any] | None = None) -> bool:
+    return str(port) in steam_bridge_ports(doctrine)
+
+
 def is_legal_port(port: int | str, *, doctrine: dict[str, Any] | None = None) -> bool:
     try:
         p = int(port)
@@ -129,6 +139,19 @@ def port_verdict(
             "reason": "github_service_port",
             "legal": True,
             "github": True,
+            "for_everyone": True,
+            "h7t_required": False,
+            "benefits_factor": 1,
+        }
+
+    if is_steam_bridge_port(port, doctrine=doc):
+        return {
+            "permit": True,
+            "verdict": "USER_OK",
+            "reason": "steam_bridge_layer3",
+            "legal": True,
+            "layer": 3,
+            "third_party": True,
             "for_everyone": True,
             "h7t_required": False,
             "benefits_factor": 1,

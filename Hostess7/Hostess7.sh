@@ -173,6 +173,8 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh cohesion              IQ + truth combined report
   ./Hostess7.sh open-tasks            Wants + cohesion gaps + more tasks rollup
   ./Hostess7.sh github-brain [build]  Isolated mirror for Pages — never touches sovereign brain
+  ./Hostess7.sh combinatronic-snap     Live combinatronic snap — map placements, instant on fingerprint
+  ./Hostess7.sh combinatronic-optimal  Full g16 optimal cycle (only when map missing or --force)
   ./Hostess7.sh pages-build           Build github-brain + export API → docs/
   ./Hostess7.sh pages-publish         Build + push gh-pages (GitHub brain on github.io)
   ./Hostess7.sh publish-source        Push main + gh-pages for review (no release tag)
@@ -432,6 +434,30 @@ main() {
                 ask) shift; exec pythong "$ROOT/scripts/hostess7_github_brain.py" ask "$@" ;;
                 status|json) exec pythong "$ROOT/scripts/hostess7_github_brain.py" status ;;
                 *) exec pythong "$ROOT/scripts/hostess7_github_brain.py" build ;;
+            esac
+            ;;
+        combinatronic-snap|combinatronic_snap|live-combinatronic|combinatronic-live)
+            shift
+            force=""
+            [[ " $* " == *" --force "* ]] && force="--force"
+            exec pythong "$ROOT/../lib/g16-combinatronic-rebalance.py" snap $force
+            ;;
+        combinatronic-optimal|combinatronic_optimal|combinatronic-rebalance|g16-optimal)
+            shift
+            args=""
+            [[ " $* " == *" --full "* ]] && args="$args --full"
+            [[ " $* " == *" --force "* ]] && args="$args --force"
+            [[ " $* " == *" --refresh "* ]] && args="$args --refresh"
+            exec pythong "$ROOT/../lib/g16-combinatronic-rebalance.py" optimal $args
+            ;;
+        combinatronic-map|combinatronic_map)
+            shift
+            sub="${1:-panel}"
+            case "$sub" in
+                capture|seed) exec pythong "$ROOT/../lib/field-combinatronic-live-map.py" capture ;;
+                delta|sync) exec pythong "$ROOT/../lib/field-combinatronic-live-map.py" delta ;;
+                map) exec pythong "$ROOT/../lib/field-combinatronic-live-map.py" map ;;
+                *) exec pythong "$ROOT/../lib/field-combinatronic-live-map.py" panel ;;
             esac
             ;;
         pages-build|pages_build|github-pages-build)

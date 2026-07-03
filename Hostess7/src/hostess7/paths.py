@@ -252,14 +252,29 @@ def scripts_available() -> bool:
     return sd.is_dir() and any(sd.glob("*.py"))
 
 
+def sovereign_brain_dir() -> Path:
+    """Canonical .../fieldstorage/brain — desktop env wins over legacy cache."""
+    fs_env = os.environ.get("HOSTESS7_FIELDSTORAGE_BRAIN", "").strip()
+    if fs_env:
+        brain = _normalize_path(Path(fs_env).expanduser())
+        if brain.is_dir():
+            return brain
+    legacy = storage_dir() / "brain"
+    if legacy.is_dir():
+        return legacy
+    desktop = _normalize_path(Path.home() / "Desktop" / "hostess7-brain" / "fieldstorage" / "brain")
+    return desktop
+
+
 def storage_dir() -> Path:
     """Sovereign fieldstorage — desktop brain first, then legacy under state."""
     root = hostess7_root()
     fs_env = os.environ.get("HOSTESS7_FIELDSTORAGE_BRAIN", "").strip()
     if fs_env:
-        desktop_fs = _normalize_path(Path(fs_env).expanduser().parent.parent)
-        if desktop_fs.is_dir():
-            return desktop_fs
+        brain = _normalize_path(Path(fs_env).expanduser())
+        fs_root = brain.parent if brain.name == "brain" else brain
+        if fs_root.is_dir():
+            return fs_root
     state_brain = brain_state_dir() / "legacy" / "fieldstorage_brain"
     if state_brain.is_dir() and any(state_brain.rglob("*.json")):
         return brain_state_dir() / "legacy"

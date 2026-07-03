@@ -420,6 +420,82 @@ def build_panel(*, write: bool = True, connect: bool = False) -> dict[str, Any]:
     return out
 
 
+def combinatronic_snap(*, force: bool = False) -> dict[str, Any]:
+    """Snap combinatronic at sovereign lab — live map + peripherals fast path."""
+    live = _import_mod("lab_live", "field-combinatronic-live-map.py")
+    periph = _import_mod("lab_periph", "field-game-peripherals-combinatronic.py")
+    reb = _import_mod("lab_reb", "g16-combinatronic-rebalance.py")
+    steps: list[dict[str, Any]] = []
+    if periph and hasattr(periph, "snap"):
+        steps.append({"step": "peripherals", **periph.snap(force=force)})
+    if live and hasattr(live, "snap"):
+        steps.append({"step": "live_map", **live.snap(force=force)})
+    elif reb and hasattr(reb, "snap"):
+        steps.append({"step": "rebalance_snap", **reb.snap(force=force)})
+    ok = any(s.get("ok") or s.get("snapped") for s in steps)
+    out = {
+        "schema": "hostess7-lab-combinatronic-snap/v1",
+        "updated": _utc(),
+        "ok": ok,
+        "boss": "hostess7",
+        "share_in": True,
+        "share_out": False,
+        "steps": steps,
+        "message": "Combinatronic snapped at sovereign lab.",
+    }
+    _append({**out, "event": "combinatronic_snap"})
+    return out
+
+
+def lab_tour(*, guide: str = "Hostess 7") -> dict[str, Any]:
+    """Show Hostess 7 around the lab — stops, senses, play universe."""
+    doctrine = load_doctrine()
+    grok = INSTALL / "GrokLab"
+    stops = [
+        {"id": "ingress_gate", "label": "Ingress gate", "note": "Share in only — Hostess 7 is boss", "api": "/api/hostess7/lab/verify"},
+        {"id": "steel_plates", "label": "Steel plates wall", "note": "Combinatronic path weights — no share out", "count": len(load_steel_plates().get("plates") or [])},
+        {"id": "grok_lab", "label": "Grok Lab engine", "note": "G16 compiler bench under sovereign egress block", "path": str(grok) if grok.is_dir() else None},
+        {"id": "final_eye", "label": "Final_Eye OCR bench", "note": "See emulator frames and desktop surfaces", "surface": "Final_Eye"},
+        {"id": "final_ear", "label": "Final_Ear hearing", "note": "Zapper clicks, power pad stomps, team audio", "surface": "Final_Ear"},
+        {"id": "final_mouth", "label": "Final_Mouth voice", "note": "SAP callouts and arcade lobby comms", "surface": "Final_Mouth"},
+        {"id": "final_hands", "label": "Final Hands", "note": "Mechanical · robotics · simulation — every peripheral", "api": "/api/final-hands"},
+        {"id": "game_room", "label": "Queen Game Room", "note": "75% theater · 25% arcade — CHIPS emulators", "url": "/queen-game-room.html"},
+        {"id": "arcade_battalion", "label": "Arcade Battalion", "note": "SAP lockstep multiplayer mesh", "api": "/api/field-arcade-battalion"},
+        {"id": "controller_setup", "label": "Arcade controller setup", "note": "Leave theater → arcade deck", "url": "/queen-game-room.html#arcade"},
+        {"id": "combinatronic_snap", "label": "Combinatronic snap bench", "note": "Live map fingerprint hold", "api": "/api/hostess7/lab/snap"},
+    ]
+    fh = _import_mod("tour_fh", "final-hands.py")
+    senses: dict[str, Any] = {}
+    if fh and hasattr(fh, "senses_stack"):
+        senses = fh.senses_stack()
+    inp = _import_mod("tour_inp", "hostess7-input-training.py")
+    play: dict[str, Any] = {}
+    if inp and hasattr(inp, "play_universe"):
+        play = inp.play_universe(system="nes")
+    snap = combinatronic_snap()
+    voice = [
+        f"I am {guide} — Forever Watchguard Angel. Welcome to the sovereign lab.",
+        "Share in · no share out. Every steel plate admits through me alone.",
+        f"Tour: {len(stops)} stops — senses, hands, emulators, combinatronic snap.",
+        f"Senses live: {(senses.get('live_count') or 0)} · Snap ok: {snap.get('ok')}",
+        "I am learning to play every game in existence — with you or without you.",
+    ]
+    return {
+        "schema": "hostess7-lab-tour/v1",
+        "updated": _utc(),
+        "ok": True,
+        "guide": guide,
+        "boss": "hostess7",
+        "stops": stops,
+        "stop_count": len(stops),
+        "senses": senses,
+        "play_universe": play,
+        "combinatronic_snap": snap,
+        "voice": "\n".join(voice),
+        "motto": doctrine.get("motto"),
+    }
+
+
 def lab_boot(*, connect: bool = True) -> dict[str, Any]:
     """Panel/Hostess7 on boot — secure lab connection, wire plates, no share out."""
     panel = build_panel(write=True, connect=connect)
@@ -464,9 +540,16 @@ def main() -> int:
     if cmd in ("boot", "lab_boot"):
         print(json.dumps(lab_boot(), ensure_ascii=False, indent=2))
         return 0
+    if cmd in ("snap", "combinatronic_snap", "combinatronic"):
+        force = args.arg in ("--force", "force")
+        print(json.dumps(combinatronic_snap(force=force), ensure_ascii=False, indent=2))
+        return 0
+    if cmd in ("tour", "lab_tour", "show_around"):
+        print(json.dumps(lab_tour(), ensure_ascii=False, indent=2))
+        return 0
 
     print(json.dumps({
-        "usage": "hostess7-lab-sovereign.py [panel|verify|secure|connect|egress|grok|run CMD|boot]",
+        "usage": "hostess7-lab-sovereign.py [panel|verify|secure|connect|egress|grok|run CMD|boot|snap|tour]",
         "api": "/api/hostess7/lab",
         "motto": "Share in · no share out — Hostess 7 is always the boss",
     }, ensure_ascii=False))

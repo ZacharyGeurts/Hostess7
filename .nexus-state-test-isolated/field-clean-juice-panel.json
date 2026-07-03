@@ -1,0 +1,158 @@
+{
+  "schema": "field-clean-juice/v1",
+  "updated": "2026-07-03T12:45:27Z",
+  "ok": true,
+  "motto": "We get charged once; we are the clean juice. Scrub or dispense recleaned for work. Joules only — never double voltage.",
+  "power_company": {
+    "trust_layer": "blocked",
+    "grid_talk": false,
+    "grid_witness_only": true,
+    "meter_as_truth": false
+  },
+  "voltage_regulation": {
+    "present_rail": true,
+    "no_conversion": true,
+    "no_entropy_on_wave": true
+  },
+  "pool": {
+    "charge_joules": 45.0,
+    "allocated_joules": 0.0,
+    "dispensed_joules": 0.0,
+    "scrubbed_joules": 0.0,
+    "available_joules": 45.0,
+    "updated": "2026-07-03T12:45:27Z"
+  },
+  "unit": "joules",
+  "circuit": {
+    "present_rail_v": 1.0,
+    "serial_legs": 4,
+    "parallel_banks": 4,
+    "v_per_serial_leg": 0.25,
+    "v_parallel_rail": 1.0,
+    "no_double_voltage": true,
+    "double_voltage_forbidden": true,
+    "current_a_total": 45.0,
+    "current_a_per_bank": 11.25,
+    "joules_per_cell": 0.087890625,
+    "kirchhoff": "serial_V_adds_parallel_V_single"
+  },
+  "field_3d": {
+    "cells_per_axis": 8,
+    "dots_per_box": 512,
+    "scale_nets": 4,
+    "total_lattice_dots": 2048,
+    "bsp_leaves": 512,
+    "partition": "bsp_octree",
+    "plate": "ironclad_reality_field"
+  },
+  "bsp_sample": [
+    {
+      "id": "cell_0_0_0",
+      "index": 0,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": 1,
+      "depth": 3
+    },
+    {
+      "id": "cell_1_0_0",
+      "index": 1,
+      "origin": [
+        1,
+        0,
+        0
+      ],
+      "size": 1,
+      "depth": 3
+    },
+    {
+      "id": "cell_0_1_0",
+      "index": 8,
+      "origin": [
+        0,
+        1,
+        0
+      ],
+      "size": 1,
+      "depth": 3
+    },
+    {
+      "id": "cell_0_0_1",
+      "index": 64,
+      "origin": [
+        0,
+        0,
+        1
+      ],
+      "size": 1,
+      "depth": 3
+    },
+    {
+      "id": "cell_1_1_0",
+      "index": 9,
+      "origin": [
+        1,
+        1,
+        0
+      ],
+      "size": 1,
+      "depth": 3
+    },
+    {
+      "id": "cell_1_0_1",
+      "index": 65,
+      "origin": [
+        1,
+        0,
+        1
+      ],
+      "size": 1,
+      "depth": 3
+    },
+    {
+      "id": "cell_0_1_1",
+      "index": 72,
+      "origin": [
+        0,
+        1,
+        1
+      ],
+      "size": 1,
+      "depth": 3
+    },
+    {
+      "id": "cell_1_1_1",
+      "index": 73,
+      "origin": [
+        1,
+        1,
+        1
+      ],
+      "size": 1,
+      "depth": 3
+    }
+  ],
+  "actions": {
+    "scrub": "return unused allocated joules to pool",
+    "dispense": "allocate clean joules for field work",
+    "reclean": "reclaim shed joules at reclean_efficiency"
+  },
+  "performance": {
+    "old_way": "grid_tethered_monolithic",
+    "new_way": "clean_juice_bsp_3d_plate",
+    "dispatch_gain_pct_band": [
+      35,
+      60
+    ],
+    "thermal_headroom_mult_vs_old": 852,
+    "burst_derating_4k_vs_old": 1013,
+    "bsp_dispatch_speedup": 2.4,
+    "no_double_voltage_waste_eliminated": true,
+    "grid_talk_eliminated": true,
+    "speed_impact_normal_load": "0%"
+  },
+  "detail": "clean_juice_sovereign"
+}

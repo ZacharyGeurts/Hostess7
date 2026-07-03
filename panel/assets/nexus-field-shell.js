@@ -244,16 +244,22 @@
           .join(" ");
         const chrome = win.userlandLayer === 0 ? chromeBarHtml(win) : "";
         const winCls = chrome ? " nfs-win--panel" : win.userlandLayer === 1 ? " nfs-win--queen" : "";
+        const excl = win.exclusiveInput || (win.sovereignLayer || 0) >= 3 ? " nfs-win--sovereign-exclusive" : "";
         return (
           '<div class="' +
           cls +
           winCls +
+          excl +
           '" id="' +
           esc(win.id) +
           '" data-win-id="' +
           esc(win.id) +
           '" data-layer="' +
           String(win.userlandLayer || 0) +
+          '" data-sovereign-layer="' +
+          String(win.sovereignLayer != null ? win.sovereignLayer : win.userlandLayer || 0) +
+          '" data-full-input="' +
+          (win.exclusiveInput ? "1" : "0") +
           '" style="z-index:' +
           win.z +
           '">' +
@@ -306,6 +312,12 @@
     state.zTop += 1;
     win.z = state.zTop;
     state.activeId = win.id;
+    if (win.sovereignLayer >= 3 || win.exclusiveInput) {
+      global.FieldLayerInputIsolation?.applyExclusiveChrome?.(document.getElementById(win.id), win.sovereignLayer);
+      global.FieldScreenLayers?.launchSurface &&
+        document.documentElement.dataset &&
+        (document.documentElement.dataset.fieldLayer = String(win.sovereignLayer));
+    }
     renderWindows();
     syncTaskbar();
     global.FieldStartbar?.trackRunning?.({
@@ -470,6 +482,12 @@
     const queenWin =
       app.id === "queen-browser" || (url && String(url).includes("/browser.html"));
     const layer = resolveUserlandLayer(app, url, queenWin);
+    const sovereignLayer =
+      app.sovereignLayer != null
+        ? app.sovereignLayer
+        : app.os_layer != null
+          ? app.os_layer
+          : layer;
     const win = {
       id: id,
       key: key,
@@ -481,6 +499,9 @@
       z: state.zTop,
       queenNavigate: app.queenNavigate || null,
       userlandLayer: layer,
+      sovereignLayer: sovereignLayer,
+      exclusiveInput: !!(app.exclusive_input || sovereignLayer >= 3),
+      allowFullscreen: app.allow_fullscreen !== false,
     };
     state.windows.push(win);
     state.activeId = id;
@@ -1122,6 +1143,9 @@
     showDesktop: showDesktop,
     getWindow: function (id) {
       return state.windows.find(function (w) { return w.id === id; });
+    },
+    getActiveWindow: function () {
+      return state.windows.find(function (w) { return w.id === state.activeId; }) || null;
     },
     openStartProperties: openStartProperties,
     openDisplaySettings: openDisplaySettings,

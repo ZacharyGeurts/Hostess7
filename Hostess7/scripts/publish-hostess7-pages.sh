@@ -18,6 +18,10 @@ export HOSTESS7_ROOT="$ROOT"
 export NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-${ROOT}/..}"
 export SG_ROOT="${SG_ROOT:-$(cd "${NEXUS_INSTALL_ROOT}/.." && pwd)}"
 export HOSTESS7_LICENSE_MODE=war
+_DESKTOP_BRAIN="${HOSTESS7_DESKTOP_BRAIN:-$HOME/Desktop/hostess7-brain}"
+export HOSTESS7_BRAIN_STATE="${HOSTESS7_BRAIN_STATE:-$_DESKTOP_BRAIN/state}"
+export HOSTESS7_FIELDSTORAGE_BRAIN="${HOSTESS7_FIELDSTORAGE_BRAIN:-$_DESKTOP_BRAIN/fieldstorage/brain}"
+export NEXUS_STATE_DIR="${NEXUS_STATE_DIR:-$HOSTESS7_BRAIN_STATE}"
 
 log "build full stack surfaces (Queen + AmmoOS) + brain corpus + API export"
 "$PY" "$ROOT/scripts/hostess7_pages_surfaces_build.py"

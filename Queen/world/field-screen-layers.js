@@ -1,50 +1,81 @@
 /**
- * Field screen layers — F9..F12 switch sovereign surfaces.
+ * Field screen layers — F1..F12 = sovereign stack top → bottom.
  *
  * ═══════════════════════════════════════════════════════════════════════════
- * IRONCLAD — F9..F12 FAST SWITCH PANEL (DO NOT REMOVE)
- * Field One Only — AmmoOS anchors at layer -1 (boot home, no F-key).
- *   F9  → layer -3 · NEXUS C2
- *   F10 → layer -2 · DNS · KILROY lane
- *   F11 → Queen Browser · own browser space (shell window, not iframe stack)
- *   F12 → userland 2+ · repeat F12 cycles only layers that exist
- * Layer 0 = Broadcaster · AmmoNet · panel programs (themed menu chrome).
+ * IRONCLAD — F-KEY STACK (DO NOT REMOVE)
+ *   F12 → Hostess 7 (∞) · panels only
+ *   F11 → Layer 3 · cycles all layers ≥ 3 (dev, game room, steam, arcade…)
+ *   F10 → Layer 2 · ZNetwork
+ *   F9  → Layer 1 · AmmoNet
+ *   F8  → Layer 0.5 · CHIPS presume path
+ *   F7  → Layer 0 · Hardware · EOL Code
+ *   F6  → Layer −1 · Field One · AmmoOS
+ *   F5  → Layer −2 · Botnet · DNS
+ *   F4  → Layer −3 · NEXUS C2
+ *   F3  → CHIPS iron plate
+ *   F2  → CHIPS presume path direct
+ *   F1  → Ironclad CHIPS truth
+ * Layer ≥ 3 in focus: full keyboard + controllers — our F-keys yield (F12 escapes).
  * Protected by field-screen-layer/v1 — comment-protect this block on every edit.
  * ═══════════════════════════════════════════════════════════════════════════
  */
 (function (global) {
   "use strict";
 
-  /* DO NOT REMOVE — F-key layer map: F11 browser, F12 userland cycle. */
-  const LAYER_META = {
-    "-3": { label: "NEXUS C2", fkey: "F9", component: "queen-nexus-c2" },
-    "-2": { label: "DNS · KILROY lane", fkey: "F10", component: "kilroy-home" },
-    "-1": { label: "Field One · AmmoOS", fkey: null, component: "field-desktop" },
-    "0": {
-      label: "OS Software · Broadcaster · AmmoNet · Panels",
-      fkey: null,
-      inside_os: true,
-      bundle: ["field-broadcaster", "ammonet-isp", "ammoos-ammonet-display"],
-    },
-    "1": { label: "Queen Browser", fkey: "F11", queen_browser: true, browser_space: true },
-    warehouse: { label: "Archival Warehouse · Official", fkey: null, official: true, component: "ammoos-warehouse" },
+  const LAYER_3_MIN = 3;
+  const USERLAND_MIN = 2;
+
+  const STACK_FKEYS = {
+    F12: { z: "infinity", id: "hostess7", label: "Hostess 7", panel: true, path: "/brain.html" },
+    F11: { z: 3, id: "layer3_cycle", label: "Layer 3+", cycle: true },
+    F10: { z: 2, id: "znetwork", label: "ZNetwork", panel: true, path: "/api/znetwork" },
+    F9: { z: 1, id: "ammonet", label: "AmmoNet", panel: true, path: "/api/ammonet" },
+    F8: { z: 0.5, id: "presume_path", label: "Presume path", panel: true, path: "/api/chips/presume-path" },
+    F7: { z: 0, id: "hardware", label: "Hardware · EOL", panel: true, path: "/eol-code" },
+    F6: { z: -1, id: "field_one", label: "Field One · AmmoOS", desktop: true },
+    F5: { z: -2, id: "botnet", label: "Botnet · DNS", stack: true, component: "kilroy-home" },
+    F4: { z: -3, id: "nexus_c2", label: "NEXUS C2", stack: true, component: "queen-nexus-c2" },
+    F3: { z: 0, id: "iron_plate", label: "Iron plate", panel: true, path: "/api/chips/plate-stack" },
+    F2: { z: 0.5, id: "presume_direct", label: "Presume direct", panel: true, path: "/api/chips/presume-path" },
+    F1: { z: 0, id: "ironclad_chips", label: "Ironclad CHIPS", queen: true, path: "/queen-chips-cores.html" },
   };
 
-  /* DO NOT REMOVE — F9/F10 fixed; F11 Queen; F12 handled by cycleUserland(). */
-  const FKEY_TO_LAYER = { F9: -3, F10: -2, F11: 1 };
-  const FAST_SWITCH_LAYERS = [-3, -2, 1];
+  const LAYER_3_PLUS_CYCLE = [
+    { z: 3, id: "developer", label: "Developers L3", panel: true, path: "/api/field-steam-bridge", sovereignLayer: 3 },
+    { z: 4, id: "queen_gameroom", label: "Queen Game Room", queen: true, path: "/queen-game-room.html", sovereignLayer: 4, fullscreen: true },
+    { z: 5, id: "ammoos", label: "AmmoOS panels", panel: true, path: "/field", sovereignLayer: 5 },
+    { z: 3, id: "arcade_battalion", label: "Arcade Battalion", panel: true, path: "/api/field-arcade-battalion", sovereignLayer: 3 },
+    { z: 4, id: "combinatorics_studio", label: "Combinatorics", panel: true, path: "/combinatorics-studio/", sovereignLayer: 4 },
+    { z: 3, id: "grok_lab", label: "Lab sovereign", panel: true, path: "/grok-lab", sovereignLayer: 3 },
+    { z: 4, id: "controller_setup", label: "Arcade setup", queen: true, path: "/queen-game-room.html#arcade", sovereignLayer: 4 },
+  ];
+
+  const LAYER_META = {
+    "-3": { label: "NEXUS C2", fkey: "F4", component: "queen-nexus-c2" },
+    "-2": { label: "DNS · KILROY lane", fkey: "F5", component: "kilroy-home" },
+    "-1": { label: "Field One · AmmoOS", fkey: "F6", component: "field-desktop" },
+    "0": { label: "OS Software · Hardware", fkey: "F7", inside_os: true },
+    "1": { label: "Queen Browser", fkey: null, queen_browser: true },
+    warehouse: { label: "Archival Warehouse", fkey: null, official: true, component: "ammoos-warehouse" },
+  };
+
   const STACK_LAYERS = [-3, -2];
-  const USERLAND_MIN = 2;
+  const FKEY_TO_LAYER = { F4: -3, F5: -2 };
 
   const state = {
     active: -1,
+    sovereignLayer: -1,
     root: null,
     frames: {},
     wired: false,
     hud: null,
     fastSwitch: null,
-    userlandCycleIdx: -1,
+    layer3CycleIdx: -1,
   };
+
+  function iso() {
+    return global.FieldLayerInputIsolation;
+  }
 
   function pagesRuntime() {
     return document.body?.dataset?.pagesRuntime === "1" || !!global.HOSTESS7_PAGES_BASE;
@@ -64,7 +95,6 @@
   function layerUrl(layer) {
     const q = queenPagesBase();
     const p = panelBase();
-    if (layer === 1) return q + "/browser.html";
     if (layer === -3) return q + "/queen-nexus-c2.html";
     if (layer === -2) return q + "/kilroy-home.html";
     if (layer === -1) return pagesRuntime() ? p + "/desktop/" : p + "/field";
@@ -72,8 +102,26 @@
     return null;
   }
 
+  function resolveSpecUrl(spec) {
+    if (!spec) return null;
+    const base = spec.queen ? queenPagesBase() : panelBase();
+    return spec.path ? base + spec.path : null;
+  }
+
   function toast(msg) {
     global.FieldHostDesktop?.toast?.(msg);
+  }
+
+  function setSovereignLayer(z) {
+    state.sovereignLayer = z;
+    document.documentElement.dataset.fieldLayer = String(z);
+    document.documentElement.dataset.fieldScreenLayer = String(z);
+    if (z >= LAYER_3_MIN) {
+      document.documentElement.dataset.fieldLayerSovereign = "exclusive";
+    } else {
+      document.documentElement.removeAttribute("data-field-layer-sovereign");
+      iso()?.clearExclusiveChrome?.();
+    }
   }
 
   function setDesktopVisible(visible) {
@@ -86,10 +134,6 @@
     }
     if (monitor && !visible) monitor.hidden = true;
     if (visible) global.NexusFieldShell?.showDesktop?.();
-  }
-
-  function userlandLabel(layer) {
-    return "Userland · L" + layer;
   }
 
   function updateHud(layer) {
@@ -105,62 +149,104 @@
       }
       state.hud = hud;
     }
-    const meta = LAYER_META[String(layer)] || {};
-    const label = layer >= USERLAND_MIN ? userlandLabel(layer) : meta.label || "Field One";
-    const fkey = meta.fkey ? " · " + meta.fkey : layer >= USERLAND_MIN ? " · F12" : "";
+    const spec = Object.values(STACK_FKEYS).find(function (s) {
+      return s.z === layer || (s.cycle && layer >= LAYER_3_MIN);
+    });
+    const label = spec?.label || LAYER_META[String(layer)]?.label || "Field One";
+    const fkey = spec?.cycle ? " · F11" : "";
     hud.textContent = "Layer " + layer + " · " + label + fkey;
-    hud.hidden = layer === -1 || layer === 0;
+    hud.hidden = layer === -1 && state.sovereignLayer < LAYER_3_MIN;
   }
 
-  function listUserlandEntries() {
-    const wins = global.NexusFieldShell?.listWindows?.() || [];
-    return wins
-      .filter(function (w) {
-        return !w.minimized && (w.userlandLayer || 0) >= USERLAND_MIN;
-      })
-      .sort(function (a, b) {
-        return (a.userlandLayer || 0) - (b.userlandLayer || 0);
-      })
-      .map(function (w) {
-        return {
-          layer: w.userlandLayer,
-          id: w.id,
-          label: w.name || "Program",
-          win: w,
-        };
-      });
-  }
-
-  function focusUserlandEntry(entry) {
-    const stack = ensureMount();
-    stack.hidden = true;
-    stack.setAttribute("aria-hidden", "true");
-    setDesktopVisible(true);
-    state.active = entry.layer;
-    document.documentElement.dataset.fieldScreenLayer = String(entry.layer);
-    document.documentElement.dataset.fieldLayer = String(entry.layer);
-    global.NexusFieldShell?.focusWindow?.(entry.id);
-    updateHud(entry.layer);
-    updateFastSwitch(entry.layer);
-    toast("Layer " + entry.layer + " · " + entry.label);
-  }
-
-  function cycleUserland() {
-    const available = listUserlandEntries();
-    if (!available.length) {
-      toast("Userland · no layers active · Field One");
+  function launchSurface(spec, fkey) {
+    if (!spec) return;
+    if (spec.desktop) {
+      showDesktopLayer(-1);
       return;
     }
-    let idx = available.findIndex(function (e) {
-      return e.layer === state.active;
-    });
-    if (idx < 0) idx = state.userlandCycleIdx;
-    const next = (idx + 1) % available.length;
-    state.userlandCycleIdx = next;
-    focusUserlandEntry(available[next]);
+    const url = resolveSpecUrl(spec);
+    if (!url) return;
+    const assets = pagesRuntime()
+      ? (global.HOSTESS7_PAGES_BASE || "/Hostess7") + "/assets"
+      : "/assets";
+    const layer = spec.sovereignLayer != null ? spec.sovereignLayer : typeof spec.z === "number" ? spec.z : -1;
+    if (global.NexusFieldShell?.launch) {
+      const win = global.NexusFieldShell.launch({
+        id: spec.id,
+        name: spec.label,
+        exec: url,
+        shell: true,
+        icon_url: assets + "/queen-prog-chips.png",
+        sovereignLayer: layer,
+        userlandLayer: layer >= LAYER_3_MIN ? layer : USERLAND_MIN,
+        os_layer: layer,
+        exclusive_input: layer >= LAYER_3_MIN,
+        allow_fullscreen: true,
+      });
+      setSovereignLayer(layer);
+      state.active = layer;
+      if (layer >= LAYER_3_MIN && win && win.id) {
+        const el = document.getElementById(win.id);
+        iso()?.applyExclusiveChrome?.(el, layer);
+        if (spec.fullscreen) iso()?.requestFullscreen?.(el);
+      }
+      updateHud(layer);
+      updateFastSwitch(layer);
+      toast((fkey || "") + " · " + spec.label);
+      return;
+    }
+    if (spec.stack && typeof spec.z === "number") {
+      switchTo(spec.z);
+      return;
+    }
+    window.open(url, "_blank", "noopener");
+    toast((fkey || "") + " · " + spec.label);
   }
 
-  /* DO NOT REMOVE — F9..F12 fast switch panel (click + keyboard). */
+  function openHostess7() {
+    launchSurface(STACK_FKEYS.F12, "F12");
+  }
+
+  function cycleLayer3Plus() {
+    const available = LAYER_3_PLUS_CYCLE;
+    if (!available.length) return;
+    let idx = state.layer3CycleIdx;
+    if (state.sovereignLayer >= LAYER_3_MIN) {
+      const hit = available.findIndex(function (e) {
+        return e.id === state.activeId;
+      });
+      if (hit >= 0) idx = hit;
+    }
+    const next = (idx + 1) % available.length;
+    state.layer3CycleIdx = next;
+    const spec = available[next];
+    state.activeId = spec.id;
+    launchSurface(spec, "F11");
+  }
+
+  function handleStackFkey(fkey) {
+    const spec = STACK_FKEYS[fkey];
+    if (!spec) return;
+    if (spec.cycle) {
+      cycleLayer3Plus();
+      return;
+    }
+    if (spec.z === "infinity") {
+      openHostess7();
+      return;
+    }
+    if (spec.stack && typeof spec.z === "number") {
+      switchTo(spec.z);
+      return;
+    }
+    if (spec.desktop) {
+      showDesktopLayer(-1);
+      setSovereignLayer(-1);
+      return;
+    }
+    launchSurface(spec, fkey);
+  }
+
   function ensureFastSwitchPanel() {
     if (state.fastSwitch) return state.fastSwitch;
     let panel = document.getElementById("fsl-fast-switch");
@@ -171,65 +257,44 @@
     panel = document.createElement("nav");
     panel.id = "fsl-fast-switch";
     panel.className = "fsl-fast-switch";
-    panel.setAttribute("aria-label", "F9–F12 fast layer switch");
-    panel.setAttribute("data-ironclad", "f9-f12-fast-switch");
-    FAST_SWITCH_LAYERS.forEach(function (layer) {
-      const meta = LAYER_META[String(layer)];
-      if (!meta || !meta.fkey) return;
+    panel.setAttribute("aria-label", "F1–F12 sovereign stack");
+    panel.setAttribute("data-ironclad", "f1-f12-stack");
+    ["F12", "F11", "F10", "F9", "F8", "F7", "F6", "F5", "F4"].forEach(function (fk) {
+      const spec = STACK_FKEYS[fk];
+      if (!spec) return;
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "fsl-fast-btn";
-      btn.dataset.layer = String(layer);
-      btn.title = meta.fkey + " · " + meta.label;
+      btn.dataset.fkey = fk;
+      btn.title = fk + " · " + spec.label;
       btn.innerHTML =
-        '<kbd class="fsl-fast-kbd">' + meta.fkey + "</kbd>" +
-        '<span class="fsl-fast-label">' + meta.label + "</span>" +
-        '<span class="fsl-fast-z">L' + layer + "</span>";
+        '<kbd class="fsl-fast-kbd">' + fk + "</kbd>" +
+        '<span class="fsl-fast-label">' + spec.label + "</span>";
       btn.addEventListener("click", function (ev) {
         ev.preventDefault();
         ev.stopPropagation();
-        switchTo(layer);
+        handleStackFkey(fk);
       });
       panel.appendChild(btn);
     });
-    const ulBtn = document.createElement("button");
-    ulBtn.type = "button";
-    ulBtn.className = "fsl-fast-btn";
-    ulBtn.dataset.layer = "userland";
-    ulBtn.title = "F12 · Userland cycle";
-    ulBtn.innerHTML =
-      '<kbd class="fsl-fast-kbd">F12</kbd>' +
-      '<span class="fsl-fast-label">Userland</span>' +
-      '<span class="fsl-fast-z">L2+</span>';
-    ulBtn.addEventListener("click", function (ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      cycleUserland();
-    });
-    panel.appendChild(ulBtn);
     document.body.appendChild(panel);
     state.fastSwitch = panel;
     return panel;
-  }
-
-  function fastSwitchHighlight(layer) {
-    if (layer === 0 || layer === -1) return null;
-    if (layer >= USERLAND_MIN) return "userland";
-    return layer;
   }
 
   function updateFastSwitch(layer) {
     ensureFastSwitchPanel();
     const panel = state.fastSwitch;
     if (!panel) return;
-    const active = fastSwitchHighlight(layer);
     panel.querySelectorAll(".fsl-fast-btn").forEach(function (btn) {
-      const raw = btn.dataset.layer;
+      const fk = btn.dataset.fkey;
+      const spec = STACK_FKEYS[fk];
       const match =
-        raw === "userland"
-          ? active === "userland"
-          : Number(raw) === active;
-      btn.classList.toggle("fsl-fast-btn--active", match);
+        spec &&
+        (spec.cycle
+          ? layer >= LAYER_3_MIN
+          : spec.z === layer || spec.z === state.sovereignLayer);
+      btn.classList.toggle("fsl-fast-btn--active", !!match);
       btn.setAttribute("aria-pressed", match ? "true" : "false");
     });
   }
@@ -259,16 +324,14 @@
         '<span class="fsl-label">' + meta.label + "</span>" +
         '<span class="fsl-z">Layer ' + layer + "</span>" +
         (meta.component ? '<span class="fsl-component">' + meta.component + "</span>" : "") +
-        '<span class="fsl-lic"><strong>©</strong> All Rights Reserved · war-ready</span>' +
         '<kbd class="fsl-kbd">' + (meta.fkey || "") + "</kbd>";
       const iframe = document.createElement("iframe");
       iframe.className = "fsl-frame";
       iframe.title = meta.label;
       iframe.setAttribute(
         "sandbox",
-        "allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation"
+        "allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation fullscreen",
       );
-  
       panel.appendChild(bar);
       panel.appendChild(iframe);
       el.appendChild(panel);
@@ -279,23 +342,19 @@
 
   function showDesktopLayer(layer) {
     state.active = layer;
-    document.documentElement.dataset.fieldScreenLayer = String(layer);
-    document.documentElement.dataset.fieldLayer = String(layer);
+    setSovereignLayer(layer);
     const stack = ensureMount();
     stack.hidden = true;
     stack.setAttribute("aria-hidden", "true");
     setDesktopVisible(true);
     updateHud(layer);
     updateFastSwitch(layer);
-    const meta = LAYER_META[String(layer)] || {};
-    const label = layer >= USERLAND_MIN ? userlandLabel(layer) : meta.label || "Field One";
-    toast("Layer " + layer + " · " + label);
+    toast("Layer " + layer + " · Field One");
   }
 
   function showStackLayer(layer) {
     state.active = layer;
-    document.documentElement.dataset.fieldScreenLayer = String(layer);
-    document.documentElement.dataset.fieldLayer = String(layer);
+    setSovereignLayer(layer);
     const stack = ensureMount();
     const onDesktop = layer === -1;
     stack.hidden = onDesktop;
@@ -314,21 +373,10 @@
     });
     updateHud(layer);
     updateFastSwitch(layer);
-    toast("Layer " + layer + " · " + (LAYER_META[String(layer)]?.label || "Field One"));
+    toast("Layer " + layer + " · " + (LAYER_META[String(layer)]?.label || "Field"));
   }
 
   function switchTo(layer) {
-    if (layer >= USERLAND_MIN) {
-      const hit = listUserlandEntries().find(function (e) {
-        return e.layer === layer;
-      });
-      if (hit) {
-        focusUserlandEntry(hit);
-        return;
-      }
-      showDesktopLayer(layer);
-      return;
-    }
     if (layer === 0) {
       showDesktopLayer(0);
       return;
@@ -337,43 +385,7 @@
       showStackLayer(layer);
       return;
     }
-    if (layer === 1) {
-      openQueen();
-      return;
-    }
     showStackLayer(layer);
-  }
-
-  function focusQueenBrowser() {
-    state.active = 1;
-    document.documentElement.dataset.fieldScreenLayer = "1";
-    document.documentElement.dataset.fieldLayer = "1";
-    const stack = ensureMount();
-    stack.hidden = true;
-    stack.setAttribute("aria-hidden", "true");
-    setDesktopVisible(true);
-    updateHud(1);
-    updateFastSwitch(1);
-  }
-
-  function openQueen() {
-    if (global.NexusFieldShell?.launch) {
-      const base = queenPagesBase();
-      const assets = pagesRuntime()
-        ? (global.HOSTESS7_PAGES_BASE || "/Hostess7") + "/assets"
-        : "/assets";
-      global.NexusFieldShell.launch({
-        id: "queen-browser",
-        name: "Queen Browser",
-        exec: base + "/browser.html",
-        shell: true,
-        icon_url: assets + "/queen-prog-browser.png",
-      });
-      focusQueenBrowser();
-      toast("Queen Browser · own browser space");
-      return;
-    }
-    focusQueenBrowser();
   }
 
   function isFieldSurface() {
@@ -386,35 +398,28 @@
   function onKeyDown(e) {
     if (!isFieldSurface()) return;
     if (e.ctrlKey || e.altKey || e.metaKey) return;
-    if (e.key === "F12") {
+    if (!/^F([1-9]|1[0-2])$/.test(e.key)) return;
+
+    if (iso()?.shouldYieldInput?.(e)) {
+      if (e.key !== "F12") return;
+    }
+
+    if (e.key in STACK_FKEYS) {
       e.preventDefault();
       e.stopPropagation();
-      cycleUserland();
-      return;
+      handleStackFkey(e.key);
     }
-    if (e.key === "F11") {
-      e.preventDefault();
-      e.stopPropagation();
-      openQueen();
-      return;
-    }
-    if (!(e.key in FKEY_TO_LAYER)) return;
-    const layer = FKEY_TO_LAYER[e.key];
-    e.preventDefault();
-    e.stopPropagation();
-    switchTo(layer);
   }
 
   function markInsideOs(active) {
     if (active) {
       state.active = 0;
-      document.documentElement.dataset.fieldScreenLayer = "0";
-      document.documentElement.dataset.fieldLayer = "0";
+      setSovereignLayer(0);
       updateHud(0);
       updateFastSwitch(0);
       return;
     }
-    if (state.active === 0 || state.active >= USERLAND_MIN) switchTo(-1);
+    if (state.active === 0 || state.sovereignLayer >= LAYER_3_MIN) switchTo(-1);
   }
 
   function wire() {
@@ -429,19 +434,23 @@
 
   global.FieldScreenLayers = {
     switchTo: switchTo,
-    openQueen: openQueen,
-    focusQueenBrowser: focusQueenBrowser,
-    cycleUserland: cycleUserland,
+    openHostess7: openHostess7,
+    cycleLayer3Plus: cycleLayer3Plus,
     markInsideOs: markInsideOs,
     layerUrl: layerUrl,
-    listUserland: listUserlandEntries,
+    launchSurface: launchSurface,
     current: function () {
       return state.active;
     },
+    sovereignLayer: function () {
+      return state.sovereignLayer;
+    },
     wire: wire,
     LAYERS: LAYER_META,
+    STACK_FKEYS: STACK_FKEYS,
+    LAYER_3_PLUS_CYCLE: LAYER_3_PLUS_CYCLE,
+    LAYER_3_MIN: LAYER_3_MIN,
     FKEY_TO_LAYER: FKEY_TO_LAYER,
-    FAST_SWITCH_LAYERS: FAST_SWITCH_LAYERS,
     USERLAND_MIN: USERLAND_MIN,
   };
 

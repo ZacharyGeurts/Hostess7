@@ -605,6 +605,44 @@
         });
       }
     }
+    if (
+      path === "/api/game-room" ||
+      path.startsWith("/api/game-room/") ||
+      path === "/api/sap" ||
+      path === "/api/nes-library" ||
+      path === "/api/field-arcade-battalion"
+    ) {
+      const queenApi = QUEEN_LOOPBACK + path;
+      const loopApi = LOOPBACK + path;
+      const target = path === "/api/field-arcade-battalion" ? loopApi : queenApi;
+      try {
+        const r = await global.__H7_ORIG_FETCH__(target, {
+          method: method,
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: method === "POST" ? (opts && opts.body) || "{}" : undefined,
+          cache: "no-store",
+        });
+        if (r.ok) {
+          const ct = r.headers.get("content-type") || "";
+          if (ct.includes("json")) return jsonResponse(await r.json());
+        }
+      } catch (_e) {}
+      if (path === "/api/field-arcade-battalion") {
+        return okStub({
+          ok: true,
+          schema: "field-arcade-battalion/v1",
+          pages: true,
+          lobby: { sap_beacons: 0, qemu_witnesses: 0 },
+          hint: "Boot loopback for live arcade lobby",
+        });
+      }
+      return okStub({
+        ok: false,
+        error: "loopback_required",
+        hint: "Queen Game Room needs loopback :9481 — ./nexus.sh boot",
+        path: path,
+      });
+    }
     if (path === "/api/queen-terminal" || path === "/api/terminal") {
       const queenApi = QUEEN_LOOPBACK + path;
       if (method === "POST") {

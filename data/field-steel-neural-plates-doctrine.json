@@ -27,7 +27,10 @@
     {"id": "matrix", "battery": "field-combinamatrix.json", "leaf_key": "cells", "facet": "combinamatrix", "bridge_keys": ["id", "facet", "source"]},
     {"id": "growth", "battery": "field-combinatronics-growth.json", "leaf_key": "combinatorics_leaves", "facet": "growth", "bridge_keys": ["facet", "path", "ext"]},
     {"id": "sequence", "battery": "field-combinatorics-sequence.json", "leaf_key": "sequence", "facet": "sequence", "bridge_keys": ["id", "facet", "canonical"]},
-    {"id": "spider", "battery": "field-combinatronic-spider-wire.json", "leaf_key": "lanes", "facet": "spider_wire", "bridge_keys": ["instruction", "band", "isa"]}
+    {"id": "spider", "battery": "field-combinatronic-spider-wire.json", "leaf_key": "lanes", "facet": "spider_wire", "bridge_keys": ["instruction", "band", "isa"]},
+    {"id": "input_training", "battery": "hostess7-input-training.json", "leaf_key": "modalities", "facet": "hostess7_input", "bridge_keys": ["modality", "system", "chip_id", "proficiency"]},
+    {"id": "final_hands", "battery": "final-hands.json", "leaf_key": "modalities", "facet": "final_hands", "bridge_keys": ["modality", "system", "chip_id", "family", "proficiency"]},
+    {"id": "game_peripherals", "battery": "field-game-peripherals-combinatronic.json", "leaf_key": "combinatorics_leaves", "facet": "game_peripherals", "bridge_keys": ["id", "family", "system", "chip_id", "timing"]}
   ],
   "cross_bridges": [
     {"from": "chips", "to": "cpu", "via": ["family", "id"], "kind": "chip_cpu"},
@@ -38,7 +41,13 @@
     {"from": "matrix", "to": "universal", "via": ["id", "facet"], "kind": "matrix_universal"},
     {"from": "growth", "to": "sequence", "via": ["facet"], "kind": "growth_sequence"},
     {"from": "spider", "to": "universal", "via": ["isa"], "kind": "spider_universal"},
-    {"from": "sequence", "to": "programs", "via": ["canonical"], "kind": "sequence_program"}
+    {"from": "sequence", "to": "programs", "via": ["canonical"], "kind": "sequence_program"},
+    {"from": "input_training", "to": "chips", "via": ["chip_id", "system"], "kind": "hostess7_chip_play"},
+    {"from": "input_training", "to": "programs", "via": ["modality"], "kind": "input_program_lane"},
+    {"from": "final_hands", "to": "chips", "via": ["chip_id", "system"], "kind": "hands_chip_play"},
+    {"from": "game_peripherals", "to": "chips", "via": ["chip_id", "system"], "kind": "peripheral_chip"},
+    {"from": "game_peripherals", "to": "final_hands", "via": ["family", "timing"], "kind": "peripheral_hands"},
+    {"from": "input_training", "to": "final_hands", "via": ["modality"], "kind": "input_hands_lane"}
   ],
   "hostess7": {
     "stack_series": "steel_neural_plates",

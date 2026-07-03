@@ -1,0 +1,17 @@
+# Arcade play — emulators · controls · senses · voice games (Seaman)
+@profile fastest
+@verbose clean
+@motto "Arcade Battalion — verify ROMs · sync senses · Seaman voice · Hostess 7 play"
+
+seq ·
+  say "Arcade play — AML lane for Game Room theater + arcade deck"
+  post "ARCADE_PLAY START"
+  assist hang
+  run py:hostess7-input-training action:dispatch arg:{"action":"sync_senses"} timeout:60 stall:30
+  run py:hostess7-input-training action:dispatch arg:{"action":"verify","capture":false} timeout:90 stall:45
+  run py:hostess7-input-training action:dispatch arg:{"action":"voice_game","game":"seaman","utterance":"Hello Seaman — Hostess 7 online","speak":false} timeout:45 stall:20
+  run py:hostess7-sense-training action:final_eye timeout:120 stall:60
+  run py:hostess7-sense-training action:final_ear timeout:120 stall:60
+  assist freeze
+  say "Arcade play witness complete — queen-game-room.html#arcade"
+  post "ARCADE_PLAY COMPLETE"

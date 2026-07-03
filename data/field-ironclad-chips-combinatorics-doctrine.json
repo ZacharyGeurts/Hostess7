@@ -32,11 +32,12 @@
       "repair": "field-combinatronic-visuals.py repair"
     },
     "layer_above_ironclad": [
-      {"layer": 1, "id": "iron_plate", "role": "THE sort composite_bsp", "module": "lib/iron-plate-organize.py"},
-      {"layer": 2, "id": "steel_plate", "role": "family neural plates", "module": "lib/field-steel-neural-plates.py"},
-      {"layer": 3, "id": "steel_family", "role": "fewer slots, lossless leaf index", "module": "lib/field-chips-plate-stack.py"},
-      {"layer": 4, "id": "chips_core", "role": "condensed Hostess read after seal", "module": "lib/field-chips-core.py"},
-      {"layer": 5, "id": "featured_render", "role": "felt macro imprint overlay — no duplicate truth", "module": "lib/field-combinatronic-visuals.py"}
+      {"layer": 1, "id": "presume_path", "role": "Direct chip path — chips ARE truth, no presumption, clock-stop sync", "module": "lib/field-chips-presume-path.py", "fkey": "F2", "z": 0.5},
+      {"layer": 2, "id": "iron_plate", "role": "THE sort composite_bsp", "module": "lib/iron-plate-organize.py", "fkey": "F3"},
+      {"layer": 3, "id": "steel_plate", "role": "family neural plates", "module": "lib/field-steel-neural-plates.py", "fkey": "F4"},
+      {"layer": 4, "id": "steel_family", "role": "fewer slots, lossless leaf index", "module": "lib/field-chips-plate-stack.py", "fkey": "F5"},
+      {"layer": 5, "id": "chips_core", "role": "condensed Hostess read after seal", "module": "lib/field-chips-core.py", "fkey": "F6"},
+      {"layer": 6, "id": "featured_render", "role": "felt macro imprint overlay — no duplicate truth", "module": "lib/field-combinatronic-visuals.py", "fkey": "F7"}
     ]
   },
   "ironclad": {
@@ -85,10 +86,19 @@
     "condense_after": "ironclad_sealed",
     "facet": "chips_core"
   },
+  "presume_pathing": {
+    "doctrine": "data/field-chips-presume-path-doctrine.json",
+    "module": "lib/field-chips-presume-path.py",
+    "api": "/api/chips/presume-path",
+    "presume": false,
+    "chip_is_truth": true,
+    "prefer_direct_when_balanced": true
+  },
   "code_path_prediction": {
     "seed": "data/field-chip-path-predict-seed.json",
     "hard_percent": true,
     "pipe_policy": "composite_bsp",
+    "presume_path_fallback": "lib/field-chips-presume-path.py",
     "power_sort_context": "chip_paths",
     "organize_algorithm": "composite_bsp",
     "the_sort": "field-best-sort",

@@ -493,7 +493,23 @@ def dispatch(body: dict[str, Any]) -> dict[str, Any]:
             inputs=body.get("inputs"),
             fb_hash=body.get("fb_hash"),
         )
-    return {"ok": False, "error": "unknown_action", "actions": ["status", "host", "join", "connect", "poll", "send", "sync", "deliver"]}
+    if action == "relay":
+        remote = str(body.get("remote") or body.get("tunnel_host") or "").strip()
+        payload = body.get("payload")
+        if not remote or payload is None:
+            return {"ok": False, "error": "relay_requires_remote_and_payload"}
+        parsed = _parse_remote(remote)
+        if not parsed:
+            return {"ok": False, "error": "invalid_relay_remote"}
+        host, port = parsed
+        out = _http_post(host, port, "/api/sap", {
+            "action": "deliver",
+            "from_id": body.get("from_id") or _inbox_id(),
+            "tunnel_id": body.get("tunnel_id") or body.get("to_id"),
+            "payload": payload,
+        })
+        return {"ok": bool(out and out.get("ok")), "relayed": True, "remote": f"{host}:{port}", "response": out}
+    return {"ok": False, "error": "unknown_action", "actions": ["status", "host", "join", "connect", "poll", "send", "sync", "deliver", "relay"]}
 
 
 def main() -> int:

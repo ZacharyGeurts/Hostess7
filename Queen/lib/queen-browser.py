@@ -524,7 +524,7 @@ BOOKMARKS = [
     {"id": "eyeball", "title": "Final_Eye", "url": f"{_world_base()}/world/queen-hostess7-hub.html#eye"},
     {"id": "chips", "title": "CHIPS", "url": f"{_world_base()}/world/queen-chips-cores.html"},
     {"id": "cores", "title": "Cores", "url": f"{_world_base()}/world/queen-chips-cores.html"},
-    {"id": "gameroom", "title": "Game Room", "url": f"{_world_base()}/world/queen-game-room.html"},
+    {"id": "gameroom", "title": "Game Room", "url": f"{_world_base()}/queen-game-room.html"},
 ]
 
 

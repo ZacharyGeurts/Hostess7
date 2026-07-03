@@ -1,0 +1,23 @@
+{
+  "schema": "field-controller-setup/v1",
+  "title": "Controller setup — Queen Game Room arcade deck",
+  "motto": "Leave the theater (75%) — go to the arcade (25%) for all controller config and voice games.",
+  "voice_games": {
+    "doctrine": "data/field-voice-games-doctrine.json",
+    "default_game": "seaman",
+    "api_action": "voice_game"
+  },
+  "canonical_surface": "/queen-game-room.html#arcade",
+  "module": "Queen/world/queen-controller-setup.js",
+  "stylesheet": "Queen/world/queen-controller-setup.css",
+  "api": "/api/hostess7/input-training",
+  "stereo_api": "/api/field-stereo-vision",
+  "layout": "theater75_arcade25",
+  "deprecated": [
+    "/controller-test.html",
+    "/world/queen-game-room.html",
+    "panel/assets/field-controller-test.js"
+  ],
+  "layer": 4,
+  "sovereign_layer": 4
+}

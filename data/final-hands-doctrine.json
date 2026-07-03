@@ -1,0 +1,28 @@
+{
+  "schema": "final-hands/v1",
+  "title": "Final Hands — mechanical, robotics, and simulational hand training",
+  "motto": "Beyond military grade — every grip, every peripheral, every game in history. Zapper timings perfect on any display.",
+  "commander": "hostess7",
+  "module": "lib/final-hands.py",
+  "battery": "final-hands.json",
+  "panel": "final-hands-panel.json",
+  "lanes": ["mechanical", "robotics", "simulation", "peripheral", "display_sync"],
+  "proficiency_target": 0.78,
+  "master_floor": 0.96,
+  "display_profiles": {
+    "ntsc_60": {"refresh_hz": 59.94, "zapper_flash_us": 5800, "safe_window_ms": 16.7},
+    "pal_50": {"refresh_hz": 50.0, "zapper_flash_us": 6200, "safe_window_ms": 20.0},
+    "crt_classic": {"refresh_hz": 59.94, "zapper_flash_us": 5800, "phosphor_persist_ms": 2.5},
+    "lcd_modern": {"refresh_hz": 60.0, "zapper_flash_us": 4200, "sample_delay_ms": 8},
+    "oled_vrr": {"refresh_hz": 120.0, "zapper_flash_us": 3800, "vrr_compensate": true}
+  },
+  "pioneers": [
+    {"id": "ralph_baer", "name": "Ralph H. Baer", "work": "Brown Box / Magnavox Odyssey", "year": 1972, "chip_id": "system_odyssey"},
+    {"id": "jay_miner", "name": "Jay Miner", "work": "Amiga chipset", "year": 1985, "chip_id": "system_amiga"},
+    {"id": "gunpei_yokoi", "name": "Gunpei Yokoi", "work": "Game Boy / Zapper lineage", "year": 1989, "chip_id": "system_gameboy"}
+  ],
+  "peripheral_families": [
+    "light_gun", "paddle", "trackball", "keyboard", "gamepad", "power_mat", "steering", "maracas", "dance", "pointer", "keypad", "analog_stick", "flight", "guitar", "drum", "vr", "touch", "hand"
+  ],
+  "api": "/api/final-hands"
+}

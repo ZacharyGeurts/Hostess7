@@ -49,7 +49,7 @@
       const path = s.replace(/^queen:\/\//, "");
       if (path === "terminal") return "/world/queen-gnu-terminal-embed.html";
       if (path === "files") return "/world/queen-files.html";
-      if (path === "gameroom") return "/world/queen-game-room.html";
+      if (path === "gameroom") return "/queen-game-room.html";
       if (path === "field-gimp" || path === "ammoos-image") {
         const port = document.body?.dataset?.nexusPanelPort || "9477";
         return `http://127.0.0.1:${port}/field-gimp`;

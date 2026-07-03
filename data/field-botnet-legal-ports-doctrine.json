@@ -29,6 +29,11 @@
     "ports": [22, 443, 9418],
     "note": "GitHub git/https/ssh — auto-allow for everyone through botnet civilian passthrough"
   },
+  "steam_bridge_ports": {
+    "layer": 3,
+    "ports": [27015, 27016, 27017, 27018, 27019, 27020, 27036, 27037, 27060, 443, 80],
+    "note": "Layer 3 Steam Bridge — game traffic + HTTPS through botnet for civilians"
+  },
   "h7t_truth": {
     "module": "lib/field-h7t-truth.py",
     "doctrine": "data/field-h7t-truth-doctrine.json",

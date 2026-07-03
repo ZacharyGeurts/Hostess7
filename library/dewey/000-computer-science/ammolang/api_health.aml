@@ -1,0 +1,17 @@
+# API health — JSON guard witness · no line-1-char-1 · route 404/504 sweep
+@profile fastest
+@verbose clean
+@motto "API health — every lane returns JSON; EOL · input-training · game room"
+
+seq ·
+  say "API health — AML fast probes · JSON guard on all stdout"
+  post "API_HEALTH START"
+  assist hang
+  run py:field-eol-code action:panel timeout:45 stall:20
+  run py:field-eol-code action:wiring timeout:30 stall:15
+  run py:hostess7-input-training action:json timeout:45 stall:20
+  run py:field-api-health action:json timeout:60 stall:30
+  run py:field-api-health action:json arg:--offline timeout:30 stall:15
+  assist freeze
+  say "API health complete — inspect field-api-health JSON"
+  post "API_HEALTH COMPLETE"

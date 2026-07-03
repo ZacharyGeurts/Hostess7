@@ -12,7 +12,24 @@ from pathlib import Path
 from typing import Any
 
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", Path(__file__).resolve().parents[1]))
-STATE = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state"))
+
+
+def _resolve_state_dir() -> Path:
+    """Prefer state dir that already holds EOL cache — avoids empty-brain full generator hang."""
+    env = os.environ.get("NEXUS_STATE_DIR", "").strip()
+    candidates: list[Path] = []
+    if env:
+        candidates.append(Path(env))
+    local = INSTALL / ".nexus-state"
+    if local not in candidates:
+        candidates.append(local)
+    for cand in candidates:
+        if (cand / "field-eol-code-tree.json").is_file() or (cand / "field-eol-code-runtime.json").is_file():
+            return cand
+    return Path(env) if env else local
+
+
+STATE = _resolve_state_dir()
 DOCTRINE = INSTALL / "data" / "field-eol-code-doctrine.json"
 PANEL = STATE / "field-eol-code-panel.json"
 RUNTIME = STATE / "field-eol-code-runtime.json"
@@ -77,6 +94,46 @@ def _import_py(path: Path, name: str) -> Any | None:
 
 def doctrine_doc() -> dict[str, Any]:
     return _load(DOCTRINE, {"schema": "field-eol-code/v1", "policy": {}})
+
+
+def _layer_sort_key(z: Any) -> tuple[int, float]:
+    if z == "infinity":
+        return (2, 999.0)
+    if isinstance(z, str):
+        try:
+            return (1, float(z))
+        except ValueError:
+            return (2, 999.0)
+    try:
+        return (0, float(z))
+    except (TypeError, ValueError):
+        return (2, 999.0)
+
+
+def _slim_tree_branch(branch: dict[str, Any], *, max_children: int = 48) -> dict[str, Any]:
+    kids = list(branch.get("children") or [])
+    if len(kids) <= max_children:
+        return branch
+    slim = dict(branch)
+    slim["children"] = kids[:max_children]
+    slim["children_truncated"] = len(kids) - max_children
+    return slim
+
+
+def _slim_tree(tree: dict[str, Any], *, max_children: int = 48) -> dict[str, Any]:
+    if not tree.get("root"):
+        return tree
+    root = dict(tree["root"])
+    root["children"] = [_slim_tree_branch(b, max_children=max_children) for b in (root.get("children") or [])]
+    return {**tree, "root": root, "slim": True, "max_children": max_children}
+
+
+def _load_tree_cache() -> dict[str, Any] | None:
+    for path in (TREE_CACHE, INSTALL / ".nexus-state" / "field-eol-code-tree.json"):
+        doc = _load(path, None)
+        if isinstance(doc, dict) and doc.get("schema"):
+            return doc
+    return None
 
 
 def _composite_bsp_sort(rows: list[dict[str, Any]], *, key: str = "truth_percent") -> list[dict[str, Any]]:
@@ -223,10 +280,16 @@ def _truth_for_node(node: dict[str, Any], policy: dict[str, Any]) -> dict[str, A
     }
 
 
-def _ironclad_extend_batch(nodes: list[dict[str, Any]], policy: dict[str, Any]) -> list[dict[str, Any]]:
-    truth_mod = _import_py(INSTALL / "lib" / "field-ironclad-truth.py", "field_ironclad_truth")
+def _ironclad_extend_batch(
+    nodes: list[dict[str, Any]],
+    policy: dict[str, Any],
+    *,
+    ironclad_extend: bool | None = None,
+) -> list[dict[str, Any]]:
+    extend = ironclad_extend if ironclad_extend is not None else bool(policy.get("ironclad_extend", True))
+    truth_mod = _import_py(INSTALL / "lib" / "field-ironclad-truth.py", "field_ironclad_truth") if extend else None
     ic = _load(STATE / "ironclad-immediate.json", {})
-    sealed = bool(ic.get("ironclad_sealed"))
+    sealed = bool(ic.get("ironclad_sealed")) and extend
     out: list[dict[str, Any]] = []
     for node in nodes:
         t = _truth_for_node(node, policy)
@@ -286,7 +349,7 @@ def _build_bsp_tree(nodes: list[dict[str, Any]], doctrine: dict[str, Any]) -> di
             "children": child_branches,
         }
 
-    layer_order = sorted(layers.keys())
+    layer_order = sorted(layers.keys(), key=_layer_sort_key)
     root_label = layers.get(min(layer_order), {}).get("label", "Pending")
     tree_children = []
     for z in layer_order:
@@ -410,17 +473,108 @@ def generator_run(*, ticks: int = 5) -> dict[str, Any]:
     }
 
 
-def build_panel(*, refresh: bool = False, write: bool = True) -> dict[str, Any]:
+def wiring_audit(*, write: bool = False) -> dict[str, Any]:
+    """EOL registry — code paths, icons, open-file dialogs, wiring gaps."""
+    policy = doctrine_doc().get("policy") or {}
+    desktop = _load(INSTALL / "data" / "field-host-desktop-doctrine.json", {})
+    icons_dir = INSTALL / "panel" / "assets"
+    gaps: list[dict[str, Any]] = []
+    wired = 0
+    missing_icons = 0
+    open_file_hits = 0
+
+    for entry in desktop.get("programs") or desktop.get("launchers") or []:
+        if not isinstance(entry, dict):
+            continue
+        eid = str(entry.get("id") or "")
+        icon = str(entry.get("icon") or "")
+        exec_url = str(entry.get("exec") or "")
+        if not eid:
+            continue
+        if icon and not (icons_dir / (icon + ".png")).is_file() and not (icons_dir / icon).is_file():
+            missing_icons += 1
+            gaps.append({
+                "id": eid,
+                "kind": "icon",
+                "severity": "pending",
+                "hint": f"missing icon: {icon}",
+                "path": exec_url,
+            })
+        elif exec_url:
+            wired += 1
+        else:
+            gaps.append({"id": eid, "kind": "exec", "severity": "dead_end", "hint": "no exec url"})
+
+    presume = STATE / "field-chips-presume-path.json"
+    if presume.is_file():
+        pp = _load(presume, {})
+        for row in (pp.get("paths") or [])[:200]:
+            wired += 1
+            if not row.get("path_id"):
+                gaps.append({"id": row.get("chip_id"), "kind": "code_path", "severity": "pending", "hint": "no direct path_id"})
+
+    for root_name in policy.get("scan_roots") or ["panel", "lib"]:
+        root = INSTALL / root_name
+        if not root.is_dir():
+            continue
+        for path in root.rglob("*.js"):
+            if any(x in path.parts for x in ("node_modules", "leaflet")):
+                continue
+            try:
+                text = path.read_text(encoding="utf-8", errors="replace")[:80000]
+            except OSError:
+                continue
+            if "showOpenFilePicker" in text or "type=\"file\"" in text or "gr-movie-input" in text:
+                open_file_hits += 1
+                rel = path.relative_to(INSTALL).as_posix()
+                if "wire" not in text and "addEventListener" not in text:
+                    gaps.append({"id": rel, "kind": "open_file", "severity": "active", "hint": "open dialog — verify handler wired"})
+
+    for gap in gaps:
+        _append_ledger({"op": "wiring_gap", **gap})
+
+    out = {
+        "schema": "field-eol-code-wiring/v1",
+        "updated": _now(),
+        "ok": True,
+        "summary": {
+            "code_paths": wired,
+            "wired": wired,
+            "gap_count": len(gaps),
+            "missing_icons": missing_icons,
+            "open_file_dialogs": open_file_hits,
+        },
+        "gaps": gaps[:256],
+        "registry": "field-eol-code-doctrine.json",
+    }
+    if write:
+        _save(STATE / "field-eol-code-wiring.json", out)
+    return out
+
+
+def build_panel(*, refresh: bool = False, write: bool = True, fast: bool = True) -> dict[str, Any]:
     doctrine = doctrine_doc()
     policy = doctrine.get("policy") or {}
     rt = _runtime()
-    if refresh or not rt.get("nodes"):
+    if refresh:
         generator_tick(batch=int(policy.get("generator_batch") or 48), write=True)
         rt = _runtime()
     nodes_list = list((rt.get("nodes") or {}).values())
     if not nodes_list:
-        nodes_list = _ironclad_extend_batch(_scan_files(policy), policy)
-    tree = _load(TREE_CACHE, None) or _build_bsp_tree(nodes_list, doctrine)
+        scan_cap = int(policy.get("panel_scan_cap") or 256)
+        nodes_list = _ironclad_extend_batch(
+            _scan_files(policy)[:scan_cap],
+            policy,
+            ironclad_extend=not fast,
+        )
+    tree = _load_tree_cache() or _load(TREE_CACHE, None)
+    if not tree and nodes_list:
+        try:
+            tree = _build_bsp_tree(nodes_list, doctrine)
+        except TypeError:
+            tree = {"schema": "field-eol-code-tree/v1", "summary": {"total_paths": len(nodes_list)}, "error": "tree_build_failed"}
+    if fast and tree:
+        tree = _slim_tree(tree)
     ic = _load(STATE / "ironclad-immediate.json", {})
     doc = {
         "ok": True,
@@ -447,6 +601,7 @@ def build_panel(*, refresh: bool = False, write: bool = True) -> dict[str, Any]:
         },
         "api": (doctrine.get("surface") or {}).get("api", "/api/field-eol-code"),
         "panel": (doctrine.get("surface") or {}).get("panel", "/eol-code"),
+        "wiring": wiring_audit(write=False),
     }
     if write:
         _save(PANEL, doc)
@@ -467,6 +622,8 @@ def handle_api(body: dict[str, Any]) -> dict[str, Any]:
         return generator_tick(batch=body.get("batch"))
     if action == "run":
         return generator_run(ticks=int(body.get("ticks") or 5))
+    if action in ("wiring", "wiring_audit", "registry"):
+        return wiring_audit(write=bool(body.get("write", True)))
     if action == "reset":
         for p in (RUNTIME, TREE_CACHE):
             try:
@@ -480,26 +637,46 @@ def handle_api(body: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     import sys
 
+    def _emit(doc: dict[str, Any], *, indent: int | None = 2) -> None:
+        print(json.dumps(doc, ensure_ascii=False, indent=indent))
+
     cmd = (sys.argv[1] if len(sys.argv) > 1 else "panel").strip().lower()
+    try:
+        return _main_inner(cmd, sys.argv, emit=_emit)
+    except Exception as exc:
+        _emit({"ok": False, "error": "field_eol_code_failed", "detail": str(exc)[:200], "schema": "field-eol-code-panel/v1"}, indent=None)
+        return 1
+
+
+def _main_inner(cmd: str, argv: list[str], *, emit: Any) -> int:
+    import sys
+
+    cmd = cmd.strip().lower()
     if cmd in ("panel", "json", "status"):
-        print(json.dumps(build_panel(refresh="--refresh" in sys.argv), ensure_ascii=False, indent=2))
+        fast = "--full" not in argv
+        panel = build_panel(refresh="--refresh" in argv, fast=fast)
+        emit(panel, indent=2 if "--full" in argv else None)
+        return 0
+    if cmd in ("wiring", "wiring_audit", "registry"):
+        emit(wiring_audit(write=False), indent=None)
         return 0
     if cmd == "tick":
-        print(json.dumps(generator_tick(), ensure_ascii=False, indent=2))
+        emit(generator_tick(), indent=2)
         return 0
     if cmd == "run":
-        n = int(sys.argv[2]) if len(sys.argv) > 2 else 5
-        print(json.dumps(generator_run(ticks=n), ensure_ascii=False, indent=2))
+        n = int(argv[2]) if len(argv) > 2 else 5
+        emit(generator_run(ticks=n), indent=2)
         return 0
     if cmd == "dispatch":
+        raw = argv[2] if len(argv) >= 3 else (sys.stdin.read() or "{}")
         try:
-            body = json.loads(sys.stdin.read() or "{}")
+            body = json.loads(raw)
         except json.JSONDecodeError:
-            print(json.dumps({"ok": False, "error": "bad_json"}, ensure_ascii=False))
+            emit({"ok": False, "error": "bad_json"}, indent=None)
             return 1
-        print(json.dumps(handle_api(body), ensure_ascii=False))
+        emit(handle_api(body), indent=None)
         return 0
-    print(json.dumps({"error": "usage: field-eol-code.py [panel|tick|run N|dispatch]"}, ensure_ascii=False))
+    emit({"ok": False, "error": "usage", "hint": "field-eol-code.py [panel|tick|run N|dispatch|wiring]"}, indent=None)
     return 1
 
 

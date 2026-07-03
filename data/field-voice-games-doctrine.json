@@ -1,0 +1,62 @@
+{
+  "schema": "field-voice-games/v1",
+  "title": "Voice-driven games — Final Mouth + Final Ear",
+  "motto": "Seaman talks back — Hostess 7 hears you, speaks through Final Mouth, watches with stereo vision.",
+  "module": "lib/hostess7-input-training.py",
+  "api": "/api/hostess7/input-training",
+  "default_game": "seaman",
+  "games": {
+    "seaman": {
+      "label": "Seaman",
+      "system": "dreamcast",
+      "peripheral_id": "dreamcast_voice_mic",
+      "year": 1999,
+      "platform": "Dreamcast",
+      "input": ["voice", "gamepad"],
+      "mouth_role": "creature_dialogue",
+      "ear_role": "operator_speech",
+      "listen_seconds": 1.0,
+      "stereo_vision": true,
+      "prompts": [
+        "Hello… I am listening.",
+        "Fushigi desu ne — tell me more.",
+        "What did you eat today?",
+        "Speak clearly into the microphone."
+      ],
+      "reply_templates": [
+        "Interesting. Go on.",
+        "Hmm. I heard that.",
+        "The tank remembers your voice.",
+        "Curious… very curious."
+      ]
+    },
+    "hey_you_pikachu": {
+      "label": "Hey You, Pikachu!",
+      "system": "n64",
+      "peripheral_id": "n64_voice_mic",
+      "year": 1998,
+      "platform": "Nintendo 64",
+      "input": ["voice"],
+      "mouth_role": "pikachu_chatter",
+      "ear_role": "operator_speech",
+      "listen_seconds": 0.8,
+      "stereo_vision": true,
+      "prompts": ["Pika! Say something!"],
+      "reply_templates": ["Pika pika!", "Pi… ka?"]
+    },
+    "ninety_nine_nights": {
+      "label": "Ninety-Nine Nights (voice comms)",
+      "system": "xbox360",
+      "peripheral_id": "xbox_live_voice",
+      "year": 2006,
+      "platform": "Xbox 360",
+      "input": ["voice", "gamepad"],
+      "mouth_role": "squad_comms",
+      "ear_role": "operator_speech",
+      "listen_seconds": 0.6,
+      "stereo_vision": false,
+      "prompts": ["Squad channel open."],
+      "reply_templates": ["Copy.", "Moving.", "On me."]
+    }
+  }
+}
