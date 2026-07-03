@@ -1,0 +1,41 @@
+#fed-root {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2147483000;
+  width: min(360px, calc(100vw - 24px));
+  max-height: min(420px, 50vh);
+  overflow: auto;
+  font: 12px/1.35 system-ui, sans-serif;
+  color: #e8ecf0;
+  background: rgba(12, 16, 22, 0.94);
+  border: 1px solid rgba(255, 90, 90, 0.45);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  display: none;
+}
+#fed-root.fed-open { display: block; }
+#fed-root .fed-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: move;
+  user-select: none;
+}
+#fed-root .fed-head strong { color: #ff8a80; }
+#fed-root .fed-close {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: #aab;
+  font-size: 18px;
+  cursor: pointer;
+}
+#fed-root .fed-body { padding: 8px 10px 10px; }
+#fed-root .fed-stat { display: flex; justify-content: space-between; margin: 2px 0; }
+#fed-root .fed-list { margin: 8px 0 0; padding-left: 16px; }
+#fed-root .fed-list li { margin: 4px 0; word-break: break-word; }
+#fed-root .fed-ok { color: #7dcea0; }
+#fed-root .fed-warn { color: #f5c542; }

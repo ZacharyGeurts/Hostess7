@@ -166,6 +166,8 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh hearing-learn         Hearing + speech science, STT/TTS, free textbooks
   ./Hostess7.sh hearing "…"           Query hearing corpus
   ./Hostess7.sh boot                  KILROY doctrine · brain on · web (GitHub Pages / Codespaces)
+  ./Hostess7.sh profile               Perf witness — ping :9477/:9481/:8080 + CPU/thermal + error dashboard
+  ./Hostess7.sh lite [on|off|status]  Opt-in throttle — skips non-essential senses/training (NEXUS unchanged)
   ./Hostess7.sh core [status|start]   Unified supervisor — owns stack identity + /api/brain
   ./Hostess7.sh daemon [N]            Autonomous reflect loop (online learn + self-brief)
   ./Hostess7.sh benchmark-iq          Cohesion IQ score (run on boot)
@@ -401,10 +403,45 @@ main() {
             ;;
         boot|pages-boot|kilroy-boot|field-boot)
             shift
+            if [[ "${HOSTESS7_LITE:-0}" == "1" ]]; then
+                export HOSTESS7_STACK_LEARN_ON_BOOT=0
+            fi
             if pythong -c "import hostess7" 2>/dev/null || [[ -d "$ROOT/src/hostess7" ]]; then
                 _h7_pkg boot "$@"
             fi
             exec pythong "$ROOT/scripts/hostess7_boot.py" "$@"
+            ;;
+        profile|perf-profile|hostess7-profile)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-runtime-mode.py" profile "$@"
+            ;;
+        lite|lite-mode|hostess7-lite)
+            shift
+            sub="${1:-status}"
+            case "$sub" in
+                on|enable|1)
+                    pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-runtime-mode.py" lite on
+                    export HOSTESS7_LITE=1
+                    export HOSTESS7_STACK_LEARN_ON_BOOT=0
+                    export HOSTESS7_DAEMON=0
+                    export HOSTESS7_TRAINING_VIEWER=0
+                    export FIELD_SENSE_POLL_MS="${FIELD_SENSE_POLL_MS:-2500}"
+                    export FIELD_PANEL_POLL_MS="${FIELD_PANEL_POLL_MS:-2000}"
+                    export G16_RTX_LOWPOWER="${G16_RTX_LOWPOWER:-1}"
+                    echo "Hostess7 lite ON — NEXUS + war posture unchanged"
+                    ;;
+                off|disable|0)
+                    pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-runtime-mode.py" lite off
+                    unset HOSTESS7_LITE HOSTESS7_STACK_LEARN_ON_BOOT 2>/dev/null || true
+                    echo "Hostess7 lite OFF — full stack polling restored"
+                    ;;
+                env)
+                    pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-runtime-mode.py" lite status
+                    ;;
+                *)
+                    pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-runtime-mode.py" lite status
+                    ;;
+            esac
             ;;
         core|hostess7-core|supervisor)
             shift

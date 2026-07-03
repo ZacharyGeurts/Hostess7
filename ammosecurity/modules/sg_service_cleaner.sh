@@ -3,7 +3,6 @@
 set -euo pipefail
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../lib/common.sh"
 
-# Remote shells, legacy file shares, discovery leaks, telemetry, rogue AP helpers
 JUNK_UNITS=(
   telnet.socket inetd openbsd-inetd
   vsftpd proftpd pure-ftpd
@@ -42,20 +41,52 @@ cmd_service_cleaner() {
     systemctl --user disable "$unit" 2>/dev/null || true
   done
 
-  # Autostart junk
   local autostart="${HOME}/.config/autostart"
   if [[ -d "$autostart" ]]; then
     find "$autostart" -maxdepth 1 -type f \( -iname '*keylog*' -o -iname '*macro*' -o -iname '*recorder*' \) \
       -print -delete 2>/dev/null || true
   fi
 
-  # Enabled services audit (informational)
   ammo_log 'still-enabled services (review manually):'
   systemctl list-unit-files --state=enabled --no-pager 2>/dev/null \
     | grep -E 'telnet|ftp|rsh|smb|avahi|bluetooth|hostapd|rpcbind|nfs' \
     || ammo_log 'no obvious junk still enabled'
+  ammo_health_note 'service_cleaner applied'
+}
+
+cmd_status() {
+  ammo_log '=== service cleaner status ==='
+  local bad=0
+  for unit in smbd avahi-daemon ufw bluetooth; do
+    if systemctl is-active "$unit" &>/dev/null; then
+      echo "ACTIVE: $unit"
+      bad=1
+    fi
+  done
+  [[ "$bad" -eq 0 ]] && echo 'no obvious junk services active'
+  ammo_health_note 'service_cleaner status'
+}
+
+cmd_drift_check() {
+  local drift=0
+  for unit in smbd nmbd ufw avahi-daemon; do
+    if systemctl is-active "$unit" &>/dev/null; then
+      ammo_violation "service drift: $unit active"
+      drift=1
+    fi
+  done
+  return "$drift"
+}
+
+main() {
+  case "${1:-apply}" in
+    status) cmd_status ;;
+    drift) cmd_drift_check ;;
+    dry-run|test) cmd_status ;;
+    *) cmd_service_cleaner ;;
+  esac
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-  cmd_service_cleaner "$@"
+  main "$@"
 fi

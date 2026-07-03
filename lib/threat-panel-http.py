@@ -1948,6 +1948,22 @@ def _field_perf_flyout_sample(*, reset: bool = False) -> dict:
         return {"schema": "field-performance-flyout/v1", "ok": False, "error": str(exc)}
 
 
+def _field_error_dashboard_sample() -> dict:
+    script = INSTALL_ROOT / "lib" / "field-error-dashboard.py"
+    if not script.is_file():
+        return {"schema": "field-error-dashboard/v1", "ok": False, "error": "error_dashboard_missing"}
+    payload = _nexus_py_json(script, ["json"], timeout=20)
+    return payload or {"schema": "field-error-dashboard/v1", "ok": False, "error": "error_dashboard_empty"}
+
+
+def _ammo_net_health_sample() -> dict:
+    script = INSTALL_ROOT / "lib" / "ammo-net-health.py"
+    if not script.is_file():
+        return {"schema": "ammo-net-health/v1", "ok": False, "error": "ammo_net_health_missing"}
+    payload = _nexus_py_json(script, ["json"], timeout=30)
+    return payload or {"schema": "ammo-net-health/v1", "ok": False, "error": "ammo_net_health_empty"}
+
+
 def _field_operator_inproc():
     global _FIELD_OPERATOR_MOD
     if _FIELD_OPERATOR_MOD is not None:
@@ -5245,6 +5261,16 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/field-performance-flyout":
             payload = _field_perf_flyout_sample()
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-error-dashboard":
+            payload = _field_error_dashboard_sample()
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/ammo-net-health", "/api/bot-net-health"):
+            payload = _ammo_net_health_sample()
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
@@ -9824,6 +9850,11 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/field-performance-flyout":
             reset = bool((body or {}).get("reset"))
             payload = _field_perf_flyout_sample(reset=reset)
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-error-dashboard":
+            payload = _field_error_dashboard_sample()
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 

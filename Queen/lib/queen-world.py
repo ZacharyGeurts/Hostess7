@@ -1440,6 +1440,10 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/field-performance-flyout":
             self._send_json(200, _perf_flyout_sample())
             return
+        if path == "/api/field-error-dashboard":
+            script = _nexus_lib_script("field-error-dashboard.py")
+            self._send_json(200, _run_json(script, "json", timeout=20))
+            return
         if path == "/api/queen-build":
             self._send_json(200, _build_status())
             return

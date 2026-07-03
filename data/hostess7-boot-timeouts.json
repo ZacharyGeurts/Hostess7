@@ -1,0 +1,17 @@
+{
+  "schema": "hostess7-boot-timeouts/v1",
+  "defaults_sec": 600,
+  "steps": {
+    "deps": 180,
+    "zac-restore": 300,
+    "stack-learn": 300,
+    "on": 120,
+    "alert-posture": 60,
+    "web-start": 90
+  },
+  "lite": {
+    "stack-learn": 0,
+    "web-start": 60
+  },
+  "watchdog_label": "hostess7_boot_watchdog"
+}

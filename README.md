@@ -2,7 +2,7 @@
 
 **Forever Watchguard Angel** — complete field stack beta: brain hub, AmmoOS, Grok16, Queen, KILROY, and wired siblings.
 
-**Version:** `2.0.7h` · **Main project** — Old Projects: AmmoOS, Grok16, Queen, KILROY · **Wiki:** [Hostess 7 wiki](https://github.com/ZacharyGeurts/Hostess7/wiki)
+**Version:** `3.1.0-beta` — canonical matrix in **[VERSION.md](VERSION.md)** (product `3.1.0-beta` · internal orchestration `10.4.x` · Grok16 `16.2.0`) · **Wiki:** [Hostess 7 wiki](https://github.com/ZacharyGeurts/Hostess7/wiki)
 
 ---
 

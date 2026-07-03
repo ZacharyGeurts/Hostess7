@@ -1,0 +1,24 @@
+{
+  "schema": "hostess7-lite-mode/v1",
+  "opt_in": true,
+  "security_unchanged": [
+    "NEXUS-Shield verify + biology seal",
+    "HOSTESS7_WAR_PROFILE",
+    "HOSTESS7_LICENSE_MODE=war",
+    "alert-posture",
+    "truth-lie / brain-guard",
+    "github-secure pinned SSH",
+    "AML boundary execution"
+  ],
+  "reduced": {
+    "HOSTESS7_DAEMON": "0",
+    "HOSTESS7_TRAINING_VIEWER": "0",
+    "HOSTESS7_STACK_LEARN_ON_BOOT": "0",
+    "HOSTESS7_INTERNET_BACKGROUND": "0",
+    "FIELD_SENSE_POLL_MS": "2500",
+    "FIELD_PANEL_POLL_MS": "2000",
+    "G16_RTX_LOWPOWER": "1",
+    "HOSTESS7_COMBINATRONIC_ON_BOOT": "0"
+  },
+  "notes": "Lite mode throttles non-essential senses/training only. NEXUS and war posture stay on."
+}

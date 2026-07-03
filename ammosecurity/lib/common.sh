@@ -7,7 +7,36 @@ SG_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SUDO_PW="${SUDO_PW:-mememe}"
 export HOME="${HOME:-/home/default}"
 
+AMMO_STATE_DIR="${AMMO_STATE_DIR:-/var/lib/ammosecurity}"
+AMMO_PREFS_DIR="${AMMO_PREFS_DIR:-${HOME}/.config/ammo-shield}"
+AMMO_VIOLATIONS_LOG="${AMMO_VIOLATIONS_LOG:-${AMMO_STATE_DIR}/violations.log}"
+AMMO_HEALTH_LOG="${AMMO_HEALTH_LOG:-${AMMO_STATE_DIR}/health.log}"
+
 sg_log() { printf '[sg_build v%s] %s\n' "$SG_VERSION" "$*"; }
+
+ammo_ensure_state() {
+  mkdir -p "$AMMO_STATE_DIR" "$AMMO_PREFS_DIR" 2>/dev/null || true
+  ammo_sudo mkdir -p "$AMMO_STATE_DIR" 2>/dev/null || true
+}
+
+ammo_violation() {
+  local msg="$1"
+  ammo_ensure_state
+  local ts
+  ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date)"
+  printf '%s VIOLATION %s\n' "$ts" "$msg" >>"${AMMO_VIOLATIONS_LOG}" 2>/dev/null \
+    || printf '%s VIOLATION %s\n' "$ts" "$msg" >>"${HOME}/.ammo-violations.log" 2>/dev/null || true
+  sg_log "VIOLATION: $msg"
+}
+
+ammo_health_note() {
+  local msg="$1"
+  ammo_ensure_state
+  local ts
+  ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date)"
+  printf '%s HEALTH %s\n' "$ts" "$msg" >>"${AMMO_HEALTH_LOG}" 2>/dev/null \
+    || printf '%s HEALTH %s\n' "$ts" "$msg" >>"${HOME}/.ammo-health.log" 2>/dev/null || true
+}
 
 sg_sudo() {
   printf '%s\n' "$SUDO_PW" | sudo -S -p '' "$@" 2>/dev/null || true

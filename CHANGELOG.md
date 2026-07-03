@@ -1,8 +1,40 @@
 # Changelog
 
-All notable **NewLatest / NEXUS-Shield** orchestration changes. Historical `RELEASE-*.md` files remain in the repo archive.
+All notable **NewLatest / NEXUS-Shield** orchestration changes. Historical `RELEASE-*.md` files remain in the repo archive; this file is the **single consolidated ledger** with UI / Perf / Bug sections.
 
-**Version lines:** Hostess7 product = `1.0.0-beta` · AmmoOS = `2.0.0-beta4` · This changelog = `10.3.0-beta` internal. See [VERSION.md](VERSION.md).
+**Version lines:** Hostess7 product = `3.1.0-beta` · AmmoOS = `3.1.0-beta` · This changelog = `10.4.0-beta` internal. See [VERSION.md](VERSION.md).
+
+## [3.1.0-beta] — 2026-07-03
+
+### Version alignment
+- README + INSTALL synced to **3.1.0-beta** matrix in VERSION.md (was `2.0.7h` / `1.0.0-beta` drift)
+- Internal NewLatest orchestration line remains **10.4.x**; historical RELEASE-*.md files unchanged
+
+### UI
+- **Error dashboard flyout** — `/api/field-error-dashboard` + `field-error-dashboard.js` on AmmoOS desktop
+- **Central log panel** — `hostess7-central-errors.jsonl` witness; boot failures surface in field panel
+
+### Perf
+- **`./Hostess7.sh profile`** — ping :9477/:9481/:8080, CPU/thermal sample, recommendations JSON
+- **`./Hostess7.sh lite [on|off]`** — opt-in throttle (senses/training/daemon); **NEXUS + war posture unchanged**
+- **Boot watchdogs** — per-step timeouts from `data/hostess7-boot-timeouts.json`; lite skips stack-learn
+
+### Bug
+- **Boot timeout logging** — watchdog failures append to central log (no silent hangs)
+- **CI smoke** — perf flyout JSON + runtime-mode + boot-timeout doctrine gates
+
+### Security (AmmoSecurity / bot-net health)
+- **`sg_net_harden.sh status`** + drift detect + IPv6 off + nft `interface_guard`
+- **`ammo_watch.sh`** — 30s re-enforcement loop + violations.log
+- **`/api/ammo-net-health`** — panel witness (net + C2 boot state)
+
+### Migration (3.0.7-beta5 → 3.1.0-beta)
+```bash
+./Hostess7.sh lite status          # default off — security unchanged
+./Hostess7.sh profile              # baseline before/after tuning
+./Hostess7.sh boot                 # respects lite if enabled
+curl -s http://127.0.0.1:9477/api/field-error-dashboard | jq .counts
+```
 
 ## [10.3.2-beta] — 2026-06-30
 

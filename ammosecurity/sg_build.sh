@@ -17,6 +17,10 @@ No security tools. No hacking tools. Internet out. No bullshit.
   ./sg_build.sh -Action Internet     outbound check
   ./sg_build.sh -Action Clean        desktop + service bullshit removal
   ./sg_build.sh -Action Status
+  ./sg_build.sh -Action NetHarden      kernel + firewall + status
+  ./sg_build.sh -Action NetStatus      bot-net / net health status only
+  ./sg_build.sh -Action Watch [start|stop|once|status]
+  ./sg_build.sh -Action Clasp [-Unlock]
 
 Legacy: ammo.sh / michigan.sh forward here.
 EOF
@@ -26,6 +30,15 @@ cmd_status() {
   [[ -f /var/lib/sg_build/firmware-layer ]] && sg_log "firmware: $(cat /var/lib/sg_build/firmware-layer 2>/dev/null)"
   ip route show default 2>/dev/null || true
   ss -tlnp 2>/dev/null | head -8 || true
+  bash "$M/sg_net_harden.sh" status 2>/dev/null || true
+  bash "$M/ammo_watch.sh" status 2>/dev/null || true
+}
+
+cmd_net_status() {
+  bash "$M/sg_net_harden.sh" status
+  bash "$M/sg_service_cleaner.sh" status
+  bash "$M/interface_guard.sh" status
+  bash "$M/ammo_watch.sh" status
 }
 
 ACTION='Help'
@@ -46,9 +59,23 @@ case "$ACTION" in
     bash "$M/sg_firmware.sh"
     bash "$M/sg_internet.sh"
     bash "$M/sg_no_bullshit.sh"
+    bash "$M/sg_net_harden.sh"
     ;;
   Internet|Net)  bash "$M/sg_internet.sh" ;;
   Clean|World)   bash "$M/sg_no_bullshit.sh" ;;
+  NetHarden|NetHardening) bash "$M/sg_net_harden.sh" ;;
+  NetStatus|BotNet|BotNetHealth) cmd_net_status ;;
+  Watch)
+    sub="${WORLD_N:-status}"
+    bash "$M/ammo_watch.sh" "$sub"
+    ;;
+  Clasp)
+    if [[ "$WORLD_N" == "-Unlock" || "$WORLD_N" == "unlock" ]]; then
+      bash "$M/sg_ingress_clasp.sh" unlock
+    else
+      bash "$M/sg_ingress_clasp.sh" lock
+    fi
+    ;;
   Status)        cmd_status ;;
   Help|*)        usage ;;
 esac

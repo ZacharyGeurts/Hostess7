@@ -250,6 +250,8 @@ Usage:
   ./nexus.sh --tab <view>    Open a panel tab in the browser (e.g. command, library)
   ./nexus.sh --shutdown      Stop panel, tray, and watchdog immediately (--stop)
   ./nexus.sh --restart       Stop and start panel immediately (--restart-immediate)
+  ./nexus.sh --health        Stack health — ports, AML tasks, manifest (see ./status.sh)
+  ./nexus.sh --verify        Alias for ./bin/nexus verify (manifest integrity)
 
 Tab views (for --tab):
   command, us, field-broadcaster, field-obs, packets, threats, intel, final-eye, final-ear, final-mouth, signals, dns, outside, library, training, system
@@ -274,6 +276,12 @@ case "${1:-}" in
   -h|--help|help)
     nexus_usage
     exit 0
+    ;;
+  --health|--status)
+    exec bash "${ROOT}/status.sh" "${2:-}"
+    ;;
+  --verify)
+    exec "${ROOT}/bin/nexus" verify
     ;;
   --clean|--cleanup)
     nexus_field_os_build_clean

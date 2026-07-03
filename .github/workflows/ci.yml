@@ -27,6 +27,8 @@ jobs:
             [[ -f "$f" ]] || continue
             bash -n "$f"
           done
+          bash -n install.sh install-all.sh install-remote.sh nexus.sh status.sh genius_shield.sh 2>/dev/null || true
+          bash -n Hostess7/Hostess7.sh
 
       - name: Shellcheck (critical paths)
         run: |
@@ -37,7 +39,20 @@ jobs:
             scripts/impl/field-vm-boot.sh \
             lib/nexus-biology-mutable.sh \
             lib/nexus-executable-seal.sh \
-            lib/self-defense.sh || true
+            lib/self-defense.sh \
+            install.sh \
+            install-all.sh \
+            nexus.sh \
+            status.sh \
+            genius_shield.sh \
+            Hostess7/Hostess7.sh \
+            ammosecurity/lib/common.sh \
+            ammosecurity/modules/sg_net_harden.sh \
+            ammosecurity/modules/sg_service_cleaner.sh \
+            ammosecurity/modules/sg_ingress_clasp.sh \
+            ammosecurity/modules/ammo_watch.sh \
+            ammosecurity/modules/interface_guard.sh \
+            ammosecurity/sg_build.sh || true
 
       - name: Python compile (lib + Hostess7)
         run: |
@@ -50,6 +65,33 @@ jobs:
       - name: Biology mutable doctrine
         run: python3 -c "import json; json.load(open('data/hostess7-biology-mutable-paths-doctrine.json'))"
 
+      - name: Field chips + boot doctrine JSON
+        run: |
+          python3 -c "import json; d=json.load(open('data/field-chips-core-doctrine.json')); assert d.get('schema','').startswith('field-chips')"
+          python3 -c "import json; json.load(open('data/hostess7-boot-timeouts.json'))"
+          python3 -c "import json; json.load(open('data/hostess7-lite-mode-doctrine.json'))"
+
+      - name: MANIFEST.sha256 present + parseable
+        run: |
+          test -f MANIFEST.sha256
+          awk 'NF>=2 {n++} END{exit (n>0)?0:1}' MANIFEST.sha256
+          echo "manifest_lines=$(wc -l < MANIFEST.sha256)"
+
+      - name: Manifest verify (dev tree dry-run)
+        run: |
+          export NEXUS_INSTALL_ROOT="$PWD"
+          export NEXUS_STATE_DIR="$PWD/.nexus-state"
+          mkdir -p "$NEXUS_STATE_DIR"
+          ./bin/nexus verify || echo "verify=skipped_dev_tree"
+
+      - name: Obvious secret pattern scan (key entrypoints)
+        run: |
+          # GitHub secret scanning is primary; this catches accidental commits in reviewed scripts.
+          ! grep -RInE '(ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}|sk-[A-Za-z0-9]{20,})' \
+            nexus.sh genius_shield.sh install-all.sh install.sh lib/nexus-common.sh Hostess7/Hostess7.sh 2>/dev/null \
+            || { echo "FAIL: possible secret pattern in entrypoint script"; exit 1; }
+          echo "secret_scan=ok"
+
       - name: AML security snippets (biology seal exempt)
         run: |
           export NEXUS_INSTALL_ROOT="$PWD"
@@ -60,3 +102,34 @@ jobs:
       - name: field_vm_boot AML route resolves
         run: |
           ./lib/ammolang-run.sh tasks | python3 -c "import json,sys; d=json.load(sys.stdin); assert 'field_vm_boot' in d.get('tasks',{}), d"
+
+      - name: Hostess7 perf smoke (profile/lite/error dashboard)
+        run: |
+          export NEXUS_INSTALL_ROOT="$PWD"
+          export NEXUS_STATE_DIR="$PWD/.nexus-state-ci"
+          mkdir -p "$NEXUS_STATE_DIR"
+          bash tests/ammolang/snippets/hostess7_perf_smoke.sh
+
+      - name: Boot script compile + help
+        run: |
+          python3 -m py_compile Hostess7/scripts/hostess7_boot.py
+          python3 Hostess7/scripts/hostess7_boot.py --help
+
+      - name: Stack status script (AML + manifest, ports optional)
+        run: |
+          export NEXUS_INSTALL_ROOT="$PWD"
+          export NEXUS_STATE_DIR="$PWD/.nexus-state-ci"
+          chmod +x status.sh
+          ./status.sh --json | python3 -c "import json,sys; d=json.load(sys.stdin); assert d.get('schema')=='hostess7-stack-status/v1'"
+
+      - name: AmmoSecurity bot-net health smoke
+        run: |
+          export NEXUS_INSTALL_ROOT="$PWD"
+          export AMMO_STATE_DIR="$PWD/.ammo-state-ci"
+          export NEXUS_STATE_DIR="$PWD/.nexus-state-ci"
+          bash tests/ammolang/snippets/ammosecurity_health_smoke.sh
+
+      # Future: multi-arch smoke matrix (uncomment when runners available)
+      # - name: aarch64 smoke (commented)
+      #   runs-on: ubuntu-24.04-arm
+      #   steps: ...

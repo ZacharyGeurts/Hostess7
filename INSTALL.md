@@ -1,6 +1,6 @@
 # Hostess 7 — Install guide
 
-**Product version:** `1.0.0-beta` · See [VERSION.md](VERSION.md) for the full version matrix.
+**Product version:** `3.1.0-beta` · See [VERSION.md](VERSION.md) for the full version matrix (Hostess7 · AmmoOS · GNUEOLTerminal · NEXUS installers).
 
 Two supported paths: **release extract** (H7e) and **git clone** (developer / VM bootstrap).
 
@@ -119,3 +119,4 @@ KILROY Tristate virtual field (external drive, host stays safe):
 - [INSTALL-README.md](INSTALL-README.md) — NEXUS-Shield system installer (`10.4.1`)
 - [SECURITY.md](SECURITY.md) — posture and manifest verification
 - [scripts/README.md](scripts/README.md) — script layout (`scripts/` vs `scripts/impl/`)
+- [docs/UPDATE-WORKFLOW.md](docs/UPDATE-WORKFLOW.md) — pages/senses publish lanes + gitlink workflow
