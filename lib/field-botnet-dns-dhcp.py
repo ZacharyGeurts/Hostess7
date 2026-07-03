@@ -258,6 +258,7 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
     legal_ports = _run_json("lib/field-botnet-legal-ports.py", ["json"], timeout=8 if fast else 15)
     h7t_truth = _run_json("lib/field-h7t-truth.py", ["json"], timeout=8 if fast else 15)
     github_res = _run_json("lib/field-github-resilience.py", ["json"], timeout=8 if fast else 15)
+    github_everyone = _run_json("lib/field-github-everyone.py", ["json"], timeout=8 if fast else 15)
     doc = {
         "ok": True,
         "schema": "field-botnet-dns-dhcp-panel/v1",
@@ -295,6 +296,7 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
         "legal_ports": legal_ports if legal_ports.get("ok") else {"api": "/api/field-botnet-legal-ports"},
         "h7t_truth": h7t_truth if h7t_truth.get("ok") else {"api": "/api/field-h7t-truth"},
         "github_resilience": github_res if github_res.get("probe") else {"api": "/api/field-github-resilience"},
+        "github_everyone": github_everyone if github_everyone.get("ok") else {"api": "/api/field-github-everyone"},
         "fast": fast,
     }
     doc["ok"] = bool(stable or gh_open or len(nodes) > 0)

@@ -3623,6 +3623,11 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
+        if path == "/api/field-github-everyone":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-github-everyone.py", ["json"], timeout=30)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
         if path == "/api/hostess7/interaction":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "hostess7-github-interaction.py", ["json"], timeout=25)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
@@ -12286,6 +12291,11 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/field-h7t-truth":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-h7t-truth.py", ["json"], timeout=25)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path == "/api/field-github-everyone":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-github-everyone.py", ["json"], timeout=30)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 

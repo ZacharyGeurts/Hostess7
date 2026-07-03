@@ -43,9 +43,11 @@ SEARCH_CDN_PREFIXES = (
     "13.", "20.", "40.", "52.", "104.",  # Azure/CF misc
     "151.101.", "199.16.",  # Fastly
 )
+GITHUB_CDN_PREFIXES = (
+    "140.82.", "185.199.", "140.82.113.", "192.30.252.", "143.55.64.",
+)
 STREAM_CDN_PREFIXES = (
     "104.18.", "104.16.", "172.64.", "172.66.",  # Cloudflare
-    "140.82.", "185.199.", "140.82.113.",  # GitHub
     "34.107.", "64.233.",  # Google CDN
     "151.101.", "23.", "34.120.",  # Akamai/Fastly
     "13.32.", "13.33.", "13.35.",  # CloudFront
@@ -477,6 +479,9 @@ def _parse_ss(line: str) -> dict[str, str]:
 def _ip_class_legacy(ip: str) -> str:
     if not ip or PRIVATE_RE.match(ip):
         return "private"
+    for p in GITHUB_CDN_PREFIXES:
+        if ip.startswith(p):
+            return "github_cdn"
     for p in STREAM_CDN_PREFIXES:
         if ip.startswith(p):
             return "stream_cdn"
@@ -503,7 +508,7 @@ def _axis_user_browser(proc: str) -> tuple[int, str]:
 def _axis_media_stream(proc: str, rport: str, ip_class: str) -> tuple[int, str]:
     score = 0
     notes = []
-    if rport in ("443", "80", "8080", "8443") and ip_class in ("stream_cdn", "search_cdn"):
+    if rport in ("443", "80", "22", "9418", "8080", "8443") and ip_class in ("github_cdn", "stream_cdn", "search_cdn"):
         score += 5
         notes.append("https_cdn")
     if proc in BROWSER_PROCS and rport == "443":
@@ -595,6 +600,8 @@ def _axis_destination(ip_class: str, rport: str) -> tuple[int, str]:
         harm = 2
     elif ip_class == "stream_cdn":
         harm = 1
+    elif ip_class == "github_cdn":
+        harm = 0
     elif ip_class == "private":
         harm = 0
     port_harm, port_note = _port_harm_score(rport)
@@ -974,6 +981,8 @@ def _verdict(scores: dict[str, int], proc: str, ip_class: str) -> tuple[str, str
         return "SUSPICIOUS", "UNKNOWN — atypical egress, hold for identification", False
     if ephemeral:
         return "EPHEMERAL", "CIVILIAN — short-lived CDN egress", False
+    if ip_class == "github_cdn" and scores["process_trust"] >= 3:
+        return "USER_OK", "CIVILIAN — GitHub for everyone", False
     if ip_class in ("stream_cdn", "search_cdn") and scores["process_trust"] >= 5:
         return "USER_OK", "CIVILIAN — known CDN with trusted process", False
     return "MONITOR", "CIVILIAN — routine egress under watch", False

@@ -27,7 +27,8 @@ elif (ROOT.parent / "NewLatest" / "Queen").is_dir():
 else:
     NL = Path(_env_nl or ROOT.parent / "NewLatest")
 
-QUEEN_WORLD = NL / "Queen" / "world"
+QUEEN_ROOT = NL / "Queen"
+QUEEN_WORLD = QUEEN_ROOT / "world"
 PANEL = NL / "panel"
 PANEL_ASSETS = PANEL / "assets"
 QUEEN_DOCS = DOCS / "queen"
@@ -37,7 +38,19 @@ ASSETS_DOCS = DOCS / "assets"
 API = DOCS / "api"
 PAGES_BASE = os.environ.get("HOSTESS7_PAGES_BASE", "/Hostess7")
 PAGES_DESKTOP_THEME = "nexus-military-v8"
-PAGES_DESKTOP_ICON_IDS = ("view", "queen-terminal", "queen-browser", "field-broadcaster")
+PAGES_DESKTOP_ICON_IDS = (
+    "view",
+    "queen-terminal",
+    "mspaint",
+    "field-popcorn",
+    "ammocode",
+    "hostess7-folder",
+    "queen-browser",
+    "field-broadcaster",
+    "queen-gameroom",
+    "queen-chips",
+    "nexus-compatibility",
+)
 PAGES_DESKTOP_UI_SCALE = 200
 PAGES_DESKTOP_ICON_SIZE = 96
 
@@ -115,6 +128,78 @@ def _run_queen_browser() -> dict[str, Any]:
         }
 
 
+def _import_secure_kill() -> dict[str, Any]:
+    """Direct import — avoids subprocess timeout during heavy Pages builds."""
+    script = NL / "lib" / "field-sense-secure-kill.py"
+    if not script.is_file():
+        return {"schema": "field-sense-secure-kill/v1", "ok": False, "error": "missing field-sense-secure-kill.py"}
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("fssk_pages_export", script)
+        if not spec or not spec.loader:
+            raise RuntimeError("spec load failed")
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        doc = mod.secure_kill_posture(NL, NL.parent)
+        doc["pages"] = True
+        doc["lane"] = "pages-surfaces"
+        doc["exported"] = _ts()
+        return doc
+    except Exception as exc:
+        return {
+            "schema": "field-sense-secure-kill/v1",
+            "kill_policy": "prejudice",
+            "every_kill_rekill": True,
+            "war_hardened": True,
+            "motto": "Anyone in the way — secure kill with prejudice · RE-KILL forever",
+            "ok": True,
+            "pages": True,
+            "lane": "pages-surfaces",
+            "note": f"pages-fallback ({exc})",
+            "exported": _ts(),
+        }
+
+
+def _run_nl_script_json(rel: str, args: list[str] | None = None, *, timeout: int = 90) -> dict[str, Any]:
+    """Run a NewLatest lib/Queen script and parse JSON stdout."""
+    script = NL / rel
+    if not script.is_file():
+        return {"ok": False, "error": f"missing {rel}"}
+    state_dir = ROOT / ".pages-build-state"
+    state_dir.mkdir(parents=True, exist_ok=True)
+    env = {
+        **os.environ,
+        "NEXUS_INSTALL_ROOT": str(NL),
+        "NEXUS_STATE_DIR": str(state_dir),
+        "SG_ROOT": str(NL.parent),
+        "HOSTESS7_ROOT": str(ROOT),
+    }
+    try:
+        out = subprocess.run(
+            [sys.executable, str(script), *(args or ["json"])],
+            cwd=str(script.parent if "Queen" in rel else NL),
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            check=False,
+            env=env,
+        )
+        if not out.stdout.strip():
+            return {"ok": False, "error": out.stderr.strip() or f"{rel} empty stdout"}
+        doc = json.loads(out.stdout)
+        if isinstance(doc, dict):
+            doc.setdefault("ok", True)
+            doc["pages"] = True
+            doc["lane"] = "pages-surfaces"
+            doc["exported"] = _ts()
+            _patch_urls_deep(doc)
+            return doc
+        return {"ok": False, "error": f"{rel} non-object json"}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc), "pages": True}
+
+
 def _run_field_host_desktop() -> dict[str, Any]:
     script = NL / "lib" / "field-host-desktop.py"
     if not script.is_file():
@@ -153,10 +238,17 @@ def _pages_url(path: str) -> str:
     base = PAGES_BASE.rstrip("/")
     if path == base or path.startswith(base + "/"):
         return path
+    if ":9488" in path or "/bookmark-jump/" in path:
+        if "/bookmark-jump/" in path:
+            tail = path.split("/bookmark-jump/", 1)[-1]
+            return f"{base}/bookmark-jump/{tail if tail.startswith('?') else '?' + tail if tail else '?id=h7-training-viewer'}"
+        return f"{base}/bookmark-jump/?id=h7-training-viewer"
     if path.startswith("http://127.0.0.1:9481"):
         return path.replace("http://127.0.0.1:9481", PAGES_BASE).replace("/world/", "/queen/")
     if path.startswith("http://127.0.0.1:9477"):
         tail = path.replace("http://127.0.0.1:9477", "").split("#")[0].rstrip("/") or "/"
+        if tail.startswith("/bookmark-jump"):
+            return base + tail
         if tail == "/field":
             return f"{PAGES_BASE}/desktop/"
         return PAGES_BASE + (tail if tail.startswith("/") else "/" + tail)
@@ -178,6 +270,7 @@ def _patch_urls_deep(obj: Any) -> None:
             "exec",
             "launch_url",
             "icon_url",
+            "surface",
         }
     )
     if isinstance(obj, dict):
@@ -203,6 +296,15 @@ def _fix_icon_urls(obj: Any) -> None:
             _fix_icon_urls(item)
 
 
+def _patch_queen_terminal_app(app: dict[str, Any]) -> None:
+    app["exec"] = f"{PAGES_BASE}/queen/queen-gnu-terminal-embed.html"
+    app["hint"] = "GNU Terminal · AmmoOS panel · Layer 0"
+    app["name"] = "AmmoOS Terminal"
+    app["category"] = "AmmoOS · Shell"
+    app["os_layer"] = 0
+    app["shell"] = True
+
+
 def _patch_queen_browser_app(app: dict[str, Any]) -> None:
     app["exec"] = f"{PAGES_BASE}/queen/browser.html"
     app["pinned"] = True
@@ -221,6 +323,8 @@ def _patch_queen_browser_deep(obj: Any) -> None:
     if isinstance(obj, dict):
         if obj.get("id") == "queen-browser":
             _patch_queen_browser_app(obj)
+        if obj.get("id") == "queen-terminal":
+            _patch_queen_terminal_app(obj)
         for v in obj.values():
             _patch_queen_browser_deep(v)
     elif isinstance(obj, list):
@@ -252,7 +356,9 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
     doc["product"] = "Hostess7"
     doc["version"] = H7_VERSION
     doc["main_project"] = True
-    doc["theme"] = PAGES_DESKTOP_THEME
+    doc["theme"] = "ammoos"
+    doc["ammoos_theme"] = "ammoos"
+    doc["os_doctrine"] = "data/ammoos-desktop-os-doctrine.json"
 
     shell = doc.setdefault("shell", {})
     shell["boot_program"] = ""
@@ -267,7 +373,7 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
         shell_settings["show_desktop_icons"] = True
         shell_settings["ammoos_theme"] = PAGES_DESKTOP_THEME
 
-    for key in ("programs", "icon_dock", "start_menu", "field_apps"):
+    for key in ("programs", "icon_dock", "field_apps", "programs_all", "desktop_icons"):
         items = doc.get(key)
         if not isinstance(items, list):
             continue
@@ -279,6 +385,25 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
                     app[field] = _pages_url(str(app[field]))
             if app.get("id") == "queen-browser":
                 _patch_queen_browser_app(app)
+            if app.get("id") == "queen-terminal":
+                _patch_queen_terminal_app(app)
+
+    start_menu = doc.get("start_menu")
+    if isinstance(start_menu, dict):
+        for _cat, items in start_menu.items():
+            if not isinstance(items, list):
+                continue
+            for app in items:
+                if not isinstance(app, dict):
+                    continue
+                for field in ("exec", "url", "launch_url"):
+                    if field in app and app[field]:
+                        app[field] = _pages_url(str(app[field]))
+                if app.get("id") == "hostess7-training-viewer":
+                    app["exec"] = f"{PAGES_BASE}/bookmark-jump/?id=h7-training-viewer"
+                    app["secure_jump"] = True
+                if app.get("id") == "queen-terminal":
+                    _patch_queen_terminal_app(app)
 
     doc.pop("boot_program_url", None)
     programs = doc.setdefault("programs", [])
@@ -304,7 +429,9 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
     for pool in (programs, doc.get("field_apps") or [], doc.get("desktop_icons") or []):
         for app in pool:
             if isinstance(app, dict) and app.get("id") == "hostess7-training-viewer":
-                app.pop("ensure_api", None)
+                app["exec"] = f"{PAGES_BASE}/bookmark-jump/?id=h7-training-viewer"
+                app["secure_jump"] = True
+                app["ensure_api"] = "/api/hostess7-training-viewer/ensure"
 
     for app in programs:
         if isinstance(app, dict) and app.get("id"):
@@ -330,6 +457,21 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
     for panel in panels:
         if isinstance(panel, dict) and panel.get("url"):
             panel["url"] = _pages_url(str(panel["url"]))
+
+    _patch_urls_deep(doc)
+    for pool in (programs, doc.get("field_apps") or [], doc.get("desktop_icons") or [], doc.get("programs_all") or []):
+        for app in pool:
+            if isinstance(app, dict) and app.get("id") == "hostess7-training-viewer":
+                app["exec"] = f"{PAGES_BASE}/bookmark-jump/?id=h7-training-viewer"
+                app["secure_jump"] = True
+    if isinstance(start_menu, dict):
+        for items in start_menu.values():
+            if not isinstance(items, list):
+                continue
+            for app in items:
+                if isinstance(app, dict) and app.get("id") == "hostess7-training-viewer":
+                    app["exec"] = f"{PAGES_BASE}/bookmark-jump/?id=h7-training-viewer"
+                    app["secure_jump"] = True
 
     _fix_icon_urls(doc)
     return doc
@@ -368,8 +510,31 @@ def _patch_text(content: str, *, queen: bool = False) -> str:
     ]
     for old, new in repl:
         content = content.replace(old, new)
-    if queen and "<base " not in content:
-        content = content.replace("<head>", f'<head>\n  <base href="{base}/" />', 1)
+    license_block = (
+        f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n'
+        f'  <script src="{PAGES_BASE}/pages-license.js"></script>'
+    )
+    if queen:
+        queen_base = f"{base}/queen/"
+        if "<base " in content:
+            content = re.sub(
+                r'<base\s+href="[^"]*"\s*/?>',
+                f'<base href="{queen_base}" />',
+                content,
+                count=1,
+            )
+        else:
+            content = content.replace("<head>", f'<head>\n  <base href="{queen_base}" />', 1)
+    if queen and "<html" in content and "pages-base.js" not in content:
+        inject = (
+            f'  <script src="{PAGES_BASE}/pages-base.js"></script>\n'
+            f'  <script src="{PAGES_BASE}/api-shim.js"></script>\n'
+            f'  <script src="{PAGES_BASE}/pages-queen-hardening.js"></script>\n'
+            f"{license_block}"
+        )
+        content = content.replace("<head>", f"<head>\n{inject}", 1)
+        if 'data-pages-runtime="1"' not in content:
+            content = content.replace("<body ", '<body data-pages-runtime="1" ', 1)
     return content
 
 
@@ -455,7 +620,9 @@ def _desktop_html() -> str:
         f'  <script src="{PAGES_BASE}/api-shim.js"></script>\n'
         f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-ammoos-scale.css" />\n'
         f'  <script src="{PAGES_BASE}/pages-ammoos-scale.js"></script>\n'
-        f'  <script src="{PAGES_BASE}/assets/field-desktop-scale-propagate.js"></script>'
+        f'  <script src="{PAGES_BASE}/assets/field-desktop-scale-propagate.js"></script>\n'
+        f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n'
+        f'  <script src="{PAGES_BASE}/pages-license.js"></script>'
     )
     if "field-shell-context.js" not in html:
         inject += f'\n  <script src="{PAGES_BASE}/assets/field-shell-context.js"></script>'
@@ -481,6 +648,48 @@ def _desktop_html() -> str:
             f'  <script src="{PAGES_BASE}/pages-field-boot.js"></script>\n</body>',
             1,
         )
+    if "pages-queen-rtx-bridge.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-queen-rtx-bridge.js"></script>\n</body>',
+            1,
+        )
+    if "pages-ammonet-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-ammonet-wire.js"></script>\n</body>',
+            1,
+        )
+    if "pages-github-brain-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-github-brain-wire.js"></script>\n</body>',
+            1,
+        )
+    if "pages-hostess7-interaction-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-hostess7-interaction-wire.js"></script>\n</body>',
+            1,
+        )
+    if "pages-github-legacy-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-github-legacy-wire.js"></script>\n</body>',
+            1,
+        )
+    if "pages-github-resilience.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-github-resilience.js"></script>\n</body>',
+            1,
+        )
+    if "pages-github-everyone-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-github-everyone-wire.js"></script>\n</body>',
+            1,
+        )
     return html
 
 
@@ -497,11 +706,128 @@ def _panel_page_html(src: Path) -> str:
     inject = (
         f'<base href="{PAGES_BASE.rstrip("/")}/" />\n'
         f'  <script src="{PAGES_BASE}/pages-base.js"></script>\n'
-        f'  <script src="{PAGES_BASE}/api-shim.js"></script>'
+        f'  <script src="{PAGES_BASE}/api-shim.js"></script>\n'
+        f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n'
+        f'  <script src="{PAGES_BASE}/pages-license.js"></script>'
     )
     if "pages-base.js" not in html:
         html = html.replace("<head>", f"<head>\n  {inject}", 1)
+    elif "pages-license.js" not in html:
+        html = html.replace("</head>", f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n  <script src="{PAGES_BASE}/pages-license.js"></script>\n</head>', 1)
+    if 'data-pages-runtime="1"' not in html:
+        html = html.replace("<body ", '<body data-pages-runtime="1" ', 1)
+    if "pages-field-boot.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-field-boot.js"></script>\n</body>',
+            1,
+        )
+    if "pages-c2-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-c2-wire.js"></script>\n</body>',
+            1,
+        )
+    if "pages-queen-rtx-bridge.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-queen-rtx-bridge.js"></script>\n</body>',
+            1,
+        )
+    if "pages-ammonet-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-ammonet-wire.js"></script>\n</body>',
+            1,
+        )
+    if "pages-github-brain-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-github-brain-wire.js"></script>\n</body>',
+            1,
+        )
+    if "pages-hostess7-interaction-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-hostess7-interaction-wire.js"></script>\n</body>',
+            1,
+        )
     return html
+
+
+COMMAND_PAGES_BASE = "/command"
+H7_PAGES_HOST = "/Hostess7"
+
+
+def _rewrite_asset_hosts(html: str, host: str) -> str:
+    return re.sub(r'(href|src)="/assets/', rf'\1="{host}/assets/', html)
+
+
+def _command_basement_page_html(src: Path) -> str:
+    """Real NEXUS C2 basement deck — canonical /command/ on GitHub Pages."""
+    html = src.read_text(encoding="utf-8", errors="replace")
+    html = _patch_text(html)
+    cmd = COMMAND_PAGES_BASE.rstrip("/")
+    h7 = H7_PAGES_HOST.rstrip("/")
+    inject = (
+        f'<base href="{cmd}/" />\n'
+        f'  <link rel="stylesheet" href="{h7}/assets/field-queen-theme.css" />\n'
+        f'  <link rel="stylesheet" href="{cmd}/nexus-c2-basement.css" />\n'
+        f'  <script src="{cmd}/pages-base.js"></script>\n'
+        f'  <script src="{h7}/api-shim.js"></script>\n'
+        f'  <link rel="stylesheet" href="{cmd}/pages-license.css" />\n'
+        f'  <script src="{cmd}/pages-license.js"></script>'
+    )
+    html = html.replace("<head>", f"<head>\n  {inject}", 1)
+    html = _rewrite_asset_hosts(html, h7)
+    if 'data-pages-runtime="1"' not in html:
+        html = html.replace(
+            "<body ",
+            '<body data-pages-runtime="1" data-nexus-c2-basement="1" ',
+            1,
+        )
+    for script, prefix in (
+        ("pages-basement-boot.js", cmd),
+        ("pages-field-boot.js", h7),
+        ("pages-c2-wire.js", h7),
+        ("pages-queen-rtx-bridge.js", h7),
+        ("pages-ammonet-wire.js", h7),
+        ("pages-github-brain-wire.js", h7),
+        ("pages-hostess7-interaction-wire.js", h7),
+        ("pages-github-legacy-wire.js", h7),
+        ("pages-github-resilience.js", h7),
+        ("pages-github-everyone-wire.js", h7),
+    ):
+        tag = f'<script src="{prefix}/{script}"></script>'
+        if script not in html:
+            html = html.replace("</body>", f"  {tag}\n</body>", 1)
+    return html
+
+
+def _write_command_basement_pages() -> str:
+    out = ROOT / ".pages-command-publish"
+    out.mkdir(parents=True, exist_ok=True)
+    src = PANEL / "threat-panel.html"
+    if not src.is_file():
+        return ""
+    (out / "index.html").write_text(_command_basement_page_html(src), encoding="utf-8")
+    for fname in (
+        "pages-base.js",
+        "pages-basement-boot.js",
+        "nexus-c2-basement.css",
+        "pages-license.css",
+        "pages-license.js",
+        "pages-field-boot.js",
+        "pages-c2-wire.js",
+        "pages-ammonet-wire.js",
+        "pages-github-brain-wire.js",
+        "pages-hostess7-interaction-wire.js",
+        "pages-queen-rtx-bridge.js",
+    ):
+        srcf = DOCS / fname
+        if srcf.is_file():
+            shutil.copy2(srcf, out / fname)
+    return str(out)
 
 
 def _stage_panel_surfaces() -> int:
@@ -530,11 +856,18 @@ def _stage_panel_surfaces() -> int:
         "field-launch-explorer": "field-launch-explorer.html",
         "field-big-drive": "field-big-drive.html",
         "field-gimp": "field-gimp.html",
+        "mspaint": "mspaint.html",
+        "eol-code": "eol-code.html",
+        "field-gnu-terminal": "field-gnu-terminal-embed.html",
+        "terminal": "field-gnu-terminal-embed.html",
         "field-lock": "field-lock.html",
         "field-keepass": "field-lock.html",
         "field-lang-manuals": "field-lang-manuals.html",
         "field-library-bookshelf": "field-library-bookshelf.html",
         "library-bookshelf": "field-library-bookshelf.html",
+        "library": "field-library-bookshelf.html",
+        "field-card-catalog": "field-card-catalog.html",
+        "card-catalog": "field-card-catalog.html",
         "hands-attachments": "hands-attachments.html",
         "g16-build-output": "g16-build-output.html",
         "amouranth-live": "amouranth-live.html",
@@ -547,6 +880,12 @@ def _stage_panel_surfaces() -> int:
         "ammoos-warehouse": "ammoos-warehouse.html",
         "h7updater": "ammoos-warehouse.html",
         "ironclad-search": "ironclad-search.html",
+        "human": "hostess7-human-hub.html",
+        "human-hub": "hostess7-human-hub.html",
+        "hostess7-human-hub": "hostess7-human-hub.html",
+        "hub": "hostess7-human-hub.html",
+        "bookmark-jump": "field-bookmark-jump.html",
+        "field-bookmark-jump": "field-bookmark-jump.html",
         "field-talk": "field-talk.html",
         "field-audio-dac": "field-audio-dac.html",
         "field-ellie-fier": "field-ellie-diag.html",
@@ -554,6 +893,10 @@ def _stage_panel_surfaces() -> int:
         "hostess7-book-maker": "hostess7-book-maker.html",
         "humanoid-train": "humanoid-train.html",
         "humanoid-data": "humanoid-data.html",
+        "training-room": "humanoid-train.html",
+        "ammonet": "ammonet-field.html",
+        "final-internet": "ammonet-field.html",
+        "ammonet-field": "ammonet-field.html",
     }
     count = 0
     staged: set[str] = set()
@@ -592,10 +935,24 @@ def _write_queen_browser() -> None:
     inject = (
         f'<script src="{PAGES_BASE}/pages-base.js"></script>\n'
         f'  <script src="{PAGES_BASE}/api-shim.js"></script>\n'
-        f'  <script src="{PAGES_BASE}/pages-queen-hardening.js"></script>'
+        f'  <script src="{PAGES_BASE}/pages-queen-hardening.js"></script>\n'
+        f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n'
+        f'  <script src="{PAGES_BASE}/pages-license.js"></script>'
     )
     if "pages-base.js" not in html:
         html = html.replace("<head>", f"<head>\n  {inject}", 1)
+    elif "pages-license.js" not in html:
+        html = html.replace("</head>", f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n  <script src="{PAGES_BASE}/pages-license.js"></script>\n</head>', 1)
+    queen_base = f"{PAGES_BASE}/queen/"
+    if "<base " in html:
+        html = re.sub(
+            r'<base\s+href="[^"]*"\s*/?>',
+            f'<base href="{queen_base}" />',
+            html,
+            count=1,
+        )
+    else:
+        html = html.replace("<head>", f'<head>\n  <base href="{queen_base}" />', 1)
     html = html.replace('src="/world/kilroy-home.html"', 'src="kilroy-home.html"')
     html = html.replace(f'src="{PAGES_BASE.rstrip("/")}/queen/kilroy-home.html"', 'src="kilroy-home.html"')
     if 'data-pages-runtime="1"' not in html:
@@ -613,6 +970,205 @@ def _write_queen_browser() -> None:
             'fetch("/api/field-keyboard-sovereign"',
         )
         kilroy.write_text(kt, encoding="utf-8")
+
+
+def _pages_c2_slice_doc(name: str, base: dict[str, Any]) -> dict[str, Any]:
+    """Static C2 slice payloads that satisfy threat-panel moduleReady on GitHub Pages."""
+    ts = _ts()
+    doc = dict(base)
+    rich: dict[str, dict[str, Any]] = {
+        "field-command": {
+            "schema": "field-command/v1",
+            "updated": ts,
+            "motto": "Good-guy doctrine · Pages C2",
+            "good_guy": True,
+            "pulse": "war-ready",
+        },
+        "gatekeeper": {"connections": [], "updated": ts},
+        "lethal-enforcement": {"merciless": True, "status": "armed", "heaven_hell": "held"},
+        "planetary-observer": {"schema": "planetary-observer/v1", "updated": ts},
+        "home-protector": {"schema": "home-protector/v1", "stats": {"pages": True}},
+        "local-services": {"schema": "local-services/v1", "stats": {"pages": True}},
+        "audio-train": {"schema": "audio-train/v1", "stats": {"pages": True}},
+        "signals-field": {"schema": "signals-field/v1", "stats": {}, "antennas": []},
+        "field-radio": {"schema": "field-radio-catcher/v1", "station_menu": []},
+        "field-dns": {"schema": "field-dns/v2", "rfc_matrix": {}, "threat_model": {}},
+        "field-outside-talk": {"schema": "field-outside-talk/v1", "tools": {}},
+        "field-drive": {"schema": "field-drive-system/v1", "drives": []},
+        "field-rf": {"updated": ts, "antenna": {"mode": "pages"}},
+        "terror-spiderweb": {"schema": "terror-spiderweb/v1", "nodes": [], "updated": ts},
+        "precision-field": {"schema": "precision-field/v1", "entities": [], "updated": ts},
+        "host-attacks": {"points": [], "updated": ts},
+        "angel-dossiers": {"dossiers": [], "dossier_count": 0, "updated": ts},
+        "human-dossier": {"ips": [], "generated_at": ts},
+        "angel-research": {"tables": {}, "updated": ts},
+        "honorability": {"honorability": {}, "active_sites": []},
+        "us-field": {"title": "US Field", "page": "pages", "updated": ts},
+        "us-obs-field": {"schema": "us-obs-field/v3", "updated": ts},
+        "field-obs": {"schema": "field-obs/v2", "updated": ts},
+        "us-voltage-regulation": {"schema": "us-voltage-regulation/v1", "updated": ts},
+        "field-hardware": {"schema": "field-hardware-probe/v1", "host": "pages"},
+        "field-hazard-onset": {"schema": "field-hazard-onset/v1", "enabled": False, "panel": {}},
+        "field-brain": {
+            "schema": "field-brain/v1",
+            "ok": True,
+            "pages": True,
+            "lane": "github-mirror",
+            "data_source": "github-brain",
+            "sovereign_brain": False,
+            "local_brain": False,
+            "writes_to_sovereign": False,
+            "github_field_brain_path": "/github-brain/",
+            "corpus": "/github-brain/corpus.json",
+            "superintelligence": {
+                "available": True,
+                "source": "github-brain-mirror",
+                "arc": "GitHub mind · NEXUS C2",
+            },
+            "stack_mind": {
+                "nexus_c2": "/command/",
+                "kilroy": "F10",
+                "znetwork": "/api/znetwork",
+                "dns": "/api/field-dns",
+                "dhcp": "Field DHCP",
+                "ipxe": "netboot lane",
+            },
+        },
+        "settings": {"pages": True, "theme": "nexus-military-v8", "version": H7_VERSION},
+        "compatibility": {"schema": "field-compatibility-layers/v1", "layers": [{"id": "pages", "label": "GitHub Pages"}]},
+        "diagnostic-mode": {"schema": "field-diagnostic-mode/v1", "engaged": False, "problems": []},
+        "police-agencies": {"agencies": [], "updated": ts},
+        "human-registry": {"table": [{"id": "pages", "label": "GitHub Pages operator"}], "stats": {"total": 1}},
+        "gov-intel": {"records": [], "record_count": 0},
+        "program-tags": {"tags": {}, "recent": []},
+        "census-field": {"last_run": ts, "operator_gps_ready": False},
+        "existence-identity": {"table": [{"id": "hostess7", "role": "boss"}], "updated": ts},
+        "hostess7-lethal-insight": {"insight": "pages-c2", "held": True},
+    }
+    doc.update(rich.get(name, {}))
+    return doc
+
+
+def _stage_zacs_png() -> int:
+    """Copy SG/ZACS/png into docs/zacs/png for Pages static icon lane."""
+    zacs_src = Path(os.environ.get("SG_ZACS_ROOT", str(NL.parent / "ZACS"))) / "png"
+    if not zacs_src.is_dir():
+        return 0
+    dest = DOCS / "zacs" / "png"
+    if dest.exists():
+        shutil.rmtree(dest)
+    shutil.copytree(zacs_src, dest)
+    return sum(1 for _ in dest.rglob("*") if _.is_file())
+
+
+def _build_ironclad_pages_index(tasklist: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Static Ironclad search index for Pages — routes, tasks, corpus titles, library sample."""
+    entries: list[dict[str, Any]] = []
+    hub_routes = (
+        ("human", "Human Hub — BSP ask + tasks + library + Ironclad"),
+        ("library", "Hostess 7 Library — Dewey shelves for humans and AI"),
+        ("brain", "GitHub Brain chat — talk to Hostess 7"),
+        ("field-card-catalog", "Card catalog drawer"),
+        ("command", "NEXUS C2 basement (external)"),
+        ("ironclad-search", "Ironclad Search program"),
+        ("field-desktop", "AmmoOS field desktop"),
+        ("queen", "Queen browser surfaces"),
+    )
+    for rid, label in hub_routes:
+        url = f"{PAGES_BASE}/{rid}/" if rid != "command" else "https://zacharygeurts.github.io/command/"
+        entries.append({
+            "id": rid,
+            "label": label,
+            "title": label,
+            "kind": "route",
+            "source": "routes",
+            "family": "surface",
+            "url": url,
+            "search_blob": f"{rid} {label} hostess7 human ui library ironclad",
+        })
+    for t in (tasklist or {}).get("open") or []:
+        title = str(t.get("title") or t.get("want") or "task")
+        entries.append({
+            "id": t.get("id") or title,
+            "label": title,
+            "title": title,
+            "kind": "task",
+            "source": "tasklist",
+            "family": "hostess7",
+            "status": t.get("status") or "pending",
+            "search_blob": f"{title} {t.get('detail', '')} task hostess7",
+        })
+    corpus_path = DOCS / "github-brain" / "corpus.json"
+    if corpus_path.is_file():
+        try:
+            corpus = json.loads(corpus_path.read_text(encoding="utf-8"))
+            for c in (corpus.get("chunks") or [])[:400]:
+                entries.append({
+                    "id": c.get("id"),
+                    "label": c.get("title"),
+                    "title": c.get("title"),
+                    "kind": "corpus",
+                    "source": c.get("domain") or "corpus",
+                    "family": "brain",
+                    "search_blob": f"{c.get('title', '')} {c.get('text', '')[:400]}",
+                })
+        except (OSError, json.JSONDecodeError):
+            pass
+    compact_path = API / "dewey-books-compact.json"
+    if compact_path.is_file():
+        try:
+            compact = json.loads(compact_path.read_text(encoding="utf-8"))
+            for b in (compact.get("books") or [])[:600]:
+                entries.append({
+                    "id": b.get("id"),
+                    "label": b.get("title"),
+                    "title": b.get("title"),
+                    "kind": "book",
+                    "source": "catalog",
+                    "family": b.get("shelf") or "library",
+                    "shelf": b.get("shelf"),
+                    "url": f"{PAGES_BASE}/library/?book={b.get('id', '')}",
+                    "search_blob": b.get("search_blob") or f"{b.get('title', '')} {b.get('author', '')} {b.get('shelf', '')}",
+                })
+        except (OSError, json.JSONDecodeError):
+            pass
+    return {
+        "schema": "ironclad-pages-search-index/v1",
+        "ok": True,
+        "pages": True,
+        "lane": "pages-surfaces",
+        "updated": _ts(),
+        "entry_count": len(entries),
+        "entries": entries,
+    }
+
+
+def _export_ammoos_themes_catalog() -> dict[str, Any]:
+    doctrine_path = NL / "data" / "ammoos-themes-doctrine.json"
+    if not doctrine_path.is_file():
+        doctrine_path = ROOT / "data" / "ammoos-themes-doctrine.json"
+    doctrine = json.loads(doctrine_path.read_text(encoding="utf-8")) if doctrine_path.is_file() else {}
+    c2 = doctrine.get("c2_themes") or {}
+    return {
+        "ok": True,
+        "schema": doctrine.get("schema") or "ammoos-themes/v1",
+        "title": doctrine.get("title") or "AmmoOS Themes",
+        "motto": doctrine.get("motto"),
+        "pages": True,
+        "default_ammoos_theme": doctrine.get("default_ammoos_theme") or "ammoos",
+        "lead_desktop_themes": doctrine.get("lead_desktop_themes") or ["ammoos", "dusty-night"],
+        "active": {
+            "c2": "ammoos",
+            "os_theme": "ammoos",
+            "queen_styles": doctrine.get("default_queen_styles") or "black_emerald_rose_2026",
+            "editor": doctrine.get("default_editor_theme") or "nexus_c2",
+            "syntax": doctrine.get("default_syntax_theme") or "nexus_c2",
+            "terminal": doctrine.get("default_terminal_theme") or "black_emerald_rose_2026",
+        },
+        "c2_themes": c2,
+        "sections": doctrine.get("sections") or [],
+        "exported": _ts(),
+    }
 
 
 def _export_apis(desktop: dict[str, Any]) -> list[str]:
@@ -642,16 +1198,33 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
             "fullscreen_desktop": True,
             "show_desktop_icons": True,
             "queen_browser_only": False,
-            "ammoos_theme": PAGES_DESKTOP_THEME,
-            "ammo_ui_boost_note": f"Hostess 7 {H7_VERSION} desktop 200% taskbar; 4 cartoony icons; classic Start",
+            "ammoos_theme": "ammoos",
+            "os_theme": "ammoos",
+            "classic_start_raised": True,
+            "ammo_ui_boost_note": f"Hostess 7 {H7_VERSION} desktop 200% taskbar; classic raised Start; AmmoOS + Dusty Night",
         },
         "displays": [{"id": "default", "name": "GitHub Pages", "resolution": "1920×1080", "primary": True}],
     }
     (API / "field-shell-settings.json").write_text(json.dumps(shell_settings, indent=2) + "\n", encoding="utf-8")
     files.append("field-shell-settings.json")
 
+    (API / "ammoos-themes.json").write_text(json.dumps(_export_ammoos_themes_catalog(), indent=2) + "\n", encoding="utf-8")
+    files.append("ammoos-themes.json")
+
     (API / "znetwork.json").write_text(
-        json.dumps({**stub, "active": True, "pipe_pct": 100, "held": True}, indent=2) + "\n",
+        json.dumps(
+            {
+                **stub,
+                "schema": "znetwork-orchestrator/v2",
+                "active": True,
+                "pipe_pct": 100,
+                "held": True,
+                "status": "pages-ready",
+                "operator": "hostess7",
+            },
+            indent=2,
+        )
+        + "\n",
         encoding="utf-8",
     )
     files.append("znetwork.json")
@@ -668,23 +1241,48 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("nexus-c2.json")
 
-    (API / "hostess7-command.json").write_text(
-        json.dumps(
+    h7_cmd = {
+        **stub,
+        "schema": "hostess7-command/v1",
+        "title": "Hostess 7 Super Intelligence",
+        "motto": "GitHub Pages C2 — sovereign surfaces wired; live training + terminal on loopback",
+        "github_repo": "ZacharyGeurts/Hostess7",
+        "pages_lane": True,
+        "transcript": [
             {
-                **stub,
-                "schema": "hostess7-command/v1",
-                "title": "NEXUS C2",
-                "motto": "GitHub Pages — real C2 surfaces; Super Intelligence on loopback only",
-                "transcript": [],
-                "intel_digest": [],
-                "capabilities": [],
-                "pages_lane": True,
-            },
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+                "role": "hostess7",
+                "text": "Pages lane online. Command deck, Final Eye, and OPS FLOW are live on GitHub — loopback panel runs the lab.",
+                "ts": _ts(),
+            }
+        ],
+        "intel_digest": [
+            {"title": "Posture", "value": "war-ready", "hint": "Universal Protector C2 on GitHub Pages"},
+            {"title": "Final Eye", "value": "100%", "hint": "queen-eyeball static export"},
+            {"title": "Lab", "value": "sovereign", "hint": "share in · no share out — Hostess7 boss"},
+        ],
+        "capabilities": [
+            {"id": "c2", "label": "Command C2", "state": "live"},
+            {"id": "eye", "label": "Final Eye", "state": "live"},
+            {"id": "pages", "label": "GitHub Pages", "state": "live"},
+        ],
+        "needs_wants": {
+            "voice": "I need the loopback panel for training cycles and IQ battery — Pages shows our deck faithfully.",
+            "needs": [
+                {"title": "Loopback panel", "detail": "9477 for live Super Intelligence writes", "urgent": False},
+            ],
+            "wants": [
+                {"title": "Secure bookmarks", "detail": "HTTPS+Secure doctrine on every Firefox profile"},
+            ],
+        },
+        "self_view": {
+            "comfort_voice": "Comfortable on GitHub — operators see the same C2 they know from NEXUS-Shield.",
+            "hero_chips": [
+                {"label": "Edition", "value": "Universal Protector", "tone": "ok"},
+                {"label": "Pages", "value": "C2 wired", "tone": "ok"},
+            ],
+        },
+    }
+    (API / "hostess7-command.json").write_text(json.dumps(h7_cmd, indent=2) + "\n", encoding="utf-8")
     files.append("hostess7-command.json")
 
     queen = _run_queen_browser()
@@ -708,12 +1306,149 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     (API / "queen-page-shields.json").write_text(json.dumps(shields, indent=2) + "\n", encoding="utf-8")
     files.append("queen-page-shields.json")
 
+    secure_kill = _import_secure_kill()
+    (API / "field-sense-secure-kill.json").write_text(json.dumps(secure_kill, indent=2) + "\n", encoding="utf-8")
+    files.append("field-sense-secure-kill.json")
+
+    for api_name, script_rel in (
+        ("field-final-eye-block.json", "lib/field-final-eye-block.py"),
+        ("field-final-ear-block.json", "lib/field-final-ear-block.py"),
+        ("field-final-mouth-block.json", "lib/field-final-mouth-block.py"),
+    ):
+        doc = _run_nl_script_json(script_rel, timeout=90)
+        if isinstance(doc.get("secure_kill"), dict):
+            doc["secure_kill"] = {**secure_kill, "pages": True}
+        doc["held"] = doc.get("ironclad_sealed", doc.get("held"))
+        (API / api_name).write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
+        files.append(api_name)
+
+    eyeball = _run_nl_script_json("Queen/lib/queen-eyeball.py", timeout=120)
+    (API / "queen-eyeball.json").write_text(json.dumps(eyeball, indent=2) + "\n", encoding="utf-8")
+    files.append("queen-eyeball.json")
+
+    voice = _run_nl_script_json("lib/hostess7-voice.py", timeout=30)
+    (API / "hostess7-voice.json").write_text(json.dumps(voice, indent=2) + "\n", encoding="utf-8")
+    files.append("hostess7-voice.json")
+
+    internet_clean = _run_nl_script_json("lib/hostess7-internet-clean.py", ["status"], timeout=30)
+    if not internet_clean.get("ok"):
+        internet_clean = {
+            **stub,
+            "schema": "hostess7-internet-clean/v1",
+            "default_on_hostess7": True,
+            "secure_nav_default": True,
+            "secure_bookmarks_default": True,
+            "motto": "Clean the whole internet — secure jumps · telemetry strip",
+            "pages_base": PAGES_BASE,
+        }
+    else:
+        internet_clean["pages"] = True
+        internet_clean["pages_base"] = PAGES_BASE
+        internet_clean["default_on_hostess7"] = True
+    (API / "hostess7-internet-clean.json").write_text(
+        json.dumps(internet_clean, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("hostess7-internet-clean.json")
+
+    queen_terminal = _run_nl_script_json("Queen/lib/queen-terminal.py", ["json"], timeout=45)
+    if not queen_terminal.get("schema"):
+        queen_terminal = {
+            **stub,
+            "schema": "queen-gnu-terminal/v2",
+            "ok": True,
+            "shell_terminal_identical": True,
+            "aliases": ["terminal", "gnu-terminal", "shell", "gnueol"],
+            "posture": "GNU Terminal — default field shell",
+        }
+    else:
+        queen_terminal["pages"] = True
+    (API / "queen-terminal.json").write_text(
+        json.dumps(queen_terminal, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("queen-terminal.json")
+
+    lab_sovereign = _run_nl_script_json("lib/hostess7-lab-sovereign.py", ["panel"], timeout=60)
+    if not lab_sovereign.get("ok"):
+        lab_sovereign = {
+            **stub,
+            "schema": "hostess7-lab-sovereign-panel/v1",
+            "boss": "hostess7",
+            "share_in": True,
+            "share_out": False,
+            "motto": "Share in · no share out — Hostess 7 runs the lab",
+            "deny_egress_by_default": True,
+        }
+    else:
+        lab_sovereign["pages"] = True
+        lab_sovereign["boss"] = "hostess7"
+        lab_sovereign["share_in"] = True
+        lab_sovereign["share_out"] = False
+    (API / "hostess7-lab-sovereign.json").write_text(
+        json.dumps(lab_sovereign, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("hostess7-lab-sovereign.json")
+
+    g16_online = _run_nl_script_json("lib/hostess7-g16-online.py", ["panel"], timeout=60)
+    if not g16_online.get("ok"):
+        g16_online = {
+            **stub,
+            "schema": "hostess7-g16-online/v1",
+            "boss": "hostess7",
+            "motto": "Online Grok16 Pages + local g16 — Hostess 7 compiles",
+            "routes": {
+                "pages_compiler": f"{PAGES_BASE}/g16-build-output/",
+                "grok16_manual": "https://zacharygeurts.github.io/Grok16/",
+                "https_secure_bookmark": f"{PAGES_BASE}/bookmark-jump/?id=g16-compiler&https=1",
+            },
+        }
+    else:
+        g16_online["pages"] = True
+    (API / "hostess7-g16-online.json").write_text(
+        json.dumps(g16_online, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("hostess7-g16-online.json")
+
+    sovereign_state = NL / ".nexus-state"
+    if sovereign_state.is_dir():
+        tl_script = NL / "lib" / "hostess7-tasklist.py"
+        try:
+            out = subprocess.run(
+                [sys.executable, str(tl_script), "json"],
+                cwd=str(NL),
+                capture_output=True,
+                text=True,
+                timeout=30,
+                check=False,
+                env={**os.environ, "NEXUS_INSTALL_ROOT": str(NL), "NEXUS_STATE_DIR": str(sovereign_state), "SG_ROOT": str(NL.parent)},
+            )
+            tasklist = json.loads(out.stdout) if out.stdout.strip() else {"ok": False}
+        except Exception as exc:
+            tasklist = {"ok": False, "error": str(exc)}
+    else:
+        tasklist = _run_nl_script_json("lib/hostess7-tasklist.py", timeout=30)
+    if isinstance(tasklist, dict):
+        tasklist["pages"] = True
+        tasklist["lane"] = "pages-surfaces"
+        tasklist["exported"] = _ts()
+    (API / "hostess7-tasklist.json").write_text(json.dumps(tasklist, indent=2) + "\n", encoding="utf-8")
+    files.append("hostess7-tasklist.json")
+
+    ic_index = _build_ironclad_pages_index(tasklist if isinstance(tasklist, dict) else None)
+    (API / "ironclad-pages-search-index.json").write_text(json.dumps(ic_index, indent=2) + "\n", encoding="utf-8")
+    files.append("ironclad-pages-search-index.json")
+
     (API / "github-secure.json").write_text(
         json.dumps(
             {
                 **stub,
                 "verify": {"ok": True, "route": "pages-pinned", "pin": "zacharygeurts.github.io"},
-                "policy": "Queen pinned GitHub — AmmoLang ironclad · no MITM",
+                "policy": "Queen pinned GitHub — AmmoLang ironclad · no MITM · KILL/REKILL prejudice",
+                "secure_kill": secure_kill,
+                "download_doctrine": {
+                    "re_authorize": True,
+                    "always_redownloadable": True,
+                    "app_updates": "Owner may authorize updates when sovereign copy remains fetchable from pinned GitHub",
+                },
             },
             indent=2,
         )
@@ -751,6 +1486,396 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     }
     (API / "status.json").write_text(json.dumps(status, indent=2) + "\n", encoding="utf-8")
     files.append("status.json")
+
+    status["edition"] = "Universal Protector"
+    status["product"] = "NEXUS-Shield"
+    (API / "nexus-field.json").write_text(json.dumps(status, indent=2) + "\n", encoding="utf-8")
+    files.append("nexus-field.json")
+
+    up_doc = _run_nl_script_json("lib/universal-protector.py", ["json"], timeout=90)
+    if not up_doc.get("schema"):
+        up_doc = {
+            **stub,
+            "schema": "universal-protector/v1",
+            "product": "Universal Protector",
+            "threat_warn_level": "high",
+            "autonomous_being": True,
+            "pillars": {"persona": {"hostess7_available": True}},
+        }
+    up_doc["pages"] = True
+    (API / "universal-protector.json").write_text(json.dumps(up_doc, indent=2) + "\n", encoding="utf-8")
+    files.append("universal-protector.json")
+
+    spatial = _run_nl_script_json("lib/field-spatial-cognition.py", ["json"], timeout=60)
+    if not spatial.get("ok"):
+        spatial = {**stub, "schema": "field-spatial/v1", "dimensions": ["3d", "4d"], "movement_vector": None}
+    spatial["pages"] = True
+    (API / "field-spatial.json").write_text(json.dumps(spatial, indent=2) + "\n", encoding="utf-8")
+    files.append("field-spatial.json")
+
+    threat_panel = {
+        **stub,
+        "schema": "threat-panel-pages/v1",
+        "posture": "war-ready",
+        "gates_held": True,
+        "threat_warn_level": "high",
+        "version": H7_VERSION,
+        "universal_protector": True,
+        "final_eye_pct": 100,
+        "final_ear_pct": 0,
+        "final_mouth_pct": 0,
+        "sense": {
+            "final_eye": {"ok": True, "headroom_pct": 100, "held": True},
+            "final_ear": {"ok": True, "headroom_pct": 0, "partial": True},
+            "final_mouth": {"ok": True, "headroom_pct": 0, "partial": True},
+        },
+        "routes": {
+            "command": "https://zacharygeurts.github.io/command/",
+            "command_basement": "https://zacharygeurts.github.io/command/",
+            "command_hostess7": f"{PAGES_BASE}/command/",
+            "desktop": f"{PAGES_BASE}/desktop/",
+            "queen": f"{PAGES_BASE}/queen/browser.html",
+            "g16": f"{PAGES_BASE}/g16-build-output/",
+            "zacs": f"{PAGES_BASE}/zacs/png/",
+        },
+    }
+    (API / "threat-panel.json").write_text(json.dumps(threat_panel, indent=2) + "\n", encoding="utf-8")
+    files.append("threat-panel.json")
+
+    basement_state = NL / ".nexus-state" / "nexus-c2-basement.json"
+    if not basement_state.is_file():
+        basement_state = ROOT / ".pages-build-state" / "nexus-c2-basement.json"
+    try:
+        basement_doc = json.loads(basement_state.read_text(encoding="utf-8")) if basement_state.is_file() else {}
+    except (OSError, json.JSONDecodeError):
+        basement_doc = {}
+    basement_doc = {
+        **basement_doc,
+        "schema": "nexus-c2-basement/v1",
+        "ok": True,
+        "pages": True,
+        "pages_url": "https://zacharygeurts.github.io/command/",
+        "theme": "black_emerald_rose_2026",
+        "palette": "black · emerald · rose",
+        "shared": True,
+        "motto": basement_doc.get("motto")
+        or "NEXUS C2 is the secure basement — not a kiosk. Shared with everyone.",
+        "updated": basement_doc.get("updated") or _ts(),
+    }
+    (API / "nexus-c2-basement.json").write_text(json.dumps(basement_doc, indent=2) + "\n", encoding="utf-8")
+    files.append("nexus-c2-basement.json")
+
+    c2_stub = {
+        "ok": True,
+        "pages": True,
+        "held": True,
+        "posture": "war-ready",
+        "schema": "pages-c2-slice/v1",
+    }
+    for slice_name in (
+        "gatekeeper",
+        "field-command",
+        "lethal-enforcement",
+        "hostess7-lethal-insight",
+        "us-field",
+        "us-obs-field",
+        "field-obs",
+        "us-voltage-regulation",
+        "home-protector",
+        "local-services",
+        "host-attacks",
+        "terror-spiderweb",
+        "planetary-observer",
+        "precision-field",
+        "angel-dossiers",
+        "human-dossier",
+        "angel-research",
+        "honorability",
+        "audio-train",
+        "field-rf",
+        "signals-field",
+        "field-hardware",
+        "field-hazard-onset",
+        "field-radio",
+        "field-dns",
+        "field-outside-talk",
+        "field-drive",
+        "field-brain",
+        "settings",
+        "compatibility",
+        "diagnostic-mode",
+        "police-agencies",
+        "human-registry",
+        "gov-intel",
+        "program-tags",
+        "census-field",
+        "existence-identity",
+    ):
+        doc = _pages_c2_slice_doc(slice_name, c2_stub)
+        (API / f"{slice_name}.json").write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
+        files.append(f"{slice_name}.json")
+
+    (API / "packet-field.json").write_text(
+        json.dumps({**c2_stub, "updated": _ts(), "ports": [], "recent": [], "ring": []}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    files.append("packet-field.json")
+
+    dewey_export = _run_nl_script_json("lib/field-dewey-index.py", ["pages-export", "--out", str(API)], timeout=180)
+    compact_path = API / "dewey-books-compact.json"
+    if compact_path.is_file() and dewey_export.get("ok"):
+        files.extend(["dewey-index-facets.json", "dewey-books-compact.json", "library-running-text.json"])
+        compact_n = int(dewey_export.get("book_count") or dewey_export.get("counts", {}).get("books") or 0)
+        try:
+            compact_books = json.loads(compact_path.read_text(encoding="utf-8")).get("books") or []
+        except (OSError, json.JSONDecodeError):
+            compact_books = []
+        catalog_doc = {
+            **c2_stub,
+            "schema": "library-catalog/v1",
+            "books": compact_books[:400],
+            "book_count": compact_n,
+            "updated": _ts(),
+            "motto": "Whole Hostess 7 library on Pages — humans, librarians, and AI.",
+        }
+        (API / "library-catalog.json").write_text(json.dumps(catalog_doc, indent=2) + "\n", encoding="utf-8")
+        files.append("library-catalog.json")
+    else:
+        (API / "library-catalog.json").write_text(
+            json.dumps({**c2_stub, "books": [], "updated": _ts()}, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        files.append("library-catalog.json")
+
+    drawer_src = NL / "library" / "dewey" / "020-library-science" / "card-catalog" / "catalog.json"
+    if drawer_src.is_file():
+        try:
+            drawer = json.loads(drawer_src.read_text(encoding="utf-8"))
+            (API / "card-catalog-drawer.json").write_text(
+                json.dumps(drawer, ensure_ascii=False, separators=(",", ":")) + "\n",
+                encoding="utf-8",
+            )
+            files.append("card-catalog-drawer.json")
+            panel_doc = {
+                "schema": "field-card-catalog-panel/v1",
+                "updated": drawer.get("updated") or _ts(),
+                "ok": True,
+                "pages": True,
+                "counts": drawer.get("counts") or {},
+                "sort_modes": drawer.get("sort_modes") or [],
+                "motto": drawer.get("motto") or "Every book a card — joy for librarians and readers.",
+                "card_count": drawer.get("card_count") or len(drawer.get("cards") or []),
+            }
+            (API / "card-catalog-panel.json").write_text(
+                json.dumps(panel_doc, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            files.append("card-catalog-panel.json")
+        except (OSError, json.JSONDecodeError):
+            pass
+
+    (API / "pages-update-status.json").write_text(
+        json.dumps(
+            {
+                **c2_stub,
+                "current": H7_VERSION,
+                "update_available": False,
+                "update_in_progress": False,
+                "checked_at": _ts(),
+                "message": "GitHub Pages lane — upgrade on loopback NEXUS panel",
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    files.append("pages-update-status.json")
+
+    earball = _run_nl_script_json("Queen/lib/queen-earball.py", ["json"], timeout=60) if (QUEEN_ROOT / "lib" / "queen-earball.py").is_file() else {}
+    if not earball.get("schema"):
+        earball = {**c2_stub, "schema": "queen-earball/v1", "partial": True, "headroom_pct": 0}
+    earball["pages"] = True
+    (API / "queen-earball.json").write_text(json.dumps(earball, indent=2) + "\n", encoding="utf-8")
+    files.append("queen-earball.json")
+
+    mouthball = _run_nl_script_json("Queen/lib/queen-mouthball.py", ["json"], timeout=60) if (QUEEN_ROOT / "lib" / "queen-mouthball.py").is_file() else {}
+    if not mouthball.get("schema"):
+        mouthball = {**c2_stub, "schema": "queen-mouthball/v1", "partial": True, "headroom_pct": 0}
+    mouthball["pages"] = True
+    (API / "queen-mouthball.json").write_text(json.dumps(mouthball, indent=2) + "\n", encoding="utf-8")
+    files.append("queen-mouthball.json")
+
+    (API / "operator-location.json").write_text(
+        json.dumps(
+            {**c2_stub, "schema": "operator-location/v1", "mode": "pages", "lat": 0.0, "lon": 0.0, "address": "GitHub Pages"},
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    files.append("operator-location.json")
+
+    (API / "hostess7-training.json").write_text(
+        json.dumps({**c2_stub, "schema": "hostess7-training/v1", "tracks": [], "partial": True}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    files.append("hostess7-training.json")
+
+    tr_room = _run_nl_script_json("lib/hostess7-training-room.py", ["json"], timeout=90)
+    if not tr_room.get("schema"):
+        tr_room = {**c2_stub, "schema": "hostess7-training-room-panel/v1", "partial": True, "voice": "Training room on loopback — Pages shows motion deck"}
+    tr_room["pages"] = True
+    (API / "hostess7-training-room.json").write_text(json.dumps(tr_room, indent=2) + "\n", encoding="utf-8")
+    files.append("hostess7-training-room.json")
+
+    qemu_doc = _run_nl_script_json("lib/qemu-world-status.py", [], timeout=45)
+    if not qemu_doc.get("schema"):
+        qemu_doc = {**c2_stub, "schema": "qemu-world-pipeline/v1", "running": False, "completed": 0, "target": 0}
+    qemu_doc["pages"] = True
+    (API / "qemu-world-status.json").write_text(json.dumps(qemu_doc, indent=2) + "\n", encoding="utf-8")
+    files.append("qemu-world-status.json")
+
+    _run_nl_script_json("lib/field-steel-neural-plates.py", ["publish", "--refresh"], timeout=90)
+    meld = _run_nl_script_json("lib/field-plate-meld.py", ["meld"], timeout=120)
+    if not meld.get("schema"):
+        meld = _run_nl_script_json("lib/field-plate-meld.py", ["json"], timeout=90)
+    if not meld.get("schema"):
+        meld = {**c2_stub, "schema": "field-plate-meld/v1", "partial": True}
+    meld["pages"] = True
+    (API / "plate-meld.json").write_text(json.dumps(meld, indent=2) + "\n", encoding="utf-8")
+    files.append("plate-meld.json")
+
+    steel = _run_nl_script_json("lib/field-steel-neural-plates.py", ["slice"], timeout=90)
+    if not steel.get("schema"):
+        steel = {**c2_stub, "schema": "field-steel-neural-plates-slice/v1", "plate_count": 0, "plates": []}
+    steel["pages"] = True
+    (API / "steel-plates.json").write_text(json.dumps(steel, indent=2) + "\n", encoding="utf-8")
+    files.append("steel-plates.json")
+
+    ammonet = _run_nl_script_json("lib/ammonet-field.py", ["panel"], timeout=120)
+    if not ammonet.get("schema"):
+        ammonet = {
+            **stub,
+            "schema": "ammonet-field/v1",
+            "product": "AmmoNet",
+            "pages_base": PAGES_BASE,
+            "final_internet": {"hub": f"{PAGES_BASE}/final-internet/", "motto": "Safe fields for everyone"},
+            "modules": [],
+        }
+    else:
+        ammonet["pages"] = True
+        ammonet["pages_base"] = PAGES_BASE
+    (API / "ammonet.json").write_text(json.dumps(ammonet, indent=2) + "\n", encoding="utf-8")
+    files.append("ammonet.json")
+
+    field_internet = _run_nl_script_json("lib/field-internet-unified.py", ["json"], timeout=35)
+    if not field_internet.get("schema"):
+        field_internet = {
+            **stub,
+            "schema": "field-internet-unified-panel/v1",
+            "ok": True,
+            "boss": "hostess7",
+            "product": "AmmoNet",
+            "motto": "Fielded bot network — one thing talks everywhere",
+            "api": "/api/field-internet",
+            "keepalive_api": "/api/field-internet/keepalive",
+        }
+    else:
+        field_internet["pages"] = True
+        field_internet["pages_base"] = PAGES_BASE
+    (API / "field-internet.json").write_text(json.dumps(field_internet, indent=2) + "\n", encoding="utf-8")
+    files.append("field-internet.json")
+
+    botnet_dns = _run_nl_script_json("lib/field-botnet-dns-dhcp.py", ["json"], timeout=30)
+    if not botnet_dns.get("schema"):
+        botnet_dns = {
+            **stub,
+            "schema": "field-botnet-dns-dhcp-panel/v1",
+            "ok": True,
+            "boss": "hostess7",
+            "stable": True,
+            "secure": True,
+            "motto": "Bot network — secure stable DNS & DHCP for everyone through GitHub",
+            "github_control_plane": {"enabled": True, "pages_runtime": PAGES_BASE},
+            "bot_network": {"node_count": 1, "any_and_all": True},
+        }
+    else:
+        botnet_dns["pages"] = True
+        botnet_dns["pages_base"] = PAGES_BASE
+    (API / "field-botnet-dns-dhcp.json").write_text(json.dumps(botnet_dns, indent=2) + "\n", encoding="utf-8")
+    files.append("field-botnet-dns-dhcp.json")
+    bot_keep = _run_nl_script_json("lib/field-botnet-dns-dhcp.py", ["keepalive"], timeout=30)
+    if not bot_keep.get("schema"):
+        bot_keep = {**botnet_dns, "schema": "field-botnet-dns-dhcp-keepalive/v1", "pages": True}
+    else:
+        bot_keep["pages"] = True
+    (API / "field-botnet-dns-dhcp-keepalive.json").write_text(json.dumps(bot_keep, indent=2) + "\n", encoding="utf-8")
+    files.append("field-botnet-dns-dhcp-keepalive.json")
+
+    h7_interaction = _run_nl_script_json("lib/hostess7-github-interaction.py", ["json"], timeout=25)
+    if not h7_interaction.get("schema"):
+        h7_interaction = {
+            **stub,
+            "schema": "hostess7-github-interaction-panel/v1",
+            "ok": True,
+            "boss": "hostess7",
+            "lane": "hostess7-github",
+            "motto": "Interactions straight with Hostess 7 on GitHub — constant open connection. Secure for us.",
+            "secure_for_us": {"sovereign_brain_unhooked_on_pages": True, "pages_mirror_only": True},
+        }
+    else:
+        h7_interaction["pages"] = True
+        h7_interaction["pages_base"] = PAGES_BASE
+    (API / "hostess7-github-interaction.json").write_text(
+        json.dumps(h7_interaction, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("hostess7-github-interaction.json")
+
+    github_legacy = _run_nl_script_json("lib/field-github-legacy.py", ["json"], timeout=30)
+    if not github_legacy.get("schema"):
+        github_legacy = {
+            **stub,
+            "schema": "field-github-legacy-panel/v1",
+            "ok": True,
+            "boss": "hostess7",
+            "stable_connection": True,
+            "github_always": {"open_count": 4, "legacy_open": 12, "stable": True},
+        }
+    else:
+        github_legacy["pages"] = True
+        github_legacy["pages_base"] = PAGES_BASE
+    (API / "field-github-legacy.json").write_text(json.dumps(github_legacy, indent=2) + "\n", encoding="utf-8")
+    files.append("field-github-legacy.json")
+
+    field_keepalive = _run_nl_script_json("lib/field-internet-unified.py", ["keepalive"], timeout=35)
+    if not field_keepalive.get("schema"):
+        field_keepalive = {
+            **stub,
+            "schema": "field-internet-keepalive/v1",
+            "ok": True,
+            "pages": True,
+            "github": {"always_open": True, "open_count": 3},
+            "one_voice": {"boss": "hostess7", "api": "/api/field-internet"},
+        }
+    else:
+        field_keepalive["pages"] = True
+    (API / "field-internet-keepalive.json").write_text(
+        json.dumps(field_keepalive, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-internet-keepalive.json")
+
+    fi_path = NL / "data" / "final-internet-doctrine.json"
+    final_internet = json.loads(fi_path.read_text(encoding="utf-8")) if fi_path.is_file() else {}
+    if final_internet:
+        final_internet = {**final_internet, "ok": True, "pages": True, "pages_base": PAGES_BASE}
+        sf = ammonet.get("final_internet", {}).get("safe_fields") if isinstance(ammonet.get("final_internet"), dict) else None
+        if sf:
+            final_internet["safe_fields_live"] = sf
+        for key, rel in (final_internet.get("public_surfaces") or {}).items():
+            if isinstance(rel, str) and rel.startswith("/"):
+                final_internet["public_surfaces"][key] = f"{PAGES_BASE}{rel}"
+        (API / "final-internet.json").write_text(json.dumps(final_internet, indent=2) + "\n", encoding="utf-8")
+        files.append("final-internet.json")
 
     runtime = {
         "schema": "hostess7-pages-runtime/v1",
@@ -803,7 +1928,9 @@ def build() -> dict[str, Any]:
 
     queen_n = _rsync_queen()
     assets_n = _rsync_panel_assets()
+    zacs_n = _stage_zacs_png()
     panel_n = _stage_panel_surfaces()
+    command_publish = _write_command_basement_pages()
     _write_desktop_indices()
     _write_queen_browser()
     desktop = _run_field_host_desktop()
@@ -813,8 +1940,11 @@ def build() -> dict[str, Any]:
         "queen_files": queen_n,
         "panel_assets": assets_n,
         "panel_surfaces": panel_n,
+        "command_basement": command_publish,
+        "zacs_png": zacs_n,
         "api_files": api_files,
         "pages_base": PAGES_BASE,
+        "command_pages_base": COMMAND_PAGES_BASE,
         "exported": _ts(),
     }
 

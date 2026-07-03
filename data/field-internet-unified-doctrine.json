@@ -1,0 +1,74 @@
+{
+  "schema": "field-internet-unified/v1",
+  "title": "Field Internet Unified — one voice, all pipes, GitHub always open",
+  "product": "AmmoNet",
+  "boss": "hostess7",
+  "motto": "Fielded bot network — one thing talks everywhere. GitHub stays open. All internet through Hostess 7.",
+  "one_voice": {
+    "module": "lib/field-internet-unified.py",
+    "api": "/api/field-internet",
+    "keepalive_api": "/api/field-internet/keepalive",
+    "boss": "hostess7",
+    "egress": "connection_gatekeeper",
+    "relayer": "znetwork_relayer",
+    "isp": "ammonet"
+  },
+  "github_legacy": {
+    "module": "lib/field-github-legacy.py",
+    "doctrine": "data/field-github-legacy-doctrine.json",
+    "api": "/api/field-github-legacy",
+    "motto": "Canonical + old stack repos — TLS secure, legacy clients welcome"
+  },
+  "github_everyone": {
+    "module": "lib/field-github-everyone.py",
+    "doctrine": "data/field-github-everyone-doctrine.json",
+    "api": "/api/field-github-everyone",
+    "motto": "Everyone needs GitHub — botnet civilian passthrough, DNS truth, Pages mirrors"
+  },
+  "github_always": {
+    "enabled": true,
+    "probe_interval_sec": 30,
+    "legacy_module": "lib/field-github-legacy.py",
+    "endpoints": [
+      {"id": "github_com", "url": "https://github.com", "role": "canonical_git"},
+      {"id": "api_github", "url": "https://api.github.com", "role": "api"},
+      {"id": "hostess7_pages", "url": "https://zacharygeurts.github.io/Hostess7/", "role": "pages_runtime"},
+      {"id": "command_pages", "url": "https://zacharygeurts.github.io/command/", "role": "c2_pages"},
+      {"id": "ammoos_pages", "url": "https://zacharygeurts.github.io/AmmoOS/", "role": "manual"}
+    ],
+    "catalog": "data/ammoos-pages-hub.json"
+  },
+  "fielded_bot_network": {
+    "enabled": true,
+    "lab": "GrokLab",
+    "registry": ".nexus-state/grok-lab-world-registry.json",
+    "qemu_api": "/api/qemu-world-status",
+    "motto": "World nodes on the fielded bot network share one unified egress through Hostess 7",
+    "dns_dhcp": {
+      "doctrine": "data/field-botnet-dns-dhcp-doctrine.json",
+      "module": "lib/field-botnet-dns-dhcp.py",
+      "api": "/api/field-botnet-dns-dhcp",
+      "for_everyone": true,
+      "github_control_plane": true
+    }
+  },
+  "wires": [
+    {"id": "hostess7", "module": "lib/hostess7-lab-sovereign.py", "role": "boss"},
+    {"id": "ammonet", "module": "lib/ammonet-field.py", "role": "isp_hub"},
+    {"id": "znetwork_wire", "module": "lib/hostess7-znetwork-wire.py", "role": "egress_voice"},
+    {"id": "gatekeeper", "module": "lib/connection-gatekeeper.py", "role": "iff_trust"},
+    {"id": "sovereign_bridge", "module": "lib/field-sovereign-protocol-bridge.py", "role": "protocol_mux"},
+    {"id": "znetwork", "module": "lib/znetwork-orchestrator.py", "role": "relayer"},
+    {"id": "final_internet", "doctrine": "data/final-internet-doctrine.json", "role": "safe_fields"},
+    {"id": "botnet_dns_dhcp", "module": "lib/field-botnet-dns-dhcp.py", "role": "dns_dhcp_everyone"}
+  ],
+  "interaction": {
+    "lane": "hostess7-github",
+    "doctrine": "data/hostess7-github-interaction-doctrine.json",
+    "module": "lib/hostess7-github-interaction.py",
+    "api": "/api/hostess7/interaction",
+    "motto": "Interactions straight with Hostess 7 on GitHub — constant open connection. Secure for us."
+  },
+  "layer": 0,
+  "ships_with": ["ammoos", "ammonet", "field-broadcaster"]
+}

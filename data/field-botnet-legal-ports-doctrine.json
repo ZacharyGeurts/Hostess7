@@ -25,6 +25,10 @@
     "ports": [8080, 8443, 3004, 3005, 8000, 8888, 5000, 5173, 4173],
     "note": "Legal dev/app servers — allow for consumer+botnet; score only for untrusted daemons"
   },
+  "github_service_ports": {
+    "ports": [22, 443, 9418],
+    "note": "GitHub git/https/ssh — auto-allow for everyone through botnet civilian passthrough"
+  },
   "h7t_truth": {
     "module": "lib/field-h7t-truth.py",
     "doctrine": "data/field-h7t-truth-doctrine.json",

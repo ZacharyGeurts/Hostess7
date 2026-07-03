@@ -66,6 +66,16 @@ def context_ports(doctrine: dict[str, Any] | None = None) -> frozenset[str]:
     return frozenset(str(p) for p in raw)
 
 
+def github_service_ports(doctrine: dict[str, Any] | None = None) -> frozenset[str]:
+    doc = doctrine or _load(DOCTRINE, {})
+    raw = (doc.get("github_service_ports") or {}).get("ports") or [22, 443, 9418]
+    return frozenset(str(p) for p in raw)
+
+
+def is_github_service_port(port: int | str, *, doctrine: dict[str, Any] | None = None) -> bool:
+    return str(port) in github_service_ports(doctrine)
+
+
 def is_legal_port(port: int | str, *, doctrine: dict[str, Any] | None = None) -> bool:
     try:
         p = int(port)
@@ -110,6 +120,18 @@ def port_verdict(
             "reason": f"stalker_lop:{p}",
             "legal": False,
             "h7t_required": False,
+        }
+
+    if is_github_service_port(port, doctrine=doc):
+        return {
+            "permit": True,
+            "verdict": "USER_OK",
+            "reason": "github_service_port",
+            "legal": True,
+            "github": True,
+            "for_everyone": True,
+            "h7t_required": False,
+            "benefits_factor": 1,
         }
 
     if safe_stack:
@@ -165,6 +187,8 @@ def port_verdict(
 
 def gatekeeper_port_harm(port: str, *, proc: str = "", h7t_witness: bool = False) -> tuple[int, str]:
     """Drop-in for connection-gatekeeper _axis_destination harm scoring."""
+    if is_github_service_port(port):
+        return 0, "github_service"
     if is_stalker_port(port):
         return 10, "stalker_lop"
     if is_context_port(port):

@@ -1,0 +1,46 @@
+{
+  "schema": "field-github-everyone/v1",
+  "title": "GitHub for everyone — botnet civilian passthrough, DNS truth, Pages mirrors",
+  "boss": "hostess7",
+  "motto": "Everyone needs GitHub — repos, Pages, raw, API, git — open for all through the field botnet",
+  "for_everyone": {
+    "enabled": true,
+    "civilian_passthrough": true,
+    "dns_always_allow": true,
+    "legal_ports_auto": true,
+    "pages_mirror_fallback": true,
+    "h7t_for_foreign_repos": true,
+    "note": "Sovereign ZacharyGeurts stack runs native; everyone else gets GitHub + H7t chamber for foreign payloads"
+  },
+  "github_domains": [
+    "github.com",
+    "api.github.com",
+    "raw.githubusercontent.com",
+    "codeload.github.com",
+    "objects.githubusercontent.com",
+    "github.io",
+    "githubassets.com",
+    "githubusercontent.com",
+    "ssh.github.com"
+  ],
+  "github_service_ports": [22, 443, 9418],
+  "fallback_chain": [
+    "https://github.com",
+    "https://raw.githubusercontent.com",
+    "https://zacharygeurts.github.io/Hostess7/",
+    "http://127.0.0.1:9477"
+  ],
+  "wires": [
+    {"id": "github_legacy", "module": "lib/field-github-legacy.py", "api": "/api/field-github-legacy"},
+    {"id": "github_resilience", "module": "lib/field-github-resilience.py", "api": "/api/field-github-resilience"},
+    {"id": "internet_unified", "module": "lib/field-internet-unified.py", "api": "/api/field-internet"},
+    {"id": "botnet_dns_dhcp", "module": "lib/field-botnet-dns-dhcp.py", "api": "/api/field-botnet-dns-dhcp"},
+    {"id": "legal_ports", "module": "lib/field-botnet-legal-ports.py", "api": "/api/field-botnet-legal-ports"},
+    {"id": "h7t_truth", "module": "lib/field-h7t-truth.py", "api": "/api/field-h7t-truth"},
+    {"id": "field_dns", "module": "lib/field-dns.py", "api": "/api/field-dns"}
+  ],
+  "pages_wire": "Hostess7/docs/pages-github-everyone-wire.js",
+  "api": "/api/field-github-everyone",
+  "layer": 0,
+  "ships_with": ["ammoos", "ammonet", "field-internet-unified", "field-botnet-dns-dhcp"]
+}
