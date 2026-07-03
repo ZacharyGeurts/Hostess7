@@ -131,7 +131,7 @@ materialize_siblings() {
     mkdir -p "$link"
     copied=0
     if rsync -a \
-      --exclude='.git' --exclude='build' --exclude='build-cmake' --exclude='cache'
+      --exclude='.git' --exclude='build' --exclude='build-cmake' --exclude='cache' \
       --exclude='vendor' --exclude='.venv*' --exclude='__pycache__' --exclude='*.pyc' \
       "${target}/" "${link}/" 2>/dev/null; then
       copied=1
