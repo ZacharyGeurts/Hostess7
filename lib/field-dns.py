@@ -524,10 +524,24 @@ def _udp_loop(family: int, host: str) -> None:
     sock.bind((host, PORT))
     blocked = _load_blocklist()
     last_reload = time.time()
+    clear_signal = STATE / "field-dns-clear.signal"
+    last_clear_stamp = ""
     while True:
         if time.time() - last_reload > 120:
             blocked = _load_blocklist()
             last_reload = time.time()
+        if clear_signal.is_file():
+            try:
+                stamp = clear_signal.read_text(encoding="utf-8").strip()
+            except OSError:
+                stamp = ""
+            if stamp and stamp != last_clear_stamp:
+                with _cache_lock:
+                    _cache.clear()
+                _stats["cache_hits"] = 0
+                _stats["cache_misses"] = 0
+                last_clear_stamp = stamp
+                _publish({"cache_cleared": stamp, "destructive": True})
         try:
             data, addr = sock.recvfrom(4096)
         except OSError:
@@ -1235,7 +1249,31 @@ def main() -> int:
     if cmd == "status":
         print(json.dumps(status(), ensure_ascii=False))
         return 0
-    print("usage: field-dns.py [serve|build|json|status]", file=sys.stderr)
+    if cmd in ("clean", "clean-tables"):
+        clean_py = INSTALL / "lib" / "field-dns-table-clean.py"
+        if clean_py.is_file():
+            proc = subprocess.run(
+                [sys.executable, str(clean_py), "clean"],
+                env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)},
+                check=False,
+            )
+            return proc.returncode
+        print(json.dumps({"ok": True, "mode": "clean", "note": "no table-clean module"}, ensure_ascii=False))
+        return 0
+    if cmd in ("clear-tables", "flush-cache"):
+        clean_py = INSTALL / "lib" / "field-dns-table-clean.py"
+        if clean_py.is_file():
+            extra = ["clear"]
+            if os.environ.get("I_KNOW_DNS_CLEAR", "").strip().lower() in ("1", "yes", "on"):
+                extra.append("--i-know")
+            proc = subprocess.run(
+                [sys.executable, str(clean_py), *extra],
+                env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)},
+                check=False,
+            )
+            return proc.returncode
+        return 1
+    print("usage: field-dns.py [serve|build|json|status|clean-tables|clear-tables]", file=sys.stderr)
     return 1
 
 

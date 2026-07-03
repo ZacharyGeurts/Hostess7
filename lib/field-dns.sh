@@ -65,6 +65,23 @@ nexus_field_dns_publish() {
     pythong "$drift" panel >/dev/null 2>&1 || true
 }
 
+nexus_field_dns_clean_tables() {
+  [[ "${NEXUS_FIELD_DNS:-1}" == "1" ]] || return 0
+  local py="${NEXUS_INSTALL_ROOT}/lib/field-dns-table-clean.py"
+  [[ -f "$py" ]] || return 0
+  NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+    pythong "$py" clean >/dev/null 2>&1 || true
+}
+
+nexus_field_dns_clear_tables() {
+  [[ "${NEXUS_FIELD_DNS:-1}" == "1" ]] || return 0
+  [[ "${I_KNOW_DNS_CLEAR:-}" == "1" ]] || return 2
+  local py="${NEXUS_INSTALL_ROOT}/lib/field-dns-table-clean.py"
+  [[ -f "$py" ]] || return 0
+  NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+    pythong "$py" clear --i-know >/dev/null 2>&1 || true
+}
+
 nexus_dns_internet_pull_loop() {
   [[ "${NEXUS_DNS_INTERNET_PULL:-1}" == "1" ]] || return 0
   local py="${NEXUS_INSTALL_ROOT}/lib/dns-internet-field.py"

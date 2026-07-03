@@ -1,0 +1,51 @@
+{
+  "schema": "field-dns-table-clean/v1",
+  "title": "Truth DNS table hygiene — clean ≠ clear",
+  "motto": "Clean = expire stale rows, reconcile authority, reaffirm policy. Clear = wipe tables — only when you know.",
+  "clean": {
+    "expire_shard_ttl_sec": 600,
+    "expire_probe_panel_ttl_sec": 900,
+    "query_log_keep_lines": 500,
+    "cache_hints_keep_lines": 200,
+    "dhcp_events_keep_lines": 100,
+    "rebuild_panels": true,
+    "rescan_drift": true,
+    "enforce_resolv": true,
+    "reaffirm_foreign_block": true,
+    "flush_stub_cache": false
+  },
+  "clear": {
+    "requires_i_know": true,
+    "truncate_logs": true,
+    "remove_shard_probes": true,
+    "remove_probe_panels": true,
+    "flush_in_memory_cache": true,
+    "flush_stub_cache": true,
+    "dhcp_leases": false
+  },
+  "paths": {
+    "query_log": "field-dns-queries.jsonl",
+    "cache_hints": "field-dns-cache-hints.jsonl",
+    "shard_probes_dir": "field-github-shard-probes",
+    "probe_panels": [
+      "field-github-legacy-probe.json",
+      "field-github-resilience-probe.json",
+      "field-internet-github.json",
+      "field-github-traffic-rotation.json",
+      "field-dns-drift-threat-panel.json",
+      "field-github-path-harden-panel.json"
+    ]
+  },
+  "theirs": {
+    "stub_witness": "127.0.0.53"
+  },
+  "rebuild_after": [
+    "lib/field-dns.py",
+    "lib/field-dhcp.py",
+    "lib/field-dns-drift-threat.py",
+    "lib/dns-service-takeover.py"
+  ],
+  "api_clean": "/api/field-dns-table-clean",
+  "api_clear": "/api/field-dns-table-clear",
+  "cli": "scripts/dns-clean-tables.sh"
+}

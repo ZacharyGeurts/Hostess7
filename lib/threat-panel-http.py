@@ -5289,6 +5289,23 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        if path == "/api/field-dns-table-clean":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dns-table-clean.py", ["clean"], timeout=45)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-dns-table-clear":
+            if os.environ.get("I_KNOW_DNS_CLEAR", "").strip().lower() not in ("1", "yes", "on"):
+                self._send(403, json.dumps({
+                    "ok": False,
+                    "error": "clear_requires_i_know",
+                    "hint": "Set I_KNOW_DNS_CLEAR=1 on loopback authority only if you know what you are doing.",
+                }, ensure_ascii=False), "application/json")
+                return
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dns-table-clean.py", ["clear", "--i-know"], timeout=45)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path.startswith("/api/field-monster-monitor"):
             script = INSTALL_ROOT / "lib" / "field-monster-monitor.py"
             if not script.is_file():
