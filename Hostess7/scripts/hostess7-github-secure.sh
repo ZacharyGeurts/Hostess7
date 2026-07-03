@@ -14,6 +14,9 @@ case "$CMD" in
     shift || true
     exec pythong "$SECURE" "$CMD" "$@"
     ;;
+  lanes|probe)
+    exec pythong "$SECURE" lanes
+    ;;
   push)
     shift
     DIR="${1:-${HOSTESS7_SECURE_PUBLISH_DIR:-${NEXUS_INSTALL_ROOT}/dist/hostess7-github-publish}}"
@@ -40,6 +43,7 @@ Hostess7 secure git — pinned GitHub SSH keys, MITM-resistant
   ./Hostess7.sh github-secure verify     Match keys, DNS, anti-redirect/hook audit
   ./Hostess7.sh github-secure audit [DIR]  Scan git config/hooks for hijacks
   ./Hostess7.sh github-secure route        Pick direct :22 or tunnel :443
+  ./Hostess7.sh github-secure lanes        Probe all push lanes (SSH · HTTPS · Pages CDN)
   ./Hostess7.sh github-secure publish      Stage Hostess7 + push main + Pages (no release tag)
   HOSTESS7_PUSH_TAG=1 github-secure publish  Same + git tag v<version> (release)
   ./Hostess7.sh github-secure push [DIR]   Push staged repo (--branch --remote --tag)

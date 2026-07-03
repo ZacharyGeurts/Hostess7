@@ -130,7 +130,8 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh g16-online [panel|ensure|probe]  Grok16 online compiler — Pages + local g16 for Hostess 7
   ./Hostess7.sh secure-bookmarks-purge   Remove orphan loopback bookmarks · re-export HTTPS+Secure to Firefox
   ./Hostess7.sh github [status|invite|bootstrap]  Bot @hostess7 repo access
-  ./Hostess7.sh github-secure [verify|audit|route|publish|push|clone]  Pinned SSH — no MITM/redirect
+  ./Hostess7.sh github-secure [verify|audit|route|lanes|publish|push|clone]  Pinned SSH — no MITM/redirect
+  ./scripts/github-lanes.sh probe|setup-remotes|push  All GitHub lanes (:22 · :443 tunnel · HTTPS token)
   ./Hostess7.sh queen-github-secure [verify|status]  Queen Browser GitHub pin check
   ./Hostess7.sh k12-ingest seed       K-12 OER textbook catalog (grades K-12)
   ./Hostess7.sh k12-ingest fetch      Fetch ALL catalog URLs — truth-filter on input

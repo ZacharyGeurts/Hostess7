@@ -89,7 +89,20 @@ def _write_known_hosts(doc: dict[str, Any]) -> Path:
     return KNOWN_HOSTS
 
 
-def _probe_tcp(host: str, port: int, timeout: float = 5.0) -> bool:
+def _probe_tcp(host: str, port: int, timeout: float = 8.0) -> bool:
+    """IPv4-first TCP probe — avoids broken IPv6 DNS on some ISPs."""
+    for family, _, _, _, sockaddr in (
+        socket.getaddrinfo(host, port, socket.AF_INET, socket.SOCK_STREAM)
+        if host
+        else []
+    ):
+        try:
+            with socket.socket(family, socket.SOCK_STREAM) as sock:
+                sock.settimeout(timeout)
+                sock.connect(sockaddr)
+                return True
+        except OSError:
+            continue
     try:
         with socket.create_connection((host, port), timeout=timeout):
             return True
@@ -188,17 +201,31 @@ def _verify_host_keys(doc: dict[str, Any]) -> dict[str, Any]:
     return {"ok": all_ok, "hosts": per_host}
 
 
-def _tls_pin_ok(host: str) -> bool:
-    ctx = ssl.create_default_context()
-    with socket.create_connection((host, 443), timeout=12) as sock:
-        with ctx.wrap_socket(sock, server_hostname=host) as ssock:
-            der = ssock.getpeercert(binary_form=True)
-    fp = hashlib.sha256(der).hexdigest() if der else ""
+def _tls_pin_ok(host: str) -> tuple[bool, str]:
     doc = _load_doctrine()
     expected = (doc.get("api") or {}).get("tls_pin_sha256")
     if not expected:
-        return True
-    return fp.lower() == str(expected).lower().replace(":", "")
+        if os.environ.get("HOSTESS7_GIT_REQUIRE_API_TLS", "").strip().lower() in ("1", "yes", "on"):
+            pass
+        else:
+            return True, "skipped_no_pin"
+    if os.environ.get("HOSTESS7_GIT_SKIP_API_TLS", "").strip().lower() in ("1", "yes", "on"):
+        return True, "skipped_env"
+    timeout = float(os.environ.get("HOSTESS7_GIT_API_TLS_TIMEOUT", "6"))
+    try:
+        ctx = ssl.create_default_context()
+        with socket.create_connection((host, 443), timeout=timeout) as sock:
+            with ctx.wrap_socket(sock, server_hostname=host) as ssock:
+                der = ssock.getpeercert(binary_form=True)
+        fp = hashlib.sha256(der).hexdigest() if der else ""
+        if not expected:
+            return True, "reachable"
+        ok = fp.lower() == str(expected).lower().replace(":", "")
+        return ok, "pinned" if ok else "pin_mismatch"
+    except OSError as exc:
+        if not expected:
+            return True, f"unreachable_soft:{exc}"
+        return False, f"unreachable:{exc}"
 
 
 def _audit_git_config(cwd: Path | None = None) -> dict[str, Any]:
@@ -298,7 +325,22 @@ def _https_to_ssh(url: str, doc: dict[str, Any]) -> str:
     return url
 
 
+def _validate_https_remote(url: str, doc: dict[str, Any]) -> dict[str, Any]:
+    m = re.match(r"https://[^@]+@github\.com/([^/]+)/([^/]+?)(?:\.git)?$", url)
+    if not m:
+        m = re.match(r"https://github\.com/([^/]+)/([^/]+?)(?:\.git)?$", url)
+    if not m:
+        return {"ok": False, "remote": url, "error": "https remote must be github.com owner/repo"}
+    owner, repo = m.group(1), m.group(2)
+    allowed_owner = str(doc.get("owner") or OWNER)
+    if owner != allowed_owner:
+        return {"ok": False, "remote": url, "error": f"owner {owner} != doctrine owner {allowed_owner}"}
+    return {"ok": True, "remote": url, "transport": "https"}
+
+
 def _validate_remote(url: str, doc: dict[str, Any]) -> dict[str, Any]:
+    if url.startswith("https://"):
+        return _validate_https_remote(url, doc)
     ssh = _https_to_ssh(url, doc)
     m = re.match(r"git@github\.com:([^/]+)/([^/]+?)(?:\.git)?$", ssh)
     if not m:
@@ -337,37 +379,73 @@ def audit(cwd: Path | None = None) -> dict[str, Any]:
     }
 
 
-def verify(cwd: Path | None = None) -> dict[str, Any]:
+def probe_lanes(doc: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Probe every GitHub push lane — SSH :22, tunnel :443, API HTTPS, Pages CDN."""
+    doc = doc or _load_doctrine()
+    hosts = doc.get("hosts") or {}
+    direct_port = int((hosts.get("github.com") or {}).get("port") or 22)
+    tunnel_port = int((hosts.get("ssh.github.com") or {}).get("port") or 443)
+    api_host = (doc.get("api") or {}).get("host") or "api.github.com"
+    lanes: list[dict[str, Any]] = []
+
+    def _lane(lid: str, ok: bool, **meta: Any) -> None:
+        lanes.append({"id": lid, "ok": ok, **meta})
+
+    _lane("ssh_direct_22", _probe_tcp("github.com", direct_port), host="github.com", port=direct_port)
+    _lane("ssh_tunnel_443", _probe_tcp("ssh.github.com", tunnel_port), host="ssh.github.com", port=tunnel_port)
+    _lane("api_https_443", _probe_tcp(api_host, 443), host=api_host, port=443)
+    _lane("pages_cdn_443", _probe_tcp("zacharygeurts.github.io", 443), host="zacharygeurts.github.io", port=443)
+    _lane("raw_github_443", _probe_tcp("raw.githubusercontent.com", 443), host="raw.githubusercontent.com", port=443)
+    _lane("https_token_push", bool(_token()), note="GITHUB_TOKEN/HOSTESS7_GITHUB_TOKEN set")
+
+    recommended = "none"
+    if any(l["id"] == "ssh_direct_22" and l["ok"] for l in lanes):
+        recommended = "ssh_direct_22"
+    elif any(l["id"] == "ssh_tunnel_443" and l["ok"] for l in lanes):
+        recommended = "ssh_tunnel_443"
+    elif any(l["id"] == "https_token_push" and l["ok"] for l in lanes):
+        recommended = "https_token_push"
+    route_map = {"ssh_direct_22": "direct", "ssh_tunnel_443": "tunnel", "https_token_push": "https"}
+    route = route_map.get(recommended, "none")
+    return {"schema": "hostess7-github-lanes/v1", "lanes": lanes, "recommended": recommended, "route": route}
+
+
+def verify(cwd: Path | None = None, *, for_push: bool = False) -> dict[str, Any]:
     doc = _load_doctrine()
     known = _write_known_hosts(doc)
     keys = _verify_host_keys(doc)
     dns = _verify_dns(doc)
     route = _pick_route(doc)
     api_host = (doc.get("api") or {}).get("host") or "api.github.com"
-    tls_ok = _tls_pin_ok(api_host) if (doc.get("api") or {}).get("verify_tls", True) else True
+    verify_tls = (doc.get("api") or {}).get("verify_tls", True)
+    tls_ok, tls_note = (True, "disabled") if not verify_tls else _tls_pin_ok(api_host)
     gh = shutil.which("gh")
     token = bool(_token())
     hook_audit = audit(cwd)
     config_ok = hook_audit["git_config"]["ok"]
     hooks_ok = hook_audit["git_hooks"]["ok"]
+    lanes = probe_lanes(doc)
+    can_ssh = bool(keys.get("ok") and dns.get("ok") and route != "none")
+    can_https = bool(_token()) and _probe_tcp(api_host, 443)
+    if for_push:
+        push_ok = (can_ssh or can_https) and config_ok and hooks_ok
+    else:
+        push_ok = can_ssh and config_ok and hooks_ok
+    full_ok = push_ok and tls_ok and bool(gh or token)
     out = {
-        "ok": (
-            keys.get("ok")
-            and dns.get("ok")
-            and tls_ok
-            and route != "none"
-            and bool(gh or token)
-            and config_ok
-            and hooks_ok
-        ),
+        "ok": push_ok if for_push else full_ok,
+        "push_ok": push_ok,
+        "full_ok": full_ok,
         "known_hosts": str(known),
         "ssh_key_match": keys,
         "dns_pin": dns,
         "route": route,
         "tls_ok": tls_ok,
+        "tls_note": tls_note,
         "gh_cli": bool(gh),
         "token_present": token,
         "anti_hook": hook_audit,
+        "lanes": lanes,
         "policy": doc.get("policy"),
         "repos": doc.get("repos"),
     }
@@ -383,9 +461,23 @@ def _run_git(cwd: Path | None, args: list[str], *, ssh_cmd: str, env: dict[str, 
     return subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=7200, check=False)
 
 
-def git_run(cwd: Path, args: list[str], *, remote: str | None = None) -> dict[str, Any]:
+def _https_remote(owner: str, repo: str) -> str | None:
+    tok = _token()
+    if not tok:
+        return None
+    return f"https://x-access-token:{tok}@github.com/{owner}/{repo}.git"
+
+
+def git_run(
+    cwd: Path,
+    args: list[str],
+    *,
+    remote: str | None = None,
+    route_override: str | None = None,
+    for_push: bool = False,
+) -> dict[str, Any]:
     doc = _load_doctrine()
-    v = verify(cwd)
+    v = verify(cwd, for_push=for_push or any(a == "push" for a in args))
     if not v.get("ok"):
         err = "secure git verify failed"
         if not v.get("ssh_key_match", {}).get("ok"):
@@ -400,7 +492,8 @@ def git_run(cwd: Path, args: list[str], *, remote: str | None = None) -> dict[st
             err = "cannot reach github.com:22 or ssh.github.com:443"
         return {"ok": False, "error": err, **v}
     known = Path(v["known_hosts"])
-    ssh_cmd = _ssh_command(known, str(v.get("route")))
+    route = route_override or str(v.get("route"))
+    ssh_cmd = _ssh_command(known, route) if route != "https" else "ssh -o BatchMode=yes"
     env = _sanitize_env()
     if remote:
         chk = _validate_remote(remote, doc)
@@ -421,21 +514,65 @@ def git_run(cwd: Path, args: list[str], *, remote: str | None = None) -> dict[st
         "stderr": (proc.stderr or "").strip(),
         "cwd": str(cwd),
         "args": args,
-        "route": v.get("route"),
+        "route": route,
     }
 
 
 def push_repo(cwd: Path, *, branch: str = "main", remote: str, tag: str | None = None, force: bool = False) -> dict[str, Any]:
-    steps: list[dict] = []
+    doc = _load_doctrine()
+    lanes_doc = probe_lanes(doc)
+    attempts: list[dict[str, Any]] = []
     flag = ["--force"] if force else []
-    r = git_run(cwd, ["push", "-u", "origin", branch, *flag], remote=remote)
-    steps.append({"step": "push", **r})
-    if tag:
-        git_run(cwd, ["tag", "-a", tag, "-m", tag, "-f"], remote=remote)
-        tr = git_run(cwd, ["push", "origin", tag, "--force"], remote=remote)
-        steps.append({"step": "tag", **tr})
-    ok = all(s.get("ok") for s in steps)
-    return {"ok": ok, "branch": branch, "tag": tag, "steps": steps}
+
+    def _try_push(*, lane: str, route: str | None, remote_url: str) -> dict[str, Any]:
+        r = git_run(
+            cwd,
+            ["push", "-u", "origin", branch, *flag],
+            remote=remote_url,
+            route_override=route,
+            for_push=True,
+        )
+        return {"lane": lane, "route": route, "remote": remote_url, **r}
+
+    order: list[tuple[str, str | None, str]] = []
+    if lanes_doc.get("recommended") == "ssh_direct_22":
+        order.append(("ssh_direct_22", "direct", remote))
+    if lanes_doc.get("recommended") == "ssh_tunnel_443" or not order:
+        order.append(("ssh_tunnel_443", "tunnel", remote))
+    if ("ssh_direct_22", "direct", remote) not in order:
+        order.append(("ssh_direct_22", "direct", remote))
+
+    m = re.match(r"git@github\.com:([^/]+)/([^/]+?)(?:\.git)?$", remote)
+    if m:
+        https = _https_remote(m.group(1), m.group(2).replace(".git", ""))
+        if https:
+            order.append(("https_token", "https", https))
+
+    seen: set[tuple[str, str | None]] = set()
+    for lane, route, url in order:
+        key = (lane, route)
+        if key in seen:
+            continue
+        seen.add(key)
+        attempt = _try_push(lane=lane, route=route, remote_url=url)
+        attempts.append(attempt)
+        if attempt.get("ok"):
+            steps: list[dict] = [{"step": "push", **attempt}]
+            if tag:
+                git_run(cwd, ["tag", "-a", tag, "-m", tag, "-f"], remote=url, for_push=True)
+                tr = git_run(cwd, ["push", "origin", tag, "--force"], remote=url, for_push=True)
+                steps.append({"step": "tag", **tr})
+            return {
+                "ok": all(s.get("ok") for s in steps),
+                "branch": branch,
+                "tag": tag,
+                "lane": lane,
+                "route": route,
+                "steps": steps,
+                "attempts": attempts,
+            }
+
+    return {"ok": False, "branch": branch, "tag": tag, "steps": [], "attempts": attempts, "lanes": lanes_doc}
 
 
 def clone_repo(dest: Path, remote: str, *, branch: str | None = None) -> dict[str, Any]:
@@ -486,6 +623,10 @@ def main(argv: list[str] | None = None) -> int:
         route = _pick_route()
         print(json.dumps({"route": route, "policy": "direct=github.com:22 tunnel=ssh.github.com:443"}, indent=2))
         return 0 if route != "none" else 1
+    if args[0] == "lanes":
+        doc = probe_lanes()
+        print(json.dumps(doc, indent=2))
+        return 0 if doc.get("recommended") != "none" else 1
     if args[0] == "push":
         cwd = Path(args[1]).resolve()
         branch = "main"
