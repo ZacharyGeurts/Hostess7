@@ -44,6 +44,8 @@ pip install -r requirements.txt
 
 Open **https://zacharygeurts.github.io/Hostess7/** for the full package on GitHub Pages, or **http://127.0.0.1:9477/field** after local boot for live AmmoOS.
 
+**Brain:** Public mind = `docs/github-brain` on Pages. Sovereign loopback brain = `~/Desktop/hostess7-brain` (never in the SG git tree). Migrate: `bash Hostess7/scripts/hostess7-brain-desktop-migrate.sh`
+
 ```bash
 ./Hostess7.sh github-brain build   # mirror sovereign → docs/github-brain
 ./Hostess7.sh h7-optimise --apply  # H7s JSON + PNG recompress before push
