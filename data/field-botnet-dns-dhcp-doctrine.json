@@ -1,0 +1,47 @@
+{
+  "schema": "field-botnet-dns-dhcp/v1",
+  "title": "Fielded bot network — secure stable DNS & DHCP for everyone through GitHub",
+  "boss": "hostess7",
+  "motto": "Any and all bot-net nodes — Truth DNS + Field DHCP — stable for everyone · GitHub control plane",
+  "for_everyone": {
+    "civilian_passthrough": true,
+    "dns_truth": true,
+    "dhcp_field": true,
+    "stable": true,
+    "secure": true
+  },
+  "github_control_plane": {
+    "enabled": true,
+    "pages": "https://zacharygeurts.github.io/Hostess7/",
+    "doctrine_api": "/api/field-botnet-dns-dhcp",
+    "dns_api": "/api/field-dns",
+    "internet_api": "/api/field-internet",
+    "catalog": "data/ammoos-pages-hub.json",
+    "sync_interval_sec": 30
+  },
+  "bot_network": {
+    "member_registry": "lib/field-botnet-registry.py",
+    "registry": ".nexus-state/grok-lab-world-registry.json",
+    "prefer_member_registry": true,
+    "max_qemu_placeholder_nodes": 64,
+    "qemu_api": "/api/qemu-world-status",
+    "roles": ["dns_relay", "dhcp_relay", "truth_mirror", "github_sync", "power_user"],
+    "unified_egress": "hostess7"
+  },
+  "authorities": {
+    "dns": {"module": "lib/field-dns.py", "port": 53, "bind": "127.0.0.1"},
+    "dhcp": {"module": "lib/field-dhcp.py", "port": 67, "dns_option": ["127.0.0.1"]}
+  },
+  "wires": [
+    {"id": "internet_unified", "module": "lib/field-internet-unified.py"},
+    {"id": "botnet_dns_dhcp", "module": "lib/field-botnet-dns-dhcp.py"},
+    {"id": "botnet_legal_ports", "module": "lib/field-botnet-legal-ports.py"},
+    {"id": "h7t_truth", "module": "lib/field-h7t-truth.py"},
+    {"id": "github_resilience", "module": "lib/field-github-resilience.py"},
+    {"id": "gatekeeper", "module": "lib/connection-gatekeeper.py"},
+    {"id": "znetwork", "module": "lib/znetwork-orchestrator.py"}
+  ],
+  "layer": -2,
+  "fkey": "F10",
+  "ships_with": ["ammoos", "ammonet", "field-internet-unified"]
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "field-github-resilience/v1",
+  "title": "GitHub resilience — loopback authority + publish queue when control plane is down",
+  "boss": "hostess7",
+  "loopback_authority": {
+    "host": "127.0.0.1",
+    "port": 9477,
+    "base": "http://127.0.0.1:9477",
+    "apis": [
+      "/api/status",
+      "/api/field-github-resilience",
+      "/api/field-github-legacy",
+      "/api/field-internet",
+      "/api/field-botnet-dns-dhcp"
+    ]
+  },
+  "probes": [
+    {"id": "pages", "url": "https://zacharygeurts.github.io/Hostess7/", "role": "pages", "weight": 3},
+    {"id": "raw", "url": "https://raw.githubusercontent.com/ZacharyGeurts/Hostess7/main/VERSION", "role": "raw", "weight": 2},
+    {"id": "api", "url": "https://api.github.com/zen", "role": "api", "weight": 2},
+    {"id": "github_https", "url": "https://github.com/", "role": "web", "weight": 1},
+    {"id": "ssh_tunnel", "host": "ssh.github.com", "port": 443, "role": "git_push", "weight": 3},
+    {"id": "ssh_direct", "host": "github.com", "port": 22, "role": "git_push", "weight": 2}
+  ],
+  "degraded_ok_when": {
+    "loopback_up": true,
+    "pages_or_raw_open": true,
+    "min_open_probes": 1
+  },
+  "publish_queue": {
+    "path": ".nexus-state/hostess7-publish-queue.json",
+    "max_entries": 32,
+    "auto_flush": true
+  },
+  "pages_fallback_origin": "https://zacharygeurts.github.io/Hostess7/"
+}

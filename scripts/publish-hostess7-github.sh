@@ -25,7 +25,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 [[ -f "${ROOT}/lib/nexus-common.sh" ]] && source "${ROOT}/lib/nexus-common.sh"
 nexus_release_host_path 2>/dev/null || export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-HOSTESS7_VERSION="${HOSTESS7_VERSION:-2.0.7h}"
+HOSTESS7_VERSION="${HOSTESS7_VERSION:-3.0.7-beta5}"
 TAG="v${HOSTESS7_VERSION}"
 DIST="${ROOT}/dist"
 STAGE="${DIST}/hostess7-github-publish"
@@ -183,6 +183,17 @@ git_publish_stage() {
     log "dry-run: would git push ${STAGE} → ${REMOTE}"
     return 0
   fi
+  RES_PY="${ROOT}/lib/field-github-resilience.py"
+  if [[ -f "$RES_PY" ]]; then
+    RES_DOC="$(python3 "$RES_PY" probe 2>/dev/null || true)"
+    if ! echo "$RES_DOC" | python3 -c "import sys,json; d=json.load(sys.stdin); sys.exit(0 if d.get('github_push_ready') else 1)" 2>/dev/null; then
+      log "GitHub push lane down — enqueue publish and continue on loopback authority"
+      ENQ="$(python3 "$RES_PY" enqueue "$(python3 -c "import json; print(json.dumps({'version':'${HOSTESS7_VERSION}','tag':'${TAG}','stage':'${STAGE}','remote':'${REMOTE}'}))")" 2>/dev/null || true)"
+      log "queue: ${ENQ:-enqueue_failed}"
+      log "loopback authority: http://127.0.0.1:9477 — run publish-hostess7-github.sh --push when GitHub returns"
+      return 0
+    fi
+  fi
   cd "$STAGE"
   rm -rf .git
   git init -b main
@@ -203,8 +214,14 @@ git_publish_stage() {
   log "secure git push origin main"
   H7_SECURE="${ROOT}/Hostess7/scripts/hostess7_secure_git.py"
   if [[ -f "$H7_SECURE" ]]; then
-    pythong "$H7_SECURE" verify
-    pythong "$H7_SECURE" push "$STAGE" --branch main \
+    if ! python3 "$H7_SECURE" verify; then
+      log "secure git verify failed — enqueue for retry"
+      if [[ -f "$RES_PY" ]]; then
+        python3 "$RES_PY" enqueue "$(python3 -c "import json; print(json.dumps({'version':'${HOSTESS7_VERSION}','tag':'${TAG}','stage':'${STAGE}','remote':'${REMOTE}','reason':'verify_failed'}))")" 2>/dev/null || true
+      fi
+      return 0
+    fi
+    python3 "$H7_SECURE" push "$STAGE" --branch main \
       --remote "git@github.com:ZacharyGeurts/Hostess7.git" --tag "$TAG" --force
   else
     git push -u origin main --force

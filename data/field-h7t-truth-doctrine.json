@@ -1,0 +1,53 @@
+{
+  "schema": "field-h7t-truth/v1",
+  "title": "H7t — truthed isolation format for non-sovereign payloads",
+  "acronym": "H7t",
+  "expands_to": "Hostess 7 Truthed",
+  "magic": "H7T\\x01",
+  "format": "h7t/1",
+  "motto": "Not our safe stuff → truthed → H7t → 100× benefits in the chamber without touching the real deal",
+  "safe_stack": {
+    "sources": [
+      "data/hostess7-platform-release.json",
+      "data/ammoos-pages-hub.json",
+      "data/hostess7-supreme-authority.json"
+    ],
+    "path_prefixes": [
+      "Hostess7/",
+      "lib/field-",
+      "lib/hostess7-",
+      "lib/connection-gatekeeper.py",
+      "lib/ironclad-",
+      "Queen/world/",
+      "panel/",
+      "GNUEOLTerminal/",
+      "Grok16/",
+      "data/field-"
+    ],
+    "owner": "ZacharyGeurts"
+  },
+  "truth_pipeline": {
+    "rating": "lib/hostess7-truth-rating.py",
+    "lie_threat": "lib/hostess7-truth-lie-threat.py",
+    "min_assurance_pct": 40,
+    "chamber": "lib/field-legacy-isolation-chamber.py"
+  },
+  "inner_formats": {
+    "raw": "octet-stream",
+    "h7c": "lib/field-h7c-compression.py",
+    "h7s": "lib/field-h7s-format.py"
+  },
+  "benefits": {
+    "h7s_speedup_factor": 100,
+    "note": "Truthed H7t shells may carry h7s/1 inner faces — 100× hot-path without sovereign stack mutation"
+  },
+  "isolation": {
+    "layer": -3,
+    "no_sovereign_write": true,
+    "no_stack_meld": true,
+    "chamber_only_execute": true,
+    "state_dir": ".nexus-state/h7t-chamber"
+  },
+  "botnet_wire": "lib/field-botnet-legal-ports.py",
+  "api": "/api/field-h7t-truth"
+}

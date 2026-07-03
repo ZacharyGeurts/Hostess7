@@ -50,10 +50,41 @@ STREAM_CDN_PREFIXES = (
     "151.101.", "23.", "34.120.",  # Akamai/Fastly
     "13.32.", "13.33.", "13.35.",  # CloudFront
 )
-HARM_PORTS = frozenset({
+STALKER_LOP_PORTS = frozenset({
     "4444", "5555", "1337", "31337", "6666", "6667", "9001", "9050", "1080", "3128",
-    "4443", "8080", "8443", "3004", "3005", "6006", "6606", "8808",
+    "4443", "6006", "6606", "8808",
 })
+CONTEXT_PORTS = frozenset({"8080", "8443", "3004", "3005", "8000", "8888", "5000", "5173", "4173"})
+HARM_PORTS = STALKER_LOP_PORTS | CONTEXT_PORTS
+_legal_ports_mod: Any = None
+
+
+def _legal_ports_module():
+    global _legal_ports_mod
+    if _legal_ports_mod is not None:
+        return _legal_ports_mod
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("field_botnet_legal_ports", INSTALL / "lib" / "field-botnet-legal-ports.py")
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(mod)
+        _legal_ports_mod = mod
+    except Exception:
+        return None
+    return _legal_ports_mod
+
+
+def _port_harm_score(rport: str) -> tuple[int, str]:
+    lp = _legal_ports_module()
+    if lp and hasattr(lp, "gatekeeper_port_harm"):
+        return lp.gatekeeper_port_harm(rport)
+    if rport in STALKER_LOP_PORTS:
+        return 10, "stalker_lop"
+    if rport in CONTEXT_PORTS:
+        return 3, "context_port"
+    return 0, "iana_legal"
 KILL_VECTORS = frozenset({
     "C2_BEACON", "PACKET_INJECTION", "DNS_TUNNEL", "DNS_POISON", "RAW_SOCKET_INJECTION",
     "RST_FLOOD", "EGRESS_BEACON", "CONN_HARM",
@@ -566,9 +597,13 @@ def _axis_destination(ip_class: str, rport: str) -> tuple[int, str]:
         harm = 1
     elif ip_class == "private":
         harm = 0
-    if rport in HARM_PORTS:
+    port_harm, port_note = _port_harm_score(rport)
+    if port_harm >= 10:
         harm = 10
-    return harm, ip_class if rport not in HARM_PORTS else f"{ip_class}+bad_port"
+    elif port_harm >= 3 and harm < port_harm:
+        harm = port_harm
+    suffix = f"+{port_note}" if port_harm >= 3 else ""
+    return harm, f"{ip_class}{suffix}" if suffix else ip_class
 
 
 def _axis_threat_linked(rip: str, threats: dict[str, list[str]]) -> tuple[int, str]:
@@ -664,8 +699,10 @@ def _build_suggestion(
     elif ip_class in ("classified_remote", "hosting", "identified_org") and dc >= 6:
         intel_label = notes.get("intel_label") or rip
         unfriendly.append(f"{intel_label} is not a well-known CDN — classified remote peer ({dc}/10).")
-    if rport in HARM_PORTS:
-        unfriendly.append(f"Port {rport} is commonly used by malware and remote-control tools.")
+    if rport in STALKER_LOP_PORTS:
+        unfriendly.append(f"Port {rport} is on the stalker lop — malware/C2 socket, never auto-allowed.")
+    elif rport in CONTEXT_PORTS:
+        unfriendly.append(f"Port {rport} is a dev/app server port — legal but monitored unless H7t truthed.")
 
     tl = int(scores.get("threat_linked", 0))
     if tl >= 4:
@@ -1007,7 +1044,17 @@ def _kill_signal(
     vecs = [v for v in threats.get(rip, []) if v in KILL_VECTORS]
     if vecs:
         return True, f"threat_vector:{vecs[0]}", "strike"
-    if rport in HARM_PORTS and int(scores.get("process_trust", 0)) <= 3:
+    lp = _legal_ports_module()
+    if lp and hasattr(lp, "gatekeeper_should_block_port"):
+        if lp.gatekeeper_should_block_port(
+            rport,
+            proc=proc,
+            verdict=verdict,
+            process_trust=int(scores.get("process_trust", 0)),
+        ):
+            tier = "eradicate" if rport in STALKER_LOP_PORTS and proc not in BROWSER_PROCS else "block"
+            return True, f"legal_port_gate:{rport}", tier
+    elif rport in STALKER_LOP_PORTS and int(scores.get("process_trust", 0)) <= 3:
         tier = "eradicate" if proc not in BROWSER_PROCS else "block"
         return True, f"shell_port:{rport}", tier
     if verdict == "HARM_CANDIDATE" and block_rec:
@@ -1018,10 +1065,10 @@ def _kill_signal(
         if int(scores.get("beacon_pattern", 0)) >= 7 and proc not in BROWSER_PROCS:
             return True, "persistent_beacon", "eradicate"
         return True, "harm_candidate", "strike"
-    if verdict == "SUSPICIOUS" and rport in HARM_PORTS:
+    if verdict == "SUSPICIOUS" and rport in STALKER_LOP_PORTS:
         return True, f"suspicious_shell:{rport}", "block"
     seen = int(peer_history.get("seen_count", 0))
-    if seen >= 24 and rport in HARM_PORTS and proc not in CONSUMER_PROCS:
+    if seen >= 24 and rport in STALKER_LOP_PORTS and proc not in CONSUMER_PROCS:
         return True, f"beacon_burst:{seen}", "eradicate"
     return False, "", "none"
 
