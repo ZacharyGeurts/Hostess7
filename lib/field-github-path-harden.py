@@ -299,11 +299,13 @@ def path_audit(*, apply: bool = False, ensure_dns: bool = True, quick: bool = Fa
         ]
         tls = _tls_github()
     any_flap = any(f.get("flapping") for f in flaps)
-    direct_down_tunnel_up = (
-        flaps[0].get("all_down") and flaps[1].get("ok_count", 0) > 0
-    ) or (
-        flaps[0].get("flapping") and flaps[1].get("ok_count", 0) >= flaps[0].get("ok_count", 0)
-    )
+    direct_down_tunnel_up = False
+    if len(flaps) >= 2:
+        direct_down_tunnel_up = (
+            flaps[0].get("all_down") and flaps[1].get("ok_count", 0) > 0
+        ) or (
+            flaps[0].get("flapping") and flaps[1].get("ok_count", 0) >= flaps[0].get("ok_count", 0)
+        )
 
     verdict = "OK"
     if dns.get("suspect"):
