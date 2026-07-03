@@ -48,6 +48,7 @@ jobs:
         env:
           HOSTESS7_ROOT: ${{ github.workspace }}/Hostess7
           NEXUS_INSTALL_ROOT: ${{ github.workspace }}
+          NEXUS_STATE_DIR: ${{ github.workspace }}/.nexus-state-ci
           HOSTESS7_LICENSE_MODE: war
           HOSTESS7_WAR_PROFILE: "1"
           NEXUS_PRESUME_HOSTILE: "1"
