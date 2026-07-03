@@ -111,8 +111,36 @@ def _export_ask_seeds() -> dict[str, Any]:
     return {"ok": True, "schema": "hostess7-github-ask-seeds/v1", "lane": "github-mirror", "answers": answers, "exported": _ts()}
 
 
+def _export_operator_x() -> None:
+    import subprocess
+
+    env = {**os.environ, "HOSTESS7_ROOT": str(ROOT), "NEXUS_INSTALL_ROOT": str(ROOT.parent)}
+    for script, args, out_name in (
+        ("hostess7-x-comments.py", ["syndicate"], "operator-x-comments.json"),
+        ("hostess7-censorship-exposure.py", ["expose"], "operator-censorship-exposure.json"),
+    ):
+        py = ROOT.parent / "lib" / script
+        if not py.is_file():
+            continue
+        proc = subprocess.run(
+            [sys.executable, str(py), *args],
+            capture_output=True,
+            text=True,
+            timeout=60,
+            env=env,
+            cwd=str(ROOT.parent),
+        )
+        if proc.returncode == 0 and proc.stdout.strip():
+            try:
+                doc = json.loads(proc.stdout)
+                _write(out_name, doc)
+            except json.JSONDecodeError:
+                pass
+
+
 def export_all(*, full: bool = True) -> dict[str, Any]:
     os.environ.setdefault("HOSTESS7_ROOT", str(ROOT))
+    _export_operator_x()
     files: list[str] = []
     files.append(_write("health.json", _export_health()).name)
     files.append(_write("status.json", _export_status()).name)

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hostess 7 — GitHub Brain (chat)</title>
   <meta name="description" content="Full Hostess 7 package on GitHub Pages — talk, API, brain corpus from repo files. Same surface as local :8080." />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:* https://raw.githubusercontent.com https://api.github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://pbs.twimg.com https://abs.twimg.com; connect-src 'self' http://127.0.0.1:* http://localhost:* https://raw.githubusercontent.com https://api.github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -45,6 +45,14 @@
         </div>
       </section>
 
+      <section class="x-release-panel" id="x-release-panel" aria-label="Operator X comments — sovereign mirror">
+        <h2 class="x-release-title">BIG GRIN on X — comments released here</h2>
+        <p class="x-release-meta" id="x-release-meta">Syndicating…</p>
+        <div class="x-release-exposure" id="x-release-exposure"></div>
+        <ul class="x-release-posts" id="x-release-posts"></ul>
+        <ul class="x-release-comments" id="x-release-comments"></ul>
+      </section>
+
       <section class="search-row" aria-label="Corpus search">
         <form id="search-form" class="search-form">
           <select id="search-domain" aria-label="Domain">
@@ -82,5 +90,6 @@
   <script src="brain-engine.js"></script>
   <script src="gfx.js"></script>
   <script src="app.js"></script>
+  <script src="operator-x-release.js"></script>
 </body>
 </html>

@@ -3591,6 +3591,24 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in (
+            "/api/hostess7/x-comments",
+            "/api/hostess7-x-comments",
+            "/api/operator-x-comments",
+        ):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "hostess7-x-comments.py", ["syndicate"], timeout=45)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
+            "/api/hostess7/censorship-exposure",
+            "/api/hostess7-censorship-exposure",
+            "/api/operator-censorship-exposure",
+        ):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "hostess7-censorship-exposure.py", ["expose"], timeout=45)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path in ("/api/g16/stack", "/api/nexus/g16", "/api/nexus-g16-stack"):
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "nexus-g16-bridge.py", ["json"], timeout=40)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
