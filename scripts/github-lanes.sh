@@ -17,6 +17,15 @@ REPO="${HOSTESS7_GITHUB_REPO:-Hostess7}"
 export NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-$ROOT}"
 export NEXUS_STATE_DIR="${NEXUS_STATE_DIR:-$ROOT/.nexus-state}"
 
+ensure_truth_dns() {
+  if [[ -f "${ROOT}/lib/field-dns.sh" ]]; then
+    # shellcheck source=/dev/null
+    source "${ROOT}/lib/field-dns.sh"
+    nexus_field_dns_enforce_cycle 2>/dev/null || true
+  fi
+  python3 "${ROOT}/lib/field-dns-resolve.py" ensure >/dev/null 2>&1 || true
+}
+
 usage() {
   cat <<EOF
 github-lanes.sh — all GitHub push lanes for Hostess7
@@ -34,6 +43,7 @@ EOF
 }
 
 cmd_probe() {
+  ensure_truth_dns
   python3 "$SECURE" lanes
 }
 
@@ -56,12 +66,14 @@ cmd_setup_remotes() {
 }
 
 cmd_verify() {
+  ensure_truth_dns
   export HOSTESS7_GIT_SKIP_API_TLS="${HOSTESS7_GIT_SKIP_API_TLS:-1}"
   python3 "$SECURE" verify "$ROOT"
 }
 
 cmd_push() {
   local branch="${1:-main}"
+  ensure_truth_dns
   export HOSTESS7_GIT_SKIP_API_TLS="${HOSTESS7_GIT_SKIP_API_TLS:-1}"
   cmd_setup_remotes >/dev/null
   python3 "$SECURE" push "$ROOT" --branch "$branch" --remote "git@github.com:${OWNER}/${REPO}.git"

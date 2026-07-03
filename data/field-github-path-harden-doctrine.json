@@ -3,8 +3,22 @@
   "presume_mitm": true,
   "presume_hostile_isp": true,
   "default_route": "tunnel",
-  "notes": "Charter/Spectrum path to 140.82.x.x may flap or RST :22 — treat as hostile until proven otherwise.",
+  "notes": "We are our own DNS — Truth resolver @127.0.0.1:53 is authority. Charter/Spectrum stub is witness only; tunnel ssh.github.com:443 when :22 flaps.",
+  "sovereign_dns": {
+    "module": "lib/field-dns.py",
+    "resolve_module": "lib/field-dns-resolve.py",
+    "truth_host": "127.0.0.1",
+    "truth_port": 53,
+    "stub_witness": "127.0.0.53",
+    "primary": "truth_dns",
+    "ensure_before_git": true,
+    "block_foreign_resolvers": true
+  },
   "dns_crosscheck": {
+    "primary": "truth_dns",
+    "stub_witness": true,
+    "doh_witness": false,
+    "block_foreign_resolvers": true,
     "doh": [
       {"id": "cloudflare", "url": "https://cloudflare-dns.com/dns-query?name={host}&type=A", "json": true},
       {"id": "google", "url": "https://dns.google/resolve?name={host}&type=A", "json": true}

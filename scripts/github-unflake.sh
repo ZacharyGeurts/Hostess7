@@ -6,6 +6,15 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-$ROOT}"
 export NEXUS_STATE_DIR="${NEXUS_STATE_DIR:-$ROOT/.nexus-state}"
 
+ensure_truth_dns() {
+  if [[ -f "${ROOT}/lib/field-dns.sh" ]]; then
+    # shellcheck source=/dev/null
+    source "${ROOT}/lib/field-dns.sh"
+    nexus_field_dns_enforce_cycle 2>/dev/null || true
+  fi
+  python3 "${ROOT}/lib/field-dns-resolve.py" ensure >/dev/null 2>&1 || true
+}
+
 # Source auto-mitigations if present
 if [[ -f "${HOME}/.config/ammo-shield/github-lane.env" ]]; then
   # shellcheck source=/dev/null
@@ -27,6 +36,7 @@ EOF
 cmd_audit() {
   local apply=""
   [[ " $* " == *" --apply "* ]] && apply="--apply"
+  ensure_truth_dns
   python3 "${ROOT}/lib/field-github-path-harden.py" audit $apply
 }
 
@@ -44,6 +54,7 @@ print('verdict:', p.get('verdict'), 'route:', p.get('recommended_route'))
 
 cmd_push() {
   local branch="${1:-main}"
+  ensure_truth_dns
   cmd_audit --apply >/dev/null || true
   export HOSTESS7_GIT_TUNNEL="${HOSTESS7_GIT_TUNNEL:-tunnel}"
   export HOSTESS7_GIT_SKIP_API_TLS="${HOSTESS7_GIT_SKIP_API_TLS:-1}"

@@ -38,6 +38,12 @@
     "api": "/api/field-github-path-harden",
     "cli": "scripts/github-unflake.sh",
     "presume_mitm": true,
-    "default_push": "HOSTESS7_GIT_TUNNEL=tunnel ./scripts/github-lanes.sh push main"
+    "default_push": "HOSTESS7_GIT_TUNNEL=tunnel ./scripts/github-lanes.sh push main",
+    "sovereign_dns": {
+      "module": "lib/field-dns.py",
+      "resolve_module": "lib/field-dns-resolve.py",
+      "truth_host": "127.0.0.1",
+      "truth_port": 53
+    }
   }
 }

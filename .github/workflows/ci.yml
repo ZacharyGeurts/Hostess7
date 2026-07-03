@@ -129,6 +129,13 @@ jobs:
           export NEXUS_STATE_DIR="$PWD/.nexus-state-ci"
           bash tests/ammolang/snippets/ammosecurity_health_smoke.sh
 
+      - name: GitHub sovereign DNS + path harden smoke
+        run: |
+          export NEXUS_INSTALL_ROOT="$PWD"
+          export NEXUS_STATE_DIR="$PWD/.nexus-state-ci"
+          mkdir -p "$NEXUS_STATE_DIR"
+          bash tests/ammolang/snippets/github_sovereign_dns_smoke.sh
+
       # Future: multi-arch smoke matrix (uncomment when runners available)
       # - name: aarch64 smoke (commented)
       #   runs-on: ubuntu-24.04-arm

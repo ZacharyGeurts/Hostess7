@@ -1,7 +1,8 @@
 #!/usr/bin/env pythong
-"""GitHub path harden — presume MITM/hostile ISP; DNS cross-check, flap detect, tunnel-first."""
+"""GitHub path harden — presume MITM/hostile ISP; Truth DNS authority, flap detect, tunnel-first."""
 from __future__ import annotations
 
+import importlib.util
 import ipaddress
 import json
 import os
@@ -64,16 +65,36 @@ def _violation(msg: str) -> None:
         pass
 
 
-def _system_ips(host: str) -> list[str]:
-    ips: list[str] = []
+def _resolve_mod():
+    path = INSTALL / "lib" / "field-dns-resolve.py"
+    spec = importlib.util.spec_from_file_location("field_dns_resolve", path)
+    if not spec or not spec.loader:
+        raise ImportError("field-dns-resolve.py unavailable")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _truth_resolve(host: str) -> dict[str, Any]:
     try:
-        for info in socket.getaddrinfo(host, None, socket.AF_INET, socket.SOCK_STREAM):
-            ip = info[4][0]
-            if ip not in ips:
-                ips.append(ip)
-    except OSError:
-        pass
-    return ips
+        return _resolve_mod().resolve_a(host)
+    except (ImportError, OSError, AttributeError):
+        ips: list[str] = []
+        try:
+            for info in socket.getaddrinfo(host, None, socket.AF_INET, socket.SOCK_STREAM):
+                ip = info[4][0]
+                if ip not in ips:
+                    ips.append(ip)
+        except OSError:
+            pass
+        return {"host": host, "ips": ips, "source": "system", "truth_up": False, "truth": [], "stub": [], "system": ips}
+
+
+def _ensure_truth_dns() -> dict[str, Any]:
+    try:
+        return _resolve_mod().ensure_truth_dns()
+    except (ImportError, OSError, AttributeError):
+        return {"ok": False, "truth_up": False, "applied": []}
 
 
 def _doh_ips(host: str, url_tpl: str) -> list[str]:
@@ -115,23 +136,31 @@ def _ip_in_cidrs(ip: str, cidrs: list[str]) -> bool:
     return False
 
 
-def _tcp_once(host: str, port: int, timeout: float, *, bind_ip: str | None = None) -> dict[str, Any]:
+def _tcp_once(host: str, port: int, timeout: float, *, bind_ip: str | None = None, ips: list[str] | None = None) -> dict[str, Any]:
     t0 = time.monotonic()
-    try:
-        infos = socket.getaddrinfo(host, port, socket.AF_INET, socket.SOCK_STREAM)
-    except OSError as exc:
-        return {"ok": False, "error": str(exc), "ms": 0}
+    targets = list(ips or [])
+    if not targets:
+        resolved = _truth_resolve(host)
+        targets = list(resolved.get("ips") or [])
+    if not targets:
+        try:
+            for info in socket.getaddrinfo(host, port, socket.AF_INET, socket.SOCK_STREAM):
+                ip = info[4][0]
+                if ip not in targets:
+                    targets.append(ip)
+        except OSError as exc:
+            return {"ok": False, "error": str(exc), "ms": 0}
     last_err = ""
-    for _, _, _, _, sockaddr in infos:
+    for ip in targets:
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(timeout)
             if bind_ip:
                 sock.bind((bind_ip, 0))
-            sock.connect(sockaddr)
+            sock.connect((ip, port))
             sock.close()
             ms = round((time.monotonic() - t0) * 1000, 1)
-            return {"ok": True, "ip": sockaddr[0], "ms": ms}
+            return {"ok": True, "ip": ip, "ms": ms}
         except OSError as exc:
             last_err = str(exc)
             continue
@@ -174,55 +203,101 @@ def _tls_github(host: str = "api.github.com") -> dict[str, Any]:
 
 def dns_crosscheck(doc: dict[str, Any]) -> dict[str, Any]:
     cfg = doc.get("dns_crosscheck") or {}
+    sovereign = doc.get("sovereign_dns") or {}
     hosts = cfg.get("hosts") or ["github.com", "api.github.com", "ssh.github.com"]
     known = _load(KNOWN, {})
     cidrs = (known.get("dns_allow") or {}).get("git_cidrs") or []
     pinned = doc.get("pinned_connect_ips") or {}
+    block_foreign = bool(cfg.get("block_foreign_resolvers", sovereign.get("block_foreign_resolvers", True)))
+    doh_witness = bool(cfg.get("doh_witness", False)) and not block_foreign
     rows: list[dict[str, Any]] = []
     suspect = False
+    truth_down = False
     for host in hosts:
-        sys_ips = _system_ips(host)
+        resolved = _truth_resolve(host)
+        truth_ips = list(resolved.get("truth") or resolved.get("ips") or [])
+        stub_ips = list(resolved.get("stub") or [])
+        sys_ips = list(resolved.get("system") or [])
+        source = str(resolved.get("source") or "unknown")
+        if not resolved.get("truth_up"):
+            truth_down = True
         doh_sets: dict[str, list[str]] = {}
-        for spec in cfg.get("doh") or []:
-            doh_sets[str(spec.get("id"))] = _doh_ips(host, str(spec.get("url")))
+        if doh_witness:
+            for spec in cfg.get("doh") or []:
+                doh_sets[str(spec.get("id"))] = _doh_ips(host, str(spec.get("url")))
         pin = list(pinned.get(host) or [])
-        bad_sys = [ip for ip in sys_ips if cidrs and not _ip_in_cidrs(ip, cidrs)]
+        authority_ips = truth_ips or list(resolved.get("ips") or [])
+        bad_truth = [ip for ip in authority_ips if cidrs and not _ip_in_cidrs(ip, cidrs)]
+        bad_stub = [ip for ip in stub_ips if cidrs and not _ip_in_cidrs(ip, cidrs)]
         all_doh = {ip for ips in doh_sets.values() for ip in ips}
         bad_doh = [ip for ip in all_doh if cidrs and not _ip_in_cidrs(ip, cidrs)]
         mismatch = False
-        if bad_sys or bad_doh:
+        if bad_truth:
             mismatch = True
             suspect = True
-            _violation(f"DNS outside git CIDR {host}: system_bad={bad_sys} doh_bad={bad_doh}")
-        elif all_doh and sys_ips and not (set(sys_ips) & all_doh):
-            # GitHub rotates A records — warn only unless flap/TLS also bad
+            _violation(f"Truth DNS outside git CIDR {host}: truth_bad={bad_truth} source={source}")
+        elif bad_stub:
             mismatch = True
-            _violation(f"DNS pool drift {host}: system={sys_ips} doh={sorted(all_doh)} (same CIDR — monitor)")
+            suspect = True
+            _violation(f"Stub witness outside git CIDR {host}: stub_bad={bad_stub}")
+        elif bad_doh:
+            mismatch = True
+            suspect = True
+            _violation(f"DoH witness outside git CIDR {host}: doh_bad={bad_doh}")
+        elif stub_ips and authority_ips and not (set(stub_ips) & set(authority_ips)):
+            mismatch = True
+            _violation(
+                f"Stub vs Truth drift {host}: truth={authority_ips} stub={stub_ips} (monitor — Charter path)"
+            )
+        elif doh_witness and all_doh and authority_ips and not (set(authority_ips) & all_doh):
+            mismatch = True
+            _violation(f"DoH witness drift {host}: truth={authority_ips} doh={sorted(all_doh)} (monitor)")
         rows.append({
             "host": host,
+            "truth": truth_ips,
+            "authority": authority_ips,
+            "source": source,
+            "stub": stub_ips,
             "system": sys_ips,
             "doh": doh_sets,
             "pinned": pin,
-            "bad_system": bad_sys,
+            "bad_truth": bad_truth,
+            "bad_stub": bad_stub,
             "mismatch": mismatch,
         })
-    return {"ok": not suspect, "suspect": suspect, "hosts": rows}
+    return {
+        "ok": not suspect,
+        "suspect": suspect,
+        "truth_down": truth_down,
+        "authority": "truth_dns",
+        "block_foreign_resolvers": block_foreign,
+        "doh_witness": doh_witness,
+        "hosts": rows,
+    }
 
 
-def path_audit(*, apply: bool = False) -> dict[str, Any]:
+def path_audit(*, apply: bool = False, ensure_dns: bool = True, quick: bool = False) -> dict[str, Any]:
     doc = _load(DOCTRINE, {})
+    sovereign = doc.get("sovereign_dns") or {}
+    dns_ensure: dict[str, Any] = {}
+    if ensure_dns and sovereign.get("ensure_before_git", True):
+        dns_ensure = _ensure_truth_dns()
     flap_cfg = doc.get("flap_probe") or {}
     rounds = int(flap_cfg.get("rounds") or 3)
     interval = float(flap_cfg.get("interval_sec") or 1.5)
     timeout = float(flap_cfg.get("timeout_sec") or 6)
 
     dns = dns_crosscheck(doc)
-    flaps = [
-        _flap_probe("github.com", 22, rounds=rounds, interval=interval, timeout=timeout),
-        _flap_probe("ssh.github.com", 443, rounds=rounds, interval=interval, timeout=timeout),
-        _flap_probe("api.github.com", 443, rounds=rounds, interval=interval, timeout=timeout),
-    ]
-    tls = _tls_github()
+    if quick:
+        flaps: list[dict[str, Any]] = []
+        tls: dict[str, Any] = {"ok": True, "skipped": True, "reason": "quick"}
+    else:
+        flaps = [
+            _flap_probe("github.com", 22, rounds=rounds, interval=interval, timeout=timeout),
+            _flap_probe("ssh.github.com", 443, rounds=rounds, interval=interval, timeout=timeout),
+            _flap_probe("api.github.com", 443, rounds=rounds, interval=interval, timeout=timeout),
+        ]
+        tls = _tls_github()
     any_flap = any(f.get("flapping") for f in flaps)
     direct_down_tunnel_up = (
         flaps[0].get("all_down") and flaps[1].get("ok_count", 0) > 0
@@ -233,6 +308,10 @@ def path_audit(*, apply: bool = False) -> dict[str, Any]:
     verdict = "OK"
     if dns.get("suspect"):
         verdict = "MITM_DNS_SUSPECT"
+    elif dns.get("truth_down") and not dns.get("hosts"):
+        verdict = "TRUTH_DNS_DOWN"
+    elif dns.get("truth_down"):
+        verdict = "TRUTH_DNS_DEGRADED"
     elif any_flap:
         verdict = "ISP_FLAP_SUSPECT"
     elif direct_down_tunnel_up:
@@ -264,6 +343,13 @@ def path_audit(*, apply: bool = False) -> dict[str, Any]:
         "ok": verdict == "OK",
         "verdict": verdict,
         "presume_mitm": bool(doc.get("presume_mitm", True)),
+        "sovereign_dns": {
+            "module": sovereign.get("module", "lib/field-dns.py"),
+            "resolve_module": sovereign.get("resolve_module", "lib/field-dns-resolve.py"),
+            "truth_host": sovereign.get("truth_host", "127.0.0.1"),
+            "truth_port": sovereign.get("truth_port", 53),
+            "ensure": dns_ensure,
+        },
         "dns": dns,
         "flaps": flaps,
         "tls": tls,
@@ -286,10 +372,17 @@ def main() -> int:
     args = sys.argv[1:]
     apply = "--apply" in args
     cmd = next((a for a in args if not a.startswith("-")), "audit")
-    if cmd in ("audit", "json", "panel", "status"):
-        print(json.dumps(path_audit(apply=apply), ensure_ascii=False, indent=2))
+    quick = "--quick" in args or os.environ.get("HOSTESS7_PATH_HARDEN_QUICK", "").strip().lower() in ("1", "yes", "on")
+    if cmd == "dns":
+        doc = _load(DOCTRINE, {})
+        if quick:
+            _ensure_truth_dns()
+        print(json.dumps(dns_crosscheck(doc), ensure_ascii=False, indent=2))
         return 0
-    print(json.dumps({"usage": "field-github-path-harden.py [audit|panel] [--apply]"}, ensure_ascii=False))
+    if cmd in ("audit", "json", "panel", "status"):
+        print(json.dumps(path_audit(apply=apply, ensure_dns=True, quick=quick), ensure_ascii=False, indent=2))
+        return 0
+    print(json.dumps({"usage": "field-github-path-harden.py [audit|dns|panel] [--apply] [--quick]"}, ensure_ascii=False))
     return 1
 
 

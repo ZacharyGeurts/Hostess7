@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import ipaddress
 import json
 import os
@@ -161,7 +162,26 @@ def _pick_route(doc: dict[str, Any] | None = None) -> str:
     return "none"
 
 
+def _resolve_mod():
+    path = INSTALL / "lib" / "field-dns-resolve.py"
+    spec = importlib.util.spec_from_file_location("field_dns_resolve", path)
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def _resolve_host(host: str) -> list[str]:
+    mod = _resolve_mod()
+    if mod is not None:
+        try:
+            doc = mod.resolve_a(host)
+            ips = list(doc.get("ips") or [])
+            if ips:
+                return ips
+        except (OSError, AttributeError):
+            pass
     try:
         infos = socket.getaddrinfo(host, None, type=socket.SOCK_STREAM)
     except socket.gaierror:
@@ -195,15 +215,37 @@ def _verify_dns(doc: dict[str, Any]) -> dict[str, Any]:
     cidrs = (doc.get("dns_allow") or {}).get("git_cidrs") or []
     if not cidrs:
         return {"ok": True, "skipped": True, "reason": "no cidrs in doctrine"}
+    mod = _resolve_mod()
+    truth_up = False
+    if mod is not None:
+        try:
+            truth_up = bool(mod.truth_resolver_up())
+        except (OSError, AttributeError):
+            pass
     per_host: dict[str, Any] = {}
     all_ok = True
     for host in (doc.get("hosts") or {}):
-        ips = _resolve_host(host)
+        source = "system"
+        if mod is not None:
+            try:
+                resolved = mod.resolve_a(host)
+                ips = list(resolved.get("ips") or [])
+                source = str(resolved.get("source") or "truth_dns")
+            except (OSError, AttributeError):
+                ips = _resolve_host(host)
+        else:
+            ips = _resolve_host(host)
         bad = [ip for ip in ips if not _ip_allowed(ip, cidrs)]
         ok = bool(ips) and not bad
-        per_host[host] = {"ips": ips, "ok": ok, "bad": bad}
+        per_host[host] = {"ips": ips, "ok": ok, "bad": bad, "source": source}
         all_ok = all_ok and ok
-    return {"ok": all_ok, "hosts": per_host}
+    return {
+        "ok": all_ok,
+        "authority": "truth_dns",
+        "truth_up": truth_up,
+        "resolver": "127.0.0.1:53",
+        "hosts": per_host,
+    }
 
 
 def _verify_host_keys(doc: dict[str, Any]) -> dict[str, Any]:
