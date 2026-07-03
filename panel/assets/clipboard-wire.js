@@ -8,6 +8,7 @@
   const OWNER = "nexus-clipboard-wire";
   const LS_SCHEME = "nexus-clipboard-scheme";
   const LS_HISTORY = "nexus-clipboard-scheme-history";
+  const LS_MEDIA = "nexus-clipboard-media-active";
   const WIRE_SEL =
     "[data-clipboard-wire], [data-hardware-wire], [data-smart-wire], [data-front-hook], [data-admin-shield], [data-queen-surface=\"browser\"], [data-nexus-clipboard-sovereign], .qw-browser-shell, .fm-shell";
   const API = "/api/field-clipboard";
@@ -30,6 +31,8 @@
     vaultOps: 0,
     ghostMode: true,
     historicCount: 0,
+    mediaCount: 0,
+    mediaActiveId: null,
     historyCursor: 0,
   };
 
@@ -183,16 +186,287 @@
     return text;
   }
 
-  function vaultAction(action, text) {
+  function vaultAction(action, text, extra) {
     state.vaultOps += 1;
+    const body = Object.assign({ action, text: text || "" }, extra || {});
     return fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action, text: text || "" }),
+      body: JSON.stringify(body),
       credentials: "same-origin",
     })
       .then((r) => r.json())
       .catch(() => ({ ok: false, error: "vault_unreachable" }));
+  }
+
+  function dispatchClipboard(body) {
+    state.vaultOps += 1;
+    return fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body || {}),
+      credentials: "same-origin",
+    })
+      .then((r) => r.json())
+      .catch(() => ({ ok: false, error: "vault_unreachable" }));
+  }
+
+  function blobToDataUrl(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  function dataUrlToBlob(dataUrl) {
+    const parts = String(dataUrl).split(",");
+    const mime = (parts[0].match(/data:([^;]+)/) || [])[1] || "application/octet-stream";
+    const b64 = parts[1] || "";
+    const bin = atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: mime });
+  }
+
+  function mediaTargetFromEvent(ev) {
+    const t = (ev && ev.target) || document.activeElement;
+    if (!t || !t.closest) return null;
+    const img = t.closest("img");
+    if (img && img.src) return img;
+    const video = t.closest("video");
+    if (video) return video;
+    const canvas = t.closest("canvas");
+    if (canvas) return canvas;
+    if (t.tagName === "IMG" || t.tagName === "VIDEO" || t.tagName === "CANVAS") return t;
+    const sel = window.getSelection && window.getSelection();
+    if (sel && sel.anchorNode) {
+      const node = sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement;
+      const hit = node && node.querySelector && node.querySelector("img,video,canvas");
+      if (hit) return hit;
+    }
+    return null;
+  }
+
+  async function blobFromElement(el) {
+    if (!el) return null;
+    const tag = (el.tagName || "").toUpperCase();
+    if (tag === "IMG") {
+      try {
+        const res = await fetch(el.currentSrc || el.src, { credentials: "same-origin" });
+        if (res.ok) return await res.blob();
+      } catch (_) {}
+      const canvas = document.createElement("canvas");
+      const w = el.naturalWidth || el.width || 1;
+      const h = el.naturalHeight || el.height || 1;
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(el, 0, 0);
+      return new Promise((resolve) => canvas.toBlob((b) => resolve(b), "image/png"));
+    }
+    if (tag === "VIDEO") {
+      try {
+        const src = el.currentSrc || el.src;
+        if (src && !src.startsWith("blob:")) {
+          const res = await fetch(src, { credentials: "same-origin" });
+          if (res.ok) return await res.blob();
+        }
+      } catch (_) {}
+      const canvas = document.createElement("canvas");
+      canvas.width = el.videoWidth || el.clientWidth || 1;
+      canvas.height = el.videoHeight || el.clientHeight || 1;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(el, 0, 0, canvas.width, canvas.height);
+      return new Promise((resolve) => canvas.toBlob((b) => resolve(b), "image/png"));
+    }
+    if (tag === "CANVAS") {
+      return new Promise((resolve) => el.toBlob((b) => resolve(b), "image/png"));
+    }
+    return null;
+  }
+
+  async function writeSystemClipboard(blob, mime) {
+    if (!blob || !navigator.clipboard || !window.ClipboardItem) return false;
+    try {
+      const type = mime || blob.type || "application/octet-stream";
+      await navigator.clipboard.write([new ClipboardItem({ [type]: blob })]);
+      return true;
+    } catch (_) {
+      if ((mime || blob.type || "").startsWith("image/")) {
+        try {
+          await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+          return true;
+        } catch (_2) {}
+      }
+      return false;
+    }
+  }
+
+  async function readSystemClipboard() {
+    if (!navigator.clipboard || !navigator.clipboard.read) return null;
+    try {
+      const items = await navigator.clipboard.read();
+      for (const item of items) {
+        for (const type of item.types) {
+          const blob = await item.getType(type);
+          return { blob, mime: type, kind: type.startsWith("image/") ? "image" : type.startsWith("video/") ? "video" : "file" };
+        }
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  async function storeMediaBlob(blob, mime, name) {
+    const dataUrl = await blobToDataUrl(blob);
+    const doc = await dispatchClipboard({
+      action: "copy_media",
+      mime: mime || blob.type,
+      data_url: dataUrl,
+      name: name || "",
+    });
+    if (doc && doc.ok) {
+      state.mediaCount = doc.count || state.mediaCount;
+      state.mediaActiveId = doc.media_id || state.mediaActiveId;
+      lsSet(LS_MEDIA, { media_id: doc.media_id, mime: doc.mime, kind: doc.kind, at: Date.now() });
+      state.historicCount = (doc.historic && doc.historic.count) || state.historicCount;
+    }
+    return doc;
+  }
+
+  function insertMediaBlob(blob, mime) {
+    const type = mime || blob.type || "";
+    const url = URL.createObjectURL(blob);
+    const el = document.activeElement;
+    if (type.startsWith("image/")) {
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "clipboard-paste";
+      img.className = "ncw-paste-image";
+      if (el && el.isContentEditable) {
+        el.focus();
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount) {
+          const range = sel.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(img);
+          return true;
+        }
+        el.appendChild(img);
+        return true;
+      }
+      document.body.appendChild(img);
+      flashPasteToast("Image pasted — click target field to insert next time");
+      return true;
+    }
+    if (type.startsWith("video/")) {
+      const video = document.createElement("video");
+      video.src = url;
+      video.controls = true;
+      video.className = "ncw-paste-video";
+      if (el && el.isContentEditable) {
+        el.appendChild(video);
+        return true;
+      }
+      flashPasteToast("Video copied to vault — open a media surface to insert");
+      return true;
+    }
+    flashPasteToast("File in vault (" + type + ")");
+    return false;
+  }
+
+  function flashPasteToast(msg) {
+    let toast = document.getElementById("ncw-paste-toast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "ncw-paste-toast";
+      toast.className = "ncw-paste-toast";
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add("ncw-paste-toast--show");
+    clearTimeout(flashPasteToast._t);
+    flashPasteToast._t = setTimeout(() => toast.classList.remove("ncw-paste-toast--show"), 2200);
+  }
+
+  async function copyMediaFromContext(ev) {
+    const el = mediaTargetFromEvent(ev);
+    let blob = null;
+    let mime = "";
+    let name = "";
+    if (el) {
+      blob = await blobFromElement(el);
+      mime = blob && blob.type;
+      name = el.getAttribute && (el.getAttribute("alt") || el.getAttribute("title") || el.src || "") || "";
+    }
+    if (!blob) {
+      const clip = await readSystemClipboard();
+      if (clip && clip.blob) {
+        blob = clip.blob;
+        mime = clip.mime;
+      }
+    }
+    if (!blob) return false;
+    await writeSystemClipboard(blob, mime);
+    await storeMediaBlob(blob, mime, name);
+    flashPasteToast("Copied " + (mime.split("/")[0] || "media") + " to secured vault");
+    return true;
+  }
+
+  async function pasteMediaFirst() {
+    const clip = await readSystemClipboard();
+    if (clip && clip.blob) {
+      insertMediaBlob(clip.blob, clip.mime);
+      const dataUrl = await blobToDataUrl(clip.blob);
+      await dispatchClipboard({ action: "copy_media", mime: clip.mime, data_url: dataUrl });
+      return true;
+    }
+    const cached = lsGet(LS_MEDIA, null);
+    const doc = await dispatchClipboard({
+      action: "paste_media",
+      media_id: (cached && cached.media_id) || state.mediaActiveId || undefined,
+    });
+    if (!doc || !doc.ok) return false;
+    const blob = dataUrlToBlob(doc.data_url || "");
+    await writeSystemClipboard(blob, doc.mime);
+    insertMediaBlob(blob, doc.mime);
+    state.mediaActiveId = doc.media_id || state.mediaActiveId;
+    return true;
+  }
+
+  async function copyUnified(ev) {
+    const text = selectionText();
+    if (text && text.trim()) {
+      if (ev) {
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+      }
+      state.chordsHandled += 1;
+      await vaultAction("copy", text);
+      return true;
+    }
+    const got = await copyMediaFromContext(ev);
+    if (got && ev) {
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      state.chordsHandled += 1;
+    }
+    return got;
+  }
+
+  async function pasteUnified(ev) {
+    if (ev) {
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+    }
+    state.chordsHandled += 1;
+    const media = await pasteMediaFirst();
+    if (media) return true;
+    const doc = await vaultAction("paste");
+    const text = (doc && doc.stdout) || "";
+    if (text) insertText(text);
+    return !!text;
   }
 
   function performAction(action, ev) {
@@ -201,12 +475,7 @@
       return;
     }
     if (action === "copy" || action === "kill_region") {
-      const text = selectionText();
-      if (!text) return;
-      ev.preventDefault();
-      ev.stopImmediatePropagation();
-      state.chordsHandled += 1;
-      vaultAction(action, text);
+      copyUnified(ev);
       return;
     }
     if (action === "cut") {
@@ -219,13 +488,7 @@
       return;
     }
     if (action === "paste" || action === "yank" || action === "paste_primary" || action === "paste_clip") {
-      ev.preventDefault();
-      ev.stopImmediatePropagation();
-      state.chordsHandled += 1;
-      vaultAction(action === "paste_primary" ? "paste" : action).then((doc) => {
-        const text = (doc && doc.stdout) || "";
-        if (text) insertText(text);
-      });
+      pasteUnified(ev);
       return;
     }
     if (action === "clear") {
@@ -322,7 +585,7 @@
       `<section class="ncw-flyout-section"><h3>Editor soul</h3>${listHtml}</section>` +
       `<div class="ncw-flyout-foot">` +
       `AmmoOS is your clipboard · <span class="ncw-flyout-kbd">${esc(state.flyoutChord)}</span> toggle · ` +
-      `${state.historicCount || 0} vault entries` +
+      `${state.historicCount || 0} text · ${state.mediaCount || 0} media` +
       `</div>`;
 
     el.querySelectorAll("[data-ncw-scheme]").forEach((btn) => {
@@ -408,15 +671,17 @@
     }
     if (ev.type === "copy" || ev.type === "cut") {
       const text = selectionText();
-      if (text) vaultAction(ev.type === "cut" ? "copy" : "copy", ev.type === "cut" ? cutSelection() : text);
+      if (text) {
+        vaultAction(ev.type === "cut" ? "copy" : "copy", ev.type === "cut" ? cutSelection() : text);
+        return;
+      }
+      copyMediaFromContext(ev);
+      return;
     }
     if (ev.type === "paste") {
       ev.preventDefault();
       ev.stopImmediatePropagation();
-      vaultAction("paste").then((doc) => {
-        const text = (doc && doc.stdout) || "";
-        if (text) insertText(text);
-      });
+      pasteUnified(ev);
     }
   }
 
@@ -425,6 +690,8 @@
     state.schemeLabel = doc.active_label || doc.label || schemeLabel(state.scheme);
     state.ghostMode = doc.ghost_mode !== false;
     state.historicCount = doc.historic_count || doc.count || state.historicCount;
+    state.mediaCount = doc.media_count || state.mediaCount;
+    state.mediaActiveId = doc.media_active_id || state.mediaActiveId;
     state.flyoutChord = doc.flyout_chord || state.flyoutChord;
     if (Array.isArray(doc.scheme_history)) state.schemeHistory = doc.scheme_history;
     if (Array.isArray(doc.history)) state.schemeHistory = doc.history;
@@ -571,6 +838,9 @@
     openFlyout,
     closeFlyout,
     toggleFlyout,
+    copyMedia: copyMediaFromContext,
+    pasteMedia: pasteMediaFirst,
+    storeMediaBlob,
     setScheme(scheme) {
       return applyScheme(scheme, true);
     },

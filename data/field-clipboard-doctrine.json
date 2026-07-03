@@ -28,6 +28,14 @@
       "standard", "emacs", "nano", "vi", "terminal", "readline",
       "clipboard_master", "windows", "mac", "apple2e", "apple2e_prodos",
       "c64", "nes_keyboard", "all"
+    ],
+    "media_vault": true,
+    "media_max_bytes": 67108864,
+    "media_ring_max": 12,
+    "media_mimes": [
+      "image/png", "image/jpeg", "image/gif", "image/webp", "image/bmp", "image/svg+xml",
+      "video/mp4", "video/webm", "video/ogg", "audio/mpeg", "audio/wav", "audio/ogg",
+      "application/pdf", "text/plain"
     ]
   },
   "wire_chain": [
@@ -39,6 +47,8 @@
   ],
   "actions": {
     "copy": "Encrypt selection → RAM vault → OS clipboard (TTL wipe)",
+    "copy_media": "Image · video · audio · file → secured media vault + OS clipboard",
+    "paste_media": "Restore blob from vault or system clipboard into target surface",
     "cut": "Copy then delete selection on wire surface",
     "paste": "Decrypt vault → target (no extra history)",
     "paste_primary": "X11/Wayland primary selection paste",

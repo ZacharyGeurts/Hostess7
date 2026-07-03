@@ -117,3 +117,37 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(0, 0, 0, 0.25);
 }
+
+.ncw-paste-toast {
+  position: fixed;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 96500;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(10, 18, 14, 0.95);
+  border: 1px solid rgba(120, 200, 140, 0.35);
+  color: #d8f0de;
+  font: 12px system-ui, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.ncw-paste-toast--show {
+  opacity: 1;
+}
+
+.ncw-paste-image {
+  max-width: min(480px, 90vw);
+  max-height: 40vh;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.ncw-paste-video {
+  max-width: min(640px, 92vw);
+  max-height: 50vh;
+  border-radius: 6px;
+}

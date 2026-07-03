@@ -2357,7 +2357,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Referrer-Policy", "no-referrer")
         self.send_header(
             "Permissions-Policy",
-            "camera=(), microphone=(), display-capture=(), clipboard-read=(), geolocation=()",
+            "camera=(), microphone=(), display-capture=(), clipboard-read=(self), clipboard-write=(self), geolocation=()",
         )
         self.send_header("X-Admin-Shield", "keyboard-hooks-blocked")
         self.send_header("X-Smart-Wire", "nexus-keyboard-no-middleman")
@@ -3048,6 +3048,32 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/field-clipboard":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-clipboard-wire.py", ["json"], timeout=25)
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path.startswith("/api/field-clipboard/media"):
+            import re as _re
+
+            media_id = str(query.get("id", [""])[0]).strip()
+            safe = _re.sub(r"[^a-zA-Z0-9_-]", "", media_id)[:64]
+            if not safe:
+                self._send(400, b"id_required", "text/plain")
+                return
+            index_path = STATE_DIR / "field-clipboard-media-index.json"
+            media_path = STATE_DIR / "field-clipboard-media" / f"{safe}.bin"
+            mime = "application/octet-stream"
+            try:
+                if index_path.is_file():
+                    idx = json.loads(index_path.read_text(encoding="utf-8"))
+                    row = next((e for e in (idx.get("entries") or []) if e.get("id") == safe), None)
+                    if row:
+                        mime = str(row.get("mime") or mime)
+                if media_path.is_file():
+                    blob = media_path.read_bytes()
+                    self._send(200, blob, mime)
+                    return
+            except (OSError, json.JSONDecodeError):
+                pass
+            self._send(404, b"media_not_found", "text/plain")
             return
 
         if path == "/api/front-hook":
@@ -8596,8 +8622,30 @@ class Handler(BaseHTTPRequestHandler):
             scheme = str((body or {}).get("scheme") or "").strip()
             text = (body or {}).get("text")
             hist_idx = (body or {}).get("history_index")
+            media_actions = {
+                "copy_media", "media_copy", "paste_media", "media_paste",
+                "media_history", "media_list", "media_clear",
+            }
             if scheme:
                 payload = _nexus_py_json(script, ["scheme", scheme], timeout=20)
+            elif action in media_actions or body.get("media_b64") or body.get("data_url"):
+                env = _field_stack_env()
+                proc = None
+                try:
+                    proc = subprocess.run(
+                        [sys.executable, str(script), "dispatch"],
+                        input=json.dumps(body if isinstance(body, dict) else {}, ensure_ascii=False),
+                        capture_output=True,
+                        text=True,
+                        timeout=int((body or {}).get("timeout") or 180),
+                        env=env,
+                        cwd=str(INSTALL_ROOT),
+                    )
+                    payload = json.loads(proc.stdout or "{}")
+                except subprocess.TimeoutExpired:
+                    payload = {"ok": False, "error": "timeout"}
+                except json.JSONDecodeError:
+                    payload = {"ok": False, "error": "bad_json", "detail": ((proc.stderr if proc else "") or "")[:200]}
             elif action in ("schemes", "list_schemes"):
                 payload = _nexus_py_json(script, ["schemes"], timeout=20)
             elif action == "enforce":
