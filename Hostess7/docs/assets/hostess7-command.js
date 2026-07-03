@@ -5,6 +5,28 @@
   "use strict";
 
   const API = "/api/hostess7-command";
+
+  function pagesRuntime() {
+    return (
+      document.body?.dataset?.pagesRuntime === "1" ||
+      !!global.HOSTESS7_PAGES_BASE ||
+      !!global.HOSTESS7_PAGES
+    );
+  }
+
+  function applyPagesLane() {
+    if (!pagesRuntime()) return;
+    document.documentElement.classList.add("h7-pages-lane");
+    const deck = document.getElementById("hostess7-command-deck");
+    if (deck) deck.hidden = true;
+    const iq = document.getElementById("h7-iq-test");
+    if (iq) {
+      iq.disabled = true;
+      iq.title = "IQ battery requires live Hostess7 API";
+    }
+    const sync = document.getElementById("h7-command-sync");
+    if (sync) sync.title = "Sync requires live Hostess7 API";
+  }
   let thinking = false;
   let voiceOn = true;
   let lastSpoken = "";
@@ -898,7 +920,12 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    return res.json();
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (_) {
+      throw new Error(pagesRuntime() ? "Hostess7 API offline on GitHub Pages" : "Invalid JSON from Hostess7 API");
+    }
   }
 
   async function syncGithub() {
@@ -1143,6 +1170,7 @@
   }
 
   function bindHostess7Command() {
+    applyPagesLane();
     $("h7-field-terminal-run")?.addEventListener("click", () => runTerminalCommand());
     $("h7-field-terminal-clear")?.addEventListener("click", () => {
       terminalLines.length = 0;

@@ -509,6 +509,9 @@ def _stage_panel_surfaces() -> int:
     if not PANEL.is_dir():
         return 0
     route_map: dict[str, str] = {
+        "field": "field-desktop.html",
+        "desktop": "field-desktop.html",
+        "ammoos": "field-desktop.html",
         "command": "threat-panel.html",
         "threat-panel": "threat-panel.html",
         "panel": "threat-panel.html",
@@ -665,6 +668,25 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("nexus-c2.json")
 
+    (API / "hostess7-command.json").write_text(
+        json.dumps(
+            {
+                **stub,
+                "schema": "hostess7-command/v1",
+                "title": "NEXUS C2",
+                "motto": "GitHub Pages — real C2 surfaces; Super Intelligence on loopback only",
+                "transcript": [],
+                "intel_digest": [],
+                "capabilities": [],
+                "pages_lane": True,
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    files.append("hostess7-command.json")
+
     queen = _run_queen_browser()
     (API / "queen-browser.json").write_text(json.dumps(queen, indent=2) + "\n", encoding="utf-8")
     files.append("queen-browser.json")
@@ -781,8 +803,8 @@ def build() -> dict[str, Any]:
 
     queen_n = _rsync_queen()
     assets_n = _rsync_panel_assets()
-    _write_desktop_indices()
     panel_n = _stage_panel_surfaces()
+    _write_desktop_indices()
     _write_queen_browser()
     desktop = _run_field_host_desktop()
     api_files = _export_apis(desktop)

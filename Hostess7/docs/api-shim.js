@@ -111,6 +111,35 @@
         return okStub({ posture: "pages-surfaces", gates_held: true });
       }
     }
+    if (path === "/api/hostess7-command") {
+      if (method === "POST") {
+        let body = {};
+        try { body = JSON.parse((opts && opts.body) || "{}"); } catch (_e) { body = {}; }
+        if (body.action === "iq_test") {
+          return okStub({
+            action: "iq_test",
+            score: 0,
+            pass_rate: 0,
+            iq_pass: false,
+            estimated_iq: 100,
+            estimated_iq_band: "pages-static",
+            note: "IQ battery requires live Hostess7 loopback",
+          });
+        }
+        return okStub({ action: body.action || "noop", note: "Pages static lane" });
+      }
+      try {
+        return jsonResponse(await loadStatic("/api/hostess7-command.json"));
+      } catch (_e) {
+        return okStub({ schema: "hostess7-command/v1", pages: true, lane: "pages-surfaces" });
+      }
+    }
+    if (path === "/api/universal-protector") {
+      return okStub({ pages: true, threat_warn_level: "pages", pillars: {} });
+    }
+    if (path === "/api/field-spatial") {
+      return okStub({ pages: true, movement_vector: null });
+    }
     if (path === "/api/field-c2-bookmarks" && method === "POST") {
       return okStub({ stored: true });
     }

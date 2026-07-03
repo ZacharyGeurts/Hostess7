@@ -75,7 +75,16 @@
       `think tanks ${tanks} · 3D/4D ${nets} · ${movement}${motionBit}${livesBit}${ellieBit} · threat ${posture} · lethal armed`;
   }
 
+  function pagesRuntime() {
+    return (
+      document.body?.dataset?.pagesRuntime === "1" ||
+      !!global.HOSTESS7_PAGES_BASE ||
+      !!global.HOSTESS7_PAGES
+    );
+  }
+
   function boot() {
+    if (pagesRuntime()) return;
     ensureBanner();
     refresh().catch(() => {});
     setInterval(() => refresh().catch(() => {}), REFRESH_MS);
