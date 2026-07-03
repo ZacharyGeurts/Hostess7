@@ -135,12 +135,19 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
             return cached
 
     doctrine = _load(DOCTRINE, {})
-    legacy = _run_json("lib/field-github-legacy.py", ["json"], timeout=12 if fast else 20)
-    resilience = _run_json("lib/field-github-resilience.py", ["json"], timeout=12 if fast else 20)
-    internet = _run_json("lib/field-internet-unified.py", ["json"], timeout=12 if fast else 25)
-    botnet = _run_json("lib/field-botnet-dns-dhcp.py", ["json"], timeout=12 if fast else 20)
-    gh_live = legacy.get("github_always") or {}
-    open_n = int(gh_live.get("open_count") or 0)
+    if fast:
+        legacy = _load(STATE / "field-github-legacy-panel.json", {}) or _load(STATE / "field-github-legacy-probe.json", {})
+        resilience = _load(STATE / "field-github-resilience-panel.json", {}) or _load(STATE / "field-github-resilience-probe.json", {})
+        internet = _load(STATE / "field-internet-unified-panel.json", {})
+        botnet = _load(STATE / "field-botnet-dns-dhcp-panel.json", {})
+        gh_live = legacy.get("github_always") or legacy.get("probe") or legacy
+    else:
+        legacy = _run_json("lib/field-github-legacy.py", ["json"], timeout=12 if fast else 20)
+        resilience = _run_json("lib/field-github-resilience.py", ["json"], timeout=12 if fast else 20)
+        internet = _run_json("lib/field-internet-unified.py", ["json"], timeout=12 if fast else 25)
+        botnet = _run_json("lib/field-botnet-dns-dhcp.py", ["json"], timeout=12 if fast else 20)
+        gh_live = legacy.get("github_always") or {}
+    open_n = int(gh_live.get("open_count") or legacy.get("open_count") or 0)
     stable = bool(gh_live.get("stable") or gh_live.get("always_open"))
 
     doc = {

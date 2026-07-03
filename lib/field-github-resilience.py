@@ -2,6 +2,7 @@
 """GitHub resilience — loopback authority, degraded probes, publish queue when push lane is down."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import socket
@@ -93,17 +94,41 @@ def _loopback_up(doctrine: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _traffic_shard_mod():
+    path = INSTALL / "lib" / "field-github-traffic-shard.py"
+    spec = importlib.util.spec_from_file_location("field_github_traffic_shard", path)
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def probe_all(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
+    shard = _traffic_shard_mod()
     if fast and PROBE_CACHE.is_file():
         cached = _load(PROBE_CACHE, {})
-        if cached.get("schema"):
+        if cached.get("schema") and (not shard or shard.cache_fresh(cached.get("updated"), fast=True)):
             cached["cached"] = True
             return cached
 
     doctrine = _load(DOCTRINE, {})
+    specs = list(doctrine.get("probes") or [])
+    plan: dict[str, Any] = {}
+    cached_rows: list[dict[str, Any]] = []
+    if shard is not None:
+        try:
+            plan = shard.plan_probe_batch(specs, fast=fast, probe_kind="resilience")
+            live_specs = list(plan.get("live_batch_eps") or [])
+            cached_rows = list(plan.get("cached_rows_data") or [])
+        except (OSError, AttributeError, TypeError):
+            live_specs = specs[:1]
+    else:
+        live_specs = specs[:2] if fast else specs
+
     rows: list[dict[str, Any]] = []
     weight_open = 0
-    for spec in doctrine.get("probes") or []:
+    for spec in live_specs:
         weight = int(spec.get("weight") or 1)
         if spec.get("url"):
             hit = _probe_url(str(spec["url"]), timeout=2.8 if fast else 4.0)
@@ -114,6 +139,12 @@ def probe_all(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
         if row.get("ok"):
             weight_open += weight
         rows.append(row)
+
+    live_only = list(rows)
+    if shard and plan and cached_rows:
+        rows = shard.merge_probe_rows(live_only, cached_rows, active_shard=str(plan.get("active_shard") or ""), plan=plan)
+        shard.record_live_shard(str(plan.get("active_shard") or ""), live_only, probe_kind="resilience")
+        weight_open = sum(int(r.get("weight") or 1) for r in rows if r.get("ok"))
 
     loopback = _loopback_up(doctrine)
     open_n = sum(1 for r in rows if r.get("ok"))
@@ -142,6 +173,12 @@ def probe_all(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
         "authority": loopback.get("authority") if loopback.get("ok") else (doctrine.get("pages_fallback_origin")),
         "probes": rows,
         "fast": fast,
+        "traffic_shard": {
+            "offload_pct": plan.get("offload_pct"),
+            "active_shard": plan.get("active_shard"),
+            "field_nodes": plan.get("field_nodes"),
+            "live_batch": plan.get("live_batch"),
+        } if plan else None,
     }
     if write:
         _save(PROBE_CACHE, doc)

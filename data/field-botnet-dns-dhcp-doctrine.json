@@ -17,7 +17,11 @@
     "dns_api": "/api/field-dns",
     "internet_api": "/api/field-internet",
     "catalog": "data/ammoos-pages-hub.json",
-    "sync_interval_sec": 30
+    "sync_interval_sec": 120,
+    "github_traffic_shard": {
+      "module": "lib/field-github-traffic-shard.py",
+      "offload_target_pct": 90
+    }
   },
   "bot_network": {
     "member_registry": "lib/field-botnet-registry.py",

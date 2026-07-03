@@ -5275,7 +5275,12 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in ("/api/field-github-path-harden", "/api/github-unflake"):
-            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-github-path-harden.py", ["audit"], timeout=45)
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-github-path-harden.py", ["audit", "--quick"], timeout=25)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-github-traffic-shard":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-github-traffic-shard.py", ["panel"], timeout=12)
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 

@@ -5,7 +5,7 @@
 (function (global) {
   "use strict";
 
-  const INTERVAL_MS = 30000;
+  const INTERVAL_MS = 120000;
   const REPO_RE = /^https:\/\/github\.com\/([^/]+)\/([^/]+)\/?$/i;
   const REPO_MIRRORS_FALLBACK = {
     "ZacharyGeurts/GNUEOLTerminal": [

@@ -2,6 +2,7 @@
 """GitHub legacy secure lane — stable open connection for canonical + old stack repos."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import ssl
@@ -182,24 +183,47 @@ def probe_url(url: str, *, timeout: float = 4.0, legacy_ua: bool = False) -> dic
     return hit
 
 
+def _traffic_shard_mod():
+    path = INSTALL / "lib" / "field-github-traffic-shard.py"
+    spec = importlib.util.spec_from_file_location("field_github_traffic_shard", path)
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def probe_all(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
+    shard = _traffic_shard_mod()
     if fast and CACHE.is_file():
         cached = _load(CACHE, {})
-        if cached.get("schema"):
+        if cached.get("schema") and (not shard or shard.cache_fresh(cached.get("updated"), fast=True)):
             cached["cached"] = True
             return cached
 
     eps = all_endpoints()
     canonical = [e for e in eps if not e.get("legacy")]
     legacy = [e for e in eps if e.get("legacy")]
+    full_total = len(eps)
 
-    if fast:
-        sample = canonical[:4] + legacy[: int((_load(DOCTRINE, {}).get("secure_legacy") or {}).get("fast_sample_legacy") or 5)]
-        to_probe = sample
-        full_total = len(eps)
+    plan: dict[str, Any] = {}
+    cached_rows: list[dict[str, Any]] = []
+    if shard is not None:
+        try:
+            plan = shard.plan_probe_batch(eps, fast=fast, probe_kind="legacy")
+            to_probe = list(plan.get("live_batch_eps") or [])
+            cached_rows = list(plan.get("cached_rows_data") or [])
+        except (OSError, AttributeError, TypeError):
+            to_probe = []
     else:
-        to_probe = eps
-        full_total = len(eps)
+        to_probe = []
+
+    if not to_probe:
+        if fast:
+            sample = canonical[:4] + legacy[: int((_load(DOCTRINE, {}).get("secure_legacy") or {}).get("fast_sample_legacy") or 5)]
+            to_probe = sample[:2]
+        else:
+            to_probe = eps[: max(1, len(eps) // 10)]
 
     rows: list[dict[str, Any]] = []
     for ep in to_probe:
@@ -219,6 +243,11 @@ def probe_all(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
                     row["always_open"] = True
                     row["via_pages_mirror"] = True
         rows.append(row)
+
+    live_only = list(rows)
+    if shard and plan:
+        rows = shard.merge_probe_rows(live_only, cached_rows, active_shard=str(plan.get("active_shard") or ""), plan=plan)
+        shard.record_live_shard(str(plan.get("active_shard") or ""), live_only, probe_kind="legacy")
 
     open_n = sum(1 for r in rows if r.get("ok"))
     canon_open = sum(1 for r in rows if r.get("ok") and not r.get("legacy"))
@@ -241,6 +270,14 @@ def probe_all(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
         "secure_legacy": (_load(DOCTRINE, {}).get("secure_legacy") or {}),
         "endpoints": rows,
         "always_allow_domains": always_allow_domains(),
+        "traffic_shard": {
+            "offload_pct": plan.get("offload_pct"),
+            "host_share_pct": plan.get("host_share_pct"),
+            "active_shard": plan.get("active_shard"),
+            "field_nodes": plan.get("field_nodes"),
+            "live_batch": plan.get("live_batch"),
+            "cached_rows": plan.get("cached_rows"),
+        } if plan else None,
     }
     if write:
         _save(CACHE, doc)

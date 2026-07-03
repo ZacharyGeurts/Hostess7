@@ -55,7 +55,7 @@ print('verdict:', p.get('verdict'), 'route:', p.get('recommended_route'))
 cmd_push() {
   local branch="${1:-main}"
   ensure_truth_dns
-  cmd_audit --apply >/dev/null || true
+  HOSTESS7_PATH_HARDEN_QUICK=1 cmd_audit --apply >/dev/null || true
   export HOSTESS7_GIT_TUNNEL="${HOSTESS7_GIT_TUNNEL:-tunnel}"
   export HOSTESS7_GIT_SKIP_API_TLS="${HOSTESS7_GIT_SKIP_API_TLS:-1}"
   export HOSTESS7_PRESUME_HOSTILE="${HOSTESS7_PRESUME_HOSTILE:-1}"

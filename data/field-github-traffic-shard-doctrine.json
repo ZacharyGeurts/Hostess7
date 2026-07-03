@@ -1,0 +1,28 @@
+{
+  "schema": "field-github-traffic-shard/v1",
+  "title": "GitHub traffic shard — thermal-settle style field offload",
+  "motto": "Queen probes ~10% per cycle; field nodes carry ~90% — rotate like thermal headroom.",
+  "offload_target_pct": 90,
+  "host_share_pct_min": 5,
+  "host_share_pct_max": 15,
+  "rotate_interval_sec": 120,
+  "fast_cache_ttl_sec": 90,
+  "full_cache_ttl_sec": 300,
+  "keepalive_min_interval_sec": 90,
+  "thermal_coupling": {
+    "enabled": true,
+    "headroom_full_pct": 80,
+    "headroom_throttle_pct": 50,
+    "offload_boost_hot": 8,
+    "offload_boost_crit": 15
+  },
+  "shard_roles": ["github_sync", "truth_mirror", "dns_relay"],
+  "primary_host_id": "field-loopback",
+  "wires": [
+    {"id": "botnet_registry", "module": "lib/field-botnet-registry.py"},
+    {"id": "thermal_guard", "module": "lib/field-thermal-guard.py"},
+    {"id": "github_legacy", "module": "lib/field-github-legacy.py"},
+    {"id": "github_resilience", "module": "lib/field-github-resilience.py"}
+  ],
+  "api": "/api/field-github-traffic-shard"
+}

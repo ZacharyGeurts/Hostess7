@@ -27,7 +27,12 @@
   },
   "github_always": {
     "enabled": true,
-    "probe_interval_sec": 30,
+    "probe_interval_sec": 120,
+    "traffic_shard": {
+      "module": "lib/field-github-traffic-shard.py",
+      "api": "/api/field-github-traffic-shard",
+      "offload_target_pct": 90
+    },
     "legacy_module": "lib/field-github-legacy.py",
     "endpoints": [
       {"id": "github_com", "url": "https://github.com", "role": "canonical_git"},

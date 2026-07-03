@@ -230,7 +230,32 @@ def all_pipes(*, fast: bool = True) -> dict[str, Any]:
     }
 
 
+def _traffic_shard_keepalive_ok() -> tuple[bool, dict[str, Any]]:
+    path = INSTALL / "lib" / "field-github-traffic-shard.py"
+    if not path.is_file():
+        return True, {}
+    try:
+        spec = importlib.util.spec_from_file_location("field_github_traffic_shard", path)
+        if not spec or not spec.loader:
+            return True, {}
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        ok, age = mod.keepalive_allowed()
+        return ok, {"age_sec": age, "offload_pct": mod.offload_pct()}
+    except (ImportError, OSError, AttributeError):
+        return True, {}
+
+
 def keepalive(*, write: bool = True) -> dict[str, Any]:
+    allow, shard_meta = _traffic_shard_keepalive_ok()
+    if not allow and PANEL.is_file():
+        cached = _load(PANEL, {})
+        if cached.get("schema") == "field-internet-unified-panel/v1":
+            cached = dict(cached)
+            cached["schema"] = "field-internet-keepalive/v1"
+            cached["throttled"] = True
+            cached["traffic_shard"] = shard_meta
+            return cached
     gh = probe_github(write=write, fast=True)
     pipes = all_pipes(fast=True)
     h7 = wire_hostess7(fast=True)
@@ -256,6 +281,7 @@ def keepalive(*, write: bool = True) -> dict[str, Any]:
             "api": "/api/field-internet",
             "motto": "One thing talks everywhere — GitHub always open",
         },
+        "traffic_shard": shard_meta,
     }
     if write:
         try:
