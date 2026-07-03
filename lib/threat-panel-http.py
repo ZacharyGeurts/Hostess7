@@ -5274,6 +5274,11 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-github-path-harden", "/api/github-unflake"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-github-path-harden.py", ["audit"], timeout=45)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path.startswith("/api/field-monster-monitor"):
             script = INSTALL_ROOT / "lib" / "field-monster-monitor.py"
             if not script.is_file():

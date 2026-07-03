@@ -116,18 +116,47 @@ def _probe_tcp(host: str, port: int, timeout: float = 8.0) -> bool:
         return False
 
 
+def _presume_hostile(doc: dict[str, Any] | None = None) -> bool:
+    if os.environ.get("HOSTESS7_PRESUME_HOSTILE", os.environ.get("NEXUS_PRESUME_HOSTILE", "")).strip().lower() in (
+        "1",
+        "yes",
+        "on",
+        "true",
+        "war",
+    ):
+        return True
+    harden = INSTALL / "data" / "field-github-path-harden-doctrine.json"
+    if harden.is_file():
+        try:
+            hdoc = json.loads(harden.read_text(encoding="utf-8"))
+            if hdoc.get("presume_mitm") or hdoc.get("presume_hostile_isp"):
+                return True
+        except (OSError, json.JSONDecodeError):
+            pass
+    return bool((doc or {}).get("presume_mitm"))
+
+
 def _pick_route(doc: dict[str, Any] | None = None) -> str:
+    doc = doc or _load_doctrine()
     force = os.environ.get("HOSTESS7_GIT_TUNNEL", "").strip().lower()
     if force in ("443", "tunnel", "yes", "1", "on"):
         return "tunnel"
     if force in ("22", "direct", "no", "0", "off"):
         return "direct"
-    hosts = (doc or _load_doctrine()).get("hosts") or {}
+    hosts = doc.get("hosts") or {}
     direct_port = int((hosts.get("github.com") or {}).get("port") or 22)
     tunnel_port = int((hosts.get("ssh.github.com") or {}).get("port") or 443)
-    if _probe_tcp("github.com", direct_port):
+    tunnel_ok = _probe_tcp("ssh.github.com", tunnel_port)
+    direct_ok = _probe_tcp("github.com", direct_port)
+    if _presume_hostile(doc):
+        if tunnel_ok:
+            return "tunnel"
+        if direct_ok:
+            return "direct"
+        return "none"
+    if direct_ok:
         return "direct"
-    if _probe_tcp("ssh.github.com", tunnel_port):
+    if tunnel_ok:
         return "tunnel"
     return "none"
 
@@ -540,10 +569,12 @@ def push_repo(cwd: Path, *, branch: str = "main", remote: str, tag: str | None =
         )
         return {"lane": lane, "route": route, "remote": remote_url, **r}
 
-    candidates: list[tuple[str, str | None, str]] = [
-        ("ssh_tunnel_443", "tunnel", remote),
-        ("ssh_direct_22", "direct", remote),
-    ]
+    hostile = _presume_hostile(doc)
+    candidates: list[tuple[str, str | None, str]] = (
+        [("ssh_tunnel_443", "tunnel", remote), ("ssh_direct_22", "direct", remote)]
+        if hostile
+        else [("ssh_direct_22", "direct", remote), ("ssh_tunnel_443", "tunnel", remote)]
+    )
     m = re.match(r"git@github\.com:([^/]+)/([^/]+?)(?:\.git)?$", remote)
     if m:
         https = _https_remote(m.group(1), m.group(2).replace(".git", ""))

@@ -1,7 +1,8 @@
 {
   "schema": "hostess7-github-known-hosts/v1",
   "owner": "ZacharyGeurts",
-  "policy": "Pinned SSH host keys only — StrictHostKeyChecking=yes, no MITM; tunnel via ssh.github.com:443 when :22 blocked; no redirects, hooks, or proxy hijacks",
+  "policy": "Pinned SSH host keys only — StrictHostKeyChecking=yes, no MITM; presume hostile ISP — tunnel ssh.github.com:443 first; no redirects, hooks, or proxy hijacks",
+  "presume_mitm": true,
   "anti_hook": {
     "ignore_ssh_config": true,
     "disable_git_hooks": true,

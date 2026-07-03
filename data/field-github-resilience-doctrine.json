@@ -32,5 +32,12 @@
     "max_entries": 32,
     "auto_flush": true
   },
-  "pages_fallback_origin": "https://zacharygeurts.github.io/Hostess7/"
+  "pages_fallback_origin": "https://zacharygeurts.github.io/Hostess7/",
+  "path_harden": {
+    "module": "lib/field-github-path-harden.py",
+    "api": "/api/field-github-path-harden",
+    "cli": "scripts/github-unflake.sh",
+    "presume_mitm": true,
+    "default_push": "HOSTESS7_GIT_TUNNEL=tunnel ./scripts/github-lanes.sh push main"
+  }
 }

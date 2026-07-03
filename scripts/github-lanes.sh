@@ -4,6 +4,13 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SECURE="${ROOT}/Hostess7/scripts/hostess7_secure_git.py"
+if [[ -f "${HOME}/.config/ammo-shield/github-lane.env" ]]; then
+  # shellcheck source=/dev/null
+  source "${HOME}/.config/ammo-shield/github-lane.env"
+fi
+export HOSTESS7_PRESUME_HOSTILE="${HOSTESS7_PRESUME_HOSTILE:-1}"
+export HOSTESS7_GIT_TUNNEL="${HOSTESS7_GIT_TUNNEL:-tunnel}"
+export HOSTESS7_GIT_SKIP_API_TLS="${HOSTESS7_GIT_SKIP_API_TLS:-1}"
 OWNER="${HOSTESS7_GITHUB_OWNER:-ZacharyGeurts}"
 REPO="${HOSTESS7_GITHUB_REPO:-Hostess7}"
 

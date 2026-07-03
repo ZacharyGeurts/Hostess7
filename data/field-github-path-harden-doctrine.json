@@ -1,0 +1,27 @@
+{
+  "schema": "field-github-path-harden/v1",
+  "presume_mitm": true,
+  "presume_hostile_isp": true,
+  "default_route": "tunnel",
+  "notes": "Charter/Spectrum path to 140.82.x.x may flap or RST :22 — treat as hostile until proven otherwise.",
+  "dns_crosscheck": {
+    "doh": [
+      {"id": "cloudflare", "url": "https://cloudflare-dns.com/dns-query?name={host}&type=A", "json": true},
+      {"id": "google", "url": "https://dns.google/resolve?name={host}&type=A", "json": true}
+    ],
+    "hosts": ["github.com", "api.github.com", "ssh.github.com"]
+  },
+  "flap_probe": {"rounds": 3, "interval_sec": 1.5, "timeout_sec": 6},
+  "mitigations": {
+    "force_tunnel": true,
+    "tunnel_first_push": true,
+    "skip_api_tls_when_unpinned": true,
+    "ipv4_only": true,
+    "log_violations": true
+  },
+  "pinned_connect_ips": {
+    "github.com": ["140.82.112.33", "140.82.114.4"],
+    "ssh.github.com": ["140.82.112.35", "140.82.114.36"],
+    "api.github.com": ["140.82.114.5"]
+  }
+}
