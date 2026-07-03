@@ -21,16 +21,21 @@ PROFILE_README = ROOT / "profile" / "README.md"
 PROFILE_DOCS = ROOT / "profile" / "docs"
 RELEASES_CSS = PROFILE_DOCS / "releases.css"
 
-# Pin board order (16 public repos)
+# Pin board order — Hostess 7 leads sovereign stack
 PIN_ORDER = [
-    "AmmoOS", "Grok16", "KILROY", "ZNetwork",
-    "AmmoCode", "Field_Primer", "Field_Research", "Final_Eye",
+    "Hostess7", "H7updater", "AmmoOS", "Grok16",
+    "KILROY", "ZNetwork", "AmmoCode", "Field_Primer",
+    "Field_Research", "Final_Eye", "Final_Ear", "Final_Mouth",
     "World_Redata", "AMOURANTHRTX", "OBS-FieldVoiceFilter", "Kill-Grok-Orphans",
     "memes", "retrotool", "Poop", "ZacharyGeurts",
 ]
 
 TAGS = {
+    "Hostess7": "main project · brain",
+    "H7updater": "official updates · Layer 0",
     "AmmoOS": "field OS",
+    "Final_Ear": "sense · audio",
+    "Final_Mouth": "sense · speech",
     "Grok16": "G16 compiler",
     "KILROY": "Field boot",
     "ZNetwork": "smart relayer",
@@ -59,6 +64,8 @@ BADGE_VERSIONS = {
 # GitHub repo name → on-disk tree under SG (AmmoOS ships from NewLatest).
 REPO_LOCAL_ROOT: dict[str, str] = {
     "AmmoOS": "NewLatest",
+    "Hostess7": "NewLatest",
+    "H7updater": "NewLatest/H7updater",
 }
 
 
@@ -481,9 +488,10 @@ def profile_hub_html(metas: list[dict[str, Any]]) -> str:
   <p class="meta">Field operator hub — pins link to Pages first. Icons: 📄 Pages · 📖 Wiki · 🏷 Releases · 💻 Repo · 🐛 Issues</p>
   <nav>
     <a href="https://github.com/{OWNER}/{OWNER}">Profile README</a>
+    <a href="{PAGES_BASE}/Hostess7/">Hostess 7</a>
+    <a href="{PAGES_BASE}/H7updater/">H7 Updater</a>
     <a href="{PAGES_BASE}/AmmoOS/">AmmoOS</a>
-    <a href="{PAGES_BASE}/Grok16/">Grok16</a>
-    <a href="{PAGES_BASE}/Field_Primer/">Field Primer</a>
+    <a href="stack.html">Stack hub</a>
   </nav>
   <div class="grid">
     {"".join(cards)}

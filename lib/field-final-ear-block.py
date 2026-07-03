@@ -171,9 +171,20 @@ def _resolve_html(html_rel: str) -> Path:
     return html_path
 
 
+def _secure_kill_posture() -> dict[str, Any]:
+    mod = _import_py(INSTALL / "lib" / "field-sense-secure-kill.py", "fssk_feb")
+    if mod and hasattr(mod, "secure_kill_posture"):
+        try:
+            return mod.secure_kill_posture(INSTALL, SG)
+        except Exception:
+            pass
+    return {"schema": "field-sense-secure-kill/v1", "ok": False, "kill_policy": "observe"}
+
+
 def build_block(*, refresh: bool = False) -> dict[str, Any]:
     doctrine = _load(DOCTRINE, {})
     ironclad = _ironclad_slice()
+    secure_kill = _secure_kill_posture()
     sealed = bool(ironclad.get("ironclad_sealed") or ironclad.get("realized"))
     guard = _guard_posture()
     earball = _earball_posture()
@@ -206,6 +217,7 @@ def build_block(*, refresh: bool = False) -> dict[str, Any]:
         and ocr.get("ok")
         and earball_ok
         and root_ok
+        and secure_kill.get("ok")
     )
     ok = held and sense_safe
 
@@ -241,11 +253,12 @@ def build_block(*, refresh: bool = False) -> dict[str, Any]:
             "certainty_score": guard.get("certainty_score"),
         },
         "ocr": ocr,
+        "secure_kill": secure_kill,
         "ironclad_chain": {
             "citation": IRONCLAD_CITE,
             "sealed": sealed,
             "truth_percent": 100.0 if sealed and ok else 95.0 if ok else 80.0,
-            "layers": ["ironclad", "final_ear", "queen_earball", "hostess7_bridge", "final_eye_ocr"],
+            "layers": ["ironclad", "final_ear", "queen_earball", "hostess7_bridge", "secure_kill", "final_eye_ocr"],
         },
         "posture": (
             f"Final Ear block — {product.get('name', 'The Final Ear')} · "

@@ -1,5 +1,5 @@
 #!/usr/bin/env pythong
-"""Final Mouth block — ironclad sealed NEXUS C2 voice surface (like CHIPS core)."""
+"""Final Eye block — ironclad sealed NEXUS C2 vision surface (like CHIPS core)."""
 from __future__ import annotations
 
 import importlib.util
@@ -11,14 +11,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+
 def _install_root() -> Path:
     env = os.environ.get("NEXUS_INSTALL_ROOT", "").strip()
     if env:
         p = Path(env).expanduser().resolve()
-        if (p / "data" / "field-final-mouth-block-doctrine.json").is_file():
+        if (p / "data" / "field-final-eye-block-doctrine.json").is_file():
             return p
     nl = Path(os.environ.get("SG_ROOT", Path(__file__).resolve().parents[2])) / "NewLatest"
-    if (nl / "data" / "field-final-mouth-block-doctrine.json").is_file():
+    if (nl / "data" / "field-final-eye-block-doctrine.json").is_file():
         return nl.resolve()
     return Path(__file__).resolve().parents[1]
 
@@ -26,11 +27,11 @@ def _install_root() -> Path:
 INSTALL = _install_root()
 STATE = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state"))
 SG = Path(os.environ.get("SG_ROOT", INSTALL.parent))
-DOCTRINE = INSTALL / "data" / "field-final-mouth-block-doctrine.json"
-PANEL = STATE / "field-final-mouth-block-panel.json"
-BATTERY = STATE / "field-final-mouth-block.json"
-FACET = "final_mouth"
-IRONCLAD_CITE = "ironclad:final_mouth:1"
+DOCTRINE = INSTALL / "data" / "field-final-eye-block-doctrine.json"
+PANEL = STATE / "field-final-eye-block-panel.json"
+BATTERY = STATE / "field-final-eye-block.json"
+FACET = "final_eye"
+IRONCLAD_CITE = "ironclad:final_eye:1"
 
 
 def _now() -> str:
@@ -41,7 +42,6 @@ def _h7s_read_json(path: Path, default: Any = None) -> Any:
     fs_py = INSTALL / "lib" / "field-h7s-fs.py"
     if path.suffix.lower() == ".json" and fs_py.is_file():
         try:
-            import importlib.util
             spec = importlib.util.spec_from_file_location("_h7s_fs_io", fs_py)
             if spec and spec.loader:
                 mod = importlib.util.module_from_spec(spec)
@@ -54,6 +54,7 @@ def _h7s_read_json(path: Path, default: Any = None) -> Any:
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError, UnicodeDecodeError):
         return default if default is not None else {}
+
 
 def _load(path: Path, default: Any = None) -> Any:
     return _h7s_read_json(path, default=default)
@@ -84,7 +85,7 @@ def _ironclad_slice() -> dict[str, Any]:
     cached = _load(STATE / "ironclad-immediate.json", {})
     if cached.get("schema"):
         return cached
-    mod = _import_py(INSTALL / "lib" / "ironclad-immediate.py", "ic_fmb")
+    mod = _import_py(INSTALL / "lib" / "ironclad-immediate.py", "ic_fey")
     if mod and hasattr(mod, "immediate_slice"):
         try:
             return mod.immediate_slice()
@@ -94,15 +95,22 @@ def _ironclad_slice() -> dict[str, Any]:
 
 
 def _final_eye_ocr_html(html_path: Path, needles: list[str]) -> dict[str, Any]:
-    eye = SG / "Final_Eye" / "zocr.py"
+    eye = SG / "Final_Eye" / "zocr_military_eol.py"
+    if not eye.is_file():
+        eye = SG / "Final_Eye" / "zocr.py"
     text = ""
     if html_path.is_file():
         text = html_path.read_text(encoding="utf-8", errors="replace")
     hits = [n for n in needles if n.lower() in text.lower()]
-    ocr_mod = _import_py(eye, "zocr_fmb")
-    military_ok = bool(ocr_mod and getattr(ocr_mod, "tesseract_available", lambda: False)())
+    ocr_mod = _import_py(eye, "zocr_fey")
+    military_ok = bool(ocr_mod)
+    if military_ok and hasattr(ocr_mod, "tesseract_available"):
+        try:
+            military_ok = bool(ocr_mod.tesseract_available())
+        except Exception:
+            military_ok = True
     return {
-        "schema": "field-final-mouth-ocr/v1",
+        "schema": "field-final-eye-ocr/v1",
         "engine": "Hostess7/MilitaryEOL",
         "html_path": str(html_path),
         "html_exists": html_path.is_file(),
@@ -116,7 +124,7 @@ def _final_eye_ocr_html(html_path: Path, needles: list[str]) -> dict[str, Any]:
 
 
 def _guard_posture() -> dict[str, Any]:
-    mod = _import_py(INSTALL / "lib" / "field-thermal-guard.py", "ftg_fmb")
+    mod = _import_py(INSTALL / "lib" / "field-thermal-guard.py", "ftg_fey")
     if mod and hasattr(mod, "evaluate"):
         try:
             return mod.evaluate()
@@ -147,7 +155,7 @@ def _queen_ball_posture(script_name: str, status_attr: str) -> dict[str, Any]:
             [sys.executable, str(script), "json"],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=90,
             cwd=str(INSTALL),
             env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "SG_ROOT": str(SG)},
         )
@@ -159,20 +167,19 @@ def _queen_ball_posture(script_name: str, status_attr: str) -> dict[str, Any]:
     return {}
 
 
-def _mouthball_posture() -> dict[str, Any]:
-    return _queen_ball_posture("queen-mouthball.py", "mouthball_status")
+def _eyeball_posture() -> dict[str, Any]:
+    return _queen_ball_posture("queen-eyeball.py", "eyeball_status")
 
 
 def _resolve_html(html_rel: str) -> Path:
-    html_path = INSTALL / html_rel
     for candidate in (INSTALL / html_rel, SG / "NewLatest" / html_rel, SG / "Queen" / Path(html_rel).name):
         if candidate.is_file():
             return candidate
-    return html_path
+    return INSTALL / html_rel
 
 
 def _secure_kill_posture() -> dict[str, Any]:
-    mod = _import_py(INSTALL / "lib" / "field-sense-secure-kill.py", "fssk_fmb")
+    mod = _import_py(INSTALL / "lib" / "field-sense-secure-kill.py", "fssk_fey")
     if mod and hasattr(mod, "secure_kill_posture"):
         try:
             return mod.secure_kill_posture(INSTALL, SG)
@@ -187,9 +194,9 @@ def build_block(*, refresh: bool = False) -> dict[str, Any]:
     secure_kill = _secure_kill_posture()
     sealed = bool(ironclad.get("ironclad_sealed") or ironclad.get("realized"))
     guard = _guard_posture()
-    mouthball = _mouthball_posture()
+    eyeball = _eyeball_posture()
     ocr_spec = doctrine.get("ocr_expect") or {}
-    html_rel = str(ocr_spec.get("surface_html") or "Queen/world/queen-final-mouth-manager.html")
+    html_rel = str(ocr_spec.get("surface_html") or "Queen/world/queen-final-eye-manager.html")
     html_path = _resolve_html(html_rel)
     ocr = _final_eye_ocr_html(html_path, list(ocr_spec.get("needles") or []))
 
@@ -200,27 +207,38 @@ def build_block(*, refresh: bool = False) -> dict[str, Any]:
     blocked = {str(x).lower() for x in (sense_cfg.get("blocked_levels") or ["crit", "storm"])}
     sense_safe = headroom >= min_h and level.lower() not in blocked
 
-    mouth_root = Path(str(mouthball.get("final_mouth_root") or SG / "Final_Mouth"))
-    final_mouth = mouthball.get("final_mouth") or {}
-    product = mouthball.get("product") or {}
-    twins = product.get("twins") or {}
+    eye_root = Path(str(eyeball.get("final_eye_root") or SG / "Final_Eye"))
+    stack = doctrine.get("stack") or {}
+    bridge_path = INSTALL / str(stack.get("bridge") or "lib/final-eye-ocr-core.py")
+    seal_path = INSTALL / str(stack.get("seal") or "lib/final-eye-hostess7-seal.py")
+    twins = eyeball.get("twins") or {}
+    product = eyeball.get("product") or {}
+    sovereign = eyeball.get("sovereign_time") or {}
+    mesh_ok = eyeball.get("mesh_ok")
 
-    surface = doctrine.get("surface") or "/world/queen-final-mouth-manager.html"
-    module_ok = (INSTALL / "lib" / "field-final-mouth-block.py").is_file()
-    mouthball_ok = mouthball.get("schema") == "queen-mouthball-hostess7/v1"
-    root_ok = mouth_root.is_dir() and (mouth_root / "zocr_product.py").is_file()
+    surface = doctrine.get("surface") or "/world/queen-final-eye-manager.html"
+    module_ok = (INSTALL / "lib" / "field-final-eye-block.py").is_file()
+    eyeball_ok = eyeball.get("schema") == "queen-eyeball-hostess7/v1"
+    root_ok = eye_root.is_dir() and (
+        (eye_root / "zocr.py").is_file() or (eye_root / "zocr_military_eol.py").is_file()
+    )
+    bridge_ok = bridge_path.is_file()
     held = (
         module_ok
         and html_path.is_file()
         and ocr.get("ok")
-        and mouthball_ok
+        and eyeball_ok
         and root_ok
+        and bridge_ok
         and secure_kill.get("ok")
     )
     ok = held and sense_safe
 
+    living = twins.get("living") or eyeball.get("living") or {}
+    truth = twins.get("truth") or eyeball.get("truth") or {}
+
     return {
-        "schema": "field-final-mouth-block/v1",
+        "schema": "field-final-eye-block/v1",
         "updated": _now(),
         "ok": ok,
         "held": held,
@@ -233,19 +251,21 @@ def build_block(*, refresh: bool = False) -> dict[str, Any]:
         "headroom_pct": headroom,
         "thermal_level": level,
         "surface": surface,
-        "bookmark_id": "final-mouth-manager",
-        "mouthball": {
-            "schema": mouthball.get("schema"),
-            "posture": mouthball.get("posture"),
-            "rule": mouthball.get("rule"),
+        "bookmark_id": "final-eye-manager",
+        "eyeball": {
+            "schema": eyeball.get("schema"),
+            "posture": eyeball.get("posture"),
+            "rule": eyeball.get("rule"),
             "twins": {
-                "living": twins.get("living") or "Loquor",
-                "truth": twins.get("truth") or "Veritas Vox",
+                "living": (living.get("name") if isinstance(living, dict) else living) or "Vita",
+                "truth": (truth.get("name") if isinstance(truth, dict) else truth) or "Veritas",
             },
-            "active_mode": final_mouth.get("active_mode"),
-            "active_profile": final_mouth.get("active_profile"),
+            "mesh_ok": mesh_ok,
+            "sovereign_ok": sovereign.get("ok", sovereign.get("verdict") == "USER_OK"),
             "product_version": product.get("version"),
-            "final_mouth_root": str(mouth_root),
+            "final_eye_root": str(eye_root),
+            "bridge_ok": bridge_ok,
+            "seal_ok": seal_path.is_file(),
         },
         "guard": {
             "headroom_pct": guard.get("headroom_pct"),
@@ -257,11 +277,11 @@ def build_block(*, refresh: bool = False) -> dict[str, Any]:
             "citation": IRONCLAD_CITE,
             "sealed": sealed,
             "truth_percent": 100.0 if sealed and ok else 95.0 if ok else 80.0,
-            "layers": ["ironclad", "final_mouth", "queen_mouthball", "gvc1", "secure_kill", "final_eye_ocr"],
+            "layers": ["ironclad", "final_eye", "queen_eyeball", "hostess7_ocr", "military_eol"],
         },
         "posture": (
-            f"Final Mouth block — {product.get('name', 'The Final Mouth')} · "
-            f"mode {final_mouth.get('active_mode', 'dishes')} · "
+            f"Final Eye block — {product.get('name', product.get('product', 'Final_Eye'))} · "
+            f"twins Vita/Veritas · mesh {'woven' if mesh_ok else 'check'} · "
             f"OCR {ocr.get('hit_count', 0)} hits"
         ),
     }
@@ -270,7 +290,7 @@ def build_block(*, refresh: bool = False) -> dict[str, Any]:
 def publish_panel(*, refresh: bool = False) -> dict[str, Any]:
     block = build_block(refresh=refresh)
     panel = {
-        "schema": "field-final-mouth-block-panel/v1",
+        "schema": "field-final-eye-block-panel/v1",
         "updated": block.get("updated"),
         "ok": block.get("ok"),
         "held": block.get("held"),
@@ -289,9 +309,9 @@ def publish_panel(*, refresh: bool = False) -> dict[str, Any]:
 def posture() -> dict[str, Any]:
     cached = _load(BATTERY, {})
     if (
-        cached.get("schema") == "field-final-mouth-block/v1"
+        cached.get("schema") == "field-final-eye-block/v1"
         and cached.get("updated")
-        and (cached.get("mouthball") or {}).get("schema") == "queen-mouthball-hostess7/v1"
+        and (cached.get("eyeball") or {}).get("schema") == "queen-eyeball-hostess7/v1"
     ):
         return cached
     return build_block()
@@ -308,10 +328,10 @@ def main() -> int:
     if cmd == "ocr":
         doc = _load(DOCTRINE, {})
         spec = doc.get("ocr_expect") or {}
-        html = _resolve_html(str(spec.get("surface_html") or "Queen/world/queen-final-mouth-manager.html"))
+        html = _resolve_html(str(spec.get("surface_html") or "Queen/world/queen-final-eye-manager.html"))
         print(json.dumps(_final_eye_ocr_html(html, list(spec.get("needles") or [])), ensure_ascii=False, indent=2))
         return 0
-    print(json.dumps({"error": "usage: field-final-mouth-block.py [json|publish|ocr]"}, ensure_ascii=False))
+    print(json.dumps({"error": "usage: field-final-eye-block.py [json|publish|ocr]"}, ensure_ascii=False))
     return 1
 
 

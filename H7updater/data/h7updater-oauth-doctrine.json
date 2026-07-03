@@ -1,0 +1,53 @@
+{
+  "schema": "h7updater-oauth/v1",
+  "title": "H7 Updater — sovereign vs personal lanes",
+  "motto": "ZacharyGeurts writes sovereign stack only. Everyone else connects their GitHub read-only.",
+  "sovereign_owner": "ZacharyGeurts",
+  "sovereign_write": {
+    "allowed_login": "ZacharyGeurts",
+    "policy": "Only the sovereign owner may push to ZacharyGeurts/* repos. H7updater never requests write scope."
+  },
+  "lanes": {
+    "sovereign": {
+      "id": "sovereign",
+      "label": "Sovereign catalog",
+      "description": "Official field stack from ZacharyGeurts — public API, no login required.",
+      "manifest": "data/h7updater-stack-index.json",
+      "api_mode": "public",
+      "write": false
+    },
+    "personal": {
+      "id": "personal",
+      "label": "Your GitHub",
+      "description": "Authorize read-only access to your repos and releases. Updates apply to your machine only — never to ZacharyGeurts.",
+      "api_mode": "oauth_device",
+      "scopes": ["repo:read", "read:user"],
+      "write": false,
+      "device_flow": {
+        "authorize_url": "https://github.com/login/device",
+        "code_url": "https://github.com/login/device/code",
+        "token_url": "https://github.com/login/oauth/access_token"
+      },
+      "oauth_app": {
+        "client_id_env": "H7UPDATER_OAUTH_CLIENT_ID",
+        "client_id_placeholder": "Ov23liPLACEHOLDER",
+        "setup_url": "https://github.com/settings/applications/new",
+        "redirect_uri_note": "Device flow — no redirect URI required. Enable for your account or org; read-only scopes only."
+      }
+    }
+  },
+  "github_api": {
+    "base": "https://api.github.com",
+    "raw_base": "https://raw.githubusercontent.com",
+    "releases_path": "/repos/{owner}/{repo}/releases/latest",
+    "contents_path": "/repos/{owner}/{repo}/contents/{path}",
+    "user_repos_path": "/user/repos?per_page=100&sort=updated"
+  },
+  "ui": {
+    "pages_url": "https://zacharygeurts.github.io/H7updater/",
+    "warehouse_surface": "ammoos-warehouse",
+    "local_updater_route": "/ammoos-update-os",
+    "token_storage": "sessionStorage",
+    "token_key": "h7updater_github_token"
+  }
+}

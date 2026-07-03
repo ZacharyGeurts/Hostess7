@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AmmoOS Stack — @ZacharyGeurts</title>
-  <meta name="description" content="AmmoOS-led field stack — NEXUS C2, ZNetwork, Queen, KILROY navigation." />
+  <title>Field Stack — @ZacharyGeurts</title>
+  <meta name="description" content="Hostess 7 leads — AmmoOS field stack, H7 Updater, senses, Queen, KILROY." />
   <link rel="stylesheet" href="releases.css" />
   <style>
     .stack { font-family: var(--mono, monospace); background: var(--panel); padding: 1rem; border-radius: 8px; line-height: 1.7; }
@@ -13,8 +13,7 @@
     .card { border: 1px solid var(--edge); border-radius: 10px; padding: 1rem; background: var(--panel); }
     .card h3 { margin: 0 0 0.5rem; }
     .card.leader { border-color: #22c55e; }
-  </style>
-  <style>
+    .card.main { border-color: #f5c518; }
     .github-chrome-top, .github-chrome-bottom {
       display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
       gap:.5rem 1rem; padding:.55rem .85rem; margin:0 0 1rem; border-radius:8px;
@@ -26,40 +25,49 @@
   </style>
 </head>
 <body>
-  <div class="github-chrome-top"><a class="github-repo-primary" href="https://github.com/ZacharyGeurts/AmmoOS">→ GitHub: ZacharyGeurts/AmmoOS</a><span><a href="https://zacharygeurts.github.io/AmmoOS/">Manual</a> · <a href="https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta4">Release</a></span></div>
-  <h1>AmmoOS Stack</h1>
-  <p class="lead"><strong>AmmoOS leads.</strong> Install once, wire siblings, operate on loopback <code>127.0.0.1</code>.</p>
+  <div class="github-chrome-top"><a class="github-repo-primary" href="https://github.com/ZacharyGeurts/Hostess7">→ GitHub: ZacharyGeurts/Hostess7</a><span><a href="https://zacharygeurts.github.io/Hostess7/">Pages</a> · <a href="https://github.com/ZacharyGeurts/Hostess7/wiki">Wiki</a></span></div>
+  <h1>Field Stack</h1>
+  <p class="lead"><strong>Hostess 7 leads.</strong> AmmoOS, senses, and siblings wire inside one tree. Updates via <a href="https://zacharygeurts.github.io/H7updater/">H7 Updater</a>.</p>
   <nav>
     <a href="https://github.com/ZacharyGeurts">Profile</a>
+    <a href="https://zacharygeurts.github.io/Hostess7/">Hostess 7</a>
+    <a href="https://zacharygeurts.github.io/H7updater/">H7 Updater</a>
     <a href="https://zacharygeurts.github.io/AmmoOS/">AmmoOS manual</a>
     <a href="https://zacharygeurts.github.io/Queen/">Queen</a>
-    <a href="https://zacharygeurts.github.io/ZNetwork/">ZNetwork</a>
-    <a href="https://zacharygeurts.github.io/KILROY/">KILROY</a>
     <a href="https://zacharygeurts.github.io/Final_Eye/">Final Eye</a>
     <a href="https://zacharygeurts.github.io/Final_Ear/">Final Ear</a>
     <a href="https://zacharygeurts.github.io/Final_Mouth/">Final Mouth</a>
-    <a href="display-example.html">Display example</a>
   </nav>
 
   <h2>Layer diagram</h2>
-  <pre class="stack">Hardware (witness)
+  <pre class="stack">Hostess 7 brain (z=-4)
   ↓
-NEXUS C2 · AmmoOS · :9477/field
+NEXUS C2 · KILROY kernel
   ↓
-ZNetwork · sole internet pipe
+AmmoOS desktop · :9477/field
   ↓
-Queen CANVAS · RTX display (not GUI)
+H7 Updater · Layer 0 warehouse
   ↓
 Queen Browser · :9481
   ↓
-AmmoOS inside Queen Start tab</pre>
+Senses · Final_Eye · Final_Ear · Final_Mouth</pre>
 
   <h2>Repos</h2>
   <div class="grid">
+    <article class="card main">
+      <h3><a href="https://zacharygeurts.github.io/Hostess7/">★ Hostess 7</a></h3>
+      <p>Main project · brain · counsel · <code>2.0.7h</code></p>
+      <p><a href="https://zacharygeurts.github.io/Hostess7/">📄 Pages</a> · <a href="https://github.com/ZacharyGeurts/Hostess7/wiki">📖 Wiki</a> · <a href="https://github.com/ZacharyGeurts/Hostess7">💻 Repo</a></p>
+    </article>
+    <article class="card">
+      <h3><a href="https://zacharygeurts.github.io/H7updater/">H7 Updater</a></h3>
+      <p>Official updates · sovereign + OAuth · <code>1.0.0</code></p>
+      <p><a href="https://zacharygeurts.github.io/H7updater/">📄 Pages</a> · <a href="https://github.com/ZacharyGeurts/H7updater">💻 Repo</a></p>
+    </article>
     <article class="card leader">
-      <h3><a href="https://zacharygeurts.github.io/AmmoOS/">★ AmmoOS</a></h3>
-      <p>Field OS + NEXUS C2 · <code>2.0.0-beta4</code></p>
-      <p><a href="https://zacharygeurts.github.io/AmmoOS/">📄 Manual</a> · <a href="https://zacharygeurts.github.io/AmmoOS/stack-hub.html">Stack doc</a> · <a href="https://github.com/ZacharyGeurts/AmmoOS">💻 Repo</a></p>
+      <h3><a href="https://zacharygeurts.github.io/AmmoOS/">AmmoOS</a></h3>
+      <p>Field OS + NEXUS C2 · <code>2.0.0-beta5</code></p>
+      <p><a href="https://zacharygeurts.github.io/AmmoOS/">📄 Manual</a> · <a href="https://github.com/ZacharyGeurts/AmmoOS">💻 Repo</a></p>
     </article>
     <article class="card">
       <h3><a href="https://zacharygeurts.github.io/Queen/">Queen</a></h3>
@@ -67,53 +75,46 @@ AmmoOS inside Queen Start tab</pre>
       <p><a href="https://zacharygeurts.github.io/AmmoOS/queen-browser.html">📄 Manual</a> · <a href="https://github.com/ZacharyGeurts/Queen">💻 Repo</a></p>
     </article>
     <article class="card">
-      <h3><a href="https://zacharygeurts.github.io/ZNetwork/">ZNetwork</a></h3>
-      <p>Smart relayer · <code>2.1.0</code></p>
-      <p><a href="https://zacharygeurts.github.io/AmmoOS/io.html">📄 Manual</a> · <a href="https://github.com/ZacharyGeurts/ZNetwork">💻 Repo</a></p>
-    </article>
-    <article class="card">
       <h3><a href="https://zacharygeurts.github.io/KILROY/">KILROY</a></h3>
-      <p>Field boot kernel · Taco</p>
-      <p><a href="https://zacharygeurts.github.io/AmmoOS/architecture.html">📄 Manual</a> · <a href="https://github.com/ZacharyGeurts/KILROY">💻 Repo</a></p>
+      <p>Field boot kernel</p>
+      <p><a href="https://zacharygeurts.github.io/KILROY/">📄 Hub</a> · <a href="https://github.com/ZacharyGeurts/KILROY">💻 Repo</a></p>
     </article>
     <article class="card">
       <h3><a href="https://zacharygeurts.github.io/Grok16/">Grok16</a></h3>
       <p>Sovereign compiler · <code>5.2.0</code></p>
-      <p><a href="https://zacharygeurts.github.io/AmmoOS/combinatronic.html">📄 Manual</a> · <a href="https://github.com/ZacharyGeurts/AmmoOS">💻 Code (AmmoOS)</a></p>
+      <p><a href="https://zacharygeurts.github.io/AmmoOS/combinatronic.html">📄 Manual</a> · <a href="https://github.com/ZacharyGeurts/Grok16">💻 Repo</a></p>
     </article>
     <article class="card">
       <h3><a href="https://zacharygeurts.github.io/Final_Eye/">Final Eye</a></h3>
-      <p>Vision textbook · <code>v1.3</code></p>
-      <p><a href="https://zacharygeurts.github.io/AmmoOS/launch-surfaces.html">📄 Manual</a> · <a href="https://github.com/ZacharyGeurts/AmmoOS">💻 Code (AmmoOS)</a></p>
+      <p>Vision · Military EOL OCR · <code>v1.3.1</code></p>
+      <p><a href="https://zacharygeurts.github.io/Final_Eye/">📄 Hub</a> · <a href="https://github.com/ZacharyGeurts/Final_Eye">💻 Repo</a></p>
     </article>
     <article class="card">
       <h3><a href="https://zacharygeurts.github.io/Final_Ear/">Final Ear</a></h3>
       <p>Audio truth filters</p>
-      <p><a href="https://zacharygeurts.github.io/Final_Ear/">📄 Hub</a> · <a href="https://github.com/ZacharyGeurts/AmmoOS">💻 AmmoOS</a></p>
+      <p><a href="https://zacharygeurts.github.io/Final_Ear/">📄 Hub</a> · <a href="https://github.com/ZacharyGeurts/Final_Ear">💻 Repo</a></p>
     </article>
     <article class="card">
       <h3><a href="https://zacharygeurts.github.io/Final_Mouth/">Final Mouth</a></h3>
-      <p>Speech · ZOCR mouth · <code>v1.0</code></p>
-      <p><a href="https://zacharygeurts.github.io/Final_Mouth/">📄 Hub</a> · <a href="https://github.com/ZacharyGeurts/AmmoOS">💻 AmmoOS</a></p>
+      <p>Speech · ZOCR mouth</p>
+      <p><a href="https://zacharygeurts.github.io/Final_Mouth/">📄 Hub</a> · <a href="https://github.com/ZacharyGeurts/Final_Mouth">💻 Repo</a></p>
     </article>
   </div>
-
-  <h2>Sense trilogy</h2>
-  <p>Final_Eye, Final_Ear, and Final_Mouth wire into Queen and NEXUS panel HTTP — <code>/api/field-manual?sense=vision|audio|speech</code>.</p>
 
   <h2>Live surfaces</h2>
   <table>
     <tr><th>Surface</th><th>URL</th></tr>
+    <tr><td>Hostess 7 counsel</td><td><code>./Hostess7/Hostess7.sh talk</code></td></tr>
     <tr><td>Host desktop</td><td><code>http://127.0.0.1:9477/field</code></td></tr>
-    <tr><td>Field command</td><td><code>http://127.0.0.1:9477/command</code></td></tr>
-    <tr><td>ZNetwork Hub</td><td><code>http://127.0.0.1:9477/field-znetwork</code></td></tr>
+    <tr><td>Archival Warehouse</td><td><code>http://127.0.0.1:9477/ammoos-warehouse</code></td></tr>
+    <tr><td>Software Update Manager</td><td><code>http://127.0.0.1:9477/ammoos-update-os</code></td></tr>
     <tr><td>Queen Browser</td><td><code>http://127.0.0.1:9481/world/browser.html</code></td></tr>
   </table>
 
   <h2>Install</h2>
-  <pre><code>git clone https://github.com/ZacharyGeurts/AmmoOS.git
-cd AmmoOS && git checkout v2.0.0-beta4
-./scripts/wire-stack.sh && sudo ./install-all.sh</code></pre>
-  <div class="github-chrome-bottom"><a class="github-repo-primary" href="https://github.com/ZacharyGeurts/AmmoOS">→ GitHub: ZacharyGeurts/AmmoOS</a><span>AmmoOS 2.0.0-beta4 · stack hub</span></div>
+  <pre><code>git clone https://github.com/ZacharyGeurts/Hostess7.git
+cd Hostess7 && ./scripts/wire-stack.sh && sudo ./install-all.sh
+./Hostess7/Hostess7.sh on</code></pre>
+  <div class="github-chrome-bottom"><a class="github-repo-primary" href="https://github.com/ZacharyGeurts/Hostess7">→ GitHub: ZacharyGeurts/Hostess7</a><span>Hostess 7 2.0.7h · stack hub</span></div>
 </body>
 </html>

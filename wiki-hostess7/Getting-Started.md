@@ -61,6 +61,16 @@ See **[Training Campus](Training-Campus)**.
 
 ---
 
+## Software updates
+
+Official catalog: **[H7 Updater](H7-Updater)** — https://zacharygeurts.github.io/H7updater/
+
+- **Sovereign lane:** reads ZacharyGeurts stack manifest (no login).
+- **Personal lane:** authorize your GitHub read-only to browse your repos the same way.
+- **Local apply:** `/ammoos-update-os` after install.
+
+---
+
 ## GitHub Pages (demo only)
 
 Public hub: https://zacharygeurts.github.io/Hostess7/

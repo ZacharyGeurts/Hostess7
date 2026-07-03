@@ -47,6 +47,9 @@ gate() {
 gate "ammoos version 2.0.0" grep -q '"version": "2.0.0"' "$ROOT/data/ammoos-version.json"
 gate "thermal manager block" pythong "$ROOT/lib/field-thermal-manager-block.py" json
 gate "thermal manager OCR Final_Eye" bash -c "pythong '$ROOT/lib/field-thermal-manager-block.py' ocr | grep -q '\"ok\": true'"
+gate "secure kill sense policy" pythong "$ROOT/lib/field-sense-secure-kill.py"
+gate "final eye block" pythong "$ROOT/lib/field-final-eye-block.py" json
+gate "final eye OCR Military EOL" bash -c "pythong '$ROOT/lib/field-final-eye-block.py' ocr | grep -q '\"ok\": true'"
 gate "final ear block" pythong "$ROOT/lib/field-final-ear-block.py" json
 gate "final ear OCR Final_Eye" bash -c "pythong '$ROOT/lib/field-final-ear-block.py' ocr | grep -q '\"ok\": true'"
 gate "final mouth block" pythong "$ROOT/lib/field-final-mouth-block.py" json

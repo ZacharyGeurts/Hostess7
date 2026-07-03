@@ -211,6 +211,8 @@ def main() -> int:
         print("THERMAL SKIP: queen-thermal-manager.html not in NewLatest/Queen/world")
 
     for label, html_rel, block_py, needles in (
+        ("EYE", "Queen/world/queen-final-eye-manager.html", "field-final-eye-block.py",
+         ("Final Eye", "NEXUS C2", "Vita", "Veritas")),
         ("EAR", "Queen/world/queen-final-ear-manager.html", "field-final-ear-block.py",
          ("Final Ear", "NEXUS C2", "Auditus", "Veritas")),
         ("MOUTH", "Queen/world/queen-final-mouth-manager.html", "field-final-mouth-block.py",

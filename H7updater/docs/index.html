@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="h7updater">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a1814" />
+  <title>H7 Updater — Sovereign stack catalog</title>
+  <meta name="description" content="Official Hostess 7 software update lane — alphabetized stack folders, GitHub releases, personal OAuth." />
+  <link rel="stylesheet" href="assets/h7updater.css?v=1" />
+</head>
+<body>
+  <div class="h7-caution" aria-hidden="true"></div>
+  <div class="h7-wrap">
+    <header class="h7-head">
+      <p class="h7-layer">Layer 0 · Archival Warehouse</p>
+      <h1>H7 Updater</h1>
+      <p class="h7-lead">
+        Smart connection to GitHub for field stack updates.
+        <strong>ZacharyGeurts</strong> ships the sovereign catalog — nobody else pushes to that org.
+        Connect <em>your</em> GitHub read-only to mirror the same folder doctrine on your repos.
+      </p>
+      <nav class="h7-nav">
+        <a href="https://github.com/ZacharyGeurts/H7updater">Repository</a>
+        <a href="https://zacharygeurts.github.io/Hostess7/">Hostess 7 Pages</a>
+        <a href="https://zacharygeurts.github.io/ZacharyGeurts/stack.html">Stack hub</a>
+        <a href="https://zacharygeurts.github.io/AmmoOS/">AmmoOS manual</a>
+      </nav>
+    </header>
+
+    <section class="h7-card">
+      <h2>Update lanes</h2>
+      <div class="h7-lanes">
+        <div class="h7-lane active" data-lane="sovereign" tabindex="0" role="button">
+          <h3>Sovereign catalog</h3>
+          <p>Official ZacharyGeurts stack — public API, no login. Grok and warehouse read <code>data/h7updater-stack-index.json</code>.</p>
+        </div>
+        <div class="h7-lane" data-lane="personal" tabindex="0" role="button">
+          <h3>Your GitHub</h3>
+          <p>Authorize read-only device flow → browse <em>your</em> repos/releases. Never grants write to ZacharyGeurts.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="h7-card" id="h7-sovereign-panel">
+      <h2>Alphabetized stack folders</h2>
+      <p class="h7-status" id="h7-status">Loading manifest…</p>
+      <div class="h7-tree" id="h7-folder-tree"></div>
+    </section>
+
+    <section class="h7-card" id="h7-personal-panel" hidden>
+      <h2>Connect your GitHub</h2>
+      <p>Create a GitHub OAuth App (read-only). Device flow — no redirect URI required.</p>
+      <div class="h7-oauth-box">
+        <p><a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">New OAuth App</a> · enable Device flow · scopes <code>read:user</code> <code>repo:read</code></p>
+        <label>Client ID <input type="text" id="h7-client-id" placeholder="Ov23li…" style="width:100%;margin-top:0.35rem;padding:0.4rem;" /></label>
+        <button type="button" class="h7-btn" id="h7-save-client-id" style="margin-top:0.5rem;">Save client ID</button>
+      </div>
+      <p id="h7-user-line" class="h7-status"></p>
+      <button type="button" class="h7-btn primary" id="h7-auth-btn">Authorize GitHub (read-only)</button>
+      <button type="button" class="h7-btn" id="h7-disconnect-btn" hidden>Disconnect</button>
+      <div class="h7-oauth-box" id="h7-device-code" hidden></div>
+      <div class="h7-tree" id="h7-personal-tree" style="margin-top:1rem;"></div>
+    </section>
+
+    <section class="h7-card">
+      <h2>Folder doctrine</h2>
+      <pre class="h7-tree">stack/{LETTER}/{RepoName}/
+  layer_z -4 → Hostess7 brain
+  layer_z  0 → H7updater warehouse
+  layer_z  2 → senses + siblings
+  A–Z bucket = first letter of repo (else #)</pre>
+      <p>Manifest paths: <code>data/h7updater-stack-index.json</code> · <code>data/h7updater-oauth-doctrine.json</code></p>
+    </section>
+
+    <footer class="h7-foot">
+      H7updater v1.0.0 · All Rights Reserved · ZacharyGeurts sovereign write lane only.
+    </footer>
+  </div>
+  <script src="assets/h7updater.js?v=1"></script>
+</body>
+</html>

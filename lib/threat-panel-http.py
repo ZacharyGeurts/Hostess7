@@ -2987,6 +2987,11 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-final-eye-block", "/api/final-eye-block"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-final-eye-block.py", ["json"], timeout=90)
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
         if path in ("/api/queen-canvas-renderer", "/api/field-rtx-display"):
             canvas_script = None
             for candidate in (

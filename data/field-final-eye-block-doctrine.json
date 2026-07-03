@@ -1,0 +1,43 @@
+{
+  "schema": "field-final-eye-block/v1",
+  "title": "Final Eye — ironclad NEXUS C2 block",
+  "motto": "Vita + Veritas · Military EOL OCR · Hostess7 bridge — one sealed vision block like CHIPS.",
+  "product": "AmmoOS",
+  "module": "lib/field-final-eye-block.py",
+  "panel_state": "field-final-eye-block-panel.json",
+  "battery_state": "field-final-eye-block.json",
+  "api": "/api/field-final-eye-block",
+  "surface": "/world/queen-final-eye-manager.html",
+  "facet": "final_eye",
+  "ironclad_citation": "ironclad:final_eye:1",
+  "sense": {
+    "min_headroom_pct": 10,
+    "blocked_levels": ["crit", "storm"]
+  },
+  "stack": {
+    "eyeball": "Queen/lib/queen-eyeball.py",
+    "bridge": "lib/final-eye-ocr-core.py",
+    "seal": "lib/final-eye-hostess7-seal.py",
+    "product": "Final_Eye/zocr_product.py",
+    "ocr": "Final_Eye/zocr_military_eol.py"
+  },
+  "ocr_expect": {
+    "surface_html": "Queen/world/queen-final-eye-manager.html",
+    "needles": ["Final Eye", "NEXUS C2", "Vita", "Veritas", "qfy-vision"]
+  },
+  "kernels": [
+    "queen_eyeball",
+    "final_eye",
+    "hostess7_ocr",
+    "military_eol",
+    "secure_kill",
+    "final_eye_ocr"
+  ],
+  "secure_kill": {
+    "module": "lib/field-sense-secure-kill.py",
+    "policy": "prejudice",
+    "law": "data/kill-immediate-law.json",
+    "war": "data/field-war-hardening-doctrine.json",
+    "motto": "Anyone in the way — secure kill with prejudice"
+  }
+}

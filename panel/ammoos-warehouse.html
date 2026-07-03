@@ -32,12 +32,18 @@
     <main class="aw-main">
       <section class="aw-card">
         <h2>H7 Software Updates</h2>
-        <p>Official update lane for the field stack. Preflight, lock, apply — nothing breaks a running AmmoOS.</p>
+        <p>Official update lane for the field stack. Manifest from <strong>ZacharyGeurts/H7updater</strong> — preflight, lock, apply locally. Others connect their GitHub read-only on the H7updater Pages site.</p>
         <div class="aw-actions">
-          <a class="aw-btn primary" href="https://github.com/ZacharyGeurts/H7updater" target="_blank" rel="noopener">Open H7updater on GitHub</a>
+          <a class="aw-btn primary" id="aw-h7-pages" href="https://zacharygeurts.github.io/H7updater/" target="_blank" rel="noopener">Open H7updater Pages</a>
+          <a class="aw-btn" href="https://github.com/ZacharyGeurts/H7updater" target="_blank" rel="noopener">GitHub repo</a>
           <a class="aw-btn" id="aw-local-updater" href="/ammoos-update-os">Software Update Manager</a>
           <a class="aw-btn" id="aw-desktop" href="/desktop/">Return to desktop</a>
         </div>
+      </section>
+      <section class="aw-card aw-card--stack">
+        <h2>Sovereign stack (A–Z folders)</h2>
+        <p class="aw-stack-status" id="aw-stack-status">Loading manifest…</p>
+        <div class="aw-stack-tree" id="aw-stack-tree"></div>
       </section>
       <section class="aw-card aw-card--ironclad">
         <h2>Ironclad Search</h2>
