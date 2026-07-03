@@ -5559,6 +5559,17 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-eol-code", "/api/field-eol-code/"):
+            script = INSTALL_ROOT / "lib" / "field-eol-code.py"
+            if script.is_file():
+                refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+                args = ["panel"] + (["--refresh"] if refresh else [])
+                payload = _nexus_py_json(script, args, timeout=120)
+            else:
+                payload = {"schema": "field-eol-code-panel/v1", "ok": False, "error": "field_eol_code_missing"}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
         if path == "/api/field-popcorn":
             script = INSTALL_ROOT / "lib" / "field-popcorn-player.py"
             if script.is_file():
@@ -7846,6 +7857,8 @@ class Handler(BaseHTTPRequestHandler):
                 target = PANEL_DIR / "field-ellie-diag.html"
         elif path in ("/field-gnu-terminal", "/field-gnu-terminal/", "/terminal", "/terminal/"):
             target = PANEL_DIR / "field-gnu-terminal-embed.html"
+        elif path in ("/eol-code", "/eol-code/"):
+            target = PANEL_DIR / "eol-code.html"
         elif path in ("/field-popcorn", "/field-popcorn/"):
             target = PANEL_DIR / "field-popcorn.html"
         elif path in ("/ammocode", "/ammocode/"):
@@ -9060,6 +9073,33 @@ class Handler(BaseHTTPRequestHandler):
                     capture_output=True,
                     text=True,
                     timeout=int(req.get("timeout") or 90),
+                    env=env,
+                    cwd=str(INSTALL_ROOT),
+                )
+                payload = json.loads(proc.stdout or "{}")
+            except subprocess.TimeoutExpired:
+                payload = {"ok": False, "error": "timeout"}
+            except json.JSONDecodeError:
+                payload = {"ok": False, "error": "bad_json", "detail": ((proc.stderr if proc else "") or "")[:200]}
+            code = 200 if payload.get("ok", True) else 400
+            self._send(code, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-eol-code", "/api/field-eol-code/"):
+            script = INSTALL_ROOT / "lib" / "field-eol-code.py"
+            if not script.is_file():
+                self._send(503, json.dumps({"ok": False, "error": "field_eol_code_missing"}), "application/json")
+                return
+            req = body if isinstance(body, dict) else {}
+            env = _field_stack_env()
+            proc = None
+            try:
+                proc = subprocess.run(
+                    [sys.executable, str(script), "dispatch"],
+                    input=json.dumps(req, ensure_ascii=False),
+                    capture_output=True,
+                    text=True,
+                    timeout=int(req.get("timeout") or 120),
                     env=env,
                     cwd=str(INSTALL_ROOT),
                 )

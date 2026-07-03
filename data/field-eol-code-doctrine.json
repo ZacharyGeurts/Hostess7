@@ -1,0 +1,43 @@
+{
+  "schema": "field-eol-code/v1",
+  "title": "EOL Code — Layer 0 end-of-line generator",
+  "motto": "Never go down — BSP from pending (−4) through every path and dead end to EOL at layer 0",
+  "policy": {
+    "os_layer": 0,
+    "self_run": true,
+    "ironclad_extend": true,
+    "bsp_sort": "composite_bsp",
+    "generator_batch": 48,
+    "auto_tick_ms": 1200,
+    "scan_roots": ["lib", "panel", "data", "scripts"],
+    "code_extensions": [".py", ".js", ".html", ".json", ".sh"],
+    "exclude_dirs": [".git", ".nexus-state", "dist", "cache", "__pycache__", "node_modules", "Grok16", "KILROY"],
+    "truth_eol_threshold": 100.0,
+    "truth_active_threshold": 85.0
+  },
+  "layers": [
+    {"z": -4, "id": "pending", "label": "Pending · lowest negative", "role": "generator_root"},
+    {"z": -3, "id": "nexus-c2", "label": "NEXUS C2", "fkey": "F9"},
+    {"z": -2, "id": "dns-lane", "label": "DNS · KILROY lane", "fkey": "F10"},
+    {"z": -1, "id": "ammoos-desktop", "label": "Field One · AmmoOS", "fkey": null},
+    {"z": 0, "id": "eol-target", "label": "EOL Code · OS Software", "fkey": null},
+    {"z": 1, "id": "userland", "label": "Userland L2+", "fkey": "F12"}
+  ],
+  "eol_statuses": ["pending", "active", "eol", "dead_end", "leaf", "cut_candidate"],
+  "ironclad": {
+    "meld_citation": "ironclad:eol_code:1",
+    "field_sanity_cite": "ironclad:field_sanity:2",
+    "truth_module": "lib/field-ironclad-truth.py",
+    "best_sort_module": "lib/field-best-sort.py"
+  },
+  "bsp": {
+    "case_id": "eol_code_tree",
+    "profile": "g16_field_opt",
+    "sort_key": "truth_percent"
+  },
+  "surface": {
+    "panel": "/eol-code",
+    "api": "/api/field-eol-code",
+    "embed": "/eol-code"
+  }
+}
