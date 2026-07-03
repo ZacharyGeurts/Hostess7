@@ -15,7 +15,8 @@
     {"id": "f12_userland", "keys": ["F12"], "action": "cycle_userland", "layer": 2, "desktop": true},
     {"id": "f9_underlay_kernel", "keys": ["F9"], "action": "launch", "target": "underlay-f9", "kernel": true},
     {"id": "ctrl_alt_t", "keys": ["Control", "Alt", "t"], "action": "launch", "target": "queen-terminal", "desktop": true},
-    {"id": "ctrl_alt_b", "keys": ["Control", "Alt", "b"], "action": "launch", "target": "field-broadcaster", "desktop": true}
+    {"id": "ctrl_alt_b", "keys": ["Control", "Alt", "b"], "action": "launch", "target": "field-broadcaster", "desktop": true},
+    {"id": "ctrl_alt_space_clipboard", "keys": ["Control", "Alt", "Space"], "action": "clipboard_flyout", "target": "field-clipboard-wire", "desktop": true, "global": true}
   ],
   "launch_targets": {
     "nexus-c2": {"id": "nexus-c2", "exec": "http://127.0.0.1:9481/world/queen-nexus-c2.html", "label": "NEXUS C2"},

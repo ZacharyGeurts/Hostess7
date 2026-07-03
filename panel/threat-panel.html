@@ -8,7 +8,16 @@
         document.documentElement.classList.add("dusty-midnight", "nexus-military-v8", "nexus-v82", "nexus-4k");
         if (localStorage.getItem("nexus_old_man") === "1") document.documentElement.classList.add("old-man");
         try {
+          const parts = location.pathname.split("/").filter(Boolean);
+          const basement = parts[0] === "command";
           const q = new URLSearchParams(location.search);
+          if (basement || q.get("basement") === "1") {
+            document.documentElement.classList.add(
+              "nexus-c2-basement", "mil-c2", "black_emerald_rose_2026"
+            );
+            document.documentElement.dataset.queenTheme = "black_emerald_rose_2026";
+            document.documentElement.dataset.nexusC2Basement = "1";
+          }
           if (q.get("embed") === "1") {
             document.documentElement.classList.add("nexus-field-embed", "nexus-military-v8", "mil-c2-embed");
           }
@@ -26,10 +35,12 @@
   <link rel="preload" href="/api/nexus-field" as="fetch" crossorigin />
   <script src="/assets/front-hook.js?v=cc7"></script>
   <script src="/assets/hardware-wire.js?v=cc1"></script>
-  <script src="/assets/clipboard-wire.js?v=cc1"></script>
+  <link rel="stylesheet" href="/assets/clipboard-wire.css?v=1" />
+  <script src="/assets/clipboard-wire.js?v=2"></script>
   <script src="/assets/admin-window-shield.js?v=cc6"></script>
   <script src="/assets/field-foundation.js"></script>
   <script src="/assets/nexus-ui-smooth.js"></script>
+  <script src="/assets/field-library-eye.js?v=2"></script>
   <script src="/assets/h7-reader.js"></script>
   <script defer src="/assets/nexus-plugin-runtime.js"></script>
   <script defer src="/assets/plugins/tab-beacon.js"></script>
@@ -2347,7 +2358,7 @@
       <span class="nav-group-label">Network</span>
       <button type="button" data-view="packets" data-i18n="nav.packets" data-tip="Packets — live connections scored Good/Bad plus deep DPI inspect. Packet permission v4.0.">Packets</button>
       <button type="button" data-view="threats" data-i18n="nav.threats" data-tip="Threats — globe map, attack-path dossiers, Grok Heavy kill-orders. Identify. Record. KILL.">Threats</button>
-      <button type="button" data-view="dns" data-i18n="nav.dns" data-tip="DNS & DHCP — planetary command. Threat levels, traffic patterns, secure threat model, Truth Resolver + Field DHCP on one tab.">DNS &amp; DHCP</button>
+      <button type="button" data-view="dns" data-i18n="nav.dns" data-tip="Self-hosted DNS &amp; DHCP — Truth Resolver and Field DHCP on one page. We host these servers ourselves.">DNS &amp; DHCP</button>
       <button type="button" data-view="outside" data-i18n="nav.outside" data-tip="Outside — NEXUS egress gate. SSH, telnet, mail, HTTP/S, custom ports. Operator-initiated outbound through our firewall.">Outside</button>
     </div>
     <div class="nav-group">
@@ -3078,7 +3089,7 @@
         </div>
         <div class="library-sync-bar" id="field-brain-banner"></div>
         <div class="library-sync-bar" id="library-sync-bar"></div>
-        <div class="library-human-blurb" id="library-human-blurb" aria-live="polite">Pick a collection or book — plain-language summaries help you choose what to read.</div>
+        <div class="library-human-blurb" id="library-human-blurb" aria-live="polite">Welcome, reader — browse Dewey shelves, pull a volume, read in peace. The same catalog serves librarians, nuns, scholars, and AI retrieval.</div>
         <div class="library-passage-hits" id="library-passage-hits" hidden aria-label="Passage search results for AI retrieval"></div>
         <div class="library-covers" id="library-covers"></div>
         <div class="library-ein" id="library-ein"></div>
@@ -3627,14 +3638,15 @@
     <div class="dns-wrap dns-planetary">
       <header class="dns-hero" id="dns-hero">
         <div class="dns-hero-main">
-          <p class="dns-hero-eyebrow">Planetary DNS &amp; DHCP Command</p>
-          <h2 class="dns-hero-title" id="dns-hero-title">Truth Resolver · Field DHCP</h2>
-          <p class="dns-hero-sub" id="dns-motto">Sampling planetary posture…</p>
+          <p class="dns-hero-eyebrow">Self-hosted servers · Field One</p>
+          <h2 class="dns-hero-title" id="dns-hero-title">Truth DNS · Field DHCP</h2>
+          <p class="dns-hero-sub" id="dns-motto">We host these ourselves — loopback resolver and LAN DHCP, no cloud middleman.</p>
         </div>
         <div class="dns-hero-status" id="dns-hero-status"></div>
       </header>
 
       <div id="dns-posture-strip" class="dns-posture-strip"><div class="empty">Loading threat posture…</div></div>
+      <div id="dns-self-hosted-banner" class="dns-self-hosted-banner" aria-label="Self-hosted DNS and DHCP servers"></div>
       <div id="dns-alerts" class="dns-alerts"></div>
 
       <div class="dns-command-grid">
@@ -3667,6 +3679,7 @@
 
       <nav class="dns-ref-tabs" id="dns-ref-tabs" aria-label="DNS and DHCP detail sections">
         <button type="button" class="active" data-dns-tab="operations">Operations</button>
+        <button type="button" data-dns-tab="dhcp">Field DHCP</button>
         <button type="button" data-dns-tab="internet">Internet field</button>
         <button type="button" data-dns-tab="queries">Recent queries</button>
         <button type="button" data-dns-tab="planetary">Planetary zones</button>
@@ -3679,6 +3692,9 @@
       <div class="dns-ref-panels">
         <article class="dns-panel dns-panel--wide dns-ref-panel active" data-dns-panel="operations">
           <div id="dns-operations-detail"><div class="empty">Loading takeover, egress, multipoint…</div></div>
+        </article>
+        <article class="dns-panel dns-panel--wide dns-ref-panel" data-dns-panel="dhcp" hidden>
+          <div id="dns-dhcp-main-panel"><div class="empty">Loading Field DHCP — leases, pool, events…</div></div>
         </article>
         <article class="dns-panel dns-panel--wide dns-ref-panel" data-dns-panel="internet" hidden>
           <div id="dns-reality-model"></div>
@@ -6632,7 +6648,9 @@
       updateLibraryCheckoutUi(book);
       const blurb = $("library-human-blurb");
       if (blurb) {
+        const fle = window.FieldLibraryEye;
         blurb.textContent = book?.for_humans || book?.summary || book?.description
+          || (fle?.humanLine ? fle.humanLine(book) : "")
           || "Select a book to see a plain-language summary.";
       }
       const einEl = $("library-ein");

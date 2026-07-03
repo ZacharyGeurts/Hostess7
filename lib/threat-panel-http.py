@@ -8598,6 +8598,10 @@ class Handler(BaseHTTPRequestHandler):
             hist_idx = (body or {}).get("history_index")
             if scheme:
                 payload = _nexus_py_json(script, ["scheme", scheme], timeout=20)
+            elif action in ("schemes", "list_schemes"):
+                payload = _nexus_py_json(script, ["schemes"], timeout=20)
+            elif action == "enforce":
+                payload = _nexus_py_json(script, ["enforce"], timeout=25)
             elif action in ("history", "historic"):
                 payload = _nexus_py_json(script, ["history"], timeout=20)
             elif action in ("history_paste", "historic_paste", "paste_history"):

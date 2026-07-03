@@ -1,4 +1,4 @@
-#!/usr/bin/env pythong
+#!/usr/bin/env python3
 """NEXUS Field Clipboard Wire — hardware-secured copy/paste, all chords, all editor souls."""
 from __future__ import annotations
 
@@ -199,14 +199,71 @@ def historic_paste(index: int = 0) -> dict[str, Any]:
     return _run_sclip("paste")
 
 
+def _scheme_state() -> dict[str, Any]:
+    doc = _load(SCHEME_JSON, {})
+    if not isinstance(doc, dict):
+        return {}
+    return doc
+
+
 def _active_scheme() -> str:
     env = os.environ.get("NEXUS_CLIPBOARD_SCHEME", "").strip()
     if env:
         return env
-    saved = _load(SCHEME_JSON, {})
+    saved = _scheme_state()
     if saved.get("scheme"):
         return str(saved["scheme"])
     return str((_doctrine().get("policy") or {}).get("default_scheme") or "standard")
+
+
+def _scheme_history() -> list[str]:
+    hist = _scheme_state().get("history") or []
+    return [str(x) for x in hist if x]
+
+
+def _push_scheme_history(scheme: str) -> list[str]:
+    max_hist = int(_policy().get("scheme_history_max") or 12)
+    hist = [h for h in _scheme_history() if h != scheme]
+    hist.insert(0, scheme)
+    hist = hist[:max_hist]
+    doc = _scheme_state()
+    doc["scheme"] = scheme
+    doc["history"] = hist
+    doc["updated"] = _now()
+    _save(SCHEME_JSON, doc)
+    return hist
+
+
+def list_schemes() -> dict[str, Any]:
+    doctrine = _doctrine()
+    schemes = doctrine.get("schemes") or {}
+    order = list(_policy().get("flyout_schemes") or [])
+    if not order:
+        order = [k for k in schemes.keys() if k != "all"] + (["all"] if "all" in schemes else [])
+    items: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for sid in order:
+        if sid in schemes and sid not in seen:
+            seen.add(sid)
+            row = schemes[sid] or {}
+            items.append({"id": sid, "label": str(row.get("label") or sid)})
+    for sid, row in schemes.items():
+        if sid not in seen:
+            items.append({"id": sid, "label": str((row or {}).get("label") or sid)})
+    active = _active_scheme()
+    labels = {x["id"]: x["label"] for x in items}
+    history = _scheme_history()
+    return {
+        "ok": True,
+        "schema": "field-clipboard-schemes/v1",
+        "active": active,
+        "active_label": labels.get(active, active),
+        "history": history,
+        "history_labels": [labels.get(h, h) for h in history],
+        "schemes": items,
+        "flyout_chord": str(_policy().get("flyout_chord") or "Control+Alt+Space"),
+        "sovereign_on_boot": bool(_policy().get("sovereign_on_boot", True)),
+    }
 
 
 def _parse_chord(chord: str) -> dict[str, Any]:
@@ -353,6 +410,9 @@ def enforce(*, kill: bool | None = None) -> dict[str, Any]:
         "ghost_visible": bool(_policy().get("ghost_visible", False)),
         "historic_ring": bool(_policy().get("historic_ring", True)),
         "historic_count": len((_load_history().get("entries") or [])),
+        "scheme_history": _scheme_history(),
+        "flyout_chord": str(_policy().get("flyout_chord") or "Control+Alt+Space"),
+        "sovereign_on_boot": bool(_policy().get("sovereign_on_boot", True)),
     }
     _save(PANEL_JSON, doc)
     return doc
@@ -370,8 +430,16 @@ def set_scheme(scheme: str) -> dict[str, Any]:
     schemes = (_doctrine().get("schemes") or {})
     if scheme not in schemes:
         return {"ok": False, "error": "unknown_scheme", "scheme": scheme, "known": sorted(schemes.keys())}
-    _save(SCHEME_JSON, {"scheme": scheme, "updated": _now()})
-    return {"ok": True, "scheme": scheme, "bindings": len(_resolve_scheme_bindings(scheme))}
+    history = _push_scheme_history(scheme)
+    panel = enforce(kill=False)
+    return {
+        "ok": True,
+        "scheme": scheme,
+        "scheme_history": history,
+        "bindings": len(_resolve_scheme_bindings(scheme)),
+        "binding_count": panel.get("binding_count"),
+        "label": str((schemes.get(scheme) or {}).get("label") or scheme),
+    }
 
 
 def action(name: str, text: str | None = None, *, history_index: int | None = None) -> dict[str, Any]:
@@ -568,11 +636,14 @@ def main() -> int:
         idx = int(sys.argv[2]) if len(sys.argv) > 2 and str(sys.argv[2]).lstrip("-").isdigit() else 0
         print(json.dumps(historic_paste(idx), ensure_ascii=False))
         return 0
+    if cmd == "schemes":
+        print(json.dumps(list_schemes(), ensure_ascii=False))
+        return 0
     if cmd == "listen":
         once = "--once" in sys.argv[2:]
         return _evdev_listen(once=once)
     print(json.dumps({
-        "error": "usage: field-clipboard-wire.py [json|enforce|scan|scheme|bindings|action|listen]",
+        "error": "usage: field-clipboard-wire.py [json|enforce|scan|scheme|schemes|bindings|action|listen]",
     }, ensure_ascii=False))
     return 1
 
