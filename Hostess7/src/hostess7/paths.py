@@ -153,11 +153,18 @@ def _prune_legacy_after_migration(
     return log
 
 
+def _desktop_brain_state() -> Path:
+    desktop = os.environ.get("HOSTESS7_DESKTOP_BRAIN", "").strip()
+    if desktop:
+        return _normalize_path(Path(desktop).expanduser() / "state")
+    return _normalize_path(Path.home() / "Desktop" / "hostess7-brain" / "state")
+
+
 def brain_state_dir() -> Path:
-    """Unified cortex state — brain/state/ is canonical."""
+    """Unified cortex state — sovereign brain on operator Desktop; GitHub brain on Pages."""
     root = hostess7_root()
     env = os.environ.get("HOSTESS7_BRAIN_STATE", "").strip()
-    unified = _normalize_path(Path(env)) if env else _normalize_path(root / "brain" / "state")
+    unified = _normalize_path(Path(env)) if env else _desktop_brain_state()
     legacy_state = Path(os.environ.get("NEXUS_STATE_DIR", "")).resolve() if os.environ.get("NEXUS_STATE_DIR") else None
     if legacy_state is None or not legacy_state.is_dir():
         legacy_state = nexus_install_root() / ".nexus-state"
@@ -246,11 +253,19 @@ def scripts_available() -> bool:
 
 
 def storage_dir() -> Path:
-    """Prefer brain/state for new writes; legacy cache/fieldstorage still readable."""
+    """Sovereign fieldstorage — desktop brain first, then legacy under state."""
     root = hostess7_root()
+    fs_env = os.environ.get("HOSTESS7_FIELDSTORAGE_BRAIN", "").strip()
+    if fs_env:
+        desktop_fs = _normalize_path(Path(fs_env).expanduser().parent.parent)
+        if desktop_fs.is_dir():
+            return desktop_fs
     state_brain = brain_state_dir() / "legacy" / "fieldstorage_brain"
     if state_brain.is_dir() and any(state_brain.rglob("*.json")):
         return brain_state_dir() / "legacy"
+    desktop_root = _normalize_path(Path.home() / "Desktop" / "hostess7-brain")
+    if (desktop_root / "fieldstorage").is_dir():
+        return desktop_root / "fieldstorage"
     return root / "cache" / "fieldstorage"
 
 

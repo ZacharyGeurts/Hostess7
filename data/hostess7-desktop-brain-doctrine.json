@@ -1,0 +1,29 @@
+{
+  "schema": "hostess7-desktop-brain/v1",
+  "title": "Sovereign brain on operator desktop — GitHub brain on Pages",
+  "motto": "Public mind lives on GitHub Pages docs/github-brain. Loopback sovereign brain lives on Desktop, never in the SG git tree.",
+  "canonical_public": {
+    "lane": "github-brain",
+    "pages_base": "https://zacharygeurts.github.io/Hostess7/",
+    "corpus": "/github-brain/corpus.json",
+    "manifest": "/github-brain/manifest.json",
+    "wire": "Hostess7/docs/pages-github-brain-wire.js"
+  },
+  "sovereign_desktop": {
+    "root": "~/Desktop/hostess7-brain",
+    "state": "~/Desktop/hostess7-brain/state",
+    "fieldstorage_brain": "~/Desktop/hostess7-brain/fieldstorage/brain",
+    "env": "HOSTESS7_BRAIN_STATE"
+  },
+  "git_policy": {
+    "never_commit": ["Hostess7/brain/", "Hostess7/cache/fieldstorage/brain/"],
+    "pages_export_only": "Hostess7/docs/github-brain/"
+  },
+  "migrate_from_sg": {
+    "sources": [
+      "Hostess7/brain/state",
+      "Hostess7/cache/fieldstorage/brain"
+    ],
+    "script": "Hostess7/scripts/hostess7-brain-desktop-migrate.sh"
+  }
+}
