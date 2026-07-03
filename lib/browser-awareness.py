@@ -29,9 +29,15 @@ SITE_IP_HINTS: dict[str, str] = {
 HOST_ALIASES = {
     "twitter.com": "x.com",
     "mobile.twitter.com": "x.com",
+    "api.twitter.com": "x.com",
+    "api.x.com": "x.com",
     "t.co": "x.com",
     "pbs.twimg.com": "x.com",
+    "abs.twimg.com": "x.com",
     "video.twimg.com": "x.com",
+    "steamcommunity.com": "steamcommunity.com",
+    "store.steampowered.com": "steampowered.com",
+    "cdn.steamcommunity.com": "steamcommunity.com",
 }
 
 

@@ -23,6 +23,9 @@ def _import_mod(name: str, rel: str) -> Any | None:
     path = INSTALL / "lib" / rel
     if not path.is_file():
         return None
+    lib_dir = str(INSTALL / "lib")
+    if lib_dir not in sys.path:
+        sys.path.insert(0, lib_dir)
     spec = importlib.util.spec_from_file_location(name, path)
     if not spec or not spec.loader:
         return None
