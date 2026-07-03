@@ -10,7 +10,8 @@
   "dock_icons": [
     {"id": "start", "label": "Start", "exec": "/field", "glyph": "start"},
     {"id": "files", "label": "Files", "exec": "http://127.0.0.1:9481/world/queen-files.html", "glyph": "folder"},
-    {"id": "terminal", "label": "Terminal", "exec": "http://127.0.0.1:9481/world/?dock=terminal", "glyph": "terminal", "badge": false},
+    {"id": "terminal", "label": "Terminal", "exec": "http://127.0.0.1:9477/field-gnu-terminal-embed.html", "glyph": "terminal", "badge": false, "aliases": ["shell", "gnu-terminal", "gnueol", "field-gnu-terminal"], "shell_identical": true},
+    {"id": "shell", "label": "Shell", "exec": "http://127.0.0.1:9477/field-gnu-terminal-embed.html?shell=1", "glyph": "terminal", "badge": false, "aliases": ["terminal", "gnu-terminal"], "shell_identical": true, "combinatronic_url": "http://127.0.0.1:9477/field-gnu-terminal-embed.html?mode=combinatronic"},
     {"id": "browser", "label": "Queen Browser", "exec": "http://127.0.0.1:9481/world/browser.html", "glyph": "browser"},
     {"id": "broadcaster", "label": "Broadcaster", "exec": "/field-broadcaster", "glyph": "broadcast", "live": true}
   ],

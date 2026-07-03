@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="gnu-terminal">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AmmoOS Terminal</title>
+  <link rel="stylesheet" href="/assets/nexus-theme.css?v=1" />
+  <link rel="stylesheet" href="/assets/field-gnu-terminal.css?v=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:*; frame-src 'self' http://127.0.0.1:* https:; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
+  <style>
+    html, body { margin: 0; height: 100%; background: #030806; }
+    #fgt-embed-root { height: 100%; min-height: 320px; }
+  </style>
+</head>
+<body>
+  <div id="fgt-embed-root"></div>
+  <script src="/assets/ironclad-bus.js?v=1"></script>
+  <script src="/assets/ammoos-theme-engine.js?v=1"></script>
+  <script src="/assets/kilroy-universal-shell.js?v=1"></script>
+  <script src="/assets/field-gnu-terminal.js?v=1"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(location.search);
+      const cwd = params.get("cwd") || "";
+      void globalThis.FieldGnuTerminal?.mount(document.getElementById("fgt-embed-root"), { cwd })?.then(() => {
+        if (cwd) return globalThis.FieldGnuTerminal?.runCommand?.(`cd ${cwd.replace(/"/g, '\\"')}`);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -4,7 +4,21 @@
 (function () {
   "use strict";
 
-  const state = { data: null, keysEngaged: false, selected: null };
+  const state = { data: null, keysEngaged: false, selected: null, internetCleanDone: false };
+
+  function apiUrl(path) {
+    if (global.H7Api) return global.H7Api(path);
+    if (global.H7Base) return global.H7Base(path);
+    return path;
+  }
+
+  function pageUrl(path) {
+    if (global.H7Page) return global.H7Page(path);
+    if (global.HOSTESS7_PAGES_BASE && String(path || "").startsWith("/")) {
+      return global.HOSTESS7_PAGES_BASE + path;
+    }
+    return path;
+  }
 
   function toast(msg) {
     const el = document.getElementById("hd-toast");
@@ -23,16 +37,31 @@
   }
 
   const QUEEN_ICON = "/assets/ammoos-field-48.png";
-  const DESKTOP_FOUR_IDS = ["view", "queen-terminal", "queen-browser", "field-broadcaster"];
+  const DESKTOP_DEFAULT_IDS = [
+    "view",
+    "queen-terminal",
+    "field-popcorn",
+    "ammocode",
+    "hostess7-folder",
+    "queen-browser",
+    "field-broadcaster",
+    "queen-gameroom",
+    "queen-chips",
+    "nexus-compatibility",
+  ];
+  const DESKTOP_PIN_KEY = "field-desktop-pins-v1";
   const DESKTOP_ICON_PX = 96;
 
   function iconHtml(app, size) {
     size = size || DESKTOP_ICON_PX;
-    const QIE = window.QueenIconEngine;
-    if (QIE?.programIconHtml) {
-      return QIE.programIconHtml(app, size, { base: QIE.PANEL_ICONS });
+    const src = app.icon_url || (pagesRuntime() ? pagesAssetBase() + "/queen-prog-" + (app.icon || app.id || "view").replace(/^queen-prog-/, "") + ".png" : null) || QUEEN_ICON;
+    if (pagesRuntime() && app.icon_url) {
+      return '<img src="' + esc(src) + '" alt="" width="' + size + '" height="' + size + '" class="hd-app-icon" loading="lazy" decoding="async" onerror="this.src=\'' + esc(pagesAssetBase() + "/ammoos-field-48.png") + '\'" />';
     }
-    const src = app.icon_url || QUEEN_ICON;
+    const QIE = window.QueenIconEngine;
+    if (QIE?.programIconHtml && !pagesRuntime()) {
+      return QIE.programIconHtml(app, size, { base: pagesRuntime() ? pagesAssetBase() + "/" : QIE.PANEL_ICONS });
+    }
     if (app.live) {
       return (
         '<span class="hd-icon-live-wrap">' +
@@ -55,6 +84,13 @@
   function pagesAssetBase() {
     if (pagesRuntime()) return (window.HOSTESS7_PAGES_BASE || "/Hostess7") + "/assets";
     return "/assets";
+  }
+
+  function gnuTerminalExec() {
+    if (pagesRuntime()) {
+      return (window.HOSTESS7_PAGES_BASE || "/Hostess7") + "/field-gnu-terminal-embed.html";
+    }
+    return panelOrigin() + "/field-gnu-terminal-embed.html";
   }
 
   function inQueenFrame() {
@@ -104,7 +140,10 @@
   }
 
   function launchAppInner(app) {
-    const exec = app.exec || app.url || "";
+    let exec = app.exec || app.url || "";
+    if (window.FieldQueenNav?.secureUrl) {
+      exec = window.FieldQueenNav.secureUrl(exec, { id: app.id });
+    }
     if (app.shell !== false && (app.shell || exec.includes("embed=1") || app.view)) {
       if (shellLaunch(app)) {
         toast("Opened · " + (app.name || exec));
@@ -134,15 +173,120 @@
     window.FieldStartbar?.trackRunning?.(app);
   }
 
-  function desktopFourFallback() {
+  function loadDesktopPins() {
+    try {
+      const raw = localStorage.getItem(DESKTOP_PIN_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveDesktopPins(ids) {
+    try {
+      localStorage.setItem(DESKTOP_PIN_KEY, JSON.stringify(ids));
+    } catch (_) { /* ignore */ }
+  }
+
+  function normalizeDesktopApp(app, id) {
+    if (!app) return null;
+    const row = Object.assign({}, app);
+    if (id === "queen-terminal") {
+      row.exec = gnuTerminalExec();
+      row.name = "AmmoOS Terminal";
+      row.hint = row.hint || "GNU Terminal · AmmoOS panel · Layer 0";
+      row.os_layer = 0;
+      row.category = "AmmoOS · Layer 0";
+    }
+    if (id === "field-popcorn") {
+      row.icon = "queen-prog-popcorn";
+      row.icon_url = pagesAssetBase() + "/queen-prog-popcorn.png";
+      row.os_layer = 0;
+      row.exec = row.exec || pageUrl("/field-popcorn");
+    }
+    if (id === "ammocode") {
+      row.icon = "queen-prog-ammocode";
+      row.icon_url = pagesAssetBase() + "/queen-prog-ammocode.png";
+      row.os_layer = 0;
+      row.exec = row.exec || pageUrl("/ammocode");
+      row.name = "AmmoCode";
+      row.hint = row.hint || "Syntax editor · Layer 0";
+    }
+    if (id === "hostess7-folder") {
+      row.kind = "desktop_folder";
+      row.icon = "queen-prog-hostess";
+      row.icon_url = pagesAssetBase() + "/queen-prog-hostess.png";
+      row.os_layer = 0;
+    }
+    return row;
+  }
+
+  function isDesktopFolder(app) {
+    return !!(app && (app.kind === "desktop_folder" || (app.folder_children && app.folder_children.length)));
+  }
+
+  function openDesktopFolder(app) {
+    const kids = app.folder_children || [];
+    if (!kids.length) {
+      toast("Folder empty · " + (app.name || app.id));
+      return;
+    }
+    let pop = document.getElementById("hd-folder-pop");
+    if (!pop) {
+      pop = document.createElement("div");
+      pop.id = "hd-folder-pop";
+      pop.className = "hd-folder-pop";
+      pop.setAttribute("role", "dialog");
+      pop.setAttribute("aria-label", app.name || "Folder");
+      document.body.appendChild(pop);
+    }
+    pop.innerHTML =
+      '<div class="hd-folder-head"><strong>' + esc(app.name || "Folder") + '</strong>' +
+      '<button type="button" class="hd-folder-close" aria-label="Close">×</button></div>' +
+      '<div class="hd-folder-grid">' +
+      kids.map(function (child) {
+        return (
+          '<button type="button" class="hd-folder-item" data-app-id="' + esc(child.id) + '">' +
+          iconHtml(child, 48) +
+          '<span>' + esc(child.name) + "</span></button>"
+        );
+      }).join("") +
+      "</div>";
+    pop.classList.add("open");
+    pop.querySelector(".hd-folder-close")?.addEventListener("click", function () {
+      pop.classList.remove("open");
+    });
+    pop.querySelectorAll(".hd-folder-item").forEach(function (btn) {
+      btn.addEventListener("dblclick", function () {
+        const cid = btn.dataset.appId;
+        const child = kids.find(function (c) { return c.id === cid; });
+        if (child) {
+          pop.classList.remove("open");
+          openDesktopApp(child);
+        }
+      });
+    });
+  }
+
+  function desktopDefaultFallback() {
     const base = pagesRuntime() ? (window.HOSTESS7_PAGES_BASE || "/Hostess7") : "";
     const assets = pagesAssetBase();
-    return [
+    const world = pagesRuntime() ? base + "/queen" : "http://127.0.0.1:9481/world";
+    const rows = [
       { id: "view", name: "View", hint: "Files & folders", icon: "queen-prog-view", exec: base + "/queen/view.html", icon_url: assets + "/queen-prog-view.png", pinned: true, shell: true, category: "NEXUS · Queen" },
-      { id: "queen-terminal", name: "Terminal", hint: "Queen terminal", icon: "queen-prog-terminal", exec: base + "/queen/?dock=terminal", icon_url: assets + "/queen-prog-terminal.png", pinned: true, shell: true, category: "NEXUS · Queen" },
+      { id: "queen-terminal", name: "AmmoOS Terminal", hint: "Field GNU Terminal · code preview · truth · Layer 0", icon: "queen-prog-terminal", exec: gnuTerminalExec(), icon_url: assets + "/queen-prog-terminal.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
+      { id: "field-popcorn", name: "Popcorn", hint: "Media player · Layer 0", icon: "queen-prog-popcorn", exec: base + "/field-popcorn", icon_url: assets + "/queen-prog-popcorn.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
+      { id: "ammocode", name: "AmmoCode", hint: "Syntax editor · Layer 0", icon: "queen-prog-ammocode", exec: base + "/ammocode", icon_url: assets + "/queen-prog-ammocode.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
+      { id: "hostess7-folder", name: "Hostess 7", kind: "desktop_folder", hint: "Hostess 7 panels", icon: "queen-prog-hostess", icon_url: assets + "/queen-prog-hostess.png", pinned: true, os_layer: 0, category: "AmmoOS · Layer 0", folder_children: [] },
       { id: "queen-browser", name: "Queen Browser", hint: "Queen web engine", icon: "queen-prog-browser", exec: base + "/queen/browser.html", icon_url: assets + "/queen-prog-browser.png", pinned: true, shell: true, category: "NEXUS · Queen" },
-      { id: "field-broadcaster", name: "Broadcaster", hint: "Field broadcaster", icon: "queen-prog-field", exec: base + "/field-broadcaster", icon_url: assets + "/queen-prog-field.png", pinned: true, shell: true, live: true, category: "NEXUS · Media" },
+      { id: "field-broadcaster", name: "Broadcaster", hint: "OBS rebranded · Layer 0 · Final_Eye Ear Mouth", icon: "queen-prog-broadcaster", exec: base + "/field-broadcaster", icon_url: assets + "/queen-prog-broadcaster.png", pinned: true, shell: true, live: true, os_layer: 0, ensure_api: "/api/field-broadcaster/launch", category: "AmmoOS · Media" },
+      { id: "queen-gameroom", name: "Game Room", hint: "Queen Game Room · cartridges · arcade", icon: "queen-prog-gameroom", exec: world + "/queen-game-room.html", icon_url: assets + "/queen-prog-gameroom.png", pinned: true, shell: true, category: "NEXUS · Queen" },
+      { id: "queen-chips", name: "CHIPS", hint: "Emulators · chip cores · combinatronic", icon: "queen-prog-chips", exec: world + "/queen-chips-cores.html", icon_url: assets + "/queen-prog-chips.png", pinned: true, shell: true, category: "NEXUS · Queen" },
+      { id: "nexus-compatibility", name: "Compatibility Layers", hint: "Wine · DOS · retro layers", icon: "queen-prog-g16", exec: base + "/compatibility", icon_url: assets + "/queen-prog-g16.png", pinned: true, shell: true, category: "NEXUS · Tools" },
     ];
+    return DESKTOP_DEFAULT_IDS.map(function (id) {
+      return normalizeDesktopApp(rows.find(function (r) { return r.id === id; }), id);
+    }).filter(Boolean);
   }
 
   function desktopIconList(doc) {
@@ -152,100 +296,165 @@
       if (p?.id) byId[p.id] = p;
     });
     const fromApi = Array.isArray(doc?.desktop_icons) ? doc.desktop_icons : [];
-    const four = DESKTOP_FOUR_IDS.map(function (id) {
-      return byId[id] || fromApi.find(function (p) { return p.id === id; });
+    const serverIds = new Set(fromApi.map(function (p) { return p.id; }).filter(Boolean));
+    const local = loadDesktopPins();
+    if (Array.isArray(local)) {
+      local.forEach(function (id) { serverIds.add(id); });
+    }
+    const ordered = [];
+    fromApi.forEach(function (p) {
+      if (p?.id && !ordered.find(function (x) { return x.id === p.id; })) ordered.push(p.id);
+    });
+    DESKTOP_DEFAULT_IDS.forEach(function (id) {
+      if (!ordered.includes(id) && (serverIds.has(id) || byId[id])) ordered.push(id);
+    });
+    serverIds.forEach(function (id) {
+      if (!ordered.includes(id)) ordered.push(id);
+    });
+    const list = ordered.map(function (id) {
+      const app = byId[id] || fromApi.find(function (p) { return p.id === id; });
+      return normalizeDesktopApp(app, id);
     }).filter(Boolean);
-    if (four.length === DESKTOP_FOUR_IDS.length) return four;
-    return desktopFourFallback();
+    if (list.length) {
+      return list.map(function (app) {
+        return Object.assign({}, app, { pinned: serverIds.has(app.id) || app.pinned });
+      });
+    }
+    return desktopDefaultFallback();
+  }
+
+  function toggleDesktopPin(app) {
+    if (!app?.id) return;
+    const list = desktopIconList(state.data || {});
+    const ids = list.map(function (p) { return p.id; });
+    const idx = ids.indexOf(app.id);
+    if (idx >= 0) ids.splice(idx, 1);
+    else ids.push(app.id);
+    saveDesktopPins(ids);
+    renderDesktopIcons(state.data);
+    toast(idx >= 0 ? "Unpinned · " + (app.name || app.id) : "Pinned to desktop · " + (app.name || app.id));
+  }
+
+  function openDesktopApp(app) {
+    if (app.id === "queen-browser") openQueenBrowserClean();
+    else if (app.id === "queen-terminal") launchGnuTerminal(app);
+    else launchApp(app);
   }
 
   function renderDesktopIcons(doc) {
     const grid = document.getElementById("hd-icons");
     if (!grid) return;
 
-    // Force exactly 4 big cartoony icons. Always. Clean stack, no overlap, no other data.
-    grid.innerHTML = '';
-    grid.style.display = 'flex';
-    grid.style.flexDirection = 'column';
-    grid.style.gap = '12px';
-    grid.style.padding = '12px 8px';
-    grid.style.alignItems = 'flex-start';
+    grid.innerHTML = "";
+    grid.className = "hd-icons hd-icons--classic";
 
-    const FOUR = desktopIconList(doc);
-
-    FOUR.forEach(function (app) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'hd-icon hd-icon-cartoony';
+    const icons = desktopIconList(doc);
+    icons.forEach(function (app) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "hd-icon hd-icon-cartoony" +
+        (app.pinned ? " pinned" : "") +
+        (isDesktopFolder(app) ? " hd-icon--folder" : "") +
+        (app.os_layer === 0 ? " hd-icon--layer0" : "");
       btn.dataset.appId = app.id;
-      btn.title = app.hint || app.name;
+      btn.title = (app.hint || app.name) + (app.os_layer === 0 ? " · Layer 0" : "");
 
-      const iconWrap = document.createElement('div');
-      iconWrap.className = 'hd-icon-glyph';
+      const pinBtn = document.createElement("button");
+      pinBtn.type = "button";
+      pinBtn.className = "hd-icon-pin";
+      pinBtn.setAttribute("aria-label", app.pinned ? "Unpin from desktop" : "Pin to desktop");
+      pinBtn.textContent = "📌";
+      pinBtn.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        toggleDesktopPin(app);
+      });
+
+      const iconWrap = document.createElement("div");
+      iconWrap.className = "hd-icon-glyph";
       iconWrap.innerHTML = iconHtml(app, DESKTOP_ICON_PX);
 
-      const label = document.createElement('span');
-      label.style.cssText = 'font-size:11px; color:#e0f0ff; text-shadow:0 1px 2px rgba(0,0,0,0.9); margin-top:1px;';
+      const label = document.createElement("span");
+      label.className = "hd-icon-label";
       label.textContent = app.name;
 
-      btn.style.cssText = 'background:transparent; border:1px solid rgba(120,255,180,0.25); padding:4px 2px; border-radius:4px; display:flex; flex-direction:column; align-items:center; width:100px;';
+      btn.appendChild(pinBtn);
       btn.appendChild(iconWrap);
       btn.appendChild(label);
 
-      btn.addEventListener('click', function (e) {
+      btn.addEventListener("click", function (e) {
         e.stopImmediatePropagation();
-        grid.querySelectorAll('.hd-icon').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
+        grid.querySelectorAll(".hd-icon").forEach(function (b) { b.classList.remove("selected"); });
+        btn.classList.add("selected");
         state.selected = app;
-
-        if (app.id === 'queen-browser') {
-          openQueenBrowserClean();
-        } else {
-          launchApp(app);
-        }
       });
 
-      btn.addEventListener('dblclick', function (e) {
+      btn.addEventListener("dblclick", function (e) {
         e.stopImmediatePropagation();
-        if (app.id === 'queen-browser') openQueenBrowserClean();
-        else launchApp(app);
+        if (isDesktopFolder(app)) openDesktopFolder(app);
+        else openDesktopApp(app);
       });
 
-      btn.addEventListener('contextmenu', function (ev) {
+      btn.addEventListener("contextmenu", function (ev) {
         ev.preventDefault();
-        const m = document.createElement('div');
-        m.style.cssText = 'position:fixed;z-index:99999;background:#0a0f0a;border:1px solid #4ade80;color:#c8ffda;padding:4px 0;font-size:11px;min-width:140px';
-        m.innerHTML = '<div style="padding:3px 8px;font-weight:700;border-bottom:1px solid #334155">' + esc(app.name) + '</div>' +
-          '<div data-a="open" style="padding:3px 8px;cursor:pointer">Open</div>' +
-          '<div data-a="queen" style="padding:3px 8px;cursor:pointer">Open Queen Window</div>';
-        m.style.left = ev.clientX + 'px';
-        m.style.top = ev.clientY + 'px';
-        document.body.appendChild(m);
-        m.onclick = function (me) {
-          const a = me.target.getAttribute('data-a');
-          document.body.removeChild(m);
-          if (a === 'open' || !a) {
-            if (app.id === 'queen-browser') openQueenBrowserClean(); else launchApp(app);
-          } else if (a === 'queen') {
-            openQueenBrowserClean();
-          }
-        };
-        setTimeout(function () { document.addEventListener('click', () => { if (m.parentNode) m.parentNode.removeChild(m); }, {once: true}); }, 50);
+        if (window.FieldStartbar?.openCtx) {
+          window.FieldStartbar.openCtx(ev.clientX, ev.clientY, [
+            { label: "Open", action: "desktop-open" },
+            { label: "Open Queen window", action: "desktop-queen" },
+            { label: app.pinned ? "Unpin from desktop" : "Pin to desktop", action: "desktop-pin" },
+            { label: "Pin to taskbar", action: "pin" },
+            { label: "Properties", action: "menu-props" },
+          ], app);
+          return;
+        }
+        toast("Right-click · " + app.name);
       });
 
       grid.appendChild(btn);
     });
 
-    grid.classList.remove('hidden');
+    grid.classList.remove("hidden");
+  }
+
+  function launchGnuTerminal(app) {
+    const exec = gnuTerminalExec();
+    const termApp = Object.assign({}, app || {}, {
+      id: "queen-terminal",
+      exec: exec,
+      shell: true,
+      name: "AmmoOS Terminal",
+      os_layer: 0,
+      category: "AmmoOS · Shell",
+    });
+    if (shellLaunch(termApp)) {
+      toast("AmmoOS Terminal · GNU panel");
+      return;
+    }
+    if (pagesRuntime()) {
+      window.location.href = pageUrl(exec);
+      return;
+    }
+    launchApp(termApp);
   }
 
   function openQueenBrowserClean() {
+    const base = pagesRuntime() ? (window.HOSTESS7_PAGES_BASE || "/Hostess7") : "";
+    const exec = base
+      ? base + "/queen/browser.html"
+      : "http://127.0.0.1:9481/world/browser.html";
+    const app = {
+      id: "queen-browser",
+      name: "Queen Browser",
+      exec: exec,
+      shell: true,
+      icon_url: pagesAssetBase() + "/queen-prog-browser.png",
+    };
     if (window.FieldScreenLayers?.openQueen) {
       window.FieldScreenLayers.openQueen();
+      toast("Queen Browser · own browser space");
       return;
     }
-    if (window.FieldQueenNav?.openStandalone) {
-      window.FieldQueenNav.openStandalone({ id: "queen-browser", name: "Queen Browser", c2_embedded: false });
+    if (shellLaunch(app)) {
+      toast("Queen Browser · own browser space");
       return;
     }
     toast("Queen Browser unavailable");
@@ -253,7 +462,7 @@
 
   function engageKeyboardSovereign() {
     if (state.keysEngaged) return;
-    fetch("/api/field-keyboard-sovereign/engage", {
+    fetch(apiUrl("/api/field-keyboard-sovereign/engage"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: "{}",
@@ -270,9 +479,9 @@
     if (!state.keysEngaged) return;
     const body = JSON.stringify({ reason: reason || "pagehide" });
     if (navigator.sendBeacon) {
-      navigator.sendBeacon("/api/field-keyboard-sovereign/release", body);
+      navigator.sendBeacon(apiUrl("/api/field-keyboard-sovereign/release"), body);
     } else {
-      fetch("/api/field-keyboard-sovereign/release", {
+      fetch(apiUrl("/api/field-keyboard-sovereign/release"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: body,
@@ -307,12 +516,40 @@
   function applyDesktop(doc) {
     state.data = doc;
     try { global.__H7_DESKTOP_DOC__ = doc; } catch (_) {}
-    document.documentElement.dataset.osTheme = doc.theme || "ammo-field";
+    document.documentElement.dataset.osTheme = doc.theme || "ammoos";
+    document.documentElement.dataset.fieldScreenLayer = "-1";
+    document.documentElement.dataset.fieldLayer = "-1";
+    global.FieldScreenLayers?.switchTo?.(-1);
     const label = document.getElementById("hd-wall-label");
     if (label) {
-      label.textContent = "Archival Warehouse · 4 icons · Classic Start · Layer -1";
+      label.textContent = "Field One · AmmoOS · Layer -1 · Classic Start";
     }
     renderDesktopIcons(doc);
+  }
+
+  function runInternetCleanIfDefault(policy) {
+    policy = policy || {};
+    const on =
+      policy.internet_clean_on_boot !== false &&
+      (policy.auto_import_bookmarks !== false || policy.secure_bookmarks_default !== false);
+    if (!on || state.internetCleanDone || pagesRuntime()) return;
+    state.internetCleanDone = true;
+    fetch(apiUrl("/api/hostess7/internet-clean"), {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: "{}",
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (doc) {
+        if (doc && doc.ok !== false) {
+          const s = doc.summary || {};
+          const n = s.bookmarks_secured || 0;
+          const q = s.telemetry_quarantined || 0;
+          if (n || q) toast("Internet clean · " + n + " secure bookmarks · " + q + " telemetry stripped");
+        }
+      })
+      .catch(function () {});
   }
 
   async function refresh() {
@@ -320,25 +557,32 @@
     if (loading) loading.classList.remove("hidden");
     fillViewport();
     try {
-      const res = await fetch("/api/field-host-desktop", { credentials: "same-origin" });
+      const res = await fetch(apiUrl("/api/field-host-desktop"), { credentials: "same-origin" });
       if (!res.ok) throw new Error("desktop API " + res.status);
       const doc = await res.json();
       applyDesktop(doc);
 
       const mon = document.getElementById("hd-monitor");
       const policy = doc?.policy || {};
-      const showWall = policy.six_tool_wall === true && policy.six_tool_wall_on_boot !== false;
+      const showAmmoNet =
+        policy.ammonet_display_right !== false &&
+        (policy.monitor_dashboard_right !== false || policy.ammonet_display_right === true);
+      const showWall = !showAmmoNet && policy.six_tool_wall === true && policy.six_tool_wall_on_boot !== false;
       if (mon) {
-        mon.classList.toggle("hd-monitor--hidden", !showWall);
-        mon.hidden = !showWall;
-        mon.innerHTML = "";
-      }
-      const dash = doc?.monitor_dashboard || {};
-      if (showWall && mon && window.FieldMonitorDashboard) {
-        window.FieldMonitorDashboard.mount(mon, Object.assign({}, dash, {
-          programs: doc.programs || [],
-          icon_dock: doc.icon_dock || [],
-        }));
+        if (showAmmoNet && window.FieldAmmoNetDisplay) {
+          window.FieldAmmoNetDisplay.mount(mon);
+        } else {
+          mon.classList.toggle("hd-monitor--hidden", !showWall);
+          mon.hidden = !showWall;
+          mon.innerHTML = "";
+          const dash = doc?.monitor_dashboard || {};
+          if (showWall && window.FieldMonitorDashboard) {
+            window.FieldMonitorDashboard.mount(mon, Object.assign({}, dash, {
+              programs: doc.programs || [],
+              icon_dock: doc.icon_dock || [],
+            }));
+          }
+        }
       }
 
       const sb = document.getElementById("fsb-mount");
@@ -358,6 +602,7 @@
       if (tm && window.FieldC2TaskManager) window.FieldC2TaskManager.mount(tm);
 
       engageKeyboardSovereign();
+      runInternetCleanIfDefault(policy);
       if (pagesRuntime()) toast("AmmoOS desktop ready · click an icon to launch");
     } catch (e) {
       // Static GitHub Pages fallback for Hostess7/desktop/ — this IS our AmmoOS OS desktop.
@@ -365,9 +610,9 @@
       const staticDoc = {
         product: "AmmoOS",
         version: "2.0",
-        programs: desktopFourFallback(),
-        desktop_icons: desktopFourFallback(),
-        policy: { desktop_icons_in_start: false, show_desktop_icons: true, six_tool_wall: false, desktop_ui_scale_default: 200, desktop_icon_size_default: 96 },
+        programs: desktopDefaultFallback(),
+        desktop_icons: desktopDefaultFallback(),
+        policy: { desktop_icons_in_start: false, show_desktop_icons: true, six_tool_wall: false, ammonet_display_right: true, monitor_dashboard_right: true, desktop_ui_scale_default: 200, desktop_icon_size_default: 96 },
         shell: { settings: { desktop_icon_size: 96, ui_scale: 200, sort_desktop: "manual" } },
         startbar: { start_label: "Start", classic: true },
         guest_os: { system: "Field" },
@@ -378,7 +623,7 @@
       const sb = document.getElementById("fsb-mount");
       if (sb && window.FieldStartbar) window.FieldStartbar.mount(sb, staticDoc);
 
-      if (pagesRuntime()) toast("AmmoOS desktop ready — 4 cartoony icons · Classic Start · 200% taskbar");
+      if (pagesRuntime()) toast("AmmoOS desktop ready · Classic icons · Start menu");
     } finally {
       if (loading) loading.classList.add("hidden");
     }
@@ -390,6 +635,8 @@
     toast: toast,
     launchApp: launchApp,
     renderDesktopIcons: renderDesktopIcons,
+    toggleDesktopPin: toggleDesktopPin,
+    openQueenBrowserClean: openQueenBrowserClean,
   };
 
   window.addEventListener("pagehide", function () {

@@ -1,0 +1,62 @@
+{
+  "schema": "ammoos-desktop-os/v1",
+  "title": "AmmoOS Desktop OS — classic Start, themes, start menu essentials",
+  "motto": "Bottom taskbar stays · Start rises classic · two lead themes · every menu program launches.",
+  "product": "AmmoOS",
+  "version": "2.0.0",
+  "lead_theme": {
+    "id": "ammoos",
+    "label": "AmmoOS",
+    "palette": "black · emerald green · rose pink tinges",
+    "data_attr": "nexus-military-v8",
+    "c2_key": "ammoos",
+    "default": true
+  },
+  "alternate_theme": {
+    "id": "dusty-night",
+    "label": "Dusty Night",
+    "palette": "warm dusty midnight blues · scroll-friendly",
+    "data_attr": "dusty-night",
+    "c2_key": "dusty-night",
+    "css_class": "dusty-midnight"
+  },
+  "start_button": {
+    "style": "classic_raised",
+    "icon": "windows_flag_four_pane",
+    "position": "bottom_left_above_taskbar",
+    "menu_anchor": "flyout_above_start",
+    "ammonet_bar": "pages-ammonet-wire.js — bottom anchor; taskbar + classic Start above on Y",
+    "module": "panel/assets/field-startbar.js"
+  },
+  "start_menu": {
+    "layout": "nexus_c2_flyout",
+    "theme_swatches": ["ammoos", "dusty-night"],
+    "essentials": [
+      {"id": "nexus-calc", "name": "Calculator", "exec": "/nexus-calc", "os_layer": 0, "required": true},
+      {"id": "nexus-timer", "name": "Set Timer", "exec": "/nexus-calendar?timer=1", "os_layer": 0},
+      {"id": "nexus-calendar", "name": "Calendar", "exec": "/nexus-calendar", "os_layer": 0},
+      {"id": "queen-terminal", "name": "AmmoOS Terminal", "exec": "/field-gnu-terminal-embed.html", "os_layer": 0},
+      {"id": "ammocode", "name": "AmmoCode", "exec": "/ammocode", "os_layer": 0},
+      {"id": "field-popcorn", "name": "Popcorn", "exec": "/field-popcorn", "os_layer": 0},
+      {"id": "nexus-control-panel", "name": "Control Panel", "exec": "/control-panel", "os_layer": 0},
+      {"id": "field-library-bookshelf", "name": "Library", "exec": "/library/"},
+      {"id": "hostess7-human-hub", "name": "Human Hub", "exec": "/human/"},
+      {"id": "queen-browser", "name": "Queen Browser", "exec": "/queen/browser.html"},
+      {"id": "ammoos-update-os", "name": "Software Update", "exec": "/ammoos-update-os", "os_layer": 0}
+    ],
+    "github_favorites": true
+  },
+  "modules": {
+    "taskbar": "panel/assets/field-startbar.js",
+    "themes": "panel/assets/ammoos-theme-engine.js",
+    "calculator": "panel/nexus-calc.html",
+    "calculator_api": "/api/hostess7/calculator/compute",
+    "desktop": "panel/field-desktop.html"
+  },
+  "pages": {
+    "repo": "ZacharyGeurts/Hostess7",
+    "base": "/Hostess7",
+    "desktop": "/Hostess7/desktop/"
+  },
+  "botnet_publish": "scripts/publish-hostess7-pages.sh — gh-pages full stack"
+}

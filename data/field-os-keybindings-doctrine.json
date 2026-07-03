@@ -1,0 +1,28 @@
+{
+  "schema": "field-os-keybindings/v1",
+  "title": "AmmoOS OS keybindings",
+  "motto": "F-keys sovereign · Ironclad desktop dispatch · kernel witness optional",
+  "policy": {
+    "kernel_listener": true,
+    "desktop_capture": true,
+    "ironclad_sort": true,
+    "fkey_layers": "field-screen-layers.js"
+  },
+  "bindings": [
+    {"id": "f9_nexus_c2", "keys": ["F9"], "action": "launch", "target": "nexus-c2", "layer": -3, "desktop": true},
+    {"id": "f10_dns_lane", "keys": ["F10"], "action": "launch", "target": "kilroy-dns", "layer": -2, "desktop": true},
+    {"id": "f11_queen_browser", "keys": ["F11"], "action": "kilroy_browser", "target": "queen-browser", "layer": 1, "desktop": true},
+    {"id": "f12_userland", "keys": ["F12"], "action": "cycle_userland", "layer": 2, "desktop": true},
+    {"id": "f9_underlay_kernel", "keys": ["F9"], "action": "launch", "target": "underlay-f9", "kernel": true},
+    {"id": "ctrl_alt_t", "keys": ["Control", "Alt", "t"], "action": "launch", "target": "queen-terminal", "desktop": true},
+    {"id": "ctrl_alt_b", "keys": ["Control", "Alt", "b"], "action": "launch", "target": "field-broadcaster", "desktop": true}
+  ],
+  "launch_targets": {
+    "nexus-c2": {"id": "nexus-c2", "exec": "http://127.0.0.1:9481/world/queen-nexus-c2.html", "label": "NEXUS C2"},
+    "kilroy-dns": {"id": "kilroy-home", "exec": "http://127.0.0.1:9481/world/kilroy-home.html", "label": "DNS · KILROY lane"},
+    "queen-browser": {"id": "queen-browser", "exec": "http://127.0.0.1:9481/world/browser.html", "label": "Queen Browser"},
+    "underlay-f9": {"id": "underlay-f9", "exec": "http://127.0.0.1:9477/underlay-f9", "label": "Underlay F9"},
+    "queen-terminal": {"id": "queen-terminal", "exec": "http://127.0.0.1:9477/field-gnu-terminal-embed.html", "label": "AmmoOS Terminal"},
+    "field-broadcaster": {"id": "field-broadcaster", "exec": "http://127.0.0.1:9477/field-broadcaster", "label": "Broadcaster"}
+  }
+}
