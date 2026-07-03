@@ -1,0 +1,46 @@
+{
+  "schema": "field-dos40/v1",
+  "title": "MS-DOS 4.0 rewrite — GNU Terminal module host",
+  "motto": "COMMAND.COM lineage · load modules · MSPaint rides the shell",
+  "policy": {
+    "version": "4.0",
+    "module_dir": "panel/assets/dos40-modules",
+    "sovereign_confirm_ms": 120,
+    "slowdown_threat_ms": 800
+  },
+  "modules": [
+    {
+      "id": "mspaint",
+      "label": "MSPaint",
+      "exec": "/mspaint",
+      "terminal_cmds": ["mspaint", "paint"],
+      "dos_help": "MSPAINT — bitmap editor (PCX · clipboard · GNU module)",
+      "clipboard": true,
+      "sovereign_gate": true
+    },
+    {
+      "id": "edit",
+      "label": "MS-DOS Editor",
+      "exec": "/field-gnu-terminal-embed.html?module=edit",
+      "terminal_cmds": ["edit"],
+      "dos_help": "EDIT — plain text (GNU Terminal surface)",
+      "clipboard": true
+    },
+    {
+      "id": "gwbasic",
+      "label": "GW-BASIC",
+      "exec": "/field-gnu-terminal-embed.html?module=gwbasic",
+      "terminal_cmds": ["gwbasic", "basic"],
+      "dos_help": "GW-BASIC — scaffold · launch via CHIPS",
+      "coming_soon": true
+    },
+    {
+      "id": "mem",
+      "label": "MEM",
+      "terminal_cmds": ["mem"],
+      "dos_help": "MEM — stack witness (truth diagnostic)",
+      "action": "truth",
+      "truth_query": "memory"
+    }
+  ]
+}
