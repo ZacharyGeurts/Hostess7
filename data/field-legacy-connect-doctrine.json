@@ -1,0 +1,68 @@
+{
+  "schema": "field-legacy-connect/v1",
+  "title": "Legacy open + secured — retro gear forever welcome",
+  "boss": "hostess7",
+  "motto": "Bring Truth DNS and Field DHCP fully up — legacy ears open, gatekeeper secured, Dreamcast modem welcome",
+  "policy": {
+    "legacy_open_secured": true,
+    "forever": true,
+    "civilian_passthrough": true,
+    "promote_primary_when_truth_healthy": true,
+    "never_block_retro_ports": true
+  },
+  "dns_legacy": {
+    "accept_no_edns": true,
+    "max_udp_response": 512,
+    "prefer_a_records": true,
+    "rfc": "RFC 1035 classic UDP"
+  },
+  "dhcp_legacy": {
+    "dreamcast_oui_prefixes": ["00:d0:f1", "00:d0:0f", "00:09:bf"],
+    "retro_pool": {
+      "start": "192.168.47.100",
+      "end": "192.168.47.150",
+      "gateway": "192.168.47.1",
+      "subnet": "255.255.255.0",
+      "lease_seconds": 86400
+    },
+    "default_pool_env": {
+      "start": "NEXUS_FIELD_DHCP_POOL_START",
+      "end": "NEXUS_FIELD_DHCP_POOL_END"
+    }
+  },
+  "dreamcast_modem": {
+    "id": "dreamcast_modem",
+    "vendor": "Sega",
+    "era": "1999–2003",
+    "modes": ["dialup_ppp", "broadband_adapter"],
+    "dialup": {
+      "protocol": "PPP",
+      "speeds": ["33600", "56000", "V90"],
+      "serial_devices": ["/dev/ttyS0", "/dev/ttyS1", "/dev/ttyUSB0", "/dev/ttyACM0"],
+      "pppd_peer": "dreamcast-modem",
+      "note": "Null-modem or USB voice modem — queen runs pppd peer; Dreamcast dials in"
+    },
+    "bba": {
+      "protocol": "Ethernet",
+      "dhcp": true,
+      "static_fallback": "192.168.47.2",
+      "dns_manual": ["192.168.47.1"],
+      "note": "Broadband Adapter on retro LAN — DHCP option 6 → Truth Resolver"
+    }
+  },
+  "retro_ports": {
+    "dreamcast_online": [7648, 9300, 9420, 9421, 9422, 9423, 9424, 9425, 9426, 9427, 9428, 9429, 9430],
+    "ppp_serial": [],
+    "note": "PSO / ChuChu Rocket / retro tunnel ports — auto-allow through civilian passthrough"
+  },
+  "wires": [
+    {"id": "protocol_bridge", "module": "lib/field-sovereign-protocol-bridge.py"},
+    {"id": "github_legacy", "module": "lib/field-github-legacy.py"},
+    {"id": "dns_takeover", "module": "lib/dns-service-takeover.py"},
+    {"id": "field_dns", "module": "lib/field-dns.py"},
+    {"id": "field_dhcp", "module": "lib/field-dhcp.py"},
+    {"id": "local_connect", "module": "lib/field-local-dns-connect.py"}
+  ],
+  "api": "/api/field-legacy-connect",
+  "cli": "scripts/legacy-connect-primary.sh"
+}

@@ -701,10 +701,21 @@ def _stage_gnueol_terminal_mirror() -> int:
         return 0
     forge = NL / "GNUEOLTerminal" / "scripts" / "forge-gnu-wiki-manual.py"
     build = NL / "GNUEOLTerminal" / "scripts" / "build-site.py"
+    verify = NL / "GNUEOLTerminal" / "scripts" / "verify-gnu-wiki-manual.py"
     if forge.is_file() and build.is_file():
         try:
             subprocess.run([sys.executable, str(forge)], cwd=str(NL / "GNUEOLTerminal"), check=False, timeout=120)
-            subprocess.run([sys.executable, str(build)], cwd=str(NL / "GNUEOLTerminal"), check=False, timeout=120)
+            proc = subprocess.run(
+                [sys.executable, str(build)], cwd=str(NL / "GNUEOLTerminal"), check=False, timeout=120,
+            )
+            if proc.returncode != 0:
+                print("[gnueol] WARN build-site.py failed — wiki verify may be stale", file=sys.stderr)
+            elif verify.is_file():
+                vproc = subprocess.run(
+                    [sys.executable, str(verify)], cwd=str(NL / "GNUEOLTerminal"), check=False, timeout=60,
+                )
+                if vproc.returncode != 0:
+                    print("[gnueol] WARN verify-gnu-wiki-manual.py failed", file=sys.stderr)
         except (subprocess.TimeoutExpired, OSError):
             pass
     if dest.exists():

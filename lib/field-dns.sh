@@ -265,8 +265,19 @@ nexus_field_local_connect_loop() {
   done
 }
 
+nexus_field_legacy_connect_primary() {
+  [[ "${NEXUS_LEGACY_OPEN_SECURED:-1}" == "1" ]] || return 0
+  local py="${NEXUS_INSTALL_ROOT}/lib/field-legacy-connect.py"
+  [[ -f "$py" ]] || return 0
+  export NEXUS_LEGACY_OPEN_SECURED=1
+  export NEXUS_FIELD_DNS_LEGACY_COMPAT=1
+  NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+    pythong "$py" ensure-primary >/dev/null 2>&1 || true
+}
+
 nexus_field_services_boot() {
   [[ "${NEXUS_FIELD_DNS:-1}" == "1" ]] || return 0
+  declare -f nexus_field_legacy_connect_primary >/dev/null 2>&1 && nexus_field_legacy_connect_primary || true
   declare -f nexus_field_dns_publish >/dev/null 2>&1 && nexus_field_dns_publish || true
   if ! pgrep -f 'field-dns.py serve' >/dev/null 2>&1; then
     nohup env NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \

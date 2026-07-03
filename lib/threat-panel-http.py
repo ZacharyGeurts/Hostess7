@@ -5289,6 +5289,16 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        if path == "/api/field-legacy-connect":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-legacy-connect.py", ["json"], timeout=25)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-legacy-connect-primary":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-legacy-connect.py", ["ensure-primary"], timeout=120)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path == "/api/field-dns-table-clean":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dns-table-clean.py", ["clean"], timeout=45)
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")

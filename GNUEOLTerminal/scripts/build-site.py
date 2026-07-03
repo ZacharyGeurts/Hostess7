@@ -6,6 +6,7 @@ import html
 import json
 import re
 import shutil
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +21,21 @@ ASSETS = ROOT / "assets"
 
 def esc(s: str) -> str:
     return html.escape(s, quote=True)
+
+
+def _inline_md(text: str) -> str:
+    """Bold, code, and markdown links — wiki .md → .html for relative pages."""
+    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", _link_repl, text)
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    text = re.sub(r"`([^`]+)`", r"<code>\1</code>", text)
+    return text
+
+
+def _link_repl(m: re.Match[str]) -> str:
+    label, href = m.group(1), m.group(2)
+    if href.endswith(".md") and not href.startswith("http"):
+        href = href[:-3] + ".html"
+    return f'<a href="{esc(href)}">{esc(label)}</a>'
 
 
 def site_base(manifest: dict) -> str:
@@ -65,8 +81,7 @@ def md_to_html(text: str) -> str:
         if buf:
             para = " ".join(x.strip() for x in buf if x.strip())
             if para:
-                para = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", para)
-                para = re.sub(r"`([^`]+)`", r"<code>\1</code>", para)
+                para = _inline_md(para)
                 para = re.sub(
                     r'<span class="tag (\w+)">([^<]+)</span>',
                     r'<span class="tag \1">\2</span>',
@@ -106,12 +121,12 @@ def md_to_html(text: str) -> str:
         if line.startswith("> "):
             flush_p()
             close_lists()
-            out.append(f"<blockquote>{esc(line[2:])}</blockquote>")
+            out.append(f"<blockquote>{_inline_md(line[2:])}</blockquote>")
             continue
         if line.startswith("### "):
             flush_p()
             close_lists()
-            out.append(f"<h3>{esc(line[4:])}</h3>")
+            out.append(f"<h3>{_inline_md(line[4:])}</h3>")
             continue
         if line.startswith("| ") and "|" in line[1:]:
             flush_p()
@@ -124,6 +139,11 @@ def md_to_html(text: str) -> str:
                 if "---" in line:
                     continue
                 out.append("<tr>" + "".join(f"<{tag}>{esc(c)}</{tag}>" for c in cells) + "</tr>")
+            continue
+        if line.startswith("# ") and not line.startswith("## "):
+            flush_p()
+            close_lists()
+            out.append(f"<h1>{esc(line[2:])}</h1>")
             continue
         if line.startswith("## "):
             flush_p()
@@ -139,9 +159,7 @@ def md_to_html(text: str) -> str:
             if not in_ul:
                 out.append("<ul>")
                 in_ul = True
-            item = line[2:]
-            item = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", item)
-            item = re.sub(r"`([^`]+)`", r"<code>\1</code>", item)
+            item = _inline_md(line[2:])
             out.append(f"<li>{item}</li>")
             continue
         m = re.match(r"^(\d+)\. (.+)$", line)
@@ -153,8 +171,7 @@ def md_to_html(text: str) -> str:
             if not in_ol:
                 out.append("<ol>")
                 in_ol = True
-            item = m.group(2)
-            item = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", item)
+            item = _inline_md(m.group(2))
             out.append(f"<li>{item}</li>")
             continue
         if line.startswith("![") and "](" in line:
@@ -429,6 +446,12 @@ def main() -> None:
     wiki_n = build_wiki(manifest)
     (DOCS / "index.html").write_text(build_index(manifest), encoding="utf-8")
     copy_assets()
+    verify_py = ROOT / "scripts" / "verify-gnu-wiki-manual.py"
+    if verify_py.is_file():
+        import subprocess
+        proc = subprocess.run([sys.executable, str(verify_py)], cwd=str(ROOT), check=False)
+        if proc.returncode != 0:
+            raise SystemExit("verify-gnu-wiki-manual.py failed — full manual not publish-ready")
     print(f"built {built} chapters · {wiki_n} wiki pages · ~{manifest.get('estimated_pages')} pages → {DOCS}")
 
 

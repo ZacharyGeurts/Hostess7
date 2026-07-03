@@ -8,7 +8,15 @@
     "dns_truth": true,
     "dhcp_field": true,
     "stable": true,
-    "secure": true
+    "secure": true,
+    "legacy_open_secured": true
+  },
+  "legacy_connect": {
+    "module": "lib/field-legacy-connect.py",
+    "doctrine": "data/field-legacy-connect-doctrine.json",
+    "api": "/api/field-legacy-connect",
+    "dreamcast_modem": true,
+    "forever": true
   },
   "github_control_plane": {
     "enabled": true,
@@ -44,6 +52,7 @@
     {"id": "github_resilience", "module": "lib/field-github-resilience.py"},
     {"id": "github_path_harden", "module": "lib/field-github-path-harden.py", "dns_authority": "lib/field-dns.py"},
     {"id": "dns_drift_threat", "module": "lib/field-dns-drift-threat.py", "api": "/api/field-dns-drift-threat"},
+    {"id": "legacy_connect", "module": "lib/field-legacy-connect.py", "api": "/api/field-legacy-connect"},
     {"id": "github_everyone", "module": "lib/field-github-everyone.py"},
     {"id": "gatekeeper", "module": "lib/connection-gatekeeper.py"},
     {"id": "znetwork", "module": "lib/znetwork-orchestrator.py"}

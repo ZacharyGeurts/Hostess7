@@ -45,6 +45,26 @@ DNS_SERVERS_V6 = _dns_servers_v6()
 LEASE_SEC = int(os.environ.get("NEXUS_FIELD_DHCP_LEASE", "3600"))
 POOL_START = os.environ.get("NEXUS_FIELD_DHCP_POOL_START", "192.168.50.100")
 POOL_END = os.environ.get("NEXUS_FIELD_DHCP_POOL_END", "192.168.50.200")
+LEGACY_POOL_START = os.environ.get("NEXUS_FIELD_DHCP_LEGACY_POOL_START", "")
+LEGACY_POOL_END = os.environ.get("NEXUS_FIELD_DHCP_LEGACY_POOL_END", "")
+LEGACY_LEASE_SEC = int(os.environ.get("NEXUS_FIELD_DHCP_LEGACY_LEASE", "86400") or "86400")
+LEGACY_OUI_PREFIXES = tuple(
+    p.strip().lower()
+    for p in os.environ.get(
+        "NEXUS_FIELD_DHCP_LEGACY_OUI",
+        "00:d0:f1,00:d0:0f,00:09:bf",
+    ).split(",")
+    if p.strip()
+)
+
+
+def _legacy_dns_servers_v4() -> list[str]:
+    raw = os.environ.get("NEXUS_FIELD_DHCP_LEGACY_DNS_IPV4", "")
+    hosts = [h.strip() for h in raw.split(",") if h.strip()]
+    return hosts
+
+
+LEGACY_DNS_SERVERS = _legacy_dns_servers_v4()
 BIND_IF = os.environ.get("NEXUS_FIELD_DHCP_BIND", "0.0.0.0")
 
 _stats = {
@@ -155,12 +175,31 @@ def _discover_rate_ok(mac: str) -> bool:
     return True
 
 
-def _pool_valid(ip: str) -> bool:
+def _pool_valid(ip: str, *, start: str = POOL_START, end: str = POOL_END) -> bool:
     try:
         n = _ip_to_int(ip)
-        return _ip_to_int(POOL_START) <= n <= _ip_to_int(POOL_END)
+        return _ip_to_int(start) <= n <= _ip_to_int(end)
     except OSError:
         return False
+
+
+def _is_legacy_client(mac: str) -> bool:
+    m = str(mac or "").lower().replace("-", ":")
+    if not m:
+        return False
+    return any(m.startswith(prefix) for prefix in LEGACY_OUI_PREFIXES)
+
+
+def _pool_for_mac(mac: str) -> tuple[str, str, int]:
+    if LEGACY_POOL_START and LEGACY_POOL_END and _is_legacy_client(mac):
+        return LEGACY_POOL_START, LEGACY_POOL_END, LEGACY_LEASE_SEC
+    return POOL_START, POOL_END, LEASE_SEC
+
+
+def _dns_for_mac(mac: str) -> list[str]:
+    if _is_legacy_client(mac) and LEGACY_DNS_SERVERS:
+        return LEGACY_DNS_SERVERS
+    return DNS_SERVERS
 
 
 def _next_lease(mac: str, *, renew: bool = False) -> str:
@@ -174,11 +213,15 @@ def _next_lease(mac: str, *, renew: bool = False) -> str:
         exp, rem = _lease_expiry(str(entry.get("leased_at") or now))
         entry["expires_at"] = exp
         entry["remaining_seconds"] = rem
-        entry["dns"] = DNS_SERVERS
+        pool_start, pool_end, lease_sec = _pool_for_mac(mac)
+        entry["dns"] = _dns_for_mac(mac)
+        entry["legacy"] = _is_legacy_client(mac)
+        entry["lease_seconds"] = lease_sec
         _save_json(LEASE_FILE, leases)
-        return str(entry.get("ip") or POOL_START)
-    start = _ip_to_int(POOL_START)
-    end = _ip_to_int(POOL_END)
+        return str(entry.get("ip") or pool_start)
+    pool_start, pool_end, lease_sec = _pool_for_mac(mac)
+    start = _ip_to_int(pool_start)
+    end = _ip_to_int(pool_end)
     used = {_ip_to_int(v["ip"]) for v in pool.values() if v.get("ip")}
     for n in range(start, end + 1):
         if n not in used:
@@ -192,11 +235,13 @@ def _next_lease(mac: str, *, renew: bool = False) -> str:
                 "renewals": 0,
                 "declines": 0,
                 "last_seen": now,
-                "dns": DNS_SERVERS,
+                "dns": _dns_for_mac(mac),
+                "legacy": _is_legacy_client(mac),
+                "lease_seconds": lease_sec,
             }
             _save_json(LEASE_FILE, leases)
             return ip
-    return POOL_START
+    return pool_start
 
 
 def _dhcp_options(data: bytes) -> dict[int, bytes]:
@@ -220,7 +265,15 @@ def _dhcp_options(data: bytes) -> dict[int, bytes]:
     return opts
 
 
-def _build_reply(msg_type: int, xid: bytes, yiaddr: str, chaddr: bytes) -> bytes:
+def _build_reply(
+    msg_type: int,
+    xid: bytes,
+    yiaddr: str,
+    chaddr: bytes,
+    *,
+    lease_sec: int = LEASE_SEC,
+    dns_servers: list[str] | None = None,
+) -> bytes:
     op = 2
     htype = 1
     hlen = 6
@@ -236,8 +289,9 @@ def _build_reply(msg_type: int, xid: bytes, yiaddr: str, chaddr: bytes) -> bytes
     opts = bytearray()
     opts.extend(bytes([53, 1, msg_type]))
     opts.extend(bytes([54, 4]) + socket.inet_aton(siaddr))
-    opts.extend(bytes([51, 4]) + struct.pack("!I", LEASE_SEC))
-    dns_blob = b"".join(socket.inet_aton(d) for d in DNS_SERVERS)
+    opts.extend(bytes([51, 4]) + struct.pack("!I", lease_sec))
+    dns_list = dns_servers or DNS_SERVERS
+    dns_blob = b"".join(socket.inet_aton(d) for d in dns_list)
     opts.extend(bytes([6, len(dns_blob)]) + dns_blob)
     opts.extend(bytes([1, 4]) + socket.inet_aton("255.255.255.0"))
     opts.append(255)
@@ -314,24 +368,26 @@ def _handle(data: bytes, addr: tuple[str, int]) -> bytes | None:
             _record_threat("discover_rate_limit", addr[0], mac, "reject")
             return None
         _stats["discover"] += 1
+        pool_start, pool_end, lease_sec = _pool_for_mac(mac)
         ip = _next_lease(mac)
-        if not _pool_valid(ip):
+        if not _pool_valid(ip, start=pool_start, end=pool_end):
             _stats["rejected"] += 1
             _stats["conflicts_detected"] = int(_stats.get("conflicts_detected") or 0) + 1
             _append_event("pool_conflict", mac, ip, "invalid_pool_ip")
             return None
         _stats["offer"] += 1
         _append_event("offer", mac, ip)
-        return _build_reply(2, xid, ip, chaddr)
+        return _build_reply(2, xid, ip, chaddr, lease_sec=lease_sec, dns_servers=_dns_for_mac(mac))
     if msg_type == 3:
         _stats["request"] += 1
+        pool_start, pool_end, lease_sec = _pool_for_mac(mac)
         ip = _next_lease(mac, renew=True)
-        if not _pool_valid(ip):
+        if not _pool_valid(ip, start=pool_start, end=pool_end):
             _stats["rejected"] += 1
             return None
         _stats["ack"] += 1
         _append_event("ack", mac, ip)
-        return _build_reply(5, xid, ip, chaddr)
+        return _build_reply(5, xid, ip, chaddr, lease_sec=lease_sec, dns_servers=_dns_for_mac(mac))
     if msg_type == 7:
         _stats["declines"] = int(_stats.get("declines") or 0) + 1
         _append_event("decline", mac, "", "client_decline")
@@ -504,6 +560,12 @@ def build_panel() -> dict[str, Any]:
         "motto": "DHCP sovereign-gated — DNS option 6 → Truth Resolver; cycle never lost.",
         "bind": f"{BIND_IF}:{PORT}",
         "pool": {"start": POOL_START, "end": POOL_END},
+        "legacy_pool": (
+            {"start": LEGACY_POOL_START, "end": LEGACY_POOL_END, "lease_seconds": LEGACY_LEASE_SEC}
+            if LEGACY_POOL_START and LEGACY_POOL_END
+            else None
+        ),
+        "legacy_oui_prefixes": list(LEGACY_OUI_PREFIXES),
         "dns_option": DNS_SERVERS,
         "dns_option_v6": DNS_SERVERS_V6,
         "lease_seconds": LEASE_SEC,

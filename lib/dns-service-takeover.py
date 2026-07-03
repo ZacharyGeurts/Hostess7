@@ -25,6 +25,14 @@ READY_CHECKS = int(os.environ.get("NEXUS_DNS_TAKEOVER_READY_CHECKS", "2"))
 HEALTH_QUERY = os.environ.get("NEXUS_DNS_TAKEOVER_HEALTH_QNAME", "example.com")
 
 PHASES = ("observing", "ready", "primary")
+LEGACY_DOCTRINE = INSTALL / "data" / "field-legacy-connect-doctrine.json"
+
+
+def _legacy_open_secured() -> bool:
+    if os.environ.get("NEXUS_LEGACY_OPEN_SECURED", "").strip().lower() in ("1", "yes", "on"):
+        return True
+    doc = _load_json(LEGACY_DOCTRINE, {})
+    return bool((doc.get("policy") or {}).get("legacy_open_secured", False))
 
 
 def _now() -> str:
@@ -245,6 +253,9 @@ def _advance_phase(
         if not health.get("healthy"):
             return "observing"
         if streak >= READY_CHECKS:
+            legacy_open = _legacy_open_secured()
+            if legacy_open and health.get("healthy") and inc.get("nexus_dns_running"):
+                return "primary"
             vacant = not inc.get("incumbent_dhcp") and (
                 not inc.get("incumbent_dns") or inc.get("nexus_dns_running")
             )
@@ -283,6 +294,7 @@ def evaluate_takeover(*, persist: bool = True) -> dict[str, Any]:
             "listen_before_reject": True,
             "dhcp_dns_only": True,
             "no_lateral_movement": True,
+            "legacy_open_secured": _legacy_open_secured(),
         },
         "health": health,
         "incumbents": inc,

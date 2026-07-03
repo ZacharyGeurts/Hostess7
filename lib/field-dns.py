@@ -221,6 +221,17 @@ def _pack_rdata(qtype: int, value: str) -> bytes | None:
     return None
 
 
+def _legacy_compat_enabled() -> bool:
+    return os.environ.get("NEXUS_FIELD_DNS_LEGACY_COMPAT", "").strip().lower() in ("1", "yes", "on")
+
+
+def _legacy_max_udp() -> int:
+    try:
+        return int(os.environ.get("NEXUS_FIELD_DNS_LEGACY_MAX_UDP", "512") or "512")
+    except ValueError:
+        return 512
+
+
 def _build_response(
     txn_id: int,
     qname: str,
@@ -509,8 +520,15 @@ def _handle_query(data: bytes, blocked: set[str], client: str = "") -> bytes | N
         return _build_response(txn_id, qname, qtype, qclass, [], rcode=3)
     if not answers:
         _stats["errors"] += 1
-        return _build_response(txn_id, qname, qtype, qclass, [], rcode=2)
-    return _build_response(txn_id, qname, qtype, qclass, answers)
+        resp = _build_response(txn_id, qname, qtype, qclass, [], rcode=2)
+    else:
+        legacy_answers = answers[:4] if _legacy_compat_enabled() and qtype == 1 else answers
+        resp = _build_response(txn_id, qname, qtype, qclass, legacy_answers)
+    if _legacy_compat_enabled() and len(resp) > _legacy_max_udp():
+        resp = resp[:_legacy_max_udp()]
+        if len(resp) >= 3:
+            resp = resp[:2] + bytes([resp[2] | 0x02]) + resp[3:]
+    return resp
 
 
 def _udp_loop(family: int, host: str) -> None:
