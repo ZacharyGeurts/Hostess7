@@ -30,6 +30,7 @@ jobs:
           python3 scripts/forge-gnu-wiki-manual.py
           python3 scripts/forge-book.py
           python3 scripts/build-site.py
+          python3 scripts/verify-gnu-wiki-manual.py
           touch docs/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
