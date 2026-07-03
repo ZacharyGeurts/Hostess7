@@ -246,12 +246,16 @@ def dns_crosscheck(doc: dict[str, Any]) -> dict[str, Any]:
             _violation(f"DoH witness outside git CIDR {host}: doh_bad={bad_doh}")
         elif stub_ips and authority_ips and not (set(stub_ips) & set(authority_ips)):
             mismatch = True
-            _violation(
-                f"Stub vs Truth drift {host}: truth={authority_ips} stub={stub_ips} (monitor — Charter path)"
-            )
+            suspect = True
+            _violation(f"DNS drift threat {host}: truth={authority_ips} stub={stub_ips} (TRUTH_STUB_DRIFT)")
+        elif authority_ips and stub_ips and set(authority_ips) != set(stub_ips) and (set(stub_ips) & set(authority_ips)):
+            mismatch = True
+            suspect = True
+            _violation(f"DNS pool drift threat {host}: truth={authority_ips} stub={stub_ips} (DNS_POOL_DRIFT)")
         elif doh_witness and all_doh and authority_ips and not (set(authority_ips) & all_doh):
             mismatch = True
-            _violation(f"DoH witness drift {host}: truth={authority_ips} doh={sorted(all_doh)} (monitor)")
+            suspect = True
+            _violation(f"DoH witness drift threat {host}: truth={authority_ips} doh={sorted(all_doh)}")
         rows.append({
             "host": host,
             "truth": truth_ips,
@@ -321,11 +325,11 @@ def path_audit(*, apply: bool = False, ensure_dns: bool = True, quick: bool = Fa
     elif not tls.get("ok"):
         verdict = "TLS_SUSPECT"
     elif dns.get("hosts") and any(h.get("mismatch") for h in dns["hosts"]):
-        verdict = "DNS_POOL_DRIFT"
+        verdict = "DNS_DRIFT_THREAT"
 
     mitigations = list(doc.get("mitigations") or {})
     applied: list[str] = []
-    if apply and verdict not in ("OK", "DNS_POOL_DRIFT"):
+    if apply and verdict not in ("OK",):
         if doc.get("mitigations", {}).get("force_tunnel"):
             ENV_FILE.parent.mkdir(parents=True, exist_ok=True)
             ENV_FILE.write_text(

@@ -60,6 +60,9 @@ nexus_field_dns_publish() {
   [[ -f "$sync" ]] && NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
     pythong "$sync" mirror >/dev/null 2>&1 && \
     pythong "$sync" json >/dev/null 2>&1 || true
+  local drift="${NEXUS_INSTALL_ROOT}/lib/field-dns-drift-threat.py"
+  [[ -f "$drift" ]] && NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+    pythong "$drift" panel >/dev/null 2>&1 || true
 }
 
 nexus_dns_internet_pull_loop() {

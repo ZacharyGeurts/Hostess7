@@ -1,0 +1,37 @@
+{
+  "schema": "field-dns-drift-threat/v1",
+  "title": "DNS drift threat — Truth vs witness divergence is hostile",
+  "motto": "We are our own DNS — any drift from Truth @127.0.0.1 is a threat, not noise.",
+  "authority": {
+    "truth_host": "127.0.0.1",
+    "truth_port": 53,
+    "stub_witness": "127.0.0.53",
+    "resolve_module": "lib/field-dns-resolve.py"
+  },
+  "drift_as_threat": true,
+  "pool_drift_as_threat": true,
+  "stub_drift_as_threat": true,
+  "trace_drift_as_threat": true,
+  "watch_hosts": [
+    "github.com",
+    "api.github.com",
+    "ssh.github.com",
+    "raw.githubusercontent.com"
+  ],
+  "dhcp_dns_require": ["127.0.0.1"],
+  "node_dns_upstream_require": "127.0.0.1",
+  "mitigations": {
+    "enforce_resolv": true,
+    "eradicate_vector": "DNS_DRIFT",
+    "log_violations": true,
+    "force_tunnel_on_git_drift": true
+  },
+  "wires": [
+    {"id": "field_dns", "module": "lib/field-dns.py"},
+    {"id": "field_dhcp", "module": "lib/field-dhcp.py"},
+    {"id": "dns_threat_guard", "module": "lib/dns-threat-guard.py"},
+    {"id": "dns_takeover", "module": "lib/dns-service-takeover.py"},
+    {"id": "github_path_harden", "module": "lib/field-github-path-harden.py"}
+  ],
+  "api": "/api/field-dns-drift-threat"
+}

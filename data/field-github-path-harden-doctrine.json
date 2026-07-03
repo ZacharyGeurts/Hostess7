@@ -14,9 +14,16 @@
     "ensure_before_git": true,
     "block_foreign_resolvers": true
   },
+  "dns_drift_threat": {
+    "module": "lib/field-dns-drift-threat.py",
+    "api": "/api/field-dns-drift-threat",
+    "drift_as_threat": true,
+    "pool_drift_as_threat": true
+  },
   "dns_crosscheck": {
     "primary": "truth_dns",
     "stub_witness": true,
+    "drift_as_threat": true,
     "doh_witness": false,
     "block_foreign_resolvers": true,
     "doh": [

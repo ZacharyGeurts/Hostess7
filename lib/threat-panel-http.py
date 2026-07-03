@@ -5284,6 +5284,11 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        if path == "/api/field-dns-drift-threat":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dns-drift-threat.py", ["panel"], timeout=20)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path.startswith("/api/field-monster-monitor"):
             script = INSTALL_ROOT / "lib" / "field-monster-monitor.py"
             if not script.is_file():

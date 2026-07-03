@@ -13,6 +13,7 @@ ensure_truth_dns() {
     nexus_field_dns_enforce_cycle 2>/dev/null || true
   fi
   python3 "${ROOT}/lib/field-dns-resolve.py" ensure >/dev/null 2>&1 || true
+  python3 "${ROOT}/lib/field-dns-drift-threat.py" panel >/dev/null 2>&1 || true
 }
 
 # Source auto-mitigations if present

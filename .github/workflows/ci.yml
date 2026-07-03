@@ -142,6 +142,12 @@ jobs:
           export NEXUS_STATE_DIR="$PWD/.nexus-state-ci"
           bash tests/ammolang/snippets/github_traffic_shard_smoke.sh
 
+      - name: DNS drift threat + servers-updated smoke
+        run: |
+          export NEXUS_INSTALL_ROOT="$PWD"
+          export NEXUS_STATE_DIR="$PWD/.nexus-state-ci"
+          bash tests/ammolang/snippets/dns_drift_threat_smoke.sh
+
       # Future: multi-arch smoke matrix (uncomment when runners available)
       # - name: aarch64 smoke (commented)
       #   runs-on: ubuntu-24.04-arm

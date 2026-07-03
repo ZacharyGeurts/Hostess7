@@ -261,12 +261,14 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
         github_res = _load(STATE / "field-github-resilience-panel.json", {}) or _load(STATE / "field-github-resilience-probe.json", {})
         github_everyone = _load(STATE / "field-github-everyone-panel.json", {})
         traffic = _load(STATE / "field-github-traffic-shard-panel.json", {})
+        drift_threat = _load(STATE / "field-dns-drift-threat-panel.json", {})
     else:
         legal_ports = _run_json("lib/field-botnet-legal-ports.py", ["json"], timeout=8 if fast else 15)
         h7t_truth = _run_json("lib/field-h7t-truth.py", ["json"], timeout=8 if fast else 15)
         github_res = _run_json("lib/field-github-resilience.py", ["json"], timeout=8 if fast else 15)
         github_everyone = _run_json("lib/field-github-everyone.py", ["json"], timeout=8 if fast else 15)
         traffic = _run_json("lib/field-github-traffic-shard.py", ["json"], timeout=8)
+        drift_threat = _run_json("lib/field-dns-drift-threat.py", ["panel"], timeout=12)
     doc = {
         "ok": True,
         "schema": "field-botnet-dns-dhcp-panel/v1",
@@ -306,6 +308,8 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
         "github_resilience": github_res if github_res.get("probe") else {"api": "/api/field-github-resilience"},
         "github_everyone": github_everyone if github_everyone.get("ok") else {"api": "/api/field-github-everyone"},
         "github_traffic_shard": traffic if traffic.get("schema") else {"api": "/api/field-github-traffic-shard"},
+        "dns_drift_threat": drift_threat if drift_threat.get("schema") else {"api": "/api/field-dns-drift-threat"},
+        "servers_updated": (drift_threat.get("servers_updated") if drift_threat.get("schema") else None),
         "fast": fast,
     }
     doc["ok"] = bool(stable or gh_open or len(nodes) > 0)
