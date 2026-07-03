@@ -669,6 +669,10 @@ def panel_json() -> dict[str, Any]:
     if PANEL_JSON.is_file():
         doc = _load(PANEL_JSON, {})
         if doc.get("schema") == "field-clipboard-wire/v1":
+            midx = _load_media_index()
+            doc["media_vault"] = bool(_policy().get("media_vault", True))
+            doc["media_count"] = len(midx.get("entries") or [])
+            doc["media_active_id"] = midx.get("active_id")
             return doc
     return enforce(kill=False)
 
