@@ -151,6 +151,10 @@ if [[ "$PUSH" -eq 0 ]]; then
 fi
 
 git_publish_stage
+if [[ -f "${ROOT}/GNUEOLTerminal/scripts/publish-github-wiki.sh" ]]; then
+  log "publish native GitHub wiki (GNUEOLTerminal.wiki.git)"
+  bash "${ROOT}/GNUEOLTerminal/scripts/publish-github-wiki.sh" || log "WARN: GitHub wiki publish failed"
+fi
 [[ "$INVITE_RMS" -eq 1 ]] && invite_rms
 if command -v python3 >/dev/null 2>&1; then
   python3 "${ROOT}/lib/field-endpoint-registry.py" record pages publish_witness \
