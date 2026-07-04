@@ -154,6 +154,7 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh people-learn          Truth-filtered ZacharyGeurts + Amouranth online
   ./Hostess7.sh alert-posture on      Heightened alert — stun/RF/terror vigilance
   ./Hostess7.sh battle-stations on    General quarters — six-tool wall everywhere
+  ./scripts/github-account-no-forks-branches.sh run   Cut extra branches account-wide
   ./Hostess7.sh learn-online          Alias for go-online
   ./Hostess7.sh online-wants          Show curated online learning plan (no fetch)
   ./Hostess7.sh memes-ingest seed     Ingest github.com/ZacharyGeurts/memes (image talk)
