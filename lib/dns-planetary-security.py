@@ -22,6 +22,7 @@ PLANETARY_ZONES = [
     {"region": "Middle East", "tld_group": ".ae .il .sa", "security_level": "extreme", "rfc": "RFC 7766", "note": "TCP fallback documented"},
     {"region": "Special-use", "tld_group": ".localhost .invalid .test", "security_level": "extreme", "rfc": "RFC 6761", "note": "Loopback-only binding enforced"},
     {"region": "Infrastructure", "tld_group": "arpa", "security_level": "extreme", "rfc": "RFC 6895", "note": "IANA parameter compliance"},
+    {"region": "AmmoNet sovereign", "tld_group": ".com .net .org .io .dev .app .field", "security_level": "extreme", "rfc": "RFC 1035", "legal": "Operator-owned AmmoNet", "note": "ammonet.* zones — Truth DNS + Field DHCP + secure mail"},
 ]
 
 

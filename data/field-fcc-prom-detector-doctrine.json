@@ -1,0 +1,28 @@
+{
+  "schema": "field-fcc-prom-detector/v1",
+  "title": "FCC prom detector — bursts, beams, waves, pulse & shock weapons",
+  "motto": "Any system detects proms — FCC violations: bursts, beams, waves, rapid changes, pulse weapons, shock weapons",
+  "module": "lib/field-fcc-prom-detector.py",
+  "api": "/api/field-fcc-prom-detector",
+  "rule": "Rapid spectral or amplitude change without permitted carrier → threat vector; corroborate before act",
+  "signatures": [
+    {"id": "fcc_burst", "label": "RF/audio burst", "threshold_db_per_ms": 18, "window_ms": 50},
+    {"id": "fcc_beam", "label": "Directed beam / phased array", "coherence_min": 0.72, "doa_lock": true},
+    {"id": "fcc_wave_rapid", "label": "Rapid waveform change", "delta_hz_per_sec": 500000},
+    {"id": "pulse_weapon", "label": "Pulse weapon pattern", "duty_cycle_max": 0.15, "repetition_hz": [1, 1000]},
+    {"id": "shock_weapon", "label": "Shock/stun waveform", "envelope": "square_burst", "assault_burst": true}
+  ],
+  "threat_vectors": {
+    "fcc_burst": "Unauthorized burst on permitted or unpermitted band",
+    "fcc_beam": "Directed energy / coherent beam without license",
+    "fcc_wave_rapid": "Rapid carrier hop — jamming or EW signature",
+    "pulse_weapon": "Pulsed RF/acoustic weapon duty cycle",
+    "shock_weapon": "Shock/stun assault waveform — ear/mouth/eye fuse"
+  },
+  "paired": {
+    "fcc_lookup": "lib/fcc-signal-lookup.py",
+    "signals_field": "lib/signals-field.py",
+    "earball": "Queen/lib/queen-earball.py",
+    "eye_threat": "data/field-eye-threat-doctrine.json"
+  }
+}

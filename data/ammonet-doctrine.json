@@ -25,6 +25,9 @@
     {"id": "ammoos", "label": "AmmoOS panels", "z": 5, "route": "/field"},
     {"id": "hostess7", "label": "Hostess 7", "z": "infinity", "boss": true, "panels_only": true, "doctrine": "data/field-layer-stack-doctrine.json"}
   ],
+  "dns_zones": "data/ammonet-dns-zones.json",
+  "dns_module": "lib/ammonet-dns-zones.py",
+  "secure_email": "data/field-secure-email-doctrine.json",
   "surface_catalog": "data/ammonet-public-surfaces.json",
   "public_modules": [
     {"id": "internet_clean", "label": "Internet Clean", "api": "/api/hostess7/internet-clean", "pages": "/bookmark-jump/"},
@@ -40,6 +43,8 @@
     {"id": "final_eye", "label": "Final Eye", "api": "/api/queen-eyeball"},
     {"id": "steel_plates", "label": "Steel Plates", "api": "/api/steel-plates"},
     {"id": "plate_meld", "label": "Plate Meld", "api": "/api/plate-meld"},
+    {"id": "aia_accelerator", "label": "AIA AI Accelerator", "api": "/api/field-aia-accelerator", "pages": "https://zacharygeurts.github.io/AIA/", "pages_mirror": "https://zacharygeurts.github.io/Hostess7/api/field-aia-accelerator.json", "repo": "ZacharyGeurts/AIA", "boss": "hostess7"},
+    {"id": "field_qubes_drive", "label": "FIELD_QUBES Drive", "api": "/api/field-qubes-drive-provision", "boss": "hostess7"},
     {"id": "qemu_lane", "label": "QEMU Secure Transfer", "api": "/api/qemu-world-status"},
     {"id": "arcade_battalion", "label": "Arcade Battalion · SAP lobby", "api": "/api/field-arcade-battalion", "pages": "/queen-game-room.html"},
     {"id": "znetwork_vault", "label": "Secure Vault", "pages": "/field-znetwork-vault/"}

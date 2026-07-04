@@ -1,0 +1,104 @@
+{
+  "schema": "field-qubes-drive-panel/v1",
+  "updated": "2026-07-04T05:43:46Z",
+  "qubes_device": "/dev/sdb",
+  "qubes_mount": "/media/default/FIELD_QUBES",
+  "qubes_mounted": true,
+  "team_mount": "/media/default/HOSTESS7_TEAM1",
+  "team_field": "/media/default/HOSTESS7_TEAM1/fieldstorage",
+  "team_layout": {
+    "ok": true,
+    "team_field": "/media/default/HOSTESS7_TEAM1/fieldstorage",
+    "created": [
+      "/media/default/HOSTESS7_TEAM1/fieldstorage/fieldstorage",
+      "/media/default/HOSTESS7_TEAM1/fieldstorage/fieldstorage/build-cache",
+      "/media/default/HOSTESS7_TEAM1/fieldstorage/fieldstorage/build-cache/g16-rtx",
+      "/media/default/HOSTESS7_TEAM1/fieldstorage/fieldstorage/build-cache/cmake",
+      "/media/default/HOSTESS7_TEAM1/fieldstorage/fieldstorage/build-cache/queen-roms",
+      "/media/default/HOSTESS7_TEAM1/fieldstorage/fieldstorage/zacs-mirror",
+      "/media/default/HOSTESS7_TEAM1/fieldstorage/fieldstorage/stabilizer-staging"
+    ]
+  },
+  "lsblk": [],
+  "aia_accelerator": {
+    "repo": "ZacharyGeurts/AIA",
+    "pages_url": "https://zacharygeurts.github.io/AIA/",
+    "hostess7_api": "/api/field-aia-accelerator",
+    "lane": {
+      "present": true,
+      "repo": "ZacharyGeurts/AIA",
+      "ok": true,
+      "schema": "field-aia-accelerator-export/v1",
+      "updated": "2026-07-04T05:43:50Z",
+      "pages_url": "https://zacharygeurts.github.io/AIA/",
+      "qubes_ready": true,
+      "staging": "/media/default/FIELD_QUBES/fieldstorage/aia-publish",
+      "staging_bytes": 71755809,
+      "copied": [],
+      "manifest": "/media/default/FIELD_QUBES/fieldstorage/aia-publish/manifest.json",
+      "upload_ready": true,
+      "ironclad_cert": {
+        "schema": "ironclad-component-cert/v1",
+        "updated": "2026-07-04T05:43:50Z",
+        "component_id": "aia_accelerator",
+        "facet": "aia_accelerator",
+        "citation": "ironclad:aia:1",
+        "full_cert": true,
+        "ironclad_sealed": true,
+        "integrity_ok": true,
+        "held": true,
+        "truth_percent": 100.0,
+        "truth_confidence": 1.0,
+        "verdict": "GREEN",
+        "connected_throughout": true,
+        "root": "ironclad-immediate",
+        "canonical_hash": "df82e0ec4ad9168d5499416d20911b8f6574f5d2e547ca66f3dcfeacc2d7c402",
+        "meld_citation": "ironclad:meld:2",
+        "requires": [
+          "integrity_ok",
+          "traces_to_truth_set_or_citation",
+          "ironclad_sealed"
+        ],
+        "layers": [
+          "ironclad",
+          "aia_accelerator",
+          "field_qubes_drive",
+          "g16_build_cache",
+          "queen_chips"
+        ],
+        "ironclad_chain": {
+          "root": "ironclad-immediate",
+          "citation": "ironclad:aia:1",
+          "sealed": true,
+          "truth_percent": 100.0,
+          "connected_throughout": true,
+          "layers": [
+            "ironclad",
+            "aia_accelerator",
+            "field_qubes_drive",
+            "g16_build_cache",
+            "queen_chips"
+          ]
+        }
+      },
+      "upload_steps": [
+        "python3 lib/field-qubes-drive-provision.py aia-export",
+        "cd /media/default/FIELD_QUBES/fieldstorage/aia-publish && git init && git remote add origin https://github.com/ZacharyGeurts/AIA.git",
+        "git add -A && git commit -m 'aia: FIELD_QUBES accelerator bundle'",
+        "git push -u origin main",
+        "Enable GitHub Pages on ZacharyGeurts/AIA \u2014 source: main / root"
+      ]
+    }
+  },
+  "steel_plate_ids": [
+    "steel_plate:field_qubes_drive",
+    "steel_plate:g16_build_cache",
+    "steel_plate:field_big_drive",
+    "steel_plate:aia_accelerator"
+  ],
+  "ok": true,
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-04T05:43:50Z",
+  "pages_base": "/Hostess7"
+}

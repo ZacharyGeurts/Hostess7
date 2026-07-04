@@ -82,6 +82,11 @@ def main() -> int:
                     used_url = f"fallback:{hit}"
                     dest_name = fallback
                     break
+        if not data:
+            clone = Path("/tmp/nes-test-roms/other/nestest.nes")
+            if sys_id == "nes" and clone.is_file():
+                data = clone.read_bytes()
+                used_url = f"clone:{clone}"
         row = {"system": sys_id, "ok": bool(data), "filename": dest_name, "url": used_url}
         if data:
             for root in _incoming_roots():
@@ -93,6 +98,23 @@ def main() -> int:
         results.append(row)
         print(json.dumps(row))
     ok_n = sum(1 for r in results if r.get("ok"))
+    if ok_n < len(results):
+        mk = QUEEN / "scripts" / "mk-minimal-test-roms.py"
+        if mk.is_file():
+            import subprocess
+            subprocess.run([sys.executable, str(mk)], check=False)
+            for row in results:
+                if row.get("ok"):
+                    continue
+                sid = row.get("system")
+                for root in _incoming_roots():
+                    hit = root / str(sid) / str(row.get("filename") or "")
+                    if hit.is_file() and hit.stat().st_size >= 256:
+                        row["ok"] = True
+                        row["url"] = f"minimal:{hit}"
+                        row.setdefault("written", []).append(str(hit))
+                        ok_n += 1
+                        break
     print(json.dumps({"schema": "queen-test-roms-fetch/v1", "ok": ok_n > 0, "fetched": ok_n, "total": len(results)}))
     return 0 if ok_n else 1
 

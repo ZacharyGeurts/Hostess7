@@ -93,6 +93,29 @@ def _ironclad_slice() -> dict[str, Any]:
     return cached
 
 
+def _full_ironclad_cert(*, held: bool) -> dict[str, Any]:
+    cert_py = INSTALL / "lib" / "field-ironclad-component-cert.py"
+    mod = _import_py(cert_py, "icc_final_mouth")
+    if mod and hasattr(mod, "full_cert"):
+        return mod.full_cert(
+            component_id=FACET,
+            citation=IRONCLAD_CITE,
+            layers=["ironclad", "final_mouth", "queen_mouthball", "gvc1", "hostess7_brain_sync"],
+            held=held,
+            facet=FACET,
+        )
+    iron = _ironclad_slice()
+    sealed = bool(iron.get("ironclad_sealed") or iron.get("realized"))
+    return {
+        "schema": "ironclad-component-cert/v1",
+        "component_id": FACET,
+        "citation": IRONCLAD_CITE,
+        "full_cert": sealed and held,
+        "ironclad_sealed": sealed,
+        "verdict": "GREEN" if sealed and held else "WATCH",
+    }
+
+
 def _final_eye_ocr_html(html_path: Path, needles: list[str]) -> dict[str, Any]:
     eye = SG / "Final_Eye" / "zocr.py"
     text = ""
@@ -221,6 +244,7 @@ def build_block(*, refresh: bool = False) -> dict[str, Any]:
 
     return {
         "schema": "field-final-mouth-block/v1",
+        "boss": doctrine.get("boss", "hostess7"),
         "updated": _now(),
         "ok": ok,
         "held": held,
@@ -253,9 +277,12 @@ def build_block(*, refresh: bool = False) -> dict[str, Any]:
         },
         "ocr": ocr,
         "secure_kill": secure_kill,
+        "ironclad_cert": _full_ironclad_cert(held=held),
         "ironclad_chain": {
             "citation": IRONCLAD_CITE,
             "sealed": sealed,
+            "full_cert": sealed and held,
+            "connected_throughout": sealed and held,
             "truth_percent": 100.0 if sealed and ok else 95.0 if ok else 80.0,
             "layers": ["ironclad", "final_mouth", "queen_mouthball", "gvc1", "secure_kill", "final_eye_ocr"],
         },

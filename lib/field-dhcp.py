@@ -76,6 +76,36 @@ def _legacy_dns_servers_v4() -> list[str]:
 LEGACY_DNS_SERVERS = _legacy_dns_servers_v4()
 BIND_IF = os.environ.get("NEXUS_FIELD_DHCP_BIND", "0.0.0.0")
 
+
+def _ammonet_dhcp() -> dict[str, Any]:
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "ammonet_dns_zones_dhcp", INSTALL / "lib" / "ammonet-dns-zones.py",
+        )
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            return {
+                "domain": mod.dhcp_domain() if hasattr(mod, "dhcp_domain") else "ammonet.net",
+                "search": mod.dhcp_search_domains() if hasattr(mod, "dhcp_search_domains") else ["ammonet.net"],
+            }
+    except Exception:
+        pass
+    return {"domain": "ammonet.net", "search": ["ammonet.net", "ammonet.com", "ammonet.org"]}
+
+
+def _encode_domain_name(domain: str) -> bytes:
+    out = bytearray()
+    for label in domain.strip().lower().rstrip(".").split("."):
+        if not label or len(label) > 63:
+            continue
+        out.append(len(label))
+        out.extend(label.encode("ascii", errors="ignore"))
+    out.append(0)
+    return bytes(out)
+
 _stats = {
     "discover": 0,
     "offer": 0,
@@ -302,6 +332,17 @@ def _build_reply(
     dns_list = dns_servers or DNS_SERVERS
     dns_blob = b"".join(socket.inet_aton(d) for d in dns_list)
     opts.extend(bytes([6, len(dns_blob)]) + dns_blob)
+    ammonet = _ammonet_dhcp()
+    domain_blob = _encode_domain_name(str(ammonet.get("domain") or "ammonet.net"))
+    if domain_blob:
+        opts.extend(bytes([15, len(domain_blob)]) + domain_blob)
+    search_list = bytearray()
+    for dom in list(ammonet.get("search") or [])[:5]:
+        enc = _encode_domain_name(str(dom))
+        if enc:
+            search_list.extend(enc)
+    if search_list:
+        opts.extend(bytes([119, len(search_list)]) + search_list)
     opts.extend(bytes([1, 4]) + socket.inet_aton("255.255.255.0"))
     opts.append(255)
     header = struct.pack(

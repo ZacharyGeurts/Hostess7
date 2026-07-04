@@ -64,9 +64,24 @@
     "roles": ["dns_relay", "dhcp_relay", "truth_mirror", "github_sync", "power_user"],
     "unified_egress": "hostess7"
   },
+  "ammonet_dns": {
+    "doctrine": "data/ammonet-dns-zones.json",
+    "module": "lib/ammonet-dns-zones.py",
+    "zones": ["ammonet.com", "ammonet.net", "ammonet.org", "ammonet.io", "ammonet.dev", "ammonet.app", "ammonet.field"],
+    "dhcp_domain": "ammonet.net",
+    "secure_email": "lib/field-secure-email.py"
+  },
+  "aia_accelerator": {
+    "repo": "ZacharyGeurts/AIA",
+    "pages": "https://zacharygeurts.github.io/AIA/",
+    "hostess7_mirror": "https://zacharygeurts.github.io/Hostess7/api/field-aia-accelerator.json",
+    "module": "lib/field-aia-accelerator.py",
+    "qubes": "lib/field-qubes-drive-provision.py",
+    "staging": "FIELD_QUBES/fieldstorage/aia-publish"
+  },
   "authorities": {
     "dns": {"module": "lib/field-dns.py", "port": 53, "bind": "127.0.0.1"},
-    "dhcp": {"module": "lib/field-dhcp.py", "port": 67, "dns_option": ["127.0.0.1"]}
+    "dhcp": {"module": "lib/field-dhcp.py", "port": 67, "dns_option": ["127.0.0.1"], "domain": "ammonet.net"}
   },
   "wires": [
     {"id": "internet_unified", "module": "lib/field-internet-unified.py"},

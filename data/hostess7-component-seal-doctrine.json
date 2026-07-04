@@ -1,0 +1,583 @@
+{
+  "schema": "hostess7-component-seal-doctrine/v1",
+  "title": "Hostess 7 component seal — Angel owns every final lane",
+  "motto": "Forever Watchguard Angel seals body, sense, training, system, botnet security, and owned shells — full access, no middleman.",
+  "boss": "hostess7",
+  "commander": "hostess7",
+  "module": "lib/hostess7-component-seal.py",
+  "api": "/api/hostess7/component-seal",
+  "tiers": {
+    "body": "Mouth, ear, eye, brain, spine, limbs, hands, attachments, biology, motion, final hands",
+    "sense": "Final Eye, Final Ear, Final Mouth, sense package, OCR, FCC prom, CHIPS eyeball wire",
+    "training": "Calculator, biology, engineering, combat, MOS, programming, G16, codecraft, geography, music, imaging, sense training, reality physics",
+    "system": "NEXUS C2, KILROY, ZNetwork, botnet DNS/DHCP, AmmoNet, secure email, noti, weapons, brain guard, ironclad, field I/O",
+    "shell_owned": "AmmoOS desktop, Queen browser, Queen CANVAS, Queen terminal — display shells she commands",
+    "security": "Botnet registry, legal ports, FCC prom detector, Qubes field drive — Hostess7-gated"
+  },
+  "components": [
+    {
+      "id": "mouth",
+      "tier": "body",
+      "label": "Mouth · voice hemisphere",
+      "module": "lib/hostess7-mouth-neural.py",
+      "owned": true,
+      "api": "/api/hostess7/mouth-neural",
+      "brain_sync": true,
+      "ai_only": true
+    },
+    {
+      "id": "ear",
+      "tier": "body",
+      "label": "Ear · Final Ear · Auditus",
+      "module": "lib/hostess7-sense-core.py",
+      "product": "Final_Ear/zocr_product.py",
+      "owned": true
+    },
+    {
+      "id": "eye",
+      "tier": "body",
+      "label": "Eye · Final Eye · vision",
+      "module": "lib/hostess7-sense-core.py",
+      "seal": "lib/final-eye-hostess7-seal.py",
+      "product": "Final_Eye/zocr_product.py",
+      "owned": true
+    },
+    {
+      "id": "brain",
+      "tier": "body",
+      "label": "Brain · hemispheres · callosum",
+      "module": "Hostess7/scripts/field_brain_core.py",
+      "bridge": "lib/hostess7-brain-guard.py",
+      "owned": true,
+      "api": "/api/hostess7/brain-guard"
+    },
+    {
+      "id": "spine",
+      "tier": "body",
+      "label": "Spine · posture · flexion",
+      "module": "lib/hostess7-body-core.py",
+      "owned": true
+    },
+    {
+      "id": "arms",
+      "tier": "body",
+      "label": "Arms · reach",
+      "module": "lib/hostess7-body-core.py",
+      "owned": true
+    },
+    {
+      "id": "legs",
+      "tier": "body",
+      "label": "Legs · gait",
+      "module": "lib/hostess7-body-core.py",
+      "owned": true
+    },
+    {
+      "id": "toes",
+      "tier": "body",
+      "label": "Toes · balance",
+      "module": "lib/hostess7-body-core.py",
+      "owned": true
+    },
+    {
+      "id": "proprioception",
+      "tier": "body",
+      "label": "Proprioception · COM",
+      "module": "lib/hostess7-body-core.py",
+      "owned": true
+    },
+    {
+      "id": "hands",
+      "tier": "body",
+      "label": "Hands · dexterity · grips",
+      "module": "lib/hostess7-hand-core.py",
+      "owned": true,
+      "api": "/api/hostess7/hands"
+    },
+    {
+      "id": "final_hands",
+      "tier": "body",
+      "label": "Final Hands · mechanical grips",
+      "module": "lib/final-hands.py",
+      "owned": true,
+      "api": "/api/final-hands"
+    },
+    {
+      "id": "attachments",
+      "tier": "body",
+      "label": "Attachments · mount · inspect",
+      "module": "lib/hostess7-attachment-core.py",
+      "owned": true,
+      "api": "/api/hostess7/attachments"
+    },
+    {
+      "id": "biology",
+      "tier": "body",
+      "label": "Biology · anatomy chamber",
+      "module": "lib/hostess7-biology.py",
+      "owned": true
+    },
+    {
+      "id": "anatomy_books",
+      "tier": "body",
+      "label": "Anatomy books · H7 per part",
+      "module": "lib/hostess7-anatomy-book.py",
+      "owned": true
+    },
+    {
+      "id": "eye_threat",
+      "tier": "body",
+      "label": "Eye threat registry",
+      "module": "lib/field-eye-threat-chamber.py",
+      "owned": true,
+      "api": "/api/field-eye-threat"
+    },
+    {
+      "id": "motion",
+      "tier": "body",
+      "label": "Humanoid motion · martial lattice",
+      "module": "lib/humanoid-motion-training.py",
+      "owned": true
+    },
+    {
+      "id": "body_umbrella",
+      "tier": "body",
+      "label": "Body control umbrella",
+      "module": "lib/hostess7-body-control.py",
+      "owned": true,
+      "api": "/api/hostess7/body"
+    },
+    {
+      "id": "field_body_system",
+      "tier": "body",
+      "label": "Field body system",
+      "module": "lib/field-body-system.py",
+      "owned": true
+    },
+    {
+      "id": "final_eye",
+      "tier": "sense",
+      "label": "Final_Eye · OCR · eyeball",
+      "module": "lib/field-final-eye-block.py",
+      "seal": "lib/field-ironclad-component-cert.py",
+      "bridge": "lib/final-eye-hostess7-seal.py",
+      "product": "Final_Eye/zocr_product.py",
+      "owned": true,
+      "api": "/api/field-final-eye-block",
+      "surface": "/world/queen-final-eye-manager.html",
+      "brain_sync": true,
+      "ironclad_citation": "ironclad:final_eye:1"
+    },
+    {
+      "id": "final_ear",
+      "tier": "sense",
+      "label": "Final_Ear · audio offense",
+      "bridge": "Hostess7/scripts/field_final_ear_bridge.py",
+      "product": "Final_Ear/zocr_product.py",
+      "module": "lib/field-final-ear-block.py",
+      "seal": "lib/field-ironclad-component-cert.py",
+      "owned": true,
+      "api": "/api/field-final-ear-block",
+      "surface": "/world/queen-final-ear-manager.html",
+      "brain_sync": true,
+      "ironclad_citation": "ironclad:final_ear:1"
+    },
+    {
+      "id": "final_mouth",
+      "tier": "sense",
+      "label": "Final_Mouth · voice product · AI only",
+      "module": "lib/field-final-mouth-block.py",
+      "product": "Final_Mouth/zocr_product.py",
+      "seal": "lib/field-ironclad-component-cert.py",
+      "owned": true,
+      "api": "/api/field-final-mouth-block",
+      "surface": "/world/queen-final-mouth-manager.html",
+      "ai_only": true,
+      "brain_sync": true,
+      "ironclad_citation": "ironclad:final_mouth:1"
+    },
+    {
+      "id": "sense_package",
+      "tier": "sense",
+      "label": "Sense package meld",
+      "module": "lib/field-sense-package-meld.py",
+      "owned": true
+    },
+    {
+      "id": "hostess7_ocr_control",
+      "tier": "sense",
+      "label": "OS OCR control",
+      "module": "lib/hostess7-ocr-control.py",
+      "owned": true,
+      "api": "/api/hostess7/ocr-control"
+    },
+    {
+      "id": "audio_dac",
+      "tier": "sense",
+      "label": "Audio DAC chamber",
+      "module": "lib/field-audio-dac-chamber.py",
+      "owned": true
+    },
+    {
+      "id": "broadcaster",
+      "tier": "sense",
+      "label": "Vision broadcaster",
+      "module": "lib/field-broadcaster-final-eye.py",
+      "owned": true
+    },
+    {
+      "id": "fcc_prom_detector",
+      "tier": "sense",
+      "label": "FCC prom · burst/beam/pulse weapons",
+      "module": "lib/field-fcc-prom-detector.py",
+      "owned": true,
+      "api": "/api/field-fcc-prom-detector"
+    },
+    {
+      "id": "calculator",
+      "tier": "training",
+      "label": "Calculator chamber",
+      "module": "lib/hostess7-calculator.py",
+      "owned": true
+    },
+    {
+      "id": "biology_training",
+      "tier": "training",
+      "label": "Biology training",
+      "module": "lib/hostess7-biology.py",
+      "owned": true
+    },
+    {
+      "id": "engineering",
+      "tier": "training",
+      "label": "Engineering chamber",
+      "module": "lib/hostess7-engineering.py",
+      "owned": true
+    },
+    {
+      "id": "combat",
+      "tier": "training",
+      "label": "Combat chamber",
+      "module": "lib/hostess7-combat.py",
+      "owned": true
+    },
+    {
+      "id": "mos",
+      "tier": "training",
+      "label": "MOS chamber",
+      "module": "lib/hostess7-mos.py",
+      "owned": true
+    },
+    {
+      "id": "programming",
+      "tier": "training",
+      "label": "Programming chamber",
+      "module": "lib/hostess7-programming.py",
+      "owned": true,
+      "api": "/api/hostess7/programming"
+    },
+    {
+      "id": "g16",
+      "tier": "training",
+      "label": "G16 compiler chamber",
+      "module": "lib/hostess7-g16.py",
+      "owned": true,
+      "api": "/api/hostess7/g16"
+    },
+    {
+      "id": "codecraft",
+      "tier": "training",
+      "label": "Codecraft chamber",
+      "module": "lib/hostess7-codecraft.py",
+      "owned": true,
+      "api": "/api/hostess7/codecraft"
+    },
+    {
+      "id": "geography",
+      "tier": "training",
+      "label": "Geography training",
+      "module": "lib/hostess7-geography-training.py",
+      "owned": true
+    },
+    {
+      "id": "music",
+      "tier": "training",
+      "label": "Music training",
+      "module": "lib/hostess7-music-training.py",
+      "owned": true
+    },
+    {
+      "id": "imaging",
+      "tier": "training",
+      "label": "Imaging chamber",
+      "module": "lib/hostess7-imaging.py",
+      "owned": true
+    },
+    {
+      "id": "sense_training",
+      "tier": "training",
+      "label": "Sense training",
+      "module": "lib/hostess7-sense-training.py",
+      "owned": true
+    },
+    {
+      "id": "reality_physics",
+      "tier": "training",
+      "label": "Reality physics training",
+      "module": "lib/hostess7-reality-physics-training.py",
+      "owned": true
+    },
+    {
+      "id": "training_chamber",
+      "tier": "training",
+      "label": "Training chamber",
+      "module": "lib/hostess7-training-chamber.py",
+      "owned": true,
+      "api": "/api/hostess7/training-chamber"
+    },
+    {
+      "id": "training_floor",
+      "tier": "training",
+      "label": "Training floor",
+      "module": "lib/hostess7-training-floor.py",
+      "owned": true
+    },
+    {
+      "id": "training_room",
+      "tier": "training",
+      "label": "Training room",
+      "module": "lib/hostess7-training-room.py",
+      "owned": true,
+      "api": "/api/hostess7/training-room"
+    },
+    {
+      "id": "nexus_c2",
+      "tier": "system",
+      "label": "NEXUS C2 · threat panel",
+      "module": "lib/threat-panel-http.py",
+      "owned": true
+    },
+    {
+      "id": "kilroy",
+      "tier": "system",
+      "label": "KILROY kernel witness",
+      "bridge": "lib/kilroy-field-brain.py",
+      "owned": true,
+      "api": "/api/kilroy"
+    },
+    {
+      "id": "znetwork",
+      "tier": "system",
+      "label": "ZNetwork relayer",
+      "module": "lib/znetwork-orchestrator.py",
+      "owned": true,
+      "api": "/api/znetwork"
+    },
+    {
+      "id": "connection_gatekeeper",
+      "tier": "system",
+      "label": "Connection gatekeeper",
+      "module": "lib/connection-gatekeeper.py",
+      "owned": true
+    },
+    {
+      "id": "trust_strike_engine",
+      "tier": "system",
+      "label": "Trust strike engine",
+      "module": "lib/trust-strike-engine.py",
+      "owned": true
+    },
+    {
+      "id": "field_attack_kit",
+      "tier": "system",
+      "label": "Field attack kit",
+      "module": "lib/field-attack-kit.py",
+      "owned": true
+    },
+    {
+      "id": "noti",
+      "tier": "system",
+      "label": "Noti sovereign notifier",
+      "module": "lib/noti.py",
+      "bridge": "lib/hostess7-noti.py",
+      "owned": true
+    },
+    {
+      "id": "hostess7_weapons_defense",
+      "tier": "system",
+      "label": "Weapons defense",
+      "module": "lib/hostess7-weapons-defense.py",
+      "owned": true,
+      "api": "/api/hostess7/weapons-defense"
+    },
+    {
+      "id": "hostess7_system_control",
+      "tier": "system",
+      "label": "System control · Angel charge",
+      "module": "lib/hostess7-system-control.py",
+      "owned": true,
+      "api": "/api/hostess7/system-control"
+    },
+    {
+      "id": "hostess7_voice",
+      "tier": "system",
+      "label": "Voice",
+      "module": "lib/hostess7-voice.py",
+      "owned": true
+    },
+    {
+      "id": "hostess7_autonomous",
+      "tier": "system",
+      "label": "Autonomous counsel",
+      "module": "lib/hostess7-autonomous.py",
+      "owned": true
+    },
+    {
+      "id": "field_io_packet",
+      "tier": "system",
+      "label": "Field I/O packet",
+      "module": "lib/field-io-packet.py",
+      "owned": true
+    },
+    {
+      "id": "field_dns",
+      "tier": "system",
+      "label": "Truth DNS",
+      "module": "lib/field-dns.py",
+      "owned": true,
+      "api": "/api/field-dns"
+    },
+    {
+      "id": "ironclad",
+      "tier": "system",
+      "label": "Ironclad reality field",
+      "module": "lib/ironclad-reality-field.py",
+      "owned": true
+    },
+    {
+      "id": "sense_neural",
+      "tier": "system",
+      "label": "Sense neural wire",
+      "bridge": "Queen/lib/queen-sense-neural.py",
+      "owned": true,
+      "api": "/api/sense-neural"
+    },
+    {
+      "id": "field_botnet_dns_dhcp",
+      "tier": "security",
+      "label": "Botnet DNS+DHCP · everyone deploy",
+      "module": "lib/field-botnet-dns-dhcp.py",
+      "owned": true,
+      "api": "/api/field-botnet-dns-dhcp",
+      "doctrine": "data/field-botnet-dns-dhcp-doctrine.json"
+    },
+    {
+      "id": "field_botnet_registry",
+      "tier": "security",
+      "label": "Botnet member registry",
+      "module": "lib/field-botnet-registry.py",
+      "owned": true,
+      "api": "/api/field-botnet-registry"
+    },
+    {
+      "id": "field_botnet_legal_ports",
+      "tier": "security",
+      "label": "Botnet legal ports",
+      "module": "lib/field-botnet-legal-ports.py",
+      "owned": true,
+      "api": "/api/field-botnet-legal-ports"
+    },
+    {
+      "id": "ammonet_dns",
+      "tier": "security",
+      "label": "AmmoNet DNS zones",
+      "module": "lib/ammonet-dns-zones.py",
+      "owned": true,
+      "api": "/api/ammonet/dns-zones",
+      "doctrine": "data/ammonet-dns-zones.json"
+    },
+    {
+      "id": "field_secure_email",
+      "tier": "security",
+      "label": "Field secure email · Apache rewrite",
+      "module": "lib/field-secure-email.py",
+      "owned": true,
+      "api": "/api/field-secure-email"
+    },
+    {
+      "id": "field_qubes_drive",
+      "tier": "security",
+      "label": "FIELD_QUBES drive provision",
+      "module": "lib/field-qubes-drive-provision.py",
+      "owned": true,
+      "api": "/api/field-qubes-drive-provision"
+    },
+    {
+      "id": "aia_accelerator",
+      "tier": "security",
+      "label": "AIA AI Accelerator · ZacharyGeurts/AIA",
+      "module": "lib/field-aia-accelerator.py",
+      "seal": "lib/field-ironclad-component-cert.py",
+      "owned": true,
+      "api": "/api/field-aia-accelerator",
+      "surface": "https://zacharygeurts.github.io/AIA/",
+      "ironclad_citation": "ironclad:aia:1"
+    },
+    {
+      "id": "queen_chips",
+      "tier": "system",
+      "label": "CHIPS · queen-browser emulators",
+      "module": "Queen/lib/queen-chips.py",
+      "owned": true,
+      "api": "/api/queen-chips",
+      "surface": "/world/queen-chips-cores.html"
+    },
+    {
+      "id": "ammoos_desktop",
+      "tier": "shell_owned",
+      "label": "AmmoOS desktop · Start shell",
+      "surface": "/field",
+      "owned": true,
+      "api": "/api/field-host-desktop"
+    },
+    {
+      "id": "queen_browser",
+      "tier": "shell_owned",
+      "label": "Queen browser shell",
+      "module": "Queen/lib/queen-browser.py",
+      "owned": true,
+      "api": "/api/queen-browser",
+      "surface": "/world/browser.html"
+    },
+    {
+      "id": "queen_canvas",
+      "tier": "shell_owned",
+      "label": "Queen CANVAS · AMOURANTHRTX",
+      "bridge": "lib/field-final-eye-canvas-bridge.py",
+      "owned": true,
+      "api": "/api/field-final-eye-canvas"
+    },
+    {
+      "id": "queen_terminal",
+      "tier": "shell_owned",
+      "label": "Queen terminal dock",
+      "surface": "/world/?dock=terminal",
+      "owned": true
+    },
+    {
+      "id": "ammoos_blocks",
+      "tier": "system",
+      "label": "CHIPS · AmmoOS blocks",
+      "module": "lib/field-ammoos-blocks.py",
+      "owned": true,
+      "api": "/api/field-ammoos-blocks"
+    },
+    {
+      "id": "field_toolkit",
+      "tier": "system",
+      "label": "Field toolkit",
+      "module": "lib/field-toolkit-db.py",
+      "owned": true
+    }
+  ]
+}

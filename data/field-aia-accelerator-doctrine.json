@@ -1,0 +1,63 @@
+{
+  "schema": "field-aia-accelerator/v1",
+  "title": "AIA — AI Accelerator · ZacharyGeurts/AIA",
+  "motto": "FIELD_QUBES build cache stages the accelerator bundle — Hostess 7 publishes when the drive helps out",
+  "boss": "hostess7",
+  "ironclad_citation": "ironclad:aia:1",
+  "ironclad_cert": {
+    "module": "lib/field-ironclad-component-cert.py",
+    "full_cert_required": true,
+    "root": "ironclad-immediate",
+    "meld_citation": "ironclad:meld:2",
+    "layers": ["ironclad", "aia_accelerator", "field_qubes_drive", "g16_build_cache", "queen_chips"]
+  },
+  "repo": {
+    "owner": "ZacharyGeurts",
+    "name": "AIA",
+    "full": "ZacharyGeurts/AIA",
+    "url": "https://github.com/ZacharyGeurts/AIA",
+    "clone": "https://github.com/ZacharyGeurts/AIA.git",
+    "pages_url": "https://zacharygeurts.github.io/AIA/",
+    "role": "ai_accelerator"
+  },
+  "hostess7_pages": {
+    "runtime": "https://zacharygeurts.github.io/Hostess7/",
+    "api": "/api/field-aia-accelerator",
+    "pages_api": "/api/field-aia-accelerator.json",
+    "qubes_api": "/api/field-qubes-drive-provision",
+    "mirror_on_hostess7": true
+  },
+  "qubes_drive": {
+    "module": "lib/field-qubes-drive-provision.py",
+    "label": "FIELD_QUBES",
+    "mount": "/media/default/FIELD_QUBES",
+    "staging_subdir": "fieldstorage/aia-publish",
+    "build_cache": "fieldstorage/build-cache"
+  },
+  "bundle": {
+    "includes": [
+      "manifest.json",
+      "README.md",
+      "build-cache/g16-rtx",
+      "build-cache/cmake",
+      "build-cache/queen-roms",
+      "accelerator-posture.json"
+    ],
+    "upload_when": "qubes_mounted_and_layout_ready"
+  },
+  "upload_steps": [
+    "python3 lib/field-qubes-drive-provision.py aia-export",
+    "cd /media/default/FIELD_QUBES/fieldstorage/aia-publish && git init && git remote add origin https://github.com/ZacharyGeurts/AIA.git",
+    "git add -A && git commit -m 'aia: FIELD_QUBES accelerator bundle'",
+    "git push -u origin main",
+    "Enable GitHub Pages on ZacharyGeurts/AIA — source: main / root"
+  ],
+  "module": "lib/field-aia-accelerator.py",
+  "api": "/api/field-aia-accelerator",
+  "paired": {
+    "qubes": "lib/field-qubes-drive-provision.py",
+    "g16": "lib/hostess7-g16.py",
+    "chips": "Queen/lib/queen-chips.py",
+    "component_seal": "data/hostess7-component-seal-doctrine.json"
+  }
+}

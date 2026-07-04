@@ -1958,6 +1958,36 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     (API / "field-botnet-dns-dhcp-keepalive.json").write_text(json.dumps(bot_keep, indent=2) + "\n", encoding="utf-8")
     files.append("field-botnet-dns-dhcp-keepalive.json")
 
+    aia_accel = _run_nl_script_json("lib/field-aia-accelerator.py", ["json"], timeout=90)
+    if not aia_accel.get("schema"):
+        aia_accel = {
+            **stub,
+            "schema": "field-aia-accelerator-panel/v1",
+            "ok": True,
+            "boss": "hostess7",
+            "title": "AIA — AI Accelerator",
+            "repo": {
+                "full": "ZacharyGeurts/AIA",
+                "url": "https://github.com/ZacharyGeurts/AIA",
+                "pages_url": "https://zacharygeurts.github.io/AIA/",
+            },
+            "hostess7_pages": {"runtime": f"https://zacharygeurts.github.io{PAGES_BASE}/"},
+        }
+    else:
+        aia_accel["pages"] = True
+        aia_accel["pages_base"] = PAGES_BASE
+    (API / "field-aia-accelerator.json").write_text(json.dumps(aia_accel, indent=2) + "\n", encoding="utf-8")
+    files.append("field-aia-accelerator.json")
+
+    qubes_drive = _run_nl_script_json("lib/field-qubes-drive-provision.py", ["json"], timeout=60)
+    if not qubes_drive.get("schema"):
+        qubes_drive = {**stub, "schema": "field-qubes-drive-panel/v1", "ok": True, "boss": "hostess7"}
+    else:
+        qubes_drive["pages"] = True
+        qubes_drive["pages_base"] = PAGES_BASE
+    (API / "field-qubes-drive.json").write_text(json.dumps(qubes_drive, indent=2) + "\n", encoding="utf-8")
+    files.append("field-qubes-drive.json")
+
     h7_interaction = _run_nl_script_json("lib/hostess7-github-interaction.py", ["json"], timeout=25)
     if not h7_interaction.get("schema"):
         h7_interaction = {

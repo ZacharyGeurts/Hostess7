@@ -1,0 +1,88 @@
+{
+  "schema": "ammonet-dns-zones/v1",
+  "title": "AmmoNet sovereign DNS — all TLDs we host",
+  "product": "AmmoNet",
+  "motto": "ammonet.com · ammonet.net · ammonet.org · all of them — Truth DNS + Field DHCP",
+  "authority": "127.0.0.1",
+  "loopback_ipv4": "127.0.0.1",
+  "loopback_ipv6": "::1",
+  "mail_host": "mail.ammonet.net",
+  "web_host": "www.ammonet.com",
+  "dhcp_domain": "ammonet.net",
+  "dhcp_search": [
+    "ammonet.net",
+    "ammonet.com",
+    "ammonet.org",
+    "ammonet.io",
+    "ammonet.dev"
+  ],
+  "tlds": [".com", ".net", ".org", ".io", ".dev", ".app", ".field"],
+  "zones": [
+    {
+      "zone": "ammonet.com",
+      "records": [
+        {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "www", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "mail", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "@", "type": "MX", "value": "10 mail.ammonet.net", "ttl": 300},
+        {"name": "@", "type": "TXT", "value": "v=spf1 a mx -all", "ttl": 300}
+      ]
+    },
+    {
+      "zone": "ammonet.net",
+      "records": [
+        {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "www", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "mail", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "smtp", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "imap", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "@", "type": "MX", "value": "10 mail.ammonet.net", "ttl": 300},
+        {"name": "@", "type": "TXT", "value": "v=spf1 a mx -all", "ttl": 300}
+      ]
+    },
+    {
+      "zone": "ammonet.org",
+      "records": [
+        {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "www", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "mail", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "@", "type": "MX", "value": "10 mail.ammonet.net", "ttl": 300}
+      ]
+    },
+    {
+      "zone": "ammonet.io",
+      "records": [
+        {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "api", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "pages", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300}
+      ]
+    },
+    {
+      "zone": "ammonet.dev",
+      "records": [
+        {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "field", "type": "A", "value": "127.0.0.1", "ttl": 300}
+      ]
+    },
+    {
+      "zone": "ammonet.app",
+      "records": [
+        {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "desktop", "type": "A", "value": "127.0.0.1", "ttl": 300}
+      ]
+    },
+    {
+      "zone": "ammonet.field",
+      "records": [
+        {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "truth", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "dhcp", "type": "A", "value": "127.0.0.1", "ttl": 300}
+      ]
+    }
+  ],
+  "services": {
+    "dns": {"module": "lib/field-dns.py", "port": 53},
+    "dhcp": {"module": "lib/field-dhcp.py", "port": 67, "domain_option": 15},
+    "email": {"module": "lib/field-secure-email.py", "smtp": 587, "imap": 993}
+  }
+}

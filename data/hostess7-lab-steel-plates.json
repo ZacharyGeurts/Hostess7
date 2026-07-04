@@ -273,6 +273,60 @@
       "share_out": false,
       "sovereign": "hostess7",
       "status": "sovereign_connected"
+    },
+    {
+      "id": "steel_plate:field_qubes_drive",
+      "plate_kind": "steel_family",
+      "label": "FIELD_QUBES — repurposed Qubes T-FORCE build plate",
+      "path_pct": 0.98,
+      "steel_boost": 1.22,
+      "bsp_boost": 1.18,
+      "wire": [
+        "lib/field-qubes-drive-provision.py",
+        "lib/field-big-drive.py",
+        "lib/field-drive-system.py"
+      ],
+      "boss": "hostess7",
+      "share_in": true,
+      "share_out": false,
+      "sovereign": "hostess7",
+      "status": "sovereign_connected"
+    },
+    {
+      "id": "steel_plate:g16_build_cache",
+      "plate_kind": "steel_family",
+      "label": "G16 / CHIPS build cache on field steel",
+      "path_pct": 0.95,
+      "steel_boost": 1.2,
+      "bsp_boost": 1.15,
+      "wire": [
+        "Queen/scripts/g16-build.sh",
+        "Grok16/scripts/field-cmake.sh",
+        "Queen/lib/queen-chips.py"
+      ],
+      "boss": "hostess7",
+      "share_in": true,
+      "share_out": false,
+      "sovereign": "hostess7",
+      "status": "sovereign_connected"
+    },
+    {
+      "id": "steel_plate:queen_emulator_captures",
+      "plate_kind": "steel_family",
+      "label": "Queen CHIPS emulator Final_Eye captures → ZACS",
+      "path_pct": 0.93,
+      "steel_boost": 1.16,
+      "bsp_boost": 1.1,
+      "wire": [
+        "Queen/lib/queen-chips.py",
+        "scripts/field-desktop-icon-audit.py",
+        "lib/final-eye-ocr-core.py"
+      ],
+      "boss": "hostess7",
+      "share_in": true,
+      "share_out": false,
+      "sovereign": "hostess7",
+      "status": "sovereign_connected"
     }
   ]
 }

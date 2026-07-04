@@ -1,0 +1,41 @@
+{
+  "schema": "field-secure-email/v1",
+  "title": "Field secure email — Apache rewritten from web to sovereign mail",
+  "motto": "Apache serves mail, not marketing pages — SMTP/IMAP on loopback, Hostess7 gates every envelope",
+  "module": "lib/field-secure-email.py",
+  "api": "/api/field-secure-email",
+  "apache": {
+    "config": "config/field-secure-email-apache.conf",
+    "rewrite": true,
+    "human_web_disabled": true,
+    "ports": {
+      "smtp_submission": 587,
+      "smtp_tls": 465,
+      "imap_tls": 993,
+      "http_redirect": 80,
+      "https_mail": 443
+    }
+  },
+  "domains": [
+    "mail.ammonet.net",
+    "smtp.ammonet.net",
+    "imap.ammonet.net",
+    "mail.ammonet.com",
+    "mail.ammonet.org"
+  ],
+  "bind": "127.0.0.1",
+  "posture": {
+    "ai_operator_only": false,
+    "hostess7_gate": true,
+    "ironclad_sealed": true,
+    "no_open_relay": true,
+    "dkim_ready": true,
+    "spf_txt": "v=spf1 a mx -all"
+  },
+  "dns_zones": "data/ammonet-dns-zones.json",
+  "paired": {
+    "ammonet": "data/ammonet-doctrine.json",
+    "dns": "lib/field-dns.py",
+    "dhcp": "lib/field-dhcp.py"
+  }
+}

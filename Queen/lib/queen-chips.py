@@ -18,7 +18,10 @@ QUEEN = Path(__file__).resolve().parents[1]
 SG = QUEEN.parent.parent
 NEXUS = Path(os.environ.get("NEXUS_INSTALL_ROOT", SG / "NewLatest"))
 NEXUS_STATE = Path(os.environ.get("NEXUS_STATE_DIR", NEXUS / ".nexus-state"))
-RTX = Path(os.environ.get("AMOURANTHRTX_ROOT", SG / "NewLatest" / "AMOURANTHRTX"))
+RTX = Path(os.environ.get(
+    "AMOURANTHRTX_ROOT",
+    SG / "NewLatest" / ".pages-hub-AMOURANTHRTX",
+))
 _SG_PATHS_LIB = Path(__file__).resolve().parents[2] / "lib"
 if str(_SG_PATHS_LIB) not in sys.path:
     sys.path.insert(0, str(_SG_PATHS_LIB))
@@ -114,12 +117,16 @@ def _chips_tree_stats() -> dict[str, Any]:
 
 def _engine_binary() -> Path | None:
     """RTX engine for CHIPS emulation — AMOURANTHRTX or queen-browser build."""
+    hub_rtx = SG / "NewLatest" / ".pages-hub-AMOURANTHRTX"
     for p in (
         RTX / "build" / "bin" / "Linux" / "AMOURANTHRTX",
         RTX / "build-release" / "bin" / "Linux" / "AMOURANTHRTX",
         RTX / "build" / "bin" / "Linux" / "queen-browser",
         RTX / "build-release" / "bin" / "Linux" / "queen-browser",
         QUEEN / "build" / "rtx" / "bin" / "Linux" / "queen-browser",
+        QUEEN / "build" / "rtx" / "bin" / "Linux" / "AMOURANTHRTX",
+        hub_rtx / "build" / "bin" / "Linux" / "AMOURANTHRTX",
+        hub_rtx / "build-release" / "bin" / "Linux" / "AMOURANTHRTX",
         SG / "AMOURANTHRTX" / "build" / "bin" / "Linux" / "AMOURANTHRTX",
     ):
         if p.is_file():
@@ -430,6 +437,7 @@ def _capture_system_frame(
         "snap": str(snap_ppm) if ok else None,
         "image": str(snap_png) if snap_png.is_file() else None,
         "launched": "[NES_QA] launched" in log or "[RETRO_QA] launched" in log,
+        "qa_lane": "nes" if "[NES_QA] launched" in log else ("retro" if "[RETRO_QA] launched" in log else None),
         "system": system,
         "log_tail": log[-800:],
     }
@@ -919,11 +927,62 @@ def _final_eye_witness(image_path: Path, *, label: str = "emulator_snap") -> dic
     return {"ok": False, "error": "final_eye_unavailable"}
 
 
+def export_captures_zacs(
+    rows: list[dict[str, Any]],
+    *,
+    manifest_path: Path | None = None,
+) -> dict[str, Any]:
+    """Copy emulator framebuffer PNGs into SG/ZACS/png/emulator-captures/."""
+    import shutil
+
+    zacs = Path(os.environ.get("SG_ZACS_ROOT", str(SG / "ZACS")))
+    out_dir = zacs / "png" / "emulator-captures"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    exports: list[dict[str, Any]] = []
+    for row in rows:
+        sid = str(row.get("system") or "unknown")
+        cap = row.get("capture") or {}
+        img = cap.get("image")
+        if not img:
+            continue
+        src = Path(str(img))
+        if not src.is_file():
+            continue
+        dest = out_dir / f"queen-emulator-{sid}.png"
+        shutil.copy2(src, dest)
+        exports.append({
+            "system": sid,
+            "ok": True,
+            "src": str(src),
+            "dest": str(dest),
+            "bytes": dest.stat().st_size,
+            "capture_ok": bool(row.get("capture_ok")),
+            "final_eye_ok": bool(row.get("final_eye_ok")),
+        })
+    manifest = {
+        "schema": "sg-zacs-emulator-captures/v1",
+        "product": "Queen Game Room",
+        "auditor": "Final_Eye",
+        "engine": "CHIPS/AMOURANTHRTX",
+        "updated": _now(),
+        "zacs_root": str(zacs),
+        "png_dir": str(out_dir),
+        "layout": {"theater_pct": 75, "arcade_pct": 25},
+        "exports": exports,
+        "ok": len(exports) > 0,
+        "capture_ok": sum(1 for e in exports if e.get("capture_ok")),
+    }
+    path = manifest_path or (zacs / "emulator-captures-latest.json")
+    path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return {"ok": bool(exports), "manifest": str(path), "exports": exports, "png_dir": str(out_dir)}
+
+
 def verify_emulators(
     *,
     systems: list[str] | None = None,
     capture: bool = False,
     final_eye: bool = False,
+    export_zacs: bool = False,
     stop_after: bool = True,
 ) -> dict[str, Any]:
     """Verify test ROM resolution and optional CHIPS capture + Final_Eye witness."""
@@ -974,7 +1033,7 @@ def verify_emulators(
     cap_ok_n = sum(1 for r in rows if r.get("capture_ok"))
     eye_ok_n = sum(1 for r in rows if r.get("final_eye_ok"))
     out = {
-        "ok": rom_ok_n > 0,
+        "ok": rom_ok_n > 0 and (not capture or cap_ok_n > 0),
         "schema": "queen-emulator-verify/v1",
         "updated": _now(),
         "systems_checked": len(rows),
@@ -985,7 +1044,10 @@ def verify_emulators(
         "engine_missing": not bool(engine),
         "rows": rows,
         "hint": None if engine else "Build queen-browser: Queen/scripts/g16-build.sh",
+        "game_room_layout": {"theater_pct": 75, "arcade_pct": 25},
     }
+    if export_zacs and capture:
+        out["zacs"] = export_captures_zacs(rows)
     if stop_after:
         _stop_session()
     return out
@@ -1107,6 +1169,7 @@ def dispatch(body: dict[str, Any]) -> dict[str, Any]:
             systems=body.get("systems") or ([str(body.get("system") or "")] if body.get("system") else None),
             capture=bool(body.get("capture", body.get("run_capture"))),
             final_eye=bool(body.get("final_eye", body.get("witness"))),
+            export_zacs=bool(body.get("export_zacs", body.get("zacs"))),
             stop_after=body.get("stop_after", True) is not False,
         )
 
@@ -1203,12 +1266,14 @@ def main() -> int:
     if len(sys.argv) > 1 and sys.argv[1] == "verify":
         capture = "--capture" in sys.argv[2:]
         final_eye = "--final-eye" in sys.argv[2:] or "--witness" in sys.argv[2:]
+        export_zacs = "--zacs" in sys.argv[2:] or "--export-zacs" in sys.argv[2:]
         systems = [a for a in sys.argv[2:] if not a.startswith("--")]
         print(json.dumps(
             verify_emulators(
                 systems=systems or None,
                 capture=capture,
                 final_eye=final_eye,
+                export_zacs=export_zacs,
             ),
             ensure_ascii=False,
         ))

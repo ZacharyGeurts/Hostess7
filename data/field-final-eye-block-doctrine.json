@@ -2,6 +2,12 @@
   "schema": "field-final-eye-block/v1",
   "title": "Final Eye — ironclad NEXUS C2 block",
   "motto": "Vita + Veritas · Military EOL OCR · Hostess7 bridge — one sealed vision block like CHIPS.",
+  "boss": "hostess7",
+  "brain_sync": {
+    "module": "lib/hostess7-sense-core.py",
+    "intelligence_lane": "hostess7_brain",
+    "refresh_sec": 30
+  },
   "product": "AmmoOS",
   "module": "lib/field-final-eye-block.py",
   "panel_state": "field-final-eye-block-panel.json",
@@ -10,6 +16,13 @@
   "surface": "/world/queen-final-eye-manager.html",
   "facet": "final_eye",
   "ironclad_citation": "ironclad:final_eye:1",
+  "ironclad_cert": {
+    "module": "lib/field-ironclad-component-cert.py",
+    "full_cert_required": true,
+    "root": "ironclad-immediate",
+    "meld_citation": "ironclad:meld:2",
+    "layers": ["ironclad", "final_eye", "queen_eyeball", "hostess7_ocr", "military_eol"]
+  },
   "sense": {
     "min_headroom_pct": 10,
     "blocked_levels": ["crit", "storm"]

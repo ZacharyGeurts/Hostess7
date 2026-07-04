@@ -2,6 +2,12 @@
   "schema": "field-final-ear-block/v1",
   "title": "Final Ear — ironclad NEXUS C2 block",
   "motto": "Auditus + Veritas · sovereign time · Hostess7 bridge — one sealed hearing block like CHIPS.",
+  "boss": "hostess7",
+  "brain_sync": {
+    "module": "lib/hostess7-sense-core.py",
+    "intelligence_lane": "hostess7_brain",
+    "refresh_sec": 30
+  },
   "product": "AmmoOS",
   "module": "lib/field-final-ear-block.py",
   "panel_state": "field-final-ear-block-panel.json",
@@ -10,6 +16,13 @@
   "surface": "/world/queen-final-ear-manager.html",
   "facet": "final_ear",
   "ironclad_citation": "ironclad:final_ear:1",
+  "ironclad_cert": {
+    "module": "lib/field-ironclad-component-cert.py",
+    "full_cert_required": true,
+    "root": "ironclad-immediate",
+    "meld_citation": "ironclad:meld:2",
+    "layers": ["ironclad", "final_ear", "queen_earball", "hostess7_bridge", "secure_kill"]
+  },
   "sense": {
     "min_headroom_pct": 10,
     "blocked_levels": ["crit", "storm"]

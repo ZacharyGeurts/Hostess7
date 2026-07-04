@@ -64,6 +64,29 @@ def _load(path: Path, default: Any = None) -> Any:
     return _h7s_read_json(path, default=default)
 
 
+def _ai_only_gate(body: dict[str, Any] | None = None) -> dict[str, Any] | None:
+    """Final Mouth is AI/brain-sync only — block human operator egress."""
+    if os.environ.get("HOSTESS7_MOUTH_AI_ONLY", "1").strip().lower() in ("0", "false", "no", "off"):
+        return None
+    if body and body.get("_hostess7_brain_sync"):
+        return None
+    doc = _load(DOCTRINE, {})
+    block = _load(INSTALL / "data" / "field-final-mouth-block-doctrine.json", {})
+    if not (doc.get("ai_only") or doc.get("human_egress_blocked") or block.get("ai_only")):
+        return None
+    mode = str((body or {}).get("mode") or "").strip().lower()
+    audience = str((body or {}).get("audience") or "").strip().lower()
+    if mode in ("operator", "human", "dishes", "speaking") or audience == "human":
+        return {
+            "ok": False,
+            "error": "final_mouth_ai_only",
+            "human_use": False,
+            "brain_sync": "hostess7_brain",
+            "hint": "Final Mouth dispatches via Hostess7 brain intelligence sync only",
+        }
+    return None
+
+
 def _save(path: Path, doc: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(".tmp")
@@ -158,6 +181,9 @@ def speak_field_neural(
     audience: str | None = None,
 ) -> dict[str, Any]:
     """Thought → voice hemisphere → optional TTS."""
+    gate = _ai_only_gate({"mode": mode, "audience": audience})
+    if gate:
+        return gate
     if not ENABLED:
         return {"ok": False, "error": "disabled"}
     aud = audience or ("human" if mode in ("speaking", "operator", "dishes") else None)
@@ -380,6 +406,7 @@ def _ironclad_goldmine() -> dict[str, Any]:
 
 def build_panel(*, write: bool = True) -> dict[str, Any]:
     doc = _load(DOCTRINE, {})
+    block_doc = _load(INSTALL / "data" / "field-final-mouth-block-doctrine.json", {})
     cached = _load(PANEL, {})
     neural = _run_mouth_neural({"action": "status"})
     goldmine = _ironclad_goldmine()
@@ -391,6 +418,9 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "schema": "hostess7-mouth-neural-panel/v1",
         "updated": _now(),
         "enabled": ENABLED,
+        "ai_only": bool(doc.get("ai_only") or block_doc.get("ai_only")),
+        "human_use": False,
+        "brain_sync": doc.get("brain_sync") or block_doc.get("brain_sync"),
         "motto": doc.get("motto"),
         "hemispheres": doc.get("hemispheres"),
         "callosum": doc.get("callosum"),
@@ -444,6 +474,10 @@ def dispatch(body: dict[str, Any]) -> dict[str, Any]:
     action = str(body.get("action") or "status").strip().lower().replace("-", "_")
     if action in ("status", "json", "panel"):
         return {"ok": True, **build_panel(write=action == "panel")}
+    if action in ("speak", "field_speak", "train", "mouth_train", "run_training", "speaking_train", "speaking_training"):
+        gate = _ai_only_gate(body)
+        if gate:
+            return gate
     if action in ("speak", "field_speak"):
         return speak_field_neural(
             str(body.get("text") or body.get("thought") or ""),

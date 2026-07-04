@@ -3792,6 +3792,49 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
+        if path in ("/api/field-fcc-prom-detector", "/api/fcc-prom-detector"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-fcc-prom-detector.py", ["json"], timeout=25)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in ("/api/field-secure-email", "/api/secure-email"):
+            sub = path.replace("/api/field-secure-email", "").replace("/api/secure-email", "").strip("/")
+            args = ["apache"] if sub == "apache" else ["json"]
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-secure-email.py", args, timeout=25)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in ("/api/ammonet/dns-zones", "/api/ammonet-dns-zones"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "ammonet-dns-zones.py", ["json"], timeout=25)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path.startswith("/api/field-qubes-drive-provision") or path in ("/api/field-qubes-drive",):
+            qdp_py = INSTALL_ROOT / "lib" / "field-qubes-drive-provision.py"
+            sub = path.replace("/api/field-qubes-drive-provision", "").replace("/api/field-qubes-drive", "").strip("/")
+            if sub in ("team-layout", "team_layout"):
+                args = ["team-layout"]
+            elif sub in ("aia-export", "export-aia"):
+                args = ["aia-export"]
+            elif sub == "wipe":
+                args = ["wipe", "--confirm"] if str(query.get("confirm", ["0"])[0]).strip().lower() in ("1", "true", "yes") else ["wipe"]
+            else:
+                args = ["json"]
+            payload = _nexus_py_json(qdp_py, args, timeout=90) if qdp_py.is_file() else {"ok": False, "error": "field_qubes_drive_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in ("/api/field-aia-accelerator", "/api/aia-accelerator"):
+            aia_py = INSTALL_ROOT / "lib" / "field-aia-accelerator.py"
+            sub = path.replace("/api/field-aia-accelerator", "").replace("/api/aia-accelerator", "").strip("/")
+            if sub in ("export", "aia-export", "stage"):
+                args = ["export"]
+            else:
+                args = ["json"]
+            payload = _nexus_py_json(aia_py, args, timeout=120) if aia_py.is_file() else {"ok": False, "error": "field_aia_accelerator_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
         if path == "/api/final-internet":
             fi = INSTALL_ROOT / "data" / "final-internet-doctrine.json"
             try:
@@ -12663,6 +12706,49 @@ class Handler(BaseHTTPRequestHandler):
             payload = None if refresh else _read_botnet_panel_cache("dns_dhcp")
             if payload is None:
                 payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-botnet-dns-dhcp.py", ["json"], timeout=30)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in ("/api/field-fcc-prom-detector", "/api/fcc-prom-detector"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-fcc-prom-detector.py", ["json"], timeout=25)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in ("/api/field-secure-email", "/api/secure-email"):
+            sub = path.replace("/api/field-secure-email", "").replace("/api/secure-email", "").strip("/")
+            args = ["apache"] if sub == "apache" else ["json"]
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-secure-email.py", args, timeout=25)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in ("/api/ammonet/dns-zones", "/api/ammonet-dns-zones"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "ammonet-dns-zones.py", ["json"], timeout=25)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path.startswith("/api/field-qubes-drive-provision") or path in ("/api/field-qubes-drive",):
+            qdp_py = INSTALL_ROOT / "lib" / "field-qubes-drive-provision.py"
+            sub = path.replace("/api/field-qubes-drive-provision", "").replace("/api/field-qubes-drive", "").strip("/")
+            if sub in ("team-layout", "team_layout"):
+                args = ["team-layout"]
+            elif sub in ("aia-export", "export-aia"):
+                args = ["aia-export"]
+            elif sub == "wipe":
+                args = ["wipe", "--confirm"] if str(query.get("confirm", ["0"])[0]).strip().lower() in ("1", "true", "yes") else ["wipe"]
+            else:
+                args = ["json"]
+            payload = _nexus_py_json(qdp_py, args, timeout=90) if qdp_py.is_file() else {"ok": False, "error": "field_qubes_drive_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in ("/api/field-aia-accelerator", "/api/aia-accelerator"):
+            aia_py = INSTALL_ROOT / "lib" / "field-aia-accelerator.py"
+            sub = path.replace("/api/field-aia-accelerator", "").replace("/api/aia-accelerator", "").strip("/")
+            if sub in ("export", "aia-export", "stage"):
+                args = ["export"]
+            else:
+                args = ["json"]
+            payload = _nexus_py_json(aia_py, args, timeout=120) if aia_py.is_file() else {"ok": False, "error": "field_aia_accelerator_missing"}
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
