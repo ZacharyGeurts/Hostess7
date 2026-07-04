@@ -30,6 +30,12 @@ RUNTIME_REPOS="AmmoCode Hostess7 KILROY"
 
 log() { printf '[hub-pages] %s\n' "$*"; }
 
+# Thin redirect stubs are FIRED — runtime repos only; no terrorist fake hubs.
+if [[ "${NEXUS_HUB_STUBS_ENABLE:-0}" != "1" ]]; then
+  log "STUBS DISABLED — redirect hubs FIRED (set NEXUS_HUB_STUBS_ENABLE=1 to override)"
+  exit 0
+fi
+
 [[ -f "$HUB_PY" ]] || { echo "missing page_ammoos_hub.py" >&2; exit 1; }
 
 is_runtime_repo() {
