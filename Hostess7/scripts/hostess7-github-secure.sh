@@ -8,21 +8,22 @@ CMD="${1:-verify}"
 
 export NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-$(cd "$ROOT/.." && pwd)}"
 export NEXUS_STATE_DIR="${NEXUS_STATE_DIR:-${NEXUS_INSTALL_ROOT}/.nexus-state}"
+PY="${NEXUS_PYTHONG:-$(command -v pythong 2>/dev/null || command -v python3)}"
 
 case "$CMD" in
   verify|route|audit)
     shift || true
-    exec pythong "$SECURE" "$CMD" "$@"
+    exec "$PY" "$SECURE" "$CMD" "$@"
     ;;
   lanes|probe)
-    exec pythong "$SECURE" lanes
+    exec "$PY" "$SECURE" lanes
     ;;
   push)
     shift
     DIR="${1:-${HOSTESS7_SECURE_PUBLISH_DIR:-${NEXUS_INSTALL_ROOT}/dist/hostess7-github-publish}}"
     shift || true
-    pythong "$SECURE" verify
-    exec pythong "$SECURE" push "$DIR" "$@"
+    "$PY" "$SECURE" verify
+    exec "$PY" "$SECURE" push "$DIR" "$@"
     ;;
   publish|release|publish-source)
     shift
@@ -33,8 +34,8 @@ case "$CMD" in
     shift
     DEST="${1:?usage: hostess7-github-secure.sh clone DEST [--remote URL]}"
     shift
-    pythong "$SECURE" verify
-    exec pythong "$SECURE" clone "$DEST" "$@"
+    "$PY" "$SECURE" verify
+    exec "$PY" "$SECURE" clone "$DEST" "$@"
     ;;
   -h|--help|help)
     cat <<'EOF'
