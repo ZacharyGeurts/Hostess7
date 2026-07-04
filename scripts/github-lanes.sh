@@ -34,6 +34,8 @@ github-lanes.sh — all GitHub push lanes for Hostess7
   ./scripts/github-lanes.sh setup-remotes  origin + origin-tunnel + origin-https remotes
   ./scripts/github-lanes.sh verify         secure git verify (push posture)
   ./scripts/github-lanes.sh push [branch]  multi-lane push (default: main)
+  ./scripts/github-lanes.sh pages-clear     Cancel stuck Pages runs (queue hygiene)
+  ./scripts/github-lanes.sh pages-dispatch  Clear stuck + workflow_dispatch Pages deploy
 
 Environment:
   HOSTESS7_GIT_TUNNEL=direct|tunnel   force SSH route
@@ -77,6 +79,20 @@ cmd_push() {
   export HOSTESS7_GIT_SKIP_API_TLS="${HOSTESS7_GIT_SKIP_API_TLS:-1}"
   cmd_setup_remotes >/dev/null
   python3 "$SECURE" push "$ROOT" --branch "$branch" --remote "git@github.com:${OWNER}/${REPO}.git"
+  if git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null | grep -qE '^Hostess7/docs/|^\.github/workflows/hostess7-pages\.yml'; then
+    bash "${ROOT}/scripts/github-pages-queue.sh" cancel-stuck 2>/dev/null || true
+    if [[ "${GITHUB_PAGES_AUTO_DISPATCH:-1}" == "1" ]]; then
+      bash "${ROOT}/scripts/github-pages-queue.sh" dispatch 2>/dev/null || true
+    fi
+  fi
+}
+
+cmd_pages_clear() {
+  bash "${ROOT}/scripts/github-pages-queue.sh" cancel-stuck
+}
+
+cmd_pages_dispatch() {
+  bash "${ROOT}/scripts/github-pages-queue.sh" dispatch
 }
 
 main() {
@@ -88,6 +104,8 @@ main() {
     setup|setup-remotes|remotes) cmd_setup_remotes ;;
     verify) cmd_verify ;;
     push) cmd_push "${1:-main}" ;;
+    pages-clear|pages_clear) cmd_pages_clear ;;
+    pages-dispatch|pages_dispatch) cmd_pages_dispatch ;;
     *)
       echo "unknown: $cmd" >&2
       usage

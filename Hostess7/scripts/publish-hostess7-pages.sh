@@ -81,4 +81,13 @@ if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
   exit 0
 fi
 
+NL="${NEXUS_INSTALL_ROOT}"
+if [[ -f "${NL}/scripts/github-pages-queue.sh" ]]; then
+  log "queue hygiene — cancel-in-progress false; clear stuck before dispatch"
+  bash "${NL}/scripts/github-pages-queue.sh" cancel-stuck 2>/dev/null || true
+  if [[ "${GITHUB_PAGES_AUTO_DISPATCH:-1}" == "1" ]]; then
+    bash "${NL}/scripts/github-pages-queue.sh" dispatch 2>/dev/null || true
+  fi
+fi
+
 log "live → https://zacharygeurts.github.io/Hostess7/"

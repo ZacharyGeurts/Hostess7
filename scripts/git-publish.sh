@@ -93,6 +93,14 @@ git_publish_dir() {
       || git -C "$dir" push -u origin "$branch" \
       || log "WARN push failed ${dir}" >&2
   fi
+  if [[ "$dir" == "$ROOT" ]] && git -C "$dir" diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null \
+    | grep -qE '^Hostess7/docs/|^\.github/workflows/hostess7-pages\.yml'; then
+    log "Pages docs changed — queue clear (cancel-in-progress false)"
+    bash "${ROOT}/scripts/github-pages-queue.sh" cancel-stuck 2>/dev/null || true
+    if [[ "${GITHUB_PAGES_AUTO_DISPATCH:-1}" == "1" ]]; then
+      bash "${ROOT}/scripts/github-pages-queue.sh" dispatch 2>/dev/null || true
+    fi
+  fi
 }
 
 log "AmmoOS (NewLatest) → origin"
