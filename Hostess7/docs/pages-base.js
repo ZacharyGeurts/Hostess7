@@ -33,6 +33,9 @@
   }
 
   global.HOSTESS7_PAGES_BASE = BASE;
+  global.HOSTESS7_CANONICAL_DESKTOP = "https://zacharygeurts.github.io/Hostess7/desktop/";
+  global.HOSTESS7_CANONICAL_COMMAND = "https://zacharygeurts.github.io/Hostess7/command/";
+  global.HOSTESS7_CANONICAL_ROOT = "https://zacharygeurts.github.io/Hostess7/";
   global.H7_ASSET_HOST = ASSET_HOST;
   global.H7Base = withBase;
   global.H7Api = function (path) {

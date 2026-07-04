@@ -692,6 +692,37 @@ def _ensure_pages_asset_aliases() -> None:
             shutil.copy2(src, dst)
 
 
+HOSTESS7_CANONICAL_DESKTOP = "https://zacharygeurts.github.io/Hostess7/desktop/"
+HOSTESS7_CANONICAL_COMMAND = "https://zacharygeurts.github.io/Hostess7/command/"
+HOSTESS7_CANONICAL_ROOT = "https://zacharygeurts.github.io/Hostess7/"
+
+
+def _route_redirect_html(*, target: str, label: str, reason: str) -> str:
+    rel = target
+    if target.startswith("http"):
+        abs_url = target
+    else:
+        abs_url = f"{PAGES_BASE.rstrip('/')}{target if target.startswith('/') else '/' + target}"
+        rel = target if target.startswith("/") else f"/{target}"
+    return (
+        "<!DOCTYPE html>\n"
+        '<html lang="en" data-route-cleanup="1">\n'
+        "<head>\n"
+        '  <meta charset="UTF-8" />\n'
+        f'  <meta http-equiv="refresh" content="0; url={rel}" />\n'
+        f'  <title>Redirect — {label}</title>\n'
+        f'  <meta name="description" content="{reason}" />\n'
+        f'  <link rel="canonical" href="{abs_url}" />\n'
+        f'  <script src="{PAGES_BASE}/pages-base.js"></script>\n'
+        f'  <script src="{PAGES_BASE}/pages-route-cleanup.js"></script>\n'
+        f'  <script>location.replace("{abs_url}");</script>\n'
+        "</head>\n"
+        "<body>\n"
+        f'  <p><a href="{abs_url}">{label}</a> — route cleaned up.</p>\n'
+        "</body>\n</html>\n"
+    )
+
+
 def _desktop_html() -> str:
     src = PANEL / "field-desktop.html"
     if not src.is_file():
@@ -713,7 +744,8 @@ def _desktop_html() -> str:
         f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-deploy-everyone.css" />\n'
         f'  <script src="{PAGES_BASE}/pages-deploy-everyone.js"></script>\n'
         f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n'
-        f'  <script src="{PAGES_BASE}/pages-license.js"></script>'
+        f'  <script src="{PAGES_BASE}/pages-license.js"></script>\n'
+        f'  <script src="{PAGES_BASE}/pages-route-cleanup.js"></script>'
     )
     if "field-shell-context.js" not in html:
         inject += f'\n  <script src="{PAGES_BASE}/assets/field-shell-context.js"></script>'
@@ -818,9 +850,29 @@ def _stage_gnueol_terminal_mirror() -> int:
 
 def _write_desktop_indices() -> None:
     html = _desktop_html()
-    for dest in (AMMOOS_DOCS, DESKTOP_DOCS, DOCS / "field"):
+    for dest in (AMMOOS_DOCS, DESKTOP_DOCS):
         dest.mkdir(parents=True, exist_ok=True)
         dest.joinpath("index.html").write_text(html, encoding="utf-8")
+    field_dest = DOCS / "field"
+    field_dest.mkdir(parents=True, exist_ok=True)
+    field_dest.joinpath("index.html").write_text(
+        _route_redirect_html(
+            target=HOSTESS7_CANONICAL_DESKTOP,
+            label="Hostess7 Desktop",
+            reason="Canonical AmmoOS desktop — /field route cleaned up",
+        ),
+        encoding="utf-8",
+    )
+    field_desktop = DOCS / "field-desktop"
+    field_desktop.mkdir(parents=True, exist_ok=True)
+    field_desktop.joinpath("index.html").write_text(
+        _route_redirect_html(
+            target=HOSTESS7_CANONICAL_DESKTOP,
+            label="Hostess7 Desktop",
+            reason="field-desktop alias → canonical desktop",
+        ),
+        encoding="utf-8",
+    )
 
 
 def _panel_page_html(src: Path) -> str:
@@ -958,7 +1010,7 @@ def _stage_panel_surfaces() -> int:
     if not PANEL.is_dir():
         return 0
     route_map: dict[str, str] = {
-        "field": "field-desktop.html",
+        "field": "__redirect_desktop__",
         "desktop": "field-desktop.html",
         "ammoos": "field-desktop.html",
         "command": "threat-panel.html",
@@ -1028,11 +1080,23 @@ def _stage_panel_surfaces() -> int:
         nonlocal count
         if route in staged:
             return
+        dest = DOCS / route / "index.html"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        if src_name == "__redirect_desktop__":
+            dest.write_text(
+                _route_redirect_html(
+                    target=HOSTESS7_CANONICAL_DESKTOP,
+                    label="Hostess7 Desktop",
+                    reason="Canonical desktop — /field route cleaned up",
+                ),
+                encoding="utf-8",
+            )
+            staged.add(route)
+            count += 1
+            return
         src = PANEL / src_name
         if not src.is_file():
             return
-        dest = DOCS / route / "index.html"
-        dest.parent.mkdir(parents=True, exist_ok=True)
         if src_name == "field-desktop.html":
             dest.write_text(_desktop_html(), encoding="utf-8")
         else:
