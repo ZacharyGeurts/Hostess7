@@ -15,14 +15,20 @@
     "usable": 4026531840
   },
   "edge_model": {
+    "kind": "logical",
+    "inside_field": true,
+    "edges_are_real_hosts": false,
+    "edges_are_ip_shards": true,
+    "materialized_rows": false,
+    "ipv4_enumerate_module": "lib/field-ipv4-enumerate.py",
     "hosts_per_edge_default": 4096,
-    "local_edge_slots": 64,
-    "edge_blast_module": "lib/field-rescue-ingress.py",
+    "logical_edges_from_ipv4": true,
     "ping_rescue": true,
     "ping_module": "lib/field-ping.py",
     "ingress_policy": "quarantine_not_kill",
     "dhcp_soft_ingress_env": "NEXUS_FIELD_DHCP_SOFT_INGRESS",
-    "dhcp_ping_soft_env": "NEXUS_FIELD_DHCP_PING_SOFT"
+    "dhcp_ping_soft_env": "NEXUS_FIELD_DHCP_PING_SOFT",
+    "note": "Inside field we own all IPs — edges are range-backed index shards, not QEMU boxes"
   },
   "world_dns_dhcp": {
     "scope": "planet_and_beyond",

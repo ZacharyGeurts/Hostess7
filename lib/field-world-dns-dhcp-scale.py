@@ -2,6 +2,7 @@
 """World DNS/DHCP scale — population growth forever, edge/host math, ping rescue."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import math
 import os
@@ -82,8 +83,23 @@ def build_scale(*, years_ahead: float | None = None) -> dict[str, Any]:
     )
 
     ping_posture = _load(STATE / "field-ping-panel.json", {}).get("last_ping") or {}
-    edge_blast = _load(STATE / "field-edge-blast-panel.json", {})
-    local_edges = int(edge_blast.get("local_edges_deployed") or edge.get("local_edge_slots") or 0)
+    ipv4_enum = _load(STATE / "field-ipv4-enumerate-panel.json", {})
+    enum_counts = ipv4_enum.get("counts") or {}
+    logical_edges = int(enum_counts.get("ipv4_enumerated_total") or 0)
+    if (edge.get("logical_edges_from_ipv4") or edge.get("kind") == "logical") and not logical_edges:
+        py = INSTALL / "lib" / "field-ipv4-enumerate.py"
+        try:
+            spec = importlib.util.spec_from_file_location("ipv4_enum", py)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if getattr(mod, "enumerate_enabled", lambda: False)() and hasattr(mod, "lease_counts"):
+                    logical_edges = int(mod.lease_counts().get("ipv4_enumerated_total") or usable_ipv4)
+        except Exception:
+            logical_edges = usable_ipv4
+    if not logical_edges:
+        logical_edges = usable_ipv4
+    logical_edge_shards = max(1, math.ceil(logical_edges / hosts_per_edge))
 
     return {
         "ok": True,
@@ -99,15 +115,21 @@ def build_scale(*, years_ahead: float | None = None) -> dict[str, Any]:
             "ipv4_usable": usable_ipv4,
             "beyond_ipv4": current_dev > usable_ipv4,
             "edge_hosts_recommended": edges_now,
-            "local_edge_hosts": local_edges,
+            "logical_edge_shards": logical_edge_shards,
+            "logical_edges_total": logical_edges,
+            "edges_are_real": bool(edge.get("edges_are_real_hosts", False)),
+            "inside_field": bool(edge.get("inside_field", True)),
             "hosts_per_edge": hosts_per_edge,
             "dhcp_leases_if_one_per_device": int(current_dev),
             "dns_records_if_one_per_device": int(current_dev),
         },
-        "edge_blast": edge_blast if edge_blast.get("ok") else {
-            "planet_edges_recommended": edges_now,
-            "hosts_per_edge": hosts_per_edge,
-            "rescue_module": edge.get("edge_blast_module"),
+        "logical_edges": {
+            "kind": edge.get("kind") or "logical",
+            "ipv4_enumerated": logical_edges,
+            "shards": logical_edge_shards,
+            "hosts_per_shard": hosts_per_edge,
+            "materialized_rows": bool(edge.get("materialized_rows", False)),
+            "motto": edge.get("note"),
         },
         "projections": projections,
         "ping_rescue": {
