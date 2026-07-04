@@ -1,0 +1,66 @@
+{
+  "schema": "field-zachub-fork-guard/v1",
+  "title": "AmmoDrive fork guard — no forks, no branches, no unauthorized clones",
+  "motto": "ALL RIGHTS RESERVED is the terms — sovereign source only, gh-pages garbage FIRED",
+  "product": "AmmoDrive",
+  "owner": "ZacharyGeurts",
+  "terms": "ALL RIGHTS RESERVED",
+  "fork_policy": {
+    "allow_forking": false,
+    "delete_owned_forks": true,
+    "cut_extra_branches": true,
+    "keep_branches": ["main", "master", "gh-pages"],
+    "account_hygiene_shell": "scripts/github-account-no-forks-branches.sh"
+  },
+  "sovereign_primary": {
+    "panel": "http://127.0.0.1:9477/field",
+    "desktop": "http://127.0.0.1:9477/field",
+    "api": "http://127.0.0.1:9477/api/",
+    "github_truth_subdir": "zachub-github-truth"
+  },
+  "local_scan": {
+    "sg_root_env": "SG_ROOT",
+    "canonical_install": "NewLatest",
+    "manifest": "data/folder-consolidation-manifest.json",
+    "detect": [
+      "drop_sg_stubs",
+      "nested_newlatest",
+      "publish_clones",
+      "duplicate_git_remotes",
+      "unauthorized_forks"
+    ]
+  },
+  "pin_sources": [
+    "docs/github-favorites.json",
+    "data/ammoos-pages-hub.json"
+  ],
+  "stale_pages_routes": [
+    "https://zacharygeurts.github.io/field/",
+    "https://zacharygeurts.github.io/Hostess7/field/",
+    "https://zacharygeurts.github.io/Hostess7/field-desktop/",
+    "https://zacharygeurts.github.io/AmmoOS/field/",
+    "https://zacharygeurts.github.io/command/field/",
+    "https://zacharygeurts.github.io/KILROY/field/",
+    "https://github.com/ZacharyGeurts/field"
+  ],
+  "fired_repos": ["field"],
+  "stale_burn": {
+    "team_qemu_stubs": [
+      "/media/default/HOSTESS7_TEAM1/field1",
+      "/media/default/HOSTESS7_TEAM1/field1-os.qcow2",
+      "/media/default/HOSTESS7_TEAM1/fieldstorage/racks"
+    ],
+    "reason": "stale TEAM QEMU — no team drive servers; real stack is GrokLab/deploy",
+    "module": "lib/field-zachub-qemu-racks.py"
+  },
+  "rewrite": {
+    "module": "panel/assets/zachub-source-router.js",
+    "on_loopback": "sovereign_pin_or_panel",
+    "on_pages": "pin_url_not_raw_github",
+    "data_h7_github_repo": "canonical_pin_url"
+  },
+  "module": "lib/field-zachub-fork-guard.py",
+  "api": "/api/field-zachub-fork-guard",
+  "pages_api": "/api/field-zachub-fork-guard.json",
+  "shell": "scripts/zachub-fork-guard.sh"
+}

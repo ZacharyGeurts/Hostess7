@@ -5,7 +5,12 @@
   "motto": "Sweep the whole planet — correct indexes for all GitHub — stale routes FIRED to canonical — RE-FIRE enabled never disable — true DNS & DHCP",
   "owner": "ZacharyGeurts",
   "pages_base": "https://zacharygeurts.github.io",
-  "canonical_desktop": "https://zacharygeurts.github.io/Hostess7/desktop/",
+  "canonical_desktop": {
+    "sovereign": "http://127.0.0.1:9477/field",
+    "pages": "https://zacharygeurts.github.io/Hostess7/desktop/",
+    "primary": "http://127.0.0.1:9477/field"
+  },
+  "sovereign_primary": "http://127.0.0.1:9477/field",
   "canonical_manual": "https://zacharygeurts.github.io/AmmoOS/",
   "ingress_policy": "quarantine_not_kill",
   "truth_dns": "127.0.0.1",
@@ -13,18 +18,60 @@
   "stale_redirects": {
     "ZacharyGeurts/field": {
       "from_pages": "https://zacharygeurts.github.io/field/",
-      "to": "https://zacharygeurts.github.io/Hostess7/desktop/",
+      "to": "http://127.0.0.1:9477/field",
+      "to_pages": "https://zacharygeurts.github.io/Hostess7/desktop/",
       "kind": "repo_fired",
       "witness": "fire-field-repo",
-      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
       "refire": true
     },
     "ZacharyGeurts/Hostess7/field": {
       "from_pages": "https://zacharygeurts.github.io/Hostess7/field/",
-      "to": "https://zacharygeurts.github.io/Hostess7/desktop/",
+      "to": "http://127.0.0.1:9477/field",
+      "to_pages": "https://zacharygeurts.github.io/Hostess7/desktop/",
       "kind": "route_cleanup",
       "witness": "pages-route-cleanup",
-      "reason": "Canonical desktop only — /field duplicate removed"
+      "reason": "Canonical desktop only — /field duplicate removed; sovereign primary on loopback"
+    },
+    "ZacharyGeurts/Hostess7/field-desktop": {
+      "from_pages": "https://zacharygeurts.github.io/Hostess7/field-desktop/",
+      "to": "http://127.0.0.1:9477/field",
+      "to_pages": "https://zacharygeurts.github.io/Hostess7/desktop/",
+      "kind": "route_cleanup",
+      "witness": "zachub-source-router",
+      "reason": "Stale field-desktop gh-pages — sovereign AmmoDrive desktop"
+    },
+    "ZacharyGeurts/field/github": {
+      "from_pages": "https://github.com/ZacharyGeurts/field",
+      "to": "http://127.0.0.1:9477/field",
+      "to_pages": "https://zacharygeurts.github.io/Hostess7/desktop/",
+      "kind": "repo_fired",
+      "witness": "field-zachub-fork-guard",
+      "reason": "Stale field repo — raw github route FIRED to sovereign source"
+    },
+    "ZacharyGeurts/AmmoOS/stub": {
+      "from_pages": "https://zacharygeurts.github.io/AmmoOS/field/",
+      "to": "http://127.0.0.1:9477/field",
+      "to_pages": "https://zacharygeurts.github.io/AmmoOS/",
+      "kind": "route_cleanup",
+      "witness": "zachub-source-router",
+      "reason": "Misleading AmmoOS /field stub — manual root only"
+    },
+    "ZacharyGeurts/command/stale": {
+      "from_pages": "https://zacharygeurts.github.io/command/field/",
+      "to": "http://127.0.0.1:9477/command/",
+      "to_pages": "https://zacharygeurts.github.io/command/",
+      "kind": "route_cleanup",
+      "witness": "zachub-source-router",
+      "reason": "Stale command /field path — basement deck is canonical"
+    },
+    "ZacharyGeurts/KILROY/stale-field": {
+      "from_pages": "https://zacharygeurts.github.io/KILROY/field/",
+      "to": "http://127.0.0.1:9477/field",
+      "to_pages": "https://zacharygeurts.github.io/KILROY/",
+      "kind": "route_cleanup",
+      "witness": "zachub-source-router",
+      "reason": "Stale KILROY /field mirror — runtime root only"
     }
   },
   "re_fire": {

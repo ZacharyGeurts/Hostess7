@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ZacHub QEMU racks — GrokLab botnet pipeline slots as edge/DNS/DHCP/witness racks."""
+"""AmmoDrive QEMU racks — GrokLab botnet pipeline slots as edge/DNS/DHCP/witness racks."""
 from __future__ import annotations
 
 import hashlib
@@ -525,7 +525,7 @@ def _one_big_drive_manifest(slots: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "schema": "zachub-one-big-drive/v2",
         "updated": _utc(),
-        "product": "ZacHub",
+        "product": "AmmoDrive",
         "protocol": "field-h7s-fs",
         "motto": "DNS/DHCP remainder converts slowly to redundant H7 pool — new rack grows data. Super secure from outside internet.",
         "no_team_drive_servers": True,
@@ -600,7 +600,7 @@ def provision_rack(
             "deploy_root": str(_deploy_root()),
             "vm_root": str(_vm_base()),
             "no_team_drive": True,
-            "product": "ZacHub",
+            "product": "AmmoDrive",
             "owners": ["Grok", "Zac"],
         }
         _save(root / "manifest.json", manifest)
@@ -671,7 +671,7 @@ def provision(
         "ok": status.get("ok", True) and all(r.get("ok", True) for r in racks),
         "schema": "field-zachub-qemu-racks/v1",
         "updated": _utc(),
-        "product": "ZacHub",
+        "product": "AmmoDrive",
         "owners": ["Grok", "Zac"],
         "motto": doc.get("motto"),
         "dry_run": dry_run,

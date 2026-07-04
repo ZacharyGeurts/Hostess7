@@ -62,6 +62,23 @@ def _run_json(rel: str, args: list[str] | None = None, *, timeout: float = 30.0)
     return {}
 
 
+def _zachub_truth_roots() -> list[Path]:
+    zachub_py = INSTALL / "lib" / "field-zachub-storage.py"
+    if not zachub_py.is_file():
+        return []
+    try:
+        spec = importlib.util.spec_from_file_location("field_zachub_export_roots", zachub_py)
+        if not spec or not spec.loader:
+            return []
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if hasattr(mod, "zachub_truth_roots"):
+            return list(mod.zachub_truth_roots())
+    except Exception:
+        pass
+    return []
+
+
 def _export_roots(doc: dict[str, Any]) -> list[Path]:
     sub = str((doc.get("world_visible") or {}).get("export_subdir") or "world-publish")
     roots: list[Path] = []
@@ -76,6 +93,8 @@ def _export_roots(doc: dict[str, Any]) -> list[Path]:
         else:
             p = base / "fieldstorage" / sub if (base / "fieldstorage").is_dir() else base / sub
         roots.append(p)
+    for zroot in _zachub_truth_roots():
+        roots.append(zroot)
     seen: set[str] = set()
     out: list[Path] = []
     for r in roots:
@@ -97,11 +116,15 @@ def export_world(*, write: bool = True) -> dict[str, Any]:
 
     port = os.environ.get("NEXUS_THREAT_PANEL_PORT", "9477")
     sovereign = doc.get("sovereign_primary") or {}
+    branding = doc.get("branding") or {}
     index = {
         "schema": "field-world-index/v1",
         "updated": _utc(),
+        "product": doc.get("product") or branding.get("product") or "AmmoDrive",
+        "owners": branding.get("owners") or ["Grok", "Zac"],
         "motto": doc.get("motto"),
         "github_role": doc.get("github_role"),
+        "zachub_storage": (doc.get("sovereign_primary") or {}).get("zachub_storage"),
         "ammonet_version": (_load(H7_DOCS / "api" / "ammonet.json") or {}).get("version"),
         "sovereign_primary": {
             **sovereign,
@@ -149,6 +172,19 @@ def export_world(*, write: bool = True) -> dict[str, Any]:
         except OSError as exc:
             errors.append(f"{root}: {exc}")
 
+    zachub_mirror: dict[str, Any] = {}
+    zachub_py = INSTALL / "lib" / "field-zachub-storage.py"
+    if zachub_py.is_file() and write:
+        try:
+            spec = importlib.util.spec_from_file_location("field_zachub_export_mirror", zachub_py)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if hasattr(mod, "mirror_github_truth"):
+                    zachub_mirror = mod.mirror_github_truth(write=True)
+        except Exception as exc:
+            zachub_mirror = {"ok": False, "error": str(exc)[:200]}
+
     return {
         "ok": not errors or bool(written),
         "schema": "field-github-isolation-export/v1",
@@ -157,6 +193,7 @@ def export_world(*, write: bool = True) -> dict[str, Any]:
         "written": written[:32],
         "errors": errors,
         "world_index": index,
+        "zachub_github_truth": zachub_mirror,
     }
 
 

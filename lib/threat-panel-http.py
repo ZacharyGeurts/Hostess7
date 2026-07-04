@@ -1823,6 +1823,7 @@ def _zachub_storage_api(
     sub = (
         path.replace("/api/field-zachub-storage", "")
         .replace("/api/zachub-storage", "")
+        .replace("/api/ammodrive-storage", "")
         .strip("/")
     )
     req = body if isinstance(body, dict) else {}
@@ -3558,9 +3559,9 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
-        if path.startswith("/api/field-zachub-storage") or path.startswith("/api/zachub-storage"):
+        if path.startswith("/api/field-zachub-storage") or path.startswith("/api/zachub-storage") or path.startswith("/api/ammodrive-storage"):
             refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
-            sub = path.replace("/api/field-zachub-storage", "").replace("/api/zachub-storage", "").strip("/")
+            sub = path.replace("/api/field-zachub-storage", "").replace("/api/zachub-storage", "").replace("/api/ammodrive-storage", "").strip("/")
             payload = None if refresh or sub else _read_zachub_panel_cache("storage")
             if payload is None:
                 payload = _zachub_storage_api(path, query=query, headers=self.headers)
@@ -3570,8 +3571,10 @@ class Handler(BaseHTTPRequestHandler):
         if path in (
             "/api/field-zachub-fork-guard",
             "/api/zachub-fork-guard",
+            "/api/ammodrive-fork-guard",
             "/api/field-zachub-fork-guard/dry",
             "/api/zachub-fork-guard/dry",
+            "/api/ammodrive-fork-guard/dry",
         ):
             refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
             fork_py = INSTALL_ROOT / "lib" / "field-zachub-fork-guard.py"
@@ -3591,7 +3594,7 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
-        if path.startswith("/api/field-zachub-qemu-racks") or path.startswith("/api/zachub-qemu-racks"):
+        if path.startswith("/api/field-zachub-qemu-racks") or path.startswith("/api/zachub-qemu-racks") or path.startswith("/api/ammodrive-qemu-racks"):
             refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
             sub = path.rstrip("/").split("/")[-1]
             if sub in ("provision", "apply", "burn", "burn-stale", "slots", "map", "convert", "storage-totals", "totals", "redundant"):
@@ -9015,13 +9018,13 @@ class Handler(BaseHTTPRequestHandler):
         if path.startswith("/api/") and not self._ironclad_api_gate(path, "POST", body):
             return
 
-        if path.startswith("/api/field-zachub-storage") or path.startswith("/api/zachub-storage"):
+        if path.startswith("/api/field-zachub-storage") or path.startswith("/api/zachub-storage") or path.startswith("/api/ammodrive-storage"):
             query = parse_qs(urlparse(self.path).query)
             payload = _zachub_storage_api(path, query=query, body=body if isinstance(body, dict) else {}, headers=self.headers)
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
-        if path.startswith("/api/field-zachub-qemu-racks") or path.startswith("/api/zachub-qemu-racks"):
+        if path.startswith("/api/field-zachub-qemu-racks") or path.startswith("/api/zachub-qemu-racks") or path.startswith("/api/ammodrive-qemu-racks"):
             qemu_py = INSTALL_ROOT / "lib" / "field-zachub-qemu-racks.py"
             sub = path.rstrip("/").split("/")[-1]
             if sub in ("provision", "apply"):

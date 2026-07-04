@@ -1,7 +1,8 @@
 #!/usr/bin/env pythong
-"""QEMU world pipeline status — secure transfer bot lane for C2 + Pages."""
+"""QEMU world pipeline status — botnet edge/DNS/DHCP/witness lanes for AmmoDrive racks."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import subprocess
@@ -11,6 +12,18 @@ from typing import Any
 
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", Path(__file__).resolve().parents[1]))
 PIPELINE = INSTALL / "GrokLab" / "deploy" / "qemu-world-pipeline.py"
+
+
+def _load_racks_mod() -> Any | None:
+    py = INSTALL / "lib" / "field-zachub-qemu-racks.py"
+    if not py.is_file():
+        return None
+    spec = importlib.util.spec_from_file_location("field_zachub_qemu_racks", py)
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
 
 
 def status_json() -> dict[str, Any]:
@@ -35,19 +48,40 @@ def status_json() -> dict[str, Any]:
         doc = json.loads(proc.stdout or "{}")
         doc.setdefault("ok", True)
         doc["schema"] = "qemu-world-pipeline/v1"
-        port_base = int(doc.get("tunnel_port_base") or 19477)
-        slots_n = int(doc.get("target") or doc.get("slots_total") or 6)
-        slots_n = max(1, min(slots_n, 16))
-        doc["gaming_roles"] = ["sap_relay", "frame_witness", "rom_caravan"]
-        doc["slots"] = [
-            {
-                "slot": i,
-                "tunnel": port_base + i,
-                "id": f"qemu-world-{i}",
-                "roles": ["sap_relay", "frame_witness"],
-            }
-            for i in range(slots_n)
-        ]
+        doc["qemu_source"] = "GrokLab/deploy/qemu-world-pipeline.py"
+        doc["not_team_field1"] = True
+        doc["no_team_drive_servers"] = True
+        doc["deploy_root"] = "GrokLab/deploy"
+        doc["edge_roles"] = ["dhcp", "dns", "edge", "github_mirror_witness"]
+        doc["botnet_roles"] = ["dns_relay", "dhcp_relay", "truth_mirror"]
+        doc["zachub_racks_api"] = "/api/field-zachub-qemu-racks"
+
+        racks_mod = _load_racks_mod()
+        if racks_mod and hasattr(racks_mod, "build_slots"):
+            slots = racks_mod.build_slots(doc)
+            doc["slots"] = slots
+            doc["gaming_roles"] = doc["edge_roles"]
+            doc["tunnel_port_base"] = int(
+                doc.get("tunnel_port_base")
+                or (slots[0].get("tunnel", 19477) - slots[0].get("slot", 0) if slots else 19477)
+            )
+        else:
+            port_base = int(doc.get("tunnel_port_base") or 19477)
+            slots_n = int(doc.get("target") or doc.get("slots_total") or 6)
+            slots_n = max(1, min(slots_n, 16))
+            cycle = ["dhcp", "dns", "edge", "github_mirror_witness"]
+            doc["slots"] = [
+                {
+                    "slot": i,
+                    "tunnel": port_base + i,
+                    "id": f"qemu-world-{i}",
+                    "field_id": f"qemu-rack-{i}",
+                    "primary_role": cycle[i % len(cycle)],
+                    "roles": [cycle[i % len(cycle)], "dns_relay", "dhcp_relay", "truth_mirror", "edge"],
+                }
+                for i in range(slots_n)
+            ]
+            doc["gaming_roles"] = doc["edge_roles"]
         return doc
     except (subprocess.TimeoutExpired, json.JSONDecodeError, OSError) as exc:
         return {

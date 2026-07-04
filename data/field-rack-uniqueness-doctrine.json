@@ -2,7 +2,13 @@
   "schema": "field-rack-uniqueness/v1",
   "title": "One field per box — whole system per rack, never colocated",
   "motto": "Unique box · unique field_id · whole nexus-field system · redundant racks never share a host",
-  "product": "ZachHub",
+  "product": "AmmoDrive",
+  "branding": {
+    "product": "AmmoDrive",
+    "owners": ["Grok", "Zac"],
+    "tagline": "Sovereign H7 storage · one field per box",
+    "motto": "Grok and Zac own it now."
+  },
   "rules": {
     "one_field_per_box": true,
     "never_colocate_fields": true,
@@ -25,9 +31,28 @@
     "slot_env": "WORLD_PIPELINE_SLOT",
     "field_id_prefix": "qemu-rack-",
     "roles": ["dhcp", "dns", "edge", "github_mirror_witness"],
-    "note": "Each QEMU slot is a unique box — never two fields on same VM"
+    "deploy_root": "GrokLab/deploy",
+    "racks_subdir": "qemu-racks",
+    "vm_subdir": "qemu-vms",
+    "no_team_drive_servers": true,
+    "note": "Each QEMU slot is a unique box on GrokLab/deploy — never TEAM drive servers"
+  },
+  "h5_storage": {
+    "qemu_racks_on": "GrokLab/deploy/qemu-racks",
+    "kind": "grok_lab_deploy",
+    "gb_per_unit": 91,
+    "per_role_gb": {
+      "dhcp": 91,
+      "dns": 91,
+      "edge": 91,
+      "github_mirror_witness": 91
+    },
+    "whole_system_per_rack_gb": 91,
+    "github_truth_pool_gb": 853,
+    "reserve_pct": 0.91
   },
   "zachub": {
+    "product": "AmmoDrive",
     "github_immediate_truth": true,
     "sovereign_over_github": true,
     "mirror_role": "degraded_witness_only"

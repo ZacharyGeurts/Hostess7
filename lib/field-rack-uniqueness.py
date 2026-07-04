@@ -83,10 +83,25 @@ def field_id_for_box(*, fp: dict[str, Any] | None = None) -> str:
     return f"rack-{fp.get('digest', 'unknown')[:16]}"
 
 
+def _qemu_deploy_racks() -> Path | None:
+    doc = _load(DOCTRINE, {})
+    qemu = doc.get("qemu_box") or {}
+    if not qemu.get("no_team_drive_servers"):
+        return None
+    raw = str(qemu.get("deploy_root") or "GrokLab/deploy")
+    deploy = Path(raw) if Path(raw).is_absolute() else INSTALL / raw
+    sub = str(qemu.get("racks_subdir") or "qemu-racks")
+    p = deploy / sub
+    return p if deploy.is_dir() or not deploy.exists() else None
+
+
 def rack_storage_roots() -> list[Path]:
     doc = _load(DOCTRINE, {})
     sub = str((doc.get("rack_layout") or {}).get("subdir") or "racks")
     roots: list[Path] = []
+    qemu_racks = _qemu_deploy_racks()
+    if qemu_racks is not None:
+        roots.append(qemu_racks)
     for base in (QUBES, TEAM, INSTALL / ".nexus-field-drive"):
         if not base:
             continue
@@ -256,7 +271,7 @@ def publish_whole_field(*, field_id: str | None = None, full: bool = True) -> di
         "zachub_github_truth": str(gh_dst),
         "rack_root": str(dst_root),
         "copied": copied,
-        "product": "ZachHub",
+        "product": "AmmoDrive",
     }
     _save(dst_root / "manifest.json", manifest)
 

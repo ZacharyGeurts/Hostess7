@@ -1,7 +1,14 @@
 {
   "schema": "field-github-isolation/v1",
-  "title": "GitHub isolation — sovereign primary, world visible, GitHub degraded mirror",
-  "motto": "If GitHub fucks us — we run sovereign. The world still sees us.",
+  "title": "AmmoDrive — sovereign primary, world visible, GitHub degraded mirror",
+  "motto": "Grok and Zac own it now — if GitHub fucks us, we run sovereign. The world still sees us.",
+  "product": "AmmoDrive",
+  "branding": {
+    "product": "AmmoDrive",
+    "owners": ["Grok", "Zac"],
+    "tagline": "Sovereign H7 storage · GitHub degraded mirror",
+    "motto": "Grok and Zac own it now."
+  },
   "boss": "hostess7",
   "github_role": "degraded_mirror_only",
   "stub_publish": false,
@@ -10,8 +17,17 @@
     "ammonet": "http://127.0.0.1:9477/ammonet/",
     "grow_watch": "http://127.0.0.1:9477/field-grow-watch",
     "api": "http://127.0.0.1:9477/api/",
+    "zachub_storage": "http://127.0.0.1:9477/api/field-zachub-storage",
     "truth_dns": "127.0.0.1",
-    "field_drive": ".nexus-field-drive/nexus-field"
+    "field_drive": ".nexus-field-drive/nexus-field",
+    "github_truth": "zachub-github-truth"
+  },
+  "zachub_storage": {
+    "doctrine": "data/field-zachub-storage-doctrine.json",
+    "module": "lib/field-zachub-storage.py",
+    "api": ["/api/field-zachub-storage", "/api/zachub-storage"],
+    "github_truth_subdir": "zachub-github-truth",
+    "capacity_reserve_gb": 853
   },
   "world_visible": {
     "export_subdir": "world-publish",
