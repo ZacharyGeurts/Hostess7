@@ -1,0 +1,56 @@
+{
+  "schema": "field-github-planet-sweep/v1",
+  "title": "Planet GitHub sweep — stale trick, canonical indexes, true DNS/DHCP",
+  "boss": "hostess7",
+  "motto": "Sweep the whole planet — correct indexes for all GitHub — stale routes FIRED to canonical — RE-FIRE enabled never disable — true DNS & DHCP",
+  "owner": "ZacharyGeurts",
+  "pages_base": "https://zacharygeurts.github.io",
+  "canonical_desktop": "https://zacharygeurts.github.io/Hostess7/desktop/",
+  "canonical_manual": "https://zacharygeurts.github.io/AmmoOS/",
+  "ingress_policy": "quarantine_not_kill",
+  "truth_dns": "127.0.0.1",
+  "dhcp_dns_option": ["127.0.0.1"],
+  "stale_redirects": {
+    "ZacharyGeurts/field": {
+      "from_pages": "https://zacharygeurts.github.io/field/",
+      "to": "https://zacharygeurts.github.io/Hostess7/desktop/",
+      "kind": "repo_fired",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only",
+      "refire": true
+    },
+    "ZacharyGeurts/Hostess7/field": {
+      "from_pages": "https://zacharygeurts.github.io/Hostess7/field/",
+      "to": "https://zacharygeurts.github.io/Hostess7/desktop/",
+      "kind": "route_cleanup",
+      "witness": "pages-route-cleanup",
+      "reason": "Canonical desktop only — /field duplicate removed"
+    }
+  },
+  "re_fire": {
+    "enabled": true,
+    "never_disable": true,
+    "module": "scripts/fire-field-repo.sh",
+    "mode": "refire",
+    "on_sweep": true,
+    "targets": ["ZacharyGeurts/field"]
+  },
+  "runtime_repos": ["Hostess7", "AmmoCode", "KILROY", "command", "AIA", "GNUEOLTerminal"],
+  "catalog_sources": [
+    "gh_api",
+    "data/ammoos-pages-hub.json",
+    "Hostess7/data/hostess7-old-projects.json",
+    "docs/github-favorites.json",
+    "H7updater/data/h7updater-stack-index.json",
+    "data/field-pages-movement-registry-seed.json"
+  ],
+  "wires": [
+    {"id": "endpoint_registry", "module": "lib/field-endpoint-registry.py", "api": "/api/field-endpoint-registry"},
+    {"id": "planetary_dns_dhcp", "module": "lib/field-planetary-dns-dhcp.py", "api": "/api/field-planetary-dns-dhcp"},
+    {"id": "world_scale", "module": "lib/field-world-dns-dhcp-scale.py", "api": "/api/field-world-dns-dhcp-scale"},
+    {"id": "github_legacy", "module": "lib/field-github-legacy.py", "api": "/api/field-github-legacy"}
+  ],
+  "api": "/api/field-github-planet-sweep",
+  "pages_api": "/api/field-github-planet-sweep.json",
+  "module": "lib/field-github-planet-sweep.py"
+}

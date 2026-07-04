@@ -129,6 +129,9 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
     world_scale = _load(STATE / "field-world-dns-dhcp-scale-panel.json", {})
     if not world_scale.get("current") and fast:
         world_scale = _run_json("lib/field-world-dns-dhcp-scale.py", ["json"], timeout=8.0)
+    github_sweep = _load(STATE / "field-github-planet-sweep-panel.json", {})
+    if not github_sweep.get("counts") and fast:
+        github_sweep = _run_json("lib/field-github-planet-sweep.py", ["json"], timeout=25.0)
     ipv4_enum = _load(STATE / "field-ipv4-enumerate-panel.json", {})
     if not ipv4_enum.get("counts") and fast:
         ipv4_enum = _run_json("lib/field-ipv4-enumerate.py", ["json"], timeout=8.0)
@@ -230,7 +233,14 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
         "planetary_leases": planetary_leases,
         "world_dns_dhcp_scale": world_scale.get("current") or {},
         "world_projections": (world_scale.get("projections") or [])[:4],
-        "ingress_policy": world_scale.get("ingress_policy") or "quarantine_not_kill",
+        "ingress_policy": world_scale.get("ingress_policy") or github_sweep.get("ingress_policy") or "quarantine_not_kill",
+        "github_planet_sweep": {
+            "repos_indexed": int((github_sweep.get("counts") or {}).get("repos_cataloged") or 0),
+            "stale_detected": int((github_sweep.get("counts") or {}).get("stale_detected") or 0),
+            "dns_index_rows": int((github_sweep.get("counts") or {}).get("dns_index_rows") or 0),
+            "dhcp_index_rows": int((github_sweep.get("counts") or {}).get("dhcp_index_rows") or 0),
+            "api": "/api/field-github-planet-sweep",
+        },
         "services": {
             "dns": (botnet.get("dns_dhcp") or {}).get("dns", {}).get("running")
             or (planetary.get("services") or {}).get("dns", {}).get("running"),

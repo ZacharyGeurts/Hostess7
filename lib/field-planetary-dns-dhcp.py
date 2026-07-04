@@ -356,6 +356,17 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
             "ammonet_dns_records": int(ammonet.get("record_count") or 0),
             "botnet_nodes": int((botnet.get("bot_network") or {}).get("node_count") or 0),
             "connected_devices": int(device_map.get("device_count") or len(device_map.get("devices") or [])),
+            "github_repos_indexed": int((github_sweep.get("counts") or {}).get("repos_cataloged") or len(gh_index.get("repos") or [])),
+            "github_dns_index": len(gh_dns),
+            "github_dhcp_index": len(gh_dhcp),
+            "github_stale_detected": int((github_sweep.get("counts") or {}).get("stale_detected") or 0),
+        },
+        "github_planet_sweep": {
+            "ok": bool(github_sweep.get("ok")),
+            "ingress_policy": github_sweep.get("ingress_policy") or "quarantine_not_kill",
+            "truth_dns": github_sweep.get("truth_dns") or "127.0.0.1",
+            "stale_repos": (github_sweep.get("stale_repos") or [])[:24],
+            "api": "/api/field-github-planet-sweep",
         },
         "services": {
             "dhcp": {
@@ -379,6 +390,50 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "api": doctrine.get("api", "/api/field-planetary-dns-dhcp"),
         "ironclad_cite": doctrine.get("ironclad_cite"),
     }
+    github_sweep: dict[str, Any] = {}
+    try:
+        sweep_mod = _mod("lib/field-github-planet-sweep.py", "github_planet_sweep")
+        if sweep_mod and hasattr(sweep_mod, "sweep"):
+            github_sweep = sweep_mod.sweep(probe=False, record_fixes=False, use_gh=False)
+        else:
+            github_sweep = _load(STATE / "field-github-planet-sweep-panel.json", {})
+    except Exception:
+        github_sweep = _load(STATE / "field-github-planet-sweep-panel.json", {})
+    gh_index = github_sweep.get("github_index") or {}
+    gh_dns = list(gh_index.get("dns_index") or [])
+    gh_dhcp = list(gh_index.get("dhcp_index") or [])
+    if gh_dns:
+        all_dns = all_dns + [
+            {
+                "kind": "dns",
+                "source": "github_planet_sweep",
+                "name": r.get("name"),
+                "type": r.get("type"),
+                "value": r.get("value"),
+                "repo_slug": r.get("repo_slug"),
+                "authority": r.get("authority") or "hostess7_truth",
+                "absorbed": True,
+            }
+            for r in gh_dns if isinstance(r, dict)
+        ]
+    if gh_dhcp:
+        all_dhcp = all_dhcp + [
+            {
+                "kind": "dhcp",
+                "source": "github_planet_sweep",
+                "lease_id": r.get("lease_id"),
+                "mac": r.get("mac"),
+                "ip": r.get("ip"),
+                "dns": r.get("dns"),
+                "hostname": r.get("hostname"),
+                "repo_slug": r.get("repo_slug"),
+                "quarantine": r.get("quarantine"),
+                "authority": r.get("authority") or "hostess7",
+                "absorbed": True,
+            }
+            for r in gh_dhcp if isinstance(r, dict)
+        ]
+
     collision: dict[str, Any] = {}
     try:
         cg = _mod("lib/field-dns-dhcp-collision-guard.py", "collision_guard")

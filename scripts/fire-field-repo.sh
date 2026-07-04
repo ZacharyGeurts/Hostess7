@@ -64,12 +64,27 @@ delete_repo() {
   return 1
 }
 
+refire_banner() {
+  log "RE-FIRE — stale route destruction ENABLED (never disable)"
+  log "target=${REPO} canonical=${CANONICAL}"
+}
+
 main() {
   command -v gh >/dev/null 2>&1 || { log "gh missing"; exit 1; }
+  local mode="${1:-fire}"
+  case "$mode" in
+    refire|re-fire|RE-FIRE)
+      refire_banner
+      ;;
+    fire|*)
+      log "FIRE — first strike on stale field route"
+      ;;
+  esac
   wipe_pages
   archive_repo || true
   delete_repo || log "repo archived+wiped — run delete after gh auth refresh -s delete_repo"
   log "canonical → ${CANONICAL}"
+  [[ "$mode" == refire || "$mode" == re-fire || "$mode" == RE-FIRE ]] && log "RE-FIRE complete"
 }
 
 main "$@"

@@ -1,12 +1,12 @@
 {
   "ok": false,
   "schema": "field-dns-drift-threat-panel/v1",
-  "updated": "2026-07-04T18:12:07Z",
+  "updated": "2026-07-04T20:44:36Z",
   "title": "DNS drift threat — Truth vs witness divergence is hostile",
   "motto": "We are our own DNS — any drift from Truth @127.0.0.1 is a threat, not noise.",
   "drift": {
     "schema": "field-dns-drift-threat/v1",
-    "ts": "2026-07-04T18:12:06Z",
+    "ts": "2026-07-04T20:44:33Z",
     "ok": false,
     "threat": true,
     "threat_level": "high",
@@ -15,15 +15,15 @@
       {
         "host": "github.com",
         "truth": [
-          "140.82.113.3"
+          "140.82.112.4"
         ],
         "authority": [
-          "140.82.113.3"
+          "140.82.112.4"
         ],
         "stub": [],
         "trace": [],
         "system": [
-          "140.82.114.3"
+          "140.82.113.4"
         ],
         "source": "truth_dns",
         "truth_up": true,
@@ -44,26 +44,28 @@
         "stub": [],
         "trace": [],
         "system": [
-          "140.82.114.6"
+          "140.82.113.5"
         ],
         "source": "truth_dns",
         "truth_up": true,
-        "threats": [],
-        "threat_level": "ok",
-        "drift": false
+        "threats": [
+          "TRUTH_SYSTEM_DRIFT"
+        ],
+        "threat_level": "high",
+        "drift": true
       },
       {
         "host": "ssh.github.com",
         "truth": [
-          "140.82.113.35"
+          "140.82.112.36"
         ],
         "authority": [
-          "140.82.113.35"
+          "140.82.112.36"
         ],
         "stub": [],
         "trace": [],
         "system": [
-          "140.82.113.36"
+          "140.82.113.35"
         ],
         "source": "truth_dns",
         "truth_up": true,
@@ -90,10 +92,10 @@
         "stub": [],
         "trace": [],
         "system": [
-          "185.199.109.133",
-          "185.199.108.133",
           "185.199.111.133",
-          "185.199.110.133"
+          "185.199.108.133",
+          "185.199.110.133",
+          "185.199.109.133"
         ],
         "source": "truth_dns",
         "truth_up": true,
@@ -106,7 +108,7 @@
   },
   "servers_updated": {
     "schema": "field-dns-dhcp-servers-updated/v1",
-    "ts": "2026-07-04T18:12:07Z",
+    "ts": "2026-07-04T20:44:36Z",
     "ok": false,
     "queen": {
       "dns_running": false,

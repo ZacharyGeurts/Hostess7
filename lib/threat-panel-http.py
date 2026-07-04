@@ -3368,6 +3368,26 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in (
+            "/api/field-github-planet-sweep",
+            "/api/github-planet-sweep",
+            "/api/field-github-planet-sweep/refire",
+            "/api/github-planet-sweep/refire",
+        ):
+            if path.endswith("/refire"):
+                args = ["refire"]
+            else:
+                args = ["sweep"]
+                if (self.headers.get("X-Field-Fast") or "").strip().lower() in ("1", "yes", "on"):
+                    args.append("--fast")
+            payload = _nexus_py_json(
+                INSTALL_ROOT / "lib" / "field-github-planet-sweep.py",
+                args,
+                timeout=180 if path.endswith("/refire") else 90,
+            )
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path in ("/api/field-planetary-dns-dhcp", "/api/planetary-dns-dhcp"):
             cmd = "absorb" if path.endswith("/absorb") else "json"
             payload = _nexus_py_json(
