@@ -520,11 +520,31 @@ def publish_gui(*, full: bool = False) -> dict[str, Any]:
     }
 
 
+def _rack_solo() -> dict[str, Any] | None:
+    py = INSTALL / "lib" / "field-rack-uniqueness.py"
+    if not py.is_file():
+        return None
+    try:
+        spec = importlib.util.spec_from_file_location("field_rack_unique", py)
+        if not spec or not spec.loader:
+            return None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if hasattr(mod, "assert_solo_field"):
+            return mod.assert_solo_field(write=True)
+    except Exception:
+        return None
+    return None
+
+
 def publish_system(*, full: bool = False) -> dict[str, Any]:
     """Mirror GUI + supporting install + state onto field drive."""
     blocked = _gate_publish("publish_system")
     if blocked:
         return blocked
+    solo = _rack_solo()
+    if solo and not solo.get("ok"):
+        return {"ok": False, "error": "field_colocation_forbidden", **solo}
     base = ensure_layout(for_publish=True)
     sys_dst = system_dir(for_publish=True)
     st_dst = state_dir(for_publish=True)

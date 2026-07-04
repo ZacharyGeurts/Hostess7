@@ -1,0 +1,37 @@
+{
+  "schema": "field-rack-uniqueness/v1",
+  "title": "One field per box — whole system per rack, never colocated",
+  "motto": "Unique box · unique field_id · whole nexus-field system · redundant racks never share a host",
+  "product": "ZachHub",
+  "rules": {
+    "one_field_per_box": true,
+    "never_colocate_fields": true,
+    "whole_system_per_rack": true,
+    "field_in_field_forbidden": true,
+    "redundant_racks_unique_ids": true
+  },
+  "rack_layout": {
+    "subdir": "racks",
+    "nexus_field_name": "nexus-field",
+    "whole_system_dirs": ["lib", "panel", "data", "config", "assets", "state", "world-publish"],
+    "github_truth_subdir": "zachub-github-truth"
+  },
+  "box_fingerprint": {
+    "sources": ["machine_id", "hostname", "FIELD_RACK_ID", "WORLD_PIPELINE_SLOT"],
+    "lease_file": "field-rack-lease.json",
+    "registry_file": "field-rack-registry.json"
+  },
+  "qemu_box": {
+    "slot_env": "WORLD_PIPELINE_SLOT",
+    "field_id_prefix": "qemu-rack-",
+    "roles": ["dhcp", "dns", "edge", "github_mirror_witness"],
+    "note": "Each QEMU slot is a unique box — never two fields on same VM"
+  },
+  "zachub": {
+    "github_immediate_truth": true,
+    "sovereign_over_github": true,
+    "mirror_role": "degraded_witness_only"
+  },
+  "module": "lib/field-rack-uniqueness.py",
+  "api": "/api/field-rack-uniqueness"
+}

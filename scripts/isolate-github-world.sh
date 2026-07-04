@@ -37,4 +37,10 @@ print('  world export:', w.get('world_export'))
 print('  github mirror:', w.get('github_pages'), '(degraded)')
 "
 
+log "rack provision — one field per box, whole system"
+if [[ -f "$ROOT/scripts/field-rack-provision.sh" ]]; then
+  FIELD_RACK_ID="${FIELD_RACK_ID:-rack-$(hostname -s 2>/dev/null || echo local)}" \
+    bash "$ROOT/scripts/field-rack-provision.sh" 2>/dev/null || log "  WARN rack provision deferred"
+fi
+
 log "done — world sees sovereign loopback + field drive; GitHub optional"

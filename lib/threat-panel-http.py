@@ -3378,6 +3378,16 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-rack-uniqueness", "/api/field-rack", "/api/rack-uniqueness"):
+            rack_py = INSTALL_ROOT / "lib" / "field-rack-uniqueness.py"
+            sub = path.split("/")[-1] if path.count("/") > 3 else ""
+            args = ["publish"] if sub in ("publish", "whole", "provision") else ["json"]
+            if sub in ("assert", "solo", "lease"):
+                args = ["assert"]
+            payload = _nexus_py_json(rack_py, args, timeout=180) if rack_py.is_file() else {"ok": False, "error": "field_rack_uniqueness_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path in ("/api/field-github-isolation", "/api/github-isolation"):
             iso_py = INSTALL_ROOT / "lib" / "field-github-isolation.py"
             sub = path.replace("/api/field-github-isolation", "").replace("/api/github-isolation", "").strip("/")
