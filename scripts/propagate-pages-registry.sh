@@ -29,7 +29,12 @@ if [[ "$PUSH" -eq 1 ]]; then
       git add Hostess7/docs/api/field-endpoint-registry.json \
         Hostess7/docs/api/field-pages-movement.json \
         Hostess7/docs/api/field-endpoint-registry-routes.json \
-        Hostess7/docs/api/field-endpoint-registry-ledger.json 2>/dev/null || true
+        Hostess7/docs/api/field-endpoint-registry-ledger.json \
+        Hostess7/docs/api/ammodrive-public.json \
+        Hostess7/docs/api/ammodrive-storage.json \
+        Hostess7/docs/api/ammodrive-qemu-racks.json \
+        Hostess7/docs/api/ammodrive-fork-guard.json \
+        Hostess7/docs/data/ammodrive-branding.json 2>/dev/null || true
       if git diff --cached --quiet; then
         log "registry API files already committed"
       else

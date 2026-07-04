@@ -392,8 +392,8 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
     policy = doc.setdefault("policy", {})
     battle = _battle_stations_on()
     policy["battle_stations"] = battle
-    policy["six_tool_wall"] = battle
-    policy["six_tool_wall_on_boot"] = battle
+    policy["six_tool_wall"] = False
+    policy["six_tool_wall_on_boot"] = False
     policy["kiosk_launch"] = True
     policy["fullscreen_desktop"] = True
     policy["keyboard_sovereign"] = True
@@ -725,6 +725,7 @@ def _route_redirect_html(*, target: str, label: str, reason: str) -> str:
         f'  <link rel="canonical" href="{abs_url}" />\n'
         f'  <script src="{PAGES_BASE}/pages-base.js"></script>\n'
         f'  <script src="{PAGES_BASE}/pages-route-cleanup.js"></script>\n'
+        f'  <script src="{PAGES_BASE}/assets/zachub-source-router.js"></script>\n'
         f'  <script>location.replace("{abs_url}");</script>\n'
         "</head>\n"
         "<body>\n"
@@ -755,7 +756,8 @@ def _desktop_html() -> str:
         f'  <script src="{PAGES_BASE}/pages-deploy-everyone.js"></script>\n'
         f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n'
         f'  <script src="{PAGES_BASE}/pages-license.js"></script>\n'
-        f'  <script src="{PAGES_BASE}/pages-route-cleanup.js"></script>'
+        f'  <script src="{PAGES_BASE}/pages-route-cleanup.js"></script>\n'
+        f'  <script src="{PAGES_BASE}/assets/zachub-source-router.js"></script>'
     )
     if "field-shell-context.js" not in html:
         inject += f'\n  <script src="{PAGES_BASE}/assets/field-shell-context.js"></script>'
@@ -821,6 +823,12 @@ def _desktop_html() -> str:
         html = html.replace(
             "</body>",
             f'  <script src="{PAGES_BASE}/pages-github-everyone-wire.js"></script>\n</body>',
+            1,
+        )
+    if "pages-ammodrive-wire.js" not in html:
+        html = html.replace(
+            "</body>",
+            f'  <script src="{PAGES_BASE}/pages-ammodrive-wire.js"></script>\n</body>',
             1,
         )
     return html
@@ -2298,6 +2306,21 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
         "exported": _ts(),
     }
     (DOCS / "runtime.json").write_text(json.dumps(runtime, indent=2) + "\n", encoding="utf-8")
+
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "hostess7_pages_api_export",
+            ROOT / "scripts" / "hostess7_pages_api_export.py",
+        )
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            files.extend(mod._export_ammodrive())
+    except Exception as exc:
+        print(f"[ammodrive] WARN pages export: {exc}", file=sys.stderr)
+
     return files
 
 
@@ -2306,7 +2329,11 @@ def _sync_docs_data() -> None:
     src_data = ROOT / "data"
     dst_data = DOCS / "data"
     dst_data.mkdir(parents=True, exist_ok=True)
-    for name in ("hostess7-old-projects.json", "hostess7-rtx-executables.json"):
+    for name in (
+        "hostess7-old-projects.json",
+        "hostess7-rtx-executables.json",
+        "ammodrive-branding.json",
+    ):
         src = src_data / name
         if src.is_file():
             shutil.copy2(src, dst_data / name)

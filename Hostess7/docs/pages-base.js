@@ -32,10 +32,32 @@
     return pathname;
   }
 
+  const LOOPBACK = "http://127.0.0.1:9477";
+  const ON_LOOPBACK =
+    typeof global.location !== "undefined" &&
+    (global.location.hostname === "127.0.0.1" || global.location.hostname === "localhost");
+
   global.HOSTESS7_PAGES_BASE = BASE;
-  global.HOSTESS7_CANONICAL_DESKTOP = "https://zacharygeurts.github.io/Hostess7/desktop/";
-  global.HOSTESS7_CANONICAL_COMMAND = "https://zacharygeurts.github.io/Hostess7/command/";
-  global.HOSTESS7_CANONICAL_ROOT = "https://zacharygeurts.github.io/Hostess7/";
+  global.H7_LOOPBACK_AUTHORITY = LOOPBACK;
+  global.ZACHUB_LOOPBACK = LOOPBACK;
+  global.HOSTESS7_SOVEREIGN_DESKTOP = LOOPBACK + "/field";
+  global.ZACHUB_SOVEREIGN_DESKTOP = LOOPBACK + "/field";
+  global.HOSTESS7_CANONICAL_DESKTOP = ON_LOOPBACK
+    ? LOOPBACK + "/field"
+    : "https://zacharygeurts.github.io/Hostess7/desktop/";
+  global.HOSTESS7_CANONICAL_COMMAND = ON_LOOPBACK
+    ? LOOPBACK + "/command/"
+    : "https://zacharygeurts.github.io/Hostess7/command/";
+  global.HOSTESS7_CANONICAL_ROOT = ON_LOOPBACK
+    ? LOOPBACK + "/field"
+    : "https://zacharygeurts.github.io/Hostess7/";
+  global.AMMODRIVE_CANONICAL_ROOT = global.HOSTESS7_CANONICAL_ROOT;
+  global.AMMODRIVE_CANONICAL_DESKTOP = ON_LOOPBACK
+    ? LOOPBACK + "/field"
+    : "https://zacharygeurts.github.io/Hostess7/desktop/";
+  global.AMMODRIVE_PAGES_API = (ASSET_HOST || BASE || "") + "/api/ammodrive-public";
+  global.AMMODRIVE_PRODUCT = "AmmoDrive";
+  global.AMMODRIVE_LEGACY_PRODUCT = "ZacHub";
   global.H7_ASSET_HOST = ASSET_HOST;
   global.H7Base = withBase;
   global.H7Api = function (path) {
@@ -82,6 +104,21 @@
   }
   if (typeof document !== "undefined" && document.documentElement) {
     document.documentElement.dataset.battleStations = "1";
+    document.documentElement.dataset.zachubCanonical = ON_LOOPBACK ? "sovereign" : "pages";
+    document.documentElement.dataset.ammodriveProduct = "AmmoDrive";
+    document.documentElement.dataset.ammodriveLane = ON_LOOPBACK ? "sovereign" : "pages";
     if (document.body) document.body.dataset.battleStations = "1";
   }
+
+  function loadZachubRouter() {
+    if (typeof document === "undefined") return;
+    var src = (ASSET_HOST || BASE || "") + "/assets/zachub-source-router.js";
+    if (!src.startsWith("/")) src = "/" + src;
+    if (document.querySelector('script[src*="zachub-source-router"]')) return;
+    var s = document.createElement("script");
+    s.src = src;
+    s.defer = true;
+    (document.head || document.documentElement).appendChild(s);
+  }
+  loadZachubRouter();
 })(typeof window !== "undefined" ? window : globalThis);

@@ -1129,6 +1129,106 @@
       } catch (_e) {}
       return okStub({ melded: true, pages: true, note: "Full steel meld on loopback panel" });
     }
+    if (
+      path === "/api/ammodrive-public" ||
+      path === "/api/ammodrive-public.json"
+    ) {
+      try {
+        return jsonResponse(await loadStatic("/api/ammodrive-public.json"));
+      } catch (_e) {
+        return okStub({
+          schema: "ammodrive-public/v1",
+          product: "AmmoDrive",
+          pages: true,
+          security: { pages_read_only: true, internet_isolated: true },
+        });
+      }
+    }
+    if (
+      path === "/api/ammodrive-storage" ||
+      path === "/api/field-zachub-storage" ||
+      path === "/api/zachub-storage"
+    ) {
+      const staticName = path.indexOf("ammodrive") >= 0 ? "ammodrive-storage.json" : "field-zachub-storage.json";
+      try {
+        return jsonResponse(await loadStatic("/api/" + staticName));
+      } catch (_e) {
+        try {
+          return jsonResponse(await loadStatic("/api/ammodrive-storage.json"));
+        } catch (_e2) {
+          return okStub({ schema: "ammodrive-storage/v1", product: "AmmoDrive", partial: true });
+        }
+      }
+    }
+    if (
+      path.startsWith("/api/ammodrive-qemu-racks") ||
+      path.startsWith("/api/field-zachub-qemu-racks") ||
+      path.startsWith("/api/zachub-qemu-racks")
+    ) {
+      const staticName = path.indexOf("ammodrive") >= 0 ? "ammodrive-qemu-racks.json" : "field-zachub-qemu-racks.json";
+      let baseDoc = {};
+      try {
+        baseDoc = await loadStatic("/api/" + staticName);
+      } catch (_e) {
+        try {
+          baseDoc = await loadStatic("/api/ammodrive-qemu-racks.json");
+        } catch (_e2) {
+          baseDoc = {};
+        }
+      }
+      const sub = path.replace(/^\/api\/(?:ammodrive|field-zachub|zachub)-qemu-racks\/?/, "").replace(/\/$/, "");
+      if (!sub || sub === "json") {
+        return jsonResponse(baseDoc);
+      }
+      if (sub === "storage-totals" || sub === "totals") {
+        const totals = baseDoc.storage_totals || {};
+        return jsonResponse(Object.assign({ ok: true, pages: true, schema: "field-zachub-storage-totals/v1" }, totals));
+      }
+      if (sub === "slots" || sub === "map") {
+        return jsonResponse({ ok: true, pages: true, slots: baseDoc.slots || [], count: (baseDoc.slots || []).length });
+      }
+      if (method === "POST" || sub === "provision" || sub === "apply" || sub === "convert" || sub === "burn" || sub === "burn-stale") {
+        return okStub({
+          ok: true,
+          pages: true,
+          stored: false,
+          action: sub,
+          note: "AmmoDrive QEMU writes on loopback panel only — Pages mirror is read-only",
+          loopback_upgrade: LOOPBACK,
+        });
+      }
+      return jsonResponse(baseDoc);
+    }
+    if (
+      path === "/api/ammodrive-fork-guard" ||
+      path === "/api/field-zachub-fork-guard" ||
+      path === "/api/zachub-fork-guard" ||
+      path.startsWith("/api/ammodrive-fork-guard/") ||
+      path.startsWith("/api/field-zachub-fork-guard/")
+    ) {
+      const staticName = path.indexOf("ammodrive") >= 0 ? "ammodrive-fork-guard.json" : "field-zachub-fork-guard.json";
+      let baseDoc = {};
+      try {
+        baseDoc = await loadStatic("/api/" + staticName);
+      } catch (_e) {
+        try {
+          baseDoc = await loadStatic("/api/ammodrive-fork-guard.json");
+        } catch (_e2) {
+          baseDoc = {};
+        }
+      }
+      const sub = path.split("/").pop() || "";
+      if (method === "POST" || sub === "burn" || sub === "run" || sub === "guard" || sub === "dry") {
+        return okStub({
+          ok: true,
+          pages: true,
+          action: sub || "guard",
+          note: "AmmoDrive fork guard applies on loopback — Pages serves static pins only",
+          loopback_upgrade: LOOPBACK,
+        });
+      }
+      return jsonResponse(baseDoc);
+    }
     if (path === "/api/final-internet" && method === "GET") {
       try {
         return jsonResponse(await loadStatic("/api/final-internet.json"));
@@ -1353,6 +1453,13 @@
         "/api/field-dns": "/api/field-dns.json",
         "/api/field-outside-talk": "/api/field-outside-talk.json",
         "/api/field-drive": "/api/field-drive.json",
+        "/api/ammodrive-public": "/api/ammodrive-public.json",
+        "/api/ammodrive-storage": "/api/ammodrive-storage.json",
+        "/api/ammodrive-qemu-racks": "/api/ammodrive-qemu-racks.json",
+        "/api/ammodrive-fork-guard": "/api/ammodrive-fork-guard.json",
+        "/api/field-zachub-storage": "/api/field-zachub-storage.json",
+        "/api/field-zachub-qemu-racks": "/api/field-zachub-qemu-racks.json",
+        "/api/field-zachub-fork-guard": "/api/field-zachub-fork-guard.json",
         "/api/field-brain": "/api/field-brain.json",
         "/api/settings": "/api/settings.json",
         "/api/compatibility": "/api/compatibility.json",

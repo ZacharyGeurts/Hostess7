@@ -1,0 +1,528 @@
+{
+  "ok": true,
+  "schema": "ammodrive-fork-guard/v1",
+  "updated": "2026-07-04T22:43:31Z",
+  "title": "AmmoDrive fork guard \u2014 no forks, no branches, no unauthorized clones",
+  "motto": "ALL RIGHTS RESERVED is the terms \u2014 sovereign source only, gh-pages garbage FIRED",
+  "product": "AmmoDrive",
+  "owners": [
+    "Grok",
+    "Zac"
+  ],
+  "owner": "ZacharyGeurts",
+  "terms": "ALL RIGHTS RESERVED",
+  "dry_run": false,
+  "gh_available": true,
+  "fork_policy": {
+    "allow_forking": false,
+    "delete_owned_forks": true,
+    "cut_extra_branches": true,
+    "keep_branches": [
+      "main",
+      "master",
+      "gh-pages"
+    ],
+    "account_hygiene_shell": "scripts/github-account-no-forks-branches.sh"
+  },
+  "sovereign_primary": {
+    "panel": "http://127.0.0.1:9477/field",
+    "desktop": "http://127.0.0.1:9477/field",
+    "api": "http://127.0.0.1:9477/api/",
+    "github_truth_subdir": "zachub-github-truth"
+  },
+  "stale_pages_routes": [
+    "https://zacharygeurts.github.io/field/",
+    "https://zacharygeurts.github.io/Hostess7/field/",
+    "https://zacharygeurts.github.io/Hostess7/field-desktop/",
+    "https://zacharygeurts.github.io/AmmoOS/field/",
+    "https://zacharygeurts.github.io/command/field/",
+    "https://zacharygeurts.github.io/KILROY/field/",
+    "https://github.com/ZacharyGeurts/field/"
+  ],
+  "pin_index": {
+    "ZacharyGeurts/Hostess7": {
+      "repo": "Hostess7",
+      "pin_url": "http://127.0.0.1:9477/field",
+      "pages_url": "https://zacharygeurts.github.io/Hostess7/",
+      "sovereign_url": "http://127.0.0.1:9477/field",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Hostess7"
+    },
+    "ZacharyGeurts/H7updater": {
+      "repo": "H7updater",
+      "pin_url": "http://127.0.0.1:9477/h7updater/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/h7updater/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/H7updater"
+    },
+    "ZacharyGeurts/AmmoOS": {
+      "repo": "AmmoOS",
+      "pin_url": "http://127.0.0.1:9477/ammoos/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/ammoos/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/AmmoOS"
+    },
+    "ZacharyGeurts/Grok16": {
+      "repo": "Grok16",
+      "pin_url": "http://127.0.0.1:9477/grok16/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/grok16/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Grok16"
+    },
+    "ZacharyGeurts/KILROY": {
+      "repo": "KILROY",
+      "pin_url": "http://127.0.0.1:9477/kilroy/",
+      "pages_url": "https://zacharygeurts.github.io/KILROY/",
+      "sovereign_url": "http://127.0.0.1:9477/kilroy/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/KILROY"
+    },
+    "ZacharyGeurts/ZNetwork": {
+      "repo": "ZNetwork",
+      "pin_url": "http://127.0.0.1:9477/znetwork/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/znetwork/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/ZNetwork"
+    },
+    "ZacharyGeurts/AmmoCode": {
+      "repo": "AmmoCode",
+      "pin_url": "http://127.0.0.1:9477/ammocode/",
+      "pages_url": "https://zacharygeurts.github.io/AmmoCode/",
+      "sovereign_url": "http://127.0.0.1:9477/ammocode/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/AmmoCode"
+    },
+    "ZacharyGeurts/Field_Primer": {
+      "repo": "Field_Primer",
+      "pin_url": "http://127.0.0.1:9477/field-primer/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/field-primer/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Field_Primer"
+    },
+    "ZacharyGeurts/Field_Research": {
+      "repo": "Field_Research",
+      "pin_url": "http://127.0.0.1:9477/field-research/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/field-research/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Field_Research"
+    },
+    "ZacharyGeurts/Final_Eye": {
+      "repo": "Final_Eye",
+      "pin_url": "http://127.0.0.1:9477/final-eye/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/final-eye/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Final_Eye"
+    },
+    "ZacharyGeurts/Final_Ear": {
+      "repo": "Final_Ear",
+      "pin_url": "http://127.0.0.1:9477/final-ear/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/final-ear/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Final_Ear"
+    },
+    "ZacharyGeurts/Final_Mouth": {
+      "repo": "Final_Mouth",
+      "pin_url": "http://127.0.0.1:9477/final-mouth/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/final-mouth/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Final_Mouth"
+    },
+    "ZacharyGeurts/World_Redata": {
+      "repo": "World_Redata",
+      "pin_url": "http://127.0.0.1:9477/world-redata/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/world-redata/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/World_Redata"
+    },
+    "ZacharyGeurts/AMOURANTHRTX": {
+      "repo": "AMOURANTHRTX",
+      "pin_url": "http://127.0.0.1:9477/amouranthrtx/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/amouranthrtx/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/AMOURANTHRTX"
+    },
+    "ZacharyGeurts/OBS-FieldVoiceFilter": {
+      "repo": "OBS-FieldVoiceFilter",
+      "pin_url": "http://127.0.0.1:9477/obs-fieldvoicefilter/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/obs-fieldvoicefilter/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/OBS-FieldVoiceFilter"
+    },
+    "ZacharyGeurts/Kill-Grok-Orphans": {
+      "repo": "Kill-Grok-Orphans",
+      "pin_url": "http://127.0.0.1:9477/kill-grok-orphans/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/kill-grok-orphans/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Kill-Grok-Orphans"
+    },
+    "ZacharyGeurts/memes": {
+      "repo": "memes",
+      "pin_url": "http://127.0.0.1:9477/memes/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/memes/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/memes"
+    },
+    "ZacharyGeurts/retrotool": {
+      "repo": "retrotool",
+      "pin_url": "http://127.0.0.1:9477/retrotool/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/retrotool/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/retrotool"
+    },
+    "ZacharyGeurts/Poop": {
+      "repo": "Poop",
+      "pin_url": "http://127.0.0.1:9477/poop/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/poop/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Poop"
+    },
+    "ZacharyGeurts/ZacharyGeurts": {
+      "repo": "ZacharyGeurts",
+      "pin_url": "http://127.0.0.1:9477/zacharygeurts/",
+      "pages_url": "https://zacharygeurts.github.io/ZacharyGeurts/",
+      "sovereign_url": "http://127.0.0.1:9477/zacharygeurts/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/ZacharyGeurts"
+    },
+    "ZacharyGeurts/command": {
+      "repo": "command",
+      "pin_url": "http://127.0.0.1:9477/command/",
+      "pages_url": "https://zacharygeurts.github.io/command/",
+      "sovereign_url": "http://127.0.0.1:9477/command/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/command"
+    },
+    "ZacharyGeurts/Queen": {
+      "repo": "Queen",
+      "pin_url": "http://127.0.0.1:9477/queen/",
+      "pages_url": null,
+      "sovereign_url": "http://127.0.0.1:9477/queen/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/Queen"
+    },
+    "ZacharyGeurts/AIA": {
+      "repo": "AIA",
+      "pin_url": "http://127.0.0.1:9477/aia/",
+      "pages_url": "https://zacharygeurts.github.io/AIA/",
+      "sovereign_url": "http://127.0.0.1:9477/aia/",
+      "true_source": "sovereign_loopback",
+      "github": "https://github.com/ZacharyGeurts/AIA"
+    },
+    "ZacharyGeurts/GNUEOLTerminal": {
+      "repo": "GNUEOLTerminal",
+      "pin_url": "http://127.0.0.1:9477/gnueolterminal/",
+      "pages_url": "https://zacharygeurts.github.io/GNUEOLTerminal/",
+      "sovereign_url": "http://127.0.0.1:9477/gnueolterminal/",
+      "true_source": "sovereign_loopback",
+      "github": "https://zacharygeurts.github.io/GNUEOLTerminal/"
+    }
+  },
+  "counts": {
+    "local_findings": 12,
+    "fork_deletes": 0,
+    "fork_locks": 25,
+    "branch_cuts": 0,
+    "owned_repos": 25
+  },
+  "local_findings": [
+    {
+      "kind": "drop_sg_stub",
+      "path": "/home/default/Desktop/SG/AmmoCode",
+      "exists": false,
+      "reason": "data-only stub \u2014 real tree is NewLatest/AmmoCode"
+    },
+    {
+      "kind": "drop_sg_stub",
+      "path": "/home/default/Desktop/SG/Grok16",
+      "exists": false,
+      "reason": "data-only stub \u2014 real tree is NewLatest/Grok16"
+    },
+    {
+      "kind": "nested_newlatest",
+      "path": "/home/default/Desktop/SG/NewLatest/NewLatest",
+      "exists": false,
+      "reason": "Nested stub \u2014 canonical root is parent"
+    },
+    {
+      "kind": "duplicate_owned_repo",
+      "path": "/home/default/Desktop/SG/NewLatest",
+      "exists": true,
+      "slug": "ZacharyGeurts/Hostess7",
+      "duplicate_of": "/home/default/Desktop/SG/NewLatest"
+    },
+    {
+      "kind": "duplicate_repo_tree",
+      "path": "/home/default/Desktop/SG/NewLatest",
+      "exists": true,
+      "slug": "ZacharyGeurts/Hostess7",
+      "canonical": "/home/default/Desktop/SG/NewLatest"
+    },
+    {
+      "kind": "stale_pages_route",
+      "path": "https:/zacharygeurts.github.io/field",
+      "exists": false,
+      "virtual": true,
+      "rewrite_to": "http://127.0.0.1:9477/field"
+    },
+    {
+      "kind": "stale_pages_route",
+      "path": "https:/zacharygeurts.github.io/Hostess7/field",
+      "exists": false,
+      "virtual": true,
+      "rewrite_to": "http://127.0.0.1:9477/field"
+    },
+    {
+      "kind": "stale_pages_route",
+      "path": "https:/zacharygeurts.github.io/Hostess7/field-desktop",
+      "exists": false,
+      "virtual": true,
+      "rewrite_to": "http://127.0.0.1:9477/field"
+    },
+    {
+      "kind": "stale_pages_route",
+      "path": "https:/zacharygeurts.github.io/AmmoOS/field",
+      "exists": false,
+      "virtual": true,
+      "rewrite_to": "http://127.0.0.1:9477/field"
+    },
+    {
+      "kind": "stale_pages_route",
+      "path": "https:/zacharygeurts.github.io/command/field",
+      "exists": false,
+      "virtual": true,
+      "rewrite_to": "http://127.0.0.1:9477/field"
+    },
+    {
+      "kind": "stale_pages_route",
+      "path": "https:/zacharygeurts.github.io/KILROY/field",
+      "exists": false,
+      "virtual": true,
+      "rewrite_to": "http://127.0.0.1:9477/field"
+    },
+    {
+      "kind": "stale_pages_route",
+      "path": "https:/github.com/ZacharyGeurts/field",
+      "exists": false,
+      "virtual": true,
+      "rewrite_to": "http://127.0.0.1:9477/field"
+    }
+  ],
+  "github_actions": {
+    "available": true,
+    "fork_deletes": [],
+    "fork_locks": [
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/AMOURANTHRTX",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/AmmoCode",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/AmmoOS",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Field_Primer",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Field_Research",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Final_Ear",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Final_Eye",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Final_Mouth",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/GNUEOLTerminal",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Grok16",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/H7updater",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Hostess7",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/KILROY",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Kill-Grok-Orphans",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/OBS-FieldVoiceFilter",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Poop",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/Queen",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/VSYNC-Locker",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/World_Redata",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/ZNetwork",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/ZacharyGeurts",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/command",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/field",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Repository was archived so is read-only. (HTTP 403)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/memes",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      },
+      {
+        "action": "disable_forking",
+        "repo": "ZacharyGeurts/retrotool",
+        "dry": false,
+        "ok": false,
+        "note": "gh: Allow forks setting can only be changed on org-owned private repositories (HTTP 422)"
+      }
+    ],
+    "branch_cuts": []
+  },
+  "pin_index_count": 24,
+  "api": "/api/ammodrive-fork-guard",
+  "rewrite": {
+    "module": "panel/assets/zachub-source-router.js",
+    "on_loopback": "sovereign_pin_or_panel",
+    "on_pages": "pin_url_not_raw_github",
+    "data_h7_github_repo": "canonical_pin_url"
+  },
+  "pages": true,
+  "lane": "github-mirror",
+  "writes_to_sovereign": false,
+  "sovereign_brain_unhooked": true,
+  "pages_read_only": true,
+  "canonical_api": "/api/ammodrive-fork-guard",
+  "api_aliases": [
+    "/api/field-zachub-fork-guard",
+    "/api/zachub-fork-guard"
+  ],
+  "loopback_upgrade": "http://127.0.0.1:9477",
+  "exported": "2026-07-04T23:53:53Z"
+}

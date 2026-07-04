@@ -4,12 +4,15 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+INSTALL = ROOT.parent
 DOCS = ROOT / "docs"
 API = DOCS / "api"
 sys.path.insert(0, str(ROOT / "src"))
@@ -111,6 +114,165 @@ def _export_ask_seeds() -> dict[str, Any]:
     return {"ok": True, "schema": "hostess7-github-ask-seeds/v1", "lane": "github-mirror", "answers": answers, "exported": _ts()}
 
 
+def _run_install_json(rel: str, args: list[str] | None = None, *, timeout: int = 120) -> dict[str, Any]:
+    script = INSTALL / rel
+    if not script.is_file():
+        return {}
+    env = {**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "HOSTESS7_ROOT": str(ROOT)}
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(script), *(args or ["json"])],
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            cwd=str(INSTALL),
+            env=env,
+            check=False,
+        )
+        if proc.returncode == 0 and proc.stdout.strip():
+            doc = json.loads(proc.stdout)
+            if isinstance(doc, dict):
+                return doc
+    except (subprocess.TimeoutExpired, json.JSONDecodeError, OSError):
+        pass
+    return {}
+
+
+def _ammodrive_pages_doc(
+    doc: dict[str, Any],
+    *,
+    api: str,
+    legacy_apis: list[str],
+    schema_suffix: str,
+) -> dict[str, Any]:
+    out = dict(doc)
+    base_schema = str(out.get("schema") or schema_suffix)
+    if base_schema.startswith("field-zachub"):
+        out["schema"] = base_schema.replace("field-zachub", "ammodrive", 1)
+    out["product"] = out.get("product") or "AmmoDrive"
+    out["pages"] = True
+    out["lane"] = "github-mirror"
+    out["writes_to_sovereign"] = False
+    out["sovereign_brain_unhooked"] = True
+    out["pages_read_only"] = True
+    out["api"] = api
+    out["canonical_api"] = api
+    out["api_aliases"] = legacy_apis
+    out["loopback_upgrade"] = "http://127.0.0.1:9477"
+    out["exported"] = _ts()
+    return out
+
+
+def _export_ammodrive() -> list[str]:
+    """Publish AmmoDrive static API snapshots — read-only on GitHub Pages."""
+    branding_path = INSTALL / "data" / "ammodrive-branding.json"
+    branding = h7_read_json(branding_path) if branding_path.is_file() else {}
+    pairs: list[tuple[str, str, str, list[str], str]] = (
+        (
+            "field-zachub-storage.json",
+            "ammodrive-storage.json",
+            "/api/ammodrive-storage",
+            ["/api/field-zachub-storage", "/api/zachub-storage"],
+            "lib/field-zachub-storage.py",
+        ),
+        (
+            "field-zachub-qemu-racks.json",
+            "ammodrive-qemu-racks.json",
+            "/api/ammodrive-qemu-racks",
+            ["/api/field-zachub-qemu-racks", "/api/zachub-qemu-racks"],
+            "lib/field-zachub-qemu-racks.py",
+        ),
+        (
+            "field-zachub-fork-guard.json",
+            "ammodrive-fork-guard.json",
+            "/api/ammodrive-fork-guard",
+            ["/api/field-zachub-fork-guard", "/api/zachub-fork-guard"],
+            "lib/field-zachub-fork-guard.py",
+        ),
+    )
+    files: list[str] = []
+    storage: dict[str, Any] = {}
+    racks: dict[str, Any] = {}
+    fork: dict[str, Any] = {}
+    for src_name, dst_name, api, legacy, script_rel in pairs:
+        src_path = API / src_name
+        doc: dict[str, Any] = {}
+        if src_path.is_file():
+            try:
+                doc = h7_read_json(src_path)
+            except Exception:
+                doc = {}
+        if not doc:
+            doc = _run_install_json(script_rel)
+        if not doc:
+            continue
+        enriched = _ammodrive_pages_doc(doc, api=api, legacy_apis=legacy, schema_suffix=dst_name)
+        files.append(_write(dst_name, enriched).name)
+        if "storage" in dst_name:
+            storage = enriched
+        elif "qemu" in dst_name:
+            racks = enriched
+        elif "fork" in dst_name:
+            fork = enriched
+    totals = racks.get("storage_totals") if isinstance(racks.get("storage_totals"), dict) else {}
+    if not totals:
+        obd = racks.get("one_big_drive") if isinstance(racks.get("one_big_drive"), dict) else {}
+        if obd:
+            totals = {
+                "logical_gb": obd.get("logical_gb"),
+                "effective_gb_with_redundancy": obd.get("effective_gb_with_redundancy"),
+                "rack_count": obd.get("rack_count"),
+                "combined_h7_addressable_gb": obd.get("logical_gb"),
+                "protocol": obd.get("protocol") or "field-h7s-fs",
+            }
+    public = {
+        "schema": "ammodrive-public/v1",
+        "ok": True,
+        "product": branding.get("product") or storage.get("product") or "AmmoDrive",
+        "legacy_product": branding.get("legacy_product") or "ZacHub",
+        "tagline": branding.get("tagline"),
+        "motto": branding.get("motto") or storage.get("motto") or racks.get("motto"),
+        "pages": True,
+        "lane": "github-mirror",
+        "canonical_root": "https://zacharygeurts.github.io/Hostess7/",
+        "desktop": "https://zacharygeurts.github.io/Hostess7/desktop/",
+        "apis": {
+            "public": "/api/ammodrive-public",
+            "storage": "/api/ammodrive-storage",
+            "qemu_racks": "/api/ammodrive-qemu-racks",
+            "fork_guard": "/api/ammodrive-fork-guard",
+        },
+        "api_aliases": branding.get("api_aliases") or [],
+        "security": {
+            "internet_isolated": bool(racks.get("internet_isolated", True)),
+            "outside_internet": False,
+            "storage_plane": "sovereign_loopback_only",
+            "pages_read_only": True,
+            "sovereign_brain_unhooked": True,
+            "writes_to_sovereign": False,
+            "ironclad_gate": True,
+            "loopback_upgrade": "http://127.0.0.1:9477",
+            "motto": "Super secure from outside internet — Pages serves read-only mirror; live stack on loopback.",
+        },
+        "storage_totals": totals,
+        "rack_count": len(racks.get("slots") or racks.get("racks_provisioned") or []),
+        "owners": branding.get("owners") or storage.get("owners") or ["Grok", "Zac"],
+        "exported": _ts(),
+    }
+    if fork:
+        public["fork_guard"] = {
+            "ok": fork.get("ok"),
+            "pins": len((fork.get("pins") or fork.get("source_pins") or {})),
+            "stale_routes": len((fork.get("stale_routes") or {})),
+        }
+    files.append(_write("ammodrive-public.json", public).name)
+    docs_data = DOCS / "data"
+    docs_data.mkdir(parents=True, exist_ok=True)
+    if branding_path.is_file():
+        shutil.copy2(branding_path, docs_data / "ammodrive-branding.json")
+    return files
+
+
 def _export_operator_x() -> None:
     import subprocess
 
@@ -152,6 +314,7 @@ def export_all(*, full: bool = True) -> dict[str, Any]:
         files.append(_write("library-index.json", _export_search_index("library", "library", "children algebra")).name)
         files.append(_write("videogames-index.json", _export_search_index("videogames", "videogames", "mario zelda")).name)
         files.append(_write("ask-seeds.json", _export_ask_seeds()).name)
+    files.extend(_export_ammodrive())
     total = sum((API / f).stat().st_size for f in files if (API / f).is_file())
     return {"ok": True, "lane": "github-mirror", "api_dir": str(API), "files": files, "bytes": total, "exported": _ts()}
 
