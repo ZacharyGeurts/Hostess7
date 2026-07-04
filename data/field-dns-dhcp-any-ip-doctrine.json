@@ -2,14 +2,17 @@
   "schema": "field-dns-dhcp-any-ip/v1",
   "title": "Answer DNS and DHCP on any IP — every possible local address",
   "boss": "hostess7",
-  "motto": "Anyone picks any IP on this host — we answer DNS and DHCP. Wildcard bind + per-address truth.",
+  "motto": "Anyone picks any IPv4 anywhere — DNS and DHCP answer. It just works. Device map, not numbers.",
   "policy": {
     "dns_any_ipv4": true,
     "dns_any_ipv6": true,
     "dhcp_any_ipv4": true,
+    "arbitrary_ipv4_worldwide": true,
+    "it_just_works": true,
     "wildcard_bind": true,
-    "enumerate_local_addresses": true,
-    "reply_on_dest_ip": true
+    "enumerate_local_addresses": false,
+    "reply_on_dest_ip": true,
+    "track_devices_not_numbers": true
   },
   "bind": {
     "dns_ipv4_wildcard": "0.0.0.0",

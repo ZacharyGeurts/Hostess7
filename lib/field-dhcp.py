@@ -90,6 +90,29 @@ def _any_ip_mod() -> Any:
     return mod
 
 
+def _arbitrary_mod() -> Any:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "field_dhcp_arbitrary", INSTALL / "lib" / "field-ipv4-arbitrary.py",
+    )
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _arbitrary_ipv4() -> bool:
+    try:
+        mod = _arbitrary_mod()
+        if mod and hasattr(mod, "arbitrary_ipv4_enabled"):
+            return bool(mod.arbitrary_ipv4_enabled())
+    except Exception:
+        pass
+    return False
+
+
 def _bind_if() -> str:
     try:
         mod = _any_ip_mod()
@@ -269,6 +292,14 @@ def _discover_rate_ok(mac: str) -> bool:
 
 
 def _pool_valid(ip: str, *, start: str = POOL_START, end: str = POOL_END) -> bool:
+    if _arbitrary_ipv4():
+        try:
+            mod = _arbitrary_mod()
+            if mod and hasattr(mod, "valid_arbitrary_ip"):
+                return bool(mod.valid_arbitrary_ip(ip))
+        except Exception:
+            pass
+        return True
     try:
         n = _ip_to_int(ip)
         return _ip_to_int(start) <= n <= _ip_to_int(end)
@@ -297,6 +328,13 @@ def _dns_for_mac(mac: str) -> list[str]:
 
 def _ip_in_use(ip: str, timeout: float = 0.9) -> bool:
     """Ping probe before OFFER — prevent lease/IP collisions on the LAN."""
+    if _arbitrary_ipv4():
+        try:
+            mod = _arbitrary_mod()
+            if mod and hasattr(mod, "skip_ping_probe") and mod.skip_ping_probe():
+                return False
+        except Exception:
+            return False
     if os.environ.get("NEXUS_FIELD_DHCP_PING_PROBE", "1") != "1":
         return False
     try:
@@ -311,10 +349,83 @@ def _ip_in_use(ip: str, timeout: float = 0.9) -> bool:
         return False
 
 
-def _next_lease(mac: str, *, renew: bool = False) -> str:
+def _resolve_lease_ip(
+    mac: str,
+    *,
+    requested: str | None = None,
+    ciaddr: str | None = None,
+    dest_ip: str | None = None,
+    existing: str | None = None,
+) -> str:
+    if _arbitrary_ipv4():
+        try:
+            mod = _arbitrary_mod()
+            if mod and hasattr(mod, "resolve_lease_ip"):
+                return str(mod.resolve_lease_ip(
+                    mac,
+                    requested=requested,
+                    ciaddr=ciaddr,
+                    dest_ip=dest_ip,
+                    existing=existing,
+                ))
+        except Exception:
+            pass
+    pool_start, _, _ = _pool_for_mac(mac)
+    return existing or pool_start
+
+
+def _store_lease(mac: str, ip: str, *, renew: bool, lease_sec: int) -> None:
     leases = _load_json(LEASE_FILE, {"leases": {}})
     pool = leases.setdefault("leases", {})
     now = _now()
+    exp, rem = _lease_expiry(now)
+    entry = pool.get(mac) or {}
+    entry.update({
+        "ip": ip,
+        "leased_at": entry.get("leased_at") or now,
+        "expires_at": exp,
+        "remaining_seconds": rem,
+        "renewals": int(entry.get("renewals") or 0) + (1 if renew else 0),
+        "declines": int(entry.get("declines") or 0),
+        "last_seen": now,
+        "dns": _dns_for_mac(mac),
+        "legacy": _is_legacy_client(mac),
+        "lease_seconds": lease_sec,
+        "device_id": f"dhcp-{mac.replace(':', '')[:12]}",
+        "track_ip": not _arbitrary_ipv4(),
+        "arbitrary_ipv4": _arbitrary_ipv4(),
+    })
+    pool[mac] = entry
+    _save_json(LEASE_FILE, leases)
+
+
+def _next_lease(
+    mac: str,
+    *,
+    renew: bool = False,
+    requested: str | None = None,
+    ciaddr: str | None = None,
+    dest_ip: str | None = None,
+) -> str:
+    leases = _load_json(LEASE_FILE, {"leases": {}})
+    pool = leases.setdefault("leases", {})
+    now = _now()
+    pool_start, pool_end, lease_sec = _pool_for_mac(mac)
+    existing = str(pool[mac].get("ip")) if mac in pool and pool[mac].get("ip") else None
+
+    if _arbitrary_ipv4():
+        ip = _resolve_lease_ip(
+            mac,
+            requested=requested,
+            ciaddr=ciaddr,
+            dest_ip=dest_ip,
+            existing=existing,
+        )
+        if not _pool_valid(ip, start=pool_start, end=pool_end):
+            ip = _resolve_lease_ip(mac, existing=existing)
+        _store_lease(mac, ip, renew=renew, lease_sec=lease_sec)
+        return ip
+
     if mac in pool:
         entry = pool[mac]
         entry["last_seen"] = now
@@ -322,13 +433,11 @@ def _next_lease(mac: str, *, renew: bool = False) -> str:
         exp, rem = _lease_expiry(str(entry.get("leased_at") or now))
         entry["expires_at"] = exp
         entry["remaining_seconds"] = rem
-        pool_start, pool_end, lease_sec = _pool_for_mac(mac)
         entry["dns"] = _dns_for_mac(mac)
         entry["legacy"] = _is_legacy_client(mac)
         entry["lease_seconds"] = lease_sec
         _save_json(LEASE_FILE, leases)
         return str(entry.get("ip") or pool_start)
-    pool_start, pool_end, lease_sec = _pool_for_mac(mac)
     start = _ip_to_int(pool_start)
     end = _ip_to_int(pool_end)
     used = {_ip_to_int(v["ip"]) for v in pool.values() if v.get("ip")}
@@ -339,20 +448,7 @@ def _next_lease(mac: str, *, renew: bool = False) -> str:
                 _stats["conflicts_detected"] = int(_stats.get("conflicts_detected") or 0) + 1
                 _append_event("pool_conflict", mac, ip, "ping_probe_in_use")
                 continue
-            exp, rem = _lease_expiry(now)
-            pool[mac] = {
-                "ip": ip,
-                "leased_at": now,
-                "expires_at": exp,
-                "remaining_seconds": rem,
-                "renewals": 0,
-                "declines": 0,
-                "last_seen": now,
-                "dns": _dns_for_mac(mac),
-                "legacy": _is_legacy_client(mac),
-                "lease_seconds": lease_sec,
-            }
-            _save_json(LEASE_FILE, leases)
+            _store_lease(mac, ip, renew=False, lease_sec=lease_sec)
             return ip
     return pool_start
 
@@ -486,6 +582,12 @@ def _handle(data: bytes, addr: tuple[str, int]) -> bytes | None:
     xid = data[4:8]
     chaddr = data[28:44]
     mac = ":".join(f"{b:02x}" for b in chaddr[:6])
+    requested = None
+    if 50 in opts and len(opts[50]) == 4:
+        requested = socket.inet_ntoa(opts[50])
+    ciaddr = socket.inet_ntoa(data[12:16])
+    ciaddr = ciaddr if ciaddr != "0.0.0.0" else None
+    dest_ip = _LAST_DHCP_DEST
     if msg_type == 1:
         if not _discover_rate_ok(mac):
             _stats["rejected"] += 1
@@ -493,7 +595,7 @@ def _handle(data: bytes, addr: tuple[str, int]) -> bytes | None:
             return None
         _stats["discover"] += 1
         pool_start, pool_end, lease_sec = _pool_for_mac(mac)
-        ip = _next_lease(mac)
+        ip = _next_lease(mac, requested=requested, ciaddr=ciaddr, dest_ip=dest_ip)
         if not _pool_valid(ip, start=pool_start, end=pool_end):
             _stats["rejected"] += 1
             _stats["conflicts_detected"] = int(_stats.get("conflicts_detected") or 0) + 1
@@ -505,7 +607,7 @@ def _handle(data: bytes, addr: tuple[str, int]) -> bytes | None:
     if msg_type == 3:
         _stats["request"] += 1
         pool_start, pool_end, lease_sec = _pool_for_mac(mac)
-        ip = _next_lease(mac, renew=True)
+        ip = _next_lease(mac, renew=True, requested=requested, ciaddr=ciaddr, dest_ip=dest_ip)
         if not _pool_valid(ip, start=pool_start, end=pool_end):
             _stats["rejected"] += 1
             return None
@@ -750,7 +852,12 @@ def build_panel() -> dict[str, Any]:
         "bind": f"{bind}:{PORT}",
         "ok": running and may_serve,
         "crushing": running,
-        "pool": {"start": POOL_START, "end": POOL_END},
+        "pool": (
+            {"scope": "0.0.0.0/0", "arbitrary": True, "it_just_works": True}
+            if _arbitrary_ipv4()
+            else {"start": POOL_START, "end": POOL_END}
+        ),
+        "arbitrary_ipv4": _arbitrary_ipv4(),
         "legacy_pool": (
             {"start": LEGACY_POOL_START, "end": LEGACY_POOL_END, "lease_seconds": LEGACY_LEASE_SEC}
             if LEGACY_POOL_START and LEGACY_POOL_END

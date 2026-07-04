@@ -10,6 +10,8 @@ export NEXUS_FIELD_DHCP_BIND="${NEXUS_FIELD_DHCP_BIND:-192.168.47.1}"
 export NEXUS_FIELD_DNS_ANY_IP="${NEXUS_FIELD_DNS_ANY_IP:-1}"
 export NEXUS_FIELD_DHCP_ANY_IP="${NEXUS_FIELD_DHCP_ANY_IP:-1}"
 export NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN="${NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN:-1}"
+export NEXUS_FIELD_IPV4_ARBITRARY="${NEXUS_FIELD_IPV4_ARBITRARY:-1}"
+export NEXUS_FIELD_DHCP_PING_PROBE="${NEXUS_FIELD_DHCP_PING_PROBE:-0}"
 
 PGREP="${PGREP:-/usr/bin/pgrep}"
 
@@ -84,4 +86,6 @@ if p.is_file():
     w = d.get('worldwide_suppression') or {}
     print('Foreign off:', w.get('foreign_dns_dhcp_off'), '| threats:', w.get('foreign_threat_count'), '| sole:', w.get('sole_authority'))
     print('Track devices not numbers:', d.get('track_devices_not_numbers'))
+    ia = d.get('internet_arbitrary') or {}
+    print('Internet arbitrary:', ia.get('arbitrary_ipv4'), '| it just works:', ia.get('it_just_works'))
 " 2>/dev/null || true

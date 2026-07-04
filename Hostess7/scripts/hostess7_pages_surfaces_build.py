@@ -1666,6 +1666,15 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("field-ipv4-device-sovereign.json")
 
+    ipv4_arbitrary = _run_nl_script_json("lib/field-ipv4-arbitrary.py", ["panel"], timeout=20)
+    if not ipv4_arbitrary.get("schema"):
+        ipv4_arbitrary = {**stub, "schema": "field-ipv4-arbitrary/v1", "partial": True}
+    ipv4_arbitrary["pages"] = True
+    (API / "field-ipv4-arbitrary.json").write_text(
+        json.dumps(ipv4_arbitrary, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-ipv4-arbitrary.json")
+
     threat_panel = {
         **stub,
         "schema": "threat-panel-pages/v1",

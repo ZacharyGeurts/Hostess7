@@ -205,6 +205,8 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "answer_any_ip": True,
         "device_sovereign": sovereign,
         "track_devices_not_numbers": sovereign,
+        "arbitrary_ipv4_worldwide": sovereign,
+        "it_just_works": sovereign,
         "dns": {
             "binds_v4": dns_bind_hosts_v4(),
             "binds_v6": dns_bind_hosts_v6(),

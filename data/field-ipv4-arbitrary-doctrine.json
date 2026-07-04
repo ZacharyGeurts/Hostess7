@@ -1,0 +1,26 @@
+{
+  "schema": "field-ipv4-arbitrary/v1",
+  "title": "IPv4 completely arbitrary — worldwide, it just works",
+  "boss": "hostess7",
+  "motto": "Connect anywhere on Earth. Pick any IPv4. DNS and DHCP answer. Device information is the map — numbers are arbitrary.",
+  "policy": {
+    "arbitrary_ipv4_worldwide": true,
+    "it_just_works": true,
+    "honor_requested_ip": true,
+    "honor_ciaddr": true,
+    "honor_dest_ip": true,
+    "track_devices_not_numbers": true,
+    "wildcard_bind": true,
+    "skip_ping_probe": true,
+    "scope": "0.0.0.0/0"
+  },
+  "internet": {
+    "anywhere": true,
+    "any_pick": true,
+    "dns_answer": "0.0.0.0:53",
+    "dhcp_answer": "0.0.0.0:67"
+  },
+  "module": "lib/field-ipv4-arbitrary.py",
+  "api": "/api/field-ipv4-arbitrary",
+  "ironclad_cite": "ironclad:ipv4-arbitrary:1"
+}

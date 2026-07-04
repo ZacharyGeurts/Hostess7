@@ -192,6 +192,28 @@ def _box_authority() -> dict[str, Any]:
     }
 
 
+def _internet_arbitrary() -> dict[str, Any]:
+    arbitrary = _run_json("lib/field-ipv4-arbitrary.py", ["json"], timeout=10)
+    any_ip = _load(STATE / "field-dns-dhcp-any-ip-panel.json", {})
+    if not any_ip.get("schema"):
+        any_ip = _run_json("lib/field-dns-dhcp-any-ip.py", ["json"], timeout=10)
+    dhcp = _load(STATE / "field-dhcp-panel.json", {})
+    return {
+        "active": True,
+        "arbitrary_ipv4": arbitrary.get("arbitrary_ipv4", True),
+        "it_just_works": arbitrary.get("it_just_works", True),
+        "anywhere": True,
+        "any_pick": True,
+        "scope": "0.0.0.0/0",
+        "dns_wildcard": (any_ip.get("dns") or {}).get("wildcard_v4"),
+        "dhcp_wildcard": (any_ip.get("dhcp") or {}).get("wildcard"),
+        "dhcp_arbitrary_pool": (dhcp.get("pool") or {}).get("arbitrary"),
+        "honor_requested_ip": True,
+        "map_to": "device_information",
+        "motto": "Connect anywhere on Earth — IPv4 is completely arbitrary, it just works",
+    }
+
+
 def _worldwide_suppression() -> dict[str, Any]:
     collision = _load(STATE / "field-dns-dhcp-collision-guard-panel.json", {})
     if not collision.get("foreign_threat_count"):
@@ -228,11 +250,14 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "never_look_back": True,
         "ipv4": {
             "sovereign": True,
+            "arbitrary": True,
             "symbolic_space": IPV4_SPACE,
             "scope": "0.0.0.0/0",
             "enumerate": False,
             "map_to": "device_information",
+            "it_just_works": True,
         },
+        "internet_arbitrary": _internet_arbitrary(),
         "box": _box_authority(),
         "devices": devices,
         "device_count": len(devices),
@@ -263,6 +288,9 @@ def manage(*, auto: bool = True) -> dict[str, Any]:
 
     _run_json("lib/field-dns-dhcp-any-ip.py", ["panel"], timeout=15)
     actions.append({"step": "any_ip_panel"})
+
+    _run_json("lib/field-ipv4-arbitrary.py", ["panel"], timeout=10)
+    actions.append({"step": "ipv4_arbitrary"})
 
     _run_json("lib/field-device-map.py", ["panel"], timeout=60)
     actions.append({"step": "device_map"})
