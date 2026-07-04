@@ -3,7 +3,7 @@
   "schema": "field-botnet-dns-dhcp-panel/v1",
   "title": "Fielded bot network \u2014 secure stable DNS & DHCP for everyone through GitHub",
   "motto": "Any and all bot-net nodes \u2014 Truth DNS + Field DHCP \u2014 stable for everyone \u00b7 GitHub control plane",
-  "updated": "2026-07-03T10:52:44Z",
+  "updated": "2026-07-04T02:05:46Z",
   "boss": "hostess7",
   "layer": -2,
   "fkey": "F10",
@@ -12,7 +12,8 @@
     "dns_truth": true,
     "dhcp_field": true,
     "stable": true,
-    "secure": true
+    "secure": true,
+    "legacy_open_secured": true
   },
   "github_control_plane": {
     "enabled": true,
@@ -21,12 +22,16 @@
     "dns_api": "/api/field-dns",
     "internet_api": "/api/field-internet",
     "catalog": "data/ammoos-pages-hub.json",
-    "sync_interval_sec": 30,
+    "sync_interval_sec": 120,
+    "github_traffic_shard": {
+      "module": "lib/field-github-traffic-shard.py",
+      "offload_target_pct": 90
+    },
     "github_open": true,
     "pages_probe": {
       "ok": true,
       "status": 200,
-      "elapsed_ms": 93,
+      "elapsed_ms": 391,
       "url": "https://zacharygeurts.github.io/Hostess7/"
     },
     "pages_runtime": "https://zacharygeurts.github.io/Hostess7/",
@@ -34,40 +39,8 @@
   },
   "bot_network": {
     "enabled": true,
-    "node_count": 65,
+    "node_count": 492,
     "nodes": [
-      {
-        "id": "bot-f62ebbb5ce352796",
-        "kind": "botnet_member",
-        "name": "Zach",
-        "full_name": "Zachary Geurts",
-        "region": "MI",
-        "country": "US",
-        "flag": "US",
-        "permanent": true,
-        "forever_storage": true,
-        "storage_slot": 494385628861677479,
-        "virtual_bytes": 1000000000000000,
-        "roles": [
-          "dns_relay",
-          "dhcp_relay",
-          "truth_mirror",
-          "github_sync",
-          "power_user"
-        ],
-        "dns_upstream": "127.0.0.1:53",
-        "dhcp_dns_option": [
-          "127.0.0.1"
-        ],
-        "dhcp_pool": "192.168.110.100-192.168.110.200",
-        "dhcp_subnet": "192.168.110.0/24",
-        "composite_score": 0.94,
-        "bsp_algorithm": "composite_bsp",
-        "github_sync": true,
-        "boss": "hostess7",
-        "power_user": true,
-        "updated": "2026-07-03T08:06:09Z"
-      },
       {
         "id": "qemu-world-1",
         "kind": "qemu_world",
@@ -1091,12 +1064,6860 @@
         "github_sync": true,
         "boss": "hostess7",
         "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-65",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-66",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-67",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-68",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-69",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-70",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-71",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-72",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-73",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-74",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-75",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-76",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-77",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-78",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-79",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-80",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-81",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-82",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-83",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-84",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-85",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-86",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-87",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-88",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-89",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-90",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-91",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-92",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-93",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-94",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-95",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-96",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-97",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-98",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-99",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-100",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-101",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-102",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-103",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-104",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-105",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-106",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-107",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-108",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-109",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-110",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-111",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-112",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-113",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-114",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-115",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-116",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-117",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-118",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-119",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-120",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-121",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-122",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-123",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-124",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-125",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-126",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-127",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-128",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-129",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-130",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-131",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-132",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-133",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-134",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-135",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-136",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-137",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-138",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-139",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-140",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-141",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-142",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-143",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-144",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-145",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-146",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-147",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-148",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-149",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-150",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-151",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-152",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-153",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-154",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-155",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-156",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-157",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-158",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-159",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-160",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-161",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-162",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-163",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-164",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-165",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-166",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-167",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-168",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-169",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-170",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-171",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-172",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-173",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-174",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-175",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-176",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-177",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-178",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-179",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-180",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-181",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-182",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-183",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-184",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-185",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-186",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-187",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-188",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-189",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-190",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-191",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-192",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-193",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-194",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-195",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-196",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-197",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-198",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-199",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-200",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-201",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-202",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-203",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-204",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-205",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-206",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-207",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-208",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-209",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-210",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-211",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-212",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-213",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-214",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-215",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-216",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-217",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-218",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-219",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-220",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-221",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-222",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-223",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-224",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-225",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-226",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-227",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-228",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-229",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-230",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-231",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-232",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-233",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-234",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-235",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-236",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-237",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-238",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-239",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-240",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-241",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-242",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-243",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-244",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-245",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-246",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-247",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-248",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-249",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-250",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-251",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-252",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-253",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-254",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-255",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-256",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-257",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-258",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-259",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-260",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-261",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-262",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-263",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-264",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-265",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-266",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-267",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-268",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-269",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-270",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-271",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-272",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-273",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-274",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-275",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-276",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-277",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-278",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-279",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-280",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-281",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-282",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-283",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-284",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-285",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-286",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-287",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-288",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-289",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-290",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-291",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-292",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-293",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-294",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-295",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-296",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-297",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-298",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-299",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-300",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-301",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-302",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-303",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-304",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-305",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-306",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-307",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-308",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-309",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-310",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-311",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-312",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-313",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-314",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-315",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-316",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-317",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-318",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-319",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-320",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-321",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-322",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-323",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-324",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-325",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-326",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-327",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-328",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-329",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-330",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-331",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-332",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-333",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-334",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-335",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-336",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-337",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-338",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-339",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-340",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-341",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-342",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-343",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-344",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-345",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-346",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-347",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-348",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-349",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-350",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-351",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-352",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-353",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-354",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-355",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-356",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-357",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-358",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-359",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-360",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-361",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-362",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-363",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-364",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-365",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-366",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-367",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-368",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-369",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-370",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-371",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-372",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-373",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-374",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-375",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-376",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-377",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-378",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-379",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-380",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-381",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-382",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-383",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-384",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-385",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-386",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-387",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-388",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-389",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-390",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-391",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-392",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-393",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-394",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-395",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-396",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-397",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-398",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-399",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-400",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-401",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-402",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-403",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-404",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-405",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-406",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-407",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-408",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-409",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-410",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-411",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-412",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-413",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-414",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-415",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-416",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-417",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-418",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-419",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-420",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-421",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-422",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-423",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-424",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-425",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-426",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-427",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-428",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-429",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-430",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-431",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-432",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-433",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-434",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-435",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-436",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-437",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-438",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-439",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-440",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-441",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-442",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-443",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-444",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-445",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-446",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-447",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-448",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-449",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-450",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-451",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-452",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-453",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-454",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-455",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-456",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-457",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-458",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-459",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-460",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-461",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-462",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-463",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-464",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-465",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-466",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-467",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-468",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-469",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-470",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-471",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-472",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-473",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-474",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-475",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-476",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-477",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-478",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-479",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-480",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-481",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-482",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-483",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-484",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-485",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-486",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-487",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-488",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-489",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-490",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-491",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
+      },
+      {
+        "id": "qemu-world-492",
+        "kind": "qemu_world",
+        "roles": [
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "dns_upstream": "127.0.0.1:53",
+        "dhcp_dns_option": [
+          "127.0.0.1"
+        ],
+        "github_sync": true,
+        "boss": "hostess7",
+        "pipeline": "qemu-world-pipeline/v1"
       }
     ],
     "member_registry": "lib/field-botnet-registry.py",
     "member_registry_api": "/api/field-botnet-registry",
     "prefer_member_registry": true,
-    "permanent_reservation": true,
+    "permanent_reservation": false,
     "any_and_all": true,
     "unified_egress": "hostess7"
   },
@@ -1158,6 +7979,21 @@
       "module": "lib/field-github-resilience.py"
     },
     {
+      "id": "github_path_harden",
+      "module": "lib/field-github-path-harden.py",
+      "dns_authority": "lib/field-dns.py"
+    },
+    {
+      "id": "dns_drift_threat",
+      "module": "lib/field-dns-drift-threat.py",
+      "api": "/api/field-dns-drift-threat"
+    },
+    {
+      "id": "legacy_connect",
+      "module": "lib/field-legacy-connect.py",
+      "api": "/api/field-legacy-connect"
+    },
+    {
       "id": "github_everyone",
       "module": "lib/field-github-everyone.py"
     },
@@ -1175,7 +8011,7 @@
     "schema": "field-botnet-legal-ports-panel/v1",
     "title": "Botnet legal port auto-allow \u2014 IANA-registered civilian egress for everyone",
     "motto": "Real legal ports pass automatically through the field botnet \u2014 stalker lop only for confirmed malware sockets",
-    "updated": "2026-07-03T10:52:14Z",
+    "updated": "2026-07-04T02:02:02Z",
     "stalker_lop_count": 14,
     "context_port_count": 9,
     "for_everyone": {
@@ -1203,7 +8039,7 @@
     "title": "H7t \u2014 truthed isolation format for non-sovereign payloads",
     "format": "h7t/1",
     "motto": "Not our safe stuff \u2192 truthed \u2192 H7t \u2192 100\u00d7 benefits in the chamber without touching the real deal",
-    "updated": "2026-07-03T10:52:14Z",
+    "updated": "2026-07-04T02:02:04Z",
     "safe_stack_prefixes": [
       "Hostess7/",
       "lib/field-",
@@ -1230,21 +8066,21 @@
     "ingest_usage": "POST body or field-h7t-truth.py ingest PATH"
   },
   "github_resilience": {
-    "ok": true,
+    "ok": false,
     "schema": "field-github-resilience-panel/v1",
     "title": "GitHub resilience \u2014 loopback authority + publish queue when control plane is down",
-    "updated": "2026-07-03T10:52:15Z",
+    "updated": "2026-07-04T02:02:09Z",
     "boss": "hostess7",
     "probe": {
       "schema": "field-github-resilience-probe/v1",
-      "updated": "2026-07-03T10:52:15Z",
-      "ok": true,
+      "updated": "2026-07-04T02:02:09Z",
+      "ok": false,
       "degraded_ok": false,
-      "github_push_ready": true,
-      "open_count": 6,
-      "weight_open": 13,
+      "github_push_ready": false,
+      "open_count": 1,
+      "weight_open": 3,
       "pages_open": true,
-      "raw_open": true,
+      "raw_open": false,
       "loopback": {
         "ok": false,
         "tcp": {
@@ -1268,55 +8104,16 @@
           "weight": 3,
           "ok": true,
           "status": 200,
-          "elapsed_ms": 94
-        },
-        {
-          "id": "raw",
-          "url": "https://raw.githubusercontent.com/ZacharyGeurts/Hostess7/main/VERSION",
-          "role": "raw",
-          "weight": 2,
-          "ok": true,
-          "status": 200,
-          "elapsed_ms": 98
-        },
-        {
-          "id": "api",
-          "url": "https://api.github.com/zen",
-          "role": "api",
-          "weight": 2,
-          "ok": true,
-          "status": 403,
-          "elapsed_ms": 228
-        },
-        {
-          "id": "github_https",
-          "url": "https://github.com/",
-          "role": "web",
-          "weight": 1,
-          "ok": true,
-          "status": 429,
-          "elapsed_ms": 253
-        },
-        {
-          "id": "ssh_tunnel",
-          "host": "ssh.github.com",
-          "port": 443,
-          "role": "git_push",
-          "weight": 3,
-          "ok": true,
-          "elapsed_ms": 152
-        },
-        {
-          "id": "ssh_direct",
-          "host": "github.com",
-          "port": 22,
-          "role": "git_push",
-          "weight": 2,
-          "ok": true,
-          "elapsed_ms": 78
+          "elapsed_ms": 361
         }
       ],
-      "fast": true
+      "fast": true,
+      "traffic_shard": {
+        "offload_pct": 90.0,
+        "active_shard": "field-loopback",
+        "field_nodes": 1,
+        "live_batch": 1
+      }
     },
     "loopback_authority": {
       "host": "127.0.0.1",
@@ -1332,10 +8129,10 @@
     },
     "authority": "https://zacharygeurts.github.io/Hostess7/",
     "degraded_ok": false,
-    "github_push_ready": true,
+    "github_push_ready": false,
     "publish_queue": {
-      "pending": 1,
-      "entries": 1,
+      "pending": 0,
+      "entries": 0,
       "path": "/home/default/Desktop/SG/NewLatest/.nexus-state/hostess7-publish-queue.json"
     },
     "api": "/api/field-github-resilience",
@@ -1347,7 +8144,7 @@
     "schema": "field-github-everyone-panel/v1",
     "title": "GitHub for everyone \u2014 botnet civilian passthrough, DNS truth, Pages mirrors",
     "motto": "Everyone needs GitHub \u2014 repos, Pages, raw, API, git \u2014 open for all through the field botnet",
-    "updated": "2026-07-03T10:52:15Z",
+    "updated": "2026-07-04T02:02:11Z",
     "boss": "hostess7",
     "for_everyone": {
       "enabled": true,
@@ -1719,9 +8516,53 @@
     "api": "/api/field-github-everyone",
     "fast": true
   },
+  "github_traffic_shard": {
+    "schema": "field-github-traffic-shard-panel/v1",
+    "updated": "2026-07-04T02:02:13Z",
+    "ok": true,
+    "title": "GitHub traffic shard \u2014 thermal-settle style field offload",
+    "motto": "Queen probes ~10% per cycle; field nodes carry ~90% \u2014 rotate like thermal headroom.",
+    "offload_target_pct": 90.0,
+    "host_share_pct": 10.0,
+    "field_nodes": 1,
+    "nodes": [
+      {
+        "id": "field-loopback",
+        "kind": "sovereign",
+        "roles": [
+          "github_sync"
+        ]
+      }
+    ],
+    "rotation": {
+      "schema": "field-github-traffic-rotation/v1",
+      "updated": "2026-07-04T02:02:12Z",
+      "active_shard": "field-loopback",
+      "field_nodes": 1,
+      "offload_pct": 90.0,
+      "host_share_pct": 10.0,
+      "live_batch": 3,
+      "cached_rows": 0,
+      "stale_shards": [],
+      "thermal_headroom": 100.0,
+      "fast": false,
+      "probe_kind": "legacy"
+    },
+    "thermal_headroom": 100.0,
+    "cache_ttl_fast_sec": 90,
+    "keepalive_min_interval_sec": 90,
+    "api": "/api/field-github-traffic-shard"
+  },
+  "dns_drift_threat": {
+    "api": "/api/field-dns-drift-threat"
+  },
+  "legacy_connect": {
+    "api": "/api/field-legacy-connect"
+  },
+  "servers_updated": null,
   "fast": true,
   "pages": true,
   "lane": "pages-surfaces",
-  "exported": "2026-07-03T10:52:44Z",
+  "exported": "2026-07-04T02:05:47Z",
   "pages_base": "/Hostess7"
 }
