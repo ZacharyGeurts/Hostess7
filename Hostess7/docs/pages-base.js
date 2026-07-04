@@ -46,4 +46,35 @@
   };
   global.H7StripBase = stripBase;
   global.NEXUS_C2_BASEMENT = BASE === "/command";
+
+  if (!global.fetch && global.XMLHttpRequest) {
+    global.fetch = function (input, opts) {
+      opts = opts || {};
+      return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        var url = typeof input === "string" ? input : (input && input.url) || "";
+        xhr.open(opts.method || "GET", url, true);
+        if (opts.headers) {
+          Object.keys(opts.headers).forEach(function (k) {
+            xhr.setRequestHeader(k, opts.headers[k]);
+          });
+        }
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState !== 4) return;
+          resolve({
+            ok: xhr.status >= 200 && xhr.status < 300,
+            status: xhr.status,
+            json: function () {
+              return Promise.resolve(JSON.parse(xhr.responseText || "{}"));
+            },
+            text: function () {
+              return Promise.resolve(xhr.responseText || "");
+            },
+          });
+        };
+        xhr.onerror = function () { reject(new Error("network")); };
+        xhr.send(opts.body || null);
+      });
+    };
+  }
 })(typeof window !== "undefined" ? window : globalThis);

@@ -220,7 +220,13 @@ def detect_incumbents() -> dict[str, Any]:
     dhcp_busy = _port_in_use(DHCP_PORT, "udp")
     resolved = _systemd_resolved_active()
     resolv = _read_resolv()
-    foreign_ns = [n for n in resolv.get("nameservers") or [] if n not in ("127.0.0.1", "::1", "127.0.0.53")]
+    trusted_ns = frozenset({"127.0.0.1", "::1", "127.0.0.53"})
+    foreign_ns = [n for n in resolv.get("nameservers") or [] if n not in trusted_ns]
+    nexus_dns = _nexus_dns_running()
+    nexus_dhcp = _nexus_dhcp_running()
+    # Foreign resolvers in resolv.conf are enforcement targets — not incumbents that block takeover.
+    port_held_by_foreign = dns_busy and not nexus_dns
+    stub_without_truth = resolved and not nexus_dns
     return {
         "dns_port_busy": dns_busy,
         "dhcp_port_busy": dhcp_busy,
@@ -229,10 +235,12 @@ def detect_incumbents() -> dict[str, Any]:
         "systemd_resolved": resolved,
         "resolv": resolv,
         "foreign_nameservers": foreign_ns,
-        "incumbent_dns": dns_busy or resolved or bool(foreign_ns),
-        "incumbent_dhcp": dhcp_busy,
-        "nexus_dns_running": _nexus_dns_running(),
-        "nexus_dhcp_running": _nexus_dhcp_running(),
+        "foreign_ipv4_resolvers": [n for n in foreign_ns if ":" not in n],
+        "incumbent_dns": port_held_by_foreign or stub_without_truth,
+        "incumbent_dhcp": dhcp_busy and not nexus_dhcp,
+        "nexus_dns_running": nexus_dns,
+        "nexus_dhcp_running": nexus_dhcp,
+        "ipv4_truth_only": not foreign_ns or nexus_dns,
     }
 
 
@@ -252,14 +260,11 @@ def _advance_phase(
     if phase == "ready":
         if not health.get("healthy"):
             return "observing"
+        if streak >= READY_CHECKS and health.get("healthy") and inc.get("nexus_dns_running"):
+            return "primary"
         if streak >= READY_CHECKS:
-            legacy_open = _legacy_open_secured()
-            if legacy_open and health.get("healthy") and inc.get("nexus_dns_running"):
-                return "primary"
-            vacant = not inc.get("incumbent_dhcp") and (
-                not inc.get("incumbent_dns") or inc.get("nexus_dns_running")
-            )
-            if vacant or streak >= READY_CHECKS + 1:
+            vacant = not inc.get("incumbent_dns")
+            if vacant or inc.get("nexus_dns_running"):
                 return "primary"
         return "ready"
 
@@ -279,9 +284,13 @@ def evaluate_takeover(*, persist: bool = True) -> dict[str, Any]:
     streak = prev_streak + 1 if health.get("healthy") else 0
     phase = _advance_phase(str(prev.get("phase") or "observing"), streak, health, inc)
 
+    foreign_ns = list(inc.get("foreign_nameservers") or [])
     can_enforce_resolv = phase == "primary"
-    can_serve_dhcp = phase == "primary" and not inc.get("incumbent_dhcp")
+    can_serve_dhcp = phase == "primary" and (
+        inc.get("nexus_dhcp_running") or not inc.get("incumbent_dhcp") or _legacy_open_secured()
+    )
     can_capture_egress = phase == "primary"
+    can_remove_foreign = phase == "primary" and bool(foreign_ns)
 
     doc: dict[str, Any] = {
         "schema": "dns-takeover/v1",
@@ -303,6 +312,16 @@ def evaluate_takeover(*, persist: bool = True) -> dict[str, Any]:
             "serve_dhcp": can_serve_dhcp,
             "local_capture": can_capture_egress,
             "break_resolv_symlink": can_enforce_resolv,
+            "remove_foreign_resolvers": can_remove_foreign,
+            "ipv4_truth_only": phase == "primary" and not foreign_ns,
+        },
+        "foreign_enforcement": {
+            "foreign_nameservers": foreign_ns,
+            "foreign_ipv4_resolvers": inc.get("foreign_ipv4_resolvers") or [],
+            "remove_on_primary": can_remove_foreign,
+            "seamless_transition": True,
+            "no_internet_break": True,
+            "motto": "Truth DNS primary — foreign resolvers removed, not middleman",
         },
         "hostess7": {
             "inside": {

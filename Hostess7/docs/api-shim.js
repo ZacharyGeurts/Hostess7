@@ -1162,9 +1162,13 @@
         const st = await loadStatic("/api/status.json");
         return okStub({
           current: st.version || "2.0.7h",
+          version: st.version || "2.0.7h",
+          deploy_url: "https://zacharygeurts.github.io/Hostess7/",
           update_available: false,
           pages: true,
-          message: "GitHub Pages lane — upgrade on loopback panel",
+          middleman: false,
+          direct_for_everyone: true,
+          message: "Deployed for everyone at https://zacharygeurts.github.io/Hostess7/",
         });
       }
     }

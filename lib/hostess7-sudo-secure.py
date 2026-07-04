@@ -199,7 +199,9 @@ def destroy_untrue(*, timeout: int = 300) -> dict[str, Any]:
         "schema": "hostess7-sudo-secure-destroy-untrue/v1",
         "updated": _utc(),
         "action": "destroy-untrue",
-        "ok": all(s.get("ok") for s in steps) and takeover.get("phase") in ("ready", "primary"),
+        "ok": all(s.get("ok") for s in steps)
+        and takeover.get("phase") == "primary"
+        and takeover.get("permissions", {}).get("enforce_resolv", False),
         "steps": steps,
         "takeover_phase": takeover.get("phase"),
         "permissions": takeover.get("permissions"),

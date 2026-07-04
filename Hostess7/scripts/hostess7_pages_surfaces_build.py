@@ -563,6 +563,8 @@ def _patch_text(content: str, *, queen: bool = False) -> str:
         content,
     )
     license_block = (
+        f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-deploy-everyone.css" />\n'
+        f'  <script src="{PAGES_BASE}/pages-deploy-everyone.js"></script>\n'
         f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n'
         f'  <script src="{PAGES_BASE}/pages-license.js"></script>'
     )
@@ -691,6 +693,8 @@ def _desktop_html() -> str:
         f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-ammoos-scale.css" />\n'
         f'  <script src="{PAGES_BASE}/pages-ammoos-scale.js"></script>\n'
         f'  <script src="{PAGES_BASE}/assets/field-desktop-scale-propagate.js"></script>\n'
+        f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-deploy-everyone.css" />\n'
+        f'  <script src="{PAGES_BASE}/pages-deploy-everyone.js"></script>\n'
         f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n'
         f'  <script src="{PAGES_BASE}/pages-license.js"></script>'
     )
@@ -1776,15 +1780,25 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
         except (OSError, json.JSONDecodeError):
             pass
 
+    deploy_url = f"https://zacharygeurts.github.io{PAGES_BASE.rstrip('/')}/"
     (API / "pages-update-status.json").write_text(
         json.dumps(
             {
                 **c2_stub,
+                "schema": "pages-update-status/v1",
                 "current": H7_VERSION,
+                "version": H7_VERSION,
+                "deploy_url": deploy_url,
+                "deployed_at": _ts(),
+                "pages_base": PAGES_BASE,
                 "update_available": False,
                 "update_in_progress": False,
                 "checked_at": _ts(),
-                "message": "GitHub Pages lane — upgrade on loopback NEXUS panel",
+                "middleman": False,
+                "direct_for_everyone": True,
+                "old_browsers_ok": True,
+                "dns_dhcp": "/api/field-botnet-dns-dhcp",
+                "message": f"Deployed for everyone at {deploy_url} — Truth DNS + Field DHCP, no middleman",
             },
             indent=2,
         )
