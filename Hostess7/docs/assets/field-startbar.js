@@ -988,13 +988,14 @@
 
   function startIcon() {
     return (
-      '<span class="fsb-start-flag" aria-hidden="true">' +
-      '<svg class="fsb-start-flag-svg" viewBox="0 0 16 16" width="20" height="20" focusable="false">' +
+      '<span class="fsb-start-flag fsb-start-flag--classic" aria-hidden="true">' +
+      '<span class="fsb-start-flag-bezel">' +
+      '<svg class="fsb-start-flag-svg" viewBox="0 0 16 16" width="16" height="16" focusable="false">' +
       '<rect x="0" y="0" width="7" height="7" fill="#e81224"/>' +
       '<rect x="8" y="0" width="7" height="7" fill="#16c60c"/>' +
       '<rect x="0" y="8" width="7" height="7" fill="#0078d4"/>' +
       '<rect x="8" y="8" width="7" height="7" fill="#ffb900"/>' +
-      "</svg></span>" +
+      "</svg></span></span>" +
       '<span class="fsb-start-label">Start</span>'
     );
   }
