@@ -179,7 +179,10 @@ def main() -> int:
 
     cmd = (sys.argv[1] if len(sys.argv) > 1 else "json").strip().lower()
     if cmd in ("json", "panel", "status"):
-        print(json.dumps(build(), ensure_ascii=False, indent=2))
+        try:
+            print(json.dumps(build(), ensure_ascii=False, indent=2))
+        except BrokenPipeError:
+            return 0
         return 0
     print(json.dumps({"error": "usage: field-error-dashboard.py [json|panel]"}))
     return 1

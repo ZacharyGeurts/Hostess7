@@ -74,12 +74,13 @@ monster_exec() {
   exec "$@"
 }
 
+# Introspection routes — direct build.py (no monster/boundary; CI expects task-registry JSON)
 if [[ "$route" == "tasks" || "$route" == "list" ]]; then
-  monster_exec "ammolang:tasks" "$PY" "$BUILD" tasks
+  exec "$PY" "$BUILD" tasks
 fi
 
 if [[ "$route" == "assist" ]]; then
-  monster_exec "ammolang:assist" "$PY" "$BUILD" assist "${extra[@]:-all}"
+  exec "$PY" "$BUILD" assist "${extra[@]:-all}"
 fi
 
 dry=()

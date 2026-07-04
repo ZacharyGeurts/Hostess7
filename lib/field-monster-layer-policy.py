@@ -67,6 +67,14 @@ def needs_ammolang(*, label: str = "", cmd: list[str] | None = None) -> bool:
         return False
     if os.environ.get("AML_BOUNDARY_ACTIVE", "").strip() in ("1", "true", "yes"):
         return False
+    lbl = str(label or "").lower()
+    if lbl.startswith("ammolang:") and any(x in lbl for x in ("tasks", "list", "assist")):
+        return False
+    argv = [str(a) for a in (cmd or [])]
+    if any("field-ammolang-build.py" in a for a in argv):
+        tail = {str(a).lower() for a in argv}
+        if tail & {"tasks", "list", "assist"}:
+            return False
     info = infer_layer(label=label, cmd=cmd)
     if info["layer_id"] in KILROY_IDS:
         return False
