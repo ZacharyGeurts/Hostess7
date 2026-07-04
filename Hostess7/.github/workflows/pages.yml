@@ -17,9 +17,13 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: hostess7-github-pages
+  cancel-in-progress: true
+
 jobs:
   deploy:
-    timeout-minutes: 12
+    timeout-minutes: 20
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
