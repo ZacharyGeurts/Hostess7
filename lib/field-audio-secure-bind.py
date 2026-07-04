@@ -43,8 +43,17 @@ def probe_hardware() -> dict[str, Any]:
     }
 
 
+def _hdmi_driver_mod() -> Any | None:
+    return fcc.mod("audio_hdmi_driver", "field-hdmi-audio-driver.py")
+
+
 def bind(*, sink_name: str = "", force: bool = False) -> dict[str, Any]:
     """Bind DAC chamber routing through ZNetwork localhost audio layer."""
+    hdmi = _hdmi_driver_mod()
+    if hdmi and hasattr(hdmi, "bind"):
+        probe = hdmi.probe() if hasattr(hdmi, "probe") else {}
+        if probe.get("default_is_dummy") or not probe.get("hdmi_sinks"):
+            hdmi.bind(force=True)
     dac = _dac_mod()
     if not dac:
         return {"ok": False, "error": "dac_chamber_missing"}

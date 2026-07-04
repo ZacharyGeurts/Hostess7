@@ -15,7 +15,7 @@
 
   function panelBase() {
     if (pagesRuntime()) return (global.HOSTESS7_PAGES_BASE || "/Hostess7").replace(/\/$/, "");
-    return "http://127.0.0.1:9477";
+    return "/Hostess7";
   }
 
   function ammonetUrl() {

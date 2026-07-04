@@ -50,7 +50,7 @@
 
   const DESKTOP_DEFAULT_IDS = [
     "view",
-    "queen-terminal",
+    "gnu-eol-terminal",
     "field-ping",
     "mspaint",
     "field-popcorn",
@@ -204,10 +204,11 @@
   function normalizeDesktopApp(app, id) {
     if (!app) return null;
     const row = Object.assign({}, app);
-    if (id === "queen-terminal") {
+    if (id === "gnu-eol-terminal" || id === "queen-terminal") {
+      row.id = "gnu-eol-terminal";
       row.exec = gnuTerminalExec();
-      row.name = "AmmoOS Terminal";
-      row.hint = row.hint || "GNU Terminal · AmmoOS panel · Layer 0";
+      row.name = "GNU EOL Terminal";
+      row.hint = row.hint || "GNU EOL Terminal · shell ≡ terminal · Layer 0";
       row.os_layer = 0;
       row.category = "AmmoOS · Layer 0";
     }
@@ -295,7 +296,7 @@
     const world = pagesRuntime() ? base + "/queen" : "http://127.0.0.1:9481/world";
     const rows = [
       { id: "view", name: "View", hint: "Files & folders", icon: "queen-prog-view", exec: base + "/queen/view.html", icon_url: assets + "/queen-prog-view.png", pinned: true, shell: true, category: "NEXUS · Queen" },
-      { id: "queen-terminal", name: "AmmoOS Terminal", hint: "Field GNU Terminal · code preview · truth · Layer 0", icon: "queen-prog-terminal", exec: gnuTerminalExec(), icon_url: assets + "/queen-prog-terminal.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
+      { id: "gnu-eol-terminal", name: "GNU EOL Terminal", hint: "GNU EOL Terminal · shell ≡ terminal · code preview · Layer 0", icon: "queen-prog-terminal", exec: gnuTerminalExec(), icon_url: assets + "/queen-prog-terminal.png", pinned: true, shell: true, os_layer: 0, category: "GNU EOL Terminal" },
       { id: "field-ping", name: "Ping", hint: "ICMP · traceroute · KILROY lineage", icon: "queen-prog-znetwork", exec: base + "/field-ping", icon_url: assets + "/queen-prog-znetwork.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Network" },
       { id: "field-popcorn", name: "Popcorn", hint: "Media player · Layer 0", icon: "queen-prog-popcorn", exec: base + "/field-popcorn", icon_url: assets + "/queen-prog-popcorn.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
       { id: "ammocode", name: "AmmoCode", hint: "Syntax editor · Layer 0", icon: "queen-prog-ammocode", exec: base + "/ammocode", icon_url: assets + "/queen-prog-ammocode.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
@@ -359,7 +360,7 @@
 
   function openDesktopApp(app) {
     if (app.id === "queen-browser") openQueenBrowserClean();
-    else if (app.id === "queen-terminal") launchGnuTerminal(app);
+    else if (app.id === "gnu-eol-terminal" || app.id === "queen-terminal") launchGnuTerminal(app);
     else launchApp(app);
   }
 
@@ -444,15 +445,15 @@
   function launchGnuTerminal(app) {
     const exec = gnuTerminalExec();
     const termApp = Object.assign({}, app || {}, {
-      id: "queen-terminal",
+      id: "gnu-eol-terminal",
       exec: exec,
       shell: true,
-      name: "AmmoOS Terminal",
+      name: "GNU EOL Terminal",
       os_layer: 0,
-      category: "AmmoOS · Shell",
+      category: "GNU EOL Terminal",
     });
     if (shellLaunch(termApp)) {
-      toast("AmmoOS Terminal · GNU panel");
+      toast("GNU EOL Terminal · GNU panel");
       return;
     }
     if (pagesRuntime()) {

@@ -1,6 +1,6 @@
 # Explaining Core — Grok15 shared reference
 
-Generated: 2026-07-04T18:15:21Z
+Generated: 2026-07-04T20:39:12Z
 
 Non-redundant backbone for all `explaining_*` language manuals.
 

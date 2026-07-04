@@ -126,6 +126,9 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
     planetary = _load(STATE / "field-planetary-dns-dhcp-panel.json", {})
     if not planetary.get("counts") and fast:
         planetary = _run_json("lib/field-planetary-dns-dhcp.py", ["panel"], timeout=5.0)
+    world_scale = _load(STATE / "field-world-dns-dhcp-scale-panel.json", {})
+    if not world_scale.get("current") and fast:
+        world_scale = _run_json("lib/field-world-dns-dhcp-scale.py", ["json"], timeout=8.0)
     ipv4_enum = _load(STATE / "field-ipv4-enumerate-panel.json", {})
     if not ipv4_enum.get("counts") and fast:
         ipv4_enum = _run_json("lib/field-ipv4-enumerate.py", ["json"], timeout=8.0)
@@ -225,6 +228,9 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
             "load": (perf.get("loadavg") or [None])[0],
         },
         "planetary_leases": planetary_leases,
+        "world_dns_dhcp_scale": world_scale.get("current") or {},
+        "world_projections": (world_scale.get("projections") or [])[:4],
+        "ingress_policy": world_scale.get("ingress_policy") or "quarantine_not_kill",
         "services": {
             "dns": (botnet.get("dns_dhcp") or {}).get("dns", {}).get("running")
             or (planetary.get("services") or {}).get("dns", {}).get("running"),

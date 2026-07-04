@@ -7,7 +7,7 @@
   const API = (function () {
     if (globalThis.H7Api) return globalThis.H7Api("/api/field-gnu-terminal");
     try {
-      const p = new URL(globalThis.location?.href || "/Hostess7/");
+      const p = new URL(globalThis.location?.href || "http://127.0.0.1:9477/");
       if (p.port === "9481") return `${p.origin}/api/field-gnu-terminal`;
       return "/api/field-gnu-terminal";
     } catch (_) {
@@ -1014,7 +1014,7 @@
   function shellInner() {
     return (
       `<header class="fgt-topbar">` +
-      `<span class="fgt-topbar-brand">AmmoOS Terminal</span>` +
+      `<span class="fgt-topbar-brand">GNU EOL Terminal</span>` +
       `<span class="fgt-topbar-pill fgt-topbar-pill--secured">Iron Plate</span>` +
       `<span class="fgt-topbar-pill fgt-topbar-pill--kilroy">GNU·EOL</span>` +
       `<nav class="fgt-menubar" aria-label="Terminal menus">` +
@@ -1022,7 +1022,7 @@
         ["clear", "Clear terminal"],
         ["tab-new", "New tab"],
         ["wiki", "Open GNUEOL wiki"],
-        ["about", "About AmmoOS Terminal"],
+        ["about", "About GNU EOL Terminal"],
       ]) +
       menuBlock("Edit", [
         ["copy", "Copy buffer"],

@@ -1,19 +1,8 @@
 {
   "schema": "field-dns-dhcp-collision-guard/v1",
-  "updated": "2026-07-04T18:13:34Z",
+  "updated": "2026-07-04T20:34:19Z",
   "motto": "Internet open for users. Anything making unclean internet is hostile.",
   "collisions": [
-    {
-      "kind": "duplicate_serve_process",
-      "service": "dhcp_serve",
-      "pattern": "field-dhcp.py serve",
-      "pids": [
-        2999801,
-        3001365
-      ],
-      "count": 2,
-      "severity": "high"
-    },
     {
       "kind": "incumbent_dns",
       "listeners": [
@@ -86,9 +75,9 @@
       "note": "Unauthorized DNS listener"
     }
   ],
-  "collision_count": 7,
+  "collision_count": 6,
   "lease_collisions": 0,
-  "duplicate_processes": 1,
+  "duplicate_processes": 0,
   "incumbent_conflicts": 2,
   "foreign_server_threats": [
     {
@@ -137,9 +126,9 @@
     "phase": "observing",
     "foreign_resolvers": [],
     "internet_open": true,
-    "collision_count": 7,
+    "collision_count": 6,
     "authority_collision_count": 2,
-    "hygiene_warnings": 1
+    "hygiene_warnings": 0
   },
   "takeover_phase": "observing",
   "policy": {

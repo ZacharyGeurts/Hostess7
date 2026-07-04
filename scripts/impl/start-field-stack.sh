@@ -197,6 +197,16 @@ if [[ -x "${ROOT}/lib/field-vsync-locker-bootstrap.sh" ]]; then
     bash "${ROOT}/lib/field-vsync-locker-bootstrap.sh" 2>/dev/null || true
 fi
 
+echo "=== Field HDMI audio driver ==="
+if [[ -f "${ROOT}/lib/field-hdmi-audio-boot.sh" ]]; then
+  # shellcheck source=/dev/null
+  source "${ROOT}/lib/field-hdmi-audio-boot.sh"
+  NEXUS_INSTALL_ROOT="${ROOT}" NEXUS_STATE_DIR="${STATE}" \
+    nexus_field_hdmi_audio_boot 2>/dev/null || true
+  PY_HDMI="$(command -v pythong || command -v python3)"
+  "$PY_HDMI" "${ROOT}/lib/field-hdmi-audio-driver.py" install 2>/dev/null || true
+fi
+
 export NEXUS_ZNETWORK="${NEXUS_ZNETWORK:-1}"
 export NEXUS_ZNETWORK_PROMPT=0
 export NEXUS_ZNETWORK_NO_SUDO=1

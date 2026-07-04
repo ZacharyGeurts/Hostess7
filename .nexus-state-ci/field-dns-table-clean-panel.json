@@ -1,9 +1,9 @@
 {
   "schema": "field-dns-table-clean/v1",
   "mode": "clean",
-  "ts": "2026-07-04T00:33:11Z",
+  "ts": "2026-07-04T19:23:34Z",
   "ok": true,
-  "note": "Clean ≠ clear — stale rows expired, authority reconciled, nothing blindly wiped.",
+  "note": "Clean ≠ clear — fast smoke path (tail/expire only).",
   "actions": [
     {
       "target": "field-dns-queries.jsonl",
@@ -38,23 +38,6 @@
       "destructive": false
     }
   ],
-  "theirs": [
-    {
-      "action": "enforce_resolv",
-      "ok": true,
-      "destructive": false
-    },
-    {
-      "action": "foreign_block",
-      "ok": false,
-      "destructive": false
-    }
-  ],
-  "rebuilt": [
-    "lib/field-dns.py:build",
-    "lib/field-dhcp.py:build",
-    "lib/field-dns-drift-threat.py:panel",
-    "lib/dns-service-takeover.py:evaluate",
-    "lib/field-dns-drift-threat.py:scan"
-  ]
+  "theirs": [],
+  "rebuilt": []
 }

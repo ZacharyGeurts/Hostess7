@@ -483,7 +483,8 @@ def terminal_status() -> dict[str, Any]:
         "programs": ["truth", "mspaint", "modules", "load-module"],
         "dos40": True,
         "dos40_api": "/api/field-dos40",
-        "posture": "Field GNU Terminal — shell ≡ terminal · MS-DOS 4.0 modules · combinatronic optional · Ironclad truth",
+        "product": "GNU EOL Terminal",
+        "posture": "GNU EOL Terminal — shell ≡ terminal · MS-DOS 4.0 modules · combinatronic optional · Ironclad truth",
         "combinatronic_commands": ["combinatorics", "combinatronic", "g16-combinatronics", "bash -c combinatorics"],
         "aliases": ["terminal", "gnu-terminal", "shell", "gnueol"],
     }

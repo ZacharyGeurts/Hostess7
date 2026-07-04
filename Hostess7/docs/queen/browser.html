@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" data-queen-theme="black_emerald_rose_2026">
 <head>
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <script src="/Hostess7/pages-queen-hardening.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-deploy-everyone.css" />
+  <script src="/Hostess7/pages-deploy-everyone.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <base href="/Hostess7/queen/" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Queen Browser</title>
-  <link rel="canonical" href="/world/browser.html" />
+  <link rel="canonical" href="/Hostess7/queen/browser.html" />
   <style>
     html,body{margin:0;background:#020403;color:#e8f2ea;font:14px system-ui,sans-serif}
   </style>
@@ -22,11 +30,11 @@
   <link rel="stylesheet" href="queen-viewer.css" data-queen-theme="1" />
   <link rel="stylesheet" href="field-performance-flyout.css" />
   <link rel="stylesheet" href="queen-dashboard-flyout.css" />
-  <link rel="icon" href="/assets/ammoos-field-48.png" type="image/png" sizes="48x48" />
-  <link rel="apple-touch-icon" href="/assets/ammoos-field-256.png" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://127.0.0.1:* ws://127.0.0.1:*; frame-src 'self' http://127.0.0.1:* https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <link rel="icon" href="/Hostess7/assets/ammoos-field-48.png" type="image/png" sizes="48x48" />
+  <link rel="apple-touch-icon" href="/Hostess7/assets/ammoos-field-256.png" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
 </head>
-<body class="qw qw-browser-shell qw-classic" data-queen-surface="browser" data-queen-theme="black_emerald_rose_2026" data-queen-start="/world/queen-new-tab.html" data-queen-command="http://127.0.0.1:9477/command" data-nexus-panel-port="9477" data-media-egress="locked" data-hardware-wire="queen-browser" data-front-hook="1" data-queen-boot-os="0" data-queen-start-button="classic" data-znetwork-hooks="1">
+<body data-pages-runtime="1" class="qw qw-browser-shell qw-classic" data-queen-surface="browser" data-queen-theme="black_emerald_rose_2026" data-queen-start="/Hostess7/queen/queen-new-tab.html" data-queen-command="/Hostess7/command" data-nexus-panel-port="9477" data-media-egress="locked" data-hardware-wire="queen-browser" data-front-hook="1" data-queen-boot-os="0" data-queen-start-button="classic" data-znetwork-hooks="1">
   <script>
     (function () {
       try {
@@ -38,7 +46,7 @@
     })();
   </script>
   <main class="qb-viewport" id="qb-viewport">
-    <iframe class="qb-frame" id="qb-frame" title="New tab" src="/world/queen-new-tab.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation allow-popups-to-escape-sandbox"></iframe>
+    <iframe class="qb-frame" id="qb-frame" title="New tab" src="/Hostess7/queen/queen-new-tab.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation allow-popups-to-escape-sandbox"></iframe>
   </main>
 
   <header class="qb-chrome" id="qb-chrome" aria-label="Queen browser">

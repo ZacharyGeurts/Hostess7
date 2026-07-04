@@ -1,0 +1,33 @@
+{
+  "schema": "field-world-dns-dhcp-scale/v1",
+  "title": "World DNS & DHCP — population growth forever",
+  "motto": "Rescue everyone · more hosts and edges · ping blast · quarantine ingress — never full-kill devices on the way in",
+  "population": {
+    "base_year": 2026,
+    "base_population": 8100000000,
+    "annual_growth_rate": 0.009,
+    "devices_per_capita": 2.75,
+    "horizon_years": [10, 25, 50, 100, 500, 1000]
+  },
+  "ipv4": {
+    "total_addresses": 4294967296,
+    "reserved_headroom": 268435456,
+    "usable": 4026531840
+  },
+  "edge_model": {
+    "hosts_per_edge_default": 65536,
+    "ping_rescue": true,
+    "ping_module": "lib/field-ping.py",
+    "ingress_policy": "quarantine_not_kill",
+    "dhcp_soft_ingress_env": "NEXUS_FIELD_DHCP_SOFT_INGRESS",
+    "dhcp_ping_soft_env": "NEXUS_FIELD_DHCP_PING_SOFT"
+  },
+  "world_dns_dhcp": {
+    "scope": "planet_and_beyond",
+    "truth_dns_option_6": "127.0.0.1",
+    "never_lose_lease": true,
+    "absorb_incumbents": true
+  },
+  "api": "/api/field-world-dns-dhcp-scale",
+  "module": "lib/field-world-dns-dhcp-scale.py"
+}

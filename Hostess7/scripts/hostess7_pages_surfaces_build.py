@@ -40,7 +40,7 @@ PAGES_BASE = os.environ.get("HOSTESS7_PAGES_BASE", "/Hostess7")
 PAGES_DESKTOP_THEME = "nexus-military-v8"
 PAGES_DESKTOP_ICON_IDS = (
     "view",
-    "queen-terminal",
+    "gnu-eol-terminal",
     "field-ping",
     "mspaint",
     "field-popcorn",
@@ -322,13 +322,22 @@ def _fix_icon_urls(obj: Any) -> None:
             _fix_icon_urls(item)
 
 
-def _patch_queen_terminal_app(app: dict[str, Any]) -> None:
-    app["exec"] = f"{PAGES_BASE}/queen/queen-gnu-terminal-embed.html"
-    app["hint"] = "GNU Terminal · AmmoOS panel · Layer 0"
-    app["name"] = "AmmoOS Terminal"
-    app["category"] = "AmmoOS · Shell"
+def _patch_gnu_eol_terminal_app(app: dict[str, Any]) -> None:
+    app["id"] = "gnu-eol-terminal"
+    app["exec"] = f"{PAGES_BASE}/field-gnu-terminal-embed/"
+    app["hint"] = "GNU EOL Terminal · shell ≡ terminal · Layer 0"
+    app["name"] = "GNU EOL Terminal"
+    app["category"] = "GNU EOL Terminal"
     app["os_layer"] = 0
     app["shell"] = True
+    aliases = list(app.get("aliases") or [])
+    if "queen-terminal" not in aliases:
+        aliases.append("queen-terminal")
+    app["aliases"] = aliases
+
+
+def _patch_queen_terminal_app(app: dict[str, Any]) -> None:
+    _patch_gnu_eol_terminal_app(app)
 
 
 def _patch_queen_browser_app(app: dict[str, Any]) -> None:
@@ -349,8 +358,8 @@ def _patch_queen_browser_deep(obj: Any) -> None:
     if isinstance(obj, dict):
         if obj.get("id") == "queen-browser":
             _patch_queen_browser_app(obj)
-        if obj.get("id") == "queen-terminal":
-            _patch_queen_terminal_app(obj)
+        if obj.get("id") in ("queen-terminal", "gnu-eol-terminal"):
+            _patch_gnu_eol_terminal_app(obj)
         for v in obj.values():
             _patch_queen_browser_deep(v)
     elif isinstance(obj, list):
@@ -427,8 +436,8 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
                     app[field] = _pages_url(str(app[field]))
             if app.get("id") == "queen-browser":
                 _patch_queen_browser_app(app)
-            if app.get("id") == "queen-terminal":
-                _patch_queen_terminal_app(app)
+            if app.get("id") in ("queen-terminal", "gnu-eol-terminal"):
+                _patch_gnu_eol_terminal_app(app)
 
     start_menu = doc.get("start_menu")
     if isinstance(start_menu, dict):
@@ -1542,20 +1551,27 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("hostess7-internet-clean.json")
 
-    queen_terminal = _run_nl_script_json("Queen/lib/queen-terminal.py", ["json"], timeout=45)
-    if not queen_terminal.get("schema"):
-        queen_terminal = {
+    gnu_eol_terminal = _run_nl_script_json("lib/field-gnu-terminal.py", ["json"], timeout=45)
+    if not gnu_eol_terminal.get("schema"):
+        gnu_eol_terminal = {
             **stub,
-            "schema": "queen-gnu-terminal/v2",
+            "schema": "field-gnu-terminal/v2",
             "ok": True,
             "shell_terminal_identical": True,
-            "aliases": ["terminal", "gnu-terminal", "shell", "gnueol"],
-            "posture": "GNU Terminal — default field shell",
+            "product": "GNU EOL Terminal",
+            "aliases": ["terminal", "gnu-terminal", "shell", "gnueol", "gnu-eol-terminal"],
+            "posture": "GNU EOL Terminal — shell ≡ terminal",
         }
     else:
-        queen_terminal["pages"] = True
+        gnu_eol_terminal["pages"] = True
+        gnu_eol_terminal["product"] = "GNU EOL Terminal"
+    (API / "gnu-eol-terminal.json").write_text(
+        json.dumps(gnu_eol_terminal, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("gnu-eol-terminal.json")
     (API / "queen-terminal.json").write_text(
-        json.dumps(queen_terminal, indent=2) + "\n", encoding="utf-8"
+        json.dumps({**gnu_eol_terminal, "deprecated_id": "queen-terminal", "redirect": "gnu-eol-terminal"}, indent=2) + "\n",
+        encoding="utf-8",
     )
     files.append("queen-terminal.json")
 

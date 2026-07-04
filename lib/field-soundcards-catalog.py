@@ -75,16 +75,49 @@ def _live_cards() -> list[dict[str, Any]]:
     return cards
 
 
+def _vintage_cards() -> list[dict[str, Any]]:
+    vintage = _load(INSTALL / "data" / "field-vintage-audio-drivers.json", {})
+    families = vintage.get("families") or {}
+    rows: list[dict[str, Any]] = []
+    for card in vintage.get("cards") or []:
+        if not isinstance(card, dict) or not card.get("id"):
+            continue
+        fam = families.get(str(card.get("family") or "")) or {}
+        rows.append({
+            "id": card["id"],
+            "name": card.get("name"),
+            "era": card.get("era"),
+            "bus": card.get("bus") or fam.get("bus", ""),
+            "channels": int(fam.get("channels") or 2),
+            "quality": "retro" if str(card.get("era", ""))[:4].isdigit() and int(str(card.get("era"))[:4]) < 2000 else "standard",
+            "chips": card.get("chips") or [],
+            "systems": card.get("systems") or [],
+            "emulation": card.get("family"),
+            "family": card.get("family"),
+            "vendor": card.get("vendor"),
+            "versions": card.get("versions") or [],
+            "live": bool(card.get("live")),
+            "playback_formats": (vintage.get("playback") or {}).get("formats_in") or [],
+            "vintage_composite": True,
+        })
+    return rows
+
+
 def catalog(*, include_live: bool = True) -> dict[str, Any]:
     seed = _load(CATALOG, {})
     cards = list(seed.get("cards") or [])
     seen = {c.get("id") for c in cards if c.get("id")}
+    for vintage in _vintage_cards():
+        if vintage["id"] not in seen:
+            cards.append(vintage)
+            seen.add(vintage["id"])
     if include_live:
         for live in _live_cards():
             if live["id"] not in seen:
                 cards.insert(0, live)
                 seen.add(live["id"])
     chips = _chips_audio()
+    vintage_doc = _load(INSTALL / "data" / "field-vintage-audio-drivers.json", {})
     return {
         "ok": True,
         "schema": "field-soundcards-catalog/v1",
@@ -96,6 +129,12 @@ def catalog(*, include_live: bool = True) -> dict[str, Any]:
         "cards": cards,
         "chips": chips,
         "chip_count": len(chips),
+        "vintage_composite": {
+            "module": "lib/field-vintage-audio-composite.py",
+            "api": "/api/field-vintage-audio",
+            "formats_in": (vintage_doc.get("playback") or {}).get("formats_in") or [],
+            "card_count": len(vintage_doc.get("cards") or []),
+        },
     }
 
 
@@ -103,6 +142,11 @@ def card_by_id(card_id: str) -> dict[str, Any] | None:
     for row in catalog().get("cards") or []:
         if row.get("id") == card_id:
             return row
+    vac = fcc.mod("vintage_audio", "field-vintage-audio-composite.py")
+    if vac and hasattr(vac, "card_by_id"):
+        hit = vac.card_by_id(card_id)
+        if hit:
+            return hit
     return None
 
 

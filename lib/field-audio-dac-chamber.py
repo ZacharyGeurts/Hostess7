@@ -373,13 +373,33 @@ def dispatch(body: dict[str, Any]) -> dict[str, Any]:
 
     if action in ("set_soundcard", "soundcard"):
         cfg = load_settings()
-        cfg["soundcard_id"] = str(body.get("soundcard_id") or body.get("card_id") or "")
+        card_id = str(body.get("soundcard_id") or body.get("card_id") or "")
+        cfg["soundcard_id"] = card_id
         prof = str(body.get("format_profile") or body.get("emulation") or "")
         if prof:
             cfg["format_profile"] = prof
         if body.get("alsa_id") is not None:
             cfg["alsa_card"] = str(body["alsa_id"])
+        vac = fcc.mod("vintage_audio", "field-vintage-audio-composite.py")
+        if vac and card_id and hasattr(vac, "select_card"):
+            vac.select_card(card_id)
         return apply_routing(cfg)
+
+    vac = fcc.mod("vintage_audio", "field-vintage-audio-composite.py")
+    if vac and action in ("vintage_play", "play_media", "play_file", "play"):
+        media_path = str(body.get("path") or body.get("file") or body.get("media") or "")
+        card_id = str(body.get("card_id") or body.get("soundcard_id") or load_settings().get("soundcard_id") or "")
+        if not media_path:
+            return {"ok": False, "error": "missing_path", "hint": "pass path to MP4/MP3/WAV/any audio"}
+        if hasattr(vac, "play_media"):
+            return vac.play_media(media_path, card_id=card_id)
+        return {"ok": False, "error": "vintage_composite_missing"}
+
+    if vac and action in ("vintage_catalog", "vintage_layout", "vintage_cards"):
+        if action == "vintage_layout" and hasattr(vac, "composite_layout"):
+            return {"ok": True, **vac.composite_layout()}
+        if hasattr(vac, "catalog"):
+            return vac.catalog()
 
     if action in ("test_tone", "test", "speaker_test"):
         return test_tone(str(body.get("channel") or body.get("speaker") or "FL"))

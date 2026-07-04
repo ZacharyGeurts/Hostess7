@@ -1,15 +1,15 @@
 {
   "ok": false,
   "schema": "field-dns-drift-threat-panel/v1",
-  "updated": "2026-07-04T01:51:20Z",
+  "updated": "2026-07-04T19:17:31Z",
   "title": "DNS drift threat — Truth vs witness divergence is hostile",
   "motto": "We are our own DNS — any drift from Truth @127.0.0.1 is a threat, not noise.",
   "drift": {
     "schema": "field-dns-drift-threat/v1",
-    "ts": "2026-07-04T01:51:20Z",
+    "ts": "2026-07-04T19:17:31Z",
     "ok": false,
     "threat": true,
-    "threat_level": "critical",
+    "threat_level": "high",
     "drift_as_threat": true,
     "hosts": [
       {
@@ -20,106 +20,97 @@
         "authority": [
           "140.82.112.4"
         ],
-        "stub": [
-          "140.82.113.3"
-        ],
+        "stub": [],
         "trace": [],
         "system": [
-          "140.82.113.3"
+          "140.82.112.3"
         ],
         "source": "truth_dns",
         "truth_up": true,
         "threats": [
-          "TRUTH_STUB_DRIFT",
           "TRUTH_SYSTEM_DRIFT"
         ],
-        "threat_level": "critical",
+        "threat_level": "high",
         "drift": true
       },
       {
         "host": "api.github.com",
         "truth": [
-          "140.82.113.6"
+          "140.82.112.6"
         ],
         "authority": [
-          "140.82.113.6"
+          "140.82.112.6"
         ],
-        "stub": [
-          "140.82.113.6"
-        ],
+        "stub": [],
         "trace": [],
         "system": [
-          "140.82.113.6"
-        ],
-        "source": "truth_dns",
-        "truth_up": true,
-        "threats": [],
-        "threat_level": "ok",
-        "drift": false
-      },
-      {
-        "host": "ssh.github.com",
-        "truth": [
-          "140.82.113.35"
-        ],
-        "authority": [
-          "140.82.113.35"
-        ],
-        "stub": [
-          "140.82.113.36"
-        ],
-        "trace": [],
-        "system": [
-          "140.82.113.36"
+          "140.82.113.5"
         ],
         "source": "truth_dns",
         "truth_up": true,
         "threats": [
-          "TRUTH_STUB_DRIFT",
           "TRUTH_SYSTEM_DRIFT"
         ],
-        "threat_level": "critical",
+        "threat_level": "high",
+        "drift": true
+      },
+      {
+        "host": "ssh.github.com",
+        "truth": [
+          "140.82.114.35"
+        ],
+        "authority": [
+          "140.82.114.35"
+        ],
+        "stub": [],
+        "trace": [],
+        "system": [
+          "140.82.112.36"
+        ],
+        "source": "truth_dns",
+        "truth_up": true,
+        "threats": [
+          "TRUTH_SYSTEM_DRIFT"
+        ],
+        "threat_level": "high",
         "drift": true
       },
       {
         "host": "raw.githubusercontent.com",
-        "truth": [
-          "185.199.108.133",
-          "185.199.109.133",
-          "185.199.110.133",
-          "185.199.111.133"
-        ],
+        "truth": [],
         "authority": [
           "185.199.108.133",
-          "185.199.109.133",
-          "185.199.110.133",
-          "185.199.111.133"
-        ],
-        "stub": [
           "185.199.110.133",
           "185.199.111.133",
-          "185.199.108.133",
           "185.199.109.133"
         ],
-        "trace": [],
-        "system": [
+        "stub": [],
+        "trace": [
           "185.199.108.133",
           "185.199.110.133",
-          "185.199.109.133",
-          "185.199.111.133"
+          "185.199.111.133",
+          "185.199.109.133"
         ],
-        "source": "truth_dns",
-        "truth_up": true,
-        "threats": [],
-        "threat_level": "ok",
-        "drift": false
+        "system": [
+          "185.199.110.133",
+          "185.199.108.133",
+          "185.199.111.133",
+          "185.199.109.133"
+        ],
+        "source": "dig_trace",
+        "truth_up": false,
+        "threats": [
+          "TRUTH_DNS_DOWN"
+        ],
+        "threat_level": "high",
+        "drift": true
       }
     ],
     "applied": []
   },
   "servers_updated": {
     "schema": "field-dns-dhcp-servers-updated/v1",
-    "ts": "2026-07-04T01:51:20Z",
+    "ts": "2026-07-04T19:17:31Z",
     "ok": false,
     "queen": {
       "dns_running": true,

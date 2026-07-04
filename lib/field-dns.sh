@@ -349,6 +349,11 @@ nexus_field_services_boot() {
       >>"${NEXUS_STATE_DIR}/field-local-connect.log" 2>&1 &
   fi
   declare -f nexus_field_local_connect >/dev/null 2>&1 && nexus_field_local_connect || true
+  if [[ -f "${NEXUS_INSTALL_ROOT}/lib/field-hdmi-audio-boot.sh" ]]; then
+    # shellcheck source=/dev/null
+    source "${NEXUS_INSTALL_ROOT}/lib/field-hdmi-audio-boot.sh"
+    declare -f nexus_field_hdmi_audio_boot >/dev/null 2>&1 && nexus_field_hdmi_audio_boot || true
+  fi
 }
 
 nexus_field_dns_enforce_cycle() {

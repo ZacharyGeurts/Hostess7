@@ -35,7 +35,7 @@
     {"id": "f6_field_one", "keys": ["F6"], "action": "desktop", "target": "field-one", "layer": -1, "desktop": true},
     {"id": "f5_botnet", "keys": ["F5"], "action": "launch", "target": "kilroy-dns", "layer": -2, "desktop": true},
     {"id": "f4_nexus_c2", "keys": ["F4"], "action": "launch", "target": "nexus-c2", "layer": -3, "desktop": true},
-    {"id": "ctrl_alt_t", "keys": ["Control", "Alt", "t"], "action": "launch", "target": "queen-terminal", "desktop": true},
+    {"id": "ctrl_alt_t", "keys": ["Control", "Alt", "t"], "action": "launch", "target": "gnu-eol-terminal", "desktop": true},
     {"id": "ctrl_alt_b", "keys": ["Control", "Alt", "b"], "action": "launch", "target": "field-broadcaster", "desktop": true}
   ],
   "launch_targets": {
@@ -45,7 +45,7 @@
     "nexus-c2": {"id": "nexus-c2", "exec": "http://127.0.0.1:9481/world/queen-nexus-c2.html", "label": "NEXUS C2"},
     "kilroy-dns": {"id": "field-botnet-dns-dhcp", "exec": "http://127.0.0.1:9477/command?embed=1#dns", "label": "Botnet · DNS · DHCP"},
     "controller-setup": {"id": "controller-setup", "exec": "/queen-game-room.html#arcade", "label": "Arcade controller setup"},
-    "queen-terminal": {"id": "queen-terminal", "exec": "http://127.0.0.1:9477/field-gnu-terminal-embed.html", "label": "AmmoOS Terminal"},
+    "gnu-eol-terminal": {"id": "gnu-eol-terminal", "exec": "http://127.0.0.1:9477/field-gnu-terminal-embed.html", "label": "GNU EOL Terminal", "aliases": ["queen-terminal"]},
     "field-broadcaster": {"id": "field-broadcaster", "exec": "http://127.0.0.1:9477/field-broadcaster", "label": "Broadcaster"}
   }
 }

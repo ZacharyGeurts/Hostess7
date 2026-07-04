@@ -1014,7 +1014,7 @@
   function shellInner() {
     return (
       `<header class="fgt-topbar">` +
-      `<span class="fgt-topbar-brand">AmmoOS Terminal</span>` +
+      `<span class="fgt-topbar-brand">GNU EOL Terminal</span>` +
       `<span class="fgt-topbar-pill fgt-topbar-pill--secured">Iron Plate</span>` +
       `<span class="fgt-topbar-pill fgt-topbar-pill--kilroy">GNU·EOL</span>` +
       `<nav class="fgt-menubar" aria-label="Terminal menus">` +
@@ -1022,7 +1022,7 @@
         ["clear", "Clear terminal"],
         ["tab-new", "New tab"],
         ["wiki", "Open GNUEOL wiki"],
-        ["about", "About AmmoOS Terminal"],
+        ["about", "About GNU EOL Terminal"],
       ]) +
       menuBlock("Edit", [
         ["copy", "Copy buffer"],

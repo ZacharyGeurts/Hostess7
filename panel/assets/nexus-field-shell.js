@@ -396,7 +396,7 @@
     "ammonet",
     "final-internet",
     "ammoos-ammonet-display",
-    "queen-terminal",
+    "gnu-eol-terminal",
     "ammoos-terminal",
   ]);
 

@@ -1,33 +1,33 @@
 {
   "schema": "ammo-net-health/v1",
-  "ts": "2026-07-03T21:12:49Z",
+  "ts": "2026-07-04T19:17:30Z",
   "ok": true,
   "loopback_only": true,
-  "state_dir": "/home/default/Desktop/SG/NewLatest/.ammo-state-ci",
+  "state_dir": "/var/lib/ammosecurity",
   "modules": {
     "net_harden": {
       "ok": true,
       "rc": 0,
-      "stdout": "[sg_build v9] === Bot Net / Net Health Status ===\nptrace_scope: 3\nipv6_all: 1\nsamba_ports: None — OK\niptables_INPUT: ?\nufw: masked\nmasked/stopped\nnft ammo_guard: not loaded\n[sg_build v9] violations: /home/default/Desktop/SG/NewLatest/.ammo-state-ci/violations.log",
-      "stderr": ""
+      "stdout": "[sg_build v9] === Bot Net / Net Health Status ===\nptrace_scope: 3\nipv6_all: 1\nsamba_ports: None — OK\niptables_INPUT: ?\nufw: masked\nmasked/stopped\nnft ammo_guard: not loaded\n[sg_build v9] violations: /var/lib/ammosecurity/violations.log",
+      "stderr": "/home/default/Desktop/SG/NewLatest/ammosecurity/modules/../lib/common.sh: line 37: /var/lib/ammosecurity/health.log: Permission denied"
     },
     "ammo_watch": {
       "ok": true,
       "rc": 0,
-      "stdout": "[sg_build v9] === ammo_watch status ===\nnot running\n--- violations (tail) ---\n2026-07-03T21:12:40Z VIOLATION service drift: ufw active\n2026-07-03T21:12:40Z VIOLATION service drift: avahi-daemon active\n2026-07-03T21:12:48Z VIOLATION watch re-applied mandatory baseline after drift",
+      "stdout": "[sg_build v9] === ammo_watch status ===\nnot running",
       "stderr": ""
     },
     "ingress_clasp": {
       "ok": true,
       "rc": 0,
-      "stdout": "[sg_build v9] ingress clasp status\nclasp: not locked\nno wifi ifaces up\nBus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 001 Device 002: ID 046d:c077 Logitech, Inc. Mouse\nBus 001 Device 003: ID 05e3:0610 Genesys Logic, Inc. Hub\nBus 001 Device 005: ID 12b7:1001 HWCX USB Display\nBus 001 Device 006: ID c0f4:0201 Hengchangtong  HCT USB Entry Keyboard\nBus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub",
+      "stdout": "[sg_build v9] ingress clasp status\nclasp: not locked\nno wifi ifaces up\nBus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 001 Device 002: ID 046d:c077 Logitech, Inc. Mouse\nBus 001 Device 003: ID c0f4:0201 Hengchangtong  HCT USB Entry Keyboard\nBus 001 Device 004: ID 05e3:0610 Genesys Logic, Inc. Hub\nBus 001 Device 005: ID 12b7:1001 HWCX USB Display\nBus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub",
       "stderr": ""
     },
     "service_cleaner": {
       "ok": true,
       "rc": 0,
-      "stdout": "[sg_build v9] === service cleaner status ===\nACTIVE: avahi-daemon",
-      "stderr": ""
+      "stdout": "[sg_build v9] === service cleaner status ===\nno obvious junk services active",
+      "stderr": "/home/default/Desktop/SG/NewLatest/ammosecurity/modules/../lib/common.sh: line 37: /var/lib/ammosecurity/health.log: Permission denied"
     },
     "interface_guard": {
       "ok": true,
@@ -36,22 +36,16 @@
       "stderr": ""
     }
   },
-  "violations_tail": [
-    "2026-07-03T21:12:40Z VIOLATION ptrace_scope drift (1)",
-    "2026-07-03T21:12:40Z VIOLATION ufw active — should be masked",
-    "2026-07-03T21:12:40Z VIOLATION service drift: ufw active",
-    "2026-07-03T21:12:40Z VIOLATION service drift: avahi-daemon active",
-    "2026-07-03T21:12:48Z VIOLATION watch re-applied mandatory baseline after drift"
-  ],
+  "violations_tail": [],
   "health_tail": [
-    "2026-07-03T21:12:42Z HEALTH nft ammo_guard applied",
-    "2026-07-03T21:12:42Z HEALTH net_harden applied",
-    "2026-07-03T21:12:48Z HEALTH service_cleaner applied",
-    "2026-07-03T21:12:48Z HEALTH net_harden status check",
-    "2026-07-03T21:12:48Z HEALTH service_cleaner status",
-    "2026-07-03T21:12:48Z HEALTH net_harden status check",
-    "2026-07-03T21:12:49Z HEALTH net_harden status check",
-    "2026-07-03T21:12:49Z HEALTH service_cleaner status"
+    "2026-07-04T17:30:04Z HEALTH net_harden status check",
+    "2026-07-04T17:30:06Z HEALTH service_cleaner status",
+    "2026-07-04T17:44:12Z HEALTH net_harden status check",
+    "2026-07-04T17:44:12Z HEALTH service_cleaner status",
+    "2026-07-04T19:08:39Z HEALTH net_harden status check",
+    "2026-07-04T19:08:40Z HEALTH service_cleaner status",
+    "2026-07-04T19:17:28Z HEALTH net_harden status check",
+    "2026-07-04T19:17:30Z HEALTH service_cleaner status"
   ],
   "c2": {
     "monster_panel": false,

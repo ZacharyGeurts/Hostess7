@@ -1,8 +1,8 @@
 {
   "schema": "field-dhcp/v2",
-  "updated": "2026-07-02T07:30:34.013150Z",
+  "updated": "2026-07-02T09:54:21.219304Z",
   "running": false,
-  "serve_loop": true,
+  "serve_loop": false,
   "port_67": false,
   "may_serve": false,
   "takeover": {
@@ -141,6 +141,8 @@
     "rejected": 0,
     "threat_rejects": 0,
     "conflicts_detected": 0,
+    "quarantined": 0,
+    "soft_offers": 0,
     "declines": 0,
     "started_at": ""
   },
@@ -194,11 +196,11 @@
       "phase": "observing",
       "foreign_resolvers": [],
       "internet_open": true,
-      "collision_count": 7,
+      "collision_count": 6,
       "authority_collision_count": 2,
-      "hygiene_warnings": 1
+      "hygiene_warnings": 0
     },
-    "collision_count": 7,
+    "collision_count": 6,
     "api": "/api/field-dns-dhcp-collision-guard"
   }
 }

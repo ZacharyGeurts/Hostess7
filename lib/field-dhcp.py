@@ -191,6 +191,8 @@ _stats = {
     "rejected": 0,
     "threat_rejects": 0,
     "conflicts_detected": 0,
+    "quarantined": 0,
+    "soft_offers": 0,
     "declines": 0,
     "started_at": "",
 }
@@ -326,6 +328,16 @@ def _dns_for_mac(mac: str) -> list[str]:
     return DNS_SERVERS
 
 
+def _soft_ingress() -> bool:
+    """Quarantine suspicious clients — do not eradicate devices on first contact."""
+    return os.environ.get("NEXUS_FIELD_DHCP_SOFT_INGRESS", "1") == "1"
+
+
+def _ping_soft() -> bool:
+    """Ping conflict → quarantine lease, not hard pool skip (rescue ingress)."""
+    return os.environ.get("NEXUS_FIELD_DHCP_PING_SOFT", "1") == "1"
+
+
 def _ip_in_use(ip: str, timeout: float = 0.9) -> bool:
     """Ping probe before OFFER — prevent lease/IP collisions on the LAN."""
     if _arbitrary_ipv4():
@@ -447,9 +459,29 @@ def _next_lease(
             if _ip_in_use(ip):
                 _stats["conflicts_detected"] = int(_stats.get("conflicts_detected") or 0) + 1
                 _append_event("pool_conflict", mac, ip, "ping_probe_in_use")
+                if _ping_soft():
+                    _stats["soft_offers"] = int(_stats.get("soft_offers") or 0) + 1
+                    _stats["quarantined"] = int(_stats.get("quarantined") or 0) + 1
+                    _append_event("quarantine", mac, ip, "ping_soft_offer")
+                    leases = _load_json(LEASE_FILE, {"leases": {}})
+                    pool = leases.setdefault("leases", {})
+                    pool[mac] = {
+                        **(pool.get(mac) or {}),
+                        "ip": ip,
+                        "quarantine": True,
+                        "ping_conflict_soft": True,
+                        "last_seen": _now(),
+                    }
+                    _save_json(LEASE_FILE, leases)
+                    return ip
                 continue
             _store_lease(mac, ip, renew=False, lease_sec=lease_sec)
             return ip
+    if _ping_soft() and pool_start:
+        _stats["soft_offers"] = int(_stats.get("soft_offers") or 0) + 1
+        _append_event("quarantine", mac, pool_start, "pool_exhausted_soft")
+        _store_lease(mac, pool_start, renew=False, lease_sec=lease_sec)
+        return pool_start
     return pool_start
 
 
@@ -563,6 +595,8 @@ def _handle(data: bytes, addr: tuple[str, int]) -> bytes | None:
         _stats["rejected"] += 1
         return None
     client = f"{addr[0]}:{addr[1]}"
+    chaddr = data[28:44]
+    mac = ":".join(f"{b:02x}" for b in chaddr[:6])
     try:
         mod = _guard_mod()
         if mod.is_permanently_blocked(client):
@@ -571,17 +605,19 @@ def _handle(data: bytes, addr: tuple[str, int]) -> bytes | None:
             return None
         ok, reason = mod.listen_before_reject(client_key=client, packet_len=len(data))
         if not ok:
-            _stats["rejected"] += 1
-            _record_threat(reason or "flood", addr[0], client, "reject")
-            mod.eradicate_threat(client_key=client, reason=reason, vector="DDOS_FLOOD")
-            return None
+            if _soft_ingress():
+                _stats["quarantined"] = int(_stats.get("quarantined") or 0) + 1
+                _append_event("quarantine", mac, addr[0], reason or "flood_soft")
+            else:
+                _stats["rejected"] += 1
+                _record_threat(reason or "flood", addr[0], client, "reject")
+                mod.eradicate_threat(client_key=client, reason=reason, vector="DDOS_FLOOD")
+                return None
     except Exception:
         pass
     opts = _dhcp_options(data)
     msg_type = opts.get(53, b"\x01")[0] if 53 in opts else 1
     xid = data[4:8]
-    chaddr = data[28:44]
-    mac = ":".join(f"{b:02x}" for b in chaddr[:6])
     requested = None
     if 50 in opts and len(opts[50]) == 4:
         requested = socket.inet_ntoa(opts[50])
@@ -590,9 +626,13 @@ def _handle(data: bytes, addr: tuple[str, int]) -> bytes | None:
     dest_ip = _LAST_DHCP_DEST
     if msg_type == 1:
         if not _discover_rate_ok(mac):
-            _stats["rejected"] += 1
-            _record_threat("discover_rate_limit", addr[0], mac, "reject")
-            return None
+            if _soft_ingress():
+                _stats["quarantined"] = int(_stats.get("quarantined") or 0) + 1
+                _append_event("quarantine", mac, addr[0], "discover_rate_soft")
+            else:
+                _stats["rejected"] += 1
+                _record_threat("discover_rate_limit", addr[0], mac, "reject")
+                return None
         _stats["discover"] += 1
         pool_start, pool_end, lease_sec = _pool_for_mac(mac)
         ip = _next_lease(mac, requested=requested, ciaddr=ciaddr, dest_ip=dest_ip)

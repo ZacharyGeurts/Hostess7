@@ -1,10 +1,12 @@
 {
   "schema": "dns-threat-guard/v1",
-  "updated": "2026-07-04T00:43:34Z",
+  "updated": "2026-07-02T08:34:38Z",
   "motto": "Listen before reject · DDoS immunity · permanent eradication.",
   "policy": {
     "listen_before_reject": true,
     "dhcp_dns_only": true,
+    "only_our_dns_dhcp": true,
+    "foreign_server_is_threat": true,
     "no_lateral_movement": true,
     "max_qps_per_client": 30,
     "max_packet_bytes": 512
