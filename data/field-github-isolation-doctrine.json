@@ -1,0 +1,41 @@
+{
+  "schema": "field-github-isolation/v1",
+  "title": "GitHub isolation — sovereign primary, world visible, GitHub degraded mirror",
+  "motto": "If GitHub fucks us — we run sovereign. The world still sees us.",
+  "boss": "hostess7",
+  "github_role": "degraded_mirror_only",
+  "stub_publish": false,
+  "sovereign_primary": {
+    "panel": "http://127.0.0.1:9477/field",
+    "ammonet": "http://127.0.0.1:9477/ammonet/",
+    "grow_watch": "http://127.0.0.1:9477/field-grow-watch",
+    "api": "http://127.0.0.1:9477/api/",
+    "truth_dns": "127.0.0.1",
+    "field_drive": ".nexus-field-drive/nexus-field"
+  },
+  "world_visible": {
+    "export_subdir": "world-publish",
+    "surfaces": ["field", "ammonet", "desktop", "field-grow-watch", "command"],
+    "api_snapshots": [
+      "ammonet.json",
+      "field-github-planet-sweep.json",
+      "field-grow-watch.json",
+      "field-internet.json"
+    ],
+    "public_readme": "Sovereign Field stack — GitHub is optional mirror. Primary runtime is loopback + field drive."
+  },
+  "github_mirror": {
+    "enabled": true,
+    "push_default": false,
+    "tunnel_only": true,
+    "pages_urls": [
+      "https://zacharygeurts.github.io/Hostess7/",
+      "https://zacharygeurts.github.io/Hostess7/desktop/",
+      "https://zacharygeurts.github.io/Hostess7/ammonet/"
+    ],
+    "stale_fired": ["ZacharyGeurts/field"],
+    "hub_stubs_fired": true
+  },
+  "module": "lib/field-github-isolation.py",
+  "api": "/api/field-github-isolation"
+}

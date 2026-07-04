@@ -3378,6 +3378,16 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-github-isolation", "/api/github-isolation"):
+            iso_py = INSTALL_ROOT / "lib" / "field-github-isolation.py"
+            sub = path.replace("/api/field-github-isolation", "").replace("/api/github-isolation", "").strip("/")
+            args = ["isolate"] if sub in ("isolate", "apply", "world") else ["json"]
+            if (self.headers.get("X-Github-Mirror-Push") or "").strip().lower() in ("1", "yes", "on"):
+                args.append("--push-github")
+            payload = _nexus_py_json(iso_py, args, timeout=120) if iso_py.is_file() else {"ok": False, "error": "field_github_isolation_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path in (
             "/api/field-github-planet-sweep",
             "/api/github-planet-sweep",
