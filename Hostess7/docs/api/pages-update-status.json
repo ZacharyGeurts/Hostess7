@@ -7,11 +7,11 @@
   "current": "3.0.7-beta5",
   "version": "3.0.7-beta5",
   "deploy_url": "https://zacharygeurts.github.io/Hostess7/",
-  "deployed_at": "2026-07-04T04:19:06Z",
+  "deployed_at": "2026-07-04T04:22:54Z",
   "pages_base": "/Hostess7",
   "update_available": false,
   "update_in_progress": false,
-  "checked_at": "2026-07-04T04:19:06Z",
+  "checked_at": "2026-07-04T04:22:54Z",
   "middleman": false,
   "direct_for_everyone": true,
   "own_deployment": true,
@@ -23,5 +23,12 @@
     "git add Hostess7/docs/ && git commit -m 'pages: rebuild'",
     "git push origin main"
   ],
-  "message": "Everyone manages own deploy at https://zacharygeurts.github.io/Hostess7/ \u2014 bypass middleman, Truth DNS + Field DHCP"
+  "delay_as_threat": false,
+  "truth_clean": true,
+  "delay_countermeasures": [
+    "everyone_manages_own_deploy",
+    "cancel_zombie_ci",
+    "pages_first_no_middleman"
+  ],
+  "message": "Everyone manages own deploy at https://zacharygeurts.github.io/Hostess7/ \u2014 delay is threat, truth cleaned, no middleman"
 }
