@@ -1,6 +1,6 @@
 /**
- * GitHub for everyone — botnet civilian passthrough on Pages + loopback.
- * Mirror chains from sovereign endpoint registry (beyond ICANN) — no silent relocations.
+ * GitHub for everyone — Pages-first; everyone bypasses middleman and manages own deploys.
+ * Mirror chains from endpoint registry (beyond ICANN) — no silent relocations.
  */
 (function (global) {
   "use strict";
@@ -39,6 +39,15 @@
     return (global.H7_LOOPBACK_AUTHORITY || "http://127.0.0.1:9477").replace(/\/$/, "");
   }
 
+  function onPagesRuntime() {
+    try {
+      const host = global.location && global.location.hostname;
+      if (host && host.endsWith(".github.io")) return true;
+      if (document.body && document.body.dataset && document.body.dataset.pagesRuntime === "1") return true;
+    } catch (_) {}
+    return false;
+  }
+
   function ingestRegistry(doc) {
     if (!doc || !doc.routes) return;
     state.registry = doc;
@@ -58,18 +67,22 @@
   }
 
   async function fetchRegistry() {
-    const paths = [
-      loopback() + "/api/field-endpoint-registry",
-      loopback() + "/api/field-pages-movement",
+    const pagesPaths = [
       api("/api/field-endpoint-registry.json"),
       api("/api/field-pages-movement.json"),
     ];
+    const loopPaths = [
+      loopback() + "/api/field-endpoint-registry",
+      loopback() + "/api/field-pages-movement",
+    ];
+    const paths = onPagesRuntime() ? pagesPaths.concat(loopPaths) : loopPaths.concat(pagesPaths);
     for (let i = 0; i < paths.length; i++) {
       try {
         const r = await fetch(paths[i], { cache: "no-store", credentials: "same-origin" });
         if (r.ok) {
           const doc = await r.json();
-          state.loopbackLive = paths[i].indexOf("127.0.0.1") >= 0 || paths[i].indexOf("localhost") >= 0;
+          const fromLoopback = paths[i].indexOf("127.0.0.1") >= 0 || paths[i].indexOf("localhost") >= 0;
+          state.loopbackLive = fromLoopback && !onPagesRuntime();
           ingestRegistry(doc);
           return doc;
         }
@@ -170,11 +183,13 @@
   }
 
   async function fetchEveryone() {
-    const paths = [
+    const pagesPaths = [
       api("/api/field-github-everyone"),
       api("/api/field-internet"),
-      loopback() + "/api/field-github-everyone",
+      api("/api/field-botnet-dns-dhcp"),
     ];
+    const loopPaths = [loopback() + "/api/field-github-everyone"];
+    const paths = onPagesRuntime() ? pagesPaths.concat(loopPaths) : loopPaths.concat(pagesPaths);
     for (let i = 0; i < paths.length; i++) {
       try {
         const r = await fetch(paths[i], { cache: "no-store", credentials: "same-origin" });
@@ -184,8 +199,9 @@
     return {
       ok: true,
       for_everyone: { enabled: true, civilian_passthrough: true },
+      everyone_deploy: { bypass_middleman: true, own_deployment: true },
       github_open: true,
-      motto: "GitHub for everyone — endpoint registry witnessed",
+      motto: "Everyone bypasses middleman — manage own GitHub Pages deploy",
     };
   }
 
@@ -222,6 +238,7 @@
     if (document.body) {
       document.body.dataset.h7GithubEveryone = state.githubOpen ? "open" : "linking";
       document.body.dataset.h7EndpointRegistry = state.registry ? "witnessed" : "fallback";
+      document.body.dataset.h7OwnDeploy = "1";
     }
     patchGithubLinks(document);
     if (registryChanged) {

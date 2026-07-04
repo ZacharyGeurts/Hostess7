@@ -57,10 +57,12 @@
     el.className = "h7-deploy-everyone";
     el.setAttribute("role", "status");
     el.setAttribute("aria-live", "polite");
+    var ownDeploy = doc && (doc.own_deployment || doc.bypass_middleman);
     el.innerHTML =
-      '<span class="h7-dep-label">Deployed</span>' +
+      '<span class="h7-dep-label">' + (ownDeploy ? "Your deploy" : "Deployed") + "</span>" +
       '<a class="h7-dep-url" href="' + esc(url) + '">' + esc(url) + "</a>" +
       '<span class="h7-dep-ver">v' + esc(version) + "</span>" +
+      (ownDeploy ? '<span class="h7-dep-own">bypass middleman</span>' : "") +
       (deployed ? '<span class="h7-dep-ts">' + esc(deployed) + "</span>" : "");
     document.body.appendChild(el);
     if (document.body.classList) {

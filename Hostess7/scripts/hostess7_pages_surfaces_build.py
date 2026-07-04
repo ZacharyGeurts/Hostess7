@@ -1796,9 +1796,23 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
                 "checked_at": _ts(),
                 "middleman": False,
                 "direct_for_everyone": True,
+                "own_deployment": True,
+                "bypass_middleman": True,
                 "old_browsers_ok": True,
                 "dns_dhcp": "/api/field-botnet-dns-dhcp",
-                "message": f"Deployed for everyone at {deploy_url} — Truth DNS + Field DHCP, no middleman",
+                "deploy_steps": [
+                    "python3 Hostess7/scripts/hostess7_pages_surfaces_build.py",
+                    "git add Hostess7/docs/ && git commit -m 'pages: rebuild'",
+                    "git push origin main",
+                ],
+                "delay_as_threat": False,
+                "truth_clean": True,
+                "delay_countermeasures": [
+                    "everyone_manages_own_deploy",
+                    "cancel_zombie_ci",
+                    "pages_first_no_middleman",
+                ],
+                "message": f"Everyone manages own deploy at {deploy_url} — delay is threat, truth cleaned, no middleman",
             },
             indent=2,
         )
@@ -1918,6 +1932,22 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     else:
         botnet_dns["pages"] = True
         botnet_dns["pages_base"] = PAGES_BASE
+    doctrine_path = NL / "data" / "field-botnet-dns-dhcp-doctrine.json"
+    if doctrine_path.is_file():
+        try:
+            doctrine_doc = json.loads(doctrine_path.read_text(encoding="utf-8"))
+            ed = doctrine_doc.get("everyone_deploy") or {}
+            if ed:
+                botnet_dns["everyone_deploy"] = ed
+            gh = doctrine_doc.get("github_control_plane") or {}
+            if gh.get("pages_first"):
+                botnet_dns.setdefault("github_control_plane", {})
+                if isinstance(botnet_dns["github_control_plane"], dict):
+                    botnet_dns["github_control_plane"]["pages_first"] = True
+                    botnet_dns["github_control_plane"]["middleman"] = False
+        except (OSError, json.JSONDecodeError):
+            pass
+    botnet_dns["middleman"] = False
     (API / "field-botnet-dns-dhcp.json").write_text(json.dumps(botnet_dns, indent=2) + "\n", encoding="utf-8")
     files.append("field-botnet-dns-dhcp.json")
     bot_keep = _run_nl_script_json("lib/field-botnet-dns-dhcp.py", ["keepalive"], timeout=30)

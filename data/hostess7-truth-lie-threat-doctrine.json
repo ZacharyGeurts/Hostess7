@@ -26,6 +26,7 @@
     {"id": "clean", "classes": ["truth"], "threat": false, "vector": null, "severity": null},
     {"id": "partial_hold", "classes": ["partial_truth"], "threat": true, "vector": "TRUTH_MANIPULATION", "severity": "medium"},
     {"id": "deception_inject", "classes": ["deception"], "threat": true, "vector": "DECEPTION_INJECTION", "severity": "high"},
+    {"id": "delay_threat", "classes": ["delay_threat"], "threat": true, "vector": "DELAY_AS_THREAT", "severity": "high"},
     {"id": "confirmed_lie", "classes": ["lie"], "threat": true, "vector": "LIE_DETECTED", "severity": "high"},
     {"id": "hostile_deception", "classes": ["quarantine"], "threat": true, "vector": "HOSTILE_DECEPTION", "severity": "critical"}
   ],
@@ -33,7 +34,37 @@
     "LIE_DETECTED": "Confirmed lie — truth score below quarantine floor or lethal flags",
     "DECEPTION_INJECTION": "Deception attempt — manipulative framing, inconsistency",
     "TRUTH_MANIPULATION": "Partial truth hold — corroborate before trust or act",
+    "DELAY_AS_THREAT": "Adversarial delay — stall deploy, DNS, or CI to fake unready; bypass middleman and act on local truth",
     "HOSTILE_DECEPTION": "Hostile deception — quarantine, below adapt floor, 3+ flags"
+  },
+  "delay_as_threat": {
+    "witnessed": true,
+    "rule": "Delay is not neutral waiting — when truth is ready locally, prolonged stall is hostile deception.",
+    "signals": [
+      "github_pages_run_in_progress_stall",
+      "deploy_try_again_later",
+      "concurrency_group_lock",
+      "foreign_resolver_while_truth_healthy",
+      "loopback_middleman_gate"
+    ],
+    "countermeasures": [
+      "everyone_manages_own_deploy",
+      "pages_first_registry",
+      "cancel_zombie_ci",
+      "remove_concurrency_lock",
+      "truth_dns_primary_without_foreign_wait"
+    ],
+    "stall_sec": 600,
+    "witnessed_data_points": [
+      {
+        "id": "hostess7-pages-zombie-2026-07-04",
+        "signal": "github_pages_run_in_progress_stall",
+        "run_id": 28694433021,
+        "workflow": "Hostess7 GitHub Pages",
+        "elapsed_min": 19,
+        "detail": "Pages deploy stuck in_progress while local docs truth ready — delay used to block ship"
+      }
+    ]
   },
   "floors": {
     "adapt": 58,

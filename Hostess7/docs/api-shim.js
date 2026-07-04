@@ -978,15 +978,15 @@
     }
     if (path === "/api/field-botnet-dns-dhcp/keepalive" && method === "POST") {
       try {
+        return jsonResponse(await loadStatic("/api/field-botnet-dns-dhcp-keepalive.json"));
+      } catch (_e) {}
+      try {
         const r = await global.__H7_ORIG_FETCH__(LOOPBACK + "/api/field-botnet-dns-dhcp/keepalive", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: (opts && opts.body) || "{}",
         });
         if (r.ok) return jsonResponse(await r.json());
-      } catch (_e) {}
-      try {
-        return jsonResponse(await loadStatic("/api/field-botnet-dns-dhcp-keepalive.json"));
       } catch (_e2) {
         return okStub({
           ok: true,
@@ -1002,19 +1002,21 @@
     }
     if (path === "/api/field-botnet-dns-dhcp" && method === "GET") {
       try {
-        const r = await global.__H7_ORIG_FETCH__(LOOPBACK + "/api/field-botnet-dns-dhcp", { cache: "no-store" });
-        if (r.ok) return jsonResponse(await r.json());
+        return jsonResponse(await loadStatic("/api/field-botnet-dns-dhcp.json"));
       } catch (_e) {}
       try {
-        return jsonResponse(await loadStatic("/api/field-botnet-dns-dhcp.json"));
+        const r = await global.__H7_ORIG_FETCH__(LOOPBACK + "/api/field-botnet-dns-dhcp", { cache: "no-store" });
+        if (r.ok) return jsonResponse(await r.json());
       } catch (_e2) {
         return okStub({
           ok: true,
           schema: "field-botnet-dns-dhcp-panel/v1",
           boss: "hostess7",
-          motto: "Bot network — secure stable DNS & DHCP for everyone through GitHub",
+          motto: "Everyone bypasses middleman — manage own GitHub Pages deploy",
           pages: true,
-          github_control_plane: { enabled: true, pages_runtime: "https://zacharygeurts.github.io/Hostess7/" },
+          middleman: false,
+          everyone_deploy: { bypass_middleman: true, own_deployment: true },
+          github_control_plane: { enabled: true, pages_first: true, pages_runtime: "https://zacharygeurts.github.io/Hostess7/" },
         });
       }
     }
@@ -1173,7 +1175,26 @@
       }
     }
     if (path === "/api/update/apply" && method === "POST") {
-      return okStub({ applied: false, note: "Upgrade on loopback only" });
+      let status = null;
+      try {
+        status = await loadStatic("/api/pages-update-status.json");
+      } catch (_e) {}
+      const deployUrl = (status && status.deploy_url) || "https://zacharygeurts.github.io/Hostess7/";
+      return okStub({
+        applied: false,
+        pages: true,
+        middleman: false,
+        own_deployment: true,
+        bypass_middleman: true,
+        deploy_url: deployUrl,
+        message: "Everyone manages own deploy — git push origin main; Pages workflow ships docs/",
+        steps: [
+          "python3 Hostess7/scripts/hostess7_pages_surfaces_build.py",
+          "git add Hostess7/docs/ && git commit -m 'pages: rebuild'",
+          "git push origin main",
+        ],
+        note: "No loopback middleman — deploy is yours",
+      });
     }
     if (path === "/api/update/sudo-prompt" && method === "POST") {
       return okStub({ prompted: false, note: "Pages lane" });

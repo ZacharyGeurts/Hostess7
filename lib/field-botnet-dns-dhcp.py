@@ -281,6 +281,7 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
         "layer": doctrine.get("layer", -2),
         "fkey": doctrine.get("fkey", "F10"),
         "for_everyone": doctrine.get("for_everyone") or {},
+        "everyone_deploy": doctrine.get("everyone_deploy") or {},
         "github_control_plane": gh_slice,
         "bot_network": {
             "enabled": True,

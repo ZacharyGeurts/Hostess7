@@ -142,12 +142,179 @@ def truth_band(score: float) -> dict[str, Any]:
     return {"id": "unknown", "label": "unclassified", "min": 0, "max": 100}
 
 
+_DELAY_THREAT_RE = re.compile(
+    r"(?i)\b("
+    r"try again later|deployment failed|in_progress.*\d{2,}m|"
+    r"concurrency.*lock|zombie.*ci|stall|middleman.*gate|"
+    r"upgrade on loopback only|waiting for.*healthy"
+    r")\b"
+)
+
+
+def _delay_doctrine() -> dict[str, Any]:
+    return _doctrine().get("delay_as_threat") or {}
+
+
+def detect_delay_threat(
+    *,
+    signal: str = "",
+    detail: str = "",
+    elapsed_sec: float | int | None = None,
+    meta: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Witness delay-as-threat — stall used to block ready local truth."""
+    doc = _delay_doctrine()
+    stall_sec = float(doc.get("stall_sec") or 600)
+    elapsed = float(elapsed_sec or 0)
+    signals = list(doc.get("signals") or [])
+    matched = signal if signal in signals else ""
+    if not matched and detail:
+        low = detail.lower()
+        if "in_progress" in low or "try again later" in low:
+            matched = "github_pages_run_in_progress_stall" if "pages" in low or "github" in low else "deploy_try_again_later"
+        elif "concurrency" in low:
+            matched = "concurrency_group_lock"
+        elif "loopback" in low and ("only" in low or "gate" in low):
+            matched = "loopback_middleman_gate"
+        elif "foreign" in low and "resolver" in low:
+            matched = "foreign_resolver_while_truth_healthy"
+    is_threat = bool(matched) or elapsed >= stall_sec
+    return {
+        "schema": "hostess7-delay-threat-detect/v1",
+        "delay_is_threat": is_threat,
+        "signal": matched or signal,
+        "elapsed_sec": elapsed,
+        "stall_sec": stall_sec,
+        "detail": detail[:400],
+        "countermeasures": list(doc.get("countermeasures") or []),
+        "class": "delay_threat" if is_threat else "truth",
+        "threat_vector": "DELAY_AS_THREAT" if is_threat else None,
+        "threat_severity": "high" if is_threat else None,
+        "meta": meta or {},
+    }
+
+
+def witness_delay_threat(
+    *,
+    signal: str = "",
+    detail: str = "",
+    elapsed_sec: float | int | None = None,
+    record_threat: bool = True,
+    meta: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    det = detect_delay_threat(signal=signal, detail=detail, elapsed_sec=elapsed_sec, meta=meta)
+    threat_record = None
+    if record_threat and det.get("delay_is_threat"):
+        threat_record = record_lie_threat(
+            vector="DELAY_AS_THREAT",
+            severity="high",
+            detail=f"signal={det.get('signal')} elapsed={det.get('elapsed_sec')}s {detail[:200]}",
+            meta={"signal": det.get("signal"), **(meta or {})},
+        )
+    out = {
+        "ok": True,
+        "schema": "hostess7-delay-threat-witness/v1",
+        "utc": _utc(),
+        "lies_are_threats": True,
+        "delay_as_threat": True,
+        "detect": det,
+        "threat_recorded": bool(threat_record),
+        "threat": threat_record,
+        "action": "bypass_middleman_own_deploy" if det.get("delay_is_threat") else "continue",
+    }
+    _append(LEDGER, {**out, "event": "delay_threat_witness"})
+    return out
+
+
+def clean_truth(*, record: bool = True) -> dict[str, Any]:
+    """Clean TRUTH — witness delay threats, seal countermeasures, refresh panel."""
+    doc = _delay_doctrine()
+    witnessed: list[dict[str, Any]] = []
+    for row in doc.get("witnessed_data_points") or []:
+        if not isinstance(row, dict):
+            continue
+        elapsed = int(float(row.get("elapsed_min") or 0) * 60)
+        w = witness_delay_threat(
+            signal=str(row.get("signal") or ""),
+            detail=str(row.get("detail") or ""),
+            elapsed_sec=elapsed,
+            record_threat=record,
+            meta={"witness_id": row.get("id"), "run_id": row.get("run_id")},
+        )
+        witnessed.append(w)
+    panel = build_panel(write=True)
+    out = {
+        "ok": True,
+        "schema": "hostess7-truth-clean/v1",
+        "utc": _utc(),
+        "motto": "Delay is threat — truth cleaned; bypass middleman, own deploy",
+        "delay_as_threat": True,
+        "witnessed_count": len(witnessed),
+        "witnessed": witnessed,
+        "countermeasures": list(doc.get("countermeasures") or []),
+        "panel": {
+            "threat_vectors": panel.get("threat_vectors"),
+            "recent_lie_threat_count": panel.get("recent_lie_threat_count"),
+        },
+        "truth_posture": "direct_for_everyone",
+    }
+    _append(LEDGER, {**out, "event": "truth_clean"})
+    _save(STATE / "hostess7-truth-clean.json", out)
+    return out
+
+
+def classify_text(text: str) -> dict[str, Any]:
+    """H7t / panel ingress — classify prose for lie + delay threat."""
+    claim = (text or "").strip()
+    if _DELAY_THREAT_RE.search(claim):
+        det = detect_delay_threat(detail=claim)
+        if det.get("delay_is_threat"):
+            lie = {
+                "schema": "hostess7-truth-lie-classify/v1",
+                "class": "delay_threat",
+                "lie_is_threat": True,
+                "lies_are_threats": True,
+                "truth_score": 12.0,
+                "lie_score": 88.0,
+                "truth_band": truth_band(12.0),
+                "threat_vector": "DELAY_AS_THREAT",
+                "threat_severity": "high",
+                "threat_band": {"id": "delay_threat", "vector": "DELAY_AS_THREAT", "severity": "high"},
+                "deception_flags": ["delay_as_threat"],
+                "passes_adapt_floor": False,
+                "quarantine": False,
+            }
+            return {"ok": True, "claim_preview": claim[:400], "lie": lie, "delay": det}
+    lie = classify_lie(claim)
+    return {"ok": True, "claim_preview": claim[:400], "lie": lie}
+
+
 def classify_lie(
     claim: str,
     *,
     truth_doc: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Extensive lie classification — lies are threats."""
+    if _DELAY_THREAT_RE.search(claim or ""):
+        det = detect_delay_threat(detail=claim)
+        if det.get("delay_is_threat"):
+            return {
+                "schema": "hostess7-truth-lie-classify/v1",
+                "class": "delay_threat",
+                "lie_is_threat": True,
+                "lies_are_threats": True,
+                "lie_score": 88.0,
+                "truth_score": 12.0,
+                "truth_band": truth_band(12.0),
+                "deception_flags": ["delay_as_threat"],
+                "deception_risk": "high",
+                "ironclad_sealed": False,
+                "threat_band": {"id": "delay_threat", "vector": "DELAY_AS_THREAT", "severity": "high"},
+                "threat_vector": "DELAY_AS_THREAT",
+                "threat_severity": "high",
+                "passes_adapt_floor": False,
+                "quarantine": False,
+            }
     truth_doc = truth_doc or _analyze_truth(claim)
     score = float(truth_doc.get("truth_score") or 0)
     flags = list(truth_doc.get("inconsistency_flags") or [])
@@ -169,7 +336,7 @@ def classify_lie(
     else:
         klass = "deception"
 
-    lie_is_threat = klass in ("lie", "deception", "quarantine", "partial_truth")
+    lie_is_threat = klass in ("lie", "deception", "quarantine", "partial_truth", "delay_threat")
     threat_band = None
     for band in _doctrine().get("lie_threat_bands") or []:
         if klass in (band.get("classes") or []):
@@ -321,6 +488,8 @@ def witness_claim(
 
 def _recommended_action(lie: dict[str, Any]) -> str:
     klass = str(lie.get("class") or "")
+    if klass == "delay_threat":
+        return "bypass_middleman_own_deploy"
     if klass == "truth":
         return "trust_with_documentation"
     if klass == "partial_truth":
@@ -410,6 +579,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "sources": doctrine.get("sources"),
         "api": doctrine.get("api"),
         "doctrine": str(DOCTRINE),
+        "delay_as_threat": _delay_doctrine(),
     }
     if write:
         _save(PANEL, doc)
@@ -489,6 +659,7 @@ def pulse(*, record_sample: bool = False) -> dict[str, Any]:
     """Pulse — panel + sample lie-threat witness."""
     panel = build_panel(write=True)
     sample = None
+    delay_clean = clean_truth(record=False)
     if record_sample:
         sample = witness_claim(
             "Universal boundary protects NewLatest execution through AML",
@@ -499,9 +670,14 @@ def pulse(*, record_sample: bool = False) -> dict[str, Any]:
         "ok": True,
         "schema": "hostess7-truth-lie-pulse/v1",
         "lies_are_threats": True,
+        "delay_as_threat": True,
         "panel": {
             "recent_lie_threat_count": panel.get("recent_lie_threat_count"),
             "threat_vectors": panel.get("threat_vectors"),
+        },
+        "truth_clean": {
+            "witnessed_count": delay_clean.get("witnessed_count"),
+            "countermeasures": delay_clean.get("countermeasures"),
         },
         "sample_witness": sample,
         "utc": _utc(),
@@ -577,6 +753,25 @@ def main() -> int:
     if cmd in ("methods", "lie-methods"):
         print(json.dumps(explain_methods(), ensure_ascii=False, indent=2))
         return 0
+    if cmd in ("clean", "clean-truth", "truth-clean"):
+        print(json.dumps(clean_truth(), ensure_ascii=False, indent=2))
+        return 0
+    if cmd in ("delay", "delay-threat", "witness-delay"):
+        signal = ""
+        detail = ""
+        elapsed = None
+        for arg in sys.argv[2:]:
+            if arg.startswith("--signal="):
+                signal = arg.split("=", 1)[1]
+            elif arg.startswith("--elapsed="):
+                try:
+                    elapsed = float(arg.split("=", 1)[1])
+                except ValueError:
+                    pass
+            else:
+                detail = (detail + " " + arg).strip()
+        print(json.dumps(witness_delay_threat(signal=signal, detail=detail, elapsed_sec=elapsed), ensure_ascii=False, indent=2))
+        return 0
     if cmd == "classify":
         claim = " ".join(sys.argv[2:]) if len(sys.argv) > 2 else ""
         if not claim:
@@ -584,7 +779,7 @@ def main() -> int:
         print(json.dumps(classify_lie(claim), ensure_ascii=False, indent=2))
         return 0
     print(json.dumps({
-        "error": "usage: hostess7-truth-lie-threat.py [panel|witness|pulse|threats|methods|classify]",
+        "error": "usage: hostess7-truth-lie-threat.py [panel|witness|pulse|threats|methods|classify|clean|delay-threat]",
         "motto": _doctrine().get("motto"),
         "lies_are_threats": True,
     }, ensure_ascii=False))

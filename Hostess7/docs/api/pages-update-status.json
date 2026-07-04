@@ -7,14 +7,21 @@
   "current": "3.0.7-beta5",
   "version": "3.0.7-beta5",
   "deploy_url": "https://zacharygeurts.github.io/Hostess7/",
-  "deployed_at": "2026-07-04T04:00:00Z",
+  "deployed_at": "2026-07-04T04:19:06Z",
   "pages_base": "/Hostess7",
   "update_available": false,
   "update_in_progress": false,
-  "checked_at": "2026-07-04T04:00:00Z",
+  "checked_at": "2026-07-04T04:19:06Z",
   "middleman": false,
   "direct_for_everyone": true,
+  "own_deployment": true,
+  "bypass_middleman": true,
   "old_browsers_ok": true,
   "dns_dhcp": "/api/field-botnet-dns-dhcp",
-  "message": "Deployed for everyone at https://zacharygeurts.github.io/Hostess7/ — Truth DNS + Field DHCP, no middleman"
+  "deploy_steps": [
+    "python3 Hostess7/scripts/hostess7_pages_surfaces_build.py",
+    "git add Hostess7/docs/ && git commit -m 'pages: rebuild'",
+    "git push origin main"
+  ],
+  "message": "Everyone manages own deploy at https://zacharygeurts.github.io/Hostess7/ \u2014 bypass middleman, Truth DNS + Field DHCP"
 }

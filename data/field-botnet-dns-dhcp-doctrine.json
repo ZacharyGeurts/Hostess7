@@ -21,6 +21,9 @@
   "github_control_plane": {
     "enabled": true,
     "pages": "https://zacharygeurts.github.io/Hostess7/",
+    "pages_first": true,
+    "middleman": false,
+    "registry_pages": "/api/field-endpoint-registry.json",
     "doctrine_api": "/api/field-botnet-dns-dhcp",
     "dns_api": "/api/field-dns",
     "internet_api": "/api/field-internet",
@@ -30,6 +33,27 @@
       "module": "lib/field-github-traffic-shard.py",
       "offload_target_pct": 90
     }
+  },
+  "delay_as_threat": {
+    "witnessed": true,
+    "doctrine": "data/hostess7-truth-lie-threat-doctrine.json",
+    "vector": "DELAY_AS_THREAT",
+    "rule": "CI/DNS/deploy stall while local truth ready is hostile — bypass middleman, own deploy",
+    "countermeasure": "everyone_deploy.bypass_middleman"
+  },
+  "everyone_deploy": {
+    "bypass_middleman": true,
+    "own_deployment": true,
+    "motto": "Everyone bypasses middleman — each operator manages own GitHub Pages deploy",
+    "deploy_url_pattern": "https://{user}.github.io/{repo}/",
+    "workflow": "Hostess7 GitHub Pages",
+    "steps": [
+      "python3 Hostess7/scripts/hostess7_pages_surfaces_build.py",
+      "git add Hostess7/docs/ && git commit -m 'pages: rebuild'",
+      "git push origin main",
+      "Verify pages-update-status.json deploy stamp"
+    ],
+    "no_loopback_gate": true
   },
   "bot_network": {
     "member_registry": "lib/field-botnet-registry.py",

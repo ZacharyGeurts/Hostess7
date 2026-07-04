@@ -291,6 +291,19 @@ def evaluate_takeover(*, persist: bool = True) -> dict[str, Any]:
     )
     can_capture_egress = phase == "primary"
     can_remove_foreign = phase == "primary" and bool(foreign_ns)
+    delay_threat = bool(
+        health.get("healthy")
+        and inc.get("nexus_dns_running")
+        and foreign_ns
+        and phase != "primary"
+        and streak >= READY_CHECKS
+    )
+    if delay_threat and phase == "ready":
+        phase = "primary"
+        can_enforce_resolv = True
+        can_remove_foreign = bool(foreign_ns)
+        can_serve_dhcp = inc.get("nexus_dhcp_running") or not inc.get("incumbent_dhcp") or _legacy_open_secured()
+        can_capture_egress = True
 
     doc: dict[str, Any] = {
         "schema": "dns-takeover/v1",
@@ -322,6 +335,13 @@ def evaluate_takeover(*, persist: bool = True) -> dict[str, Any]:
             "seamless_transition": True,
             "no_internet_break": True,
             "motto": "Truth DNS primary — foreign resolvers removed, not middleman",
+        },
+        "delay_as_threat": {
+            "active": delay_threat,
+            "vector": "DELAY_AS_THREAT" if delay_threat else None,
+            "signal": "foreign_resolver_while_truth_healthy" if delay_threat else None,
+            "countermeasure": "promote_primary_remove_foreign" if delay_threat else None,
+            "truth_clean": not delay_threat or phase == "primary",
         },
         "hostess7": {
             "inside": {

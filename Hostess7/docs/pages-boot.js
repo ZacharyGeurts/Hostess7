@@ -10,7 +10,7 @@
     { id: "kilroy", label: "KILROY", detail: "Field Die · ZNetwork hooks · syscall truth", ms: 1300 },
     { id: "brain", label: "GitHub Brain", detail: "Isolated corpus mirror · same knowledge", ms: 1100 },
     { id: "surfaces", label: "Stack Surfaces", detail: "Queen browser · desktop icons · field programs", ms: 1400 },
-    { id: "deploy", label: "Deployed", detail: "https://zacharygeurts.github.io/Hostess7/ — direct for everyone", ms: 900 },
+    { id: "deploy", label: "Your deploy", detail: "https://zacharygeurts.github.io/Hostess7/ — everyone bypasses middleman", ms: 900 },
     { id: "done", label: "Boot complete", detail: "Desktop ready — Truth DNS · Field DHCP · no middleman", ms: 500 },
   ];
 
