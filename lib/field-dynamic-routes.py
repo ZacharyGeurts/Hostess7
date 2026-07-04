@@ -189,6 +189,10 @@ def kick_table_trash(*, boot_rekill: bool | None = None) -> dict[str, Any]:
         burn = _py("field-zachub-fork-guard.py", "burn-stale", timeout=90)
         steps.append({"step": "fork_guard_burn_stale", **burn})
 
+    if doc.get("policy", {}).get("convert_dns_dhcp_redundant", True):
+        conv = _py("field-zachub-qemu-racks.py", "convert", timeout=90)
+        steps.append({"step": "dns_dhcp_redundant_convert", **conv})
+
     rekill_result: dict[str, Any] | None = None
     do_rekill = boot_rekill if boot_rekill is not None else bool(pol.get("boot_rekill_after_purge", True))
     if do_rekill:

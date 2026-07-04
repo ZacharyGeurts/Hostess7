@@ -1,0 +1,77 @@
+{
+  "schema": "field-zachub-qemu-racks/v1",
+  "title": "ZacHub QEMU racks — GrokLab botnet edge/DNS/DHCP/witness on pipeline slots",
+  "motto": "Real QEMU is GrokLab/deploy — no TEAM drive servers. DNS/DHCP remainder converts slowly to redundant H7 storage; each new rack grows data. Super secure from outside internet.",
+  "product": "ZacHub",
+  "no_team_drive_servers": true,
+  "branding": {
+    "product": "ZacHub",
+    "owners": ["Grok", "Zac"],
+    "tagline": "Botnet QEMU racks · edge · DNS · DHCP · witness",
+    "motto": "Grok and Zac own it now."
+  },
+  "qemu_source": {
+    "pipeline": "GrokLab/deploy/qemu-world-pipeline.py",
+    "launch": "GrokLab/deploy/qemu-world-launch-one.sh",
+    "stop": "GrokLab/deploy/qemu-world-stop-one.sh",
+    "deploy_cli": "GrokLab/scripts/grok-lab-world-deploy.sh",
+    "regions": "GrokLab/deploy/world-node-regions.json",
+    "vm_dir": "GrokLab/deploy/qemu-vms",
+    "deploy_root": "GrokLab/deploy",
+    "not_our_qemu": [
+      "/media/default/HOSTESS7_TEAM1/field1",
+      "/media/default/HOSTESS7_TEAM1/field1-os.qcow2"
+    ],
+    "note": "QEMU racks live in GrokLab/deploy only — never HOSTESS7_TEAM fieldstorage"
+  },
+  "roles": {
+    "primary_cycle": ["dhcp", "dns", "edge", "github_mirror_witness"],
+    "all_slots": ["dns_relay", "dhcp_relay", "truth_mirror"],
+    "edge_bundle": ["edge", "dns_relay", "dhcp_relay"],
+    "witness": "github_mirror_witness"
+  },
+  "rack_layout": {
+    "deploy_root": "GrokLab/deploy",
+    "field_id_prefix": "qemu-rack-",
+    "node_id_prefix": "qemu-world-",
+    "subdir": "qemu-racks",
+    "vm_subdir": "qemu-vms",
+    "nexus_field_name": "nexus-field",
+    "h7_lane": "field-h7s-fs",
+    "one_big_drive_manifest": "zachub-manifest/one-big-drive.json",
+    "per_rack_dirs": ["nexus-field", "h7-shard", "edge", "dns", "dhcp", "witness", "zachub-github-truth"]
+  },
+  "redundant_storage": {
+    "doctrine": "data/field-zachub-redundant-storage-doctrine.json",
+    "mode": "slow_dns_dhcp_remainder",
+    "internet_isolated": true,
+    "convert_dns_dhcp_remaining": true,
+    "new_rack_grows_data": true
+  },
+  "capacity": {
+    "storage_kind": "grok_lab_deploy",
+    "gb_per_unit": 91,
+    "per_role_gb": {
+      "dhcp": 12,
+      "dns": 12,
+      "edge": 16,
+      "github_mirror_witness": 8
+    },
+    "redundant_pool_from_remainder": true,
+    "redundancy_factor": 2,
+    "stripe_width": 4,
+    "reserve_pct": 0.91,
+    "convert_pct_per_cycle": 0.05,
+    "note": "91GB/rack — DNS/DHCP keep operational ceiling; unused remainder converts to h7-shard redundant pool. New rack = +91GB growth path."
+  },
+  "stale_burn": {
+    "paths": [
+      "/media/default/HOSTESS7_TEAM1/field1",
+      "/media/default/HOSTESS7_TEAM1/field1-os.qcow2",
+      "/media/default/HOSTESS7_TEAM1/fieldstorage/racks"
+    ],
+    "reason": "stale TEAM QEMU — real stack is GrokLab/deploy botnet pipeline; no team drive servers"
+  },
+  "module": "lib/field-zachub-qemu-racks.py",
+  "api": "/api/field-zachub-qemu-racks"
+}

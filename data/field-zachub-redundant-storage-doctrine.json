@@ -1,0 +1,52 @@
+{
+  "schema": "field-zachub-redundant-storage/v1",
+  "title": "Redundant H7 storage — DNS/DHCP remainder converts slowly; new rack grows data",
+  "motto": "Each rack adds redundant shard capacity. DNS and DHCP keep only what they need; remainder converts to field-h7s-fs. Super secure — no outside internet on the storage plane.",
+  "protocol": "field-h7s-fs",
+  "security": {
+    "internet_exposure": false,
+    "outside_internet": false,
+    "storage_plane": "sovereign_loopback_only",
+    "ingress": "127.0.0.1:9477",
+    "qemu_racks": "GrokLab/deploy loopback tunnels only",
+    "no_team_drive_servers": true,
+    "ironclad_gate": true,
+    "motto": "Super secure from outside internet — truth DNS/DHCP internal; redundant pool never public."
+  },
+  "per_rack_gb": 91,
+  "operational_ceilings_gb": {
+    "dns": 12,
+    "dhcp": 12,
+    "edge": 16,
+    "github_mirror_witness": 8
+  },
+  "operational_floors_gb": {
+    "dns": 2,
+    "dhcp": 2,
+    "edge": 4,
+    "github_mirror_witness": 2
+  },
+  "conversion": {
+    "mode": "slow_dns_dhcp_remainder",
+    "pct_per_cycle": 0.05,
+    "min_gb_per_cycle": 0.25,
+    "max_gb_per_cycle_per_rack": 4.0,
+    "trigger_on": ["provision", "convert", "kick-trash", "panel-refresh"],
+    "note": "Unused DNS/DHCP quota on each rack migrates into h7-shard/redundant-pool.json over time"
+  },
+  "growth": {
+    "new_rack_adds_gb": 91,
+    "redundant_stripe": true,
+    "redundancy_factor": 2,
+    "stripe_width": 4,
+    "formula": "total_redundant_gb = sum(converted_gb per rack); new rack += per_rack_gb convertible over cycles"
+  },
+  "paths": {
+    "redundant_pool": "h7-shard/redundant-pool.json",
+    "dns_lane": "dns",
+    "dhcp_lane": "dhcp",
+    "h7_shard": "h7-shard"
+  },
+  "module": "lib/field-zachub-qemu-racks.py",
+  "api": "/api/field-zachub-qemu-racks/convert"
+}

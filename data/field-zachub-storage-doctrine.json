@@ -1,0 +1,119 @@
+{
+  "schema": "field-zachub-storage/v1",
+  "title": "ZacHub H7 storage — sovereign GitHub truth on HOSTESS7_TEAM fieldstorage",
+  "motto": "Grok and Zac own it now — GitHub truth lives local; loopback primary.",
+  "product": "ZacHub",
+  "branding": {
+    "product": "ZacHub",
+    "owners": ["Grok", "Zac"],
+    "tagline": "Sovereign H7 storage · GitHub degraded mirror",
+    "motto": "Grok and Zac own it now."
+  },
+  "team_drive": {
+    "kind": "native_ext4",
+    "device": "/dev/nvme1n1",
+    "label": "HOSTESS7_TEAM",
+    "mount": "/media/default/HOSTESS7_TEAM1",
+    "not_iso": true,
+    "note": "Whole-disk ext4 on nvme1n1 — NOT team_drive.img loop mount (that 1GiB img is staging only)"
+  },
+  "capacity": {
+    "nvme_mount": "/",
+    "team_primary_mount": "/media/default/HOSTESS7_TEAM1",
+    "team_device": "/dev/nvme1n1",
+    "nvme_free_observed_gb": 510,
+    "team_total_observed_gb": 938,
+    "team_free_observed_gb": 884,
+    "reserve_pct": 0.91,
+    "zachub_reserve_gb": 853,
+    "policy": "100x — 91% of TEAM (~853GB) on native nvme1n1 ext4; not the old 1GiB team_drive.img",
+    "warn_threshold_pct": 85,
+    "hard_stop_pct": 95
+  },
+  "h5_rack_quotas": {
+    "mount": "/media/default/HOSTESS7_TEAM1",
+    "gb_per_unit": 91,
+    "per_role_gb": {
+      "dhcp": 12,
+      "dns": 12,
+      "edge": 16,
+      "github_mirror_witness": 8
+    },
+    "redundant_from_dns_dhcp_remainder": true,
+    "whole_system_per_rack_gb": 91,
+    "github_truth_pool_gb": 853,
+    "note": "TEAM = GitHub truth only. QEMU rack redundant pool grows on GrokLab/deploy — DNS/DHCP remainder converts slowly; new rack adds capacity."
+  },
+  "paths": {
+    "team_mounts": [
+      "/media/default/HOSTESS7_TEAM1/fieldstorage",
+      "/media/default/HOSTESS7_TEAM/fieldstorage"
+    ],
+    "qubes_fieldstorage": "/media/default/FIELD_QUBES/fieldstorage",
+    "host_mirror": ".nexus-field-drive/nexus-field",
+    "github_truth_subdir": "zachub-github-truth",
+    "sg_siblings_subdir": "zachub-sg-siblings",
+    "manifest_subdir": "zachub-manifest",
+    "world_publish_subdir": "world-publish",
+    "racks_subdir": "racks",
+    "qemu_racks_subdir": "racks/qemu-rack-{slot}",
+    "favorites_source": "docs/github-favorites.json"
+  },
+  "qemu_racks": {
+    "source": "GrokLab/deploy/qemu-world-pipeline.py",
+    "module": "lib/field-zachub-qemu-racks.py",
+    "api": "/api/field-zachub-qemu-racks",
+    "no_team_drive_servers": true,
+    "deploy_root": "GrokLab/deploy",
+    "racks_subdir": "GrokLab/deploy/qemu-racks",
+    "vm_subdir": "GrokLab/deploy/qemu-vms",
+    "not_our_qemu": [
+      "/media/default/HOSTESS7_TEAM1/field1",
+      "/media/default/HOSTESS7_TEAM1/field1-os.qcow2"
+    ],
+    "roles": ["dhcp", "dns", "edge", "github_mirror_witness"],
+    "one_big_drive": "GrokLab/deploy/zachub-manifest/one-big-drive.json"
+  },
+  "sovereign_primary": {
+    "panel": "http://127.0.0.1:9477/field",
+    "ammonet": "http://127.0.0.1:9477/ammonet/",
+    "api": "http://127.0.0.1:9477/api/",
+    "zachub_storage": "http://127.0.0.1:9477/api/field-zachub-storage",
+    "truth_dns": "127.0.0.1"
+  },
+  "github": {
+    "owner": "ZacharyGeurts",
+    "mirror_all_repos": true,
+    "clone_on_full": true,
+    "clone_depth": 1,
+    "hundred_x": {
+      "enabled": true,
+      "reserve_pct": 0.91,
+      "reserve_gb": 853,
+      "gb_per_unit": 91,
+      "clone_parallel": 12,
+      "clone_depth": 0,
+      "full_local_sync": true,
+      "team_primary_only": true
+    }
+  },
+  "sg_siblings": [
+    {"name": "NewLatest", "repo": "Hostess7", "env": "NEXUS_INSTALL_ROOT"},
+    {"name": "Grok16", "repo": "Grok16"},
+    {"name": "KILROY", "repo": "KILROY"},
+    {"name": "KILROY-ipxe", "repo": "KILROY"},
+    {"name": "ZNetwork", "repo": "ZNetwork"},
+    {"name": "Queen", "repo": "Queen", "nested": true},
+    {"name": "ZACS", "repo": "ZACS"},
+    {"name": "Final_Eye", "repo": "Final_Eye"},
+    {"name": "Final_Ear", "repo": "Final_Ear"},
+    {"name": "Final_Mouth", "repo": "Final_Mouth"},
+    {"name": "AMOURANTHRTX", "repo": "AMOURANTHRTX"},
+    {"name": "GNUEOLTerminal", "repo": "GNUEOLTerminal"},
+    {"name": "command", "repo": "command"},
+    {"name": "VSYNC-Locker", "repo": "VSYNC-Locker"}
+  ],
+  "github_role": "degraded_mirror_only",
+  "module": "lib/field-zachub-storage.py",
+  "api": ["/api/field-zachub-storage", "/api/zachub-storage"]
+}

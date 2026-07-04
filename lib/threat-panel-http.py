@@ -3594,12 +3594,16 @@ class Handler(BaseHTTPRequestHandler):
         if path.startswith("/api/field-zachub-qemu-racks") or path.startswith("/api/zachub-qemu-racks"):
             refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
             sub = path.rstrip("/").split("/")[-1]
-            if sub in ("provision", "apply", "burn", "burn-stale", "slots", "map"):
+            if sub in ("provision", "apply", "burn", "burn-stale", "slots", "map", "convert", "storage-totals", "totals", "redundant"):
                 qemu_py = INSTALL_ROOT / "lib" / "field-zachub-qemu-racks.py"
                 if sub in ("provision", "apply"):
                     args = ["provision"]
                 elif sub in ("burn", "burn-stale"):
                     args = ["burn"]
+                elif sub in ("convert", "redundant", "convert-remaining"):
+                    args = ["convert"]
+                elif sub in ("storage-totals", "totals"):
+                    args = ["storage-totals"]
                 else:
                     args = ["slots"]
                 dry_hdr = (self.headers.get("X-Zachub-Dry") or "").strip().lower()
@@ -9026,6 +9030,10 @@ class Handler(BaseHTTPRequestHandler):
                 args = ["burn"]
             elif sub in ("slots", "map"):
                 args = ["slots"]
+            elif sub in ("convert", "redundant", "convert-remaining"):
+                args = ["convert"]
+            elif sub in ("storage-totals", "totals"):
+                args = ["storage-totals"]
             else:
                 args = ["json"]
             dry_hdr = (self.headers.get("X-Zachub-Dry") or "").strip().lower()
