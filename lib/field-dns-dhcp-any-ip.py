@@ -19,6 +19,17 @@ PANEL = STATE / "field-dns-dhcp-any-ip-panel.json"
 WILDCARD_V4 = "0.0.0.0"
 WILDCARD_V6 = "::"
 QUEEN = os.environ.get("NEXUS_QUEEN_LAN_DNS", os.environ.get("NEXUS_FIELD_DHCP_BIND", "192.168.47.1"))
+SOVEREIGN_DOCTRINE = INSTALL / "data" / "field-ipv4-device-sovereign-doctrine.json"
+
+
+def _device_sovereign_mode() -> bool:
+    if os.environ.get("NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN", "1").strip().lower() in ("0", "false", "no", "off"):
+        return False
+    try:
+        doctrine = json.loads(SOVEREIGN_DOCTRINE.read_text(encoding="utf-8"))
+        return bool((doctrine.get("policy") or {}).get("track_devices_not_numbers", True))
+    except (OSError, json.JSONDecodeError):
+        return True
 
 
 def _utc() -> str:
@@ -111,7 +122,29 @@ def dhcp_server_id(fallback: str | None = None) -> str:
     return fb
 
 
-def answer_points() -> list[dict[str, Any]]:
+def answer_points(*, device_sovereign: bool | None = None) -> list[dict[str, Any]]:
+    sovereign = _device_sovereign_mode() if device_sovereign is None else device_sovereign
+    if sovereign:
+        return [
+            {
+                "address": WILDCARD_V4,
+                "family": "ipv4",
+                "dns": True,
+                "dhcp": True,
+                "wildcard": True,
+                "device_mapped": True,
+                "note": "All IPv4 on box — map to device information, not numbers",
+            },
+            {
+                "address": WILDCARD_V6,
+                "family": "ipv6",
+                "dns": True,
+                "dhcp": False,
+                "wildcard": True,
+                "device_mapped": True,
+                "note": "DNS wildcard — device authority primary",
+            },
+        ]
     points: list[dict[str, Any]] = []
     for ip in enumerate_local_ipv4():
         if ip == WILDCARD_V4:
@@ -158,8 +191,10 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         doctrine = json.loads(DOCTRINE.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         pass
+    sovereign = _device_sovereign_mode()
     v4 = enumerate_local_ipv4()
     v6 = enumerate_local_ipv6()
+    points = answer_points(device_sovereign=sovereign)
     doc = {
         "ok": True,
         "schema": "field-dns-dhcp-any-ip/v1",
@@ -168,6 +203,8 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "motto": doctrine.get("motto"),
         "any_ip": True,
         "answer_any_ip": True,
+        "device_sovereign": sovereign,
+        "track_devices_not_numbers": sovereign,
         "dns": {
             "binds_v4": dns_bind_hosts_v4(),
             "binds_v6": dns_bind_hosts_v6(),
@@ -181,10 +218,12 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
             "port": 67,
             "wildcard": dhcp_bind_host() == WILDCARD_V4,
         },
-        "local_ipv4": [ip for ip in v4 if ip != WILDCARD_V4],
-        "local_ipv6": [ip for ip in v6 if ip not in (WILDCARD_V6,)],
-        "answer_points": answer_points(),
-        "answer_point_count": len(answer_points()),
+        "local_ipv4": [] if sovereign else [ip for ip in v4 if ip != WILDCARD_V4],
+        "local_ipv6": [] if sovereign else [ip for ip in v6 if ip not in (WILDCARD_V6,)],
+        "enumerate_addresses": not sovereign,
+        "map_to": "device_information" if sovereign else "local_addresses",
+        "answer_points": points,
+        "answer_point_count": len(points),
         "policy": doctrine.get("policy") or {},
         "api": doctrine.get("api", "/api/field-dns-dhcp-any-ip"),
     }

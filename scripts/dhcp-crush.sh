@@ -9,6 +9,7 @@ export NEXUS_FIELD_DHCP="${NEXUS_FIELD_DHCP:-1}"
 export NEXUS_FIELD_DHCP_BIND="${NEXUS_FIELD_DHCP_BIND:-192.168.47.1}"
 export NEXUS_FIELD_DNS_ANY_IP="${NEXUS_FIELD_DNS_ANY_IP:-1}"
 export NEXUS_FIELD_DHCP_ANY_IP="${NEXUS_FIELD_DHCP_ANY_IP:-1}"
+export NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN="${NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN:-1}"
 
 PGREP="${PGREP:-/usr/bin/pgrep}"
 
@@ -68,3 +69,19 @@ if p.is_file():
 NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
   python3 "${ROOT}/lib/field-botnet-dns-dhcp.py" panel \
   > "${ROOT}/Hostess7/docs/api/field-botnet-dns-dhcp.json" 2>/dev/null || true
+
+NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+  NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN="$NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN" \
+  python3 "${ROOT}/lib/field-ipv4-device-sovereign.py" manage \
+  > "${ROOT}/Hostess7/docs/api/field-ipv4-device-sovereign.json" 2>/dev/null || true
+python3 -c "
+import json
+from pathlib import Path
+p = Path('${ROOT}/Hostess7/docs/api/field-ipv4-device-sovereign.json')
+if p.is_file():
+    d = json.loads(p.read_text())
+    print('IPv4 sovereign:', d.get('all_ipv4_every_box'), '| devices:', d.get('device_count'))
+    w = d.get('worldwide_suppression') or {}
+    print('Foreign off:', w.get('foreign_dns_dhcp_off'), '| threats:', w.get('foreign_threat_count'), '| sole:', w.get('sole_authority'))
+    print('Track devices not numbers:', d.get('track_devices_not_numbers'))
+" 2>/dev/null || true

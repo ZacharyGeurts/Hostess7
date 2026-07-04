@@ -1657,6 +1657,15 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     (API / "field-dns-dhcp-any-ip.json").write_text(json.dumps(any_ip, indent=2) + "\n", encoding="utf-8")
     files.append("field-dns-dhcp-any-ip.json")
 
+    ipv4_sovereign = _run_nl_script_json("lib/field-ipv4-device-sovereign.py", ["panel"], timeout=90)
+    if not ipv4_sovereign.get("schema"):
+        ipv4_sovereign = {**stub, "schema": "field-ipv4-device-sovereign/v1", "devices": [], "partial": True}
+    ipv4_sovereign["pages"] = True
+    (API / "field-ipv4-device-sovereign.json").write_text(
+        json.dumps(ipv4_sovereign, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-ipv4-device-sovereign.json")
+
     threat_panel = {
         **stub,
         "schema": "threat-panel-pages/v1",

@@ -3315,6 +3315,21 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
+        if path in (
+            "/api/field-ipv4-device-sovereign",
+            "/api/field-ipv4-device-sovereign/manage",
+            "/api/ipv4-device-sovereign",
+            "/api/ipv4-device-sovereign/manage",
+        ):
+            cmd = "manage" if path.endswith("/manage") else "json"
+            payload = _nexus_py_json(
+                INSTALL_ROOT / "lib" / "field-ipv4-device-sovereign.py",
+                [cmd],
+                timeout=90 if cmd == "manage" else 30,
+            )
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
         if path in ("/api/field-dns-dhcp-collision-guard/threats", "/api/collision-guard/threats"):
             payload = _nexus_py_json(
                 INSTALL_ROOT / "lib" / "field-dns-dhcp-collision-guard.py",

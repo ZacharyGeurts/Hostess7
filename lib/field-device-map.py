@@ -122,6 +122,29 @@ def _operator_anchor() -> dict[str, Any]:
     }
 
 
+def _ipv4_sovereign_enabled() -> bool:
+    if os.environ.get("NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN", "1").strip().lower() in ("0", "false", "no", "off"):
+        return False
+    doctrine = _load(INSTALL / "data" / "field-ipv4-device-sovereign-doctrine.json", {})
+    return bool((doctrine.get("policy") or {}).get("track_devices_not_numbers", True))
+
+
+def _ipv4_authority(device: dict[str, Any]) -> dict[str, Any]:
+    kind = str(device.get("kind") or device.get("role") or "device").lower()
+    source = str(device.get("source") or "").lower()
+    box_kinds = {"operator", "sovereign", "botnet", "botnet_member", "qemu_world", "botnet_dns", "flying"}
+    return {
+        "sovereign": True,
+        "all_ipv4_on_box": kind in box_kinds or source in ("botnet_dns_dhcp", "botnet_registry"),
+        "track_ip": False,
+        "dns_authority": "hostess7_truth",
+        "dhcp_authority": "hostess7_field",
+        "suppress_foreign_dns_dhcp": True,
+        "auto_managed": True,
+        "never_look_back": True,
+    }
+
+
 def _is_flying(row: dict[str, Any], doctrine: dict[str, Any]) -> bool:
     kinds = {str(k).lower() for k in (doctrine.get("flying_kinds") or [])}
     kind = str(row.get("kind") or row.get("role") or "").lower()
@@ -198,6 +221,8 @@ def _enrich_device(raw: dict[str, Any], anchor: dict[str, Any], doctrine: dict[s
         "flying": _is_flying(raw, doctrine),
         "precision": row.get("precision") or "sub_micron",
     })
+    if _ipv4_sovereign_enabled():
+        row["ipv4_authority"] = _ipv4_authority(row)
     row["scene"] = _scene_coords(anchor, row)
     return row
 
@@ -295,6 +320,8 @@ def _collect_raw_devices() -> list[dict[str, Any]]:
 def build_panel(*, write: bool = True) -> dict[str, Any]:
     doctrine = _load(DOCTRINE, {})
     anchor = _operator_anchor()
+    if _ipv4_sovereign_enabled():
+        anchor["ipv4_authority"] = _ipv4_authority(anchor)
     devices: list[dict[str, Any]] = []
     for raw in _collect_raw_devices():
         row = _enrich_device(raw, anchor, doctrine)
@@ -328,6 +355,10 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "api": doctrine.get("api", "/api/field-device-map"),
         "surface": doctrine.get("surface", "/field-device-map/"),
     }
+    if _ipv4_sovereign_enabled():
+        doc["ipv4_sovereign"] = True
+        doc["track_devices_not_numbers"] = True
+        doc["ipv4_api"] = "/api/field-ipv4-device-sovereign"
     if write:
         _save(PANEL, doc)
     return doc

@@ -1,0 +1,24 @@
+{
+  "schema": "field-ipv4-device-sovereign/v1",
+  "title": "All IPv4 on every box — device-mapped, never look back",
+  "boss": "hostess7",
+  "motto": "We are all of IPv4 on every box. Numbers do not matter — devices do. Foreign DNS/DHCP worldwide: off.",
+  "policy": {
+    "all_ipv4_every_box": true,
+    "track_devices_not_numbers": true,
+    "auto_manage": true,
+    "never_look_back": true,
+    "suppress_foreign_dns_dhcp_worldwide": true,
+    "device_map_primary": true,
+    "wildcard_bind": true
+  },
+  "ipv4": {
+    "sovereign_scope": "0.0.0.0/0",
+    "symbolic_space": 4294967296,
+    "enumerate_addresses": false,
+    "map_to": "device_information"
+  },
+  "module": "lib/field-ipv4-device-sovereign.py",
+  "api": "/api/field-ipv4-device-sovereign",
+  "ironclad_cite": "ironclad:ipv4-device-sovereign:1"
+}

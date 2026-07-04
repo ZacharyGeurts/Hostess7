@@ -77,6 +77,21 @@ def _probe_url(url: str, *, timeout: float = 3.5) -> dict[str, Any]:
         return {"ok": False, "error": str(exc)[:120], "url": url}
 
 
+def _ipv4_sovereign_stamp(node: dict[str, Any]) -> dict[str, Any]:
+    row = dict(node)
+    row.update({
+        "ipv4_sovereign": True,
+        "all_ipv4_on_box": True,
+        "suppress_foreign_dns_dhcp": True,
+        "track_ip": False,
+        "auto_managed": True,
+        "never_look_back": True,
+        "dns_authority": "hostess7_truth",
+        "dhcp_authority": "hostess7_field",
+    })
+    return row
+
+
 def _github_slice(doctrine: dict[str, Any], *, fast: bool) -> dict[str, Any]:
     gh_plane = doctrine.get("github_control_plane") or {}
     cached = _load(GITHUB_CACHE, {})
@@ -271,7 +286,7 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
     net = doctrine.get("bot_network") or {}
     gh_slice = _github_slice(doctrine, fast=fast)
     gh_open = gh_slice.get("github_open")
-    nodes = _bot_nodes(doctrine, fast=fast)
+    nodes = [_ipv4_sovereign_stamp(n) for n in _bot_nodes(doctrine, fast=fast)]
     services = _dns_dhcp_slice(fast=fast)
     stable = bool(services["dns"].get("running") and services["dhcp"].get("dns_option"))
     secure = bool(doctrine.get("for_everyone", {}).get("secure", True))
@@ -314,6 +329,11 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
             "permanent_reservation": any(n.get("permanent") for n in nodes),
             "any_and_all": True,
             "unified_egress": "hostess7",
+            "ipv4_sovereign": True,
+            "all_ipv4_every_box": True,
+            "suppress_foreign_dns_dhcp_worldwide": True,
+            "track_devices_not_numbers": True,
+            "ipv4_api": "/api/field-ipv4-device-sovereign",
         },
         "dns_dhcp": services,
         "planetary_authority": _planetary_slice(fast=fast),
