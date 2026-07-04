@@ -5,7 +5,7 @@
 (function (global) {
   "use strict";
 
-  const INTERVAL_MS = 30000;
+  const INTERVAL_MS = 120000;
   const LANE = "hostess7-github";
   const BOSS = "hostess7";
 

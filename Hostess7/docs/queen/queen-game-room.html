@@ -6,13 +6,14 @@
   <script src="/Hostess7/pages-queen-hardening.js"></script>
   <link rel="stylesheet" href="/Hostess7/pages-license.css" />
   <script src="/Hostess7/pages-license.js"></script>
-  <base href="/Hostess7/queen/" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Queen Game Room · CHIPS</title>
+  <base href="/Hostess7/queen/" />
   <link rel="stylesheet" href="queen-modern.css" data-queen-theme="1" />
   <link rel="stylesheet" href="queen-world.css" data-queen-theme="1" />
   <link rel="stylesheet" href="queen-styles.css" />
+  <link rel="stylesheet" href="queen-controller-setup.css" />
   <script src="queen-styles.js" data-queen-theme="1"></script>
   <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://127.0.0.1:*; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
@@ -71,6 +72,9 @@
             <span>Memory</span>
             <select class="gr-select" id="gr-memory" aria-label="Memory profile"></select>
           </label>
+          <button type="button" class="gr-btn gr-btn--test" id="gr-go-arcade" title="Leave theater — arcade controller setup">
+            Arcade →
+          </button>
           <label class="gr-field">
             <span>Screen ratio</span>
             <select class="gr-select" id="gr-aspect" aria-label="Aspect ratio">
@@ -80,6 +84,14 @@
               <option value="10/9">10:9 handheld</option>
             </select>
           </label>
+        </div>
+        <div class="gr-arcade-setup" id="gr-arcade-setup" hidden>
+          <div class="gr-arcade-setup-head">
+            <h4>Controller setup</h4>
+            <p class="gr-arcade-setup-sub">Left the theater — arcade deck · keyboard · gamepad · hand · stereo</p>
+            <button type="button" class="gr-btn gr-btn--gold" id="gr-back-theater">← Back to theater</button>
+          </div>
+          <div id="gr-controller-mount"></div>
         </div>
       </div>
       <pre class="gr-log gr-log--arcade" id="gr-log"></pre>
@@ -122,6 +134,7 @@
   </section>
 
 
+  <script src="queen-controller-setup.js" defer></script>
   <script src="queen-game-room-nes.js" defer></script>
   <script src="queen-game-room-sap.js" defer></script>
   <script src="queen-game-room.js" defer></script>

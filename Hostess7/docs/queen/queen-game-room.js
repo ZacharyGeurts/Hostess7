@@ -457,6 +457,12 @@
 
   function wireControls() {
     $("gr-launch")?.addEventListener("click", () => launch());
+    $("gr-go-arcade")?.addEventListener("click", () => {
+      globalThis.QueenControllerSetup?.open?.();
+    });
+    $("gr-back-theater")?.addEventListener("click", () => {
+      globalThis.QueenControllerSetup?.close?.();
+    });
     $("gr-fullscreen")?.addEventListener("click", toggleFullscreen);
     $("gr-refresh")?.addEventListener("click", () => refresh());
     $("gr-cpus")?.addEventListener("change", (e) => {
@@ -530,6 +536,13 @@
     wireGamepad();
     wireMovie();
     drawCanvasIdle();
+    if (location.hash === "#arcade") {
+      globalThis.QueenControllerSetup?.open?.();
+    }
+    window.addEventListener("hashchange", () => {
+      if (location.hash === "#arcade") globalThis.QueenControllerSetup?.open?.();
+      else globalThis.QueenControllerSetup?.close?.();
+    });
     refresh().then(async () => {
       if (urlSystem) await selectSystem(urlSystem);
       globalThis.QueenNesLibrary?.showNesRoom?.(state.system === "nes");

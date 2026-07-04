@@ -1,4 +1,4 @@
-# Hostess 7 3.0.7-beta5 — KILROY Field Brain (Main Project)— KILROY Field Brain (Main Project)
+# Hostess 7 3.0.7-beta5 — KILROY Field Brain (Main Project)— KILROY Field Brain (Main Project)— KILROY Field Brain (Main Project)
 
 God Bless.
 

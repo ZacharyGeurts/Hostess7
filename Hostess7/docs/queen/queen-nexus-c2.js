@@ -47,7 +47,7 @@
       const path = s.replace(/^queen:\/\//, "");
       if (path === "terminal") return "/Hostess7/queen/queen-gnu-terminal-embed.html";
       if (path === "files") return "/Hostess7/queen/queen-files.html";
-      if (path === "gameroom") return "/Hostess7/queen/queen-game-room.html";
+      if (path === "gameroom") return "/queen-game-room.html";
       if (path === "nexus-c2" || path === "c2") return "/Hostess7/queen/queen-nexus-c2.html";
       if (path === "thermal" || path === "thermal-manager") return "/Hostess7/queen/queen-thermal-manager.html";
       if (path === "final-ear" || path === "final-ear-manager" || path === "earball") return "/Hostess7/queen/queen-final-ear-manager.html";

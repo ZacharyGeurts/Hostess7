@@ -7,7 +7,7 @@
 </head><body class="chapter-page">
   <nav class="top"><div class="inner"><a class="logo" href="../index.html">GNU EOL TERMINAL</a>
   <ul><li><a href="wiki/">Wiki</a></li><li><a href="terminal/">Terminal</a></li></ul></div></nav>
-  <main class="chapter-main"><p># Ch 02 · Learning objectives</p>
+  <main class="chapter-main"><h1>Ch 02 · Learning objectives</h1>
 <p>Learning objectives</p>
 <p>Map Reality is 3D to fabric texels, die bytes, and packet positions.</p>
 <p>Distinguish scalar, vector, and telemetry fields with stack examples.</p>
@@ -68,7 +68,8 @@
 <p>Chapter 3 follows energy on fabric. Chapter 4 follows receipts. Chapter 5 follows defense. Chapter 6 separates RF meanings. Chapter 7 returns offense via dispatch. Read 2 before 7 — you must know what addresses dispatch writes.</p>
 <p>Operator drill — three-scale grep</p>
 <p># Fabric / die — AMOURANTHRTX ./linux.sh run 2>&1 | tee /tmp/ch2.log grep -E 'THERMO|data_bus|dispatch' /tmp/ch2.log | tail -15</p>
-<p># Packet field — NEXUS ./nexus.sh curl -sk https://127.0.0.1:9477/threat-panel.json | head -c 2000 Name which scale each artifact belongs to. If you cannot, reread scalar/vector/telemetry table.</p>
+<h1>Packet field — NEXUS</h1>
+<p>./nexus.sh curl -sk https://127.0.0.1:9477/threat-panel.json | head -c 2000 Name which scale each artifact belongs to. If you cannot, reread scalar/vector/telemetry table.</p>
 <p>Failure modes</p>
 <p>Mode Symptom Fix</p>
 <p>2D confusion Plotting data_bus as heatmap Telemetry ≠ spatial grid</p>
@@ -179,7 +180,11 @@
 <p>energy.comp laboratory — coupling you can see</p>
 <p>The energy swipe is the canonical Phi/Thermo coupling lab — warm colors track field work in ways Big Grin chrome hides. Lab protocol:</p>
 <p>Lab 2.A — energy.comp coupling</p>
-<p>./linux.sh run # Swipe to energy canvas (Options menu or bound key per build) set AnalogFields.FieldCoupling 0.2 set AnalogFields.InjectStrength 1.0 # Move mouse 60s; then: set AnalogFields.FieldCoupling 0.85 set AnalogFields.InjectStrength 3.0 grep -E 'THERMO|entropy|Boundary' run.log | tail -20 Expect rising entropyThisFrame and boundary thermo when coupling and inject climb — proxy receipts, not joules. CFL guard may scale aggressive knobs — read stderr clamp messages as numerical ethics (Chapter 9), not censorship.</p>
+<p>./linux.sh run</p>
+<h1>Swipe to energy canvas (Options menu or bound key per build)</h1>
+<p>set AnalogFields.FieldCoupling 0.2 set AnalogFields.InjectStrength 1.0</p>
+<h1>Move mouse 60s; then:</h1>
+<p>set AnalogFields.FieldCoupling 0.85 set AnalogFields.InjectStrength 3.0 grep -E 'THERMO|entropy|Boundary' run.log | tail -20 Expect rising entropyThisFrame and boundary thermo when coupling and inject climb — proxy receipts, not joules. CFL guard may scale aggressive knobs — read stderr clamp messages as numerical ethics (Chapter 9), not censorship.</p>
 <p>Pair lab with prompt list AnalogFields — host-side FCC mirrors land in data_bus[16–23] on x86 path; Classic path still owns the same analog knobs through overlapping control surfaces. Chapter 3 owns thermo physics story; this lab proves your hands move state.</p>
 <p>RetroRTX category — tribute shaders versus product truth</p>
 <p>RetroRTX names a family of tribute canvases — retro ray aesthetic, pedagogical nostalgia, Visual -leaning presentation that must not be mistaken for the default Field Die product surface. RetroRTX swipes teach history of RT vocabulary inside the same Vulkan spine; they do not replace x86.comp guest execution truth.</p>

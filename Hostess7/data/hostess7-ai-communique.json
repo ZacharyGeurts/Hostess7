@@ -59,12 +59,26 @@
       "verify": {"action": "verify"},
       "poll": {"action": "poll", "limit": 20},
       "note": "Triple redundancy + truth floor 58; sealed hash chain; refuses storage balloon"
+    },
+    "sudo_secure": {
+      "module": "lib/hostess7-sudo-secure.py",
+      "wrapper": "/usr/local/bin/hostess7-field-sudo",
+      "doctrine": "data/hostess7-sudo-doctrine.json",
+      "human_config": "~/.config/ammo-shield/sudo.env",
+      "ai_config": "~/.config/ammo-shield/ai-sudo.env",
+      "human_lane": "any_human_in_sudo_group_password_mememe",
+      "ai_lane": "scoped_nopasswd_wrapper_only",
+      "verify": "hostess7-field-sudo verify",
+      "run": "hostess7-field-sudo run ACTION",
+      "actions": ["dns-primary", "queen-lan", "truth-dns-serve", "dns-table-clean", "nexus-genius", "rebuild-internet"]
     }
   },
   "commands": {
     "status": "./Hostess7.sh ai-communique status",
     "operate": "./Hostess7.sh ai-communique operate \"query\"",
     "teach": "./Hostess7.sh ai-communique teach",
+    "sudo_verify": "./Hostess7.sh sudo-secure verify",
+    "sudo_run": "./Hostess7.sh sudo-secure run dns-primary",
     "queen": "curl -s -X POST http://127.0.0.1:9481/api/field-brain -d '{\"action\":\"ai_operate\",\"query\":\"…\"}'"
   },
   "queen_bindings": {

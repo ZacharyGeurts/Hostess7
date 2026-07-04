@@ -408,10 +408,22 @@ def _ingest_folder_relocate(rows: list[dict[str, Any]], seen: set[str]) -> None:
         })
 
 
-def seed_historic(*, force: bool = False) -> dict[str, Any]:
+def seed_historic(*, force: bool = False, append: bool = False) -> dict[str, Any]:
     existing = _read_ledger()
-    if existing and not force:
+    if existing and not force and not append:
         return {"ok": True, "seeded": 0, "skipped": True, "reason": "ledger_nonempty"}
+
+    if force and LEDGER.is_file():
+        LEDGER.unlink()
+
+    present_keys: set[str] = set()
+    for row in existing:
+        layer = str(row.get("layer") or "")
+        eid = str(row.get("entity_id") or "")
+        if layer and eid:
+            present_keys.add(_route_key(layer, eid))
+    for key in (_load_routes().get("routes") or {}):
+        present_keys.add(key)
 
     rows: list[dict[str, Any]] = []
     seen: set[str] = set()
@@ -447,15 +459,21 @@ def seed_historic(*, force: bool = False) -> dict[str, Any]:
     _ingest_folder_relocate(rows, seen)
 
     seeded = 0
+    skipped = 0
     for raw in rows:
+        layer = str(raw["layer"])
+        eid = str(raw["entity_id"])
+        if append and _route_key(layer, eid) in present_keys:
+            skipped += 1
+            continue
         mirrors = None
         meta = raw.get("meta") or {}
         if isinstance(meta.get("chain"), list):
             mirrors = meta["chain"]
         record(
-            layer=str(raw["layer"]),
+            layer=layer,
             kind=str(raw["kind"]),
-            entity_id=str(raw["entity_id"]),
+            entity_id=eid,
             from_val=raw.get("from_url"),
             to_val=raw.get("to_url"),
             witness=str(raw.get("witness") or "seed_historic"),
@@ -464,10 +482,11 @@ def seed_historic(*, force: bool = False) -> dict[str, Any]:
             mirrors=mirrors,
             meta=meta,
         )
+        present_keys.add(_route_key(layer, eid))
         seeded += 1
 
     export_public()
-    return {"ok": True, "seeded": seeded, "verify": verify_chain()}
+    return {"ok": True, "seeded": seeded, "skipped": skipped, "append": append, "verify": verify_chain()}
 
 
 def resolve(identifier: str) -> dict[str, Any]:
@@ -624,6 +643,125 @@ def pages_panel() -> dict[str, Any]:
     }
 
 
+def _pages_api_dir() -> Path | None:
+    h7 = INSTALL / "Hostess7" / "docs" / "api"
+    if h7.parent.is_dir():
+        return h7
+    return None
+
+
+def _load_committed_pages_registry(name: str) -> dict[str, Any] | None:
+    api_dir = _pages_api_dir()
+    if not api_dir:
+        return None
+    path = api_dir / name
+    if not path.is_file():
+        return None
+    doc = _load(path)
+    return doc if isinstance(doc, dict) and doc.get("schema") else None
+
+
+def _merge_registry_docs(base: dict[str, Any], fresh: dict[str, Any]) -> dict[str, Any]:
+    """Union committed Pages snapshot with fresh local witnesses — never drop seeded routes."""
+    out = {**base, **fresh}
+    merged_routes = {**(base.get("routes") or {}), **(fresh.get("routes") or {})}
+    out["routes"] = merged_routes
+    out["route_count"] = len(merged_routes)
+    seen: set[str] = set()
+    movements: list[dict[str, Any]] = []
+    for m in (base.get("recent_movements") or []) + (fresh.get("recent_movements") or []):
+        mid = str(m.get("id") or m.get("hash") or "")
+        if not mid or mid in seen:
+            continue
+        seen.add(mid)
+        movements.append(m)
+    movements.sort(key=lambda x: str(x.get("at") or ""))
+    out["recent_movements"] = movements[-48:]
+    out["updated"] = fresh.get("updated") or base.get("updated")
+    if base.get("verify") and fresh.get("verify"):
+        out["verify"] = fresh.get("verify") if fresh["verify"].get("count", 0) >= base["verify"].get("count", 0) else base["verify"]
+    out["movement_count"] = max(int(base.get("movement_count") or 0), int(fresh.get("movement_count") or 0), len(movements))
+    return out
+
+
+def propagate_pages(*, write: bool = True, witness: str = "field-endpoint-registry.py", stamp_movement: bool = True) -> dict[str, Any]:
+    """Instant-export registry snapshots to Hostess7 Pages api/ — no full surfaces rebuild."""
+    routes_count = len((_load_routes().get("routes") or {}))
+    seeded = 0
+    if routes_count < 20:
+        seed_result = seed_historic(append=True)
+        seeded = int(seed_result.get("seeded") or 0)
+    full = export_public(write=write)
+    pages = pages_panel()
+    routes_doc = routes_panel()
+    committed_full = _load_committed_pages_registry("field-endpoint-registry.json")
+    if committed_full:
+        full = _merge_registry_docs(committed_full, full)
+    committed_pages = _load_committed_pages_registry("field-pages-movement.json")
+    if committed_pages:
+        pages = _merge_registry_docs(committed_pages, pages)
+    committed_routes = _load_committed_pages_registry("field-endpoint-registry-routes.json")
+    if committed_routes and committed_routes.get("routes"):
+        routes_doc = _merge_registry_docs(committed_routes, routes_doc)
+    ledger_rows = _read_ledger()
+    pages_base = os.environ.get("HOSTESS7_PAGES_BASE", "/Hostess7")
+    stamp = {"pages": True, "pages_base": pages_base, "instant": True, "propagated_at": _utc()}
+    files: list[str] = []
+    api_dir = _pages_api_dir()
+    if write and api_dir is not None:
+        api_dir.mkdir(parents=True, exist_ok=True)
+        payloads: list[tuple[str, dict[str, Any]]] = [
+            ("field-endpoint-registry.json", {**full, **stamp}),
+            ("field-pages-movement.json", {**pages, **stamp}),
+            ("field-endpoint-registry-routes.json", {**routes_doc, **stamp}),
+        ]
+        if ledger_rows:
+            payloads.append((
+                "field-endpoint-registry-ledger.json",
+                {
+                    "ok": full.get("ok", True),
+                    "schema": "field-endpoint-registry-ledger/v1",
+                    "count": len(ledger_rows),
+                    "head": ledger_rows[-1].get("hash") if ledger_rows else GENESIS,
+                    "entries": ledger_rows[-96:],
+                    **stamp,
+                },
+            ))
+        for name, doc in payloads:
+            (api_dir / name).write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            files.append(name)
+    out = {
+        "ok": True,
+        "schema": "field-endpoint-registry-propagate/v1",
+        "instant": True,
+        "witness": witness,
+        "updated": full.get("updated"),
+        "route_count": full.get("route_count"),
+        "movement_count": full.get("movement_count"),
+        "merged_committed": bool(committed_full or committed_pages),
+        "seeded_append": seeded,
+        "files": files,
+        "api_dir": str(api_dir) if api_dir else None,
+        "pages_base": pages_base,
+    }
+    if write and files and stamp_movement:
+        _ledger_append({
+            "schema": "field-endpoint-movement/v1",
+            "id": f"api:pages_registry:propagate:{_utc()}",
+            "at": _utc(),
+            "layer": "api",
+            "kind": "api_wire",
+            "entity_id": "pages_registry",
+            "from": None,
+            "to": f"{pages_base}/api/field-endpoint-registry.json",
+            "witness": witness,
+            "reason": "instant Pages registry propagation",
+            "meta": {"files": files},
+        })
+        export_public(write=True)
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
     args = list(argv or sys.argv[1:])
     cmd = (args[0] if args else "json").lower()
@@ -636,7 +774,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if cmd == "seed":
         force = "--force" in args
-        print(json.dumps(seed_historic(force=force), indent=2))
+        append = "--append" in args
+        print(json.dumps(seed_historic(force=force, append=append), indent=2))
         return 0
     if cmd == "verify":
         print(json.dumps(verify_chain(), indent=2))
@@ -670,20 +809,29 @@ def main(argv: list[str] | None = None) -> int:
                 reason = a
             else:
                 reason = f"{reason} {a}"
-        print(json.dumps(record(
+        row = record(
             layer=layer, kind=kind, entity_id=entity_id,
             from_val=from_val, to_val=to_val, witness=witness, reason=reason, mirrors=mirrors,
-        ), indent=2))
+        )
         export_public()
+        prop = propagate_pages(witness=witness, stamp_movement=False)
+        print(json.dumps({**row, "propagated": prop}, indent=2))
         return 0
     if cmd == "export":
         print(json.dumps(export_public(), indent=2))
         return 0
+    if cmd in ("propagate", "propagate-pages", "pages-propagate"):
+        witness = "cli"
+        for a in args[1:]:
+            if a.startswith("--witness="):
+                witness = a.split("=", 1)[1]
+        print(json.dumps(propagate_pages(witness=witness), indent=2))
+        return 0
 
     print(json.dumps({"ok": False, "error": "usage", "cmds": [
-        "json", "pages", "seed [--force]", "verify", "routes [--layer=pages]",
+        "json", "pages", "seed [--force] [--append]", "verify", "routes [--layer=pages]",
         "resolve <id>", "record <layer> <kind> <entity_id> <to> [witness] [reason]",
-        "export",
+        "export", "propagate [--witness=SCRIPT]",
     ]}, indent=2))
     return 1
 

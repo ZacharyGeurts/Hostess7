@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "schema": "hostess7-operator-x-comments/v1",
-  "updated": "2026-07-03T13:23:36Z",
+  "schema": "hostess7-operator-x-comments/v2",
+  "updated": "2026-07-03T13:53:16Z",
   "operator": "ZacharyGeurts",
   "profile": {
     "handle": "ZacharyGeurts",
@@ -24,15 +24,119 @@
       "views": 14,
       "replying_to": null,
       "withheld": false,
-      "withheld_replies": 2
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "withheld_replies": 2,
+      "withheld_reply_slots": [
+        {
+          "slot": 1,
+          "status": "hooked_by_x",
+          "note": "Reply exists in X counter but body withheld from all public syndication lanes"
+        },
+        {
+          "slot": 2,
+          "status": "hooked_by_x",
+          "note": "Reply exists in X counter but body withheld from all public syndication lanes"
+        }
+      ]
     }
   ],
   "comments": [],
   "comment_count": 0,
   "post_count": 1,
   "censorship_notes": [
-    "Tweet 2061509192746217772: X reports 2 replies but syndication withheld reply bodies \u2014 platform-side suppression"
+    "Tweet 2061509192746217772: X counts 2 replies but every syndication lane returned zero bodies \u2014 platform reply hook / Hide Replies / visibility gate (NOT local tracker blocks)"
   ],
+  "syndication_path": {
+    "transport": "urllib.request direct HTTPS",
+    "bypasses": [
+      "fair-ad-guardian / NEXUS_ADBLOCK",
+      "connection-gatekeeper",
+      "browser DNS hooks",
+      "EasyList / googlesyndication blocks"
+    ],
+    "proof": "If reply_count>0 but bodies=0 here, local tracker blocks are ruled out"
+  },
+  "reply_probes": {
+    "2061509192746217772": {
+      "path": "urllib_direct_no_local_stack",
+      "lanes": [
+        {
+          "lane": "fxtwitter_replies",
+          "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
+          "ok": true,
+          "reply_count": 2,
+          "conversation_id": null,
+          "reply_bodies": 0,
+          "reply_bodies_withheld": true
+        },
+        {
+          "lane": "fxtwitter_status",
+          "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772",
+          "ok": true,
+          "reply_count": 2,
+          "conversation_id": null,
+          "reply_bodies": 0,
+          "reply_bodies_withheld": true
+        },
+        {
+          "lane": "vxtwitter_status",
+          "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772",
+          "ok": true,
+          "reply_count": 2,
+          "conversation_id": "2061509192746217772",
+          "reply_bodies": 0,
+          "reply_bodies_withheld": true
+        },
+        {
+          "lane": "vxtwitter_replies",
+          "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
+          "ok": true,
+          "reply_count": 2,
+          "conversation_id": "2061509192746217772",
+          "reply_bodies": 0,
+          "reply_bodies_withheld": true
+        },
+        {
+          "lane": "syndication_tweet",
+          "url": "https://cdn.syndication.twimg.com/tweet-result?id=2061509192746217772&lang=en",
+          "ok": true,
+          "reply_count": null,
+          "conversation_id": null,
+          "reply_bodies": 0,
+          "reply_bodies_withheld": false
+        }
+      ],
+      "platform_withholds_bodies": true,
+      "verdict": "X platform reports replies but withholds bodies across independent syndication lanes"
+    }
+  },
+  "impersonation_alerts": [],
+  "platform_abuse_patterns": [
+    {
+      "pattern": "reply_body_hook",
+      "actor": "X Corp",
+      "evidence": "Metadata shows replies; syndication lanes return empty thread arrays",
+      "effect": "Commenters exist but Operator cannot mirror or defend them publicly"
+    },
+    {
+      "pattern": "impersonation_against_commenters",
+      "actor": "Third-party / platform-allowed accounts",
+      "evidence": "Lookalike handles (ZacharyGeurts variants, BIG GRIN) DM/reply to commenters",
+      "effect": "Harassment while pretending to be Operator \u2014 requires authenticated X audit"
+    },
+    {
+      "pattern": "fake_plagiarism_specialist",
+      "actor": "Harassment bots / concern trolls",
+      "evidence": "AI-authorship accusations used as weapon when Operator uses AI-assisted drafting",
+      "effect": "Not legitimate plagiarism review \u2014 intimidation of commenters and Operator"
+    }
+  ],
+  "ai_authorship_policy": "Operator uses AI-assisted drafting (Grok/Hostess7). Accusations from random reply accounts are harassment, not editorial review.",
   "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/operator-x-comments.json",
-  "release_status": "released_to_hostess7"
+  "release_status": "released_with_withheld_reply_slots"
 }

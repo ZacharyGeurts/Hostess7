@@ -33,13 +33,23 @@
       })
       .join("");
     var google = doc.google_involvement || {};
+    var excluded = (doc.excluded_suspects || [])
+      .map(function (x) {
+        return "<li><s>" + esc(x.actor) + "</s> — " + esc(x.excluded_reason) + "</li>";
+      })
+      .join("");
     el.innerHTML =
       "<p class=\"x-release-verdict\"><strong>Who censored @ZacharyGeurts:</strong> " +
       esc(doc.verdict_summary || doc.primary_actor) +
       "</p>" +
-      "<p class=\"x-release-google\"><strong>Google:</strong> " +
-      esc(google.note || "no direct account censorship evidenced") +
+      "<p class=\"x-release-google\"><strong>Tracker blocks:</strong> " +
+      esc(
+        (doc.syndication_bypass_proof && doc.syndication_bypass_proof.conclusion) ||
+          google.note ||
+          "ruled out"
+      ) +
       "</p>" +
+      (excluded ? "<ul class=\"x-release-excluded\">" + excluded + "</ul>" : "") +
       "<ol class=\"x-release-suspects\">" +
       suspects +
       "</ol>";
@@ -65,8 +75,20 @@
       .map(function (p) {
         var withheld =
           p.withheld_replies > 0
-            ? ' <em class="x-withheld">' + p.withheld_replies + " replies withheld by X</em>"
+            ? ' <em class="x-withheld">' + p.withheld_replies +
+              " replies hooked by X (count visible, bodies withheld — NOT tracker blocks)</em>"
             : "";
+        var slots = "";
+        if (p.withheld_reply_slots && p.withheld_reply_slots.length) {
+          slots =
+            '<ul class="x-withheld-slots">' +
+            p.withheld_reply_slots
+              .map(function (s) {
+                return "<li>Slot " + esc(s.slot) + ": " + esc(s.note) + "</li>";
+              })
+              .join("") +
+            "</ul>";
+        }
         return (
           "<li class=\"x-post\"><a href=\"" +
           esc(p.url) +
@@ -76,10 +98,29 @@
           esc(p.text) +
           "</p>" +
           withheld +
+          slots +
           "</li>"
         );
       })
       .join("");
+    if (doc.impersonation_alerts && doc.impersonation_alerts.length && comments) {
+      comments.innerHTML +=
+        '<li class="x-impersonation-alert"><strong>Impersonation/plagiarism harassment flagged in recovered replies</strong></li>' +
+        doc.impersonation_alerts
+          .map(function (a) {
+            return (
+              '<li class="x-comment x-risk"><strong>' +
+              esc(a.author_name || a.author) +
+              "</strong><p>" +
+              esc(a.text_excerpt) +
+              "</p></li>"
+            );
+          })
+          .join("");
+    }
+    if (doc.syndication_path && meta) {
+      meta.textContent += " · syndication: direct HTTPS (bypasses adblock)";
+    }
     if (comments) {
       comments.innerHTML = (doc.comments || [])
         .map(function (c) {

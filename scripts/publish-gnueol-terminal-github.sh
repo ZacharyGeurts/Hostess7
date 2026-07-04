@@ -161,4 +161,7 @@ if command -v python3 >/dev/null 2>&1; then
     "ZacharyGeurts/GNUEOLTerminal" "https://zacharygeurts.github.io/GNUEOLTerminal/" \
     publish-gnueol-terminal-github.sh "GNUEOLTerminal ${VER} pushed" 2>/dev/null || true
 fi
+if [[ -x "${ROOT}/scripts/propagate-pages-registry.sh" ]]; then
+  bash "${ROOT}/scripts/propagate-pages-registry.sh" publish-gnueol-terminal-github.sh || true
+fi
 log "published → https://zacharygeurts.github.io/GNUEOLTerminal/"

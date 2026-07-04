@@ -1,4 +1,15 @@
 /* EOL Code — Layer 0 BSP tree · Ironclad truth generator */
+.rtx-smooth-scroll {
+  overflow: auto;
+  scroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+  will-change: scroll-position;
+}
+.rtx-smooth-scroll--infinite {
+  scroll-snap-type: y proximity;
+}
+
 .eol-root {
   --eol-bg: #060a08;
   --eol-panel: #0a1210;
@@ -81,11 +92,17 @@
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr) minmax(220px, 0.7fr);
   gap: 0;
 }
 
+.eol-wiring-summary { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 10px; font-size: 0.68rem; border-bottom: 1px solid var(--eol-border); }
+.eol-wiring-row { display: grid; grid-template-columns: 72px 1fr 1fr; gap: 8px; padding: 4px 10px; border-bottom: 1px solid rgba(62,207,142,0.08); font-size: 0.65rem; }
+.eol-wiring--icon { background: rgba(245,166,35,0.06); }
+.eol-wiring-body { flex: 1; min-height: 0; overflow: auto; }
+
 .eol-tree-pane,
+.eol-wiring-pane,
 .eol-log-pane {
   min-height: 0;
   display: flex;

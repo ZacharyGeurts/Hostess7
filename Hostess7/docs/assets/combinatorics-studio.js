@@ -435,8 +435,9 @@
         <span class="comb-chip on">FieldChips</span>
         <span class="comb-chip">${esc(system)}</span>
         <button type="button" class="comb-btn comb-btn--accent" id="comb-launch-gameroom">Launch Game Room</button>
+        <button type="button" class="comb-btn" id="comb-tournament-host">Tournament · SAP</button>
       </div>
-      <p class="comb-muted">Combinatorics picked CHIPS emulator — spawns queen-game-room pump.</p>`;
+      <p class="comb-muted">Combinatorics → CHIPS pump · Tournament auto-hosts SAP + botnet beacon (layer 3+ = Steam bridge).</p>`;
     host.querySelector("#comb-launch-gameroom")?.addEventListener("click", async () => {
       log(`Launching Game Room CHIPS pump (${system})…`);
       try {
@@ -445,11 +446,33 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ action: "launch", system, spawn_rtx: true }),
         });
-        const out = await res.json();
+        const raw = await res.text();
+        let out = {};
+        try {
+          out = raw.trim() ? JSON.parse(raw) : { ok: false, error: "empty_response" };
+        } catch (_e) {
+          out = { ok: false, error: "bad_json", detail: raw.slice(0, 120) };
+        }
         log(out.spawned ? `Pump started: ${out.rom_path || system}` : `Launch: ${out.error || out.message || "see log"}`);
-        if (out.spawned) window.open("/Hostess7/queen/queen-game-room.html", "_blank", "noopener");
+        if (out.spawned) window.open("/queen-game-room.html#arcade", "_blank", "noopener");
       } catch (e) {
         log(`Game Room launch error: ${e.message || e}`);
+      }
+    });
+    host.querySelector("#comb-tournament-host")?.addEventListener("click", async () => {
+      log(`Tournament host: ${system} — launch + SAP + botnet beacon…`);
+      try {
+        const res = await fetch("/api/field-arcade-battalion", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "tournament", system, spawn_rtx: true, max_players: 4 }),
+        });
+        const out = await res.json();
+        const sid = out.sap_host?.session_id || "";
+        log(out.ok ? `Tournament live — SAP ${sid.slice(0, 12)}…` : `Tournament: ${out.error || "failed"}`);
+        if (out.ok) window.open("/queen-game-room.html", "_blank", "noopener");
+      } catch (e) {
+        log(`Tournament error: ${e.message || e}`);
       }
     });
   }

@@ -65,9 +65,13 @@
     "routes_pages": "/api/field-endpoint-registry-routes.json",
     "pages_alias": "/api/field-pages-movement"
   },
+  "instant_propagate": true,
+  "propagate_script": "scripts/propagate-pages-registry.sh",
   "publish_hooks": [
     "scripts/publish-gnueol-terminal-github.sh",
-    "scripts/publish-hostess7-github.sh"
+    "scripts/publish-hostess7-github.sh",
+    "scripts/propagate-pages-registry.sh",
+    "GNUEOLTerminal/scripts/publish-github-wiki.sh"
   ],
   "wires": [
     "Hostess7/docs/pages-github-everyone-wire.js",

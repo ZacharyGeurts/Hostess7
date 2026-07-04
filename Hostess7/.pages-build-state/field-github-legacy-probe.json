@@ -1,15 +1,15 @@
 {
   "schema": "field-github-legacy-probe/v1",
-  "updated": "2026-07-03T08:20:26Z",
+  "updated": "2026-07-04T02:06:19Z",
   "ok": true,
-  "stable": true,
+  "stable": false,
   "always_open": true,
-  "open_count": 9,
-  "canonical_open": 4,
-  "legacy_open": 5,
+  "open_count": 2,
+  "canonical_open": 2,
+  "legacy_open": 0,
   "legacy_total": 5,
-  "total_probed": 9,
-  "total_catalog": 30,
+  "total_probed": 2,
+  "total_catalog": 31,
   "fast": true,
   "secure_legacy": {
     "tls_required": true,
@@ -24,117 +24,32 @@
   },
   "endpoints": [
     {
-      "id": "github_com",
-      "url": "https://github.com",
-      "role": "canonical_git",
-      "legacy": false,
-      "ok": true,
-      "status": 403,
-      "elapsed_ms": 356,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
-    },
-    {
       "id": "api_github",
       "url": "https://api.github.com",
       "role": "api",
       "legacy": false,
       "ok": true,
       "status": 429,
-      "elapsed_ms": 241,
+      "elapsed_ms": 477,
       "method": "HEAD",
       "probe_chain": "HEAD",
-      "always_open": true
+      "always_open": true,
+      "shard": "field-loopback",
+      "live": true
     },
     {
-      "id": "hostess7_repo",
-      "url": "https://github.com/ZacharyGeurts/Hostess7",
-      "role": "main_repo",
+      "id": "github_com",
+      "url": "https://github.com",
+      "role": "canonical_git",
       "legacy": false,
       "ok": true,
-      "status": 403,
-      "elapsed_ms": 295,
+      "status": 429,
+      "elapsed_ms": 609,
       "method": "HEAD",
       "probe_chain": "HEAD",
-      "always_open": true
-    },
-    {
-      "id": "hostess7_pages",
-      "url": "https://zacharygeurts.github.io/Hostess7/",
-      "role": "pages_runtime",
-      "legacy": false,
-      "ok": true,
-      "status": 200,
-      "elapsed_ms": 262,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
-    },
-    {
-      "id": "command_stack_repo",
-      "url": "https://github.com/ZacharyGeurts/command",
-      "role": "stack_repo",
-      "legacy": true,
-      "title": "NEXUS C2 Basement",
-      "ok": true,
-      "status": 403,
-      "elapsed_ms": 510,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
-    },
-    {
-      "id": "h7updater_stack_repo",
-      "url": "https://github.com/ZacharyGeurts/H7updater",
-      "role": "stack_repo",
-      "legacy": true,
-      "title": "H7 Updater",
-      "ok": true,
-      "status": 403,
-      "elapsed_ms": 437,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
-    },
-    {
-      "id": "ammoos_stack_repo",
-      "url": "https://github.com/ZacharyGeurts/AmmoOS",
-      "role": "stack_repo",
-      "legacy": true,
-      "title": "AmmoOS",
-      "ok": true,
-      "status": 403,
-      "elapsed_ms": 254,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
-    },
-    {
-      "id": "queen_stack_repo",
-      "url": "https://github.com/ZacharyGeurts/Queen",
-      "role": "stack_repo",
-      "legacy": true,
-      "title": "Queen Browser",
-      "ok": true,
-      "status": 403,
-      "elapsed_ms": 371,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
-    },
-    {
-      "id": "grok16_stack_repo",
-      "url": "https://github.com/ZacharyGeurts/Grok16",
-      "role": "stack_repo",
-      "legacy": true,
-      "title": "Grok16",
-      "ok": true,
-      "status": 403,
-      "elapsed_ms": 317,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
+      "always_open": true,
+      "shard": "field-loopback",
+      "live": true
     }
   ],
   "always_allow_domains": [
@@ -146,5 +61,13 @@
     "github.io",
     "githubassets.com",
     "githubusercontent.com"
-  ]
+  ],
+  "traffic_shard": {
+    "offload_pct": 90.0,
+    "host_share_pct": 10.0,
+    "active_shard": "field-loopback",
+    "field_nodes": 1,
+    "live_batch": 2,
+    "cached_rows": 0
+  }
 }

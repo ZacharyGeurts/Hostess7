@@ -257,6 +257,23 @@ def teach_ai_communique() -> dict[str, Any]:
     return brief
 
 
+def _sudo_secure_status() -> dict[str, Any]:
+    py = ROOT.parent / "lib" / "hostess7-sudo-secure.py"
+    if not py.is_file():
+        return {"ok": False, "error": "missing_module"}
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("hostess7_sudo_secure", py)
+        if not spec or not spec.loader:
+            return {"ok": False, "error": "import_failed"}
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod.verify()
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)[:160]}
+
+
 def status() -> dict[str, Any]:
     doctrine = load_doctrine()
     brief = {}
@@ -274,6 +291,11 @@ def status() -> dict[str, Any]:
         "motto": doctrine.get("motto"),
         "brief": brief,
         "commands": doctrine.get("commands", {}),
+        "sudo_secure": _sudo_secure_status(),
+        "transports": {
+            k: v for k, v in (doctrine.get("transports") or {}).items()
+            if k in ("sudo_secure", "external_wire", "znetwork_wire")
+        },
     }
 
 

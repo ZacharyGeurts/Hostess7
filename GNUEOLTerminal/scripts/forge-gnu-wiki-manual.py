@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 WIKI = ROOT / "wiki"
 INSTALL = ROOT.parent
 FIELD_TECH = INSTALL / "Textbook" / "field-technology-v5.txt"
+PRESERVE_WIKI = frozenset({"eol-terminal-full-manual.md"})
 
 
 def _slug(s: str) -> str:
@@ -234,9 +235,13 @@ def forge_all() -> list[dict]:
     WIKI.mkdir(parents=True, exist_ok=True)
 
     for slug, title, body in _extension_pages():
+        out_path = WIKI / f"{slug}.md"
+        if out_path.name in PRESERVE_WIKI and out_path.is_file():
+            stats.append({"path": str(out_path.relative_to(ROOT)), "words": len(out_path.read_text().split()), "preserved": True})
+            continue
         if not body.startswith("#"):
             body = f"# {title}\n\n{body}"
-        stats.append(_write(WIKI / f"{slug}.md", body))
+        stats.append(_write(out_path, body))
 
     ft_links: list[str] = []
     for slug, title, body in _parse_field_technology():
@@ -249,7 +254,11 @@ def forge_all() -> list[dict]:
         "",
         "For Emacs veterans, Bash poets, printf samurai — and grandma who just wants copy/paste to work.",
         "",
-        "## Start here",
+        "## Full manual (start here)",
+        "",
+        "- **[GNU EOL Terminal — Full Operator Manual](eol-terminal-full-manual.md)** — commands · API · iron plate · boot · troubleshooting",
+        "",
+        "## Quick links",
         "",
         "- [GNU Technical Manual overview](gnu-technical-manual.md)",
         "- [Widgets & tight paneling](widgets-and-paneling.md)",

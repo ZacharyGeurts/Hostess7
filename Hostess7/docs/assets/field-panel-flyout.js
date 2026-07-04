@@ -93,6 +93,17 @@
       '<span class="fpnl-pill">CPU ' + esc(perf.cpu_pct != null ? perf.cpu_pct + "%" : "—") + "</span>" +
       '<span class="fpnl-pill">MEM ' + esc(perf.mem_pct != null ? perf.mem_pct + "%" : "—") + "</span>" +
       "</div>" +
+      (function () {
+        const al = doc.arcade_lobby || {};
+        if (!al.enabled) return "";
+        return (
+          '<div class="fpnl-row">' +
+          '<span class="fpnl-pill">Arcade SAP ' + fmtN(al.sap_beacons) + "</span>" +
+          '<span class="fpnl-pill">Little guys ' + fmtN(al.qemu_witnesses) + "</span>" +
+          (al.system ? '<span class="fpnl-pill">' + esc(al.system) + "</span>" : "") +
+          "</div>"
+        );
+      })() +
       '<div class="fpnl-actions">' +
       '<button type="button" class="fpnl-btn" data-act="monster"><strong>Monster</strong>Tasks · orphans · fixes</button>' +
       '<button type="button" class="fpnl-btn" data-act="registry"><strong>Registry</strong>Endpoint movements</button>' +

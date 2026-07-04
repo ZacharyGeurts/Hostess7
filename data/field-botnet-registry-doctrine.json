@@ -35,11 +35,41 @@
     "max_panel_vault_scan": 4096
   },
   "dhcp_shard": {
-    "base_private": "192.168",
-    "pool_start_host": 100,
-    "pool_end_host": 200,
-    "third_octet_min": 50,
-    "third_octet_max": 254
+    "queen_lan_dns": "192.168.47.1",
+    "queen_lan_gateway": "192.168.47.1",
+    "retro_pool": {
+      "subnet": "192.168.47.0/24",
+      "start": "192.168.47.100",
+      "end": "192.168.47.150"
+    },
+    "modes": {
+      "sovereign": {
+        "ranges": ["10.0.0.0/8"],
+        "dns_option": ["127.0.0.1", "192.168.47.1"],
+        "pool_start_host": 2,
+        "pool_end_host": 250
+      },
+      "world": {
+        "ranges": ["100.64.0.0/10", "10.0.0.0/8"],
+        "dns_option": ["192.168.47.1"],
+        "pool_start_host": 2,
+        "pool_end_host": 250
+      },
+      "robot": {
+        "ranges": ["100.64.0.0/10"],
+        "dns_option": ["192.168.47.1"],
+        "pool_start_host": 2,
+        "pool_end_host": 250
+      },
+      "retro": {
+        "ranges": ["192.168.47.0/24"],
+        "dns_option": ["192.168.47.1"],
+        "pool_start_host": 100,
+        "pool_end_host": 150
+      }
+    },
+    "default_mode": "world",
+    "world_capacity_note": "100.64/10 + 10/8 — not capped at 192.168 third-octet lottery"
   },
   "stalk_patterns": [
     "\\b(stalk|stalker|harass|dox|swat|impersonat|fake.?name|catfish)\\b",

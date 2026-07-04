@@ -1,0 +1,55 @@
+{
+  "schema": "hostess7-sudo-doctrine/v1",
+  "title": "Hostess7 secure sudo — humans + AI communique lane",
+  "motto": "Password sudo for any human in %sudo · scoped NOPASSWD for field allowlist only",
+  "policy": {
+    "human_password_env": "HOSTESS7_SUDO_PW",
+    "human_config": "~/.config/ammo-shield/sudo.env",
+    "ai_config": "~/.config/ammo-shield/ai-sudo.env",
+    "sudo_group": "%sudo",
+    "nopasswd_wrapper": "/usr/local/bin/hostess7-field-sudo",
+    "never_log_password": true,
+    "never_pages_publish": true
+  },
+  "actions": {
+    "dns-primary": {
+      "script": "scripts/legacy-connect-primary.sh",
+      "role": "Truth DNS + Field DHCP primary",
+      "ai_safe": true
+    },
+    "queen-lan": {
+      "script": "scripts/queen-lan-up.sh",
+      "role": "Queen LAN 192.168.47.1 for retro DHCP",
+      "ai_safe": true
+    },
+    "truth-dns-serve": {
+      "module": "lib/field-dns.py",
+      "args": ["serve"],
+      "role": "Bind truth resolver 127.0.0.1:53",
+      "ai_safe": true
+    },
+    "dns-table-clean": {
+      "script": "scripts/dns-clean-tables.sh",
+      "args": ["clean"],
+      "role": "Safe Truth DNS table hygiene",
+      "ai_safe": true
+    },
+    "nexus-genius": {
+      "systemctl": ["start", "nexus-genius.service"],
+      "role": "Start nexus-genius field service",
+      "ai_safe": true
+    },
+    "rebuild-internet": {
+      "script": "scripts/rebuild-internet-routes-secure.sh",
+      "role": "Secure internet route rebuild — ultimate truth",
+      "ai_safe": true
+    }
+  },
+  "ai_communique": {
+    "module": "lib/hostess7-sudo-secure.py",
+    "api": "/api/hostess7-sudo-secure",
+    "status": "json",
+    "run": "run ACTION",
+    "verify": "verify"
+  }
+}

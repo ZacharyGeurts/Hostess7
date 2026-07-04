@@ -61,7 +61,16 @@ LEGACY_OUI_PREFIXES = tuple(
 def _legacy_dns_servers_v4() -> list[str]:
     raw = os.environ.get("NEXUS_FIELD_DHCP_LEGACY_DNS_IPV4", "")
     hosts = [h.strip() for h in raw.split(",") if h.strip()]
-    return hosts
+    if hosts:
+        return hosts
+    doctrine = INSTALL / "data" / "field-legacy-connect-doctrine.json"
+    try:
+        doc = json.loads(doctrine.read_text(encoding="utf-8"))
+        retro = (doc.get("dhcp_legacy") or {}).get("retro_pool") or {}
+        queen = str(retro.get("gateway") or "192.168.47.1")
+        return [queen]
+    except (OSError, json.JSONDecodeError):
+        return ["192.168.47.1"]
 
 
 LEGACY_DNS_SERVERS = _legacy_dns_servers_v4()

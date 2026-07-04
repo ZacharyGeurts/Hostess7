@@ -1,0 +1,54 @@
+# GNU Technical Manual — Classic Schooler Wiki
+
+For Emacs veterans, Bash poets, printf samurai — and grandma who just wants copy/paste to work.
+
+## Full manual (start here)
+
+- **[GNU EOL Terminal — Full Operator Manual](eol-terminal-full-manual)** — commands · API · iron plate · boot · troubleshooting
+
+## Quick links
+
+- [GNU Technical Manual overview](gnu-technical-manual)
+- [Widgets & tight paneling](widgets-and-paneling)
+- [RTX panels](rtx-panels)
+- [Entropy grade production](entropy-grade)
+- [Sovereign time](sovereign-time)
+- [MS-DOS 4.0 modules](dos40-modules)
+
+## Classic GNU
+
+- [Emacs](emacs)
+- [Bash](bash)
+- [Coreutils](coreutils)
+- [SSH](ssh)
+- [GPL FAQ](gpl)
+- [Field Tech commands](field-tech)
+
+## Field Technology primer (full manual)
+
+- [Ch 01 · Read this before you dispatch anything](ft-ch01-read-this-before-you-dispatch-anything)
+- [Ch 02 · Learning objectives](ft-ch02-learning-objectives)
+- [Ch 03 · Learning objectives](ft-ch03-learning-objectives)
+- [Ch 04 · Learning objectives](ft-ch04-learning-objectives)
+- [Ch 05 · Learning objectives](ft-ch05-learning-objectives)
+- [Ch 06 · Learning objectives](ft-ch06-learning-objectives)
+- [Ch 07 · Offensive Dispatch — GPU Field Engine](ft-ch07-offensive-dispatch-gpu-field-engine)
+- [Ch 08 · Die-Resident Universe — Field Die & Data Bus](ft-ch08-die-resident-universe-field-die-data-bus)
+- [Ch 09 · Stability Under Load — FCC & Tesla](ft-ch09-stability-under-load-fcc-tesla)
+- [Ch 10 · Hardware Spiderweb — Sub-Micron Mirror](ft-ch10-hardware-spiderweb-sub-micron-mirror)
+- [Ch 11 · Observability — Reading the Battlefield](ft-ch11-observability-reading-the-battlefield)
+- [Ch 12 · Reality vs Theory — The Rocks](ft-ch12-reality-vs-theory-the-rocks)
+- [Ch 13 · Creditor deep dive · Thermodynamic receipts](ft-ch13-creditor-deep-dive-thermodynamic-receipts)
+- [Ch 14 · Creditor deep dive · Shannon Oracle](ft-ch14-creditor-deep-dive-shannon-oracle)
+- [Ch 15 · Creditor deep dive · Maxwell GPU](ft-ch15-creditor-deep-dive-maxwell-gpu)
+- [Ch 16 · Sacred long-form · Love Coupling](ft-ch16-sacred-long-form-love-coupling)
+- [Ch 17 · Sacred long-form · God Boundary](ft-ch17-sacred-long-form-god-boundary)
+- [Ch 18 · Sacred long-form · Operator Covenant](ft-ch18-sacred-long-form-operator-covenant)
+- [Ch 19 · Introduction — why sovereign time exists](ft-ch19-introduction-why-sovereign-time-exists)
+- [Ch 20 · Introduction — public services under terror-threat posture](ft-ch20-introduction-public-services-under-terror-threat-posture)
+- [Ch 21 · Introduction — Queen doctrine](ft-ch21-introduction-queen-doctrine)
+- [Ch 22 · Glossary — Field Technology v5](ft-ch22-glossary-field-technology-v5)
+
+Built from `Textbook/field-technology-v5.txt` · Hostess7 **3.0.7-beta5** · GNUEOLTerminal.
+
+Repo: https://github.com/ZacharyGeurts/GNUEOLTerminal

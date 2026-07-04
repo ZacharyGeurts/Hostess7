@@ -245,6 +245,7 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh queen-teach-redata      Teach Queen integration + all build tools (comfort brief)
   ./Hostess7.sh ai-communique status    AI-primary communique doctrine (Super Intelligence default)
   ./Hostess7.sh ai-communique operate "query"   Machine JSON response — optimized for AI traffic
+  ./Hostess7.sh sudo-secure verify|run <action>  Scoped sudo for humans + AI (password mememe)
   ./Hostess7.sh queen-grok16-probe      Probe Grok16 unified g16 + sync Queen toolchain manifest
   ./Hostess7.sh queen-field-tools       Queen field build tools manifest (g16 + field cmake)
   ./Hostess7.sh queen-field-tools probe Probe core field tools readiness
@@ -1023,6 +1024,18 @@ print('OK warfare-expand')
         ai-communique|ai_communique|ai-operate|ai_operate)
             shift
             exec env GPY16_TOOLING=1 HOSTESS7_AI_PRIMARY=1 HOSTESS7_AI_COMMUNIQUE=1 pythong "$ROOT/scripts/field_ai_communique.py" "${1:-status}" "${@:2}"
+            ;;
+        sudo-secure|sudo_secure|field-sudo)
+            shift
+            if [[ -f "${HOME}/.config/ammo-shield/ai-sudo.env" ]]; then
+                # shellcheck source=/dev/null
+                source "${HOME}/.config/ammo-shield/ai-sudo.env"
+            elif [[ -f "${HOME}/.config/ammo-shield/sudo.env" ]]; then
+                # shellcheck source=/dev/null
+                source "${HOME}/.config/ammo-shield/sudo.env"
+            fi
+            exec env NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-$(cd "$ROOT/.." && pwd)}" \
+                pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-sudo-secure.py" "${1:-json}" "${@:2}"
             ;;
         queen-grok16-probe|queen_grok16_probe|grok16-probe)
             QUEEN="${SG_ROOT:-$ROOT/..}/NewLatest/Queen"

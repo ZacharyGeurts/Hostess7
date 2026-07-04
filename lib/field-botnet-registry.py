@@ -259,32 +259,117 @@ def _sovereign_receipt(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _dhcp_shard(member_id: str) -> dict[str, Any]:
+def _queen_lan_dns(doc: dict[str, Any] | None = None) -> str:
+    shard = (doc or _doctrine()).get("dhcp_shard") or {}
+    return str(
+        shard.get("queen_lan_dns")
+        or os.environ.get("NEXUS_QUEEN_LAN_DNS")
+        or "192.168.47.1"
+    )
+
+
+def _connection_mode(fields: dict[str, Any] | None) -> str:
+    fields = fields or {}
+    explicit = str(fields.get("connection_mode") or "").strip().lower()
+    if explicit in ("sovereign", "local", "world", "robot", "retro"):
+        return "retro" if explicit == "local" and fields.get("retro") else explicit
+    if fields.get("retro") or fields.get("dreamcast"):
+        return "retro"
+    if fields.get("self") and not fields.get("world_robot"):
+        return "sovereign"
+    return str((_doctrine().get("dhcp_shard") or {}).get("default_mode") or "world")
+
+
+def _dhcp_shard(member_id: str, *, fields: dict[str, Any] | None = None) -> dict[str, Any]:
     doc = _doctrine().get("dhcp_shard") or {}
-    base = str(doc.get("base_private") or "192.168")
-    lo = int(doc.get("third_octet_min") or 50)
-    hi = int(doc.get("third_octet_max") or 254)
-    start_h = int(doc.get("pool_start_host") or 100)
-    end_h = int(doc.get("pool_end_host") or 200)
-    n = int(hashlib.sha256(member_id.encode()).hexdigest()[:4], 16)
-    third = lo + (n % max(1, hi - lo + 1))
+    mode = _connection_mode(fields)
+    modes = doc.get("modes") or {}
+    spec = modes.get(mode) or modes.get("world") or {}
+    queen = _queen_lan_dns(doc)
+    gateway = str(doc.get("queen_lan_gateway") or queen)
+    digest = hashlib.sha256(member_id.encode()).digest()
+    start_h = int(spec.get("pool_start_host") or 2)
+    end_h = int(spec.get("pool_end_host") or 250)
+    dns_option = list(spec.get("dns_option") or [queen])
+    if mode in ("world", "robot", "retro") and "127.0.0.1" in dns_option:
+        dns_option = [d for d in dns_option if d != "127.0.0.1"] or [queen]
+    if queen not in dns_option and mode != "sovereign":
+        dns_option = [queen, *dns_option]
+
+    if mode == "retro":
+        retro = doc.get("retro_pool") or {}
+        pool_start = str(retro.get("start") or "192.168.47.100")
+        pool_end = str(retro.get("end") or "192.168.47.150")
+        subnet = str(retro.get("subnet") or "192.168.47.0/24")
+        return {
+            "subnet": subnet,
+            "pool_start": pool_start,
+            "pool_end": pool_end,
+            "gateway": gateway,
+            "dns_option": dns_option,
+            "connection_mode": mode,
+            "unique_shard": f"retro-{member_id[:12]}",
+            "member_id": member_id,
+            "world_routable": False,
+        }
+
+    # 100.64.0.0/10 (RFC6598) for world/robot — decillion-scale virtual shards
+    if mode in ("world", "robot"):
+        second = 64 + (digest[0] % 64)
+        third = digest[1]
+        span = max(8, end_h - start_h)
+        host_start = start_h + (digest[2] % max(1, 254 - start_h - span))
+        host_end = min(host_start + span, 254)
+        base = f"100.{second}.{third}"
+        return {
+            "subnet": f"{base}.0/24",
+            "pool_start": f"{base}.{host_start}",
+            "pool_end": f"{base}.{host_end}",
+            "gateway": gateway,
+            "dns_option": dns_option,
+            "connection_mode": mode,
+            "unique_shard": f"{base}.0/24",
+            "member_id": member_id,
+            "world_routable": True,
+            "github_sync": True,
+        }
+
+    # sovereign mesh — 10.0.0.0/8
+    second = digest[0]
+    third = digest[1]
+    span = max(8, end_h - start_h)
+    host_start = start_h + (digest[2] % max(1, 254 - start_h - span))
+    host_end = min(host_start + span, 254)
+    base = f"10.{second}.{third}"
     return {
-        "subnet": f"{base}.{third}.0/24",
-        "pool_start": f"{base}.{third}.{start_h}",
-        "pool_end": f"{base}.{third}.{end_h}",
-        "dns_option": ["127.0.0.1"],
-        "unique_shard": third,
+        "subnet": f"{base}.0/24",
+        "pool_start": f"{base}.{host_start}",
+        "pool_end": f"{base}.{host_end}",
+        "gateway": gateway,
+        "dns_option": dns_option,
+        "connection_mode": mode,
+        "unique_shard": f"{base}.0/24",
         "member_id": member_id,
+        "world_routable": True,
     }
 
 
-def _dns_slot(member_id: str) -> dict[str, Any]:
+def _dns_slot(member_id: str, *, fields: dict[str, Any] | None = None) -> dict[str, Any]:
+    mode = _connection_mode(fields)
+    queen = _queen_lan_dns()
     n = int(hashlib.sha256(f"dns:{member_id}".encode()).hexdigest()[:6], 16)
+    if mode in ("world", "robot", "retro"):
+        upstream = f"{queen}:53"
+    else:
+        upstream = f"127.0.0.1:53"
     return {
         "slot_id": f"truth-{member_id}",
         "relay_id": f"dns-relay-{n % 10000:04d}",
-        "upstream": "127.0.0.1:53",
+        "upstream": upstream,
+        "queen_lan_dns": queen,
+        "connection_mode": mode,
         "multipoint_role": "dns_relay",
+        "github_pages_fallback": "https://zacharygeurts.github.io/Hostess7/api/field-dns.json",
     }
 
 
@@ -492,8 +577,8 @@ def register_member(**fields: Any) -> dict[str, Any]:
         "display_name": norm["display_name"],
         "fingerprint": fingerprint,
     })
-    shard = _dhcp_shard(member_id)
-    dns = _dns_slot(member_id)
+    shard = _dhcp_shard(member_id, fields=norm)
+    dns = _dns_slot(member_id, fields=norm)
 
     member = {
         "schema": SCHEMA,
@@ -622,6 +707,45 @@ def _sync_world_registry(members: list[dict[str, Any]]) -> None:
     _save(WORLD_REG, world)
 
 
+def reshard_members(*, write: bool = True) -> dict[str, Any]:
+    """Re-allocate DHCP/DNS shards — drops 192.168-only lottery, applies world-scale ranges."""
+    reg = _load(REGISTRY, {"schema": SCHEMA, "members": []})
+    members = list(reg.get("members") or [])
+    updated: list[dict[str, Any]] = []
+    modes: dict[str, int] = {}
+    for m in members:
+        if not isinstance(m, dict):
+            continue
+        fields = {
+            "self": m.get("self"),
+            "retro": m.get("retro"),
+            "dreamcast": m.get("dreamcast"),
+            "world_robot": m.get("world_robot"),
+            "connection_mode": m.get("connection_mode"),
+        }
+        shard = _dhcp_shard(str(m.get("member_id") or ""), fields=fields)
+        dns = _dns_slot(str(m.get("member_id") or ""), fields=fields)
+        mode = shard.get("connection_mode") or "world"
+        modes[mode] = modes.get(mode, 0) + 1
+        m = {**m, "dhcp_shard": shard, "dns_slot": dns, "updated_at": _now()}
+        updated.append(m)
+    if write and updated:
+        reg["members"] = _composite_bsp_sort(updated)
+        reg["count"] = len(updated)
+        reg["updated"] = _now()
+        reg["resharded_at"] = _now()
+        _save(REGISTRY, reg)
+        _sync_world_registry(reg["members"])
+    return {
+        "ok": True,
+        "schema": "field-botnet-reshard/v1",
+        "count": len(updated),
+        "modes": modes,
+        "queen_lan_dns": _queen_lan_dns(),
+        "note": "World/robot shards use 100.64/10 — not 192.168 third-octet cap",
+    }
+
+
 def mesh_json(*, query: str = "") -> dict[str, Any]:
     reg = _load(REGISTRY, {"members": []})
     policy = (_doctrine().get("policy") or {})
@@ -748,8 +872,11 @@ def main() -> int:
     if cmd == "dispatch" and len(sys.argv) > 2:
         print(json.dumps(dispatch(json.loads(sys.argv[2])), ensure_ascii=False, indent=2))
         return 0
+    if cmd in ("reshard", "reshard-members", "fix-192"):
+        print(json.dumps(reshard_members(), ensure_ascii=False, indent=2))
+        return 0
     print(json.dumps({
-        "usage": "field-botnet-registry.py [json|mesh [q]|register JSON|lop JSON|dispatch JSON]",
+        "usage": "field-botnet-registry.py [json|mesh [q]|register JSON|lop JSON|dispatch JSON|reshard]",
     }), file=sys.stderr)
     return 1
 

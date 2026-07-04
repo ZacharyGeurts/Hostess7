@@ -2,7 +2,11 @@
 
 For Emacs veterans, Bash poets, printf samurai — and grandma who just wants copy/paste to work.
 
-## Start here
+## Full manual (start here)
+
+- **[GNU EOL Terminal — Full Operator Manual](eol-terminal-full-manual.md)** — commands · API · iron plate · boot · troubleshooting
+
+## Quick links
 
 - [GNU Technical Manual overview](gnu-technical-manual.md)
 - [Widgets & tight paneling](widgets-and-paneling.md)

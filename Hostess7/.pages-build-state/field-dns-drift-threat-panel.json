@@ -1,0 +1,113 @@
+{
+  "schema": "field-dns-drift-threat/v1",
+  "ts": "2026-07-04T01:51:09Z",
+  "ok": false,
+  "threat": true,
+  "threat_level": "critical",
+  "drift_as_threat": true,
+  "hosts": [
+    {
+      "host": "github.com",
+      "truth": [
+        "140.82.112.4"
+      ],
+      "authority": [
+        "140.82.112.4"
+      ],
+      "stub": [
+        "140.82.113.3"
+      ],
+      "trace": [],
+      "system": [
+        "140.82.113.3"
+      ],
+      "source": "truth_dns",
+      "truth_up": true,
+      "threats": [
+        "TRUTH_STUB_DRIFT",
+        "TRUTH_SYSTEM_DRIFT"
+      ],
+      "threat_level": "critical",
+      "drift": true
+    },
+    {
+      "host": "api.github.com",
+      "truth": [
+        "140.82.113.6"
+      ],
+      "authority": [
+        "140.82.113.6"
+      ],
+      "stub": [
+        "140.82.113.6"
+      ],
+      "trace": [],
+      "system": [
+        "140.82.113.6"
+      ],
+      "source": "truth_dns",
+      "truth_up": true,
+      "threats": [],
+      "threat_level": "ok",
+      "drift": false
+    },
+    {
+      "host": "ssh.github.com",
+      "truth": [
+        "140.82.113.35"
+      ],
+      "authority": [
+        "140.82.113.35"
+      ],
+      "stub": [
+        "140.82.113.36"
+      ],
+      "trace": [],
+      "system": [
+        "140.82.113.36"
+      ],
+      "source": "truth_dns",
+      "truth_up": true,
+      "threats": [
+        "TRUTH_STUB_DRIFT",
+        "TRUTH_SYSTEM_DRIFT"
+      ],
+      "threat_level": "critical",
+      "drift": true
+    },
+    {
+      "host": "raw.githubusercontent.com",
+      "truth": [
+        "185.199.108.133",
+        "185.199.109.133",
+        "185.199.110.133",
+        "185.199.111.133"
+      ],
+      "authority": [
+        "185.199.108.133",
+        "185.199.109.133",
+        "185.199.110.133",
+        "185.199.111.133"
+      ],
+      "stub": [
+        "185.199.108.133",
+        "185.199.110.133",
+        "185.199.111.133",
+        "185.199.109.133"
+      ],
+      "trace": [],
+      "system": [
+        "185.199.111.133",
+        "185.199.110.133",
+        "185.199.109.133",
+        "185.199.108.133"
+      ],
+      "source": "truth_dns",
+      "truth_up": true,
+      "threats": [],
+      "threat_level": "ok",
+      "drift": false
+    }
+  ],
+  "applied": []
+}

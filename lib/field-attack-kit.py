@@ -1418,14 +1418,113 @@ def qemu_bot_rekill() -> dict[str, Any]:
     return doc
 
 
+def purge_rekill_trash(*, write: bool = True, clear_host_trash: bool = True) -> dict[str, Any]:
+    """Drop invalid/orphan kill-rekill registry rows and host-map trash — keep validated hostile only."""
+    reval = revalidate_kill_list(write=write)
+    validated_ips = {r.get("ip", "").strip() for r in _read_hostile_rows() if r.get("ip")}
+    nokill = _nokill_ips()
+    reg = _load_kill_rekill_registry()
+    entries: dict[str, Any] = dict(reg.get("entries") or {})
+    removed: list[dict[str, Any]] = []
+    kept: dict[str, Any] = {}
+
+    for ip, ent in list(entries.items()):
+        if not isinstance(ent, dict):
+            removed.append({"ip": ip, "reason": "malformed_entry"})
+            continue
+        ip = str(ent.get("ip") or ip).strip()
+        invalid = _kill_ip_invalid(ip)
+        if invalid:
+            removed.append({"ip": ip, "reason": invalid})
+            continue
+        if ip in nokill:
+            removed.append({"ip": ip, "reason": "nokill_exempt"})
+            continue
+        refuse, fg_reason = refuse_kill(ip)
+        if refuse:
+            removed.append({"ip": ip, "reason": fg_reason or "friendly_guard"})
+            continue
+        if ip in _INFRA_DNS:
+            removed.append({"ip": ip, "reason": "infra_dns_trash"})
+            continue
+        if validated_ips and ip not in validated_ips:
+            removed.append({"ip": ip, "reason": "orphan_not_in_hostile_registry"})
+            continue
+        kept[ip] = ent
+
+    host_trash_cleared = 0
+    host_trash_path = STATE / "host-map-trash.json"
+    if clear_host_trash and write:
+        try:
+            if host_trash_path.is_file():
+                doc = _load_json(host_trash_path, {"ids": []})
+                host_trash_cleared = len(doc.get("ids") or [])
+            host_trash_path.write_text(
+                json.dumps({"ids": [], "updated": _now(), "purged": True}, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+        except OSError:
+            pass
+
+    auto_pruned = 0
+    if write:
+        log_doc = _load_json(AUTO_REKILL_LOG, {"entries": {}})
+        entries_log = log_doc.get("entries")
+        if isinstance(entries_log, dict):
+            cutoff = time.time() - AUTO_REKILL_COOLDOWN_SEC * 48
+            pruned: dict[str, Any] = {}
+            for ip, row in entries_log.items():
+                if isinstance(row, dict) and float(row.get("ts") or 0) >= cutoff:
+                    pruned[ip] = row
+                else:
+                    auto_pruned += 1
+            log_doc["entries"] = pruned
+            log_doc["updated"] = _now()
+            try:
+                AUTO_REKILL_LOG.write_text(json.dumps(log_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            except OSError:
+                pass
+
+    if write:
+        reg["entries"] = kept
+        reg["count"] = len(kept)
+        reg["updated"] = _now()
+        reg["purged_at"] = _now()
+        try:
+            KILL_REKILL_REGISTRY.write_text(json.dumps(reg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        except OSError:
+            pass
+
+    return {
+        "ok": True,
+        "schema": "kill-rekill-purge/v1",
+        "updated": _now(),
+        "removed_count": len(removed),
+        "kept_count": len(kept),
+        "validated_hostile_count": len(validated_ips),
+        "host_trash_cleared": host_trash_cleared,
+        "auto_rekill_pruned": auto_pruned,
+        "removed": removed[:96],
+        "kept_ips": sorted(kept.keys())[:96],
+        "revalidate": {
+            "validated_count": reval.get("validated_count"),
+            "removed_count": reval.get("removed_count"),
+        },
+    }
+
+
 def main() -> int:
     if len(sys.argv) < 2:
         print(
-            "usage: field-attack-kit.py [revalidate-kill-list|boot-rekill|autokill-certain|autokill-needs-die|forever-kill-enforce|forever-disable|crush-hot|auto-rekill|qemu-bot-rekill|kill|disable|nokill|check-online|rekill <ip> ...]",
+            "usage: field-attack-kit.py [revalidate-kill-list|purge-rekill-trash|boot-rekill|autokill-certain|autokill-needs-die|forever-kill-enforce|forever-disable|crush-hot|auto-rekill|qemu-bot-rekill|kill|disable|nokill|check-online|rekill <ip> ...]",
             file=sys.stderr,
         )
         return 1
     cmd = sys.argv[1]
+    if cmd in ("purge-rekill-trash", "purge-trash", "kill-rekill-trash"):
+        json.dump(purge_rekill_trash(), sys.stdout, indent=2)
+        sys.stdout.write("\n")
+        return 0
     if cmd in ("revalidate-kill-list", "revalidate"):
         json.dump(revalidate_kill_list(), sys.stdout, indent=2)
         sys.stdout.write("\n")

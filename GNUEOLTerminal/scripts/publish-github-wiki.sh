@@ -104,3 +104,7 @@ fi
 
 log "published ${count} pages → https://github.com/${REPO}/wiki"
 log "full manual → https://github.com/${REPO}/wiki/eol-terminal-full-manual"
+
+if [[ -x "${NL}/scripts/propagate-pages-registry.sh" ]]; then
+  bash "${NL}/scripts/propagate-pages-registry.sh" publish-github-wiki.sh || true
+fi

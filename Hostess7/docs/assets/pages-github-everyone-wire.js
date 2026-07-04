@@ -5,7 +5,8 @@
 (function (global) {
   "use strict";
 
-  const INTERVAL_MS = 120000;
+  const INTERVAL_LOOPBACK_MS = 1500;
+  const INTERVAL_PAGES_MS = 5000;
   const REPO_RE = /^https:\/\/github\.com\/([^/]+)\/([^/]+)\/?$/i;
   const REPO_MIRRORS_FALLBACK = {
     "ZacharyGeurts/GNUEOLTerminal": [
@@ -19,6 +20,8 @@
     timer: null,
     doc: null,
     registry: null,
+    registryUpdated: null,
+    loopbackLive: false,
     githubOpen: false,
     repoMirrors: Object.assign({}, REPO_MIRRORS_FALLBACK),
   };
@@ -56,22 +59,38 @@
 
   async function fetchRegistry() {
     const paths = [
-      api("/api/field-endpoint-registry.json"),
-      api("/api/field-pages-movement.json"),
       loopback() + "/api/field-endpoint-registry",
       loopback() + "/api/field-pages-movement",
+      api("/api/field-endpoint-registry.json"),
+      api("/api/field-pages-movement.json"),
     ];
     for (let i = 0; i < paths.length; i++) {
       try {
         const r = await fetch(paths[i], { cache: "no-store", credentials: "same-origin" });
         if (r.ok) {
           const doc = await r.json();
+          state.loopbackLive = paths[i].indexOf("127.0.0.1") >= 0 || paths[i].indexOf("localhost") >= 0;
           ingestRegistry(doc);
           return doc;
         }
       } catch (_) {}
     }
+    state.loopbackLive = false;
     return null;
+  }
+
+  function registryStamp(doc) {
+    if (!doc) return null;
+    const routes = doc.routes || {};
+    const keys = Object.keys(routes).sort();
+    const tail = (doc.recent_movements || []).slice(-1)[0];
+    return String(doc.updated || "") + ":" + keys.length + ":" + (tail && tail.hash ? tail.hash : "");
+  }
+
+  function schedulePulse() {
+    if (state.timer) global.clearInterval(state.timer);
+    const ms = state.loopbackLive ? INTERVAL_LOOPBACK_MS : INTERVAL_PAGES_MS;
+    state.timer = global.setInterval(pulse, ms);
   }
 
   function pagesFromRepo(url) {
@@ -171,6 +190,7 @@
   }
 
   async function pulse() {
+    const prevStamp = state.registryUpdated;
     try {
       await fetch(api("/api/field-botnet-dns-dhcp/keepalive"), {
         method: "POST",
@@ -179,7 +199,10 @@
         body: "{}",
       });
     } catch (_) {}
-    await fetchRegistry();
+    const regDoc = await fetchRegistry();
+    const nextStamp = registryStamp(regDoc);
+    const registryChanged = !!(nextStamp && nextStamp !== prevStamp);
+    state.registryUpdated = nextStamp || prevStamp;
     state.doc = await fetchEveryone();
     state.githubOpen = !!(
       state.doc.github_open ||
@@ -201,11 +224,19 @@
       document.body.dataset.h7EndpointRegistry = state.registry ? "witnessed" : "fallback";
     }
     patchGithubLinks(document);
+    if (registryChanged) {
+      global.dispatchEvent(
+        new CustomEvent("h7:pages-movement", {
+          detail: { registry: state.registry, instant: true, loopback: state.loopbackLive },
+        })
+      );
+    }
     global.dispatchEvent(
       new CustomEvent("h7:github-everyone", {
-        detail: { open: state.githubOpen, doc: state.doc, registry: state.registry },
+        detail: { open: state.githubOpen, doc: state.doc, registry: state.registry, instant: registryChanged },
       })
     );
+    schedulePulse();
     return state.doc;
   }
 
@@ -213,9 +244,17 @@
     if (state.wired) return;
     state.wired = true;
     pulse();
-    state.timer = global.setInterval(pulse, INTERVAL_MS);
     global.addEventListener("h7:interaction-pulse", function () {
       patchGithubLinks(document);
+    });
+    global.addEventListener("h7:pages-propagate", function () {
+      pulse();
+    });
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) pulse();
+    });
+    global.addEventListener("focus", function () {
+      pulse();
     });
     global.addEventListener("pagehide", function () {
       if (state.timer) global.clearInterval(state.timer);

@@ -7,7 +7,7 @@
 </head><body class="chapter-page">
   <nav class="top"><div class="inner"><a class="logo" href="../index.html">GNU EOL TERMINAL</a>
   <ul><li><a href="wiki/">Wiki</a></li><li><a href="terminal/">Terminal</a></li></ul></div></nav>
-  <main class="chapter-main"><p># Ch 09 · Stability Under Load — FCC & Tesla</p>
+  <main class="chapter-main"><h1>Ch 09 · Stability Under Load — FCC &amp; Tesla</h1>
 <p>Chapter 9 · Stability Under Load — FCC & Tesla</p>
 <p>Learning objectives</p>
 <p>State wave and diffusion CFL inequalities and why the host enforces them before vkCmdDispatch .</p>
@@ -55,7 +55,8 @@
 <p>Drill 9.A — CFL clamp</p>
 <p>set AnalogFields.WaveSpeed 9.9 set AnalogFields.TimeScale 4.0 list AnalogFields grep -iE 'cfl|clamp|scale' run.log Drill 9.B — Tesla grep</p>
 <p>grep -E 'TESLA_R_|FIELD_PHI_MILLI|data_bus' Navigator/engine/FieldRtxFieldAbs.hpp Drill 9.C — Propalactic honesty</p>
-<p>set AnalogFields.PropalacticScale 2.0 # Observe Phi forcing — label dynamics knob in operator notes</p>
+<p>set AnalogFields.PropalacticScale 2.0</p>
+<h1>Observe Phi forcing — label dynamics knob in operator notes</h1>
 <p>Chapter summary</p>
 <p>CFL guard enforces wave and diffusion limits before GPU evolution. FCC floats pack to data_bus[16–23]. Tesla constants bias direction — slots 31, 34. KILROY extends discipline to kernel. PropalacticScale and GateFidelity are powerful — grep and label.</p>
 <p>Prior: Chapter 8 . Next: Chapter 10 .</p>

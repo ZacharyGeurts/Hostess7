@@ -7,7 +7,7 @@
 </head><body class="chapter-page">
   <nav class="top"><div class="inner"><a class="logo" href="../index.html">GNU EOL TERMINAL</a>
   <ul><li><a href="wiki/">Wiki</a></li><li><a href="terminal/">Terminal</a></li></ul></div></nav>
-  <main class="chapter-main"><p># Ch 03 · Learning objectives</p>
+  <main class="chapter-main"><h1>Ch 03 · Learning objectives</h1>
 <p>Learning objectives</p>
 <p>Explain why thermodynamics appears in a Vulkan renderer as accounting, not calorimetry.</p>
 <p>Name Phi, Thermo, Flow roles and bindings 8–10.</p>
@@ -59,7 +59,9 @@
 <p>Coupling narrative — worked example</p>
 <p>Raise FieldCoupling and InjectStrength ; move mouse on Classic canvas. Expect Phi ripples, Thermo rise, Flow structure change, stderr THERMO motion, spiderweb throttle hints — Chapter 10. If fabric moves and entropy stays zero, dispatch failed.</p>
 <p>Operator drill</p>
-<p>./linux.sh run # Swipe to energy or Classic if needed; move mouse 60s grep -E 'THERMO|entropy|Boundary' run.log Boundary thermo and entropy proxy should move. If not, physics refuses to lie — fix dispatch path.</p>
+<p>./linux.sh run</p>
+<h1>Swipe to energy or Classic if needed; move mouse 60s</h1>
+<p>grep -E 'THERMO|entropy|Boundary' run.log Boundary thermo and entropy proxy should move. If not, physics refuses to lie — fix dispatch path.</p>
 <p>Failure modes</p>
 <p>Mode Symptom Fix</p>
 <p>Joule fantasy Billing from stderr thermo Label proxy — Ch. 4</p>
@@ -191,7 +193,9 @@
 <p>ThermoAccountant populates every swipe — canvas-agnostic obligation from Chapter 7. Flowers beauty does not excuse skipping THERMO grep.</p>
 <p>Coupling sweep laboratory — structured knob narrative</p>
 <p>Lab 3.B — coupling sweep (Classic recommended)</p>
-<p># Swipe Flowers or energy; baseline 120s log segment set AnalogFields.FieldCoupling 0.1 set AnalogFields.GateFidelity 0.3 set AnalogFields.EntropyFloor 0.01 # Record THERMO tail; then sweep: set AnalogFields.FieldCoupling 0.9 set AnalogFields.GateFidelity 0.85 set AnalogFields.InjectStrength 4.0 grep -E 'THERMO|entropy|Boundary|prevMaint' run.log | tail -30 Journal template per sweep row:</p>
+<p># Swipe Flowers or energy; baseline 120s log segment set AnalogFields.FieldCoupling 0.1 set AnalogFields.GateFidelity 0.3 set AnalogFields.EntropyFloor 0.01</p>
+<h1>Record THERMO tail; then sweep:</h1>
+<p>set AnalogFields.FieldCoupling 0.9 set AnalogFields.GateFidelity 0.85 set AnalogFields.InjectStrength 4.0 grep -E 'THERMO|entropy|Boundary|prevMaint' run.log | tail -30 Journal template per sweep row:</p>
 <p>Step FieldCoupling GateFidelity entropyThisFrame avgBoundaryThermo Notes</p>
 <p>Baseline 0.1 0.3 (grep) (grep) Low bleed between channels</p>
 <p>Aggressive 0.9 0.85 (grep) (grep) Expect higher proxy + maintenance</p>
@@ -215,7 +219,10 @@
 <p>Honest testimony stderr THERMO + bus hex stderr + screenshot</p>
 <p>Category error “No thermo on die” “Thermo only on Classic”</p>
 <p>Drill 3.C — die vs Classic same session</p>
-<p># Segment A: x86 default 90s mouse move — grep THERMO # Segment B: swipe GreenWaves 90s same knobs — grep THERMO # Compare entropyThisFrame distributions — both must be non-silent Silence on either segment is failed path — binding 2 or dispatch broken, not “die has no physics.”</p>
+<p># Segment A: x86 default 90s mouse move — grep THERMO</p>
+<h1>Segment B: swipe GreenWaves 90s same knobs — grep THERMO</h1>
+<h1>Compare entropyThisFrame distributions — both must be non-silent</h1>
+<p>Silence on either segment is failed path — binding 2 or dispatch broken, not “die has no physics.”</p>
 <p>AnalogFields knobs — FCC mirror quick reference</p>
 <p>Knob Bus slot Chapter 3 focus</p>
 <p>TimeScale [16] Effective Δt — CFL interaction</p>
