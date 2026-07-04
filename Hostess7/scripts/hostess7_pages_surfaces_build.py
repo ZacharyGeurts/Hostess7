@@ -430,6 +430,10 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
                     _patch_queen_terminal_app(app)
 
     doc.pop("boot_program_url", None)
+    startbar = doc.setdefault("startbar", {})
+    if isinstance(startbar, dict):
+        startbar["classic"] = True
+        startbar["start_label"] = startbar.get("start_label") or "Start"
     programs = doc.setdefault("programs", [])
     qb = next((a for a in programs if a.get("id") == "queen-browser"), None)
     if not qb:
@@ -517,6 +521,15 @@ def _patch_text(content: str, *, queen: bool = False) -> str:
         ('href="/assets/', f'href="{base}/assets/'),
         ('src="/assets/', f'src="{base}/assets/'),
         ('url("/assets/', f'url("{base}/assets/'),
+        ('href="/command', f'href="{base}/command'),
+        ('href="/threat-panel', f'href="{base}/threat-panel'),
+        ('href="/field-', f'href="{base}/field-'),
+        ('href="/library', f'href="{base}/library'),
+        ('href="/card-catalog', f'href="{base}/card-catalog'),
+        ('href="/ammonet', f'href="{base}/ammonet'),
+        ('href="/desktop', f'href="{base}/desktop'),
+        ('href="/human-hub', f'href="{base}/human-hub'),
+        ('href="/hub', f'href="{base}/hub'),
         ("connect-src 'self' http://127.0.0.1:* ws://127.0.0.1:*", "connect-src 'self'"),
         (
             "function panelBase() {\n    return `http://127.0.0.1:${panelPort()}`;",
@@ -534,6 +547,21 @@ def _patch_text(content: str, *, queen: bool = False) -> str:
     ]
     for old, new in repl:
         content = content.replace(old, new)
+    content = re.sub(
+        rf'href="{re.escape(base)}/field-([a-z0-9-]+)\.html"',
+        rf'href="{base}/field-\1/"',
+        content,
+    )
+    content = re.sub(
+        rf'href="{re.escape(base)}/library-([a-z0-9-]+)\.html"',
+        rf'href="{base}/library-\1/"',
+        content,
+    )
+    content = re.sub(
+        rf'href="{re.escape(base)}/card-catalog\.html"',
+        rf'href="{base}/card-catalog/"',
+        content,
+    )
     license_block = (
         f'  <link rel="stylesheet" href="{PAGES_BASE}/pages-license.css" />\n'
         f'  <script src="{PAGES_BASE}/pages-license.js"></script>'
@@ -624,7 +652,25 @@ def _rsync_panel_assets() -> int:
                 "state.data = await res.json();\n      try { global.__H7_DESKTOP_DOC__ = state.data; } catch (_) {}",
             )
         path.write_text(text, encoding="utf-8")
+    _ensure_pages_asset_aliases()
     return sum(1 for _ in ASSETS_DOCS.rglob("*") if _.is_file())
+
+
+def _ensure_pages_asset_aliases() -> None:
+    """48px icons and other aliases referenced by panel HTML but absent from assets/."""
+    if not ASSETS_DOCS.is_dir():
+        return
+    aliases = {
+        "queen-prog-field-48.png": "queen-prog-field.png",
+        "queen-prog-os-48.png": "queen-prog-os.png",
+    }
+    for dst_name, src_name in aliases.items():
+        dst = ASSETS_DOCS / dst_name
+        if dst.is_file():
+            continue
+        src = ASSETS_DOCS / src_name
+        if src.is_file():
+            shutil.copy2(src, dst)
 
 
 def _desktop_html() -> str:

@@ -29,9 +29,9 @@
 </ul>
 <p><strong>Local loopback (sovereign stack):</strong></p>
 <div class="code-block"><pre>
-http://127.0.0.1:9477/field-gnu-terminal-embed.html
-http://127.0.0.1:9477/api/field-gnu-terminal
-http://127.0.0.1:9477/terminal/
+/Hostess7/field-gnu-terminal-embed.html
+/Hostess7/api/field-gnu-terminal
+/Hostess7/terminal/
 </pre></div>
 <p><strong>Aliases:</strong> <code>terminal</code> · <code>gnu-terminal</code> · <code>shell</code> · <code>gnueol</code></p>
 <h2 id="3-boot-order">3. Boot order</h2>
@@ -175,7 +175,7 @@ field-gnu-terminal-embed.html
 <h2 id="10-entropy-grade-sovereign-time">10. Entropy grade &amp; sovereign time</h2>
 <p>Production panels must agree: stderr, jsonl, sovereign time, panel latency.</p>
 <div class="code-block"><pre>
-curl -s http://127.0.0.1:9477/api/sovereign-time | jq .derived_utc
+curl -s /Hostess7/api/sovereign-time | jq .derived_utc
 grep THERMO ~/.nexus-state/*.jsonl | tail
 </pre></div>
 <p>See <a href="entropy-grade.html">Entropy grade production</a> and <a href="sovereign-time.html">Sovereign time</a>.</p>
