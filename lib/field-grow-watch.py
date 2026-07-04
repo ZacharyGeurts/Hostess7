@@ -66,8 +66,11 @@ def _population_growth_tick(started: float, base: float = 8_100_000_000, rate: f
     return int(base * math.pow(1.0 + rate, sim_years))
 
 
-def collect_snapshot(*, started: float, tick: int) -> dict[str, Any]:
-    api = _fetch_api()
+def collect_snapshot(*, started: float, tick: int, skip_api: bool = False) -> dict[str, Any]:
+    if not skip_api:
+        api = _fetch_api()
+    else:
+        api = {}
     if api.get("ok"):
         snap = dict(api)
         snap["source"] = "api"
@@ -75,7 +78,7 @@ def collect_snapshot(*, started: float, tick: int) -> dict[str, Any]:
         return snap
 
     scale = _run_json("lib/field-world-dns-dhcp-scale.py", ["json"], timeout=8.0)
-    rescue = _load(STATE / "field-rescue-ingress-panel.json") or _run_json("lib/field-rescue-ingress.py", ["json"], timeout=15.0)
+    rescue = _load(STATE / "field-rescue-ingress-panel.json") or _run_json("lib/field-rescue-ingress.py", ["json"], timeout=5.0)
     ipv4 = _load(STATE / "field-ipv4-enumerate-panel.json") or _run_json("lib/field-ipv4-enumerate.py", ["json"], timeout=8.0)
     everyone = _load(STATE / "field-everyone-counter-panel.json") or _run_json("lib/field-everyone-counter.py", ["fast"], timeout=6.0)
     dhcp = _load(STATE / "field-dhcp-panel.json")
@@ -116,7 +119,7 @@ def collect_snapshot(*, started: float, tick: int) -> dict[str, Any]:
 
 
 def build_api_payload() -> dict[str, Any]:
-    snap = collect_snapshot(started=time.time(), tick=0)
+    snap = collect_snapshot(started=time.time(), tick=0, skip_api=True)
     snap["schema"] = "field-grow-watch/v1"
     snap["api"] = "/api/field-grow-watch"
     return snap

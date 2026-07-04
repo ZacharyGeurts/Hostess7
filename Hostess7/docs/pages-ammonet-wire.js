@@ -19,7 +19,7 @@
     strip.className = "h7-ammonet-strip";
     strip.setAttribute("role", "navigation");
     strip.innerHTML =
-      '<span class="h7-ammonet-strip__brand"><strong>AmmoNet</strong> · Final Internet</span>' +
+      '<span class="h7-ammonet-strip__brand"><strong>AmmoNet</strong> v4.0.1 · Final Internet</span>' +
       '<a href="' + base() + '/ammonet/">ISP Hub</a>' +
       '<a href="' + base() + '/final-internet/">Safe Fields</a>' +
       '<a href="' + base() + '/command/">C2</a>' +
@@ -73,8 +73,10 @@
       if (!r.ok) return;
       const doc = await r.json();
       const countEl = document.getElementById("h7-ammonet-strip-count");
-      if (countEl && doc.surface_count && !countEl.textContent) {
-        countEl.textContent = doc.surface_count + " surfaces live";
+      if (countEl) {
+        const ver = doc.version ? "v" + doc.version + " · " : "";
+        const tail = doc.surface_count ? doc.surface_count + " surfaces live" : "";
+        if (ver || tail) countEl.textContent = ver + tail;
       }
       const brand = document.querySelector("#h7-ammonet-strip .h7-ammonet-strip__brand");
       if (brand && doc.motto && !brand.title) brand.title = doc.motto;

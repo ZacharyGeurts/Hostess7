@@ -148,6 +148,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "ok": True,
         "schema": "ammonet-field/v1",
         "product": "AmmoNet",
+        "version": doctrine.get("version", "4.0.1"),
         "title": doctrine.get("title", "AmmoNet — sovereign field ISP"),
         "tagline": doctrine.get("tagline"),
         "motto": doctrine.get("motto"),
