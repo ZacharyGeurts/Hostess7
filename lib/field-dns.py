@@ -49,14 +49,38 @@ _poison_anomalies = 0
 _dnssec = {"enabled": True, "validations": 0, "failures": 0, "stub": True}
 
 
+def _any_ip_mod() -> Any:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "field_dns_dhcp_any_ip", INSTALL / "lib" / "field-dns-dhcp-any-ip.py",
+    )
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def _bind_hosts_v4() -> list[str]:
-    # 127.0.0.53 is systemd-resolved — binding there conflicts; redirect via resolv instead.
+    try:
+        mod = _any_ip_mod()
+        if mod and hasattr(mod, "dns_bind_hosts_v4"):
+            return list(mod.dns_bind_hosts_v4())
+    except Exception:
+        pass
     raw = os.environ.get("NEXUS_FIELD_DNS_BINDS_IPV4", "127.0.0.1")
     hosts = [h.strip() for h in raw.split(",") if h.strip()]
     return hosts or [IPV4]
 
 
 def _bind_hosts_v6() -> list[str]:
+    try:
+        mod = _any_ip_mod()
+        if mod and hasattr(mod, "dns_bind_hosts_v6"):
+            return list(mod.dns_bind_hosts_v6())
+    except Exception:
+        pass
     raw = os.environ.get("NEXUS_FIELD_DNS_BINDS_IPV6", IPV6)
     hosts = [h.strip() for h in raw.split(",") if h.strip()]
     return hosts or [IPV6]
@@ -1223,11 +1247,30 @@ def build_panel() -> dict[str, Any]:
             "we_are_every_lease": True,
             "api": "/api/field-planetary-dns-dhcp",
         },
+        "any_ip": _any_ip_panel_slice(),
     }
     tmp = PANEL_CACHE.with_suffix(".tmp")
     tmp.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     tmp.replace(PANEL_CACHE)
     return doc
+
+
+def _any_ip_panel_slice() -> dict[str, Any]:
+    try:
+        mod = _any_ip_mod()
+        if mod and hasattr(mod, "build_panel"):
+            panel = mod.build_panel(write=False)
+            return {
+                "ok": bool(panel.get("any_ip")),
+                "answer_any_ip": bool(panel.get("answer_any_ip")),
+                "dns_binds_v4": (panel.get("dns") or {}).get("binds_v4"),
+                "dns_binds_v6": (panel.get("dns") or {}).get("binds_v6"),
+                "answer_point_count": panel.get("answer_point_count", 0),
+                "api": "/api/field-dns-dhcp-any-ip",
+            }
+    except Exception:
+        pass
+    return {"api": "/api/field-dns-dhcp-any-ip", "partial": True}
 
 
 def _panel_json_stub() -> dict[str, Any]:

@@ -7,6 +7,8 @@ export NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-$ROOT}"
 export NEXUS_STATE_DIR="${NEXUS_STATE_DIR:-$ROOT/.nexus-state}"
 export NEXUS_FIELD_DHCP="${NEXUS_FIELD_DHCP:-1}"
 export NEXUS_FIELD_DHCP_BIND="${NEXUS_FIELD_DHCP_BIND:-192.168.47.1}"
+export NEXUS_FIELD_DNS_ANY_IP="${NEXUS_FIELD_DNS_ANY_IP:-1}"
+export NEXUS_FIELD_DHCP_ANY_IP="${NEXUS_FIELD_DHCP_ANY_IP:-1}"
 
 PGREP="${PGREP:-/usr/bin/pgrep}"
 
@@ -49,6 +51,10 @@ if p.is_file():
 NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
   python3 "${ROOT}/lib/field-planetary-dns-dhcp.py" panel \
   > "${ROOT}/Hostess7/docs/api/field-planetary-dns-dhcp.json" 2>/dev/null || true
+
+NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+  python3 "${ROOT}/lib/field-dns-dhcp-any-ip.py" panel \
+  > "${ROOT}/Hostess7/docs/api/field-dns-dhcp-any-ip.json" 2>/dev/null || true
 python3 -c "
 import json
 from pathlib import Path

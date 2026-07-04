@@ -77,7 +77,26 @@ def _legacy_dns_servers_v4() -> list[str]:
 LEGACY_DNS_SERVERS = _legacy_dns_servers_v4()
 
 
+def _any_ip_mod() -> Any:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "field_dhcp_any_ip", INSTALL / "lib" / "field-dns-dhcp-any-ip.py",
+    )
+    if not spec or not spec.loader:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def _bind_if() -> str:
+    try:
+        mod = _any_ip_mod()
+        if mod and hasattr(mod, "dhcp_bind_host"):
+            return str(mod.dhcp_bind_host())
+    except Exception:
+        pass
     raw = os.environ.get("NEXUS_FIELD_DHCP_BIND", "").strip()
     if raw:
         return raw
@@ -93,7 +112,23 @@ def _bind_if() -> str:
     return "0.0.0.0"
 
 
+def _dhcp_server_id(dest_ip: str | None = None) -> str:
+    global _LAST_DHCP_DEST
+    dest = dest_ip or _LAST_DHCP_DEST
+    if dest and dest not in ("0.0.0.0", "255.255.255.255"):
+        return dest
+    try:
+        mod = _any_ip_mod()
+        if mod and hasattr(mod, "dhcp_server_id"):
+            return str(mod.dhcp_server_id(dest))
+    except Exception:
+        pass
+    bind = _bind_if()
+    return bind if bind != "0.0.0.0" else "192.168.47.1"
+
+
 BIND_IF = _bind_if()
+_LAST_DHCP_DEST: str | None = None
 
 
 def _ammonet_dhcp() -> dict[str, Any]:
@@ -359,7 +394,7 @@ def _build_reply(
     secs = 0
     flags = 0
     ciaddr = "0.0.0.0"
-    siaddr = BIND_IF if BIND_IF != "0.0.0.0" else "127.0.0.1"
+    siaddr = _dhcp_server_id()
     giaddr = "0.0.0.0"
     sname = b"\x00" * 64
     file_ = b"\x00" * 128
@@ -541,18 +576,36 @@ def _loop() -> None:
     bind = _bind_if()
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    try:
+        sock.setsockopt(socket.IPPROTO_IP, socket.IP_PKTINFO, 1)
+    except (OSError, AttributeError):
+        pass
     sock.bind((bind, PORT))
     while True:
         try:
-            data, addr = sock.recvfrom(2048)
+            dest_ip = None
+            try:
+                data, anc, _flags, addr = sock.recvmsg(2048, 128)
+                for level, ctype, cdata in anc:
+                    if level == socket.IPPROTO_IP and ctype == getattr(socket, "IP_PKTINFO", 8):
+                        if len(cdata) >= 8:
+                            dest_ip = socket.inet_ntoa(cdata[4:8])
+            except (OSError, AttributeError):
+                data, addr = sock.recvfrom(2048)
         except OSError:
             continue
+        if dest_ip:
+            global _LAST_DHCP_DEST
+            _LAST_DHCP_DEST = dest_ip
         resp = _handle(data, addr)
         if resp:
             try:
                 sock.sendto(resp, addr)
             except OSError:
                 pass
+
+
+
 
 
 def _takeover_mod() -> Any:
@@ -738,10 +791,28 @@ def build_panel() -> dict[str, Any]:
             "we_are_every_lease": True,
             "api": "/api/field-planetary-dns-dhcp",
         },
+        "any_ip": _any_ip_slice(),
         "collision_guard": _collision_guard_slice(),
     }
     _save_json(PANEL_CACHE, doc)
     return doc
+
+
+def _any_ip_slice() -> dict[str, Any]:
+    try:
+        mod = _any_ip_mod()
+        if mod and hasattr(mod, "build_panel"):
+            doc = mod.build_panel(write=False)
+            return {
+                "ok": bool(doc.get("any_ip")),
+                "answer_any_ip": bool(doc.get("answer_any_ip")),
+                "dhcp_bind": doc.get("dhcp", {}).get("bind"),
+                "answer_point_count": doc.get("answer_point_count", 0),
+                "api": "/api/field-dns-dhcp-any-ip",
+            }
+    except Exception:
+        pass
+    return {"api": "/api/field-dns-dhcp-any-ip", "partial": True}
 
 
 def _collision_guard_slice() -> dict[str, Any]:

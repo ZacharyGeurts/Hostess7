@@ -3310,6 +3310,11 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
+        if path in ("/api/field-dns-dhcp-any-ip", "/api/dns-dhcp-any-ip"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dns-dhcp-any-ip.py", ["json"], timeout=20)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
         if path in ("/api/field-dns-dhcp-collision-guard/threats", "/api/collision-guard/threats"):
             payload = _nexus_py_json(
                 INSTALL_ROOT / "lib" / "field-dns-dhcp-collision-guard.py",

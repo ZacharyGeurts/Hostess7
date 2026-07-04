@@ -1650,6 +1650,13 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("field-dns-dhcp-collision-guard.json")
 
+    any_ip = _run_nl_script_json("lib/field-dns-dhcp-any-ip.py", ["panel"], timeout=30)
+    if not any_ip.get("schema"):
+        any_ip = {**stub, "schema": "field-dns-dhcp-any-ip/v1", "partial": True}
+    any_ip["pages"] = True
+    (API / "field-dns-dhcp-any-ip.json").write_text(json.dumps(any_ip, indent=2) + "\n", encoding="utf-8")
+    files.append("field-dns-dhcp-any-ip.json")
+
     threat_panel = {
         **stub,
         "schema": "threat-panel-pages/v1",

@@ -174,6 +174,37 @@ def build_identity(*, running: bool = False) -> dict[str, Any]:
             "rfc": meta.get("rfc") or "RFC 6761 §6.3",
         })
 
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "any_ip_mp", INSTALL / "lib" / "field-dns-dhcp-any-ip.py",
+        )
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            if hasattr(mod, "answer_points"):
+                for ap in mod.answer_points():
+                    addr = str(ap.get("address") or "")
+                    if not addr or any(p.get("address") == addr for p in points):
+                        continue
+                    fam = str(ap.get("family") or "ipv4")
+                    pid = f"any-ip-{addr.replace('.', '-').replace(':', '-')}"
+                    points.append({
+                        "id": pid,
+                        "address": addr,
+                        "port": port,
+                        "family": fam,
+                        "role": "any_ip_answer",
+                        "listener": f"{addr}#{port}" if fam == "ipv4" else f"[{addr}]#{port}",
+                        "secure_fingerprint": _fingerprint(addr, port, pid),
+                        "trusted": True,
+                        "rfc": "RFC 1035 · field-any-ip",
+                        "note": ap.get("note") or "Answer DNS on any picked local IP",
+                    })
+    except Exception:
+        pass
+
     peers_path = STATE / "field-dns-peers.json"
     peer_doc = _load_json(peers_path, {})
     for ep in peer_doc.get("extra_peers") or []:

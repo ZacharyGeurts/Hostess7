@@ -1,0 +1,24 @@
+{
+  "schema": "field-dns-dhcp-any-ip/v1",
+  "title": "Answer DNS and DHCP on any IP — every possible local address",
+  "boss": "hostess7",
+  "motto": "Anyone picks any IP on this host — we answer DNS and DHCP. Wildcard bind + per-address truth.",
+  "policy": {
+    "dns_any_ipv4": true,
+    "dns_any_ipv6": true,
+    "dhcp_any_ipv4": true,
+    "wildcard_bind": true,
+    "enumerate_local_addresses": true,
+    "reply_on_dest_ip": true
+  },
+  "bind": {
+    "dns_ipv4_wildcard": "0.0.0.0",
+    "dns_ipv6_wildcard": "::",
+    "dhcp_ipv4_wildcard": "0.0.0.0",
+    "port_dns": 53,
+    "port_dhcp": 67
+  },
+  "module": "lib/field-dns-dhcp-any-ip.py",
+  "api": "/api/field-dns-dhcp-any-ip",
+  "ironclad_cite": "ironclad:any-ip:1"
+}
