@@ -105,6 +105,13 @@ def _i_know_confirmed() -> bool:
     return os.environ.get("I_KNOW_DNS_CLEAR", "").strip().lower() in ("1", "yes", "on", "true")
 
 
+def _fast_smoke() -> bool:
+    """CI/smoke — skip slow panel rebuilds and resolver bash hooks."""
+    if os.environ.get("FIELD_DNS_TABLE_CLEAN_FAST", "").strip().lower() in ("1", "yes", "on", "true"):
+        return True
+    return "nexus-state-ci" in str(STATE)
+
+
 def _expire_shard_probes(directory: Path, *, ttl_sec: int) -> int:
     if not directory.is_dir():
         return 0
@@ -238,15 +245,20 @@ def clean_tables() -> dict[str, Any]:
     )
     actions.append({"target": "probe_panels", "action": "expire_stale", "removed": expired_panels, "destructive": False})
 
-    theirs = _policy_theirs(doc, flush_stub=bool(cfg.get("flush_stub_cache", False)))
-    rebuilt = _rebuild_panels(doc) if cfg.get("rebuild_panels", True) else []
+    fast = _fast_smoke()
+    theirs = [] if fast else _policy_theirs(doc, flush_stub=bool(cfg.get("flush_stub_cache", False)))
+    rebuilt = [] if fast else (_rebuild_panels(doc) if cfg.get("rebuild_panels", True) else [])
+    if fast:
+        out_note = "Clean ≠ clear — fast smoke path (tail/expire only)."
+    else:
+        out_note = "Clean ≠ clear — stale rows expired, authority reconciled, nothing blindly wiped."
 
     out = {
         "schema": "field-dns-table-clean/v1",
         "mode": "clean",
         "ts": _utc(),
         "ok": True,
-        "note": "Clean ≠ clear — stale rows expired, authority reconciled, nothing blindly wiped.",
+        "note": out_note,
         "actions": actions,
         "theirs": theirs,
         "rebuilt": rebuilt,

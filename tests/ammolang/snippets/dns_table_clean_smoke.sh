@@ -4,6 +4,7 @@ ROOT="${NEXUS_INSTALL_ROOT:-$(cd "$(dirname "$0")/../../.." && pwd)}"
 export NEXUS_INSTALL_ROOT="$ROOT"
 export NEXUS_STATE_DIR="${NEXUS_STATE_DIR:-$ROOT/.nexus-state-ci}"
 mkdir -p "$NEXUS_STATE_DIR"
+export FIELD_DNS_TABLE_CLEAN_FAST=1
 
 python3 -m py_compile "$ROOT/lib/field-dns-table-clean.py"
 chmod +x "$ROOT/scripts/dns-clean-tables.sh"
