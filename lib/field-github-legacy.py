@@ -141,6 +141,20 @@ def pages_fallback(repo_url: str) -> str | None:
     return f"https://{owner.lower()}.github.io/{repo}/"
 
 
+def pages_mirror_for(ep: dict[str, Any]) -> str | None:
+    role = str(ep.get("role") or "")
+    url = str(ep.get("url") or "").strip()
+    if role == "api":
+        return "https://zacharygeurts.github.io/Hostess7/api/pages-update-status.json"
+    if role == "canonical_git":
+        return "https://zacharygeurts.github.io/Hostess7/"
+    if role in ("main_repo", "stack_repo", "repo", "ai_accelerator"):
+        return pages_fallback(url)
+    if role.endswith("_pages"):
+        return url or None
+    return pages_fallback(url)
+
+
 def _probe_once(url: str, *, method: str, timeout: float, ua: str) -> dict[str, Any]:
     ctx = ssl.create_default_context()
     started = time.monotonic()
@@ -160,10 +174,8 @@ def _probe_once(url: str, *, method: str, timeout: float, ua: str) -> dict[str, 
             return {"ok": True, "status": resp.status, "elapsed_ms": elapsed_ms, "url": url, "method": method}
     except urllib.error.HTTPError as exc:
         elapsed_ms = int((time.monotonic() - started) * 1000)
-        ok = exc.code < 500
-        if exc.code == 403 and "api.github.com" in url:
-            ok = True
-        return {"ok": ok, "status": exc.code, "elapsed_ms": elapsed_ms, "url": url, "method": method}
+        ok = exc.code < 500 and exc.code not in (403, 429)
+        return {"ok": ok, "status": exc.code, "elapsed_ms": elapsed_ms, "url": url, "method": method, "rate_limited": exc.code in (403, 429)}
     except (urllib.error.URLError, OSError, TimeoutError) as exc:
         return {"ok": False, "error": str(exc)[:120], "url": url, "method": method}
 
@@ -232,16 +244,24 @@ def probe_all(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
             continue
         hit = probe_url(url, timeout=2.8 if fast else 4.0, legacy_ua=bool(ep.get("legacy")))
         row = {**ep, **hit, "always_open": hit.get("ok")}
-        if not hit.get("ok") and ep.get("role") in ("stack_repo", "repo") and "github.com" in url:
-            fb = pages_fallback(url)
+        rate_limited = int(hit.get("status") or 0) in (403, 429)
+        if (not hit.get("ok") or rate_limited) and ep.get("role") in (
+            "canonical_git", "api", "main_repo", "stack_repo", "repo", "ai_accelerator"
+        ):
+            fb = pages_mirror_for(ep)
             if fb:
                 fb_hit = probe_url(fb, timeout=2.5, legacy_ua=True)
                 row["pages_fallback"] = fb
                 row["pages_fallback_ok"] = fb_hit.get("ok")
                 if fb_hit.get("ok"):
-                    row["ok"] = True
-                    row["always_open"] = True
-                    row["via_pages_mirror"] = True
+                    row.update({
+                        "ok": True,
+                        "always_open": True,
+                        "via_pages_mirror": True,
+                        "status": fb_hit.get("status"),
+                        "elapsed_ms": fb_hit.get("elapsed_ms"),
+                        "rate_limit_bypass": rate_limited,
+                    })
         rows.append(row)
 
     live_only = list(rows)

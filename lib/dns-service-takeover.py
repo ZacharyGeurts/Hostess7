@@ -148,26 +148,32 @@ def _read_resolv() -> dict[str, Any]:
 
 def _nexus_dns_running() -> bool:
     pid_file = STATE / "field-dns.pid"
-    if not pid_file.is_file():
-        return False
-    try:
-        pid = int(pid_file.read_text(encoding="utf-8").strip().split()[0])
-        os.kill(pid, 0)
-        return True
-    except (OSError, ValueError):
-        return False
+    if pid_file.is_file():
+        try:
+            pid = int(pid_file.read_text(encoding="utf-8").strip().split()[0])
+            os.kill(pid, 0)
+            return True
+        except PermissionError:
+            ok, _ = _dns_query(HEALTH_HOST, HEALTH_QUERY)
+            return ok
+        except (OSError, ValueError):
+            pass
+    ok, _ = _dns_query(HEALTH_HOST, HEALTH_QUERY)
+    return ok
 
 
 def _nexus_dhcp_running() -> bool:
     pid_file = STATE / "field-dhcp.pid"
-    if not pid_file.is_file():
-        return False
-    try:
-        pid = int(pid_file.read_text(encoding="utf-8").strip().split()[0])
-        os.kill(pid, 0)
-        return True
-    except (OSError, ValueError):
-        return False
+    if pid_file.is_file():
+        try:
+            pid = int(pid_file.read_text(encoding="utf-8").strip().split()[0])
+            os.kill(pid, 0)
+            return True
+        except PermissionError:
+            return _port_in_use(DHCP_PORT, "udp")
+        except (OSError, ValueError):
+            pass
+    return _port_in_use(DHCP_PORT, "udp")
 
 
 def _encode_name(name: str) -> bytes:
