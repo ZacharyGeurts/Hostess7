@@ -26,6 +26,7 @@
   function fmtN(n) {
     const x = Number(n);
     if (!Number.isFinite(x)) return "—";
+    if (x >= 1000000000) return (x / 1000000000).toFixed(1) + "B";
     if (x >= 1000000) return (x / 1000000).toFixed(1) + "M";
     if (x >= 1000) return (x / 1000).toFixed(1) + "k";
     return String(Math.round(x));
@@ -73,8 +74,13 @@
     const dist = doc.distributed_botnet || {};
     const perf = doc.perf || {};
     const svc = doc.services || {};
+    const leases = doc.planetary_leases || {};
     const dnsPill = svc.dns ? "fpnl-pill" : "fpnl-pill off";
+    const dhcpPill = svc.dhcp_crushing ? "fpnl-pill" : svc.dhcp ? "fpnl-pill" : "fpnl-pill off";
     const ghPill = dist.github_open ? "fpnl-pill" : "fpnl-pill warn";
+    const netPill = leases.internet_open ? "fpnl-pill" : "fpnl-pill warn";
+    const speedTier = leases.speed_tier || "—";
+    const speedPill = speedTier === "throttle" || speedTier === "pause" ? "fpnl-pill warn" : "fpnl-pill";
     panel.innerHTML =
       '<div class="fpnl-head">' +
       "<strong>Field Panel</strong>" +
@@ -87,9 +93,30 @@
       '<div class="fpnl-stat"><b>' + fmtN(lanes.github_people?.count) + "</b><span>GitHub people</span></div>" +
       '<div class="fpnl-stat"><b>' + fmtN(lanes.executable_people?.count) + "</b><span>Executables</span></div>" +
       "</div>" +
+      '<div class="fpnl-section">IPv4 owned · enumerated everywhere</div>' +
+      '<div class="fpnl-grid fpnl-grid-leases">' +
+      '<div class="fpnl-stat lease total"><b>' + fmtN(leases.ipv4_owned || leases.ipv4_enumerated) + "</b><span>IPv4 owned</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(leases.planet_dhcp) + "</b><span>Planet DHCP</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(leases.planet_dns) + "</b><span>Planet DNS</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(leases.planet_total) + "</b><span>Lease total</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(leases.local_dhcp) + "</b><span>Local enumerated</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(leases.devices) + "</b><span>Devices</span></div>" +
+      "</div>" +
       '<div class="fpnl-row">' +
       '<span class="' + dnsPill + '">DNS ' + (svc.dns ? "truth" : "down") + "</span>" +
+      '<span class="' + dhcpPill + '">DHCP ' + (svc.dhcp_crushing ? "crush" : svc.dhcp ? "serve" : "down") + "</span>" +
       '<span class="' + ghPill + '">GitHub ' + (dist.github_open ? "open" : "mirror") + "</span>" +
+      '<span class="' + netPill + '">Net ' + (leases.internet_open ? "open" : "gated") + "</span>" +
+      '<span class="' + speedPill + '">Speed ' + esc(speedTier) + "</span>" +
+      (leases.true_dns_authority
+        ? '<span class="fpnl-pill">' + (leases.foreign_removed ? "Truth DNS · purged" : "Truth DNS · expanded") + "</span>"
+        : "") +
+      (leases.entropy_reduction_pct != null
+        ? '<span class="fpnl-pill">Entropy −' + esc(leases.entropy_reduction_pct) + "%</span>"
+        : "") +
+      (leases.unclean_count > 0
+        ? '<span class="fpnl-pill warn">Unclean ' + fmtN(leases.unclean_count) + "</span>"
+        : "") +
       '<span class="fpnl-pill">CPU ' + esc(perf.cpu_pct != null ? perf.cpu_pct + "%" : "—") + "</span>" +
       '<span class="fpnl-pill">MEM ' + esc(perf.mem_pct != null ? perf.mem_pct + "%" : "—") + "</span>" +
       "</div>" +
@@ -145,10 +172,14 @@
     const sub = document.getElementById("fpnl-chip-sub");
     if (total) total.textContent = fmtN(doc.everyone_total);
     if (sub) {
+      const leases = doc.planetary_leases || {};
+      const lt = leases.planet_total ?? 0;
       const b = doc.lanes?.botnet?.count ?? 0;
       const g = doc.lanes?.github_people?.count ?? 0;
       const e = doc.lanes?.executable_people?.count ?? 0;
-      sub.textContent = "bot " + fmtN(b) + " · gh " + fmtN(g) + " · exe " + fmtN(e);
+      const owned = leases.ipv4_owned || leases.ipv4_enumerated || 0;
+      sub.textContent =
+        "ipv4 " + fmtN(owned) + " · leases " + fmtN(lt) + " · bot " + fmtN(b);
     }
     if (state.open) renderPanel(doc);
   }

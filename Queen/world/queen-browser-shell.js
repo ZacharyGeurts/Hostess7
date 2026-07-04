@@ -31,7 +31,7 @@
   }
 
   function startUrl() {
-    const raw = document.body?.dataset?.queenStart || "/world/kilroy-home.html";
+    const raw = document.body?.dataset?.queenStart || "/world/queen-new-tab.html";
     if (raw.startsWith("/")) return `${location.origin}${raw}`;
     return raw;
   }

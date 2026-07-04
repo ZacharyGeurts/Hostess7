@@ -1,0 +1,131 @@
+{
+  "schema": "queen-boot-hook/v1",
+  "ts": "2026-07-03T23:15:56Z",
+  "ok": true,
+  "boarded": true,
+  "boot_os": false,
+  "front_hook": {
+    "owner": "nexus-front-hook",
+    "pass_through": false,
+    "policy": "capture_phase_before_foreign_hooks"
+  },
+  "network_metal": {
+    "layer": "bios_witness",
+    "flash_chip": false,
+    "witness_only": true,
+    "firmware_witness": {
+      "flash_chip": false,
+      "witness_only": true,
+      "uefi": true,
+      "efi_vars": true,
+      "tpm": true,
+      "iommu_groups": true,
+      "nx": true,
+      "vendor": "American Megatrends International, LLC.",
+      "version": "3.50",
+      "date": "09/18/2025",
+      "board": "X870 Pro RS",
+      "product": "X870 Pro RS",
+      "secure_boot": false
+    },
+    "firmware_threat": {
+      "schema": null,
+      "ok": true,
+      "posture": null
+    },
+    "native_stack": [
+      {
+        "id": "firmware",
+        "label": "BIOS/UEFI",
+        "role": "witness_only",
+        "flash": false,
+        "audit": "KILROY/scripts/grok-firmware-audit.sh",
+        "live": true,
+        "native_with_us": true
+      },
+      {
+        "id": "boot",
+        "label": "Grok Bootloader",
+        "role": "field_native_boot",
+        "target": "KILROY/boot/grok",
+        "host_fallback": "systemd-shim",
+        "live": true,
+        "native_with_us": true
+      },
+      {
+        "id": "kernel",
+        "label": "KILROY Field OS",
+        "role": "Field Die @ syscall",
+        "target": "KILROY/kernel/rtx",
+        "host_fallback": "linux-compatible substrate",
+        "live": true,
+        "native_with_us": true
+      },
+      {
+        "id": "firmware_layer",
+        "label": "SG firmware layer",
+        "role": "internet_out_only_no_bullshit",
+        "path": "ammosecurity/modules/sg_firmware.sh",
+        "live": false,
+        "native_with_us": true
+      },
+      {
+        "id": "sovereign",
+        "label": "Root sovereign + code seal",
+        "role": "operator-bound root vigil",
+        "path": "Queen/lib/queen-root-sovereign.py",
+        "live": true,
+        "native_with_us": true
+      },
+      {
+        "id": "capsule",
+        "label": "Queen sovereign capsule",
+        "role": "never_leave — compiler/runtime inside",
+        "path": "Queen/data/queen-sovereign-capsule.json",
+        "live": true,
+        "native_with_us": true
+      },
+      {
+        "id": "field_polkit",
+        "label": "Field polkit elevation",
+        "role": "UAC-style pkexec bridge + scoped actions",
+        "path": "NewLatest/lib/nexus-pkexec-bridge.sh",
+        "live": false,
+        "native_with_us": true
+      },
+      {
+        "id": "cpu_shield",
+        "label": "CPU vulnerability shield",
+        "role": "Spectre/Meltdown/MDS/retbleed + zero-day watch",
+        "path": "NewLatest/lib/cpu-vulnerability-shield.py",
+        "live": true,
+        "native_with_us": true
+      },
+      {
+        "id": "nexus",
+        "label": "NEXUS field shield",
+        "role": "gates, wire, panel, daemon",
+        "path": "NewLatest",
+        "live": true,
+        "native_with_us": true
+      },
+      {
+        "id": "surface",
+        "label": "Operator surface",
+        "role": "queen-browser + field command",
+        "path": "Queen/build/rtx",
+        "live": true,
+        "native_with_us": true
+      }
+    ],
+    "policy": "internet_out_only_no_bullshit"
+  },
+  "host": {
+    "system": "Linux",
+    "node": "default-X870-Pro-RS",
+    "kilroy_kernel": false
+  },
+  "host_desktop_built": true,
+  "install_root": "/home/default/Desktop/SG/NewLatest",
+  "state_dir": "/home/default/Desktop/SG/NewLatest/.nexus-state-ci"
+}

@@ -1,0 +1,83 @@
+{
+  "ok": true,
+  "schema": "field-dns-dhcp-any-ip/v1",
+  "updated": "2026-07-04T18:13:36Z",
+  "title": "Answer DNS and DHCP on any IP \u2014 every possible local address",
+  "motto": "Anyone picks any IPv4 anywhere \u2014 DNS and DHCP answer. It just works. Device map, not numbers.",
+  "any_ip": true,
+  "answer_any_ip": true,
+  "device_sovereign": true,
+  "track_devices_not_numbers": true,
+  "arbitrary_ipv4_worldwide": true,
+  "it_just_works": true,
+  "dns": {
+    "binds_v4": [
+      "0.0.0.0"
+    ],
+    "binds_v6": [
+      "::"
+    ],
+    "wildcard_v4": "0.0.0.0",
+    "wildcard_v6": "::",
+    "port": 53
+  },
+  "dhcp": {
+    "bind": "0.0.0.0",
+    "server_id": "192.168.47.1",
+    "port": 67,
+    "wildcard": true
+  },
+  "local_ipv4": [
+    "0.0.0.0",
+    "127.0.0.1",
+    "97.95.64.87",
+    "71.86.186.171",
+    "192.168.47.1"
+  ],
+  "local_ipv6": [],
+  "enumerate_addresses": true,
+  "ipv4_enumeration": {
+    "enabled": true,
+    "owned_total": 4294967296,
+    "enumerated_total": 4294967296,
+    "local_enumerated": 4294967296,
+    "scope": "0.0.0.0/0"
+  },
+  "map_to": "device_information",
+  "answer_points": [
+    {
+      "address": "0.0.0.0",
+      "family": "ipv4",
+      "dns": true,
+      "dhcp": true,
+      "wildcard": true,
+      "device_mapped": true,
+      "note": "All IPv4 on box \u2014 map to device information, not numbers"
+    },
+    {
+      "address": "::",
+      "family": "ipv6",
+      "dns": true,
+      "dhcp": false,
+      "wildcard": true,
+      "device_mapped": true,
+      "note": "DNS wildcard \u2014 device authority primary"
+    }
+  ],
+  "answer_point_count": 2,
+  "policy": {
+    "dns_any_ipv4": true,
+    "dns_any_ipv6": true,
+    "dhcp_any_ipv4": true,
+    "arbitrary_ipv4_worldwide": true,
+    "it_just_works": true,
+    "wildcard_bind": true,
+    "enumerate_local_addresses": true,
+    "reply_on_dest_ip": true,
+    "track_devices_not_numbers": true
+  },
+  "api": "/api/field-dns-dhcp-any-ip",
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-04T18:13:36Z"
+}

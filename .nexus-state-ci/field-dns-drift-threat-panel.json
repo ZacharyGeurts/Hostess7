@@ -1,0 +1,153 @@
+{
+  "ok": false,
+  "schema": "field-dns-drift-threat-panel/v1",
+  "updated": "2026-07-04T01:51:20Z",
+  "title": "DNS drift threat — Truth vs witness divergence is hostile",
+  "motto": "We are our own DNS — any drift from Truth @127.0.0.1 is a threat, not noise.",
+  "drift": {
+    "schema": "field-dns-drift-threat/v1",
+    "ts": "2026-07-04T01:51:20Z",
+    "ok": false,
+    "threat": true,
+    "threat_level": "critical",
+    "drift_as_threat": true,
+    "hosts": [
+      {
+        "host": "github.com",
+        "truth": [
+          "140.82.112.4"
+        ],
+        "authority": [
+          "140.82.112.4"
+        ],
+        "stub": [
+          "140.82.113.3"
+        ],
+        "trace": [],
+        "system": [
+          "140.82.113.3"
+        ],
+        "source": "truth_dns",
+        "truth_up": true,
+        "threats": [
+          "TRUTH_STUB_DRIFT",
+          "TRUTH_SYSTEM_DRIFT"
+        ],
+        "threat_level": "critical",
+        "drift": true
+      },
+      {
+        "host": "api.github.com",
+        "truth": [
+          "140.82.113.6"
+        ],
+        "authority": [
+          "140.82.113.6"
+        ],
+        "stub": [
+          "140.82.113.6"
+        ],
+        "trace": [],
+        "system": [
+          "140.82.113.6"
+        ],
+        "source": "truth_dns",
+        "truth_up": true,
+        "threats": [],
+        "threat_level": "ok",
+        "drift": false
+      },
+      {
+        "host": "ssh.github.com",
+        "truth": [
+          "140.82.113.35"
+        ],
+        "authority": [
+          "140.82.113.35"
+        ],
+        "stub": [
+          "140.82.113.36"
+        ],
+        "trace": [],
+        "system": [
+          "140.82.113.36"
+        ],
+        "source": "truth_dns",
+        "truth_up": true,
+        "threats": [
+          "TRUTH_STUB_DRIFT",
+          "TRUTH_SYSTEM_DRIFT"
+        ],
+        "threat_level": "critical",
+        "drift": true
+      },
+      {
+        "host": "raw.githubusercontent.com",
+        "truth": [
+          "185.199.108.133",
+          "185.199.109.133",
+          "185.199.110.133",
+          "185.199.111.133"
+        ],
+        "authority": [
+          "185.199.108.133",
+          "185.199.109.133",
+          "185.199.110.133",
+          "185.199.111.133"
+        ],
+        "stub": [
+          "185.199.110.133",
+          "185.199.111.133",
+          "185.199.108.133",
+          "185.199.109.133"
+        ],
+        "trace": [],
+        "system": [
+          "185.199.108.133",
+          "185.199.110.133",
+          "185.199.109.133",
+          "185.199.111.133"
+        ],
+        "source": "truth_dns",
+        "truth_up": true,
+        "threats": [],
+        "threat_level": "ok",
+        "drift": false
+      }
+    ],
+    "applied": []
+  },
+  "servers_updated": {
+    "schema": "field-dns-dhcp-servers-updated/v1",
+    "ts": "2026-07-04T01:51:20Z",
+    "ok": false,
+    "queen": {
+      "dns_running": true,
+      "dhcp_dns_option": [
+        "127.0.0.1"
+      ],
+      "takeover_phase": "observing",
+      "truth_resolver_up": true,
+      "updated": false
+    },
+    "field_nodes": 1,
+    "stale_nodes": 1,
+    "all_nodes_updated": false,
+    "nodes_sample": [
+      {
+        "id": "bot-85b09d170b61deee",
+        "kind": "botnet_member",
+        "ok": false,
+        "dns_upstream": "192.168.47.1:53",
+        "dhcp_dns_option": [
+          "192.168.47.1"
+        ]
+      }
+    ],
+    "required_dns": [
+      "127.0.0.1"
+    ],
+    "required_upstream": "127.0.0.1"
+  },
+  "api": "/api/field-dns-drift-threat"
+}

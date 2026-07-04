@@ -1008,12 +1008,11 @@
 
   function purgeDuplicateBars() {
     if (!isAmmoDesktop()) return;
-    ["fitb-mount", "fitb-embedded", "h7-ammonet-strip", "h7-rtx-status-deck"].forEach(function (id) {
+    ["fitb-mount", "fitb-embedded", "h7-rtx-status-deck"].forEach(function (id) {
       const el = document.getElementById(id);
       if (el) el.remove();
     });
-    document.body.classList.remove("fitb-pad-bottom", "h7-final-internet");
-    document.documentElement.classList.remove("h7-final-internet");
+    document.body.classList.remove("fitb-pad-bottom");
   }
 
   /* DO NOT REMOVE — one Start + one taskbar on AmmoOS desktop (no ironclad duplicate bar). */

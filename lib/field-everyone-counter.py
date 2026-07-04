@@ -123,6 +123,69 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
     if not perf.get("cpu_pct") and fast:
         perf = _run_json("lib/field-performance-flyout.py", ["json"], timeout=3.0)
 
+    planetary = _load(STATE / "field-planetary-dns-dhcp-panel.json", {})
+    if not planetary.get("counts") and fast:
+        planetary = _run_json("lib/field-planetary-dns-dhcp.py", ["panel"], timeout=5.0)
+    ipv4_enum = _load(STATE / "field-ipv4-enumerate-panel.json", {})
+    if not ipv4_enum.get("counts") and fast:
+        ipv4_enum = _run_json("lib/field-ipv4-enumerate.py", ["json"], timeout=8.0)
+    pcounts = planetary.get("counts") or {}
+    enum_counts = ipv4_enum.get("counts") or {}
+    dhcp_panel = _load(STATE / "field-dhcp-panel.json", {})
+    speed = _load(STATE / "field-planetary-speed-panel.json", {})
+    dns_auth = _load(STATE / "field-planetary-dns-authority-panel.json", {})
+    if not dns_auth.get("expanded") and fast:
+        dns_auth = _run_json("lib/field-planetary-dns-authority.py", ["json"], timeout=12.0)
+    removal = _load(STATE / "field-planetary-removal-panel.json", {})
+    unclean = _load(STATE / "field-internet-unclean-hostile-panel.json", {})
+    unrestrict = _load(STATE / "field-internet-unrestrict-panel.json", {})
+    device = _load(STATE / "field-ipv4-device-sovereign-panel.json", {})
+    planet_dhcp = int(enum_counts.get("planet_dhcp_total") or pcounts.get("planet_dhcp_total") or 0)
+    planet_dns = int(enum_counts.get("planet_dns_total") or pcounts.get("planet_dns_total") or 0)
+    planet_total = int(
+        enum_counts.get("planet_lease_total") or pcounts.get("planet_lease_total") or planet_dhcp + planet_dns
+    )
+    ipv4_owned = int(enum_counts.get("ipv4_owned_total") or pcounts.get("ipv4_owned_total") or 0)
+    ipv4_enumerated = int(enum_counts.get("ipv4_enumerated_total") or pcounts.get("ipv4_enumerated_total") or 0)
+    local_dhcp = int(
+        enum_counts.get("local_dhcp_leases") or pcounts.get("field_dhcp_leases") or dhcp_panel.get("lease_count") or 0
+    )
+    devices = int(
+        pcounts.get("connected_devices")
+        or device.get("device_count")
+        or len(device.get("devices") or [])
+        or 0
+    )
+    speed_thermal = speed.get("thermal") or {}
+    speed_counts = speed.get("counts") or {}
+    speed_bench = speed.get("bench") or {}
+    speed_entropy = speed.get("entropy_path") or {}
+    planetary_leases = {
+        "ipv4_owned": ipv4_owned,
+        "ipv4_enumerated": ipv4_enumerated,
+        "enumerate_addresses": bool(ipv4_enum.get("enumerate_addresses") or ipv4_enumerated > 0),
+        "planet_dhcp": planet_dhcp,
+        "planet_dns": planet_dns,
+        "planet_total": planet_total,
+        "local_dhcp": local_dhcp,
+        "devices": devices,
+        "botnet_dhcp_slots": int(pcounts.get("botnet_dhcp_slots") or 0),
+        "botnet_dns_slots": int(pcounts.get("botnet_dns_slots") or 0),
+        "incumbent_dhcp": int(pcounts.get("incumbent_dhcp_absorbed") or 0),
+        "incumbent_dns": int(pcounts.get("incumbent_dns_absorbed") or 0),
+        "dhcp_crushing": bool((planetary.get("services") or {}).get("dhcp", {}).get("crushing")),
+        "sole_authority": bool((planetary.get("sole_authority") or {}).get("ok") or planetary.get("planet_authority")),
+        "speed_tier": speed_thermal.get("tier"),
+        "entropy_reduction_pct": speed_entropy.get("reduction_pct") or speed_counts.get("entropy_reduction_pct"),
+        "avg_latency_ms": speed_bench.get("avg_latency_ms") or speed_counts.get("avg_latency_ms"),
+        "internet_open": bool(unrestrict.get("internet_open", True)),
+        "unclean_count": int(unclean.get("unclean_count") or 0),
+        "true_dns_authority": bool(dns_auth.get("true_dns_authority") or dns_auth.get("expanded")),
+        "dns_zones_expanded": int(dns_auth.get("zone_count") or 0),
+        "foreign_removed": bool(removal.get("complete") or (dns_auth.get("removal") or {}).get("complete")),
+        "api": "/api/field-planetary-dns-dhcp",
+    }
+
     doc = {
         "ok": True,
         "schema": "field-everyone-counter/v1",
@@ -161,9 +224,13 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
             "mem_pct": (perf.get("memory") or {}).get("used_pct"),
             "load": (perf.get("loadavg") or [None])[0],
         },
+        "planetary_leases": planetary_leases,
         "services": {
-            "dns": (botnet.get("dns_dhcp") or {}).get("dns", {}).get("running"),
-            "dhcp": (botnet.get("dns_dhcp") or {}).get("dhcp", {}).get("running"),
+            "dns": (botnet.get("dns_dhcp") or {}).get("dns", {}).get("running")
+            or (planetary.get("services") or {}).get("dns", {}).get("running"),
+            "dhcp": (botnet.get("dns_dhcp") or {}).get("dhcp", {}).get("running")
+            or (planetary.get("services") or {}).get("dhcp", {}).get("running"),
+            "dhcp_crushing": planetary_leases["dhcp_crushing"],
             "panel": True,
         },
         "api": "/api/field-everyone-counter",

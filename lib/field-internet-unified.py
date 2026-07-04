@@ -246,7 +246,29 @@ def _traffic_shard_keepalive_ok() -> tuple[bool, dict[str, Any]]:
         return True, {}
 
 
+def _ensure_field_services_boot() -> None:
+    if os.environ.get("NEXUS_FIELD_SERVICES_BOOT", "1") != "1":
+        return
+    script = INSTALL / "lib" / "field-dns.sh"
+    if not script.is_file():
+        return
+    env = os.environ.copy()
+    env["NEXUS_INSTALL_ROOT"] = str(INSTALL)
+    env["NEXUS_STATE_DIR"] = str(STATE)
+    try:
+        subprocess.run(
+            ["bash", "-c", f'source "{script}" && nexus_field_services_boot'],
+            capture_output=True,
+            text=True,
+            timeout=25,
+            env=env,
+        )
+    except (OSError, subprocess.SubprocessError, subprocess.TimeoutExpired):
+        pass
+
+
 def keepalive(*, write: bool = True) -> dict[str, Any]:
+    _ensure_field_services_boot()
     allow, shard_meta = _traffic_shard_keepalive_ok()
     if not allow and PANEL.is_file():
         cached = _load(PANEL, {})

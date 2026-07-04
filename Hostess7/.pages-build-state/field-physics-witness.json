@@ -1,0 +1,88 @@
+{
+  "schema": "field-physics-witness/v1",
+  "updated": "2026-07-02T07:28:03Z",
+  "motto": "We all need to know thermals. We all know entropy and isotope.",
+  "meld_citation": "ironclad:meld:2",
+  "ok": true,
+  "thermal": {
+    "available": true,
+    "level": "ok",
+    "hot": false,
+    "cool_ok": true,
+    "headroom_pct": 100.0,
+    "peak_c": 78.625,
+    "rapl_watts": 0.0,
+    "anomaly_active": false,
+    "certainty_score": 0.95,
+    "joules_per_field_op": 1.2e-09,
+    "max_ops_per_second_at_budget": 37500000000.0,
+    "never_build_under_heat": true
+  },
+  "entropy": {
+    "available": true,
+    "entropy_norm": 0.5,
+    "entropy_on_trust_layer": false,
+    "entropy_ok": true,
+    "bus_entropy": null,
+    "fabric_slot": "entropy",
+    "shannon_uniform_4_bits": 2.0,
+    "second_law_ok": true,
+    "layers": [
+      "shannon_surprise",
+      "field_entropy_norm",
+      "fabric_entropy_slot"
+    ],
+    "statement": "Entropy is layered — Shannon on files, field norm on mesh, fabric floor at init."
+  },
+  "isotope": {
+    "available": true,
+    "stem": "speed_demo",
+    "identical_kernel_required": true,
+    "faces_present": {
+      "python": true,
+      "cxx": true,
+      "c": true
+    },
+    "kernel_symbols": [
+      "entropy_fold",
+      "wave_phase",
+      "nexus_score",
+      "fieldx86",
+      "run_epoch"
+    ],
+    "triad": {
+      "assembly": "Bottom — FieldX86 insn belt, native wave-convert, or gpy hot path",
+      "entropy": "Thermo fold — entropy_fold, phi blend, irreversible mix",
+      "field": "Top — depth-0 program, die slots, epoch loop on singular plane"
+    },
+    "ok": true,
+    "statement": "Isotope — identical C/C++/Python twins on one entropy-fold field kernel.",
+    "doctrine": "data/g16-iron-plate-doctrine.json"
+  },
+  "we_all_know": {
+    "thermals": true,
+    "entropy": true,
+    "isotope": true
+  },
+  "sections": {
+    "thermal": {
+      "available": true,
+      "cool_ok": true,
+      "consumer": "all_plates"
+    },
+    "entropy": {
+      "available": true,
+      "entropy_ok": true,
+      "consumer": "all_plates"
+    },
+    "isotope": {
+      "available": true,
+      "ok": true,
+      "consumer": "all_plates"
+    },
+    "panel": {
+      "available": true,
+      "manifest_api": "/api/physics-witness"
+    }
+  }
+}

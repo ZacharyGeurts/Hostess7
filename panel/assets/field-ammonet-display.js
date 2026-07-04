@@ -1,10 +1,11 @@
 /**
- * AmmoNet display panel — right rail on AmmoOS desktop, layer 0, minimize to taskbar.
+ * AmmoNet bar — bottom anchor on AmmoOS desktop; taskbar + classic Start sit above.
  */
 (function (global) {
   "use strict";
 
   const PANEL_ID = "ammoos-ammonet-display";
+  const STRIP_ID = "h7-ammonet-strip";
 
   const state = { minimized: false, mounted: false };
 
@@ -67,95 +68,104 @@
     );
   }
 
-  function wireChrome(root) {
-    root.querySelector(".h7ad-min")?.addEventListener("click", function (ev) {
-      ev.stopPropagation();
-      minimize();
-    });
-    root.querySelector(".h7ad-close")?.addEventListener("click", function (ev) {
-      ev.stopPropagation();
-      minimize();
-    });
-    root.querySelector(".h7ad-restore")?.addEventListener("click", function () {
-      restore();
-    });
+  function stripLinks() {
+    const base = panelBase();
+    return (
+      '<a href="' + esc(base + "/ammonet/") + '">ISP Hub</a>' +
+      '<a href="' + esc(base + "/final-internet/") + '">Safe Fields</a>' +
+      '<a href="' + esc(base + "/command/") + '">C2</a>' +
+      '<a href="' + esc(base + "/desktop/") + '">AmmoOS</a>' +
+      '<a href="' + esc(base + "/queen/browser.html") + '">Queen</a>' +
+      '<a href="' + esc(base + "/field-znetwork-vault/") + '">Vault</a>'
+    );
   }
 
-  function buildChrome() {
-    const theme = document.documentElement.dataset.osTheme || document.documentElement.dataset.ammoosTheme || "ammoos";
+  function buildStrip() {
+    const assets = pagesRuntime() ? panelBase() + "/assets" : "/assets";
     return (
-      '<div class="h7ad-root" data-os-layer="0" data-theme="' +
-      esc(theme) +
-      '">' +
-      '<header class="h7ad-chrome" role="banner">' +
-      '<img class="h7ad-icon" src="' +
-      esc((pagesRuntime() ? panelBase() + "/assets" : "/assets") + "/nexus-field-48.png") +
-      '" alt="" width="20" height="20" />' +
-      '<span class="h7ad-title">AmmoNet · Layer 0</span>' +
-      '<nav class="h7ad-menus" aria-label="AmmoNet menus">' +
-      '<button type="button" class="h7ad-menu-btn" data-nav="hub">ISP Hub</button>' +
-      '<button type="button" class="h7ad-menu-btn" data-nav="fields">Safe Fields</button>' +
-      '<button type="button" class="h7ad-menu-btn" data-nav="vault">Vault</button>' +
+      '<div id="' +
+      STRIP_ID +
+      '" class="h7-ammonet-strip" role="navigation" aria-label="AmmoNet">' +
+      '<img class="h7-ammonet-strip__icon" src="' +
+      esc(assets + "/nexus-field-48.png") +
+      '" alt="" width="18" height="18" />' +
+      '<span class="h7-ammonet-strip__brand"><strong>AmmoNet</strong> · Layer 0</span>' +
+      '<nav class="h7-ammonet-strip__links" aria-label="AmmoNet quick links">' +
+      stripLinks() +
       "</nav>" +
-      '<button type="button" class="h7ad-win h7ad-min" title="Minimize to taskbar" aria-label="Minimize">—</button>' +
-      '<button type="button" class="h7ad-win h7ad-close" title="Minimize to taskbar" aria-label="Close panel">×</button>' +
-      "</header>" +
-      '<div class="h7ad-frame"><iframe class="h7ad-view" title="AmmoNet ISP Hub" loading="lazy"></iframe></div>' +
+      '<span class="h7-ammonet-strip__count" id="h7-ammonet-strip-count"></span>' +
+      '<button type="button" class="h7-ammonet-strip__min" id="h7-ammonet-min" title="Minimize to taskbar" aria-label="Minimize AmmoNet">—</button>' +
       "</div>"
     );
   }
 
-  function navFrame(root, kind) {
-    const frame = root.querySelector(".h7ad-view");
-    if (!frame) return;
-    const base = panelBase();
-    if (kind === "fields") frame.src = pagesRuntime() ? base + "/final-internet/" : base + "/final-internet";
-    else if (kind === "vault") frame.src = pagesRuntime() ? base + "/field-znetwork-vault/" : base + "/field-znetwork-vault";
-    else frame.src = ammonetUrl();
+  function wireStrip(strip) {
+    strip.querySelector("#h7-ammonet-min")?.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      minimize();
+    });
+    stampStatus();
   }
 
-  function mount(monEl) {
-    if (!monEl) return;
+  async function stampStatus() {
+    const countEl = document.getElementById("h7-ammonet-strip-count");
+    if (!countEl) return;
+    try {
+      const r = await fetch(panelBase() + "/api/ammonet", { cache: "no-store", credentials: "same-origin" });
+      if (r.ok) {
+        const doc = await r.json();
+        if (doc.surface_count) countEl.textContent = doc.surface_count + " surfaces";
+        const brand = document.querySelector("#" + STRIP_ID + " .h7-ammonet-strip__brand");
+        if (brand && doc.motto) brand.title = doc.motto;
+      }
+    } catch (_) {}
+  }
+
+  function enableLayout() {
+    document.documentElement.classList.add("h7-final-internet");
+    global.FieldScreenLayers?.markInsideOs?.(true);
+  }
+
+  function mountBottom() {
+    if (state.mounted && !state.minimized) return;
+    let strip = document.getElementById(STRIP_ID);
+    if (!strip) {
+      const mount = document.getElementById("h7-ammonet-mount") || document.getElementById("fsb-mount") || document.body;
+      mount.insertAdjacentHTML("beforeend", buildStrip());
+      strip = document.getElementById(STRIP_ID);
+      wireStrip(strip);
+    }
+    strip.hidden = false;
+    strip.classList.remove("h7-ammonet-strip--hidden");
     state.mounted = true;
     state.minimized = false;
-    monEl.hidden = false;
-    monEl.classList.remove("hd-monitor--hidden");
-    monEl.setAttribute("aria-label", "AmmoNet · Layer 0 display");
-    monEl.innerHTML = buildChrome();
-    const root = monEl.querySelector(".h7ad-root");
-    const frame = monEl.querySelector(".h7ad-view");
-    if (frame) frame.src = ammonetUrl();
-    wireChrome(monEl);
-    root?.querySelectorAll(".h7ad-menu-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        navFrame(monEl, btn.dataset.nav);
-      });
-    });
-    global.FieldScreenLayers?.markInsideOs?.(true);
-    global.FieldInternetUnified?.wire?.();
+    enableLayout();
     syncTaskbar(true);
+  }
+
+  /** @deprecated right-rail display — use mountBottom */
+  function mount(monEl) {
+    mountBottom();
+    if (monEl) {
+      monEl.hidden = true;
+      monEl.classList.add("hd-monitor--hidden");
+      monEl.innerHTML = "";
+    }
   }
 
   function minimize() {
     state.minimized = true;
-    const mon = document.getElementById("hd-monitor");
-    if (mon) {
-      mon.classList.add("hd-monitor--hidden");
-      mon.hidden = true;
+    const strip = document.getElementById(STRIP_ID);
+    if (strip) {
+      strip.hidden = true;
+      strip.classList.add("h7-ammonet-strip--hidden");
     }
     syncTaskbar(false);
     global.FieldHostDesktop?.toast?.("AmmoNet · minimized to taskbar");
   }
 
   function restore() {
-    state.minimized = false;
-    const mon = document.getElementById("hd-monitor");
-    if (!mon) return;
-    if (!state.mounted) mount(mon);
-    mon.classList.remove("hd-monitor--hidden");
-    mon.hidden = false;
-    global.FieldScreenLayers?.markInsideOs?.(true);
-    syncTaskbar(true);
+    mountBottom();
     global.FieldHostDesktop?.toast?.("AmmoNet · Layer 0");
   }
 
@@ -170,6 +180,7 @@
 
   global.FieldAmmoNetDisplay = {
     mount: mount,
+    mountBottom: mountBottom,
     minimize: minimize,
     restore: restore,
     toggle: toggle,

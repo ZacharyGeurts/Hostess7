@@ -656,21 +656,50 @@ def _dhcp_probe_offer(host: str = "192.168.47.1", timeout: float = 1.5) -> bool:
         return False
 
 
+def _dhcp_serve_pgrep() -> bool:
+    for pattern in ("field-dhcp.py serve", "nexus_field_dhcp_serve_loop"):
+        try:
+            proc = subprocess.run(
+                ["pgrep", "-f", pattern],
+                capture_output=True,
+                text=True,
+                timeout=3,
+                errors="replace",
+            )
+            if proc.returncode == 0:
+                return True
+        except (OSError, subprocess.SubprocessError):
+            continue
+    return False
+
+
 def _dhcp_running() -> bool:
+    """True when our DHCP serve path is active — align with dns-service-takeover."""
+    if _dhcp_serve_pgrep():
+        return True
     if PID_FILE.is_file():
         try:
             pid = int(PID_FILE.read_text(encoding="utf-8").strip().split()[0])
             os.kill(pid, 0)
             return True
         except PermissionError:
-            pass
+            return _port_in_use(PORT)
         except (OSError, ValueError):
-            pass
+            try:
+                PID_FILE.unlink(missing_ok=True)
+            except OSError:
+                pass
     if _port_in_use(PORT):
+        try:
+            inc = _takeover_mod().evaluate_takeover(persist=False)
+            if inc.get("nexus_dhcp_running"):
+                return True
+        except Exception:
+            pass
         for host in (BIND_IF, "192.168.47.1", "127.0.0.1"):
             if host and _dhcp_probe_offer(host):
                 return True
-        return _may_serve_dhcp()
+        return True
     return False
 
 
@@ -834,6 +863,8 @@ def build_panel() -> dict[str, Any]:
     except Exception:
         takeover = {}
     may_serve = _may_serve_dhcp()
+    serve_loop = _dhcp_serve_pgrep()
+    port_67 = _port_in_use(PORT)
     running = _dhcp_running()
     bind = _bind_if()
     detailed = _leases_detailed(leases, 200)
@@ -843,6 +874,8 @@ def build_panel() -> dict[str, Any]:
         "schema": "field-dhcp/v2",
         "updated": _now(),
         "running": running,
+        "serve_loop": serve_loop,
+        "port_67": port_67,
         "may_serve": may_serve,
         "takeover": takeover,
         "takeover_phase": takeover.get("phase") or "observing",

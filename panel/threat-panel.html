@@ -4503,7 +4503,7 @@
       { key: "field_hazard_onset", url: "/api/field-hazard-onset" },
 
       { key: "field_radio", url: "/api/field-radio" },
-      { key: "field_dns", url: "/api/field-dns" },
+      { key: "field_dns", url: "/api/field-dns?live=1" },
       { key: "field_outside_talk", url: "/api/field-outside-talk" },
       { key: "field_drive", url: "/api/field-drive" },
       { key: "h7_library", url: "/api/library/catalog" },
@@ -5397,6 +5397,8 @@
       if (location.hash !== `#${hash}`) history.replaceState(null, "", `#${hash}`);
       global.NexusBraille?.onViewActivated?.(sub || panel);
       global.NexusMilitary?.onViewChange?.(hash);
+      if (panel === "dns") global.DnsDhcpLive?.start?.();
+      else global.DnsDhcpLive?.stop?.();
     }
 
     document.querySelectorAll("nav.menu button").forEach((btn) => {

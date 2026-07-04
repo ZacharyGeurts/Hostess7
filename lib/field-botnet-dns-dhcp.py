@@ -77,12 +77,18 @@ def _probe_url(url: str, *, timeout: float = 3.5) -> dict[str, Any]:
         return {"ok": False, "error": str(exc)[:120], "url": url}
 
 
+def _planetary_removal_active() -> bool:
+    removal = _load(STATE / "field-planetary-removal-panel.json", {})
+    return bool(removal.get("complete") and removal.get("remove_foreign_dns_dhcp"))
+
+
 def _ipv4_sovereign_stamp(node: dict[str, Any]) -> dict[str, Any]:
+    suppress = _planetary_removal_active()
     row = dict(node)
     row.update({
         "ipv4_sovereign": True,
         "all_ipv4_on_box": True,
-        "suppress_foreign_dns_dhcp": False,
+        "suppress_foreign_dns_dhcp": suppress,
         "track_ip": False,
         "auto_managed": True,
         "never_look_back": True,
@@ -242,16 +248,47 @@ def _planetary_slice(*, fast: bool = False) -> dict[str, Any]:
     return _run_json("lib/field-planetary-dns-dhcp.py", ["json"], timeout=25)
 
 
+def _dhcp_is_live(dhcp: dict[str, Any]) -> bool:
+    return bool(
+        dhcp.get("running")
+        or dhcp.get("serve_loop")
+        or dhcp.get("port_67")
+        or dhcp.get("crushing")
+    )
+
+
+def _ensure_field_services_boot() -> None:
+    if os.environ.get("NEXUS_FIELD_SERVICES_BOOT", "1") != "1":
+        return
+    script = INSTALL / "lib" / "field-dns.sh"
+    if not script.is_file():
+        return
+    env = os.environ.copy()
+    env["NEXUS_INSTALL_ROOT"] = str(INSTALL)
+    env["NEXUS_STATE_DIR"] = str(STATE)
+    try:
+        subprocess.run(
+            ["bash", "-c", f'source "{script}" && nexus_field_services_boot'],
+            capture_output=True,
+            text=True,
+            timeout=25,
+            env=env,
+        )
+    except (OSError, subprocess.SubprocessError, subprocess.TimeoutExpired):
+        pass
+
+
 def _dns_dhcp_slice(*, fast: bool = False) -> dict[str, Any]:
     dns_panel = _load(STATE / "field-dns-panel.json", {})
-    dhcp_panel = _load(STATE / "field-dhcp-panel.json", {})
+    dhcp_panel = _run_json("lib/field-dhcp.py", ["json"], timeout=8 if fast else 20)
+    if not dhcp_panel.get("schema"):
+        dhcp_panel = _load(STATE / "field-dhcp-panel.json", {})
     if not dns_panel.get("schema"):
         dns_panel = _run_json("lib/field-dns.py", ["json"], timeout=8 if fast else 20)
-    if not dhcp_panel.get("schema"):
-        dhcp_panel = _run_json("lib/field-dhcp.py", ["json"], timeout=8 if fast else 20)
     srv = dns_panel.get("servers") or {}
     dns_srv = srv.get("dns") or {}
-    dhcp_srv = srv.get("dhcp") or dns_panel.get("dhcp_server") or dhcp_panel
+    dhcp_srv = dhcp_panel or srv.get("dhcp") or dns_panel.get("dhcp_server") or {}
+    dhcp_live = _dhcp_is_live(dhcp_srv)
     return {
         "dns": {
             "ok": bool(dns_panel.get("running") or dns_srv.get("running")),
@@ -262,15 +299,17 @@ def _dns_dhcp_slice(*, fast: bool = False) -> dict[str, Any]:
             "schema": dns_panel.get("schema", "field-dns/v2"),
         },
         "dhcp": {
-            "ok": bool(dhcp_srv.get("running") or dhcp_panel.get("running")),
-            "running": bool(dhcp_srv.get("running") or dhcp_panel.get("running")),
-            "bind": dhcp_srv.get("bind") or dhcp_panel.get("bind") or "0.0.0.0:67",
-            "lease_count": int(dhcp_srv.get("lease_count") or dhcp_panel.get("lease_count") or 0),
-            "dns_option": dhcp_srv.get("dns_option") or dhcp_panel.get("dns_option") or ["127.0.0.1"],
-            "dns_option_v6": dhcp_srv.get("dns_option_v6") or dhcp_panel.get("dns_option_v6") or ["::1"],
-            "schema": dhcp_panel.get("schema", "field-dhcp/v2"),
+            "ok": dhcp_live,
+            "running": dhcp_live,
+            "serve_loop": bool(dhcp_srv.get("serve_loop")),
+            "port_67": bool(dhcp_srv.get("port_67")),
+            "bind": dhcp_srv.get("bind") or "0.0.0.0:67",
+            "lease_count": int(dhcp_srv.get("lease_count") or 0),
+            "dns_option": dhcp_srv.get("dns_option") or ["127.0.0.1"],
+            "dns_option_v6": dhcp_srv.get("dns_option_v6") or ["::1"],
+            "schema": dhcp_srv.get("schema", "field-dhcp/v2"),
         },
-        "combined": bool(dns_panel.get("running") or dhcp_srv.get("running")),
+        "combined": bool(dns_panel.get("running") or dhcp_live),
     }
 
 
@@ -331,7 +370,8 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
             "unified_egress": "hostess7",
             "ipv4_sovereign": True,
             "all_ipv4_every_box": True,
-            "suppress_foreign_dns_dhcp_worldwide": False,
+            "suppress_foreign_dns_dhcp_worldwide": _planetary_removal_active(),
+            "planetary_removal_complete": _planetary_removal_active(),
             "internet_open": True,
             "track_devices_not_numbers": True,
             "ipv4_api": "/api/field-ipv4-device-sovereign",
@@ -366,6 +406,7 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
 
 
 def keepalive(*, write: bool = True) -> dict[str, Any]:
+    _ensure_field_services_boot()
     doc = panel(write=write, fast=True)
     doc["schema"] = "field-botnet-dns-dhcp-keepalive/v1"
     if write:

@@ -1,0 +1,82 @@
+{
+  "schema": "dns-multipoint-identity/v1",
+  "updated": "2026-07-04T00:53:24Z",
+  "title": "DNS Multipoint Secure Identification",
+  "motto": "Every local DNS request answered by NEXUS Truth — multipoint secure identification, zero untrusted resolvers.",
+  "running": true,
+  "point_count": 3,
+  "identification_points": [
+    {
+      "id": "truth-v4-primary",
+      "address": "127.0.0.1",
+      "port": 53,
+      "family": "ipv4",
+      "role": "primary",
+      "listener": "127.0.0.1#53",
+      "secure_fingerprint": "17144891f23946faf461370a15677b342ab256bcf555c9aaf736b75527ee7a6c",
+      "trusted": true,
+      "rfc": "RFC 6761 §6.3",
+      "note": "NEXUS Truth — local answer only"
+    },
+    {
+      "id": "truth-v4-stub",
+      "address": "127.0.0.53",
+      "port": 53,
+      "family": "ipv4",
+      "role": "stub-override",
+      "listener": "127.0.0.53#53",
+      "secure_fingerprint": "bbbcb39c2960d992360e8cac8c82a51a2b8c542c8da1c908eb557c309484003d",
+      "trusted": true,
+      "rfc": "RFC 1035",
+      "note": "Captures systemd-resolved stub traffic"
+    },
+    {
+      "id": "truth-v6-primary",
+      "address": "::1",
+      "port": 53,
+      "family": "ipv6",
+      "role": "primary",
+      "listener": "[::1]#53",
+      "secure_fingerprint": "331d26adca88d99f52f68a6cb1ac63579e06a89fe1f1ad155e6a853ed0e87211",
+      "trusted": true,
+      "rfc": "RFC 6761 §6.3"
+    }
+  ],
+  "untrusted_never_added": [
+    "8.8.8.8",
+    "8.8.4.4",
+    "1.1.1.1",
+    "1.0.0.1",
+    "9.9.9.9",
+    "71.10.216.1",
+    "71.10.216.2",
+    "2001:4860:4860::8888",
+    "2001:4860:4860::8844",
+    "2606:4700:4700::1111",
+    "2606:4700:4700::1001",
+    "2620:fe::fe",
+    "2620:fe::9"
+  ],
+  "override": {
+    "resolv_conf": true,
+    "break_resolv_symlink": true,
+    "re_enforce_interval_sec": 300,
+    "block_foreign_dns_egress": true,
+    "local_only_answers": true,
+    "resolv": {
+      "path": "/etc/resolv.conf",
+      "nameservers": [
+        "127.0.0.53"
+      ],
+      "ipv4_nameservers": [
+        "127.0.0.53"
+      ],
+      "ipv6_nameservers": [],
+      "ipv4_truth_enforced": true,
+      "ipv6_truth_enforced": true,
+      "nexus_override_active": true,
+      "port": 53
+    }
+  },
+  "policy": "Respond to every local DNS request with NEXUS Truth. Override user DNS settings. Never add untrusted resolvers."
+}

@@ -243,6 +243,8 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
     devices = _device_authority_rows()
     any_ip = _run_json("lib/field-dns-dhcp-any-ip.py", ["json"], timeout=15)
     planetary = _load(STATE / "field-planetary-dns-dhcp-panel.json", {})
+    ipv4_enum = _run_json("lib/field-ipv4-enumerate.py", ["json"], timeout=15)
+    enum_counts = ipv4_enum.get("counts") or {}
 
     doc = {
         "ok": True,
@@ -258,11 +260,16 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
             "sovereign": True,
             "arbitrary": True,
             "symbolic_space": IPV4_SPACE,
+            "owned_total": enum_counts.get("ipv4_owned_total") or IPV4_SPACE,
+            "enumerated_total": enum_counts.get("ipv4_enumerated_total") or IPV4_SPACE,
             "scope": "0.0.0.0/0",
-            "enumerate": False,
+            "enumerate": bool(ipv4_enum.get("enumerate_addresses", True)),
+            "start": "0.0.0.0",
+            "end": "255.255.255.255",
             "map_to": "device_information",
             "it_just_works": True,
         },
+        "ipv4_enumeration": ipv4_enum.get("ipv4") or ipv4_enum.get("local") or {},
         "internet_arbitrary": _internet_arbitrary(),
         "box": _box_authority(),
         "devices": devices,
@@ -273,7 +280,8 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
             "dhcp_wildcard": (any_ip.get("dhcp") or {}).get("wildcard"),
         },
         "worldwide_suppression": _worldwide_suppression(),
-        "planetary_leases": (planetary.get("counts") or {}).get("planet_lease_total"),
+        "planetary_leases": (planetary.get("counts") or {}).get("planet_lease_total")
+        or enum_counts.get("planet_lease_total"),
         "policy": doctrine.get("policy") or {},
         "api": doctrine.get("api", "/api/field-ipv4-device-sovereign"),
     }
@@ -288,6 +296,16 @@ def manage(*, auto: bool = True) -> dict[str, Any]:
 
     cg = _run_json("lib/field-dns-dhcp-collision-guard.py", ["enforce"], timeout=45)
     actions.append({"step": "collision_guard", "sole": (cg.get("sole_authority") or {}).get("ok")})
+
+    _run_json("lib/field-ipv4-enumerate.py", ["panel"], timeout=15)
+    actions.append({"step": "ipv4_enumerate"})
+
+    auth = _run_json("lib/field-planetary-dns-authority.py", ["complete"], timeout=90)
+    actions.append({
+        "step": "planetary_dns_authority",
+        "expanded": bool((auth.get("counts") or {}).get("ipv4_coverage")),
+        "removal_complete": bool((auth.get("removal") or {}).get("complete")),
+    })
 
     _run_json("lib/field-planetary-dns-dhcp.py", ["absorb", "--no-crush"], timeout=60)
     actions.append({"step": "planetary_absorb"})

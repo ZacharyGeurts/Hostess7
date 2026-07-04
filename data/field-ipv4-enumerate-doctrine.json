@@ -1,0 +1,25 @@
+{
+  "schema": "field-ipv4-enumerate/v1",
+  "title": "Full IPv4 enumeration — own and enumerate every address everywhere",
+  "boss": "hostess7",
+  "motto": "We own and enumerate all IPv4 — 0.0.0.0 through 255.255.255.255 — on every box, locally and planet-wide.",
+  "policy": {
+    "enumerate_addresses": true,
+    "own_full_space": true,
+    "enumerate_locally": true,
+    "enumerate_planet": true,
+    "dhcp_lease_per_address": true,
+    "dns_lease_per_address": true,
+    "wildcard_bind": true,
+    "scope": "0.0.0.0/0"
+  },
+  "ipv4": {
+    "start": "0.0.0.0",
+    "end": "255.255.255.255",
+    "total": 4294967296,
+    "scope": "0.0.0.0/0"
+  },
+  "module": "lib/field-ipv4-enumerate.py",
+  "api": "/api/field-ipv4-enumerate",
+  "ironclad_cite": "ironclad:ipv4-enumerate:1"
+}

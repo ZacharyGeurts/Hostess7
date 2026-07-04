@@ -48,6 +48,8 @@ QUERY_LOG_MAX = 5000
 RECENT_PANEL_LIMIT = 200
 DNS_LOCK = STATE / "field-dns.lock"
 _SERVE_LOCK_HANDLE = None
+_active_listeners: list[str] = []
+_listener_lock = threading.Lock()
 _threat_events: list[dict[str, Any]] = []
 _poison_anomalies = 0
 _dnssec = {"enabled": True, "validations": 0, "failures": 0, "stub": True}
@@ -559,6 +561,14 @@ def _handle_query(data: bytes, blocked: set[str], client: str = "") -> bytes | N
     return resp
 
 
+def _log_bind_error(host: str, exc: OSError) -> None:
+    try:
+        with (STATE / "field-dns-bind-errors.log").open("a", encoding="utf-8") as fh:
+            fh.write(f"{_now()} {host}#{PORT} {exc}\n")
+    except OSError:
+        pass
+
+
 def _udp_loop(family: int, host: str) -> None:
     sock = socket.socket(family, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -567,7 +577,14 @@ def _udp_loop(family: int, host: str) -> None:
             sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 1)
         except OSError:
             pass
-    sock.bind((host, PORT))
+    try:
+        sock.bind((host, PORT))
+    except OSError as exc:
+        _log_bind_error(host, exc)
+        return
+    label = f"{host}#{PORT}" if family == socket.AF_INET else f"[{host}]#{PORT}"
+    with _listener_lock:
+        _active_listeners.append(label)
     blocked = _load_blocklist()
     last_reload = time.time()
     clear_signal = STATE / "field-dns-clear.signal"
@@ -701,29 +718,36 @@ def serve() -> int:
         await_seconds(5, STATE)
         return 0
     _stats["started_at"] = _now()
-    listeners: list[str] = []
+    _active_listeners.clear()
     threads: list[threading.Thread] = []
     for host in _bind_hosts_v4():
-        listeners.append(f"{host}#{PORT}")
         threads.append(threading.Thread(target=_udp_loop, args=(socket.AF_INET, host), daemon=True))
     for host in _bind_hosts_v6():
-        listeners.append(f"[{host}]#{PORT}")
         threads.append(threading.Thread(target=_udp_loop, args=(socket.AF_INET6, host), daemon=True))
+    for t in threads:
+        t.start()
+    time.sleep(0.75)
+    with _listener_lock:
+        listeners = list(_active_listeners)
+    if not listeners:
+        _publish({"running": False, "pid": os.getpid(), "listeners": [], "bind_error": True})
+        _release_serve_lock()
+        return 1
     try:
         _multipoint_mod().build_identity(running=True)
     except Exception:
         pass
     _publish({"running": True, "pid": os.getpid(), "listeners": listeners})
     PID_FILE.write_text(f"{os.getpid()}\n", encoding="utf-8")
-    for t in threads:
-        t.start()
     while True:
         await_seconds(5, STATE)
+        with _listener_lock:
+            listeners = list(_active_listeners)
         try:
-            _multipoint_mod().build_identity(running=True)
+            _multipoint_mod().build_identity(running=bool(listeners))
         except Exception:
             pass
-        _publish({"running": True, "pid": os.getpid(), "listeners": listeners})
+        _publish({"running": bool(listeners), "pid": os.getpid(), "listeners": listeners})
 
 
 def status() -> dict[str, Any]:

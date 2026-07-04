@@ -1,0 +1,782 @@
+{
+  "schema": "field-combinamatrix/v1",
+  "updated": "2026-07-03T23:28:22Z",
+  "product": "AmmoOS",
+  "motto": "Every leaf lands in a cell — matrix pack, neural wire, universal traverse.",
+  "ok": true,
+  "dimensions": {
+    "width": 16,
+    "length": 1,
+    "cells": 16,
+    "filled": 16
+  },
+  "source_counts": {
+    "g16": 3644,
+    "chips": 979,
+    "program": 2665,
+    "growth": 256,
+    "sequence": 0,
+    "spider": 0
+  },
+  "facet_count": 1,
+  "cells": [
+    {
+      "id": "g16:chip:chip:alpha:dec_alpha_21064",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:alpha:dec_alpha_21064",
+      "path_pct": 1000.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 0,
+      "cell_index": 0,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:amiga:commodore_8370_agnus",
+          "row": 0,
+          "col": 1,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 1,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:amiga:commodore_8370_agnus",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:amiga:commodore_8370_agnus",
+      "path_pct": 999.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 1,
+      "cell_index": 1,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:amiga:mos_8364_paula",
+          "row": 0,
+          "col": 2,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:alpha:dec_alpha_21064",
+          "row": 0,
+          "col": 0,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:amiga:mos_8364_paula",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:amiga:mos_8364_paula",
+      "path_pct": 998.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 2,
+      "cell_index": 2,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:amiga:commodore_paula_8364",
+          "row": 0,
+          "col": 3,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:amiga:commodore_8370_agnus",
+          "row": 0,
+          "col": 1,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:amiga:commodore_paula_8364",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:amiga:commodore_paula_8364",
+      "path_pct": 997.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 3,
+      "cell_index": 3,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:amiga:commodore_8362_denis",
+          "row": 0,
+          "col": 4,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:amiga:mos_8364_paula",
+          "row": 0,
+          "col": 2,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:amiga:commodore_8362_denis",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:amiga:commodore_8362_denis",
+      "path_pct": 996.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 4,
+      "cell_index": 4,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a10",
+          "row": 0,
+          "col": 5,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:amiga:commodore_paula_8364",
+          "row": 0,
+          "col": 3,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a10",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a10",
+      "path_pct": 995.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 5,
+      "cell_index": 5,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a11",
+          "row": 0,
+          "col": 6,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:amiga:commodore_8362_denis",
+          "row": 0,
+          "col": 4,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a11",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a11",
+      "path_pct": 994.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 6,
+      "cell_index": 6,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a12",
+          "row": 0,
+          "col": 7,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a10",
+          "row": 0,
+          "col": 5,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a12",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a12",
+      "path_pct": 993.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 7,
+      "cell_index": 7,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a13",
+          "row": 0,
+          "col": 8,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a11",
+          "row": 0,
+          "col": 6,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a13",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a13",
+      "path_pct": 992.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 8,
+      "cell_index": 8,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a14",
+          "row": 0,
+          "col": 9,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a12",
+          "row": 0,
+          "col": 7,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a14",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a14",
+      "path_pct": 991.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 9,
+      "cell_index": 9,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a15",
+          "row": 0,
+          "col": 10,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a13",
+          "row": 0,
+          "col": 8,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a15",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a15",
+      "path_pct": 990.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 10,
+      "cell_index": 10,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a16",
+          "row": 0,
+          "col": 11,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a14",
+          "row": 0,
+          "col": 9,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a16",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a16",
+      "path_pct": 989.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 11,
+      "cell_index": 11,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a17_pro",
+          "row": 0,
+          "col": 12,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a15",
+          "row": 0,
+          "col": 10,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a17_pro",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a17_pro",
+      "path_pct": 988.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 12,
+      "cell_index": 12,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a18",
+          "row": 0,
+          "col": 13,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a16",
+          "row": 0,
+          "col": 11,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a18",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a18",
+      "path_pct": 987.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 13,
+      "cell_index": 13,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a4",
+          "row": 0,
+          "col": 14,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a17_pro",
+          "row": 0,
+          "col": 12,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a4",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a4",
+      "path_pct": 986.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 14,
+      "cell_index": 14,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a5",
+          "row": 0,
+          "col": 15,
+          "weight": 0.0555
+        },
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a18",
+          "row": 0,
+          "col": 13,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 2,
+      "combinatronic": true
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a5",
+      "source": "g16",
+      "facet": "g16_universal",
+      "label": "g16:chip:chip:apple_silicon:apple_a5",
+      "path_pct": 985.0,
+      "depth": 0,
+      "canonical": null,
+      "runner": null,
+      "belt": null,
+      "thermal_tier": null,
+      "band": null,
+      "source_weight": 1.0,
+      "row": 0,
+      "col": 15,
+      "cell_index": 15,
+      "activation": 0.37,
+      "wires": [
+        {
+          "to": "g16:chip:chip:apple_silicon:apple_a4",
+          "row": 0,
+          "col": 14,
+          "weight": 0.0555
+        }
+      ],
+      "wire_count": 1,
+      "combinatronic": true
+    }
+  ],
+  "traversal": [
+    {
+      "id": "g16:chip:chip:alpha:dec_alpha_21064",
+      "row": 0,
+      "col": 0,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:amiga:commodore_8370_agnus",
+      "row": 0,
+      "col": 1,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:amiga:mos_8364_paula",
+      "row": 0,
+      "col": 2,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:amiga:commodore_paula_8364",
+      "row": 0,
+      "col": 3,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:amiga:commodore_8362_denis",
+      "row": 0,
+      "col": 4,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a10",
+      "row": 0,
+      "col": 5,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a11",
+      "row": 0,
+      "col": 6,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a12",
+      "row": 0,
+      "col": 7,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a13",
+      "row": 0,
+      "col": 8,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a14",
+      "row": 0,
+      "col": 9,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a15",
+      "row": 0,
+      "col": 10,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a16",
+      "row": 0,
+      "col": 11,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a17_pro",
+      "row": 0,
+      "col": 12,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a18",
+      "row": 0,
+      "col": 13,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a4",
+      "row": 0,
+      "col": 14,
+      "activation": 0.37
+    },
+    {
+      "id": "g16:chip:chip:apple_silicon:apple_a5",
+      "row": 0,
+      "col": 15,
+      "activation": 0.37
+    }
+  ],
+  "traverse_method": "van_emde_bois_row_major",
+  "neural_weights": {
+    "facet_spread": 0.25,
+    "path_pct": 0.2,
+    "coolness": 0.18,
+    "surface_depth": 0.12,
+    "wire_adjacency": 0.15,
+    "canonical_bonus": 0.1
+  },
+  "elapsed_ms": 113267.35,
+  "balance_gate": {
+    "schema": "field-combinatronic-balance-gate/v1",
+    "requested_refresh": true,
+    "effective_refresh": true,
+    "skip_reorganize": false,
+    "fast_path": false,
+    "reorganize": true,
+    "reason": "new_corpus",
+    "balanced": false,
+    "new_items": true,
+    "fingerprint": {
+      "schema": "field-combinatronic-fingerprint/v1",
+      "updated": "2026-07-03T23:26:31Z",
+      "corpus_hash": "c6933ffdb31d6420e9c32dd25ecaf2419ea813c577fb8a008ed2f8e9c9ad3083",
+      "domains": {
+        "chips": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "programs": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "program_langs": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "files": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "library_devices": {
+          "count": 21,
+          "ids_hash": "1c6b94a1d27229a3"
+        },
+        "library_games": {
+          "count": 30,
+          "ids_hash": "99c3915e70866684"
+        },
+        "library_greats": {
+          "count": 20,
+          "ids_hash": "eb702c105dc594c8"
+        },
+        "cpu": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "universal": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "matrix": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "growth": {
+          "count": 256,
+          "ids_hash": "7ac6ee2f45b1a867"
+        },
+        "sequence": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "spider": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "visuals": {
+          "count": 451
+        },
+        "h7c": {
+          "count": 0
+        },
+        "library_registry": {
+          "count": 0,
+          "ids_hash": "empty"
+        },
+        "steel_plates": {
+          "count": 0,
+          "ids_hash": "empty"
+        }
+      },
+      "material_lines": 17,
+      "entry_base": 13
+    },
+    "prev_hash": "2c2e483a3c97ed386bd15b1ffab33b789e780785154aba29ff6d51659bef5ac0",
+    "corpus_hash": "c6933ffdb31d6420e9c32dd25ecaf2419ea813c577fb8a008ed2f8e9c9ad3083",
+    "predictive_meld": {
+      "schema": "field-predictive-meld/v1",
+      "updated": "2026-07-03T23:26:33Z",
+      "plate_hash": "5de9113da74b03e7dbf136c273b87b5e26fbe6034d3bf390f05c1a5dad2c399e",
+      "corpus_hash": "c6933ffdb31d6420e9c32dd25ecaf2419ea813c577fb8a008ed2f8e9c9ad3083",
+      "prev_plate_hash": null,
+      "prev_corpus_hash": null,
+      "plate_count": 1,
+      "predicted_ms_saved": 0,
+      "skip_refresh": false,
+      "skip_meld_refresh": false,
+      "fast_path": false,
+      "reason": "initial"
+    }
+  },
+  "optimized_combinatronic": false,
+  "combinatronic": true,
+  "all_data_combinatronic": true,
+  "ammolang_curriculum": {
+    "path": "library/dewey/000-computer-science/ammolang/combinamatrix_boot.aml",
+    "ok": true,
+    "step_count": 6,
+    "combinators": [
+      "observe",
+      "pack",
+      "wire",
+      "score",
+      "universal",
+      "emit"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+Exception in thread Thread-1 (_udp_loop):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+Exception in thread Thread-2 (_udp_loop):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/default/Desktop/SG/NewLatest/lib/field-dns.py", line 524, in _udp_loop
+    self._target(*self._args, **self._kwargs)
+  File "/home/default/Desktop/SG/NewLatest/lib/field-dns.py", line 524, in _udp_loop
+    sock.bind((host, PORT))
+    sock.bind((host, PORT))
+PermissionError: [Errno 13] Permission denied
+PermissionError: [Errno 13] Permission denied

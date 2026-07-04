@@ -1,0 +1,327 @@
+{
+  "ok": true,
+  "schema": "ironclad-secure-api/v1",
+  "singleton": true,
+  "title": "Ironclad Secure API — singleton gate for every loopback route",
+  "motto": "One gate, one sort, one index — Ironclad grounds every API before serve.",
+  "ironclad_citation": "ironclad:api:1",
+  "ironclad_grounded": true,
+  "truth_percent": 100.0,
+  "verdict": "GREEN",
+  "route_count": 56,
+  "sort_contexts": [
+    "registry_index",
+    "api_registry",
+    "chip_catalog",
+    "catalog_index"
+  ],
+  "policy": {
+    "loopback_only": true,
+    "ironclad_grounding_required": true,
+    "human_integration_forbidden": true,
+    "write_requires_token": false,
+    "destructive_blocked": true,
+    "beyond_darpa_tier": "beyond_darpa_lockheed",
+    "beyond_darpa_module": "lib/beyond-darpa-security.py",
+    "human_and_machine_threats_fail_closed": true
+  },
+  "api": {
+    "gate": "/api/ironclad/secure-api",
+    "status": "/api/ironclad/secure-api/status",
+    "registry_index": "/api/ironclad/secure-api/registry-index",
+    "route_index": "/api/ironclad/secure-api/routes",
+    "sort": "/api/ironclad/secure-api/sort",
+    "search": "/api/ironclad/secure-api/search"
+  },
+  "updated": "2026-07-04T00:33:27Z",
+  "routes_sample": [
+    {
+      "path": "/api/compile-autocorrect",
+      "title": "Compile autocorrect — safe fixes only, never guess",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-compile-autocorrect-doctrine.json",
+      "label": "Compile autocorrect — safe fixes only, never guess",
+      "index": 0
+    },
+    {
+      "path": "/api/card-catalog",
+      "title": "/api/card-catalog",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-card-catalog-doctrine.json",
+      "label": "/api/card-catalog",
+      "index": 1
+    },
+    {
+      "path": "/api/card-catalog/search",
+      "title": "/api/card-catalog/search",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-card-catalog-doctrine.json",
+      "label": "/api/card-catalog/search",
+      "index": 2
+    },
+    {
+      "path": "/api/card-catalog/autocomplete",
+      "title": "/api/card-catalog/autocomplete",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-card-catalog-doctrine.json",
+      "label": "/api/card-catalog/autocomplete",
+      "index": 3
+    },
+    {
+      "path": "/api/card-catalog/sort",
+      "title": "/api/card-catalog/sort",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-card-catalog-doctrine.json",
+      "label": "/api/card-catalog/sort",
+      "index": 4
+    },
+    {
+      "path": "/api/card-catalog/card",
+      "title": "/api/card-catalog/card",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-card-catalog-doctrine.json",
+      "label": "/api/card-catalog/card",
+      "index": 5
+    },
+    {
+      "path": "/api/card-catalog/detect",
+      "title": "/api/card-catalog/detect",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-card-catalog-doctrine.json",
+      "label": "/api/card-catalog/detect",
+      "index": 6
+    },
+    {
+      "path": "/api/health",
+      "title": "health",
+      "layer": "health",
+      "kind": "route",
+      "source": "data/final-eye-plate-doctrine.json",
+      "label": "health",
+      "index": 7
+    },
+    {
+      "path": "/api/eye/operations",
+      "title": "eye_operations",
+      "layer": "eye_operations",
+      "kind": "route",
+      "source": "data/final-eye-plate-doctrine.json",
+      "label": "eye_operations",
+      "index": 8
+    },
+    {
+      "path": "/api/eye/stoard",
+      "title": "eye_stoard",
+      "layer": "eye_stoard",
+      "kind": "route",
+      "source": "data/final-eye-plate-doctrine.json",
+      "label": "eye_stoard",
+      "index": 9
+    },
+    {
+      "path": "/api/sense-package/meld",
+      "title": "sense_meld",
+      "layer": "sense_meld",
+      "kind": "route",
+      "source": "data/final-eye-plate-doctrine.json",
+      "label": "sense_meld",
+      "index": 10
+    },
+    {
+      "path": "/api/ironclad/secure-api/search",
+      "title": "ironclad_search",
+      "layer": "ironclad_search",
+      "kind": "route",
+      "source": "data/final-eye-plate-doctrine.json",
+      "label": "ironclad_search",
+      "index": 11
+    },
+    {
+      "path": "/api/hostess7/ocr",
+      "title": "gate",
+      "layer": "gate",
+      "kind": "route",
+      "source": "data/hostess7-ocr-control-doctrine.json",
+      "label": "gate",
+      "index": 12
+    },
+    {
+      "path": "/api/hostess7/ocr/dispatch",
+      "title": "dispatch",
+      "layer": "dispatch",
+      "kind": "route",
+      "source": "data/hostess7-ocr-control-doctrine.json",
+      "label": "dispatch",
+      "index": 13
+    },
+    {
+      "path": "/api/hostess7/ocr/status",
+      "title": "status",
+      "layer": "status",
+      "kind": "route",
+      "source": "data/hostess7-ocr-control-doctrine.json",
+      "label": "status",
+      "index": 14
+    },
+    {
+      "path": "/api/hostess7/ocr/ingest-all",
+      "title": "ingest_all",
+      "layer": "ingest_all",
+      "kind": "route",
+      "source": "data/hostess7-ocr-control-doctrine.json",
+      "label": "ingest_all",
+      "index": 15
+    },
+    {
+      "path": "/api/hostess7/ocr/train-all",
+      "title": "train_all",
+      "layer": "train_all",
+      "kind": "route",
+      "source": "data/hostess7-ocr-control-doctrine.json",
+      "label": "train_all",
+      "index": 16
+    },
+    {
+      "path": "/api/tobins-spirit-guide",
+      "title": "THE PINNACLE Tobin's Spirit Guide",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/tobins-spirit-guide-doctrine.json",
+      "label": "THE PINNACLE Tobin's Spirit Guide",
+      "index": 17
+    },
+    {
+      "path": "/api/chips/catalog",
+      "title": "catalog",
+      "layer": "catalog",
+      "kind": "route",
+      "source": "data/field-chips-catalog-doctrine.json",
+      "label": "catalog",
+      "index": 18
+    },
+    {
+      "path": "/api/chips/catalog/search",
+      "title": "search",
+      "layer": "search",
+      "kind": "route",
+      "source": "data/field-chips-catalog-doctrine.json",
+      "label": "search",
+      "index": 19
+    },
+    {
+      "path": "/api/chips/catalog/autocomplete",
+      "title": "autocomplete",
+      "layer": "autocomplete",
+      "kind": "route",
+      "source": "data/field-chips-catalog-doctrine.json",
+      "label": "autocomplete",
+      "index": 20
+    },
+    {
+      "path": "/api/chips/catalog/detail",
+      "title": "detail",
+      "layer": "detail",
+      "kind": "route",
+      "source": "data/field-chips-catalog-doctrine.json",
+      "label": "detail",
+      "index": 21
+    },
+    {
+      "path": "/api/chips/catalog/pages",
+      "title": "pages",
+      "layer": "pages",
+      "kind": "route",
+      "source": "data/field-chips-catalog-doctrine.json",
+      "label": "pages",
+      "index": 22
+    },
+    {
+      "path": "/api/chips/catalog/library-book",
+      "title": "library_book",
+      "layer": "library_book",
+      "kind": "route",
+      "source": "data/field-chips-catalog-doctrine.json",
+      "label": "library_book",
+      "index": 23
+    },
+    {
+      "path": "/api/chips/catalog/panel",
+      "title": "panel",
+      "layer": "panel",
+      "kind": "route",
+      "source": "data/field-chips-catalog-doctrine.json",
+      "label": "panel",
+      "index": 24
+    },
+    {
+      "path": "/api/library-registry",
+      "title": "/api/library-registry",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-library-registry-doctrine.json",
+      "label": "/api/library-registry",
+      "index": 25
+    },
+    {
+      "path": "/api/library-registry/search",
+      "title": "/api/library-registry/search",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-library-registry-doctrine.json",
+      "label": "/api/library-registry/search",
+      "index": 26
+    },
+    {
+      "path": "/api/file-formats",
+      "title": "/api/file-formats",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-file-formats-doctrine.json",
+      "label": "/api/file-formats",
+      "index": 27
+    },
+    {
+      "path": "/api/file-formats/icons",
+      "title": "/api/file-formats/icons",
+      "layer": "api",
+      "kind": "route",
+      "source": "data/field-file-formats-doctrine.json",
+      "label": "/api/file-formats/icons",
+      "index": 28
+    },
+    {
+      "path": "/api/field-monster-monitor",
+      "title": "status",
+      "layer": "status",
+      "kind": "route",
+      "source": "data/field-monster-monitor-doctrine.json",
+      "label": "status",
+      "index": 29
+    },
+    {
+      "path": "/api/field-monster-monitor/processes",
+      "title": "processes",
+      "layer": "processes",
+      "kind": "route",
+      "source": "data/field-monster-monitor-doctrine.json",
+      "label": "processes",
+      "index": 30
+    },
+    {
+      "path": "/api/field-monster-monitor/services",
+      "title": "services",
+      "layer": "services",
+      "kind": "route",
+      "source": "data/field-monster-monitor-doctrine.json",
+      "label": "services",
+      "index": 31
+    }
+  ]
+}

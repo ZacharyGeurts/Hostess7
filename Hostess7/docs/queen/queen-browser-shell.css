@@ -581,3 +581,26 @@ body.qw-browser-shell .qb-viewport .qb-tab-panes {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin: 4px 0;
 }
+
+body.qw-browser-shell.qw-classic {
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "viewport" "chrome";
+}
+
+body.qw-browser-shell.qw-classic #qm-threat-bar,
+body.qw-browser-shell.qw-classic .qb-row--humans-ai,
+body.qw-browser-shell.qw-classic .qb-row--bookmarks,
+body.qw-browser-shell.qw-classic .qb-compat-pill,
+body.qw-browser-shell.qw-classic .qb-gate-pill,
+body.qw-browser-shell.qw-classic #qb-proxy,
+body.qw-browser-shell.qw-classic #qpi-inspect-btn,
+body.qw-browser-shell.qw-classic #qb-styles,
+body.qw-browser-shell.qw-classic #qb-gates,
+body.qw-browser-shell.qw-classic #qb-underlay-drop,
+body.qw-browser-shell.qw-classic #qb-underlay-rise {
+  display: none !important;
+}
+
+body.qw-browser-shell.qw-classic .qb-chrome {
+  max-height: 120px;
+}

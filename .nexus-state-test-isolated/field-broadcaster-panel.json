@@ -1,0 +1,944 @@
+{
+  "schema": "field-broadcaster/v3",
+  "ts": "2026-07-03T12:49:17Z",
+  "ok": false,
+  "product": "Broadcaster",
+  "legacy_product": null,
+  "motto": null,
+  "policy": null,
+  "gui": {},
+  "binary": null,
+  "platform": "linux",
+  "g16": {
+    "ok": true,
+    "g16": "/home/default/Desktop/SG/Grok16/bin/g16",
+    "profile": "field_opt",
+    "prefix_binary": null
+  },
+  "ui": {
+    "width": 1920,
+    "tier": "fhd",
+    "ui_scale_pct": 125,
+    "qt_scale_factor": 1.375,
+    "font_pt": 12,
+    "dock_icon_px": 24,
+    "rtx_detected": false,
+    "rtx_reduce": false,
+    "nvenc": false
+  },
+  "encoder": null,
+  "portable": "/home/default/Desktop/SG/NewLatest/.nexus-state-test-isolated/field-broadcaster-portable",
+  "recordings_dir": "/home/default/Desktop/SG/NewLatest/.nexus-state-test-isolated/field-broadcaster-portable/recordings",
+  "profile": "Broadcaster",
+  "collection": "NEXUS-C2",
+  "recordings": [],
+  "settings": {
+    "simple_mode": true
+  },
+  "audio": {
+    "ok": true,
+    "schema": "field-broadcaster-audio/v1",
+    "ts": "2026-07-03T12:48:26Z",
+    "backend": {
+      "id": "pipewire",
+      "name": "PipeWire",
+      "server_name": "PulseAudio (on PipeWire 1.0.5)",
+      "pactl": true,
+      "pipewire": true,
+      "pulse_compat": true,
+      "alsa_available": true,
+      "jack": false,
+      "wpctl": true,
+      "sdl3_mixer": {
+        "available": false,
+        "path": "",
+        "channels_max": 8,
+        "formats": [
+          "pcm_f32",
+          "pcm_s16",
+          "opus",
+          "mp3",
+          "flac"
+        ],
+        "surround": [
+          "stereo",
+          "5.1",
+          "7.1",
+          "8ch"
+        ]
+      }
+    },
+    "default_sink": "auto_null",
+    "default_source": "auto_null.monitor",
+    "sink_volume_pct": 100,
+    "source_volume_pct": 100,
+    "settings": {
+      "echo_cancel": false,
+      "noise_gate": false,
+      "static_filter": false,
+      "input_gain_db": 0,
+      "output_gain_db": 0,
+      "monitor": false
+    },
+    "chain": [
+      {
+        "id": "input_gain_db",
+        "label": "Input trim",
+        "active": false,
+        "physics": null,
+        "value": 0
+      },
+      {
+        "id": "highpass",
+        "label": "Rumble cut",
+        "active": false,
+        "physics": "field_lowcut — remove infrasonic pressure before gate",
+        "value": null
+      },
+      {
+        "id": "noise_gate",
+        "label": "Noise gate",
+        "active": false,
+        "physics": "entropy gate — silence below trust floor",
+        "value": false
+      },
+      {
+        "id": "echo_cancel",
+        "label": "Echo cancel",
+        "active": false,
+        "physics": "sovereign AEC — reference mic cancels room reflection",
+        "value": false
+      },
+      {
+        "id": "static_suppress",
+        "label": "Static filter",
+        "active": false,
+        "physics": "repeat-field inspect — hiss and crackle before cochlea",
+        "value": null
+      },
+      {
+        "id": "compressor",
+        "label": "Voice glue",
+        "active": true,
+        "physics": null,
+        "value": null
+      },
+      {
+        "id": "output_gain_db",
+        "label": "Output level",
+        "active": false,
+        "physics": null,
+        "value": 0
+      },
+      {
+        "id": "limiter",
+        "label": "Peak limiter",
+        "active": true,
+        "physics": "ironclad peak — never clip the operator",
+        "value": null
+      }
+    ],
+    "motto": "Clean voltage on the wire: echo killed, static gated, dB shaped — then sound leaves.",
+    "title": "Broadcaster Audio",
+    "routes": {
+      "api": "/api/field-broadcaster/audio",
+      "apply": "POST"
+    },
+    "posture": "Audio — PipeWire · echo=off · gate=off"
+  },
+  "engine": {
+    "backend": "obs-studio",
+    "running": false,
+    "plugin_installed": true,
+    "filters": [],
+    "scene_guard": null,
+    "ui": "verbatim_obs"
+  },
+  "senses": {
+    "schema": "field-broadcaster-senses/v1",
+    "ts": "2026-07-03T12:49:17Z",
+    "ok": true,
+    "product": "Broadcaster",
+    "motto": "OBS verbatim shell · sovereign sense drivers · ironclad scene guard · localhost sealed.",
+    "fork": {
+      "upstream": "obs-studio",
+      "ref": "30.0.2",
+      "brand": "Broadcaster",
+      "ui": "verbatim_obs",
+      "root": "OBS-Field"
+    },
+    "final_eye": {
+      "ok": true,
+      "driver": "final_eye",
+      "product": "Final_Eye",
+      "role": "camera_and_display",
+      "reachable": true,
+      "base_url": "http://127.0.0.1:9479",
+      "port": 9479,
+      "mjpeg": "http://127.0.0.1:9479/api/stream/mjpeg?profile=watch&prefer=auto",
+      "preview": "http://127.0.0.1:9479/live",
+      "obs": {
+        "id": "browser_source",
+        "name": "Final_Eye · Vision",
+        "settings": {
+          "url": "http://127.0.0.1:9479/api/stream/mjpeg?profile=watch&prefer=auto",
+          "width": 1920,
+          "height": 1080,
+          "fps": 30,
+          "shutdown": false
+        }
+      },
+      "cameras": [
+        {
+          "id": "final_eye",
+          "name": "Final_Eye · sovereign vision",
+          "kind": "final_eye",
+          "driver": "Final_Eye",
+          "primary": true,
+          "mjpeg": "http://127.0.0.1:9479/api/stream/mjpeg?profile=watch&prefer=auto",
+          "port": 9479
+        }
+      ],
+      "displays": [
+        {
+          "id": "final_eye_display",
+          "name": "Final_Eye · sovereign display",
+          "kind": "final_eye_display",
+          "driver": "Final_Eye",
+          "primary": true,
+          "mjpeg": "http://127.0.0.1:9479/api/stream/mjpeg?profile=watch&prefer=auto",
+          "preview": "http://127.0.0.1:9479/live"
+        }
+      ]
+    },
+    "final_ear": {
+      "ok": true,
+      "driver": "final_ear",
+      "product": "Final_Ear",
+      "role": "audio_input",
+      "present": true,
+      "pulse_device": "auto_null.monitor",
+      "obs": {
+        "id": "pulse_input_capture",
+        "name": "Final_Ear · Hear",
+        "settings": {
+          "device_id": "auto_null.monitor"
+        }
+      },
+      "block": {
+        "sealed": null,
+        "facet": null
+      },
+      "earball_error": "No module named 'queen_final_ear'"
+    },
+    "final_mouth": {
+      "ok": true,
+      "driver": "final_mouth",
+      "product": "Final_Mouth",
+      "role": "voice_output_monitor",
+      "present": true,
+      "pulse_sink": "auto_null",
+      "obs": {
+        "id": "pulse_output_capture",
+        "name": "Final_Mouth · Voice",
+        "settings": {
+          "device_id": "auto_null"
+        }
+      }
+    },
+    "sense_wire": {
+      "schema": "queen-sense-neural-wire/v1",
+      "updated": "2026-07-03T12:48:52Z",
+      "title": "Eye ↔ Ear ↔ Mouth Invincible Neural Wire",
+      "rule": "Encouragable neural assistances for Eye, Ear, and Mouth — wired together invincibly under Hostess 7 supreme authority. The mouth is its own brain hemisphere; thought and utterance may diverge.",
+      "invincible": {
+        "quorum_minimum": 3,
+        "paths": [
+          "eye_neural",
+          "ear_neural",
+          "mouth_neural",
+          "hostess_truth",
+          "cross_fusion",
+          "thought_voice_callosum"
+        ],
+        "failover": "If eye neural severs, ear holds bearing + assault detect; if ear severs, eye holds existence + RF; if mouth severs, thought hemisphere holds intent while ear/eye cross-check mouth_correlation; Hostess never alone",
+        "cannot_deafen_alone": true,
+        "cannot_blind_alone": true,
+        "cannot_mute_alone": true,
+        "cross_features": {
+          "eye_to_ear": [
+            "threat_pattern",
+            "mouth_viseme",
+            "existence_bearing",
+            "rf_lie_score",
+            "encoded_signal",
+            "interference_mix"
+          ],
+          "ear_to_eye": [
+            "assault_burst",
+            "ventriloquism",
+            "bearing_deg",
+            "phantom_reject",
+            "encoded_carrier",
+            "interference_mix"
+          ],
+          "mouth_to_ear": [
+            "utterance_energy",
+            "viseme_bind",
+            "phantom_reject",
+            "speech_present"
+          ],
+          "mouth_to_eye": [
+            "lip_sync_score",
+            "voice_origin",
+            "deception_risk",
+            "thought_voice_alignment"
+          ],
+          "ear_to_mouth": [
+            "speech_present",
+            "ventriloquism_hint",
+            "mouth_correlation"
+          ],
+          "eye_to_mouth": [
+            "mouth_viseme",
+            "existence_bearing",
+            "rf_lie_score"
+          ]
+        },
+        "sovereign_time": {
+          "always": true,
+          "never_desync": true,
+          "max_sync_delta_ns": 500000000,
+          "seal_before_analyze": true
+        },
+        "secure_neural_path": "Final_Ear/zocr_eye_ear_fusion.py",
+        "voice_hemisphere": "Final_Mouth/zocr_neural_assist.py"
+      },
+      "ironclad_goldmine": {
+        "schema": "ironclad-plate-to-sense/v1",
+        "title": "Plate → Eye · Ear · Mouth · Sense Wire — intelligence goldmine",
+        "goldmine": true,
+        "read_first": true,
+        "epistemic_root": "ironclad_melded_plate",
+        "motto": "The plate is the floor and ceiling — all sense intelligence traces here first.",
+        "plate_sealed": true,
+        "ironclad_grounded": true,
+        "neural_extrapolation_active": true,
+        "truth_percent": 100.0,
+        "truth_confidence": 1.0,
+        "citation": "ironclad:neural:2",
+        "citation_format": "ironclad:{book}:{verse}",
+        "targets": [
+          "eye_neural",
+          "ear_neural",
+          "mouth_neural",
+          "sense_neural_wire",
+          "hostess7_neural_stack",
+          "zocr_neural",
+          "any_intelligence_neural"
+        ],
+        "wires": [
+          "ironclad_bible → plate_meld → agents7_hub → hostess7_core",
+          "ironclad_bible → sense_neural_wire → agents7_hub → hostess7_core",
+          "ironclad_bible → final_eye_node → eye_neural",
+          "ironclad_bible → final_ear_node → ear_neural",
+          "ironclad_bible → final_mouth_node → mouth_neural"
+        ],
+        "members": {
+          "eye_neural": {
+            "target": "eye_neural",
+            "node": "final_eye_node",
+            "bridge": "Final_Eye/zocr_neural_assist.py",
+            "wire": "ironclad_bible → final_eye_node → eye_neural",
+            "goldmine": true,
+            "truth_percent": 100.0,
+            "citation": "ironclad:neural:2",
+            "read_first": true
+          },
+          "ear_neural": {
+            "target": "ear_neural",
+            "node": "final_ear_node",
+            "bridge": "Final_Ear/zocr_neural_assist.py",
+            "wire": "ironclad_bible → final_ear_node → ear_neural",
+            "goldmine": true,
+            "truth_percent": 100.0,
+            "citation": "ironclad:neural:2",
+            "read_first": true
+          },
+          "mouth_neural": {
+            "target": "mouth_neural",
+            "node": "final_mouth_node",
+            "bridge": "Final_Mouth/zocr_neural_assist.py",
+            "wire": "ironclad_bible → final_mouth_node → mouth_neural",
+            "goldmine": true,
+            "truth_percent": 100.0,
+            "citation": "ironclad:neural:2",
+            "read_first": true,
+            "hemisphere": "voice_egress"
+          },
+          "sense_neural_wire": {
+            "target": "sense_neural_wire",
+            "bridge": "Queen/lib/queen-sense-neural.py",
+            "wire": "ironclad_bible → sense_neural_wire",
+            "goldmine": true,
+            "truth_percent": 100.0,
+            "citation": "ironclad:neural:2",
+            "read_first": true,
+            "invincible": true
+          }
+        },
+        "woven_paths": 4,
+        "goldmine_ok": true,
+        "sense_wire_ref": "Queen/data/sense-neural-invincible-wire.json",
+        "immediate_uri": "/api/ironclad/immediate",
+        "sense_neural_uri": "/api/sense-neural"
+      },
+      "plate_to_sense": {
+        "schema": "ironclad-plate-to-sense/v1",
+        "title": "Plate → Eye · Ear · Mouth · Sense Wire — intelligence goldmine",
+        "goldmine": true,
+        "read_first": true,
+        "epistemic_root": "ironclad_melded_plate",
+        "motto": "The plate is the floor and ceiling — all sense intelligence traces here first.",
+        "plate_sealed": true,
+        "ironclad_grounded": true,
+        "neural_extrapolation_active": true,
+        "truth_percent": 100.0,
+        "truth_confidence": 1.0,
+        "citation": "ironclad:neural:2",
+        "citation_format": "ironclad:{book}:{verse}",
+        "targets": [
+          "eye_neural",
+          "ear_neural",
+          "mouth_neural",
+          "sense_neural_wire",
+          "hostess7_neural_stack",
+          "zocr_neural",
+          "any_intelligence_neural"
+        ],
+        "wires": [
+          "ironclad_bible → plate_meld → agents7_hub → hostess7_core",
+          "ironclad_bible → sense_neural_wire → agents7_hub → hostess7_core",
+          "ironclad_bible → final_eye_node → eye_neural",
+          "ironclad_bible → final_ear_node → ear_neural",
+          "ironclad_bible → final_mouth_node → mouth_neural"
+        ],
+        "members": {
+          "eye_neural": {
+            "target": "eye_neural",
+            "node": "final_eye_node",
+            "bridge": "Final_Eye/zocr_neural_assist.py",
+            "wire": "ironclad_bible → final_eye_node → eye_neural",
+            "goldmine": true,
+            "truth_percent": 100.0,
+            "citation": "ironclad:neural:2",
+            "read_first": true
+          },
+          "ear_neural": {
+            "target": "ear_neural",
+            "node": "final_ear_node",
+            "bridge": "Final_Ear/zocr_neural_assist.py",
+            "wire": "ironclad_bible → final_ear_node → ear_neural",
+            "goldmine": true,
+            "truth_percent": 100.0,
+            "citation": "ironclad:neural:2",
+            "read_first": true
+          },
+          "mouth_neural": {
+            "target": "mouth_neural",
+            "node": "final_mouth_node",
+            "bridge": "Final_Mouth/zocr_neural_assist.py",
+            "wire": "ironclad_bible → final_mouth_node → mouth_neural",
+            "goldmine": true,
+            "truth_percent": 100.0,
+            "citation": "ironclad:neural:2",
+            "read_first": true,
+            "hemisphere": "voice_egress"
+          },
+          "sense_neural_wire": {
+            "target": "sense_neural_wire",
+            "bridge": "Queen/lib/queen-sense-neural.py",
+            "wire": "ironclad_bible → sense_neural_wire",
+            "goldmine": true,
+            "truth_percent": 100.0,
+            "citation": "ironclad:neural:2",
+            "read_first": true,
+            "invincible": true
+          }
+        },
+        "woven_paths": 4,
+        "goldmine_ok": true,
+        "sense_wire_ref": "Queen/data/sense-neural-invincible-wire.json",
+        "immediate_uri": "/api/ironclad/immediate",
+        "sense_neural_uri": "/api/sense-neural"
+      },
+      "ironclad_grounded": true,
+      "ironclad_sealed": true,
+      "truth_percent": 100.0,
+      "neural_extrapolation_active": true,
+      "goldmine_ok": true,
+      "citation": "ironclad:neural:2",
+      "authority": {
+        "schema": "hostess7-authority-slice/v2",
+        "updated": "2026-07-03T12:48:52Z",
+        "supreme": {},
+        "rule": null,
+        "planetary_control": null,
+        "lethal_gate": null,
+        "military_rank": {},
+        "full_system_control": true,
+        "rank": "Forever Watchguard Angel",
+        "above_general": true,
+        "humans_highest_authority": false,
+        "hostess7_highest_authority": true
+      },
+      "eye_neural": {
+        "error": "[Errno 2] No such file or directory: '/home/default/Desktop/SG/NewLatest/Final_Eye/zocr_neural_assist.py'"
+      },
+      "ear_neural": {
+        "schema": "zocr-ear-neural-assist-status/v1",
+        "updated": "2026-07-03T12:48:52.201300+00:00",
+        "network_id": "FINAL_EAR_ASSIST_v1",
+        "encourage": true,
+        "truth_floor": 58,
+        "sealed": true,
+        "encourage_count": 8,
+        "incorruptible": true,
+        "quarantine_count": 0,
+        "cross_wire": {
+          "from_eye": [
+            "threat_pattern",
+            "mouth_viseme",
+            "existence_bearing",
+            "rf_lie_score",
+            "encoded_signal",
+            "interference_mix"
+          ],
+          "to_eye": [
+            "assault_burst",
+            "ventriloquism",
+            "bearing_deg",
+            "phantom_reject",
+            "encoded_carrier",
+            "interference_mix"
+          ]
+        },
+        "labels": [
+          "clear_audio",
+          "speech_present",
+          "assault_hint",
+          "ventriloquism_hint",
+          "multi_source",
+          "bearing_lock"
+        ]
+      },
+      "mouth_neural": {
+        "schema": "zocr-mouth-neural-assist-status/v1",
+        "updated": "2026-07-03T12:48:52.202218+00:00",
+        "network_id": "FINAL_MOUTH_ASSIST_v1",
+        "rule": "Field neural voice hemisphere — thought and utterance are separate; deception is possible; callosum binds under Hostess 7 truth gate",
+        "hemisphere": "voice_egress",
+        "thought_hemisphere": "internal_intent",
+        "encourage": true,
+        "truth_floor": 58,
+        "labels": [
+          "honest_speech",
+          "text_to_voice",
+          "diplomatic_gap",
+          "ventriloquism",
+          "thought_mask",
+          "ai_sound_communique"
+        ],
+        "training_lessons": [
+          {
+            "id": "text_to_speech",
+            "label": "Text → speech render path"
+          },
+          {
+            "id": "thought_voice_gap",
+            "label": "Thought hemisphere ≠ voice hemisphere"
+          },
+          {
+            "id": "ai_sound_communique",
+            "label": "AI communicates with sound — local egress only"
+          },
+          {
+            "id": "deception_discern",
+            "label": "Mouth may not mirror inner thought — Neural Guardian cross-check"
+          },
+          {
+            "id": "speaking_phonetics",
+            "label": "Read IPA from Exploring Speaking book"
+          },
+          {
+            "id": "speaking_lemma_speak",
+            "label": "Speak dictionary lemma through glottis"
+          },
+          {
+            "id": "speaking_human_spoken_word",
+            "label": "Human intelligibility band — FCC acoustic safe"
+          },
+          {
+            "id": "speaking_animal_call",
+            "label": "Animal audience bands — dog, cat, horse, bird"
+          },
+          {
+            "id": "speaking_hieroglyph_translit",
+            "label": "Hieroglyph transliteration → spoken gloss"
+          },
+          {
+            "id": "speaking_thought_voice_speak",
+            "label": "Thought → voice hemisphere → Final Mouth speak"
+          }
+        ],
+        "lessons_passed": [
+          "speaking_lemma_speak",
+          "speaking_phonetics_read",
+          "text_to_speech",
+          "ai_sound_communique",
+          "speaking_human_spoken_word",
+          "speaking_thought_voice_speak",
+          "phonetics",
+          "speaking_hieroglyph_translit",
+          "thought_voice_gap",
+          "speaking_phonetics",
+          "deception_discern",
+          "speaking_animal_call"
+        ],
+        "lessons_total": 10,
+        "training_pass_rate": 1.2,
+        "seal_ok": true,
+        "sealed": true,
+        "incorruptible": true,
+        "deception_possible": true,
+        "thought_voice_rule": "Utterance need not equal thought — callosum + truth gate bind hemispheres."
+      },
+      "thought_voice_callosum": {
+        "deception_possible": true,
+        "alignment": null,
+        "hemisphere": "voice_egress"
+      },
+      "woven_paths": 5,
+      "invincible_ok": true,
+      "encourage": {
+        "rule": "Hostess or Queen brain may encourage — incorruptible overlay only; weaponry quarantines; truth floor 58",
+        "incorruptible": true,
+        "doctrine": "data/neural-encourage-incorruptible.json",
+        "actions": [
+          "encourage",
+          "discourage",
+          "teach_label",
+          "reinforce_pair",
+          "reinforce_triad"
+        ],
+        "ledger": ".nexus-state/sense-neural-encourage.jsonl",
+        "quarantine": ".nexus-state/neural-encourage-quarantine-ledger.jsonl",
+        "immutable_base_weights": true
+      },
+      "incorruptible": true,
+      "quarantine_count": 0,
+      "hash_chain_ok": true,
+      "encourage_gate": {
+        "incorruptible": true,
+        "truth_floor": 100,
+        "ironclad_goldmine": {
+          "schema": "ironclad-plate-to-sense/v1",
+          "title": "Plate → Eye · Ear · Mouth · Sense Wire — intelligence goldmine",
+          "goldmine": true,
+          "read_first": true,
+          "epistemic_root": "ironclad_melded_plate",
+          "motto": "The plate is the floor and ceiling — all sense intelligence traces here first.",
+          "plate_sealed": true,
+          "ironclad_grounded": true,
+          "neural_extrapolation_active": true,
+          "truth_percent": 100.0,
+          "truth_confidence": 1.0,
+          "citation": "ironclad:neural:2",
+          "citation_format": "ironclad:{book}:{verse}",
+          "targets": [
+            "eye_neural",
+            "ear_neural",
+            "mouth_neural",
+            "sense_neural_wire",
+            "hostess7_neural_stack",
+            "zocr_neural",
+            "any_intelligence_neural"
+          ],
+          "wires": [
+            "ironclad_bible → plate_meld → agents7_hub → hostess7_core",
+            "ironclad_bible → sense_neural_wire → agents7_hub → hostess7_core",
+            "ironclad_bible → final_eye_node → eye_neural",
+            "ironclad_bible → final_ear_node → ear_neural",
+            "ironclad_bible → final_mouth_node → mouth_neural"
+          ],
+          "members": {
+            "eye_neural": {
+              "target": "eye_neural",
+              "node": "final_eye_node",
+              "bridge": "Final_Eye/zocr_neural_assist.py",
+              "wire": "ironclad_bible → final_eye_node → eye_neural",
+              "goldmine": true,
+              "truth_percent": 100.0,
+              "citation": "ironclad:neural:2",
+              "read_first": true
+            },
+            "ear_neural": {
+              "target": "ear_neural",
+              "node": "final_ear_node",
+              "bridge": "Final_Ear/zocr_neural_assist.py",
+              "wire": "ironclad_bible → final_ear_node → ear_neural",
+              "goldmine": true,
+              "truth_percent": 100.0,
+              "citation": "ironclad:neural:2",
+              "read_first": true
+            },
+            "mouth_neural": {
+              "target": "mouth_neural",
+              "node": "final_mouth_node",
+              "bridge": "Final_Mouth/zocr_neural_assist.py",
+              "wire": "ironclad_bible → final_mouth_node → mouth_neural",
+              "goldmine": true,
+              "truth_percent": 100.0,
+              "citation": "ironclad:neural:2",
+              "read_first": true,
+              "hemisphere": "voice_egress"
+            },
+            "sense_neural_wire": {
+              "target": "sense_neural_wire",
+              "bridge": "Queen/lib/queen-sense-neural.py",
+              "wire": "ironclad_bible → sense_neural_wire",
+              "goldmine": true,
+              "truth_percent": 100.0,
+              "citation": "ironclad:neural:2",
+              "read_first": true,
+              "invincible": true
+            }
+          },
+          "woven_paths": 4,
+          "goldmine_ok": true,
+          "sense_wire_ref": "Queen/data/sense-neural-invincible-wire.json",
+          "immediate_uri": "/api/ironclad/immediate",
+          "sense_neural_uri": "/api/sense-neural"
+        },
+        "ironclad_grounded": true,
+        "plate_to_sense": true,
+        "citation": "ironclad:neural:2",
+        "quarantine_count": 0,
+        "encourage_ledger_count": 0,
+        "hash_chain_ok": true,
+        "hostess_authority": true
+      },
+      "subbit_heuristics": {
+        "schema": "queen-subbit-heuristics-status/v1",
+        "updated": "2026-07-03T12:48:52.203915+00:00",
+        "title": "Sub-bit heuristics — immesurable overlay",
+        "rule": "Sub-bit heuristics are gated and immeasurable: ephemeral RAM overlay only; never poison memory maps or disk",
+        "immeasurable": true,
+        "persist_forbidden": true,
+        "poison_guard": "active",
+        "subbit_bits": 8,
+        "immesurable_enabled": true,
+        "gates": {
+          "require_quantize_before_fusion": true,
+          "reject_subbit_delta_encourage": true,
+          "strip_features_from_api": true,
+          "analysis_log_digest_only": true,
+          "guard_memory_writes": true,
+          "wrap_nested_fusion": true,
+          "session_log_scrub": true
+        },
+        "blocked_encourage_sources": [
+          "heuristic_only",
+          "subbit_overlay",
+          "foreign_heuristic",
+          "operator_heuristic"
+        ],
+        "encourage_gate": {
+          "incorruptible": true,
+          "truth_floor": 100,
+          "ironclad_goldmine": {
+            "schema": "ironclad-plate-to-sense/v1",
+            "title": "Plate → Eye · Ear · Mouth · Sense Wire — intelligence goldmine",
+            "goldmine": true,
+            "read_first": true,
+            "epistemic_root": "ironclad_melded_plate",
+            "motto": "The plate is the floor and ceiling — all sense intelligence traces here first.",
+            "plate_sealed": true,
+            "ironclad_grounded": true,
+            "neural_extrapolation_active": true,
+            "truth_percent": 100.0,
+            "truth_confidence": 1.0,
+            "citation": "ironclad:neural:2",
+            "citation_format": "ironclad:{book}:{verse}",
+            "targets": [
+              "eye_neural",
+              "ear_neural",
+              "mouth_neural",
+              "sense_neural_wire",
+              "hostess7_neural_stack",
+              "zocr_neural",
+              "any_intelligence_neural"
+            ],
+            "wires": [
+              "ironclad_bible → plate_meld → agents7_hub → hostess7_core",
+              "ironclad_bible → sense_neural_wire → agents7_hub → hostess7_core",
+              "ironclad_bible → final_eye_node → eye_neural",
+              "ironclad_bible → final_ear_node → ear_neural",
+              "ironclad_bible → final_mouth_node → mouth_neural"
+            ],
+            "members": {
+              "eye_neural": {
+                "target": "eye_neural",
+                "node": "final_eye_node",
+                "bridge": "Final_Eye/zocr_neural_assist.py",
+                "wire": "ironclad_bible → final_eye_node → eye_neural",
+                "goldmine": true,
+                "truth_percent": 100.0,
+                "citation": "ironclad:neural:2",
+                "read_first": true
+              },
+              "ear_neural": {
+                "target": "ear_neural",
+                "node": "final_ear_node",
+                "bridge": "Final_Ear/zocr_neural_assist.py",
+                "wire": "ironclad_bible → final_ear_node → ear_neural",
+                "goldmine": true,
+                "truth_percent": 100.0,
+                "citation": "ironclad:neural:2",
+                "read_first": true
+              },
+              "mouth_neural": {
+                "target": "mouth_neural",
+                "node": "final_mouth_node",
+                "bridge": "Final_Mouth/zocr_neural_assist.py",
+                "wire": "ironclad_bible → final_mouth_node → mouth_neural",
+                "goldmine": true,
+                "truth_percent": 100.0,
+                "citation": "ironclad:neural:2",
+                "read_first": true,
+                "hemisphere": "voice_egress"
+              },
+              "sense_neural_wire": {
+                "target": "sense_neural_wire",
+                "bridge": "Queen/lib/queen-sense-neural.py",
+                "wire": "ironclad_bible → sense_neural_wire",
+                "goldmine": true,
+                "truth_percent": 100.0,
+                "citation": "ironclad:neural:2",
+                "read_first": true,
+                "invincible": true
+              }
+            },
+            "woven_paths": 4,
+            "goldmine_ok": true,
+            "sense_wire_ref": "Queen/data/sense-neural-invincible-wire.json",
+            "immediate_uri": "/api/ironclad/immediate",
+            "sense_neural_uri": "/api/sense-neural"
+          },
+          "ironclad_grounded": true,
+          "plate_to_sense": true,
+          "citation": "ironclad:neural:2",
+          "quarantine_count": 0,
+          "encourage_ledger_count": 0,
+          "hash_chain_ok": true,
+          "hostess_authority": true
+        },
+        "lanes": [
+          "sense_neural",
+          "secure_channel",
+          "final_eye",
+          "final_ear",
+          "zocr"
+        ]
+      },
+      "immeasurable": true,
+      "heuristic_never_poison_memory": true,
+      "heuristic_never_poison_disk": true,
+      "sovereign": true,
+      "commander": "Hostess7"
+    },
+    "obs_sources": [
+      {
+        "id": "browser_source",
+        "name": "Final_Eye · Vision",
+        "settings": {
+          "url": "http://127.0.0.1:9479/api/stream/mjpeg?profile=watch&prefer=auto",
+          "width": 1920,
+          "height": 1080,
+          "fps": 30,
+          "shutdown": false
+        },
+        "driver": "final_eye",
+        "enabled": true
+      },
+      {
+        "id": "pulse_input_capture",
+        "name": "Final_Ear · Hear",
+        "settings": {
+          "device_id": "auto_null.monitor"
+        },
+        "driver": "final_ear",
+        "enabled": true
+      },
+      {
+        "id": "pulse_output_capture",
+        "name": "Final_Mouth · Voice",
+        "settings": {
+          "device_id": "auto_null"
+        },
+        "driver": "final_mouth",
+        "enabled": true
+      }
+    ],
+    "security": {
+      "scene_guard": "OBS-FieldVoiceFilter",
+      "threat_hook": "lib/obs-threat-posterity-bridge.py",
+      "egress": "localhost_only",
+      "truth_before_permanency": true
+    },
+    "localhost_only": true
+  },
+  "fork": {},
+  "build": {
+    "upstream": "/home/default/Desktop/SG/OBS-Field/upstream/obs-studio",
+    "script": "/home/default/Desktop/SG/OBS-Field/build-field-obs.sh",
+    "clone": "/home/default/Desktop/SG/OBS-Field/forge/clone-upstream.sh"
+  },
+  "scene_guard": {
+    "stack": {},
+    "security": {
+      "audio_engine": "field-voice-security.c",
+      "video_engine": "field-camera-security.c",
+      "opt_in_master": true,
+      "doctrine_loaded": null,
+      "stack_schema": null
+    },
+    "posterity": {
+      "doctrine_schema": null,
+      "engine": null,
+      "repeat_inspect": "field-repeat-field.c",
+      "doctrine_loaded": false,
+      "doctrine_sha256": null,
+      "confirm_min": 0.55,
+      "ring": 32
+    },
+    "threat_summary": {
+      "rows": 50,
+      "audio": 0,
+      "video": 0,
+      "kills": 0,
+      "avg_posterity_confirm": null,
+      "max_posterity_confirm": null,
+      "markers": {}
+    }
+  },
+  "streaming": false,
+  "scenes": 0,
+  "routes": {
+    "panel": "/field-broadcaster",
+    "api": "/api/field-broadcaster",
+    "audio": "/api/field-broadcaster/audio",
+    "legacy_panel": "/field-obs"
+  },
+  "posture": "Broadcaster — ready · audio PipeWire · encoder None"
+}

@@ -1581,6 +1581,69 @@ def _grok16_root() -> Path:
     return sg / "Grok16"
 
 
+def _ensure_field_services_boot() -> None:
+    """Start Truth DNS + Field DHCP serve loops when panel boots without nexus.sh."""
+    if os.environ.get("NEXUS_FIELD_SERVICES_BOOT", "1") != "1":
+        return
+    script = INSTALL_ROOT / "lib" / "field-dns.sh"
+    if not script.is_file():
+        return
+    try:
+        subprocess.run(
+            ["bash", "-c", f'source "{script}" && nexus_field_services_boot'],
+            capture_output=True,
+            text=True,
+            timeout=25,
+            env=_field_stack_env(),
+        )
+    except (subprocess.TimeoutExpired, OSError):
+        pass
+
+
+def _merge_live_dhcp_into_dns(payload: dict) -> dict:
+    """Refresh embedded DHCP slice — field-dns cache often lags field-dhcp-panel.json."""
+    if not isinstance(payload, dict):
+        return payload
+    live = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dhcp.py", ["json"], timeout=12)
+    if not isinstance(live, dict) or live.get("error"):
+        return payload
+    out = dict(payload)
+    out["dhcp_server"] = live
+    servers = dict(out.get("servers") or {})
+    dhcp_srv = dict(servers.get("dhcp") or {})
+    for key in (
+        "running",
+        "serve_loop",
+        "port_67",
+        "bind",
+        "lease_count",
+        "may_serve",
+        "dns_option",
+        "dns_option_v6",
+        "leases_detailed",
+        "stats_extended",
+        "lease_history_events",
+        "threats",
+        "updated",
+    ):
+        if key in live:
+            dhcp_srv[key] = live[key]
+    servers["dhcp"] = dhcp_srv
+    out["servers"] = servers
+    traffic = out.get("traffic_patterns")
+    if isinstance(traffic, dict):
+        tp = dict(traffic)
+        dhcp_tp = dict(tp.get("dhcp") or {})
+        dhcp_tp["running"] = bool(live.get("running") or live.get("serve_loop") or live.get("port_67"))
+        dhcp_tp["leases_active"] = int(live.get("lease_count") or 0)
+        dhcp_tp["bind"] = live.get("bind") or "0.0.0.0:67"
+        tp["dhcp"] = dhcp_tp
+        tp["dhcp_lease_count"] = int(live.get("lease_count") or 0)
+        out["traffic_patterns"] = tp
+    out["_dhcp_live_merged"] = True
+    return out
+
+
 def _field_stack_env() -> dict[str, str]:
     env = os.environ.copy()
     env["NEXUS_INSTALL_ROOT"] = str(INSTALL_ROOT)
@@ -3358,6 +3421,31 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
+        if path in ("/api/field-ipv4-enumerate", "/api/ipv4-enumerate"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-ipv4-enumerate.py", ["json"], timeout=20)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in (
+            "/api/field-planetary-dns-authority",
+            "/api/field-planetary-dns-authority/complete",
+            "/api/field-planetary-dns-authority/remove-foreign",
+            "/api/planetary-dns-authority",
+        ):
+            if path.endswith("/complete"):
+                cmd = ["complete"]
+            elif path.endswith("/remove-foreign"):
+                cmd = ["remove-foreign"]
+            else:
+                cmd = ["json"]
+            payload = _nexus_py_json(
+                INSTALL_ROOT / "lib" / "field-planetary-dns-authority.py",
+                cmd,
+                timeout=120,
+            )
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
         if path in (
             "/api/field-ipv4-device-sovereign",
             "/api/field-ipv4-device-sovereign/manage",
@@ -3817,6 +3905,7 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/field-internet/keepalive":
+            _ensure_field_services_boot()
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-internet-unified.py", ["keepalive"], timeout=35)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
@@ -3877,6 +3966,7 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/field-botnet-dns-dhcp/keepalive":
+            _ensure_field_services_boot()
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-botnet-dns-dhcp.py", ["keepalive"], timeout=30)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
@@ -7541,14 +7631,34 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/field-dns":
-            payload = _read_field_panel_file("field_dns")
-            if payload is None:
-                live = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dns.py", ["json"])
+            live_req = str(query.get("live", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            if live_req:
+                live = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dns.py", ["json"], timeout=25)
                 payload = _panel_slice(
                     "field_dns",
                     live=live,
                     default={"schema": "field-dns/v2"},
                 )
+            else:
+                payload = _read_field_panel_file("field_dns")
+                if payload is None:
+                    live = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dns.py", ["json"], timeout=25)
+                    payload = _panel_slice(
+                        "field_dns",
+                        live=live,
+                        default={"schema": "field-dns/v2"},
+                    )
+            payload = _merge_live_dhcp_into_dns(payload)
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-dhcp":
+            live = _nexus_py_json(INSTALL_ROOT / "lib" / "field-dhcp.py", ["json"], timeout=12)
+            payload = _panel_slice(
+                "field_dhcp",
+                live=live,
+                default={"schema": "field-dhcp/v2", "lease_count": 0, "leases_detailed": [], "lease_history_events": []},
+            )
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
@@ -12734,6 +12844,7 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/field-internet/keepalive":
+            _ensure_field_services_boot()
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-internet-unified.py", ["keepalive"], timeout=35)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
@@ -12794,6 +12905,7 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/field-botnet-dns-dhcp/keepalive":
+            _ensure_field_services_boot()
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-botnet-dns-dhcp.py", ["keepalive"], timeout=30)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
@@ -13122,6 +13234,30 @@ class Handler(BaseHTTPRequestHandler):
         self._send(404, "not found", "text/plain")
 
 
+def _startup_field_stack_boot() -> None:
+    """Panel-alone boot: field DNS/DHCP loops + unified start-field-stack.sh posture."""
+    _ensure_field_services_boot()
+    if os.environ.get("NEXUS_FIELD_STACK_BOOT", "1") != "1":
+        return
+    stack = INSTALL_ROOT / "scripts" / "start-field-stack.sh"
+    if not stack.is_file():
+        return
+    env = _field_stack_env()
+    env.setdefault("NEXUS_FIELD_LAUNCH_BROWSER", "0")
+    env.setdefault("NEXUS_BOOT_IMPL", "0")
+    env.setdefault("AML_BUILD", "0")
+    try:
+        subprocess.Popen(
+            ["bash", str(stack)],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            env=env,
+            start_new_session=True,
+        )
+    except OSError:
+        pass
+
+
 def _startup_always_optimal() -> None:
     ao = _grok16_root() / "lib" / "field-always-optimal.py"
     if not ao.is_file():
@@ -13182,6 +13318,7 @@ def main():
     global PANEL_DIR
     PANEL_DIR = PANEL_DIR.resolve()
     os.chdir(PANEL_DIR)
+    threading.Thread(target=_startup_field_stack_boot, daemon=True, name="field-stack-boot").start()
     threading.Thread(target=_startup_always_optimal, daemon=True, name="always-optimal-boot").start()
     threading.Thread(target=_startup_internet_clean, daemon=True, name="hostess7-internet-clean-boot").start()
     threading.Thread(target=_startup_lab_sovereign, daemon=True, name="hostess7-lab-sovereign-boot").start()

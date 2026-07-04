@@ -20,24 +20,22 @@ html, body {
   position: fixed;
   inset: 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   overflow: hidden;
 }
 
 .hd-desktop {
   position: relative;
-  flex: 1 1 50%;
+  flex: 1 1 100%;
+  width: 100%;
   min-width: 0;
   padding-bottom: env(safe-area-inset-bottom, 0);
   overflow: hidden;
+  background: #0a0806;
 }
 
 .hd-monitor {
-  flex: 0 0 50%;
-  max-width: 50%;
-  min-width: 280px;
-  height: 100%;
-  overflow: hidden;
+  display: none !important;
 }
 
 .hd-monitor.hd-monitor--solo {
@@ -81,11 +79,20 @@ html[data-os-theme="ammo-field"] .hd-desktop {
 }
 
 html[data-os-theme="ammoos"] .hd-desktop,
-html[data-os-theme="nexus-military-v8"] .hd-desktop {
+html[data-os-theme="nexus-military-v8"] .hd-desktop,
+html[data-wallpaper="none"] .hd-desktop {
+  background: #0a0806;
+}
+
+html[data-os-theme="ammoos"] .hd-desktop::after,
+html[data-os-theme="nexus-military-v8"] .hd-desktop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 55% at 82% 8%, rgba(219, 112, 147, 0.14), transparent 55%),
-    radial-gradient(ellipse 90% 65% at 12% 92%, rgba(120, 72, 48, 0.22), transparent 50%),
-    linear-gradient(165deg, #14100c 0%, #1c1410 38%, #0a0806 100%);
+    radial-gradient(ellipse 70% 50% at 88% 6%, rgba(219, 112, 147, 0.08), transparent 55%),
+    radial-gradient(ellipse 80% 55% at 8% 94%, rgba(120, 72, 48, 0.12), transparent 50%);
 }
 
 html[data-os-theme="ammo-deep"] .hd-desktop {

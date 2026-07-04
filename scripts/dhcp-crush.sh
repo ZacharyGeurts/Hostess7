@@ -11,6 +11,8 @@ export NEXUS_FIELD_DNS_ANY_IP="${NEXUS_FIELD_DNS_ANY_IP:-1}"
 export NEXUS_FIELD_DHCP_ANY_IP="${NEXUS_FIELD_DHCP_ANY_IP:-1}"
 export NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN="${NEXUS_FIELD_IPV4_DEVICE_SOVEREIGN:-1}"
 export NEXUS_FIELD_IPV4_ARBITRARY="${NEXUS_FIELD_IPV4_ARBITRARY:-1}"
+export NEXUS_FIELD_IPV4_ENUMERATE="${NEXUS_FIELD_IPV4_ENUMERATE:-1}"
+export NEXUS_FIELD_PLANETARY_DNS_AUTHORITY="${NEXUS_FIELD_PLANETARY_DNS_AUTHORITY:-1}"
 export NEXUS_FIELD_DHCP_PING_PROBE="${NEXUS_FIELD_DHCP_PING_PROBE:-0}"
 export NEXUS_FIELD_INTERNET_UNRESTRICT="${NEXUS_FIELD_INTERNET_UNRESTRICT:-1}"
 export NEXUS_FIELD_DNS_FOREIGN_BLOCK="${NEXUS_FIELD_DNS_FOREIGN_BLOCK:-0}"
@@ -53,6 +55,37 @@ if p.is_file():
     s = d.get('sole_authority') or {}
     print('SOLE authority:', s.get('ok'), '| collisions:', d.get('collision_count', 0))
     print('Foreign threats:', d.get('foreign_threat_count', 0), '| eradicated:', (d.get('enforce') or {}).get('threats_eradicated', 0))
+" 2>/dev/null || true
+
+NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+  NEXUS_FIELD_IPV4_ENUMERATE="$NEXUS_FIELD_IPV4_ENUMERATE" \
+  python3 "${ROOT}/lib/field-ipv4-enumerate.py" panel \
+  > "${ROOT}/Hostess7/docs/api/field-ipv4-enumerate.json" 2>/dev/null || true
+python3 -c "
+import json
+from pathlib import Path
+p = Path('${ROOT}/Hostess7/docs/api/field-ipv4-enumerate.json')
+if p.is_file():
+    d = json.loads(p.read_text())
+    c = d.get('counts') or {}
+    print('IPv4 OWNED:', c.get('ipv4_owned_total'), '| ENUMERATED:', c.get('ipv4_enumerated_total'))
+    print('LOCAL ENUM:', c.get('local_ipv4_enumerated'), '| LEASE TOTAL:', c.get('planet_lease_total'))
+" 2>/dev/null || true
+
+NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+  NEXUS_FIELD_PLANETARY_DNS_AUTHORITY="$NEXUS_FIELD_PLANETARY_DNS_AUTHORITY" \
+  python3 "${ROOT}/lib/field-planetary-dns-authority.py" complete \
+  > "${ROOT}/Hostess7/docs/api/field-planetary-dns-authority.json" 2>/dev/null || true
+python3 -c "
+import json
+from pathlib import Path
+p = Path('${ROOT}/Hostess7/docs/api/field-planetary-dns-authority.json')
+if p.is_file():
+    d = json.loads(p.read_text())
+    c = d.get('counts') or {}
+    r = d.get('removal') or {}
+    print('TRUE DNS zones:', d.get('zone_count'), '| IPv4 coverage:', c.get('ipv4_coverage'))
+    print('Removal complete:', r.get('complete'), '| foreign purged:', r.get('foreign_dns_dhcp_removed'))
 " 2>/dev/null || true
 
 NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \

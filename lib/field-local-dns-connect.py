@@ -47,6 +47,9 @@ def _pid_alive(path: Path) -> bool:
         pid = int(path.read_text(encoding="utf-8").strip().split()[0])
         os.kill(pid, 0)
         return True
+    except PermissionError:
+        # Root-owned resolver/DHCP — EPERM means the PID is alive.
+        return True
     except (OSError, ValueError):
         return False
 

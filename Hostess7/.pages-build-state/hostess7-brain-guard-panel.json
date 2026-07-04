@@ -1,6 +1,6 @@
 {
   "schema": "hostess7-brain-guard/v1",
-  "updated": "2026-07-02T04:43:31Z",
+  "updated": "2026-07-02T07:26:18Z",
   "product": "Hostess 7",
   "role": "Our brains — Super Intelligence",
   "title": "Hostess 7 brain guard — our brains, protected and verified",
@@ -856,22 +856,22 @@
         "path": "lib/hostess7-truth-lie-threat.py",
         "present": true,
         "critical": true,
-        "sha256": "753efcb7a0596619b1b0ac53f75de7b25112b8a841347385efa9028bf53b68e3",
+        "sha256": "ccbc8f64ff6ae036fcaf981d1f8bea35775b08a86acea4f5288c3ef830a73cbd",
         "expected_sha256": "753efcb7a0596619b1b0ac53f75de7b25112b8a841347385efa9028bf53b68e3",
-        "manifest_verified": true,
-        "corrupted": false,
-        "bytes": 21039,
+        "manifest_verified": false,
+        "corrupted": true,
+        "bytes": 28776,
         "role": "Extensive truth/lie — lies are threats, threat vector escalation"
       },
       {
         "path": "data/hostess7-truth-lie-threat-doctrine.json",
         "present": true,
         "critical": true,
-        "sha256": "57a2cfa2b5464ceae045fb9b0906fd0972b1f3aa3c1fd1cde88c6ae34d6325fb",
+        "sha256": "53ce8d5a08fda22c037fe7138a0c9478f4b81208a3b66cfc9cbcd6e52e348642",
         "expected_sha256": null,
         "manifest_verified": true,
         "corrupted": false,
-        "bytes": 4623,
+        "bytes": 5849,
         "role": "Truth lie threat doctrine — 8 truth bands, 4 lie threat vectors"
       },
       {
@@ -974,6 +974,17 @@
         "corrupted": true,
         "bytes": 15373,
         "role": "OS OCR control — Angel commands Final_Eye + all vision chambers"
+      },
+      {
+        "path": "lib/hostess7-truth-lie-threat.py",
+        "present": true,
+        "critical": true,
+        "sha256": "ccbc8f64ff6ae036fcaf981d1f8bea35775b08a86acea4f5288c3ef830a73cbd",
+        "expected_sha256": "753efcb7a0596619b1b0ac53f75de7b25112b8a841347385efa9028bf53b68e3",
+        "manifest_verified": false,
+        "corrupted": true,
+        "bytes": 28776,
+        "role": "Extensive truth/lie — lies are threats, threat vector escalation"
       }
     ],
     "missing_critical": [],
@@ -1075,8 +1086,8 @@
       "lib/hostess7-aml-ingress.py": "45d9a02de427348cbc2215b5a9d7bb151e90d188a72c015b35af7d68127df73e",
       "data/hostess7-aml-ingress-doctrine.json": "fee8455e456970ded999cb03c16cf4e3b5e6d38ef8c7e47e58fab54e82447d29",
       "data/hostess7-information-discipline-doctrine.json": "dc5c04aee8219db950c2fe11d497834ed4c6bccca9b3c1edbe268ebbde215da9",
-      "lib/hostess7-truth-lie-threat.py": "753efcb7a0596619b1b0ac53f75de7b25112b8a841347385efa9028bf53b68e3",
-      "data/hostess7-truth-lie-threat-doctrine.json": "57a2cfa2b5464ceae045fb9b0906fd0972b1f3aa3c1fd1cde88c6ae34d6325fb",
+      "lib/hostess7-truth-lie-threat.py": "ccbc8f64ff6ae036fcaf981d1f8bea35775b08a86acea4f5288c3ef830a73cbd",
+      "data/hostess7-truth-lie-threat-doctrine.json": "53ce8d5a08fda22c037fe7138a0c9478f4b81208a3b66cfc9cbcd6e52e348642",
       "lib/humanoid-motion-training.py": "d17ae2d67bc01cb74f988fc77fc5f0fe6b2e246d283701b01639779b0c86cb8d",
       "data/humanoid-motion-doctrine.json": "f3d5cc72de0239eb72e7dfd739f4ccbe92db11094a8c77510f56a002310c88ad",
       "lib/iron-plate-motion-resolve.py": "982c05a34d89a5ec75a787e1bfdbea5aec23e070ed4218f28d99c439de32a132",
@@ -1090,17 +1101,17 @@
   "verdict": "brain_corruption_hold",
   "motion_hold_on_corruption": true,
   "protected_count": 86,
-  "corrupted_count": 1,
+  "corrupted_count": 2,
   "removal_count": 0,
   "guard_score": 0.18,
   "brain_live": false,
   "manifest_seal": "/home/default/Desktop/SG/NewLatest/MANIFEST.sha256",
-  "ledger_chain_tail": "1dc5e67c5fac6c20",
+  "ledger_chain_tail": "8844d2fdb6a534dd",
   "reason": "CRITICAL brain corruption or removal detected — motion hold until restore",
-  "panel_sha256": "7eaec24d08f4038230851ce5cb8e5277616cf5fda2709018b25eb2b33a7c37e9",
+  "panel_sha256": "7f7be63a5b5dfd37b08956a5100623505a036cb90e4e61dd013a8d4fd661ed25",
   "self_view": {
     "schema": "hostess7-self-view/v1",
-    "updated": "2026-07-02T04:43:31Z",
+    "updated": "2026-07-02T07:26:18Z",
     "cold_cache": true,
     "live_snapshot": {
       "brain_verdict": "brain_corruption_hold",
@@ -1387,7 +1398,7 @@
     ],
     "operator_lookup": {
       "schema": "hostess7-operator-lookup/v1",
-      "updated": "2026-07-02T04:43:31Z",
+      "updated": "2026-07-02T07:26:18Z",
       "cached": false,
       "note": "Static fallback — run /api/hostess7/operator-lookup for live GitHub",
       "github": {

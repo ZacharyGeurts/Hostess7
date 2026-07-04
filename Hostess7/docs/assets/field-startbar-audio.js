@@ -174,8 +174,8 @@
       '<div class="fsb-audio-section"><h3>Speaker test · Dolby layout</h3><div class="fsb-audio-speakers">' + spkBtns + "</div></div>" +
       '<div class="fsb-audio-foot">' +
       '<button type="button" class="fsb-audio-link" id="fsb-audio-apply">Apply</button>' +
-      '<a class="fsb-audio-link" href="/field-audio-dac" target="_blank" rel="noopener">DAC chamber</a>' +
-      '<a class="fsb-audio-link" href="/field-audio-settings" target="_blank" rel="noopener">Full settings</a></div>';
+      '<a class="fsb-audio-link" href="/Hostess7/field-audio-dac" target="_blank" rel="noopener">DAC chamber</a>' +
+      '<a class="fsb-audio-link" href="/Hostess7/field-audio-settings" target="_blank" rel="noopener">Full settings</a></div>';
 
     const cardSel = document.getElementById("fsb-audio-card");
     if (cardSel) {

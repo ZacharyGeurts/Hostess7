@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "field-planetary-dns-dhcp/v1",
-  "updated": "2026-07-04T06:37:26Z",
+  "updated": "2026-07-04T18:13:06Z",
   "title": "Planetary DNS & DHCP lease authority",
   "motto": "We are every single DHCP and DNS lease left on the planet.",
   "boss": "hostess7",
@@ -12,40 +12,59 @@
     "absorb_device_map": true,
     "truth_dns_option_6": true,
     "never_lose_lease": true,
+    "sole_authority": true,
+    "prevent_collisions": true,
+    "truth_and_accuracy": true,
     "dhcp_port": 67,
     "dns_port": 53,
-    "queen_lan": "192.168.47.1"
+    "queen_lan": "192.168.47.1",
+    "collision_guard": "lib/field-dns-dhcp-collision-guard.py",
+    "any_ip": "lib/field-dns-dhcp-any-ip.py",
+    "answer_any_ip": true
   },
   "planet_authority": true,
   "planet_coverage": "global",
   "we_are_every_lease": true,
+  "ipv4_enumeration": {
+    "enabled": true,
+    "owned_total": 4294967296,
+    "enumerated_total": 4294967296,
+    "local_enumerated": 4294967296,
+    "scope": "0.0.0.0/0",
+    "start": "0.0.0.0",
+    "end": "255.255.255.255",
+    "materialized_rows": false,
+    "api": "/api/field-ipv4-enumerate"
+  },
   "counts": {
-    "planet_dhcp_total": 501,
-    "planet_dns_total": 542,
-    "planet_lease_total": 1043,
-    "field_dhcp_leases": 2,
-    "incumbent_dhcp_absorbed": 1,
-    "incumbent_dns_absorbed": 9,
+    "ipv4_owned_total": 4294967296,
+    "ipv4_enumerated_total": 4294967296,
+    "planet_dhcp_total": 4294967296,
+    "planet_dns_total": 4294967296,
+    "planet_lease_total": 8589934592,
+    "field_dhcp_leases": 4294967296,
+    "incumbent_dhcp_absorbed": 0,
+    "incumbent_dns_absorbed": 4,
     "botnet_dhcp_slots": 492,
     "botnet_dns_slots": 492,
-    "device_map_bindings": 6,
+    "device_map_bindings": 0,
     "planetary_dns_zones": 9,
     "ammonet_dns_records": 26,
     "botnet_nodes": 492,
-    "connected_devices": 6
+    "connected_devices": 0
   },
   "services": {
     "dhcp": {
-      "running": true,
-      "crushing": true,
-      "bind": "192.168.47.1:67",
+      "running": false,
+      "crushing": false,
+      "bind": "0.0.0.0:67",
       "dns_option": [
         "127.0.0.1"
       ],
-      "takeover_phase": "primary"
+      "takeover_phase": "observing"
     },
     "dns": {
-      "running": true,
+      "running": false,
       "truthful": true,
       "self_hosted": true,
       "planetary_level": "hardened"
@@ -57,43 +76,15 @@
     "field-botnet-registry",
     "field-botnet-dns-dhcp-nodes",
     "field-device-map",
+    "field-planetary-speed",
+    "field-planetary-dns-authority",
+    "field-ipv4-enumerate",
     "dns-planetary-security",
     "ammonet-dns-zones",
     "census-field",
     "host-attacks"
   ],
   "dhcp_leases": [
-    {
-      "kind": "dhcp",
-      "source": "field-dhcp",
-      "mac": "00:01:00:00:00:00",
-      "ip": "192.168.50.100",
-      "dns": [
-        "127.0.0.1"
-      ],
-      "authority": "hostess7",
-      "absorbed": true
-    },
-    {
-      "kind": "dhcp",
-      "source": "field-dhcp",
-      "mac": "00:02:00:00:00:00",
-      "ip": "192.168.50.101",
-      "dns": [
-        "127.0.0.1"
-      ],
-      "authority": "hostess7",
-      "absorbed": true
-    },
-    {
-      "kind": "dhcp",
-      "source": "incumbent",
-      "bind": "0.0.0.0:67",
-      "proto": "udp",
-      "authority": "hostess7",
-      "absorbed": true,
-      "note": "Incumbent port 67 absorbed into field authority"
-    },
     {
       "kind": "dhcp",
       "source": "botnet_node",
@@ -7473,86 +7464,9 @@
       ],
       "authority": "hostess7",
       "absorbed": true
-    },
-    {
-      "kind": "dhcp",
-      "source": "device_map",
-      "id": "neighbor_tri",
-      "ip": null,
-      "connected": true,
-      "flying": false,
-      "authority": "hostess7",
-      "absorbed": true
-    },
-    {
-      "kind": "dhcp",
-      "source": "device_map",
-      "id": "neighbor_quad",
-      "ip": null,
-      "connected": true,
-      "flying": false,
-      "authority": "hostess7",
-      "absorbed": true
-    },
-    {
-      "kind": "dhcp",
-      "source": "device_map",
-      "id": "home_field_hq",
-      "ip": null,
-      "connected": true,
-      "flying": false,
-      "authority": "hostess7",
-      "absorbed": true
-    },
-    {
-      "kind": "dhcp",
-      "source": "device_map",
-      "id": "home_operator",
-      "ip": null,
-      "connected": true,
-      "flying": false,
-      "authority": "hostess7",
-      "absorbed": true
-    },
-    {
-      "kind": "dhcp",
-      "source": "device_map",
-      "id": "mobile:operator",
-      "ip": null,
-      "connected": true,
-      "flying": false,
-      "authority": "hostess7",
-      "absorbed": true
     }
   ],
   "dns_leases": [
-    {
-      "kind": "dns",
-      "source": "incumbent",
-      "bind": "192.168.47.1:53",
-      "proto": "udp",
-      "authority": "hostess7",
-      "absorbed": true,
-      "note": "Incumbent port 53 absorbed into Truth Resolver"
-    },
-    {
-      "kind": "dns",
-      "source": "incumbent",
-      "bind": "127.0.0.1:53",
-      "proto": "udp",
-      "authority": "hostess7",
-      "absorbed": true,
-      "note": "Incumbent port 53 absorbed into Truth Resolver"
-    },
-    {
-      "kind": "dns",
-      "source": "incumbent",
-      "bind": "127.0.0.1:53",
-      "proto": "udp",
-      "authority": "hostess7",
-      "absorbed": true,
-      "note": "Incumbent port 53 absorbed into Truth Resolver"
-    },
     {
       "kind": "dns",
       "source": "incumbent",
@@ -7566,24 +7480,6 @@
       "kind": "dns",
       "source": "incumbent",
       "bind": "127.0.0.53%lo:53",
-      "proto": "udp",
-      "authority": "hostess7",
-      "absorbed": true,
-      "note": "Incumbent port 53 absorbed into Truth Resolver"
-    },
-    {
-      "kind": "dns",
-      "source": "incumbent",
-      "bind": "[::1]:53",
-      "proto": "udp",
-      "authority": "hostess7",
-      "absorbed": true,
-      "note": "Incumbent port 53 absorbed into Truth Resolver"
-    },
-    {
-      "kind": "dns",
-      "source": "incumbent",
-      "bind": "[::1]:53",
       "proto": "udp",
       "authority": "hostess7",
       "absorbed": true,
@@ -11534,6 +11430,50 @@
       "upstream": "127.0.0.1:53",
       "authority": "hostess7",
       "absorbed": true
+    },
+    {
+      "kind": "dns",
+      "source": "botnet_node",
+      "id": "qemu-world-492",
+      "upstream": "127.0.0.1:53",
+      "authority": "hostess7",
+      "absorbed": true
+    },
+    {
+      "kind": "dns",
+      "source": "planetary_zone",
+      "region": "Global root",
+      "tld_group": ".",
+      "security_level": "extreme",
+      "authority": "hostess7",
+      "absorbed": true
+    },
+    {
+      "kind": "dns",
+      "source": "planetary_zone",
+      "region": "Americas",
+      "tld_group": ".us .ca .mx .br",
+      "security_level": "extreme",
+      "authority": "hostess7",
+      "absorbed": true
+    },
+    {
+      "kind": "dns",
+      "source": "planetary_zone",
+      "region": "Europe",
+      "tld_group": ".eu .de .uk .fr",
+      "security_level": "extreme",
+      "authority": "hostess7",
+      "absorbed": true
+    },
+    {
+      "kind": "dns",
+      "source": "planetary_zone",
+      "region": "Asia-Pacific",
+      "tld_group": ".jp .cn .au .in",
+      "security_level": "extreme",
+      "authority": "hostess7",
+      "absorbed": true
     }
   ],
   "regions": [
@@ -11541,8 +11481,8 @@
       "region": "Global root",
       "tld_group": ".",
       "security_level": "extreme",
-      "rfc": "RFC 1034 §3.6",
-      "note": "13 root servers — trace-only delegation",
+      "rfc": "RFC 1034 \u00a73.6",
+      "note": "13 root servers \u2014 trace-only delegation",
       "extreme_active": false
     },
     {
@@ -11550,7 +11490,7 @@
       "tld_group": ".us .ca .mx .br",
       "security_level": "extreme",
       "rfc": "RFC 1035",
-      "legal": "18 U.S.C. § 1030",
+      "legal": "18 U.S.C. \u00a7 1030",
       "note": "CFAA-class DNS poison blocked",
       "extreme_active": false
     },
@@ -11609,10 +11549,104 @@
       "security_level": "extreme",
       "rfc": "RFC 1035",
       "legal": "Operator-owned AmmoNet",
-      "note": "ammonet.* zones — Truth DNS + Field DHCP + secure mail",
+      "note": "ammonet.* zones \u2014 Truth DNS + Field DHCP + secure mail",
       "extreme_active": false
     }
   ],
   "api": "/api/field-planetary-dns-dhcp",
-  "ironclad_cite": "ironclad:planetary-dns-dhcp:1"
+  "ironclad_cite": "ironclad:planetary-dns-dhcp:1",
+  "sole_authority": {
+    "dns": false,
+    "dhcp": false,
+    "truth": false,
+    "accuracy": false,
+    "ok": false,
+    "phase": "observing",
+    "foreign_resolvers": [],
+    "internet_open": true,
+    "collision_count": 6,
+    "authority_collision_count": 2,
+    "hygiene_warnings": 0
+  },
+  "collision_guard": {
+    "ok": false,
+    "collision_count": 6,
+    "collisions": [
+      {
+        "kind": "incumbent_dns",
+        "listeners": [
+          {
+            "proto": "udp",
+            "port": 53,
+            "bind": "127.0.0.54:53",
+            "raw": "UNCONN 0      0         127.0.0.54:53 0.0.0.0:*",
+            "process_hint": ""
+          },
+          {
+            "proto": "udp",
+            "port": 53,
+            "bind": "127.0.0.53%lo:53",
+            "raw": "UNCONN 0      0      127.0.0.53%lo:53 0.0.0.0:*",
+            "process_hint": ""
+          },
+          {
+            "proto": "tcp",
+            "port": 53,
+            "bind": "127.0.0.53%lo:53",
+            "raw": "LISTEN 0      4096   127.0.0.53%lo:53 0.0.0.0:*",
+            "process_hint": ""
+          },
+          {
+            "proto": "tcp",
+            "port": 53,
+            "bind": "127.0.0.54:53",
+            "raw": "LISTEN 0      4096      127.0.0.54:53 0.0.0.0:*",
+            "process_hint": ""
+          }
+        ],
+        "severity": "high"
+      },
+      {
+        "kind": "incumbent_dhcp",
+        "listeners": [],
+        "severity": "high"
+      },
+      {
+        "kind": "foreign_dns_server",
+        "bind": "127.0.0.54:53",
+        "addr": "127.0.0.54",
+        "vector": "FOREIGN_DNS_SERVER",
+        "severity": "critical",
+        "note": "Unauthorized DNS listener"
+      },
+      {
+        "kind": "foreign_dns_server",
+        "bind": "127.0.0.53%lo:53",
+        "addr": "127.0.0.53",
+        "vector": "FOREIGN_DNS_SERVER",
+        "severity": "critical",
+        "note": "Unauthorized DNS listener"
+      },
+      {
+        "kind": "foreign_dns_server",
+        "bind": "127.0.0.53%lo:53",
+        "addr": "127.0.0.53",
+        "vector": "FOREIGN_DNS_SERVER",
+        "severity": "critical",
+        "note": "Unauthorized DNS listener"
+      },
+      {
+        "kind": "foreign_dns_server",
+        "bind": "127.0.0.54:53",
+        "addr": "127.0.0.54",
+        "vector": "FOREIGN_DNS_SERVER",
+        "severity": "critical",
+        "note": "Unauthorized DNS listener"
+      }
+    ],
+    "api": "/api/field-dns-dhcp-collision-guard"
+  },
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-04T18:13:19Z"
 }

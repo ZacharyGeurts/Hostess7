@@ -195,6 +195,25 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
     v4 = enumerate_local_ipv4()
     v6 = enumerate_local_ipv6()
     points = answer_points(device_sovereign=sovereign)
+    enum_panel: dict[str, Any] = {}
+    try:
+        enum_py = INSTALL / "lib" / "field-ipv4-enumerate.py"
+        if enum_py.is_file():
+            proc = subprocess.run(
+                [sys.executable, str(enum_py), "json"],
+                cwd=str(INSTALL),
+                capture_output=True,
+                text=True,
+                timeout=12,
+                env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)},
+            )
+            raw = (proc.stdout or "").strip()
+            if raw.startswith("{"):
+                enum_panel = json.loads(raw)
+    except Exception:
+        enum_panel = {}
+    enum_counts = enum_panel.get("counts") or {}
+    enumerate_all = bool(enum_panel.get("enumerate_addresses") or enum_counts.get("ipv4_enumerated_total"))
     doc = {
         "ok": True,
         "schema": "field-dns-dhcp-any-ip/v1",
@@ -220,9 +239,16 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
             "port": 67,
             "wildcard": dhcp_bind_host() == WILDCARD_V4,
         },
-        "local_ipv4": [] if sovereign else [ip for ip in v4 if ip != WILDCARD_V4],
+        "local_ipv4": v4,
         "local_ipv6": [] if sovereign else [ip for ip in v6 if ip not in (WILDCARD_V6,)],
-        "enumerate_addresses": not sovereign,
+        "enumerate_addresses": enumerate_all or not sovereign,
+        "ipv4_enumeration": {
+            "enabled": enumerate_all,
+            "owned_total": enum_counts.get("ipv4_owned_total"),
+            "enumerated_total": enum_counts.get("ipv4_enumerated_total"),
+            "local_enumerated": enum_counts.get("local_ipv4_enumerated"),
+            "scope": "0.0.0.0/0",
+        },
         "map_to": "device_information" if sovereign else "local_addresses",
         "answer_points": points,
         "answer_point_count": len(points),

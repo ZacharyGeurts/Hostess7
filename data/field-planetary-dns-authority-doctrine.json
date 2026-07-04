@@ -1,0 +1,26 @@
+{
+  "schema": "field-planetary-dns-authority/v1",
+  "title": "True planetary DNS authority — generate, expand, remove foreign servers",
+  "boss": "hostess7",
+  "motto": "Generate true DNS authority across every IPv4 — expand planet-wide — remove foreign DHCP and DNS once complete.",
+  "policy": {
+    "generate_true_dns_authority": true,
+    "expand_on_ipv4_complete": true,
+    "remove_foreign_on_complete": true,
+    "planetary_removal": true,
+    "internet_open_for_users": true,
+    "only_truth_dns_dhcp_remain": true,
+    "botnet_suppress_foreign": true
+  },
+  "authority": {
+    "scope": "planet",
+    "truth_dns": true,
+    "forward_ipv4": "0.0.0.0/0",
+    "reverse_ipv4": "0.0.0.0/0",
+    "soa": "hostess7.ammonet.net",
+    "ns": ["truth.hostess7", "ns1.ammonet.net"]
+  },
+  "module": "lib/field-planetary-dns-authority.py",
+  "api": "/api/field-planetary-dns-authority",
+  "ironclad_cite": "ironclad:planetary-dns-authority:1"
+}

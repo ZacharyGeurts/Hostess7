@@ -1,0 +1,60 @@
+{
+  "schema": "field-dns-table-clean/v1",
+  "mode": "clean",
+  "ts": "2026-07-04T00:33:11Z",
+  "ok": true,
+  "note": "Clean ≠ clear — stale rows expired, authority reconciled, nothing blindly wiped.",
+  "actions": [
+    {
+      "target": "field-dns-queries.jsonl",
+      "action": "tail_keep",
+      "kept": 0,
+      "dropped": 0,
+      "destructive": false
+    },
+    {
+      "target": "field-dns-cache-hints.jsonl",
+      "action": "tail_keep",
+      "kept": 0,
+      "dropped": 0,
+      "destructive": false
+    },
+    {
+      "target": "field-dhcp-events.jsonl",
+      "action": "tail_keep",
+      "dropped": 0,
+      "destructive": false
+    },
+    {
+      "target": "field-github-shard-probes",
+      "action": "expire_stale",
+      "removed": 0,
+      "destructive": false
+    },
+    {
+      "target": "probe_panels",
+      "action": "expire_stale",
+      "removed": 0,
+      "destructive": false
+    }
+  ],
+  "theirs": [
+    {
+      "action": "enforce_resolv",
+      "ok": true,
+      "destructive": false
+    },
+    {
+      "action": "foreign_block",
+      "ok": false,
+      "destructive": false
+    }
+  ],
+  "rebuilt": [
+    "lib/field-dns.py:build",
+    "lib/field-dhcp.py:build",
+    "lib/field-dns-drift-threat.py:panel",
+    "lib/dns-service-takeover.py:evaluate",
+    "lib/field-dns-drift-threat.py:scan"
+  ]
+}

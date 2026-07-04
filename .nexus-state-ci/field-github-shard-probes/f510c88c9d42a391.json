@@ -1,0 +1,44 @@
+{
+  "schema": "field-github-shard-probe/v1",
+  "node_id": "field-loopback",
+  "updated": "2026-07-04T01:11:50Z",
+  "probe_kind": "legacy",
+  "rows": [
+    {
+      "id": "github_com",
+      "url": "https://github.com",
+      "role": "canonical_git",
+      "legacy": false,
+      "ok": true,
+      "status": 429,
+      "elapsed_ms": 429,
+      "method": "HEAD",
+      "probe_chain": "HEAD",
+      "always_open": true
+    },
+    {
+      "id": "api_github",
+      "url": "https://api.github.com",
+      "role": "api",
+      "legacy": false,
+      "ok": true,
+      "status": 429,
+      "elapsed_ms": 314,
+      "method": "HEAD",
+      "probe_chain": "HEAD",
+      "always_open": true
+    },
+    {
+      "id": "hostess7_repo",
+      "url": "https://github.com/ZacharyGeurts/Hostess7",
+      "role": "main_repo",
+      "legacy": false,
+      "ok": true,
+      "status": 429,
+      "elapsed_ms": 554,
+      "method": "HEAD",
+      "probe_chain": "HEAD",
+      "always_open": true
+    }
+  ]
+}

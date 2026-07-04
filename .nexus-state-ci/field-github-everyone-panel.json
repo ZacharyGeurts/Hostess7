@@ -1,0 +1,95 @@
+{
+  "ok": false,
+  "schema": "field-github-everyone-panel/v1",
+  "title": "GitHub for everyone — botnet civilian passthrough, DNS truth, Pages mirrors",
+  "motto": "Everyone needs GitHub — repos, Pages, raw, API, git — open for all through the field botnet",
+  "updated": "2026-07-04T00:40:15Z",
+  "boss": "hostess7",
+  "for_everyone": {
+    "enabled": true,
+    "civilian_passthrough": true,
+    "dns_always_allow": true,
+    "legal_ports_auto": true,
+    "pages_mirror_fallback": true,
+    "h7t_for_foreign_repos": true,
+    "note": "Sovereign ZacharyGeurts stack runs native; everyone else gets GitHub + H7t chamber for foreign payloads"
+  },
+  "github_domains": [
+    "github.com",
+    "api.github.com",
+    "raw.githubusercontent.com",
+    "codeload.github.com",
+    "objects.githubusercontent.com",
+    "github.io",
+    "githubassets.com",
+    "githubusercontent.com",
+    "ssh.github.com"
+  ],
+  "github_service_ports": [
+    22,
+    443,
+    9418
+  ],
+  "fallback_chain": [
+    "https://github.com",
+    "https://raw.githubusercontent.com",
+    "https://zacharygeurts.github.io/GNUEOLTerminal/",
+    "https://zacharygeurts.github.io/Hostess7/gnueol-terminal/",
+    "https://zacharygeurts.github.io/Hostess7/",
+    "http://127.0.0.1:9477"
+  ],
+  "github_open": false,
+  "open_count": 0,
+  "legacy": {},
+  "resilience": {},
+  "internet": {
+    "ok": null,
+    "api": "/api/field-internet"
+  },
+  "botnet": {
+    "ok": true,
+    "dns_dhcp": {
+      "dns": {
+        "ok": true,
+        "running": true,
+        "self_hosted": true,
+        "truthful": true,
+        "listeners": [
+          "127.0.0.1#53",
+          "[::1]#53"
+        ],
+        "schema": "field-dns/v2"
+      },
+      "dhcp": {
+        "ok": false,
+        "running": false,
+        "bind": "0.0.0.0:67",
+        "lease_count": 0,
+        "dns_option": [
+          "127.0.0.1"
+        ],
+        "dns_option_v6": [
+          "::1"
+        ],
+        "schema": "field-dhcp/v2"
+      },
+      "combined": true
+    },
+    "for_everyone": {
+      "civilian_passthrough": true,
+      "dns_truth": true,
+      "dhcp_field": true,
+      "stable": true,
+      "secure": true,
+      "legacy_open_secured": true
+    },
+    "api": "/api/field-botnet-dns-dhcp"
+  },
+  "h7t": {
+    "api": "/api/field-h7t-truth",
+    "rule": "foreign/non-safe payloads → truthed H7t chamber; GitHub stays open for everyone"
+  },
+  "pages_wire": "Hostess7/docs/pages-github-everyone-wire.js",
+  "api": "/api/field-github-everyone",
+  "fast": true
+}

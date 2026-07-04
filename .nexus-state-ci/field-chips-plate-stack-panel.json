@@ -1,0 +1,5050 @@
+{
+  "schema": "field-chips-plate-stack-panel/v1",
+  "updated": "2026-07-04T00:50:46Z",
+  "stack_fabric": {
+    "available": true,
+    "schema": "g16-stack-fabric-witness/v1",
+    "fabric": {
+      "schema": "g16-stack-fabric/v1",
+      "profile": {
+        "schema": "g16-stack-fabric-profile/v1",
+        "profile": "field_opt",
+        "blocked": false,
+        "reason": "ok",
+        "truth": {
+          "ok": true,
+          "score": 100,
+          "floor": 58,
+          "checks": {
+            "ironclad": true,
+            "field_sanity": true,
+            "g1id": true,
+            "voltage": true
+          },
+          "reason": "match"
+        },
+        "thermal": "normal",
+        "autoloaded": true
+      },
+      "truth": {
+        "ok": true,
+        "score": 100,
+        "floor": 58,
+        "checks": {
+          "ironclad": true,
+          "field_sanity": true,
+          "g1id": true,
+          "voltage": true
+        },
+        "reason": "match"
+      },
+      "manifest": "nexus-field-stack-manifest/v1",
+      "autoload_profile": "field_opt"
+    }
+  },
+  "meld_citation": "ironclad:meld:2",
+  "ok": true,
+  "motto": "All CHIPS on iron and steel — BSP or better, locked neural calc, sovereign time the only wire.",
+  "counts": {
+    "chips": 979,
+    "modules": 139,
+    "indexed_chips": 979,
+    "families": 139,
+    "neural_calc_modules": 139,
+    "by_bsp_model": {
+      "composite_bsp": 139
+    },
+    "compression_ratio": 7.04,
+    "resolution_lossless": true
+  },
+  "connection_policy": {
+    "sovereign_time_only": true,
+    "wire": {
+      "wire": "sovereign_linear_ns",
+      "linear_ns": 1783126176811023514,
+      "utc": "2026-07-04T00:49:36Z",
+      "policy": "sovereign_time_only",
+      "allowed_wires": [
+        "sovereign_linear_ns",
+        "linear_ns"
+      ],
+      "forbidden_wires": [
+        "ntp",
+        "wall_clock",
+        "thermal",
+        "network",
+        "clipboard",
+        "rf",
+        "squidgie",
+        "pool_ntp",
+        "adjtime"
+      ],
+      "desync": {
+        "schema": "sovereign-desync/v1",
+        "synced": true,
+        "never_desync_policy": true,
+        "authoritative": "sovereign_linear",
+        "witness": "wall_realtime_ns",
+        "skew_ms": 0.012,
+        "max_desync_ms": 250.0,
+        "sovereign_ns": 1783126176811195058,
+        "wall_ns": 1783126176811183485,
+        "red_flag_active": false,
+        "gap_count": 0,
+        "red_flag_count": 0,
+        "clock_paused": false,
+        "temperature_affects_linear": false
+      }
+    },
+    "gated_modules": 139,
+    "total_modules": 139,
+    "all_gated": true
+  },
+  "layers": {
+    "ironclad": {
+      "grounded": true,
+      "truth_percent": 100.0
+    },
+    "iron_plate": {
+      "algorithm": "composite_bsp",
+      "context": "chip_paths",
+      "layer": "iron_plate",
+      "the_sort": true,
+      "schema": "field-best-sort/v1",
+      "singleton": true,
+      "field_unique_best": true,
+      "always_best_sort": true,
+      "one_best_ever": true,
+      "statement": "field_one_best_ever",
+      "meld_citation": "ironclad:meld:2",
+      "power_sort": null,
+      "n": 979,
+      "count": 979,
+      "applied": true,
+      "ironclad_connected": true,
+      "truth_percent": 100.0,
+      "ironclad_grounded": true
+    },
+    "steel_plate": {
+      "layer": "steel_plate",
+      "domain": "chips",
+      "plate_live": true,
+      "member_count": 24,
+      "cross_wired": 0,
+      "connection_depth": {
+        "max": 4,
+        "achieved": 4,
+        "mean_hops": 4.0,
+        "deep_path_count": 128
+      },
+      "wires": {
+        "intra": 240,
+        "cross": 64,
+        "matrix": 30,
+        "total": 334
+      }
+    },
+    "steel_family_plates": {
+      "layer": "steel_family_plates",
+      "mode": "steel_family",
+      "family_plate_count": 139,
+      "indexed_chips": 979,
+      "chip_count": 979,
+      "compression_ratio": 7.04,
+      "resolution_lossless": true,
+      "steel_domain": "chips",
+      "cross_wired": 0,
+      "optimal": {
+        "algorithm": "assignment_rearrangement",
+        "optimal": true,
+        "exhaustive": false,
+        "objective_score": 0.0,
+        "elapsed_ms": 0.25,
+        "n": 139,
+        "proof": "rearrangement_inequality",
+        "pairwise_polish": {
+          "algorithm": "brute_force_pairwise_swap",
+          "optimal": true,
+          "exhaustive": false,
+          "pairwise_swaps": 0,
+          "rounds": 1,
+          "objective_score": 0.0,
+          "elapsed_ms": 24060.158,
+          "n": 139
+        },
+        "equations": {
+          "plate_score": "S(p,s) = path_pct(p) * rank(s) * steel_boost(p) * bsp_boost(p)",
+          "rank": "rank(s) = 1 + max(0, (500 - s) / 500)",
+          "steel_boost": "steel_boost(p) = 1.12 if steel_member else 1.0",
+          "bsp_boost": "bsp_boost(p) = 1.08 if bsp_model == direct_neural_calculator else 1.0",
+          "stack_objective": "O(π) = Σᵢ S(plate_π(i), i)",
+          "organize_gain": "G = (truth_percent/100) * composite_bsp_weight * bridge_weight",
+          "organize_gain_deriv": "dG/ds = (truth/100) * d(composite_bsp_weight)/ds * bridge_weight + ...",
+          "rearrangement": "O maximal when plate weights wᵢ = path_pct·steel_boost·bsp_boost and slot ranks rank(s) are similarly sorted (rearrangement inequality)"
+        }
+      },
+      "equations": {
+        "plate_score": "S(p,s) = path_pct(p) * rank(s) * steel_boost(p) * bsp_boost(p)",
+        "rank": "rank(s) = 1 + max(0, (500 - s) / 500)",
+        "steel_boost": "steel_boost(p) = 1.12 if steel_member else 1.0",
+        "bsp_boost": "bsp_boost(p) = 1.08 if bsp_model == direct_neural_calculator else 1.0",
+        "stack_objective": "O(π) = Σᵢ S(plate_π(i), i)",
+        "organize_gain": "G = (truth_percent/100) * composite_bsp_weight * bridge_weight",
+        "organize_gain_deriv": "dG/ds = (truth/100) * d(composite_bsp_weight)/ds * bridge_weight + ...",
+        "rearrangement": "O maximal when plate weights wᵢ = path_pct·steel_boost·bsp_boost and slot ranks rank(s) are similarly sorted (rearrangement inequality)"
+      },
+      "organize_gain": 1.0,
+      "truth_percent": 100.0
+    }
+  },
+  "bsp_model": {
+    "minimum": "composite_bsp",
+    "preferred": "direct_neural_calculator",
+    "locked": true,
+    "calculator_module": "lib/hostess7-calculator.py",
+    "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+    "family_module_prefix": "chip_neural_calc",
+    "kinds_preferred": [
+      "host_cpu",
+      "guest_cpu",
+      "soc",
+      "fpga",
+      "gpu"
+    ]
+  },
+  "sample_modules": [
+    {
+      "id": "steel_plate:alpha",
+      "plate_kind": "steel_family",
+      "chip_id": "dec_alpha_21064",
+      "label": "Steel alpha",
+      "family": "alpha",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:alpha",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 0,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "dec_alpha_21064",
+          "combinatorics_leaf": "chip:alpha:dec_alpha_21064",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "dec_alpha_21064",
+          "steel_family_slot": 0
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.0,
+      "sort_slot": 0,
+      "slot": 0,
+      "iron_slot": 0,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:alpha",
+        "family": "alpha",
+        "chip_id": "dec_alpha_21064",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "b093ef7e555131377f768844",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:amiga",
+      "plate_kind": "steel_family",
+      "chip_id": "commodore_8370_agnus",
+      "label": "Steel amiga",
+      "family": "amiga",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:amiga",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 1,
+      "steel_rewrite": true,
+      "chip_count": 4,
+      "leaves": [
+        {
+          "chip_id": "commodore_8370_agnus",
+          "combinatorics_leaf": "chip:amiga:commodore_8370_agnus",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "commodore_8370_agnus",
+          "steel_family_slot": 1
+        },
+        {
+          "chip_id": "mos_8364_paula",
+          "combinatorics_leaf": "chip:amiga:mos_8364_paula",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "mos_8364_paula",
+          "steel_family_slot": 1
+        },
+        {
+          "chip_id": "commodore_paula_8364",
+          "combinatorics_leaf": "chip:amiga:commodore_paula_8364",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "commodore_paula_8364",
+          "steel_family_slot": 1
+        },
+        {
+          "chip_id": "commodore_8362_denis",
+          "combinatorics_leaf": "chip:amiga:commodore_8362_denis",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "commodore_8362_denis",
+          "steel_family_slot": 1
+        }
+      ],
+      "indexed_chips": 4,
+      "path_pct": 0.0,
+      "sort_slot": 1,
+      "slot": 1,
+      "iron_slot": 1,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:amiga",
+        "family": "amiga",
+        "chip_id": "commodore_8370_agnus",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "f6eff6a0d727eb8be943ded5",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:apple_silicon",
+      "plate_kind": "steel_family",
+      "chip_id": "apple_a10",
+      "label": "Steel apple_silicon",
+      "family": "apple_silicon",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:apple_silicon",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 2,
+      "steel_rewrite": true,
+      "chip_count": 29,
+      "leaves": [
+        {
+          "chip_id": "apple_a10",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a10",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a10",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a11",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a11",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a11",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a12",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a12",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a12",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a13",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a13",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a13",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a14",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a14",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a14",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a15",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a15",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a15",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a16",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a16",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a16",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a17_pro",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a17_pro",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a17_pro",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a18",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a18",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a18",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a4",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a4",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a4",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a5",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a5",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a5",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a6",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a6",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a6",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a7",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a7",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a7",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a8",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a8",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a8",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_a9",
+          "combinatorics_leaf": "chip:apple_silicon:apple_a9",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_a9",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m1",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m1",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m1",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m1_max",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m1_max",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m1_max",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m1_pro",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m1_pro",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m1_pro",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m1_ultra",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m1_ultra",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m1_ultra",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m2",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m2",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m2",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m2_max",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m2_max",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m2_max",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m2_pro",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m2_pro",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m2_pro",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m2_ultra",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m2_ultra",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m2_ultra",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m3",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m3",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m3",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m3_max",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m3_max",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m3_max",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m3_pro",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m3_pro",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m3_pro",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m4",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m4",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m4",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m4_max",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m4_max",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m4_max",
+          "steel_family_slot": 2
+        },
+        {
+          "chip_id": "apple_m4_pro",
+          "combinatorics_leaf": "chip:apple_silicon:apple_m4_pro",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "apple_m4_pro",
+          "steel_family_slot": 2
+        }
+      ],
+      "indexed_chips": 29,
+      "path_pct": 0.0,
+      "sort_slot": 2,
+      "slot": 2,
+      "iron_slot": 5,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:apple_silicon",
+        "family": "apple_silicon",
+        "chip_id": "apple_a10",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "7cd5fbfe44aa52dfb5118dce",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:arcade",
+      "plate_kind": "steel_family",
+      "chip_id": "capcom_cps_b_a",
+      "label": "Steel arcade",
+      "family": "arcade",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:arcade",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 3,
+      "steel_rewrite": true,
+      "chip_count": 7,
+      "leaves": [
+        {
+          "chip_id": "capcom_cps_b_a",
+          "combinatorics_leaf": "chip:arcade:capcom_cps_b_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "capcom_cps_b_a",
+          "steel_family_slot": 3
+        },
+        {
+          "chip_id": "konami_052001",
+          "combinatorics_leaf": "chip:arcade:konami_052001",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "konami_052001",
+          "steel_family_slot": 3
+        },
+        {
+          "chip_id": "mitsubishi_m37702",
+          "combinatorics_leaf": "chip:arcade:mitsubishi_m37702",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "mitsubishi_m37702",
+          "steel_family_slot": 3
+        },
+        {
+          "chip_id": "taito_tc0100scn",
+          "combinatorics_leaf": "chip:arcade:taito_tc0100scn",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "taito_tc0100scn",
+          "steel_family_slot": 3
+        },
+        {
+          "chip_id": "capcom_cps2_qsound",
+          "combinatorics_leaf": "chip:arcade:capcom_cps2_qsound",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "capcom_cps2_qsound",
+          "steel_family_slot": 3
+        },
+        {
+          "chip_id": "konami_053252",
+          "combinatorics_leaf": "chip:arcade:konami_053252",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "konami_053252",
+          "steel_family_slot": 3
+        },
+        {
+          "chip_id": "ti_tms34010",
+          "combinatorics_leaf": "chip:arcade:ti_tms34010",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "ti_tms34010",
+          "steel_family_slot": 3
+        }
+      ],
+      "indexed_chips": 7,
+      "path_pct": 0.0,
+      "sort_slot": 3,
+      "slot": 3,
+      "iron_slot": 34,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:arcade",
+        "family": "arcade",
+        "chip_id": "capcom_cps_b_a",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "f92e6947c6472b56d203cd72",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:arcade_audio",
+      "plate_kind": "steel_family",
+      "chip_id": "ensoniq_esp_r2",
+      "label": "Steel arcade_audio",
+      "family": "arcade_audio",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:arcade_audio",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 4,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "ensoniq_esp_r2",
+          "combinatorics_leaf": "chip:arcade_audio:ensoniq_esp_r2",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "ensoniq_esp_r2",
+          "steel_family_slot": 4
+        },
+        {
+          "chip_id": "oki_m6295",
+          "combinatorics_leaf": "chip:arcade_audio:oki_m6295",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "oki_m6295",
+          "steel_family_slot": 4
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.0,
+      "sort_slot": 4,
+      "slot": 4,
+      "iron_slot": 41,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:arcade_audio",
+        "family": "arcade_audio",
+        "chip_id": "ensoniq_esp_r2",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "696494d0d0e1206c0322ada7",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:arcade_custom",
+      "plate_kind": "steel_family",
+      "chip_id": "arcade_namco_c70",
+      "label": "Steel arcade_custom",
+      "family": "arcade_custom",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:arcade_custom",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 5,
+      "steel_rewrite": true,
+      "chip_count": 15,
+      "leaves": [
+        {
+          "chip_id": "arcade_namco_c70",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_namco_c70",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_namco_c70",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_namco_c75",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_namco_c75",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_namco_c75",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_sega_model2_dsp",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_sega_model2_dsp",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_sega_model2_dsp",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_capcom_dl392",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_capcom_dl392",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_capcom_dl392",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_capcom_kabuki",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_capcom_kabuki",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_capcom_kabuki",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_konami_k054539",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_konami_k054539",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_konami_k054539",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_namco_c65",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_namco_c65",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_namco_c65",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_namco_system22_dsp",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_namco_system22_dsp",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_namco_system22_dsp",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_capcom_cps2_gfx",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_capcom_cps2_gfx",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_capcom_cps2_gfx",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_capcom_cps_a",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_capcom_cps_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_capcom_cps_a",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_konami_k053247",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_konami_k053247",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_konami_k053247",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_konami_k056832",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_konami_k056832",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_konami_k056832",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_namco_c355",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_namco_c355",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_namco_c355",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_sega_315_5195",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_sega_315_5195",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_sega_315_5195",
+          "steel_family_slot": 5
+        },
+        {
+          "chip_id": "arcade_sega_315_5881",
+          "combinatorics_leaf": "chip:arcade_custom:arcade_sega_315_5881",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arcade_sega_315_5881",
+          "steel_family_slot": 5
+        }
+      ],
+      "indexed_chips": 15,
+      "path_pct": 0.0,
+      "sort_slot": 5,
+      "slot": 5,
+      "iron_slot": 43,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:arcade_custom",
+        "family": "arcade_custom",
+        "chip_id": "arcade_namco_c70",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "1127efe68822bf098cac61fd",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:arm",
+      "plate_kind": "steel_family",
+      "chip_id": "arm_cortex_a78",
+      "label": "Steel arm",
+      "family": "arm",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:arm",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 6,
+      "steel_rewrite": true,
+      "chip_count": 42,
+      "leaves": [
+        {
+          "chip_id": "arm_cortex_a78",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a78",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a78",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv6",
+          "combinatorics_leaf": "chip:arm:arm_armv6",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv6",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv7_a",
+          "combinatorics_leaf": "chip:arm:arm_armv7_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv7_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv8_a",
+          "combinatorics_leaf": "chip:arm:arm_armv8_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv8_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv8_1_a",
+          "combinatorics_leaf": "chip:arm:arm_armv8_1_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv8_1_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv8_2_a",
+          "combinatorics_leaf": "chip:arm:arm_armv8_2_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv8_2_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv8_3_a",
+          "combinatorics_leaf": "chip:arm:arm_armv8_3_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv8_3_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv8_4_a",
+          "combinatorics_leaf": "chip:arm:arm_armv8_4_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv8_4_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv8_5_a",
+          "combinatorics_leaf": "chip:arm:arm_armv8_5_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv8_5_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv8_6_a",
+          "combinatorics_leaf": "chip:arm:arm_armv8_6_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv8_6_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv8_7_a",
+          "combinatorics_leaf": "chip:arm:arm_armv8_7_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv8_7_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv8_8_a",
+          "combinatorics_leaf": "chip:arm:arm_armv8_8_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv8_8_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv9_a",
+          "combinatorics_leaf": "chip:arm:arm_armv9_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv9_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_armv9_2_a",
+          "combinatorics_leaf": "chip:arm:arm_armv9_2_a",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_armv9_2_a",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a53",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a53",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a53",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a55",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a55",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a55",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a57",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a57",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a57",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a710",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a710",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a710",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a715",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a715",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a715",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a72",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a72",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a72",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a720",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a720",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a720",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a725",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a725",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a725",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a73",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a73",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a73",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a75",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a75",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a75",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a76",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a76",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a76",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a77",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a77",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a77",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_a78c",
+          "combinatorics_leaf": "chip:arm:arm_cortex_a78c",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_a78c",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_m0",
+          "combinatorics_leaf": "chip:arm:arm_cortex_m0",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_m0",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_m0plus",
+          "combinatorics_leaf": "chip:arm:arm_cortex_m0plus",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_m0plus",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_m23",
+          "combinatorics_leaf": "chip:arm:arm_cortex_m23",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_m23",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_m3",
+          "combinatorics_leaf": "chip:arm:arm_cortex_m3",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_m3",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_m33",
+          "combinatorics_leaf": "chip:arm:arm_cortex_m33",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_m33",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_m4",
+          "combinatorics_leaf": "chip:arm:arm_cortex_m4",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_m4",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_m55",
+          "combinatorics_leaf": "chip:arm:arm_cortex_m55",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_m55",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_m7",
+          "combinatorics_leaf": "chip:arm:arm_cortex_m7",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_m7",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_m85",
+          "combinatorics_leaf": "chip:arm:arm_cortex_m85",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_m85",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_r52",
+          "combinatorics_leaf": "chip:arm:arm_cortex_r52",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_r52",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_r82",
+          "combinatorics_leaf": "chip:arm:arm_cortex_r82",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_r82",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_x1",
+          "combinatorics_leaf": "chip:arm:arm_cortex_x1",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_x1",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_x2",
+          "combinatorics_leaf": "chip:arm:arm_cortex_x2",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_x2",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_x3",
+          "combinatorics_leaf": "chip:arm:arm_cortex_x3",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_x3",
+          "steel_family_slot": 6
+        },
+        {
+          "chip_id": "arm_cortex_x4",
+          "combinatorics_leaf": "chip:arm:arm_cortex_x4",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "arm_cortex_x4",
+          "steel_family_slot": 6
+        }
+      ],
+      "indexed_chips": 42,
+      "path_pct": 0.0,
+      "sort_slot": 6,
+      "slot": 6,
+      "iron_slot": 58,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:arm",
+        "family": "arm",
+        "chip_id": "arm_cortex_a78",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "d9a16fed6a4c8741d8d0dd1b",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:arm_soc",
+      "plate_kind": "steel_family",
+      "chip_id": "intel_strongarm_sa110",
+      "label": "Steel arm_soc",
+      "family": "arm_soc",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:arm_soc",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 7,
+      "steel_rewrite": true,
+      "chip_count": 1,
+      "leaves": [
+        {
+          "chip_id": "intel_strongarm_sa110",
+          "combinatorics_leaf": "chip:arm_soc:intel_strongarm_sa110",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "intel_strongarm_sa110",
+          "steel_family_slot": 7
+        }
+      ],
+      "indexed_chips": 1,
+      "path_pct": 0.0,
+      "sort_slot": 7,
+      "slot": 7,
+      "iron_slot": 100,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:arm_soc",
+        "family": "arm_soc",
+        "chip_id": "intel_strongarm_sa110",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "3b4a0d4384b79b640dd20742",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:automotive",
+      "plate_kind": "steel_family",
+      "chip_id": "auto_bosch_edc17",
+      "label": "Steel automotive",
+      "family": "automotive",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:automotive",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 8,
+      "steel_rewrite": true,
+      "chip_count": 8,
+      "leaves": [
+        {
+          "chip_id": "auto_bosch_edc17",
+          "combinatorics_leaf": "chip:automotive:auto_bosch_edc17",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "auto_bosch_edc17",
+          "steel_family_slot": 8
+        },
+        {
+          "chip_id": "auto_bosch_motronic_me7",
+          "combinatorics_leaf": "chip:automotive:auto_bosch_motronic_me7",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "auto_bosch_motronic_me7",
+          "steel_family_slot": 8
+        },
+        {
+          "chip_id": "auto_motorola_mpc555",
+          "combinatorics_leaf": "chip:automotive:auto_motorola_mpc555",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "auto_motorola_mpc555",
+          "steel_family_slot": 8
+        },
+        {
+          "chip_id": "auto_infineon_c167",
+          "combinatorics_leaf": "chip:automotive:auto_infineon_c167",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "auto_infineon_c167",
+          "steel_family_slot": 8
+        },
+        {
+          "chip_id": "auto_motorola_mc68332",
+          "combinatorics_leaf": "chip:automotive:auto_motorola_mc68332",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "auto_motorola_mc68332",
+          "steel_family_slot": 8
+        },
+        {
+          "chip_id": "auto_motorola_mc68hc11",
+          "combinatorics_leaf": "chip:automotive:auto_motorola_mc68hc11",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "auto_motorola_mc68hc11",
+          "steel_family_slot": 8
+        },
+        {
+          "chip_id": "auto_renesas_rh850f1k",
+          "combinatorics_leaf": "chip:automotive:auto_renesas_rh850f1k",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "auto_renesas_rh850f1k",
+          "steel_family_slot": 8
+        },
+        {
+          "chip_id": "auto_siemens_c166",
+          "combinatorics_leaf": "chip:automotive:auto_siemens_c166",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "auto_siemens_c166",
+          "steel_family_slot": 8
+        }
+      ],
+      "indexed_chips": 8,
+      "path_pct": 0.0,
+      "sort_slot": 8,
+      "slot": 8,
+      "iron_slot": 101,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:automotive",
+        "family": "automotive",
+        "chip_id": "auto_bosch_edc17",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "75857323dbb306c94e6d52ac",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:calculator",
+      "plate_kind": "steel_family",
+      "chip_id": "calc_casio_hd61700",
+      "label": "Steel calculator",
+      "family": "calculator",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:calculator",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 9,
+      "steel_rewrite": true,
+      "chip_count": 8,
+      "leaves": [
+        {
+          "chip_id": "calc_casio_hd61700",
+          "combinatorics_leaf": "chip:calculator:calc_casio_hd61700",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "calc_casio_hd61700",
+          "steel_family_slot": 9
+        },
+        {
+          "chip_id": "calc_hp_nut",
+          "combinatorics_leaf": "chip:calculator:calc_hp_nut",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "calc_hp_nut",
+          "steel_family_slot": 9
+        },
+        {
+          "chip_id": "calc_hp_saturn",
+          "combinatorics_leaf": "chip:calculator:calc_hp_saturn",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "calc_hp_saturn",
+          "steel_family_slot": 9
+        },
+        {
+          "chip_id": "calc_sharp_sc61860",
+          "combinatorics_leaf": "chip:calculator:calc_sharp_sc61860",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "calc_sharp_sc61860",
+          "steel_family_slot": 9
+        },
+        {
+          "chip_id": "calc_ti_cc40",
+          "combinatorics_leaf": "chip:calculator:calc_ti_cc40",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "calc_ti_cc40",
+          "steel_family_slot": 9
+        },
+        {
+          "chip_id": "calc_ti_tms0980",
+          "combinatorics_leaf": "chip:calculator:calc_ti_tms0980",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "calc_ti_tms0980",
+          "steel_family_slot": 9
+        },
+        {
+          "chip_id": "calc_ti_tms1000",
+          "combinatorics_leaf": "chip:calculator:calc_ti_tms1000",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "calc_ti_tms1000",
+          "steel_family_slot": 9
+        },
+        {
+          "chip_id": "calc_ti_tms7000",
+          "combinatorics_leaf": "chip:calculator:calc_ti_tms7000",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "calc_ti_tms7000",
+          "steel_family_slot": 9
+        }
+      ],
+      "indexed_chips": 8,
+      "path_pct": 0.0,
+      "sort_slot": 9,
+      "slot": 9,
+      "iron_slot": 109,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:calculator",
+        "family": "calculator",
+        "chip_id": "calc_casio_hd61700",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "401ea0ae1de2c36d7aa18e4e",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:coco",
+      "plate_kind": "steel_family",
+      "chip_id": "coco3_fdc",
+      "label": "Steel coco",
+      "family": "coco",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:coco",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 10,
+      "steel_rewrite": true,
+      "chip_count": 12,
+      "leaves": [
+        {
+          "chip_id": "coco3_fdc",
+          "combinatorics_leaf": "chip:coco:coco3_fdc",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco3_fdc",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco_fdc",
+          "combinatorics_leaf": "chip:coco:coco_fdc",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco_fdc",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco_mc6809e",
+          "combinatorics_leaf": "chip:coco:coco_mc6809e",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco_mc6809e",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco3_mmu",
+          "combinatorics_leaf": "chip:coco:coco3_mmu",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco3_mmu",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco_sam",
+          "combinatorics_leaf": "chip:coco:coco_sam",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco_sam",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco3_acia",
+          "combinatorics_leaf": "chip:coco:coco3_acia",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco3_acia",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco_mc6821_pia0",
+          "combinatorics_leaf": "chip:coco:coco_mc6821_pia0",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco_mc6821_pia0",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco_mc6821_pia1",
+          "combinatorics_leaf": "chip:coco:coco_mc6821_pia1",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco_mc6821_pia1",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco_acia",
+          "combinatorics_leaf": "chip:coco:coco_acia",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco_acia",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco_sn76489",
+          "combinatorics_leaf": "chip:coco:coco_sn76489",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco_sn76489",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco3_gime",
+          "combinatorics_leaf": "chip:coco:coco3_gime",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco3_gime",
+          "steel_family_slot": 10
+        },
+        {
+          "chip_id": "coco_mc6847",
+          "combinatorics_leaf": "chip:coco:coco_mc6847",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "coco_mc6847",
+          "steel_family_slot": 10
+        }
+      ],
+      "indexed_chips": 12,
+      "path_pct": 0.0,
+      "sort_slot": 10,
+      "slot": 10,
+      "iron_slot": 117,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:coco",
+        "family": "coco",
+        "chip_id": "coco3_fdc",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "4949ad7ec21bbea33dff73e3",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_amiga_chipset",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_amiga_agnus",
+      "label": "Steel cpu_companion_amiga_chipset",
+      "family": "cpu_companion_amiga_chipset",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_amiga_chipset",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 11,
+      "steel_rewrite": true,
+      "chip_count": 3,
+      "leaves": [
+        {
+          "chip_id": "nb_amiga_agnus",
+          "combinatorics_leaf": "chip:cpu_companion_amiga_chipset:nb_amiga_agnus",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "nb_amiga_agnus",
+          "steel_family_slot": 11
+        },
+        {
+          "chip_id": "sb_amiga_paula",
+          "combinatorics_leaf": "chip:cpu_companion_amiga_chipset:sb_amiga_paula",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "sb_amiga_paula",
+          "steel_family_slot": 11
+        },
+        {
+          "chip_id": "glue_amiga_denise",
+          "combinatorics_leaf": "chip:cpu_companion_amiga_chipset:glue_amiga_denise",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_amiga_denise",
+          "steel_family_slot": 11
+        }
+      ],
+      "indexed_chips": 3,
+      "path_pct": 0.0,
+      "sort_slot": 11,
+      "slot": 11,
+      "iron_slot": 129,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_amiga_chipset",
+        "family": "cpu_companion_amiga_chipset",
+        "chip_id": "nb_amiga_agnus",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "682d6139281399857bd96164",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_arm_soc_template",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_arm_gic",
+      "label": "Steel cpu_companion_arm_soc_template",
+      "family": "cpu_companion_arm_soc_template",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_arm_soc_template",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 12,
+      "steel_rewrite": true,
+      "chip_count": 6,
+      "leaves": [
+        {
+          "chip_id": "glue_arm_gic",
+          "combinatorics_leaf": "chip:cpu_companion_arm_soc_template:glue_arm_gic",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_arm_gic",
+          "steel_family_slot": 12
+        },
+        {
+          "chip_id": "glue_arm_clk_rst",
+          "combinatorics_leaf": "chip:cpu_companion_arm_soc_template:glue_arm_clk_rst",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_arm_clk_rst",
+          "steel_family_slot": 12
+        },
+        {
+          "chip_id": "glue_arm_pmu",
+          "combinatorics_leaf": "chip:cpu_companion_arm_soc_template:glue_arm_pmu",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_arm_pmu",
+          "steel_family_slot": 12
+        },
+        {
+          "chip_id": "glue_arm_pinctrl",
+          "combinatorics_leaf": "chip:cpu_companion_arm_soc_template:glue_arm_pinctrl",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_arm_pinctrl",
+          "steel_family_slot": 12
+        },
+        {
+          "chip_id": "glue_arm_usb_phy",
+          "combinatorics_leaf": "chip:cpu_companion_arm_soc_template:glue_arm_usb_phy",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_arm_usb_phy",
+          "steel_family_slot": 12
+        },
+        {
+          "chip_id": "glue_arm_ddrc",
+          "combinatorics_leaf": "chip:cpu_companion_arm_soc_template:glue_arm_ddrc",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_arm_ddrc",
+          "steel_family_slot": 12
+        }
+      ],
+      "indexed_chips": 6,
+      "path_pct": 0.0,
+      "sort_slot": 12,
+      "slot": 12,
+      "iron_slot": 132,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_arm_soc_template",
+        "family": "cpu_companion_arm_soc_template",
+        "chip_id": "glue_arm_gic",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "e59e886b311a5b74aa37f43e",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_c64_ultimate_fpga",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_c64u_fpga_core",
+      "label": "Steel cpu_companion_c64_ultimate_fpga",
+      "family": "cpu_companion_c64_ultimate_fpga",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_c64_ultimate_fpga",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 13,
+      "steel_rewrite": true,
+      "chip_count": 3,
+      "leaves": [
+        {
+          "chip_id": "glue_c64u_fpga_core",
+          "combinatorics_leaf": "chip:cpu_companion_c64_ultimate_fpga:glue_c64u_fpga_core",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_c64u_fpga_core",
+          "steel_family_slot": 13
+        },
+        {
+          "chip_id": "glue_c64u_sid_sockets",
+          "combinatorics_leaf": "chip:cpu_companion_c64_ultimate_fpga:glue_c64u_sid_sockets",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_c64u_sid_sockets",
+          "steel_family_slot": 13
+        },
+        {
+          "chip_id": "glue_c64u_hdmi",
+          "combinatorics_leaf": "chip:cpu_companion_c64_ultimate_fpga:glue_c64u_hdmi",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_c64u_hdmi",
+          "steel_family_slot": 13
+        }
+      ],
+      "indexed_chips": 3,
+      "path_pct": 0.0,
+      "sort_slot": 13,
+      "slot": 13,
+      "iron_slot": 138,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_c64_ultimate_fpga",
+        "family": "cpu_companion_c64_ultimate_fpga",
+        "chip_id": "glue_c64u_fpga_core",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "4300cf221ac41dabe0ea04f6",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_console_genesis",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_genesis_tmss",
+      "label": "Steel cpu_companion_console_genesis",
+      "family": "cpu_companion_console_genesis",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_console_genesis",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 14,
+      "steel_rewrite": true,
+      "chip_count": 5,
+      "leaves": [
+        {
+          "chip_id": "glue_genesis_tmss",
+          "combinatorics_leaf": "chip:cpu_companion_console_genesis:glue_genesis_tmss",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_genesis_tmss",
+          "steel_family_slot": 14
+        },
+        {
+          "chip_id": "glue_genesis_io",
+          "combinatorics_leaf": "chip:cpu_companion_console_genesis:glue_genesis_io",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_genesis_io",
+          "steel_family_slot": 14
+        },
+        {
+          "chip_id": "glue_genesis_z80_snd",
+          "combinatorics_leaf": "chip:cpu_companion_console_genesis:glue_genesis_z80_snd",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_genesis_z80_snd",
+          "steel_family_slot": 14
+        },
+        {
+          "chip_id": "glue_genesis_ym2612",
+          "combinatorics_leaf": "chip:cpu_companion_console_genesis:glue_genesis_ym2612",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_genesis_ym2612",
+          "steel_family_slot": 14
+        },
+        {
+          "chip_id": "glue_genesis_vdp",
+          "combinatorics_leaf": "chip:cpu_companion_console_genesis:glue_genesis_vdp",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_genesis_vdp",
+          "steel_family_slot": 14
+        }
+      ],
+      "indexed_chips": 5,
+      "path_pct": 0.0,
+      "sort_slot": 14,
+      "slot": 14,
+      "iron_slot": 141,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_console_genesis",
+        "family": "cpu_companion_console_genesis",
+        "chip_id": "glue_genesis_tmss",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "2b7c18a87b9afbbedc320678",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_console_n64",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_n64_mi",
+      "label": "Steel cpu_companion_console_n64",
+      "family": "cpu_companion_console_n64",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_console_n64",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 15,
+      "steel_rewrite": true,
+      "chip_count": 6,
+      "leaves": [
+        {
+          "chip_id": "glue_n64_mi",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_mi",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_n64_mi",
+          "steel_family_slot": 15
+        },
+        {
+          "chip_id": "glue_n64_rcp",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_rcp",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_n64_rcp",
+          "steel_family_slot": 15
+        },
+        {
+          "chip_id": "glue_n64_rsp",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_rsp",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_n64_rsp",
+          "steel_family_slot": 15
+        },
+        {
+          "chip_id": "glue_n64_ai",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_ai",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_n64_ai",
+          "steel_family_slot": 15
+        },
+        {
+          "chip_id": "glue_n64_vi",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_vi",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_n64_vi",
+          "steel_family_slot": 15
+        },
+        {
+          "chip_id": "glue_n64_rdp",
+          "combinatorics_leaf": "chip:cpu_companion_console_n64:glue_n64_rdp",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_n64_rdp",
+          "steel_family_slot": 15
+        }
+      ],
+      "indexed_chips": 6,
+      "path_pct": 0.0,
+      "sort_slot": 15,
+      "slot": 15,
+      "iron_slot": 146,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_console_n64",
+        "family": "cpu_companion_console_n64",
+        "chip_id": "glue_n64_mi",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "1032be6c4a14efb63e9b4861",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_console_ps1",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_ps1_bios_rom",
+      "label": "Steel cpu_companion_console_ps1",
+      "family": "cpu_companion_console_ps1",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_console_ps1",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 16,
+      "steel_rewrite": true,
+      "chip_count": 6,
+      "leaves": [
+        {
+          "chip_id": "glue_ps1_bios_rom",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_bios_rom",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_ps1_bios_rom",
+          "steel_family_slot": 16
+        },
+        {
+          "chip_id": "glue_ps1_dma",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_dma",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_ps1_dma",
+          "steel_family_slot": 16
+        },
+        {
+          "chip_id": "glue_ps1_cdrom",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_cdrom",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_ps1_cdrom",
+          "steel_family_slot": 16
+        },
+        {
+          "chip_id": "glue_ps1_cxd8530",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_cxd8530",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_ps1_cxd8530",
+          "steel_family_slot": 16
+        },
+        {
+          "chip_id": "glue_ps1_spu",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_spu",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_ps1_spu",
+          "steel_family_slot": 16
+        },
+        {
+          "chip_id": "glue_ps1_gpu",
+          "combinatorics_leaf": "chip:cpu_companion_console_ps1:glue_ps1_gpu",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_ps1_gpu",
+          "steel_family_slot": 16
+        }
+      ],
+      "indexed_chips": 6,
+      "path_pct": 0.0,
+      "sort_slot": 16,
+      "slot": 16,
+      "iron_slot": 152,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_console_ps1",
+        "family": "cpu_companion_console_ps1",
+        "chip_id": "glue_ps1_bios_rom",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "e0690e815fa7f2f11cf49d62",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_console_saturn",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_saturn_sh2_glue",
+      "label": "Steel cpu_companion_console_saturn",
+      "family": "cpu_companion_console_saturn",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_console_saturn",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 17,
+      "steel_rewrite": true,
+      "chip_count": 6,
+      "leaves": [
+        {
+          "chip_id": "glue_saturn_sh2_glue",
+          "combinatorics_leaf": "chip:cpu_companion_console_saturn:glue_saturn_sh2_glue",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_saturn_sh2_glue",
+          "steel_family_slot": 17
+        },
+        {
+          "chip_id": "glue_saturn_smpc",
+          "combinatorics_leaf": "chip:cpu_companion_console_saturn:glue_saturn_smpc",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_saturn_smpc",
+          "steel_family_slot": 17
+        },
+        {
+          "chip_id": "glue_saturn_scu",
+          "combinatorics_leaf": "chip:cpu_companion_console_saturn:glue_saturn_scu",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_saturn_scu",
+          "steel_family_slot": 17
+        },
+        {
+          "chip_id": "glue_saturn_scsp",
+          "combinatorics_leaf": "chip:cpu_companion_console_saturn:glue_saturn_scsp",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_saturn_scsp",
+          "steel_family_slot": 17
+        },
+        {
+          "chip_id": "glue_saturn_vdp1",
+          "combinatorics_leaf": "chip:cpu_companion_console_saturn:glue_saturn_vdp1",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_saturn_vdp1",
+          "steel_family_slot": 17
+        },
+        {
+          "chip_id": "glue_saturn_vdp2",
+          "combinatorics_leaf": "chip:cpu_companion_console_saturn:glue_saturn_vdp2",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_saturn_vdp2",
+          "steel_family_slot": 17
+        }
+      ],
+      "indexed_chips": 6,
+      "path_pct": 0.0,
+      "sort_slot": 17,
+      "slot": 17,
+      "iron_slot": 158,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_console_saturn",
+        "family": "cpu_companion_console_saturn",
+        "chip_id": "glue_saturn_sh2_glue",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "43b2316078e72e8eb55f779d",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_console_snes",
+      "plate_kind": "steel_family",
+      "chip_id": "glue_snes_cic",
+      "label": "Steel cpu_companion_console_snes",
+      "family": "cpu_companion_console_snes",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_console_snes",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 18,
+      "steel_rewrite": true,
+      "chip_count": 6,
+      "leaves": [
+        {
+          "chip_id": "glue_snes_cic",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_cic",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_snes_cic",
+          "steel_family_slot": 18
+        },
+        {
+          "chip_id": "glue_snes_wram",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_wram",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_snes_wram",
+          "steel_family_slot": 18
+        },
+        {
+          "chip_id": "glue_snes_sa1",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_sa1",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_snes_sa1",
+          "steel_family_slot": 18
+        },
+        {
+          "chip_id": "glue_snes_5a22",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_5a22",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_snes_5a22",
+          "steel_family_slot": 18
+        },
+        {
+          "chip_id": "glue_snes_smp",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_smp",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_snes_smp",
+          "steel_family_slot": 18
+        },
+        {
+          "chip_id": "glue_snes_ppu",
+          "combinatorics_leaf": "chip:cpu_companion_console_snes:glue_snes_ppu",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "glue_snes_ppu",
+          "steel_family_slot": 18
+        }
+      ],
+      "indexed_chips": 6,
+      "path_pct": 0.0,
+      "sort_slot": 18,
+      "slot": 18,
+      "iron_slot": 164,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_console_snes",
+        "family": "cpu_companion_console_snes",
+        "chip_id": "glue_snes_cic",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "7a3bf2952374ba02c33eb529",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_286",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_intel_82284",
+      "label": "Steel cpu_companion_pc_286",
+      "family": "cpu_companion_pc_286",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_286",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 19,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "nb_intel_82284",
+          "combinatorics_leaf": "chip:cpu_companion_pc_286:nb_intel_82284",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "nb_intel_82284",
+          "steel_family_slot": 19
+        },
+        {
+          "chip_id": "sb_intel_82288_at",
+          "combinatorics_leaf": "chip:cpu_companion_pc_286:sb_intel_82288_at",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "sb_intel_82288_at",
+          "steel_family_slot": 19
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.0,
+      "sort_slot": 19,
+      "slot": 19,
+      "iron_slot": 170,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_286",
+        "family": "cpu_companion_pc_286",
+        "chip_id": "nb_intel_82284",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "4d5a41feb1b2fb14368414b9",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_386",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_intel_82385",
+      "label": "Steel cpu_companion_pc_386",
+      "family": "cpu_companion_pc_386",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_386",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 20,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "nb_intel_82385",
+          "combinatorics_leaf": "chip:cpu_companion_pc_386:nb_intel_82385",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "nb_intel_82385",
+          "steel_family_slot": 20
+        },
+        {
+          "chip_id": "sb_intel_82380",
+          "combinatorics_leaf": "chip:cpu_companion_pc_386:sb_intel_82380",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "sb_intel_82380",
+          "steel_family_slot": 20
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.0,
+      "sort_slot": 20,
+      "slot": 20,
+      "iron_slot": 172,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_386",
+        "family": "cpu_companion_pc_386",
+        "chip_id": "nb_intel_82385",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "2918193522b95675c9d79811",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_486_intel",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_intel_420tx",
+      "label": "Steel cpu_companion_pc_486_intel",
+      "family": "cpu_companion_pc_486_intel",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_486_intel",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 21,
+      "steel_rewrite": true,
+      "chip_count": 3,
+      "leaves": [
+        {
+          "chip_id": "nb_intel_420tx",
+          "combinatorics_leaf": "chip:cpu_companion_pc_486_intel:nb_intel_420tx",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "nb_intel_420tx",
+          "steel_family_slot": 21
+        },
+        {
+          "chip_id": "sb_intel_piix",
+          "combinatorics_leaf": "chip:cpu_companion_pc_486_intel:sb_intel_piix",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "sb_intel_piix",
+          "steel_family_slot": 21
+        },
+        {
+          "chip_id": "sb_intel_82378",
+          "combinatorics_leaf": "chip:cpu_companion_pc_486_intel:sb_intel_82378",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "sb_intel_82378",
+          "steel_family_slot": 21
+        }
+      ],
+      "indexed_chips": 3,
+      "path_pct": 0.0,
+      "sort_slot": 21,
+      "slot": 21,
+      "iron_slot": 174,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_486_intel",
+        "family": "cpu_companion_pc_486_intel",
+        "chip_id": "nb_intel_420tx",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "cf67de1ddd41b2d77200ee56",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_486_via",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_via_vt82c495",
+      "label": "Steel cpu_companion_pc_486_via",
+      "family": "cpu_companion_pc_486_via",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_486_via",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 22,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "nb_via_vt82c495",
+          "combinatorics_leaf": "chip:cpu_companion_pc_486_via:nb_via_vt82c495",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "nb_via_vt82c495",
+          "steel_family_slot": 22
+        },
+        {
+          "chip_id": "sb_via_vt82c586b",
+          "combinatorics_leaf": "chip:cpu_companion_pc_486_via:sb_via_vt82c586b",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "sb_via_vt82c586b",
+          "steel_family_slot": 22
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.0,
+      "sort_slot": 22,
+      "slot": 22,
+      "iron_slot": 177,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_486_via",
+        "family": "cpu_companion_pc_486_via",
+        "chip_id": "nb_via_vt82c495",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "cb3aa2d2fb3b3c93c61baba8",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    },
+    {
+      "id": "steel_plate:cpu_companion_pc_8088",
+      "plate_kind": "steel_family",
+      "chip_id": "nb_pc_8088_glue",
+      "label": "Steel cpu_companion_pc_8088",
+      "family": "cpu_companion_pc_8088",
+      "kind": "steel_family_plate",
+      "combinatorics_leaf": "steel_family:cpu_companion_pc_8088",
+      "layer": 3,
+      "removable": true,
+      "plated_above": "ironclad",
+      "steel_plate": true,
+      "steel_domain": "chips",
+      "steel_member": true,
+      "steel_slot": 23,
+      "steel_rewrite": true,
+      "chip_count": 2,
+      "leaves": [
+        {
+          "chip_id": "nb_pc_8088_glue",
+          "combinatorics_leaf": "chip:cpu_companion_pc_8088:nb_pc_8088_glue",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "nb_pc_8088_glue",
+          "steel_family_slot": 23
+        },
+        {
+          "chip_id": "sb_pc_8088_io",
+          "combinatorics_leaf": "chip:cpu_companion_pc_8088:sb_pc_8088_io",
+          "path_pct": null,
+          "sort_slot": null,
+          "kind": null,
+          "label": "sb_pc_8088_io",
+          "steel_family_slot": 23
+        }
+      ],
+      "indexed_chips": 2,
+      "path_pct": 0.0,
+      "sort_slot": 23,
+      "slot": 23,
+      "iron_slot": 179,
+      "bsp_model": "composite_bsp",
+      "neural_calc": {
+        "module_id": "chip_neural_calc:cpu_companion_pc_8088",
+        "family": "cpu_companion_pc_8088",
+        "chip_id": "nb_pc_8088_glue",
+        "model": "composite_bsp",
+        "locked": true,
+        "lock_hash": "1a2bafa72bc881017e819065",
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_doctrine": "data/hostess7-calculator-doctrine.json",
+        "wire": {
+          "wire": "sovereign_linear_ns",
+          "linear_ns": 1783126176811023514,
+          "utc": "2026-07-04T00:49:36Z",
+          "policy": "sovereign_time_only",
+          "allowed_wires": [
+            "sovereign_linear_ns",
+            "linear_ns"
+          ],
+          "forbidden_wires": [
+            "ntp",
+            "wall_clock",
+            "thermal",
+            "network",
+            "clipboard",
+            "rf",
+            "squidgie",
+            "pool_ntp",
+            "adjtime"
+          ],
+          "desync": {
+            "schema": "sovereign-desync/v1",
+            "synced": true,
+            "never_desync_policy": true,
+            "authoritative": "sovereign_linear",
+            "witness": "wall_realtime_ns",
+            "skew_ms": 0.012,
+            "max_desync_ms": 250.0,
+            "sovereign_ns": 1783126176811195058,
+            "wall_ns": 1783126176811183485,
+            "red_flag_active": false,
+            "gap_count": 0,
+            "red_flag_count": 0,
+            "clock_paused": false,
+            "temperature_affects_linear": false
+          }
+        },
+        "secure_connection": true,
+        "connections": [
+          "sovereign_linear_ns"
+        ]
+      },
+      "wire": {
+        "wire": "sovereign_linear_ns",
+        "linear_ns": 1783126176811023514,
+        "utc": "2026-07-04T00:49:36Z",
+        "policy": "sovereign_time_only",
+        "allowed_wires": [
+          "sovereign_linear_ns",
+          "linear_ns"
+        ],
+        "forbidden_wires": [
+          "ntp",
+          "wall_clock",
+          "thermal",
+          "network",
+          "clipboard",
+          "rf",
+          "squidgie",
+          "pool_ntp",
+          "adjtime"
+        ],
+        "desync": {
+          "schema": "sovereign-desync/v1",
+          "synced": true,
+          "never_desync_policy": true,
+          "authoritative": "sovereign_linear",
+          "witness": "wall_realtime_ns",
+          "skew_ms": 0.012,
+          "max_desync_ms": 250.0,
+          "sovereign_ns": 1783126176811195058,
+          "wall_ns": 1783126176811183485,
+          "red_flag_active": false,
+          "gap_count": 0,
+          "red_flag_count": 0,
+          "clock_paused": false,
+          "temperature_affects_linear": false
+        }
+      },
+      "connection_gate": {
+        "ok": true,
+        "sovereign_time_only": true,
+        "wire_kind": "sovereign_linear_ns",
+        "forbidden_hit": []
+      },
+      "ironclad_grounded": true,
+      "absorb_operate": true,
+      "resolution_lossless": true,
+      "plate_score": 0.0,
+      "optimal_order": true,
+      "sort_algorithm": "assignment_rearrangement",
+      "d_score_d_slot": 0.0,
+      "marginal_gain": 0.0
+    }
+  ],
+  "neural_calc_module_count": 139,
+  "family_counts": {
+    "alpha": 1,
+    "amiga": 1,
+    "apple_silicon": 1,
+    "arcade": 1,
+    "arcade_audio": 1,
+    "arcade_custom": 1,
+    "arm": 1,
+    "arm_soc": 1,
+    "automotive": 1,
+    "calculator": 1,
+    "coco": 1,
+    "cpu_companion_amiga_chipset": 1,
+    "cpu_companion_arm_soc_template": 1,
+    "cpu_companion_c64_ultimate_fpga": 1,
+    "cpu_companion_console_genesis": 1,
+    "cpu_companion_console_n64": 1
+  },
+  "plate_rebalance_derivatives": {
+    "ok": true,
+    "meta": {
+      "method": "central_difference",
+      "count": 139,
+      "elapsed_ms": 1.189,
+      "fast_path": false,
+      "fast_path_ms_target": 8,
+      "cache_hit": false,
+      "the_sort_rebalance": true,
+      "fingerprint": "facb9006538c2ec5c29f",
+      "symbolic_seal": {
+        "equation": "organize_gain = truth_percent * composite_bsp_weight * bridge_weight",
+        "variable": "slot",
+        "method": "product_rule",
+        "result": "d(organize_gain)/d(slot) = truth_percent * d(composite_bsp_weight)/d(slot) * bridge_weight + truth_percent * composite_bsp_weight * d(bridge_weight)/d(slot) + d(truth_percent)/d(slot) * composite_bsp_weight * bridge_weight",
+        "locked": true,
+        "calculator": "lib/hostess7-calculator.py",
+        "calculator_witness": "0",
+        "calculator_method": "diff"
+      },
+      "elapsed_ms_total": 280.905,
+      "top_marginal": [
+        {
+          "chip_id": "dec_alpha_21064",
+          "d_score_d_slot": 0.0,
+          "plate_score": 0.0
+        },
+        {
+          "chip_id": "commodore_8370_agnus",
+          "d_score_d_slot": 0.0,
+          "plate_score": 0.0
+        },
+        {
+          "chip_id": "apple_a10",
+          "d_score_d_slot": 0.0,
+          "plate_score": 0.0
+        },
+        {
+          "chip_id": "capcom_cps_b_a",
+          "d_score_d_slot": 0.0,
+          "plate_score": 0.0
+        },
+        {
+          "chip_id": "ensoniq_esp_r2",
+          "d_score_d_slot": 0.0,
+          "plate_score": 0.0
+        },
+        {
+          "chip_id": "arcade_namco_c70",
+          "d_score_d_slot": 0.0,
+          "plate_score": 0.0
+        },
+        {
+          "chip_id": "arm_cortex_a78",
+          "d_score_d_slot": 0.0,
+          "plate_score": 0.0
+        },
+        {
+          "chip_id": "intel_strongarm_sa110",
+          "d_score_d_slot": 0.0,
+          "plate_score": 0.0
+        }
+      ]
+    },
+    "organize_gain_derivative": 0.0,
+    "super_quick": false,
+    "symbolic_seal": {
+      "equation": "organize_gain = truth_percent * composite_bsp_weight * bridge_weight",
+      "variable": "slot",
+      "method": "product_rule",
+      "result": "d(organize_gain)/d(slot) = truth_percent * d(composite_bsp_weight)/d(slot) * bridge_weight + truth_percent * composite_bsp_weight * d(bridge_weight)/d(slot) + d(truth_percent)/d(slot) * composite_bsp_weight * bridge_weight",
+      "locked": true,
+      "calculator": "lib/hostess7-calculator.py",
+      "calculator_witness": "0",
+      "calculator_method": "diff"
+    }
+  },
+  "elapsed_ms": 12411.21,
+  "combinatronic": true,
+  "fast_path": true,
+  "_g16_seal": {
+    "schema": "g16-sealed-output/v1",
+    "algorithm": "sha256",
+    "digest": "40373d63c1d35b6d82105942fd09b54ef7dca063274f170438d15ca991745b42",
+    "sealed_at": "2026-07-04T00:50:46Z",
+    "path": "/home/default/Desktop/SG/NewLatest/.nexus-state-ci/field-chips-plate-stack-panel.json",
+    "g1id_meld": {
+      "id": "g1id",
+      "absorbed": true,
+      "meld_citation": "ironclad:meld:2",
+      "citation": "ironclad:time:1",
+      "policy": "sovereign_time_only",
+      "time_is_linear": true,
+      "sovereign_time_ok": true,
+      "sovereign_time": {
+        "source": "lib/sovereign-time.py",
+        "clock": "lib/sovereign-clock.py",
+        "schema": "sovereign-time-meld-input/v1",
+        "linear_ns": 1783126246509298922,
+        "derived_utc": "2026-07-04T00:50:46Z",
+        "sealed": true,
+        "synced": true,
+        "never_desync": true,
+        "immutable_linear": true,
+        "witness_only": true,
+        "not_geometry_t": true,
+        "citation": "ironclad:g1id:2"
+      },
+      "example_valid": true,
+      "updated": "2026-07-04T00:50:46Z"
+    }
+  }
+}

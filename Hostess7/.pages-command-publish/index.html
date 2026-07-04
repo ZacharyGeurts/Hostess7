@@ -3072,7 +3072,7 @@
         <div class="library-shelf" id="library-shelf" aria-label="Books alphabetically A to Z" tabindex="0"></div>
       </div>
       <div class="library-main">
-        <h3 id="library-title" style="margin:0;font-size: 1.1rem;color:var(--gold);">Hostess7 H7 Library · <a href="/field-library-bookshelf.html" style="color:var(--internet);font-size:0.88rem;font-weight:400">Bookshelf browser</a></h3>
+        <h3 id="library-title" style="margin:0;font-size: 1.1rem;color:var(--gold);">Hostess7 H7 Library · <a href="/Hostess7/field-library-bookshelf/" style="color:var(--internet);font-size:0.88rem;font-weight:400">Bookshelf browser</a></h3>
         <aside class="library-braille-panel" id="library-braille-panel" aria-label="Braille reader output for selected book">
           <h4>Braille reader</h4>
           <div id="library-braille-output" class="library-braille-output" tabindex="0" aria-live="polite" aria-atomic="true">⠠⠎⠑⠇⠑⠉⠞ ⠁ ⠃⠕⠕⠅ ⠋⠗⠕⠍ ⠞⠓⠑ ⠠⠁ ⠞⠕ ⠠⠵ ⠇⠊⠎⠞⠲</div>
@@ -4510,7 +4510,7 @@
       { key: "field_hazard_onset", url: "/api/field-hazard-onset" },
 
       { key: "field_radio", url: "/api/field-radio" },
-      { key: "field_dns", url: "/api/field-dns" },
+      { key: "field_dns", url: "/api/field-dns?live=1" },
       { key: "field_outside_talk", url: "/api/field-outside-talk" },
       { key: "field_drive", url: "/api/field-drive" },
       { key: "h7_library", url: "/api/library/catalog" },
@@ -5404,6 +5404,8 @@
       if (location.hash !== `#${hash}`) history.replaceState(null, "", `#${hash}`);
       global.NexusBraille?.onViewActivated?.(sub || panel);
       global.NexusMilitary?.onViewChange?.(hash);
+      if (panel === "dns") global.DnsDhcpLive?.start?.();
+      else global.DnsDhcpLive?.stop?.();
     }
 
     document.querySelectorAll("nav.menu button").forEach((btn) => {

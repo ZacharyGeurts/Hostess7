@@ -27,14 +27,18 @@
     const pipes = doc.pipes || doc.all_pipes || {};
     const connected = pipes.connected_at_once !== false;
     const ghOk = gh.always_open || (gh.open_count && gh.open_count > 0);
+    const dhcpSlice = (doc.bot_network?.dns_dhcp || doc.dns_dhcp || {}).dhcp || {};
     const dnsOk = (doc.bot_network?.dns_dhcp || doc.dns_dhcp || {}).dns?.running !== false;
-    const badge = ghOk && connected && dnsOk
+    const dhcpOk = Boolean(dhcpSlice.running || dhcpSlice.serve_loop || dhcpSlice.port_67);
+    const badge = ghOk && connected && dnsOk && dhcpOk
       ? " · GitHub open · DNS+DHCP · unified"
-      : ghOk && connected
-        ? " · GitHub open · unified"
-        : ghOk
-          ? " · GitHub open"
-          : " · linking…";
+      : ghOk && connected && dnsOk
+        ? " · GitHub open · DNS live"
+        : ghOk && connected
+          ? " · GitHub open · unified"
+          : ghOk
+            ? " · GitHub open"
+            : " · linking…";
     title.textContent = "AmmoNet · Layer 0" + badge;
     title.title = doc.motto || doc.one_voice?.motto || "Field Internet Unified — Hostess 7";
   }

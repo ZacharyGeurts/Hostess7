@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "schema": "field-ipv4-arbitrary/v1",
+  "updated": "2026-07-04T18:13:50Z",
+  "title": "IPv4 completely arbitrary \u2014 worldwide, it just works",
+  "motto": "Connect anywhere on Earth. Pick any IPv4. DNS and DHCP answer. Device information is the map \u2014 numbers are arbitrary.",
+  "boss": "hostess7",
+  "arbitrary_ipv4": true,
+  "arbitrary_ipv4_worldwide": true,
+  "it_just_works": true,
+  "track_devices_not_numbers": true,
+  "internet": {
+    "anywhere": true,
+    "any_pick": true,
+    "scope": "0.0.0.0/0",
+    "dns_bind": "0.0.0.0:53",
+    "dhcp_bind": "0.0.0.0:67",
+    "note": "Connect anywhere \u2014 pick any IPv4, we answer and map to device"
+  },
+  "lease_policy": {
+    "honor_requested_ip": true,
+    "honor_ciaddr": true,
+    "honor_dest_ip": true,
+    "skip_ping_probe": true,
+    "map_to": "device_information"
+  },
+  "policy": {
+    "arbitrary_ipv4_worldwide": true,
+    "it_just_works": true,
+    "honor_requested_ip": true,
+    "honor_ciaddr": true,
+    "honor_dest_ip": true,
+    "track_devices_not_numbers": true,
+    "wildcard_bind": true,
+    "skip_ping_probe": true,
+    "scope": "0.0.0.0/0"
+  },
+  "api": "/api/field-ipv4-arbitrary",
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-04T18:13:51Z"
+}

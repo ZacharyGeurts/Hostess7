@@ -1,0 +1,161 @@
+{
+  "schema": "field-dhcp/v2",
+  "updated": "2026-07-03T12:52:47.096515Z",
+  "running": false,
+  "may_serve": false,
+  "takeover": {
+    "schema": "dns-takeover/v1",
+    "updated": "2026-07-03T12:52:46Z",
+    "phase": "observing",
+    "healthy_streak": 0,
+    "motto": "Listen and learn first — takeover only when NEXUS resolver is healthy.",
+    "policy": {
+      "never_interrupt_on_arrival": true,
+      "listen_before_reject": true,
+      "dhcp_dns_only": true,
+      "no_lateral_movement": true
+    },
+    "health": {
+      "running": false,
+      "probe_ok": false,
+      "rcode": -1,
+      "healthy": false,
+      "host": "127.0.0.1",
+      "port": 53,
+      "qname": "example.com"
+    },
+    "incumbents": {
+      "dns_port_busy": true,
+      "dhcp_port_busy": true,
+      "dns_listeners": [
+        {
+          "proto": "udp",
+          "port": 53,
+          "bind": "127.0.0.54:53",
+          "raw": "UNCONN 0      0         127.0.0.54:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "udp",
+          "port": 53,
+          "bind": "127.0.0.53%lo:53",
+          "raw": "UNCONN 0      0      127.0.0.53%lo:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "tcp",
+          "port": 53,
+          "bind": "127.0.0.53%lo:53",
+          "raw": "LISTEN 0      4096   127.0.0.53%lo:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "tcp",
+          "port": 53,
+          "bind": "127.0.0.54:53",
+          "raw": "LISTEN 0      4096      127.0.0.54:53 0.0.0.0:*",
+          "process_hint": ""
+        }
+      ],
+      "dhcp_listeners": [],
+      "systemd_resolved": true,
+      "resolv": {
+        "path": "/etc/resolv.conf",
+        "is_symlink": true,
+        "nameservers": [
+          "127.0.0.53"
+        ],
+        "search_domains": [
+          "eau.wi.charter.com",
+          "search.charter.net"
+        ],
+        "nexus_truth_enforced": false
+      },
+      "foreign_nameservers": [],
+      "incumbent_dns": true,
+      "incumbent_dhcp": true,
+      "nexus_dns_running": false,
+      "nexus_dhcp_running": false
+    },
+    "permissions": {
+      "enforce_resolv": false,
+      "serve_dhcp": false,
+      "local_capture": false,
+      "break_resolv_symlink": false
+    },
+    "hostess7": {
+      "inside": {
+        "dns": "Truth Resolver loopback — primary after graceful takeover",
+        "dhcp": "LAN pool when port 67 vacant",
+        "movement": "none"
+      },
+      "outside": {
+        "dns_admin": "ports 7 · 77 · 777 read-only",
+        "dhcp": "disabled on WAN",
+        "movement": "none"
+      }
+    },
+    "phase_history": [
+      {
+        "ts": "2026-07-03T12:52:40Z",
+        "from": "observing",
+        "to": "observing",
+        "healthy": false
+      }
+    ]
+  },
+  "takeover_phase": "observing",
+  "security_model": "field-sovereign-gate",
+  "never_lose_cycle": true,
+  "motto": "DHCP sovereign-gated — DNS option 6 → Truth Resolver; cycle never lost.",
+  "bind": "0.0.0.0:67",
+  "pool": {
+    "start": "192.168.50.100",
+    "end": "192.168.50.200"
+  },
+  "dns_option": [
+    "127.0.0.1"
+  ],
+  "dns_option_v6": [
+    "::1"
+  ],
+  "lease_seconds": 3600,
+  "stats": {
+    "discover": 0,
+    "offer": 0,
+    "request": 0,
+    "ack": 0,
+    "rejected": 0,
+    "threat_rejects": 0,
+    "conflicts_detected": 0,
+    "declines": 0,
+    "started_at": ""
+  },
+  "stats_extended": {
+    "discovers": 0,
+    "offers": 0,
+    "acks": 0,
+    "rejects": 0,
+    "threat_rejects": 0,
+    "conflicts_detected": 0,
+    "declines": 0
+  },
+  "leases": [],
+  "leases_detailed": [],
+  "lease_history_events": [],
+  "lease_count": 0,
+  "total_leases": 0,
+  "ipv6_skeleton": {
+    "enabled": false,
+    "pool": "fe80::/64",
+    "dns_option_v6": [
+      "::1"
+    ],
+    "note": "IPv4-first serve path — IPv6 lease schema reserved"
+  },
+  "threats": [],
+  "hostess7": {
+    "inside": "LAN DHCP → 127.0.0.1 DNS · IPv6 field ::1",
+    "outside": "No DHCP on WAN — DNS admin ports 7/77/777 read-only"
+  }
+}

@@ -38,21 +38,14 @@
 
   const QUEEN_ICON = "/assets/ammoos-field-48.png";
   function applyWallpaper(wp) {
-    const key = String(wp || "archival-warehouse").toLowerCase();
+    const key = String(wp || "none").toLowerCase();
     const root = document.documentElement;
-    const warehouse =
-      key === "archival-warehouse" ||
-      key === "ammoos-warehouse" ||
-      key === "warehouse" ||
-      key === "default";
-    root.dataset.ammoosWarehouse = warehouse ? "1" : "";
-    root.dataset.wallpaper = key;
+    root.dataset.ammoosWarehouse = "";
+    root.dataset.wallpaper = key === "none" || key === "flat" ? "none" : key;
     const deco = document.getElementById("hd-warehouse-deco");
-    if (deco) deco.hidden = !warehouse;
+    if (deco) deco.hidden = true;
     const label = document.getElementById("hd-wall-label");
-    if (label && warehouse) {
-      label.textContent = "Field One · AmmoOS · Layer −1 · Archival Warehouse";
-    }
+    if (label) label.textContent = "Field One · AmmoOS · Layer −1";
   }
 
   const DESKTOP_DEFAULT_IDS = [
@@ -543,7 +536,7 @@
     document.documentElement.dataset.fieldScreenLayer = "-1";
     document.documentElement.dataset.fieldLayer = "-1";
     global.FieldScreenLayers?.switchTo?.(-1);
-    applyWallpaper(doc?.shell?.settings?.wallpaper || "archival-warehouse");
+    applyWallpaper(doc?.shell?.settings?.wallpaper || "none");
     renderDesktopIcons(doc);
   }
 
@@ -584,25 +577,23 @@
 
       const mon = document.getElementById("hd-monitor");
       const policy = doc?.policy || {};
-      const showAmmoNet =
-        policy.ammonet_display_right !== false &&
-        (policy.monitor_dashboard_right !== false || policy.ammonet_display_right === true);
-      const showWall = !showAmmoNet && policy.six_tool_wall === true && policy.six_tool_wall_on_boot !== false;
+      const showAmmoNetBottom = policy.ammonet_bar_bottom !== false && policy.ammonet_display_right === false;
+      const showWall = policy.six_tool_wall === true && policy.six_tool_wall_on_boot !== false;
       if (mon) {
-        if (showAmmoNet && window.FieldAmmoNetDisplay) {
-          window.FieldAmmoNetDisplay.mount(mon);
-        } else {
-          mon.classList.toggle("hd-monitor--hidden", !showWall);
-          mon.hidden = !showWall;
-          mon.innerHTML = "";
-          const dash = doc?.monitor_dashboard || {};
-          if (showWall && window.FieldMonitorDashboard) {
-            window.FieldMonitorDashboard.mount(mon, Object.assign({}, dash, {
-              programs: doc.programs || [],
-              icon_dock: doc.icon_dock || [],
-            }));
-          }
+        mon.classList.add("hd-monitor--hidden");
+        mon.hidden = true;
+        mon.innerHTML = "";
+        if (showWall && window.FieldMonitorDashboard) {
+          mon.classList.remove("hd-monitor--hidden");
+          mon.hidden = false;
+          window.FieldMonitorDashboard.mount(mon, Object.assign({}, doc?.monitor_dashboard || {}, {
+            programs: doc.programs || [],
+            icon_dock: doc.icon_dock || [],
+          }));
         }
+      }
+      if (showAmmoNetBottom && window.FieldAmmoNetDisplay?.mountBottom) {
+        window.FieldAmmoNetDisplay.mountBottom();
       }
 
       const sb = document.getElementById("fsb-mount");
@@ -632,7 +623,7 @@
         version: "2.0",
         programs: desktopDefaultFallback(),
         desktop_icons: desktopDefaultFallback(),
-        policy: { desktop_icons_in_start: false, show_desktop_icons: true, six_tool_wall: false, ammonet_display_right: true, monitor_dashboard_right: true, desktop_ui_scale_default: 200, desktop_icon_size_default: 96 },
+        policy: { desktop_icons_in_start: false, show_desktop_icons: true, six_tool_wall: false, ammonet_display_right: false, ammonet_bar_bottom: true, monitor_dashboard_right: false, desktop_ui_scale_default: 200, desktop_icon_size_default: 96 },
         shell: { settings: { desktop_icon_size: 96, ui_scale: 200, sort_desktop: "manual" } },
         startbar: { start_label: "Start", classic: true },
         guest_os: { system: "Field" },

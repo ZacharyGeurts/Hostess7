@@ -1,0 +1,161 @@
+{
+  "schema": "field-dns-dhcp-collision-guard/v1",
+  "updated": "2026-07-04T18:13:34Z",
+  "motto": "Internet open for users. Anything making unclean internet is hostile.",
+  "collisions": [
+    {
+      "kind": "duplicate_serve_process",
+      "service": "dhcp_serve",
+      "pattern": "field-dhcp.py serve",
+      "pids": [
+        2999801,
+        3001365
+      ],
+      "count": 2,
+      "severity": "high"
+    },
+    {
+      "kind": "incumbent_dns",
+      "listeners": [
+        {
+          "proto": "udp",
+          "port": 53,
+          "bind": "127.0.0.54:53",
+          "raw": "UNCONN 0      0         127.0.0.54:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "udp",
+          "port": 53,
+          "bind": "127.0.0.53%lo:53",
+          "raw": "UNCONN 0      0      127.0.0.53%lo:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "tcp",
+          "port": 53,
+          "bind": "127.0.0.53%lo:53",
+          "raw": "LISTEN 0      4096   127.0.0.53%lo:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "tcp",
+          "port": 53,
+          "bind": "127.0.0.54:53",
+          "raw": "LISTEN 0      4096      127.0.0.54:53 0.0.0.0:*",
+          "process_hint": ""
+        }
+      ],
+      "severity": "high"
+    },
+    {
+      "kind": "incumbent_dhcp",
+      "listeners": [],
+      "severity": "high"
+    },
+    {
+      "kind": "foreign_dns_server",
+      "bind": "127.0.0.54:53",
+      "addr": "127.0.0.54",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "Unauthorized DNS listener"
+    },
+    {
+      "kind": "foreign_dns_server",
+      "bind": "127.0.0.53%lo:53",
+      "addr": "127.0.0.53",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "Unauthorized DNS listener"
+    },
+    {
+      "kind": "foreign_dns_server",
+      "bind": "127.0.0.53%lo:53",
+      "addr": "127.0.0.53",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "Unauthorized DNS listener"
+    },
+    {
+      "kind": "foreign_dns_server",
+      "bind": "127.0.0.54:53",
+      "addr": "127.0.0.54",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "Unauthorized DNS listener"
+    }
+  ],
+  "collision_count": 7,
+  "lease_collisions": 0,
+  "duplicate_processes": 1,
+  "incumbent_conflicts": 2,
+  "foreign_server_threats": [
+    {
+      "kind": "foreign_dns_server",
+      "bind": "127.0.0.54:53",
+      "addr": "127.0.0.54",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "Unauthorized DNS listener"
+    },
+    {
+      "kind": "foreign_dns_server",
+      "bind": "127.0.0.53%lo:53",
+      "addr": "127.0.0.53",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "Unauthorized DNS listener"
+    },
+    {
+      "kind": "foreign_dns_server",
+      "bind": "127.0.0.53%lo:53",
+      "addr": "127.0.0.53",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "Unauthorized DNS listener"
+    },
+    {
+      "kind": "foreign_dns_server",
+      "bind": "127.0.0.54:53",
+      "addr": "127.0.0.54",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "Unauthorized DNS listener"
+    }
+  ],
+  "foreign_threat_count": 4,
+  "unclean_is_hostile": true,
+  "only_our_dns_dhcp": false,
+  "internet_open": true,
+  "sole_authority": {
+    "dns": false,
+    "dhcp": false,
+    "truth": false,
+    "accuracy": false,
+    "ok": false,
+    "phase": "observing",
+    "foreign_resolvers": [],
+    "internet_open": true,
+    "collision_count": 7,
+    "authority_collision_count": 2,
+    "hygiene_warnings": 1
+  },
+  "takeover_phase": "observing",
+  "policy": {
+    "unclean_is_hostile": true,
+    "prevent_lease_collisions": true,
+    "ping_probe_before_offer": false,
+    "prune_duplicate_serve_loops": true,
+    "reject_foreign_resolvers_on_primary": false,
+    "sole_authority_required": true,
+    "only_our_dns_dhcp": false,
+    "foreign_server_is_threat": false,
+    "eradicate_on_attempt": false,
+    "nft_block_foreign_offers": false,
+    "internet_open": true,
+    "accuracy": "device_mapped_not_numbers"
+  },
+  "api": "/api/field-dns-dhcp-collision-guard",
+  "ok": false
+}

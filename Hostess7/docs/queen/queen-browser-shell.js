@@ -31,7 +31,7 @@
   }
 
   function startUrl() {
-    const raw = document.body?.dataset?.queenStart || "/Hostess7/queen/kilroy-home.html";
+    const raw = document.body?.dataset?.queenStart || "/world/queen-new-tab.html";
     if (raw.startsWith("/")) return `${location.origin}${raw}`;
     return raw;
   }
@@ -41,7 +41,6 @@
   }
 
   function panelBase() {
-    if (document.body?.dataset?.pagesRuntime === "1") return (global.HOSTESS7_PAGES_BASE || "");
     return `http://127.0.0.1:${panelPort()}`;
   }
 
@@ -571,7 +570,7 @@
     }
     let url = data.url;
     if (action === "home") url = startUrl();
-    if (action === "command") url = document.body?.dataset?.queenCommand || "/Hostess7/command";
+    if (action === "command") url = document.body?.dataset?.queenCommand || "http://127.0.0.1:9477/command";
     if (!isSafeShellUrl(url)) {
       const status = $("qb-status");
       if (status) status.textContent = "Blocked hostile shell message";

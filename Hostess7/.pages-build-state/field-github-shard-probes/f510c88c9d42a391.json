@@ -1,7 +1,7 @@
 {
   "schema": "field-github-shard-probe/v1",
   "node_id": "field-loopback",
-  "updated": "2026-07-04T03:22:12Z",
+  "updated": "2026-07-04T18:15:15Z",
   "probe_kind": "legacy",
   "rows": [
     {
@@ -11,10 +11,14 @@
       "legacy": false,
       "ok": true,
       "status": 200,
-      "elapsed_ms": 508,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
+      "elapsed_ms": 295,
+      "method": "GET",
+      "rate_limited": true,
+      "always_open": true,
+      "pages_fallback": "https://zacharygeurts.github.io/Hostess7/",
+      "pages_fallback_ok": true,
+      "via_pages_mirror": true,
+      "rate_limit_bypass": true
     },
     {
       "id": "api_github",
@@ -22,11 +26,15 @@
       "role": "api",
       "legacy": false,
       "ok": true,
-      "status": 429,
-      "elapsed_ms": 472,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
+      "status": 200,
+      "elapsed_ms": 255,
+      "method": "GET",
+      "rate_limited": true,
+      "always_open": true,
+      "pages_fallback": "https://zacharygeurts.github.io/Hostess7/api/pages-update-status.json",
+      "pages_fallback_ok": true,
+      "via_pages_mirror": true,
+      "rate_limit_bypass": true
     },
     {
       "id": "hostess7_repo",
@@ -35,10 +43,14 @@
       "legacy": false,
       "ok": true,
       "status": 200,
-      "elapsed_ms": 379,
-      "method": "HEAD",
-      "probe_chain": "HEAD",
-      "always_open": true
+      "elapsed_ms": 190,
+      "method": "GET",
+      "rate_limited": true,
+      "always_open": true,
+      "pages_fallback": "https://zacharygeurts.github.io/Hostess7/",
+      "pages_fallback_ok": true,
+      "via_pages_mirror": true,
+      "rate_limit_bypass": true
     }
   ]
 }

@@ -1,0 +1,143 @@
+{
+  "schema": "hostess7-profile/v1",
+  "ts": "2026-07-03T21:08:10Z",
+  "ok": true,
+  "lite_mode": false,
+  "pings": {
+    "ammo_field": {
+      "url": "http://127.0.0.1:9477/field",
+      "up": false,
+      "elapsed_ms": 10.6,
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    "ammo_api": {
+      "url": "http://127.0.0.1:9477/api/field-performance-flyout",
+      "up": false,
+      "elapsed_ms": 0.1,
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    "queen": {
+      "url": "http://127.0.0.1:9481/api/status",
+      "up": true,
+      "elapsed_ms": 53.9
+    },
+    "queen_perf": {
+      "url": "http://127.0.0.1:9481/api/field-performance-flyout",
+      "up": true,
+      "elapsed_ms": 5.2
+    },
+    "hostess7_web": {
+      "url": "http://127.0.0.1:8080/api/status",
+      "up": false,
+      "elapsed_ms": 0.1,
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    "training": {
+      "url": "http://127.0.0.1:9488/",
+      "up": true,
+      "elapsed_ms": 0.6
+    }
+  },
+  "performance": {
+    "schema": "field-performance-flyout/v1",
+    "ts": "2026-07-03T21:08:10Z",
+    "ok": true,
+    "cpu_pct": 0.0,
+    "cpu_cores": 24,
+    "loadavg": [
+      15.07,
+      98.37,
+      156.62
+    ],
+    "memory": {
+      "total_kb": 64893384,
+      "used_kb": 7876012,
+      "available_kb": 57017372,
+      "used_pct": 12.14
+    },
+    "thermal": {
+      "available": true,
+      "headroom_pct": 100.0,
+      "current_power_w": 0.0,
+      "rapl_watts": null,
+      "peak_c": 80.625,
+      "joules_per_field_op": 1.2e-09,
+      "max_ops_per_second_at_budget": 37500000000.0,
+      "certainty_score": 1.0,
+      "dispatch_gain_band_pct": [
+        35,
+        60
+      ],
+      "quality_scale": 1.0
+    },
+    "substrate": {
+      "tier": null,
+      "label": null,
+      "multiplier": null
+    },
+    "energy": {
+      "power_w": null,
+      "headroom_pct": 100.0,
+      "peak_c": 80.625
+    },
+    "field_ops": {
+      "max_at_budget": 37500000000.0,
+      "joules_per_op": 1.2e-09
+    },
+    "wave": [
+      0.5328,
+      0.6878,
+      0.8428,
+      0.9978,
+      0.6528,
+      0.8078,
+      0.9628,
+      0.6178,
+      0.7728,
+      0.9278,
+      0.5828,
+      0.7378,
+      0.8928,
+      0.5478,
+      0.7028,
+      0.8578,
+      0.5128,
+      0.6678,
+      0.8228,
+      0.9778,
+      0.6328,
+      0.7878,
+      0.9428,
+      0.5978,
+      0.7528,
+      0.9078,
+      0.5628,
+      0.7178,
+      0.8728,
+      0.5278,
+      0.6828,
+      0.8378
+    ],
+    "telemetry": false,
+    "loopback_only": true
+  },
+  "error_dashboard": {
+    "error_count": 0,
+    "boot_ok": null,
+    "stack": {
+      "panel": {
+        "up": false
+      },
+      "queen": {
+        "up": true
+      },
+      "training": {
+        "up": true
+      }
+    }
+  },
+  "recommendations": [
+    "Down endpoints: ammo_field, ammo_api, hostess7_web — run ./Hostess7.sh boot"
+  ],
+  "loopback_only": true
+}

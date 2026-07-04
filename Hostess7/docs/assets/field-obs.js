@@ -181,7 +181,7 @@
       " registered</strong></div>" +
       "</div>" +
       '<div class="fo-row" style="margin-top:12px;">' +
-      '<a href="/field-broadcaster" class="fo-btn primary">Open Broadcaster →</a>' +
+      '<a href="/Hostess7/field-broadcaster" class="fo-btn primary">Open Broadcaster →</a>' +
       "</div>";
   }
 

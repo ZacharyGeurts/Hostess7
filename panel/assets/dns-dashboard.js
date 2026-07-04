@@ -7,8 +7,13 @@
 
   let lastFd = null;
   let lastDnsFp = "";
+  let lastDhcpFp = "";
   let tabsBound = false;
   let filterBound = false;
+  let dhcpLiveTimer = null;
+  let dhcpLiveInFlight = false;
+  let activeDnsTab = "overview";
+  const DHCP_LIVE_MS = 2500;
   const smooth = () => global.NexusUiSmooth;
 
   function esc(s) {
@@ -16,6 +21,17 @@
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function dhcpIsLive(dhcp) {
+    if (!dhcp) return false;
+    return Boolean(dhcp.running || dhcp.serve_loop || dhcp.port_67 || dhcp.crushing);
+  }
+
+  function dhcpStatusLabel(dhcp) {
+    if (dhcpIsLive(dhcp)) return "LIVE";
+    if (dhcp && dhcp.may_serve === false) return "OBSERVE";
+    return "IDLE";
   }
 
   function $(id) {
@@ -83,7 +99,7 @@
       },
       dhcp: {
         leases_active: Number(dhcp.lease_count || 0),
-        running: Boolean(dhcp.running),
+        running: dhcpIsLive(dhcp),
         bind: dhcp.bind || "0.0.0.0:67",
       },
       channels: [
@@ -92,7 +108,7 @@
         { id: "blocked", label: "Policy blocked", value: blocked, pct: pct(blocked) },
         { id: "errors", label: "SERVFAIL", value: errors, pct: pct(errors) },
         { id: "egress", label: "Egress verified", value: Number(eg.verified_exact || 0), pct: eg.total_checks ? Math.round((Number(eg.verified_exact || 0) / Number(eg.total_checks)) * 100) : 0 },
-        { id: "leases", label: "DHCP leases", value: Number(dhcp.lease_count || 0), pct: dhcp.running ? 100 : 0 },
+        { id: "leases", label: "DHCP leases", value: Number(dhcp.lease_count || 0), pct: dhcpIsLive(dhcp) ? 100 : 0 },
       ],
     };
   }
@@ -125,7 +141,7 @@
       ],
       dhcp_vectors: [
         { id: "rogue", threat: "Rogue DHCP server on LAN", level: to.incumbents?.incumbent_dhcp ? "monitored" : "mitigated", control: "Incumbent port-67 detection · graceful takeover", rfc: "RFC 2131" },
-        { id: "starvation", threat: "DHCP pool exhaustion", level: dhcp.running ? "monitored" : "info", control: `${dhcp.lease_count || 0} active leases · bind ${dhcp.bind || "67/udp"}`, rfc: "RFC 2131 §4.3" },
+        { id: "starvation", threat: "DHCP pool exhaustion", level: dhcpIsLive(dhcp) ? "monitored" : "info", control: `${dhcp.lease_count || 0} active leases · bind ${dhcp.bind || "67/udp"}`, rfc: "RFC 2131 §4.3" },
         { id: "option-inject", threat: "Malicious DNS option injection", level: "mitigated", control: `DNS option → ${(dhcp.dns_option || ["127.0.0.1"]).join(", ")}`, rfc: "RFC 3646" },
       ],
       identification: {
@@ -133,6 +149,130 @@
         untrusted_blocked: (mp.untrusted_never_added || []).length,
       },
     };
+  }
+
+  function activeDnsTabId() {
+    const hit = document.querySelector(".dns-ref-panel.active[data-dns-panel]");
+    return hit?.dataset?.dnsPanel || activeDnsTab || "overview";
+  }
+
+  function dhcpFingerprint(dhcp) {
+    if (!dhcp || typeof dhcp !== "object") return "";
+    const ext = dhcp.stats_extended || {};
+    const events = dhcp.lease_history_events || [];
+    const lastEv = events.length ? events[events.length - 1] : null;
+    return [
+      dhcp.updated || "",
+      dhcpIsLive(dhcp) ? "1" : "0",
+      dhcp.lease_count ?? 0,
+      ext.discovers ?? 0,
+      ext.offers ?? 0,
+      ext.acks ?? 0,
+      ext.threat_rejects ?? 0,
+      lastEv?.ts || "",
+      lastEv?.event || lastEv?.type || "",
+      (dhcp.leases_detailed || []).length,
+    ].join("|");
+  }
+
+  function mergeDhcpIntoField(fd, dhcp) {
+    if (!fd || !dhcp) return fd;
+    const merged = Object.assign({}, fd, {
+      dhcp_server: dhcp,
+      dhcp_leases_detailed: dhcp.leases_detailed || [],
+      dhcp_events: dhcp.lease_history_events || [],
+    });
+    const servers = Object.assign({}, fd.servers || {});
+    const dhcpLive = dhcpIsLive(dhcp);
+    servers.dhcp = Object.assign({}, servers.dhcp || {}, {
+      running: dhcpLive,
+      serve_loop: dhcp.serve_loop,
+      port_67: dhcp.port_67,
+      bind: dhcp.bind,
+      lease_count: dhcp.lease_count,
+      may_serve: dhcp.may_serve,
+      dns_option: dhcp.dns_option,
+      dns_option_v6: dhcp.dns_option_v6,
+      pool: dhcp.pool,
+      leases_detailed: dhcp.leases_detailed || [],
+      stats_extended: dhcp.stats_extended || {},
+      lease_history_events: dhcp.lease_history_events || [],
+      threats: dhcp.threats || [],
+    });
+    merged.servers = servers;
+    if (merged.traffic_patterns?.dhcp) {
+      merged.traffic_patterns = Object.assign({}, merged.traffic_patterns, {
+        dhcp: Object.assign({}, merged.traffic_patterns.dhcp, {
+          leases_active: Number(dhcp.lease_count || 0),
+          running: dhcpLive,
+          bind: dhcp.bind || "0.0.0.0:67",
+        }),
+        dhcp_lease_count: Number(dhcp.lease_count || 0),
+      });
+    }
+    return merged;
+  }
+
+  async function pollDhcpLive() {
+    if (dhcpLiveInFlight || document.hidden) return;
+    const tab = activeDnsTabId();
+    if (tab !== "dhcp" && !$("view-dns")?.offsetParent) return;
+    dhcpLiveInFlight = true;
+    try {
+      const res = await global.fetch("/api/field-dhcp", { cache: "no-store" });
+      if (!res.ok) return;
+      const dhcp = await res.json();
+      const fp = dhcpFingerprint(dhcp);
+      if (fp === lastDhcpFp && tab !== "dhcp") return;
+      lastDhcpFp = fp;
+      const base = lastFd || {};
+      const merged = mergeDhcpIntoField(base, dhcp);
+      lastFd = merged;
+      renderDhcpLive(merged);
+      if (global.lastPanelData) {
+        global.lastPanelData = Object.assign({}, global.lastPanelData, {
+          field_dns: mergeDhcpIntoField(global.lastPanelData.field_dns || base, dhcp),
+        });
+      }
+    } catch (_) {
+      /* keep last dhcp paint */
+    } finally {
+      dhcpLiveInFlight = false;
+    }
+  }
+
+  function renderDhcpLive(fd) {
+    if (!fd) return;
+    renderDhcpMainPanel(fd);
+    renderDhcpLeases(fd);
+    renderDhcpEvents(fd);
+    renderTrafficPatterns(fd);
+    renderSelfHostedBanner(fd);
+    renderDnsStats(fd);
+    const hero = $("dns-hero-status");
+    if (hero) {
+      const dhcp = fd.dhcp_server || fd.servers?.dhcp || {};
+      const dhcpRun = dhcpIsLive(dhcp);
+      const pill = hero.querySelector(".dns-hero-pill:nth-child(2)");
+      if (pill) pill.innerHTML = `<span>DHCP</span><strong>${dhcpStatusLabel(dhcp)}</strong>`;
+      const leasePill = hero.querySelector(".dns-hero-pill:nth-child(5)");
+      if (leasePill) leasePill.innerHTML = `<span>Leases</span><strong>${esc(String(dhcp.lease_count ?? 0))}</strong>`;
+    }
+    const stamp = $("dns-dhcp-live-stamp");
+    if (stamp) stamp.textContent = "Live · " + (fd.dhcp_server?.updated || fd.updated || "now").slice(11, 19);
+  }
+
+  function startDhcpLivePoll() {
+    stopDhcpLivePoll();
+    pollDhcpLive();
+    dhcpLiveTimer = global.setInterval(pollDhcpLive, DHCP_LIVE_MS);
+  }
+
+  function stopDhcpLivePoll() {
+    if (dhcpLiveTimer) {
+      global.clearInterval(dhcpLiveTimer);
+      dhcpLiveTimer = null;
+    }
   }
 
   function bindRefTabs() {
@@ -143,13 +283,22 @@
     nav.querySelectorAll("[data-dns-tab]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const tab = btn.dataset.dnsTab;
+        activeDnsTab = tab;
         nav.querySelectorAll("[data-dns-tab]").forEach((b) => b.classList.toggle("active", b === btn));
         document.querySelectorAll(".dns-ref-panel").forEach((p) => {
           const on = p.dataset.dnsPanel === tab;
           p.classList.toggle("active", on);
           p.hidden = !on;
         });
+        if (tab === "dhcp") {
+          startDhcpLivePoll();
+          pollDhcpLive();
+        }
       });
+    });
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stopDhcpLivePoll();
+      else if (activeDnsTabId() === "dhcp") startDhcpLivePoll();
     });
   }
 
@@ -170,10 +319,11 @@
 
   function dnsFingerprint(fd) {
     const ui = smooth();
+    const dhcpFp = dhcpFingerprint(fd.dhcp_server || fd.servers?.dhcp || {});
     if (ui) {
-      return ui.fingerprint(fd, ["updated", "schema", "running", "stats", "recent_queries", "top_domains", "threats", "dhcp_events"]);
+      return ui.fingerprint(fd, ["updated", "schema", "running", "stats", "recent_queries", "top_domains", "threats", "dhcp_events", "dhcp_leases_detailed"]) + "|" + dhcpFp;
     }
-    return String(fd.updated || "") + String((fd.stats || {}).queries_total || 0);
+    return String(fd.updated || "") + String((fd.stats || {}).queries_total || 0) + "|" + dhcpFp;
   }
 
   function dnsViewRoot() {
@@ -188,7 +338,7 @@
     const motto = $("dns-motto");
     const status = $("dns-hero-status");
     const dhcp = fd.dhcp_server || fd.servers?.dhcp || {};
-    const dhcpRun = Boolean(dhcp.running);
+    const dhcpRun = dhcpIsLive(dhcp);
     if (title) {
       title.innerHTML = run
         ? `<span class="dns-hero-run">RUNNING</span> Truth Resolver · ${dhcpRun ? '<span class="dns-hero-run">DHCP LIVE</span>' : '<span class="dns-hero-stop">DHCP IDLE</span>'}`
@@ -202,7 +352,7 @@
       const tm = threatModelData(fd);
       status.innerHTML = [
         `<div class="dns-hero-pill ${run ? "dns-hero-pill--ok" : "dns-hero-pill--bad"}"><span>DNS</span><strong>${run ? "LIVE" : "DOWN"}</strong></div>`,
-        `<div class="dns-hero-pill ${dhcpRun ? "dns-hero-pill--ok" : ""}"><span>DHCP</span><strong>${dhcpRun ? "LIVE" : dhcp.may_serve === false ? "OBSERVE" : "IDLE"}</strong></div>`,
+        `<div class="dns-hero-pill ${dhcpRun ? "dns-hero-pill--ok" : ""}"><span>DHCP</span><strong>${dhcpStatusLabel(dhcp)}</strong></div>`,
         `<div class="dns-hero-pill"><span>Planetary</span><strong>${esc(fd.planetary_security_level || qf.planetary_level || "—")}</strong></div>`,
         `<div class="dns-hero-pill"><span>Threat</span><strong>${esc(tm.overall_risk || "—")}</strong></div>`,
         `<div class="dns-hero-pill"><span>Leases</span><strong>${esc(String(dhcp.lease_count ?? 0))}</strong></div>`,
@@ -594,7 +744,7 @@
     const dns = fd.servers?.dns || {};
     const dhcp = fd.servers?.dhcp || fd.dhcp_server || {};
     const dnsRun = Boolean(dns.running || fd.running);
-    const dhcpRun = Boolean(dhcp.running);
+    const dhcpRun = dhcpIsLive(dhcp);
     const listeners = (dns.listeners || fd.listeners || []).map((l) => `<code>${esc(l)}</code>`).join(" ");
     el.innerHTML = `
       <p class="dns-self-hosted-lead">We host these servers ourselves — <strong>Truth DNS</strong> resolves names on loopback; <strong>Field DHCP</strong> issues leases and steers clients to our resolver. No Google DNS, no cloud DHCP broker.</p>
@@ -606,7 +756,7 @@
         </article>
         <article class="dns-self-hosted-card ${dhcpRun ? "dns-self-hosted-card--live" : ""}">
           <h5>Field DHCP</h5>
-          <span class="dns-chip ${dhcpRun ? "dns-chip-ok" : "dns-chip-meta"}">${dhcpRun ? "LIVE" : dhcp.may_serve === false ? "OBSERVE" : "IDLE"}</span>
+          <span class="dns-chip ${dhcpRun ? "dns-chip-ok" : "dns-chip-meta"}">${dhcpStatusLabel(dhcp)}</span>
           <p class="meta"><code>${esc(dhcp.bind || "0.0.0.0:67")}</code> · ${esc(String(dhcp.lease_count ?? 0))} leases · lib/field-dhcp.py</p>
         </article>
       </div>`;
@@ -624,9 +774,9 @@
     const dnsOpt = (dhcp.dns_option || ["127.0.0.1"]).map((d) => `<code>${esc(d)}</code>`).join(" ");
     const dnsOpt6 = (dhcp.dns_option_v6 || ["::1"]).map((d) => `<code>${esc(d)}</code>`).join(" ");
     el.innerHTML = `
-      <p class="dns-briefing-lead">Field DHCP — self-hosted lease server. Option 6 points every client at our Truth DNS.</p>
+      <p class="dns-briefing-lead">Field DHCP — self-hosted lease server. Option 6 points every client at our Truth DNS. <span class="dns-live-stamp" id="dns-dhcp-live-stamp" aria-live="polite">Live</span></p>
       <dl class="dns-kv-grid">
-        <dt>Status</dt><dd>${dhcp.running ? '<span class="dns-chip dns-chip-ok">LIVE</span>' : '<span class="dns-chip dns-chip-meta">IDLE</span>'}</dd>
+        <dt>Status</dt><dd>${dhcpIsLive(dhcp) ? '<span class="dns-chip dns-chip-ok">LIVE</span>' : dhcp.may_serve === false ? '<span class="dns-chip dns-chip-warn">OBSERVE</span>' : '<span class="dns-chip dns-chip-meta">IDLE</span>'}</dd>
         <dt>Bind</dt><dd><code>${esc(dhcp.bind || "0.0.0.0:67")}</code></dd>
         <dt>Pool</dt><dd><code>${esc(pool.start || "—")}</code> – <code>${esc(pool.end || "—")}</code></dd>
         <dt>DNS option v4</dt><dd>${dnsOpt}</dd>
@@ -716,7 +866,7 @@
       </tr>
       <tr>
         <td><strong>Field DHCP</strong></td>
-        <td>${dhcp.running ? '<span class="dns-chip dns-chip-ok">LIVE</span>' : dhcp.may_serve === false ? '<span class="dns-chip dns-chip-warn">OBSERVING</span>' : '<span class="dns-chip dns-chip-meta">IDLE</span>'}</td>
+        <td>${dhcpIsLive(dhcp) ? '<span class="dns-chip dns-chip-ok">LIVE</span>' : dhcp.may_serve === false ? '<span class="dns-chip dns-chip-warn">OBSERVING</span>' : '<span class="dns-chip dns-chip-meta">IDLE</span>'}</td>
         <td><code>${esc(dhcp.bind || "0.0.0.0:67")}</code></td>
         <td class="meta">${esc(String(dhcp.lease_count ?? 0))} leases · DNS v4 ${(dhcp.dns_option || ["127.0.0.1"]).map((d) => `<code>${esc(d)}</code>`).join(" ")} · v6 ${(dhcp.dns_option_v6 || ["::1"]).map((d) => `<code>${esc(d)}</code>`).join(" ")}</td>
       </tr>
@@ -1035,8 +1185,14 @@
     renderLegacy(fd);
     renderDnsAdminPortal(fd, panel);
     renderDnsStats(fd);
+    if ($("view-dns")?.offsetParent) startDhcpLivePoll();
   }
 
   global.renderDnsField = renderDnsField;
   global.renderDnsFieldLight = renderDnsFieldLight;
+  global.DnsDhcpLive = {
+    start: startDhcpLivePoll,
+    stop: stopDhcpLivePoll,
+    poll: pollDhcpLive,
+  };
 })(window);

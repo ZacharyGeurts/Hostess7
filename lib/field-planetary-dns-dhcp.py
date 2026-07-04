@@ -295,9 +295,26 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
     all_dhcp = dhcp_rows + inc_dhcp + bot_dhcp + dev_dhcp + census_dhcp
     all_dns = inc_dns + bot_dns + dev_dns + census_dns + zone_dns
 
-    planet_dhcp = len(all_dhcp)
-    planet_dns = len(all_dns)
-    field_dhcp = len(dhcp_rows)
+    ipv4_enum: dict[str, Any] = {}
+    try:
+        enum_mod = _mod("lib/field-ipv4-enumerate.py", "ipv4_enumerate")
+        if enum_mod and hasattr(enum_mod, "enumerate_enabled") and enum_mod.enumerate_enabled():
+            if hasattr(enum_mod, "build_panel"):
+                ipv4_enum = enum_mod.build_panel(write=False)
+            elif hasattr(enum_mod, "lease_counts"):
+                ipv4_enum = {"counts": enum_mod.lease_counts(), "enumerate_addresses": True}
+    except Exception:
+        ipv4_enum = _load(STATE / "field-ipv4-enumerate-panel.json", {})
+
+    enum_counts = ipv4_enum.get("counts") or {}
+    if enum_counts.get("ipv4_enumerated_total"):
+        planet_dhcp = int(enum_counts.get("planet_dhcp_total") or enum_counts["ipv4_enumerated_total"])
+        planet_dns = int(enum_counts.get("planet_dns_total") or enum_counts["ipv4_enumerated_total"])
+        field_dhcp = int(enum_counts.get("local_dhcp_leases") or enum_counts["ipv4_enumerated_total"])
+    else:
+        planet_dhcp = len(all_dhcp)
+        planet_dns = len(all_dns)
+        field_dhcp = len(dhcp_rows)
     incumbent_dhcp = len(inc_dhcp)
     incumbent_dns = len(inc_dns)
 
@@ -312,10 +329,23 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "planet_authority": True,
         "planet_coverage": "global",
         "we_are_every_lease": True,
+        "ipv4_enumeration": {
+            "enabled": bool(enum_counts.get("ipv4_enumerated_total")),
+            "owned_total": enum_counts.get("ipv4_owned_total"),
+            "enumerated_total": enum_counts.get("ipv4_enumerated_total"),
+            "local_enumerated": enum_counts.get("local_ipv4_enumerated"),
+            "scope": "0.0.0.0/0",
+            "start": "0.0.0.0",
+            "end": "255.255.255.255",
+            "materialized_rows": False,
+            "api": "/api/field-ipv4-enumerate",
+        },
         "counts": {
+            "ipv4_owned_total": enum_counts.get("ipv4_owned_total") or 0,
+            "ipv4_enumerated_total": enum_counts.get("ipv4_enumerated_total") or 0,
             "planet_dhcp_total": planet_dhcp,
             "planet_dns_total": planet_dns,
-            "planet_lease_total": planet_dhcp + planet_dns,
+            "planet_lease_total": int(enum_counts.get("planet_lease_total") or planet_dhcp + planet_dns),
             "field_dhcp_leases": field_dhcp,
             "incumbent_dhcp_absorbed": incumbent_dhcp,
             "incumbent_dns_absorbed": incumbent_dns,
@@ -383,6 +413,8 @@ def absorb_planet(*, crush: bool = True) -> dict[str, Any]:
     """Promote takeover, optionally crush DHCP, enforce sole authority, rebuild ledger."""
     if crush:
         _run_json("lib/field-dhcp.py", ["crush"], timeout=25)
+    _run_json("lib/field-ipv4-enumerate.py", ["panel"], timeout=15)
+    _run_json("lib/field-planetary-dns-authority.py", ["complete"], timeout=90)
     try:
         cg = _mod("lib/field-dns-dhcp-collision-guard.py", "collision_guard")
         if cg and hasattr(cg, "enforce_sole_authority"):
