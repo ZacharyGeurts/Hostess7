@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "schema": "field-sub-micron-timing/v1",
+  "updated": "2026-07-04T21:28:39Z",
+  "motto": "We run sub-micron placement and sub-microsecond presume — rack-hard, planet-balanced",
+  "spatial": {
+    "sub_micron": true,
+    "fixed_scale": "1e15",
+    "lsb_nm": 0.11,
+    "gps": {
+      "ok": false,
+      "anchor": {
+        "id": "operator",
+        "lat": 45.845976,
+        "lon": -87.055759,
+        "label": "8259 W BURNTWOOD P 15 DR, GLADSTONE, MI, 49837",
+        "alt_m": 0.0
+      },
+      "precision": null
+    },
+    "precision_field": {
+      "ok": true,
+      "placed": 0,
+      "sub_micron": 0,
+      "total": 0
+    }
+  },
+  "temporal": {
+    "sub_microsecond": true,
+    "bench": {
+      "rounds": 64,
+      "mono_us": {
+        "min": 18,
+        "max": 63,
+        "mean": 22.359,
+        "elapsed": 374072
+      },
+      "sovereign_us": {
+        "min": 18,
+        "max": 136080,
+        "mean": 2148.25,
+        "elapsed": 139026
+      },
+      "sub_microsecond_capable": true,
+      "desync": {
+        "schema": "sovereign-desync/v1",
+        "synced": false,
+        "never_desync_policy": true,
+        "authoritative": "sovereign_linear",
+        "witness": "wall_realtime_ns",
+        "skew_ms": 268190738.78,
+        "max_desync_ms": 250.0,
+        "sovereign_ns": 1782932319320546510,
+        "wall_ns": 1783200510059326368,
+        "red_flag_active": true,
+        "gap_count": 1411,
+        "red_flag_count": 608,
+        "clock_paused": false,
+        "temperature_affects_linear": false
+      }
+    },
+    "cycle_elapsed_us": 10196892,
+    "presume_ok": true
+  },
+  "rack": {
+    "field_id": "rack-home-sanctuary",
+    "solo": true
+  },
+  "field_rack_id": "rack-home-sanctuary"
+}

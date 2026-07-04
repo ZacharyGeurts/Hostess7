@@ -1,0 +1,27 @@
+{
+  "schema": "field-sub-micron-timing/v1",
+  "title": "Sub-micron · sub-microsecond — precision placement + sovereign timing",
+  "motto": "We run sub-micron placement and sub-microsecond presume — rack-hard, planet-balanced",
+  "spatial": {
+    "module": "lib/gps-precision.py",
+    "precision_field": "lib/precision-field.py",
+    "fixed_scale": "1e15",
+    "lsb_nm_latitude": 0.11,
+    "enu_unit": "nanometers"
+  },
+  "temporal": {
+    "module": "lib/sovereign-clock.py",
+    "presume": "lib/hostess7-presume.py",
+    "mono_us": "perf_counter_ns // 1000",
+    "sovereign_us": "linear_time_ns // 1000",
+    "target_jitter_us": 1
+  },
+  "wires": [
+    {"id": "precision_field", "api": "/api/precision-field"},
+    {"id": "gps_precision", "api": "/api/gps-precision"},
+    {"id": "presume", "api": "/api/hostess7/presume"},
+    {"id": "rack", "api": "/api/field-rack-uniqueness"}
+  ],
+  "module": "lib/field-sub-micron-timing.py",
+  "api": "/api/field-sub-micron-timing"
+}

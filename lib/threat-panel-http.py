@@ -3378,6 +3378,13 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-sub-micron-timing", "/api/sub-micron-timing", "/api/sub-micron"):
+            sm_py = INSTALL_ROOT / "lib" / "field-sub-micron-timing.py"
+            args = ["run"] if path.endswith("/run") or (self.headers.get("X-Sub-Micron-Run") or "").strip() in ("1", "yes") else ["json"]
+            payload = _nexus_py_json(sm_py, args, timeout=90) if sm_py.is_file() else {"ok": False, "error": "field_sub_micron_timing_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path in ("/api/field-rack-uniqueness", "/api/field-rack", "/api/rack-uniqueness"):
             rack_py = INSTALL_ROOT / "lib" / "field-rack-uniqueness.py"
             sub = path.split("/")[-1] if path.count("/") > 3 else ""
