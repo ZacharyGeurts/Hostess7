@@ -41,6 +41,7 @@ PAGES_DESKTOP_THEME = "nexus-military-v8"
 PAGES_DESKTOP_ICON_IDS = (
     "view",
     "queen-terminal",
+    "field-ping",
     "mspaint",
     "field-popcorn",
     "ammocode",
@@ -1032,6 +1033,7 @@ def _stage_panel_surfaces() -> int:
         "field-big-drive": "field-big-drive.html",
         "field-gimp": "field-gimp.html",
         "mspaint": "mspaint.html",
+        "field-ping": "field-ping.html",
         "eol-code": "eol-code.html",
         "field-gnu-terminal": "field-gnu-terminal-embed.html",
         "terminal": "field-gnu-terminal-embed.html",
@@ -1106,6 +1108,9 @@ def _stage_panel_surfaces() -> int:
 
     for route, src_name in route_map.items():
         write_route(route, src_name)
+
+    for slug in ("network", "truth", "thermal", "firmware", "media", "sovereign", "diag"):
+        write_route(f"field-ellie/{slug}", "field-ellie-diag.html")
 
     for src in sorted(PANEL.glob("*.html")):
         write_route(src.stem, src.name)

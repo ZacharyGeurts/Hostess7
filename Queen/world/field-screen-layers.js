@@ -418,6 +418,41 @@
     if (state.active === 0 || state.sovereignLayer >= LAYER_3_MIN) switchTo(-1);
   }
 
+  function openQueen() {
+    const url = queenBrowserUrl();
+    const assets = pagesRuntime()
+      ? (global.HOSTESS7_PAGES_BASE || "/Hostess7") + "/assets"
+      : "/assets";
+    if (global.NexusFieldShell?.launch) {
+      global.NexusFieldShell.launch({
+        id: "queen-browser",
+        name: "Queen Browser",
+        exec: url,
+        shell: true,
+        icon_url: assets + "/queen-prog-browser.png",
+      });
+      focusQueenBrowser();
+      return;
+    }
+    window.open(url, "_blank", "noopener");
+    toast("Queen Browser");
+  }
+
+  function focusQueenBrowser() {
+    setSovereignLayer(1);
+    state.active = 1;
+    const wins = global.NexusFieldShell?.listWindows?.() || [];
+    const qb = wins.find(function (w) {
+      return w.appId === "queen-browser";
+    });
+    if (qb && global.NexusFieldShell?.focusWindow) {
+      global.NexusFieldShell.focusWindow(qb.id);
+    }
+    setDesktopVisible(true);
+    updateHud(1);
+    updateFastSwitch(1);
+  }
+
   function wire() {
     if (state.wired) return;
     document.addEventListener("keydown", onKeyDown, true);
@@ -429,6 +464,8 @@
 
   global.FieldScreenLayers = {
     switchTo: switchTo,
+    openQueen: openQueen,
+    focusQueenBrowser: focusQueenBrowser,
     openHostess7: openHostess7,
     cycleLayer3Plus: cycleLayer3Plus,
     markInsideOs: markInsideOs,

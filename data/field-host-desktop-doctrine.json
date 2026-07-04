@@ -8,6 +8,7 @@
   "desktop_icon_ids": [
     "view",
     "queen-terminal",
+    "field-ping",
     "mspaint",
     "field-popcorn",
     "ammocode",
@@ -146,6 +147,7 @@
     "default_zoom": 1,
     "panel_thumbnail_default": true,
     "panels": [
+      {"id": "field-ping", "title": "Field Ping", "url": "/field-ping", "page_ratio": "16/10"},
       {"id": "ellie-network", "title": "Network Threat", "url": "/field-ellie/network", "page_ratio": "16/10"},
       {"id": "ellie-truth", "title": "Truth & Ironclad", "url": "/field-ellie/truth", "page_ratio": "16/10"},
       {"id": "ellie-thermal", "title": "Thermal & Power", "url": "/field-ellie/thermal", "page_ratio": "16/10"},
@@ -227,6 +229,7 @@
     {"id": "queen-code", "name": "Queen Code", "exec": "http://127.0.0.1:9481/world/queen-code.html", "icon": "queen-prog-code", "category": "NEXUS · Queen", "shell": true},
     {"id": "kilroy-field", "name": "KILROY Field OS", "exec": "http://127.0.0.1:9481/world/?dock=kilroy", "icon": "queen-prog-kilroy", "category": "NEXUS · Field", "pinned": true, "shell": true},
     {"id": "queen-terminal", "name": "AmmoOS Terminal", "exec": "http://127.0.0.1:9477/field-gnu-terminal-embed.html", "icon": "queen-prog-terminal", "category": "AmmoOS · Layer 0", "pinned": true, "desktop": true, "shell": true, "os_layer": 0, "start_menu": true, "hint": "Field GNU Terminal · code preview · truth · Layer 0"},
+    {"id": "field-ping", "name": "Ping", "exec": "/field-ping", "icon": "queen-prog-znetwork", "category": "AmmoOS · Network", "pinned": true, "desktop": true, "shell": true, "os_layer": 0, "start_menu": true, "dos40": true, "hint": "ICMP · traceroute · KILROY iPXE lineage · tabbed panel"},
     {"id": "mspaint", "name": "MSPaint", "exec": "/mspaint", "icon": "queen-prog-files", "category": "AmmoOS · Layer 0", "pinned": true, "desktop": true, "shell": true, "os_layer": 0, "start_menu": true, "dos40": true, "hint": "MS-DOS 4.0 MSPAINT · PCX · clipboard · load-module mspaint"},
     {"id": "queen-terminal-embed", "name": "AmmoOS Terminal (panel)", "exec": "http://127.0.0.1:9477/field-gnu-terminal-embed.html", "icon": "queen-prog-terminal", "category": "AmmoOS · Shell", "shell": true, "os_layer": 0, "aliases": ["field-gnu-terminal", "terminal", "gnu-terminal"]},
     {"id": "field-eol-code", "name": "EOL Code", "exec": "http://127.0.0.1:9477/eol-code", "icon": "queen-prog-code", "category": "AmmoOS · Layer 0", "pinned": true, "desktop": true, "shell": true, "os_layer": 0, "start_menu": true, "hint": "BSP tree · pending (−4) → EOL · Ironclad generator witness"},

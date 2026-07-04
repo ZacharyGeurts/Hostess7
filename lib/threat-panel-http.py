@@ -5405,6 +5405,15 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-ping", "/api/field-ping/"):
+            script = INSTALL_ROOT / "lib" / "field-ping.py"
+            if script.is_file():
+                payload = _nexus_py_json(script, ["json"], timeout=12)
+            else:
+                payload = {"schema": "field-ping/v1", "ok": False, "error": "field_ping_missing"}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
         if path == "/api/sovereign-clock":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "sovereign-clock.py", ["know"], timeout=10)
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
@@ -6004,6 +6013,24 @@ class Handler(BaseHTTPRequestHandler):
                 payload = _nexus_py_json(script, ["json"], timeout=25)
             else:
                 payload = {"ok": False, "error": "field_audio_secure_bind_missing"}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-hdmi-audio":
+            script = INSTALL_ROOT / "lib" / "field-hdmi-audio-driver.py"
+            if script.is_file():
+                payload = _nexus_py_json(script, ["json"], timeout=25)
+            else:
+                payload = {"ok": False, "error": "field_hdmi_audio_missing"}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-vintage-audio":
+            script = INSTALL_ROOT / "lib" / "field-vintage-audio-composite.py"
+            if script.is_file():
+                payload = _nexus_py_json(script, ["json"], timeout=30)
+            else:
+                payload = {"ok": False, "error": "field_vintage_audio_missing"}
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
@@ -8440,6 +8467,8 @@ class Handler(BaseHTTPRequestHandler):
             return
         elif path in ("/mspaint", "/mspaint/"):
             target = PANEL_DIR / "mspaint.html"
+        elif path in ("/field-ping", "/field-ping/"):
+            target = PANEL_DIR / "field-ping.html"
         elif path in ("/field-popcorn", "/field-popcorn/"):
             target = PANEL_DIR / "field-popcorn.html"
         elif path in ("/ammocode", "/ammocode/"):
@@ -9464,11 +9493,17 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(404, json.dumps({"ok": False, "error": "field_audio_settings_missing"}), "application/json")
                 return
             sub = path[len("/api/field-audio-settings") :].strip("/")
-            if sub in ("apply", "settings") or (not sub and isinstance(body, dict) and body):
+            if sub in ("test-tune", "test_tune", "tune"):
+                card = str((body or {}).get("card_id") or (body or {}).get("soundcard_id") or "").strip()
+                payload = _nexus_py_json(script, ["test_tune"] + ([card] if card else []), timeout=45)
+            elif sub in ("bind-hdmi", "bind_hdmi", "hdmi"):
+                payload = _nexus_py_json(script, ["bind_hdmi"], timeout=25)
+            elif sub in ("apply", "settings") or (not sub and isinstance(body, dict) and body):
                 patch = body if isinstance(body, dict) else {}
-                payload = _nexus_py_json(script, ["apply", json.dumps(patch)], timeout=20)
+                timeout = 45 if str(patch.get("action", "")).lower() in ("test_tune", "test_card", "play_test", "tune") else 25
+                payload = _nexus_py_json(script, ["apply", json.dumps(patch)], timeout=timeout)
             elif sub in ("", "status", "json"):
-                payload = _nexus_py_json(script, ["json"], timeout=20)
+                payload = _nexus_py_json(script, ["json"], timeout=25)
             else:
                 self._send(404, json.dumps({"ok": False, "error": "unknown_field_audio_action"}), "application/json")
                 return
@@ -9562,6 +9597,63 @@ class Handler(BaseHTTPRequestHandler):
                 payload = _nexus_py_json(script, ["json"], timeout=25)
             else:
                 self._send(404, json.dumps({"ok": False, "error": "unknown_field_audio_secure_bind_action"}), "application/json")
+                return
+            code = 200 if payload.get("ok", True) else 400
+            self._send(code, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path.startswith("/api/field-hdmi-audio"):
+            script = INSTALL_ROOT / "lib" / "field-hdmi-audio-driver.py"
+            if not script.is_file():
+                self._send(404, json.dumps({"ok": False, "error": "field_hdmi_audio_missing"}), "application/json")
+                return
+            sub = path[len("/api/field-hdmi-audio") :].strip("/")
+            if sub in ("bind", "auto"):
+                args = ["auto"] if sub == "auto" else ["bind"]
+                sink = str((body or {}).get("sink_name") or (body or {}).get("sink") or "").strip()
+                hdmi = str((body or {}).get("hdmi_device") or (body or {}).get("hdmi") or "").strip()
+                if sink:
+                    args.append(sink)
+                if hdmi:
+                    args.append(f"--hdmi={hdmi}")
+                if (body or {}).get("force"):
+                    args.append("--force")
+                payload = _nexus_py_json(script, args, timeout=30)
+            elif sub == "install":
+                payload = _nexus_py_json(script, ["install"], timeout=20)
+            elif sub == "probe":
+                payload = _nexus_py_json(script, ["probe"], timeout=25)
+            elif sub in ("", "status", "json"):
+                payload = _nexus_py_json(script, ["json"], timeout=25)
+            else:
+                self._send(404, json.dumps({"ok": False, "error": "unknown_field_hdmi_audio_action"}), "application/json")
+                return
+            code = 200 if payload.get("ok", True) else 400
+            self._send(code, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path.startswith("/api/field-vintage-audio"):
+            script = INSTALL_ROOT / "lib" / "field-vintage-audio-composite.py"
+            if not script.is_file():
+                self._send(404, json.dumps({"ok": False, "error": "field_vintage_audio_missing"}), "application/json")
+                return
+            sub = path[len("/api/field-vintage-audio") :].strip("/")
+            if sub == "play":
+                media = str((body or {}).get("path") or (body or {}).get("file") or "").strip()
+                card = str((body or {}).get("card_id") or (body or {}).get("soundcard_id") or "").strip()
+                args = ["play", media] + ([card] if card else [])
+                payload = _nexus_py_json(script, args, timeout=320)
+            elif sub == "select":
+                card = str((body or {}).get("card_id") or (body or {}).get("soundcard_id") or "").strip()
+                payload = _nexus_py_json(script, ["select", card or "sb16"], timeout=20)
+            elif sub == "layout":
+                payload = _nexus_py_json(script, ["layout"], timeout=25)
+            elif sub == "cards":
+                payload = _nexus_py_json(script, ["cards"], timeout=25)
+            elif sub in ("", "status", "json", "catalog"):
+                payload = _nexus_py_json(script, ["json"], timeout=30)
+            else:
+                self._send(404, json.dumps({"ok": False, "error": "unknown_field_vintage_audio_action"}), "application/json")
                 return
             code = 200 if payload.get("ok", True) else 400
             self._send(code, json.dumps(payload, ensure_ascii=False), "application/json")
@@ -9784,6 +9876,33 @@ class Handler(BaseHTTPRequestHandler):
                     capture_output=True,
                     text=True,
                     timeout=int(req.get("timeout") or 60),
+                    env=env,
+                    cwd=str(INSTALL_ROOT),
+                )
+                payload = json.loads(proc.stdout or "{}")
+            except subprocess.TimeoutExpired:
+                payload = {"ok": False, "error": "timeout"}
+            except json.JSONDecodeError:
+                payload = {"ok": False, "error": "bad_json", "detail": ((proc.stderr if proc else "") or "")[:200]}
+            code = 200 if payload.get("ok", True) else 400
+            self._send(code, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-ping", "/api/field-ping/"):
+            script = INSTALL_ROOT / "lib" / "field-ping.py"
+            if not script.is_file():
+                self._send(503, json.dumps({"ok": False, "error": "field_ping_missing"}), "application/json")
+                return
+            req = body if isinstance(body, dict) else {}
+            env = _field_stack_env()
+            proc = None
+            try:
+                proc = subprocess.run(
+                    [sys.executable, str(script), "dispatch"],
+                    input=json.dumps(req, ensure_ascii=False),
+                    capture_output=True,
+                    text=True,
+                    timeout=int(req.get("timeout") or 90),
                     env=env,
                     cwd=str(INSTALL_ROOT),
                 )

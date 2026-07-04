@@ -1,0 +1,15 @@
+{
+  "schema": "field-ping-doctrine/v1",
+  "title": "Field Ping",
+  "motto": "KILROY iPXE ping lineage — ICMP truth, traceroute receipts, colorful panel",
+  "source": "src/hci/commands/ping_cmd.c · src/usr/pingmgmt.c",
+  "defaults": {
+    "count": 4,
+    "size": 64,
+    "timeout_s": 2,
+    "max_hops": 30
+  },
+  "terminal_cmds": ["ping", "traceroute", "trace", "tracert"],
+  "panel_path": "/field-ping",
+  "api": "/api/field-ping"
+}

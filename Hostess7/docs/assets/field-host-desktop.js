@@ -51,6 +51,7 @@
   const DESKTOP_DEFAULT_IDS = [
     "view",
     "queen-terminal",
+    "field-ping",
     "mspaint",
     "field-popcorn",
     "ammocode",
@@ -210,6 +211,14 @@
       row.os_layer = 0;
       row.category = "AmmoOS · Layer 0";
     }
+    if (id === "field-ping") {
+      row.icon = "queen-prog-znetwork";
+      row.icon_url = pagesAssetBase() + "/queen-prog-znetwork.png";
+      row.os_layer = 0;
+      row.exec = row.exec || pageUrl("/field-ping");
+      row.name = row.name || "Ping";
+      row.hint = row.hint || "ICMP · traceroute · colorful panel";
+    }
     if (id === "field-popcorn") {
       row.icon = "queen-prog-popcorn";
       row.icon_url = pagesAssetBase() + "/queen-prog-popcorn.png";
@@ -287,6 +296,7 @@
     const rows = [
       { id: "view", name: "View", hint: "Files & folders", icon: "queen-prog-view", exec: base + "/queen/view.html", icon_url: assets + "/queen-prog-view.png", pinned: true, shell: true, category: "NEXUS · Queen" },
       { id: "queen-terminal", name: "AmmoOS Terminal", hint: "Field GNU Terminal · code preview · truth · Layer 0", icon: "queen-prog-terminal", exec: gnuTerminalExec(), icon_url: assets + "/queen-prog-terminal.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
+      { id: "field-ping", name: "Ping", hint: "ICMP · traceroute · KILROY lineage", icon: "queen-prog-znetwork", exec: base + "/field-ping", icon_url: assets + "/queen-prog-znetwork.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Network" },
       { id: "field-popcorn", name: "Popcorn", hint: "Media player · Layer 0", icon: "queen-prog-popcorn", exec: base + "/field-popcorn", icon_url: assets + "/queen-prog-popcorn.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
       { id: "ammocode", name: "AmmoCode", hint: "Syntax editor · Layer 0", icon: "queen-prog-ammocode", exec: base + "/ammocode", icon_url: assets + "/queen-prog-ammocode.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
       { id: "hostess7-folder", name: "Hostess 7", kind: "desktop_folder", hint: "Hostess 7 panels", icon: "queen-prog-hostess", icon_url: assets + "/queen-prog-hostess.png", pinned: true, os_layer: 0, category: "AmmoOS · Layer 0", folder_children: [] },
@@ -584,12 +594,15 @@
       const mon = document.getElementById("hd-monitor");
       const showWall = policy.six_tool_wall === true && policy.six_tool_wall_on_boot !== false;
       if (mon) {
+        mon.classList.remove("hd-monitor--solo");
         mon.classList.add("hd-monitor--hidden");
         mon.hidden = true;
         mon.innerHTML = "";
         if (showWall && window.FieldMonitorDashboard) {
+          mon.classList.add("hd-monitor--solo");
           mon.classList.remove("hd-monitor--hidden");
           mon.hidden = false;
+          mon.setAttribute("aria-hidden", "false");
           window.FieldMonitorDashboard.mount(mon, Object.assign({}, doc?.monitor_dashboard || {}, {
             programs: doc.programs || [],
             icon_dock: doc.icon_dock || [],
