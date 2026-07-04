@@ -33,7 +33,7 @@
     F8: { z: 0.5, id: "presume_path", label: "Presume path", panel: true, path: "/api/chips/presume-path" },
     F7: { z: 0, id: "hardware", label: "Hardware · EOL", panel: true, path: "/eol-code" },
     F6: { z: -1, id: "field_one", label: "Field One · AmmoOS", desktop: true },
-    F5: { z: -2, id: "botnet", label: "Botnet · DNS", stack: true, component: "kilroy-home" },
+    F5: { z: -2, id: "botnet", label: "Botnet · DNS", stack: true, component: "field-botnet-dns-dhcp" },
     F4: { z: -3, id: "nexus_c2", label: "NEXUS C2", stack: true, component: "queen-nexus-c2" },
     F3: { z: 0, id: "iron_plate", label: "Iron plate", panel: true, path: "/api/chips/plate-stack" },
     F2: { z: 0.5, id: "presume_direct", label: "Presume direct", panel: true, path: "/api/chips/presume-path" },
@@ -52,7 +52,7 @@
 
   const LAYER_META = {
     "-3": { label: "NEXUS C2", fkey: "F4", component: "queen-nexus-c2" },
-    "-2": { label: "DNS · KILROY lane", fkey: "F5", component: "kilroy-home" },
+    "-2": { label: "Botnet · DNS · DHCP", fkey: null, component: "field-botnet-dns-dhcp" },
     "-1": { label: "Field One · AmmoOS", fkey: "F6", component: "field-desktop" },
     "0": { label: "OS Software · Hardware", fkey: "F7", inside_os: true },
     "1": { label: "Queen Browser", fkey: null, queen_browser: true },
@@ -96,7 +96,7 @@
     const q = queenPagesBase();
     const p = panelBase();
     if (layer === -3) return q + "/queen-nexus-c2.html";
-    if (layer === -2) return q + "/kilroy-home.html";
+    if (layer === -2) return p + "/command/?embed=1#dns";
     if (layer === -1) return pagesRuntime() ? p + "/desktop/" : p + "/field";
     if (layer === "warehouse") return p + "/ammoos-warehouse/";
     return null;
@@ -153,9 +153,8 @@
       return s.z === layer || (s.cycle && layer >= LAYER_3_MIN);
     });
     const label = spec?.label || LAYER_META[String(layer)]?.label || "Field One";
-    const fkey = spec?.cycle ? " · F11" : "";
-    hud.textContent = "Layer " + layer + " · " + label + fkey;
-    hud.hidden = layer === -1 && state.sovereignLayer < LAYER_3_MIN;
+    hud.textContent = "Layer " + layer + " · " + label;
+    hud.hidden = true;
   }
 
   function launchSurface(spec, fkey) {
@@ -192,7 +191,7 @@
       }
       updateHud(layer);
       updateFastSwitch(layer);
-      toast((fkey || "") + " · " + spec.label);
+      toast(spec.label);
       return;
     }
     if (spec.stack && typeof spec.z === "number") {
@@ -200,7 +199,7 @@
       return;
     }
     window.open(url, "_blank", "noopener");
-    toast((fkey || "") + " · " + spec.label);
+    toast(spec.label);
   }
 
   function openHostess7() {
@@ -266,10 +265,8 @@
       btn.type = "button";
       btn.className = "fsl-fast-btn";
       btn.dataset.fkey = fk;
-      btn.title = fk + " · " + spec.label;
-      btn.innerHTML =
-        '<kbd class="fsl-fast-kbd">' + fk + "</kbd>" +
-        '<span class="fsl-fast-label">' + spec.label + "</span>";
+      btn.title = spec.label;
+      btn.innerHTML = '<span class="fsl-fast-label">' + spec.label + "</span>";
       btn.addEventListener("click", function (ev) {
         ev.preventDefault();
         ev.stopPropagation();
@@ -323,8 +320,7 @@
       bar.innerHTML =
         '<span class="fsl-label">' + meta.label + "</span>" +
         '<span class="fsl-z">Layer ' + layer + "</span>" +
-        (meta.component ? '<span class="fsl-component">' + meta.component + "</span>" : "") +
-        '<kbd class="fsl-kbd">' + (meta.fkey || "") + "</kbd>";
+        (meta.component ? '<span class="fsl-component">' + meta.component + "</span>" : "");
       const iframe = document.createElement("iframe");
       iframe.className = "fsl-frame";
       iframe.title = meta.label;
@@ -425,7 +421,6 @@
   function wire() {
     if (state.wired) return;
     document.addEventListener("keydown", onKeyDown, true);
-    ensureFastSwitchPanel();
     state.wired = true;
     switchTo(-1);
     updateHud(state.active);

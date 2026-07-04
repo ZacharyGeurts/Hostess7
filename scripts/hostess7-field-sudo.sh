@@ -15,7 +15,7 @@ hostess7-field-sudo — scoped elevation for humans + AI communique
   hostess7-field-sudo verify
   hostess7-field-sudo run <action>
 
-Actions: dns-primary queen-lan truth-dns-serve dns-table-clean nexus-genius rebuild-internet
+Actions: dns-primary queen-lan truth-dns-serve dns-table-clean nexus-genius rebuild-internet destroy-untrue
 EOF
 }
 
@@ -23,6 +23,9 @@ case "${1:-verify}" in
   -h|--help|help) usage ;;
   verify|json|status)
     exec "$PY" "$ROOT/lib/hostess7-sudo-secure.py" verify
+    ;;
+  destroy-untrue)
+    exec "$PY" "$ROOT/lib/hostess7-sudo-secure.py" destroy-untrue
     ;;
   run)
     exec "$PY" "$ROOT/lib/hostess7-sudo-secure.py" run "${2:?action required}"

@@ -144,12 +144,17 @@ def verify() -> dict[str, Any]:
     actions = doc.get("actions") or {}
     rows: list[dict[str, Any]] = []
     for name, spec in actions.items():
-        argv = _action_argv(name, spec) if isinstance(spec, dict) else None
+        if not isinstance(spec, dict):
+            continue
+        if spec.get("internal") or name == "destroy-untrue":
+            present = True
+        else:
+            present = _action_argv(name, spec) is not None
         rows.append({
             "action": name,
-            "ai_safe": bool((spec or {}).get("ai_safe")),
-            "present": argv is not None,
-            "role": (spec or {}).get("role"),
+            "ai_safe": bool(spec.get("ai_safe")),
+            "present": present,
+            "role": spec.get("role"),
         })
     return {
         "schema": "hostess7-sudo-secure/v1",
@@ -165,11 +170,53 @@ def verify() -> dict[str, Any]:
     }
 
 
+def destroy_untrue(*, timeout: int = 300) -> dict[str, Any]:
+    """Promote Truth DNS + DHCP, block foreign resolvers, eradicate drift."""
+    py = os.environ.get("PYTHON", "python3")
+    env = {**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE), "AML_BUILD": "0"}
+    steps: list[dict[str, Any]] = []
+
+    for label, argv in (
+        ("dns_primary", ["bash", str(INSTALL / "scripts/legacy-connect-primary.sh")]),
+        ("dns_table_clean", ["bash", str(INSTALL / "scripts/dns-clean-tables.sh"), "clean"]),
+        ("drift_scan_apply", [py, str(INSTALL / "lib/field-dns-drift-threat.py"), "scan", "--apply"]),
+    ):
+        hit = _run_elevated(argv, pw=_load_sudo_pw(), timeout=timeout)
+        steps.append({"step": label, **hit})
+
+    takeover = {}
+    try:
+        proc = subprocess.run(
+            [py, str(INSTALL / "lib/dns-service-takeover.py"), "evaluate"],
+            capture_output=True, text=True, timeout=30, env=env, check=False,
+        )
+        if proc.stdout.strip().startswith("{"):
+            takeover = json.loads(proc.stdout)
+    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+        pass
+
+    out = {
+        "schema": "hostess7-sudo-secure-destroy-untrue/v1",
+        "updated": _utc(),
+        "action": "destroy-untrue",
+        "ok": all(s.get("ok") for s in steps) and takeover.get("phase") in ("ready", "primary"),
+        "steps": steps,
+        "takeover_phase": takeover.get("phase"),
+        "permissions": takeover.get("permissions"),
+    }
+    _save(PANEL, {"last_run": out, "verify": verify()})
+    return out
+
+
 def run_action(action: str, *, timeout: int = 300) -> dict[str, Any]:
+    if action == "destroy-untrue":
+        return destroy_untrue(timeout=timeout)
     doc = doctrine()
     spec = (doc.get("actions") or {}).get(action)
     if not isinstance(spec, dict):
         return {"ok": False, "error": "unknown_action", "action": action}
+    if spec.get("internal"):
+        return {"ok": False, "error": "internal_action_use_destroy_untrue", "action": action}
     argv = _action_argv(action, spec)
     if not argv:
         return {"ok": False, "error": "action_script_missing", "action": action}
@@ -204,9 +251,12 @@ def main() -> int:
     if cmd == "run" and len(sys.argv) > 2:
         print(json.dumps(run_action(sys.argv[2].strip()), ensure_ascii=False, indent=2))
         return 0
+    if cmd == "destroy-untrue":
+        print(json.dumps(destroy_untrue(), ensure_ascii=False, indent=2))
+        return 0
     print(json.dumps({
-        "usage": "hostess7-sudo-secure.py [json|verify|run ACTION]",
-        "actions": list((doctrine().get("actions") or {}).keys()),
+        "usage": "hostess7-sudo-secure.py [json|verify|run ACTION|destroy-untrue]",
+        "actions": [k for k, v in (doctrine().get("actions") or {}).items() if not (v or {}).get("internal")],
     }, ensure_ascii=False))
     return 1
 

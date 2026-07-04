@@ -3,7 +3,7 @@
   "schema": "field-botnet-dns-dhcp-keepalive/v1",
   "title": "Fielded bot network \u2014 secure stable DNS & DHCP for everyone through GitHub",
   "motto": "Any and all bot-net nodes \u2014 Truth DNS + Field DHCP \u2014 stable for everyone \u00b7 GitHub control plane",
-  "updated": "2026-07-04T02:05:50Z",
+  "updated": "2026-07-04T03:20:44Z",
   "boss": "hostess7",
   "layer": -2,
   "fkey": "F10",
@@ -31,7 +31,7 @@
     "pages_probe": {
       "ok": true,
       "status": 200,
-      "elapsed_ms": 391,
+      "elapsed_ms": 179,
       "url": "https://zacharygeurts.github.io/Hostess7/"
     },
     "pages_runtime": "https://zacharygeurts.github.io/Hostess7/",
@@ -8011,7 +8011,7 @@
     "schema": "field-botnet-legal-ports-panel/v1",
     "title": "Botnet legal port auto-allow \u2014 IANA-registered civilian egress for everyone",
     "motto": "Real legal ports pass automatically through the field botnet \u2014 stalker lop only for confirmed malware sockets",
-    "updated": "2026-07-04T02:02:02Z",
+    "updated": "2026-07-04T03:04:59Z",
     "stalker_lop_count": 14,
     "context_port_count": 9,
     "for_everyone": {
@@ -8039,7 +8039,7 @@
     "title": "H7t \u2014 truthed isolation format for non-sovereign payloads",
     "format": "h7t/1",
     "motto": "Not our safe stuff \u2192 truthed \u2192 H7t \u2192 100\u00d7 benefits in the chamber without touching the real deal",
-    "updated": "2026-07-04T02:02:04Z",
+    "updated": "2026-07-04T03:05:01Z",
     "safe_stack_prefixes": [
       "Hostess7/",
       "lib/field-",
@@ -8069,11 +8069,11 @@
     "ok": false,
     "schema": "field-github-resilience-panel/v1",
     "title": "GitHub resilience \u2014 loopback authority + publish queue when control plane is down",
-    "updated": "2026-07-04T02:02:09Z",
+    "updated": "2026-07-04T03:05:04Z",
     "boss": "hostess7",
     "probe": {
       "schema": "field-github-resilience-probe/v1",
-      "updated": "2026-07-04T02:02:09Z",
+      "updated": "2026-07-04T03:05:04Z",
       "ok": false,
       "degraded_ok": false,
       "github_push_ready": false,
@@ -8104,7 +8104,7 @@
           "weight": 3,
           "ok": true,
           "status": 200,
-          "elapsed_ms": 361
+          "elapsed_ms": 236
         }
       ],
       "fast": true,
@@ -8144,7 +8144,7 @@
     "schema": "field-github-everyone-panel/v1",
     "title": "GitHub for everyone \u2014 botnet civilian passthrough, DNS truth, Pages mirrors",
     "motto": "Everyone needs GitHub \u2014 repos, Pages, raw, API, git \u2014 open for all through the field botnet",
-    "updated": "2026-07-04T02:02:11Z",
+    "updated": "2026-07-04T03:05:06Z",
     "boss": "hostess7",
     "for_everyone": {
       "enabled": true,
@@ -8518,7 +8518,7 @@
   },
   "github_traffic_shard": {
     "schema": "field-github-traffic-shard-panel/v1",
-    "updated": "2026-07-04T02:02:13Z",
+    "updated": "2026-07-04T03:05:07Z",
     "ok": true,
     "title": "GitHub traffic shard \u2014 thermal-settle style field offload",
     "motto": "Queen probes ~10% per cycle; field nodes carry ~90% \u2014 rotate like thermal headroom.",
@@ -8536,7 +8536,7 @@
     ],
     "rotation": {
       "schema": "field-github-traffic-rotation/v1",
-      "updated": "2026-07-04T02:02:12Z",
+      "updated": "2026-07-04T03:05:05Z",
       "active_shard": "field-loopback",
       "field_nodes": 1,
       "offload_pct": 90.0,
@@ -8557,11 +8557,2804 @@
     "api": "/api/field-dns-drift-threat"
   },
   "legacy_connect": {
+    "schema": "field-legacy-connect/v1",
+    "ts": "2026-07-04T03:05:34Z",
+    "title": "Legacy open + secured \u2014 retro gear forever welcome",
+    "motto": "Bring Truth DNS and Field DHCP fully up \u2014 legacy ears open, gatekeeper secured, Dreamcast modem welcome",
+    "legacy_open_secured": true,
+    "policy": {
+      "legacy_open_secured": true,
+      "forever": true,
+      "civilian_passthrough": true,
+      "promote_primary_when_truth_healthy": true,
+      "never_block_retro_ports": true
+    },
+    "phase": "observing",
+    "primary": false,
+    "truth_up": true,
+    "dns_legacy": {
+      "accept_no_edns": true,
+      "max_udp_response": 512,
+      "prefer_a_records": true,
+      "rfc": "RFC 1035 classic UDP"
+    },
+    "dhcp_legacy": {
+      "dreamcast_oui_prefixes": [
+        "00:d0:f1",
+        "00:d0:0f",
+        "00:09:bf"
+      ],
+      "retro_pool": {
+        "start": "192.168.47.100",
+        "end": "192.168.47.150",
+        "gateway": "192.168.47.1",
+        "subnet": "255.255.255.0",
+        "lease_seconds": 86400
+      },
+      "default_pool_env": {
+        "start": "NEXUS_FIELD_DHCP_POOL_START",
+        "end": "NEXUS_FIELD_DHCP_POOL_END"
+      }
+    },
+    "dreamcast_modem": {
+      "id": "dreamcast_modem",
+      "vendor": "Sega",
+      "era": "1999\u20132003",
+      "modes": [
+        "dialup_ppp",
+        "broadband_adapter"
+      ],
+      "dialup": {
+        "protocol": "PPP",
+        "speeds": [
+          "33600",
+          "56000",
+          "V90"
+        ],
+        "serial_devices": [
+          "/dev/ttyS0",
+          "/dev/ttyS1",
+          "/dev/ttyUSB0",
+          "/dev/ttyACM0"
+        ],
+        "pppd_peer": "dreamcast-modem",
+        "note": "Null-modem or USB voice modem \u2014 queen runs pppd peer; Dreamcast dials in"
+      },
+      "bba": {
+        "protocol": "Ethernet",
+        "dhcp": true,
+        "static_fallback": "192.168.47.2",
+        "dns_manual": [
+          "192.168.47.1"
+        ],
+        "note": "Broadband Adapter on retro LAN \u2014 DHCP option 6 \u2192 Truth Resolver"
+      },
+      "serial_devices": [
+        {
+          "device": "/dev/ttyS0",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS1",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyUSB0",
+          "present": false
+        },
+        {
+          "device": "/dev/ttyACM0",
+          "present": false
+        },
+        {
+          "device": "/dev/ttyS10",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS11",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS12",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS13",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS14",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS15",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS16",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS17",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS18",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS19",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS2",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS20",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS21",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS22",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS23",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS24",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS25",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS26",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS27",
+          "present": true
+        },
+        {
+          "device": "/dev/ttyS28",
+          "present": true
+        }
+      ],
+      "pppd_peer_path": null
+    },
+    "retro_ports": {
+      "dreamcast_online": [
+        7648,
+        9300,
+        9420,
+        9421,
+        9422,
+        9423,
+        9424,
+        9425,
+        9426,
+        9427,
+        9428,
+        9429,
+        9430
+      ],
+      "ppp_serial": [],
+      "note": "PSO / ChuChu Rocket / retro tunnel ports \u2014 auto-allow through civilian passthrough"
+    },
+    "dhcp_running": false,
+    "dhcp_may_serve": false,
+    "protocol_bridge": {
+      "schema": "field-sovereign-protocol-bridge/v1",
+      "ts": "2026-07-02T04:31:43Z",
+      "title": "Sovereign protocol bridge",
+      "motto": "Own wire first. Legacy ears open through gatekeeper \u2014 never raw guest egress.",
+      "managed_protocols": [
+        {
+          "id": "field_net",
+          "role": "primary",
+          "module": "connection-gatekeeper.py",
+          "port": null,
+          "present": true,
+          "live": true
+        },
+        {
+          "id": "znetwork_shadow",
+          "role": "shadow_wire",
+          "module": "znetwork-field.sh",
+          "port": null,
+          "present": true,
+          "live": false
+        },
+        {
+          "id": "sovereign_sync",
+          "role": "time_truth",
+          "module": "field-sovereign-sync.py",
+          "port": null,
+          "present": true,
+          "live": true
+        },
+        {
+          "id": "truth_dns",
+          "role": "dns_authority",
+          "module": "field-dns.py",
+          "port": 53,
+          "present": true,
+          "live": false
+        },
+        {
+          "id": "field_dhcp",
+          "role": "dhcp_authority",
+          "module": "field-dhcp.py",
+          "port": 67,
+          "present": true,
+          "live": false
+        }
+      ],
+      "legacy_compat": [
+        {
+          "id": "http",
+          "compat": "HTTP/1.1",
+          "bridge": "gatekeeper_egress",
+          "managed_by": "field_net",
+          "shim_live": true,
+          "compat_ok": true
+        },
+        {
+          "id": "https",
+          "compat": "TLS/HTTP2",
+          "bridge": "gatekeeper_egress",
+          "managed_by": "field_net",
+          "shim_live": true,
+          "compat_ok": true
+        },
+        {
+          "id": "dns",
+          "compat": "UDP/53",
+          "bridge": "truth_dns_shim",
+          "managed_by": "truth_dns",
+          "shim_live": false,
+          "compat_ok": true
+        },
+        {
+          "id": "tcp",
+          "compat": "TCP/IPv4+IPv6",
+          "bridge": "gatekeeper_socket",
+          "managed_by": "field_net",
+          "shim_live": true,
+          "compat_ok": true
+        },
+        {
+          "id": "tls",
+          "compat": "TLS1.2+",
+          "bridge": "gatekeeper_egress",
+          "managed_by": "field_net",
+          "shim_live": true,
+          "compat_ok": true
+        },
+        {
+          "id": "websocket",
+          "compat": "WS/WSS",
+          "bridge": "gatekeeper_egress",
+          "managed_by": "field_net",
+          "shim_live": true,
+          "compat_ok": true
+        }
+      ],
+      "gatekeeper": {
+        "updated": "2026-07-02T04:31:42Z",
+        "field_thermal": {
+          "headroom_pct": 100.0,
+          "rate_limit_active": false,
+          "max_joules_per_second": 45.0,
+          "incremental_only": true,
+          "monolithic_blast_forbidden": true,
+          "certainty_score": 0.95,
+          "field_intensity_scale": 1.0,
+          "burst_derating_ratio": 1012.5
+        },
+        "touch_policy": {
+          "motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+          "silent_count": 14,
+          "music_count": 1,
+          "traffic_count": 0,
+          "animal_count": 0,
+          "train_count": 0,
+          "alert_count": 5,
+          "felt_safe_count": 1
+        },
+        "connection_count": 20,
+        "harm_candidates": 5,
+        "kill_targets": 5,
+        "hell_chosen_count": 5,
+        "hostility_priority": "hell_first",
+        "peak_hostility_score": 224,
+        "heaven_flow_count": 15,
+        "heaven_hell_motto": "We know Heaven from Hell. To those who chose Hell, we also choose it for them. No mercy. No friendly fire. God Bless.",
+        "know_doctrine": "Know that nothing is unseen and nothing is fully secure. We can't hide all the rocks, so send Hell to Hell.",
+        "pending_trust_count": 5,
+        "permitted_flow_count": 15,
+        "segment_block_count": 0,
+        "strict_trust": true,
+        "packet_permission": true,
+        "min_accept_trust_rank": 2,
+        "why_no_auto_block": "Packet permission v4.0: DPI + gatekeeper know who and intent on every flow. Good traffic (15 flow(s)) passes at zero nft cost. Only harmful sections get segment blocks; harm candidates get IP blocks.",
+        "connections": [
+          {
+            "remote_ip": "209.18.47.63",
+            "remote_port": "53",
+            "process": "network-peer",
+            "pid": "",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "udp ESTAB      0      0                                 71.86.186.130:54658           209.18.47.63:53",
+            "scores": {
+              "user_browser": 2,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 8,
+              "stream_theft_risk": 1,
+              "beacon_pattern": 7,
+              "process_trust": 3,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "unidentified_process",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "non_cdn_egress",
+              "stream_theft_risk": "low",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "unidentified",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 16,
+            "user_total": 5,
+            "verdict": "HARM_CANDIDATE",
+            "iff": "HOSTILE",
+            "iff_class": "CONFIRMED",
+            "iff_label": "HOSTILE \u00b7 CONFIRMED",
+            "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+            "reason": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+            "block_recommended": true,
+            "trust_rank": 4,
+            "requires_user_trust": true,
+            "direction": "out",
+            "suggestion": {
+              "summary": "HOSTILE \u00b7 CONFIRMED \u2014 interdict recommended, zero hesitation. INTERDICT \u2014 block immediately, zero hesitation",
+              "action": "Interdict \u2014 block forever or remove pest. Zero delay on unrecognized hostile process.",
+              "iff": "HOSTILE",
+              "iff_class": "CONFIRMED",
+              "iff_label": "HOSTILE \u00b7 CONFIRMED",
+              "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+              "friendly_signals": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 25,
+              "concern_meter": 64,
+              "harm_total": 16,
+              "trust_total": 5
+            },
+            "intent": {
+              "who": "network-peer",
+              "purpose": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "HARM_CANDIDATE"
+            },
+            "flow_policy": {
+              "permit": false,
+              "block_scope": "ip",
+              "block_direction": "both",
+              "flow_key": "209.18.47.63:53:network-peer",
+              "zero_cost": false
+            },
+            "kill_eligible": true,
+            "kill_reason": "persistent_beacon",
+            "kill_tier": "lethal",
+            "soul_side": "hell",
+            "hell_chosen": true,
+            "human_touch": "alert",
+            "safe_signal": false,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": false,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 224,
+            "hostility_priority": "hell_first"
+          },
+          {
+            "remote_ip": "209.18.47.62",
+            "remote_port": "53",
+            "process": "network-peer",
+            "pid": "",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "udp ESTAB      0      0                                 71.86.186.130:56304           209.18.47.62:53",
+            "scores": {
+              "user_browser": 2,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 8,
+              "stream_theft_risk": 1,
+              "beacon_pattern": 7,
+              "process_trust": 3,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "unidentified_process",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "non_cdn_egress",
+              "stream_theft_risk": "low",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "unidentified",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 16,
+            "user_total": 5,
+            "verdict": "HARM_CANDIDATE",
+            "iff": "HOSTILE",
+            "iff_class": "CONFIRMED",
+            "iff_label": "HOSTILE \u00b7 CONFIRMED",
+            "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+            "reason": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+            "block_recommended": true,
+            "trust_rank": 4,
+            "requires_user_trust": true,
+            "direction": "out",
+            "suggestion": {
+              "summary": "HOSTILE \u00b7 CONFIRMED \u2014 interdict recommended, zero hesitation. INTERDICT \u2014 block immediately, zero hesitation",
+              "action": "Interdict \u2014 block forever or remove pest. Zero delay on unrecognized hostile process.",
+              "iff": "HOSTILE",
+              "iff_class": "CONFIRMED",
+              "iff_label": "HOSTILE \u00b7 CONFIRMED",
+              "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+              "friendly_signals": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 25,
+              "concern_meter": 64,
+              "harm_total": 16,
+              "trust_total": 5
+            },
+            "intent": {
+              "who": "network-peer",
+              "purpose": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "HARM_CANDIDATE"
+            },
+            "flow_policy": {
+              "permit": false,
+              "block_scope": "ip",
+              "block_direction": "both",
+              "flow_key": "209.18.47.62:53:network-peer",
+              "zero_cost": false
+            },
+            "kill_eligible": true,
+            "kill_reason": "persistent_beacon",
+            "kill_tier": "lethal",
+            "soul_side": "hell",
+            "hell_chosen": true,
+            "human_touch": "alert",
+            "safe_signal": false,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": false,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 224,
+            "hostility_priority": "hell_first"
+          },
+          {
+            "remote_ip": "68.118.158.1",
+            "remote_port": "67",
+            "process": "network-peer",
+            "pid": "",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "udp ESTAB      0      0                           97.95.64.87%enp10s0:68              68.118.158.1:67",
+            "scores": {
+              "user_browser": 2,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 8,
+              "stream_theft_risk": 1,
+              "beacon_pattern": 7,
+              "process_trust": 3,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "unidentified_process",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "non_cdn_egress",
+              "stream_theft_risk": "low",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "unidentified",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 16,
+            "user_total": 5,
+            "verdict": "HARM_CANDIDATE",
+            "iff": "HOSTILE",
+            "iff_class": "CONFIRMED",
+            "iff_label": "HOSTILE \u00b7 CONFIRMED",
+            "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+            "reason": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+            "block_recommended": true,
+            "trust_rank": 4,
+            "requires_user_trust": true,
+            "direction": "out",
+            "suggestion": {
+              "summary": "HOSTILE \u00b7 CONFIRMED \u2014 interdict recommended, zero hesitation. INTERDICT \u2014 block immediately, zero hesitation",
+              "action": "Interdict \u2014 block forever or remove pest. Zero delay on unrecognized hostile process.",
+              "iff": "HOSTILE",
+              "iff_class": "CONFIRMED",
+              "iff_label": "HOSTILE \u00b7 CONFIRMED",
+              "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+              "friendly_signals": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 25,
+              "concern_meter": 64,
+              "harm_total": 16,
+              "trust_total": 5
+            },
+            "intent": {
+              "who": "network-peer",
+              "purpose": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "HARM_CANDIDATE"
+            },
+            "flow_policy": {
+              "permit": false,
+              "block_scope": "ip",
+              "block_direction": "both",
+              "flow_key": "68.118.158.1:67:network-peer",
+              "zero_cost": false
+            },
+            "kill_eligible": true,
+            "kill_reason": "persistent_beacon",
+            "kill_tier": "lethal",
+            "soul_side": "hell",
+            "hell_chosen": true,
+            "human_touch": "alert",
+            "safe_signal": false,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": false,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 224,
+            "hostility_priority": "hell_first"
+          },
+          {
+            "remote_ip": "209.18.47.62",
+            "remote_port": "53",
+            "process": "network-peer",
+            "pid": "",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "udp ESTAB      0      0                                 71.86.186.130:34244           209.18.47.62:53",
+            "scores": {
+              "user_browser": 2,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 8,
+              "stream_theft_risk": 1,
+              "beacon_pattern": 7,
+              "process_trust": 3,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "unidentified_process",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "non_cdn_egress",
+              "stream_theft_risk": "low",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "unidentified",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 16,
+            "user_total": 5,
+            "verdict": "HARM_CANDIDATE",
+            "iff": "HOSTILE",
+            "iff_class": "CONFIRMED",
+            "iff_label": "HOSTILE \u00b7 CONFIRMED",
+            "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+            "reason": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+            "block_recommended": true,
+            "trust_rank": 4,
+            "requires_user_trust": true,
+            "direction": "out",
+            "suggestion": {
+              "summary": "HOSTILE \u00b7 CONFIRMED \u2014 interdict recommended, zero hesitation. INTERDICT \u2014 block immediately, zero hesitation",
+              "action": "Interdict \u2014 block forever or remove pest. Zero delay on unrecognized hostile process.",
+              "iff": "HOSTILE",
+              "iff_class": "CONFIRMED",
+              "iff_label": "HOSTILE \u00b7 CONFIRMED",
+              "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+              "friendly_signals": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 25,
+              "concern_meter": 64,
+              "harm_total": 16,
+              "trust_total": 5
+            },
+            "intent": {
+              "who": "network-peer",
+              "purpose": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "HARM_CANDIDATE"
+            },
+            "flow_policy": {
+              "permit": false,
+              "block_scope": "ip",
+              "block_direction": "both",
+              "flow_key": "209.18.47.62:53:network-peer",
+              "zero_cost": false
+            },
+            "kill_eligible": true,
+            "kill_reason": "persistent_beacon",
+            "kill_tier": "lethal",
+            "soul_side": "hell",
+            "hell_chosen": true,
+            "human_touch": "alert",
+            "safe_signal": false,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": false,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 224,
+            "hostility_priority": "hell_first"
+          },
+          {
+            "remote_ip": "209.18.47.63",
+            "remote_port": "53",
+            "process": "network-peer",
+            "pid": "",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "udp ESTAB      0      0                                 71.86.186.130:35373           209.18.47.63:53",
+            "scores": {
+              "user_browser": 2,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 8,
+              "stream_theft_risk": 1,
+              "beacon_pattern": 7,
+              "process_trust": 3,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "unidentified_process",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "non_cdn_egress",
+              "stream_theft_risk": "low",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "unidentified",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 16,
+            "user_total": 5,
+            "verdict": "HARM_CANDIDATE",
+            "iff": "HOSTILE",
+            "iff_class": "CONFIRMED",
+            "iff_label": "HOSTILE \u00b7 CONFIRMED",
+            "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+            "reason": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+            "block_recommended": true,
+            "trust_rank": 4,
+            "requires_user_trust": true,
+            "direction": "out",
+            "suggestion": {
+              "summary": "HOSTILE \u00b7 CONFIRMED \u2014 interdict recommended, zero hesitation. INTERDICT \u2014 block immediately, zero hesitation",
+              "action": "Interdict \u2014 block forever or remove pest. Zero delay on unrecognized hostile process.",
+              "iff": "HOSTILE",
+              "iff_class": "CONFIRMED",
+              "iff_label": "HOSTILE \u00b7 CONFIRMED",
+              "enforcement": "INTERDICT \u2014 block immediately, zero hesitation",
+              "friendly_signals": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "Not using suspicious stream-theft style ports.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "network-peer is not a browser (2/10) \u2014 background apps calling out deserve a closer look.",
+                "Unusual outbound data volume for this app type (8/10: non_cdn_egress).",
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Unidentified process or untrusted origin \u2014 hostile indicators elevated (3/10).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 25,
+              "concern_meter": 64,
+              "harm_total": 16,
+              "trust_total": 5
+            },
+            "intent": {
+              "who": "network-peer",
+              "purpose": "HOSTILE \u2014 daemon egress to classified remote with harm axes",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "HARM_CANDIDATE"
+            },
+            "flow_policy": {
+              "permit": false,
+              "block_scope": "ip",
+              "block_direction": "both",
+              "flow_key": "209.18.47.63:53:network-peer",
+              "zero_cost": false
+            },
+            "kill_eligible": true,
+            "kill_reason": "persistent_beacon",
+            "kill_tier": "lethal",
+            "soul_side": "hell",
+            "hell_chosen": true,
+            "human_touch": "alert",
+            "safe_signal": false,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": false,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 224,
+            "hostility_priority": "hell_first"
+          },
+          {
+            "remote_ip": "162.159.140.229",
+            "remote_port": "443",
+            "process": "firefox",
+            "pid": "2581",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0                                 71.86.186.130:47032        162.159.140.229:443 users:((\"firefox-bin\",pid=2581,fd=96))",
+            "scores": {
+              "user_browser": 9,
+              "media_stream": 4,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 1,
+              "process_trust": 10,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "browser:firefox",
+              "media_stream": "browser_https",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "browser_on_demand",
+              "process_trust": "signed_browser",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 8,
+            "user_total": 23,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "firefox looks like a browser or media app you opened (9/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (10/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "firefox looks like a browser or media app you opened (9/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (10/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 100,
+              "concern_meter": 32,
+              "harm_total": 8,
+              "trust_total": 23
+            },
+            "intent": {
+              "who": "firefox",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "162.159.140.229:443:firefox",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "2606:4700::6812:189f",
+            "remote_port": "443",
+            "process": "grok",
+            "pid": "3324",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv6",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0      [2600:6c47:b001:400:4caf:fd2c:ec21:8b07]:38022 [2606:4700::6812:189f]:443 users:((\"grok\",pid=3324,fd=57))",
+            "scores": {
+              "user_browser": 7,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 7,
+              "process_trust": 8,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "media_app:grok",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "known_media",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 8,
+            "user_total": 15,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 75,
+              "concern_meter": 32,
+              "harm_total": 8,
+              "trust_total": 15
+            },
+            "intent": {
+              "who": "grok",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "2606:4700::6812:189f:443:grok",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "2606:4700::6812:1dea",
+            "remote_port": "443",
+            "process": "grok",
+            "pid": "3324",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv6",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0      [2600:6c47:b001:400:4caf:fd2c:ec21:8b07]:50722 [2606:4700::6812:1dea]:443 users:((\"grok\",pid=3324,fd=26))",
+            "scores": {
+              "user_browser": 7,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 7,
+              "process_trust": 8,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "media_app:grok",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "known_media",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 8,
+            "user_total": 15,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 75,
+              "concern_meter": 32,
+              "harm_total": 8,
+              "trust_total": 15
+            },
+            "intent": {
+              "who": "grok",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "2606:4700::6812:1dea:443:grok",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "2606:4700::6812:1cea",
+            "remote_port": "443",
+            "process": "grok",
+            "pid": "3324",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv6",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0      [2600:6c47:b001:400:4caf:fd2c:ec21:8b07]:43322 [2606:4700::6812:1cea]:443 users:((\"grok\",pid=3324,fd=12))",
+            "scores": {
+              "user_browser": 7,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 7,
+              "process_trust": 8,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "media_app:grok",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "known_media",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 8,
+            "user_total": 15,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 75,
+              "concern_meter": 32,
+              "harm_total": 8,
+              "trust_total": 15
+            },
+            "intent": {
+              "who": "grok",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "2606:4700::6812:1cea:443:grok",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "2606:50c0:8000::153",
+            "remote_port": "443",
+            "process": "firefox",
+            "pid": "2581",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv6",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0      [2600:6c47:b001:400:4caf:fd2c:ec21:8b07]:48816  [2606:50c0:8000::153]:443 users:((\"firefox-bin\",pid=2581,fd=79))",
+            "scores": {
+              "user_browser": 9,
+              "media_stream": 4,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 1,
+              "process_trust": 10,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "browser:firefox",
+              "media_stream": "browser_https",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "browser_on_demand",
+              "process_trust": "signed_browser",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 8,
+            "user_total": 23,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "firefox looks like a browser or media app you opened (9/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (10/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "firefox looks like a browser or media app you opened (9/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (10/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 100,
+              "concern_meter": 32,
+              "harm_total": 8,
+              "trust_total": 23
+            },
+            "intent": {
+              "who": "firefox",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "2606:50c0:8000::153:443:firefox",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "2606:4700::6812:1cea",
+            "remote_port": "443",
+            "process": "grok",
+            "pid": "3324",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv6",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0      [2600:6c47:b001:400:4caf:fd2c:ec21:8b07]:44520 [2606:4700::6812:1cea]:443 users:((\"grok\",pid=3324,fd=38))",
+            "scores": {
+              "user_browser": 7,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 7,
+              "process_trust": 8,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "media_app:grok",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "known_media",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 8,
+            "user_total": 15,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 75,
+              "concern_meter": 32,
+              "harm_total": 8,
+              "trust_total": 15
+            },
+            "intent": {
+              "who": "grok",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "2606:4700::6812:1cea:443:grok",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "2606:4700::6812:189f",
+            "remote_port": "443",
+            "process": "grok",
+            "pid": "3324",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv6",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0      [2600:6c47:b001:400:4caf:fd2c:ec21:8b07]:38030 [2606:4700::6812:189f]:443 users:((\"grok\",pid=3324,fd=59))",
+            "scores": {
+              "user_browser": 7,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 7,
+              "process_trust": 8,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "media_app:grok",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "known_media",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 8,
+            "user_total": 15,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 75,
+              "concern_meter": 32,
+              "harm_total": 8,
+              "trust_total": 15
+            },
+            "intent": {
+              "who": "grok",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "2606:4700::6812:189f:443:grok",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "2606:4700::6812:199f",
+            "remote_port": "443",
+            "process": "grok",
+            "pid": "3324",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv6",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0      [2600:6c47:b001:400:4caf:fd2c:ec21:8b07]:44868 [2606:4700::6812:199f]:443 users:((\"grok\",pid=3324,fd=56))",
+            "scores": {
+              "user_browser": 7,
+              "media_stream": 0,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 7,
+              "process_trust": 8,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "media_app:grok",
+              "media_stream": "none",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "known_media",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 8,
+            "user_total": 15,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session).",
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 75,
+              "concern_meter": 32,
+              "harm_total": 8,
+              "trust_total": 15
+            },
+            "intent": {
+              "who": "grok",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "2606:4700::6812:199f:443:grok",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "2803:f800:53::4",
+            "remote_port": "443",
+            "process": "firefox",
+            "pid": "2581",
+            "state": "ESTAB",
+            "ip_class": "classified_remote",
+            "intel": {
+              "ip_class": "classified_remote",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv6",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0      [2600:6c47:b001:400:4caf:fd2c:ec21:8b07]:37948      [2803:f800:53::4]:443 users:((\"firefox-bin\",pid=2581,fd=99))",
+            "scores": {
+              "user_browser": 9,
+              "media_stream": 4,
+              "search_ephemeral": 0,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 1,
+              "process_trust": 10,
+              "destination_class": 7,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "browser:firefox",
+              "media_stream": "browser_https",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "browser_on_demand",
+              "process_trust": "signed_browser",
+              "destination_class": "classified_remote",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 8,
+            "user_total": 23,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "firefox looks like a browser or media app you opened (9/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (10/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "civilian_indicators": [
+                "firefox looks like a browser or media app you opened (9/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (10/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Public internet peer is not a well-known CDN \u2014 classified remote peer (7/10)."
+              ],
+              "trust_meter": 100,
+              "concern_meter": 32,
+              "harm_total": 8,
+              "trust_total": 23
+            },
+            "intent": {
+              "who": "firefox",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "2803:f800:53::4:443:firefox",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "140.82.113.6",
+            "remote_port": "443",
+            "process": "python3",
+            "pid": "2127971",
+            "state": "ESTAB",
+            "ip_class": "github_cdn",
+            "intel": {
+              "ip_class": "github_cdn",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      211                               71.86.186.130:58650           140.82.113.6:443 users:((\"python3\",pid=2127971,fd=3))",
+            "scores": {
+              "user_browser": 4,
+              "media_stream": 5,
+              "search_ephemeral": 4,
+              "bandwidth_abuse": 2,
+              "stream_theft_risk": 5,
+              "beacon_pattern": 2,
+              "process_trust": 5,
+              "destination_class": 0,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "daemon:python3",
+              "media_stream": "https_cdn",
+              "search_ephemeral": "ephemeral_search_tab",
+              "bandwidth_abuse": "cdn_normal",
+              "stream_theft_risk": "daemon_https_possible_exfil",
+              "beacon_pattern": "fresh",
+              "process_trust": "system_daemon",
+              "destination_class": "github_cdn",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 7,
+            "user_total": 14,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 GitHub for everyone",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "Data amount looks normal for this kind of connection (2/10).",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [],
+              "civilian_indicators": [
+                "Data amount looks normal for this kind of connection (2/10).",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [],
+              "trust_meter": 70,
+              "concern_meter": 28,
+              "harm_total": 7,
+              "trust_total": 14
+            },
+            "intent": {
+              "who": "python3",
+              "purpose": "CIVILIAN \u2014 GitHub for everyone",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "140.82.113.6:443:python3",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "140.82.113.6",
+            "remote_port": "443",
+            "process": "python3",
+            "pid": "2127743",
+            "state": "ESTAB",
+            "ip_class": "github_cdn",
+            "intel": {
+              "ip_class": "github_cdn",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      517                               71.86.186.130:58674           140.82.113.6:443 users:((\"python3\",pid=2127743,fd=3))",
+            "scores": {
+              "user_browser": 4,
+              "media_stream": 5,
+              "search_ephemeral": 4,
+              "bandwidth_abuse": 2,
+              "stream_theft_risk": 5,
+              "beacon_pattern": 2,
+              "process_trust": 5,
+              "destination_class": 0,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "daemon:python3",
+              "media_stream": "https_cdn",
+              "search_ephemeral": "ephemeral_search_tab",
+              "bandwidth_abuse": "cdn_normal",
+              "stream_theft_risk": "daemon_https_possible_exfil",
+              "beacon_pattern": "fresh",
+              "process_trust": "system_daemon",
+              "destination_class": "github_cdn",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 7,
+            "user_total": 14,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 GitHub for everyone",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "Data amount looks normal for this kind of connection (2/10).",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [],
+              "civilian_indicators": [
+                "Data amount looks normal for this kind of connection (2/10).",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [],
+              "trust_meter": 70,
+              "concern_meter": 28,
+              "harm_total": 7,
+              "trust_total": 14
+            },
+            "intent": {
+              "who": "python3",
+              "purpose": "CIVILIAN \u2014 GitHub for everyone",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "140.82.113.6:443:python3",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "140.82.112.3",
+            "remote_port": "443",
+            "process": "python3",
+            "pid": "2118917",
+            "state": "ESTAB",
+            "ip_class": "github_cdn",
+            "intel": {
+              "ip_class": "github_cdn",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      517                               71.86.186.130:45192           140.82.112.3:443 users:((\"python3\",pid=2118917,fd=3))",
+            "scores": {
+              "user_browser": 4,
+              "media_stream": 5,
+              "search_ephemeral": 1,
+              "bandwidth_abuse": 2,
+              "stream_theft_risk": 5,
+              "beacon_pattern": 4,
+              "process_trust": 5,
+              "destination_class": 0,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "daemon:python3",
+              "media_stream": "https_cdn",
+              "search_ephemeral": "normal_churn",
+              "bandwidth_abuse": "cdn_normal",
+              "stream_theft_risk": "daemon_https_possible_exfil",
+              "beacon_pattern": "recurring",
+              "process_trust": "system_daemon",
+              "destination_class": "github_cdn",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 7,
+            "user_total": 14,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 GitHub for everyone",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "Data amount looks normal for this kind of connection (2/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [],
+              "civilian_indicators": [
+                "Data amount looks normal for this kind of connection (2/10).",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [],
+              "trust_meter": 70,
+              "concern_meter": 28,
+              "harm_total": 7,
+              "trust_total": 14
+            },
+            "intent": {
+              "who": "python3",
+              "purpose": "CIVILIAN \u2014 GitHub for everyone",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "140.82.112.3:443:python3",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "140.82.113.6",
+            "remote_port": "443",
+            "process": "python3",
+            "pid": "2126399",
+            "state": "ESTAB",
+            "ip_class": "github_cdn",
+            "intel": {
+              "ip_class": "github_cdn",
+              "label": "Public internet peer",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      211                               71.86.186.130:58686           140.82.113.6:443 users:((\"python3\",pid=2126399,fd=3))",
+            "scores": {
+              "user_browser": 4,
+              "media_stream": 5,
+              "search_ephemeral": 1,
+              "bandwidth_abuse": 2,
+              "stream_theft_risk": 5,
+              "beacon_pattern": 2,
+              "process_trust": 5,
+              "destination_class": 0,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "daemon:python3",
+              "media_stream": "https_cdn",
+              "search_ephemeral": "normal_churn",
+              "bandwidth_abuse": "cdn_normal",
+              "stream_theft_risk": "daemon_https_possible_exfil",
+              "beacon_pattern": "fresh",
+              "process_trust": "system_daemon",
+              "destination_class": "github_cdn",
+              "intel_label": "Public internet peer",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 7,
+            "user_total": 14,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 GitHub for everyone",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "Data amount looks normal for this kind of connection (2/10).",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [],
+              "civilian_indicators": [
+                "Data amount looks normal for this kind of connection (2/10).",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [],
+              "trust_meter": 70,
+              "concern_meter": 28,
+              "harm_total": 7,
+              "trust_total": 14
+            },
+            "intent": {
+              "who": "python3",
+              "purpose": "CIVILIAN \u2014 GitHub for everyone",
+              "direction": "From us \u2192 outbound",
+              "org": "Public internet peer",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "140.82.113.6:443:python3",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "35.186.241.51",
+            "remote_port": "443",
+            "process": "grok",
+            "pid": "3324",
+            "state": "ESTAB",
+            "ip_class": "search_cdn",
+            "intel": {
+              "ip_class": "search_cdn",
+              "label": "Search / social CDN",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0                                 71.86.186.130:57674          35.186.241.51:443 users:((\"grok\",pid=3324,fd=51))",
+            "scores": {
+              "user_browser": 7,
+              "media_stream": 5,
+              "search_ephemeral": 5,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 7,
+              "process_trust": 8,
+              "destination_class": 2,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "media_app:grok",
+              "media_stream": "https_cdn",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "persistent_daemon_session",
+              "process_trust": "known_media",
+              "destination_class": "search_cdn",
+              "intel_label": "Search / social CDN",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 3,
+            "user_total": 20,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated browser egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "Address is a Google/search CDN \u2014 typical when browsing or searching.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "unfriendly_signals": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session)."
+              ],
+              "civilian_indicators": [
+                "grok looks like a browser or media app you opened (7/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (8/10).",
+                "Address is a Google/search CDN \u2014 typical when browsing or searching.",
+                "No cross-correlation with other hostile indicators on this station."
+              ],
+              "hostile_indicators": [
+                "Repeating check-ins to the same server (7/10: persistent_daemon_session)."
+              ],
+              "trust_meter": 100,
+              "concern_meter": 12,
+              "harm_total": 3,
+              "trust_total": 20
+            },
+            "intent": {
+              "who": "grok",
+              "purpose": "CIVILIAN \u2014 operator-initiated browser egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Search / social CDN",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "35.186.241.51:443:grok",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "none",
+            "safe_signal": true,
+            "music_signal": false,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": true,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          },
+          {
+            "remote_ip": "34.107.243.93",
+            "remote_port": "443",
+            "process": "firefox",
+            "pid": "2581",
+            "state": "ESTAB",
+            "ip_class": "stream_cdn",
+            "intel": {
+              "ip_class": "stream_cdn",
+              "label": "Major streaming / web CDN",
+              "org": "",
+              "hostname": "",
+              "confidence": "inferred",
+              "source": "heuristic"
+            },
+            "addr_version": "ipv4",
+            "traffic_direction": "from_us",
+            "traffic_direction_label": "From us \u2192 outbound",
+            "line": "tcp ESTAB      0      0                                 71.86.186.130:45502          34.107.243.93:443 users:((\"firefox-bin\",pid=2581,fd=85))",
+            "scores": {
+              "user_browser": 9,
+              "media_stream": 9,
+              "search_ephemeral": 1,
+              "bandwidth_abuse": 1,
+              "stream_theft_risk": 0,
+              "beacon_pattern": 1,
+              "process_trust": 10,
+              "destination_class": 1,
+              "threat_linked": 0,
+              "operator_auth": 0
+            },
+            "notes": {
+              "user_browser": "browser:firefox",
+              "media_stream": "https_cdn,browser_https",
+              "search_ephemeral": "stable_session",
+              "bandwidth_abuse": "user_app_expected",
+              "stream_theft_risk": "user_media_path",
+              "beacon_pattern": "browser_on_demand",
+              "process_trust": "signed_browser",
+              "destination_class": "stream_cdn",
+              "intel_label": "Major streaming / web CDN",
+              "intel_org": "",
+              "threat_linked": "clean",
+              "operator_auth": "not_authorized"
+            },
+            "harm_total": 2,
+            "user_total": 28,
+            "verdict": "USER_OK",
+            "iff": "CIVILIAN",
+            "iff_class": "AUTHORIZED",
+            "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+            "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+            "reason": "CIVILIAN \u2014 operator-initiated media egress",
+            "block_recommended": false,
+            "trust_rank": 0,
+            "requires_user_trust": false,
+            "direction": "out",
+            "suggestion": {
+              "summary": "CIVILIAN \u00b7 AUTHORIZED \u2014 operator-initiated browser or media egress.",
+              "action": "No action \u2014 civilian egress confirmed. Maintain watch.",
+              "iff": "CIVILIAN",
+              "iff_class": "AUTHORIZED",
+              "iff_label": "CIVILIAN \u00b7 AUTHORIZED",
+              "enforcement": "PASS \u2014 operator-initiated egress confirmed",
+              "friendly_signals": [
+                "firefox looks like a browser or media app you opened (9/10).",
+                "HTTPS/stream pattern matches normal video or web traffic (9/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (10/10)."
+              ],
+              "unfriendly_signals": [],
+              "civilian_indicators": [
+                "firefox looks like a browser or media app you opened (9/10).",
+                "HTTPS/stream pattern matches normal video or web traffic (9/10).",
+                "Data amount looks normal for this kind of connection (1/10).",
+                "Not using suspicious stream-theft style ports.",
+                "On-demand egress \u2014 no persistent beacon signature.",
+                "Process on consumer whitelist \u2014 civilian classification corroborated (10/10)."
+              ],
+              "hostile_indicators": [],
+              "trust_meter": 100,
+              "concern_meter": 8,
+              "harm_total": 2,
+              "trust_total": 28
+            },
+            "intent": {
+              "who": "firefox",
+              "purpose": "CIVILIAN \u2014 operator-initiated media egress",
+              "direction": "From us \u2192 outbound",
+              "org": "Major streaming / web CDN",
+              "verdict": "USER_OK"
+            },
+            "flow_policy": {
+              "permit": true,
+              "block_scope": "none",
+              "block_direction": null,
+              "flow_key": "34.107.243.93:443:firefox",
+              "zero_cost": true
+            },
+            "kill_eligible": false,
+            "kill_reason": "",
+            "kill_tier": "none",
+            "soul_side": "heaven",
+            "hell_chosen": false,
+            "human_touch": "music",
+            "safe_signal": true,
+            "music_signal": true,
+            "traffic_signal": false,
+            "animal_signal": false,
+            "train_signal": false,
+            "touch_silent": false,
+            "touch_motto": "A human should never feel a touch if it is a safe signal. Music, normal car traffic, animals, and Train are different.",
+            "hostility_score": 0,
+            "hostility_priority": "normal"
+          }
+        ]
+      },
+      "sovereign_sync": {
+        "schema": "sovereign-sync-manifest/v1",
+        "updated": "2026-07-02T04:31:43.337844Z",
+        "motto": "One clock \u2014 every section syncs; redundant, secure, never lose data",
+        "sections": [
+          "dns",
+          "dhcp",
+          "ntp",
+          "sovereign",
+          "operator",
+          "refield",
+          "underlay",
+          "panel",
+          "services",
+          "gate",
+          "general"
+        ],
+        "section_stamps": {},
+        "cycle": {
+          "cycle": 0,
+          "never_lost": true,
+          "threats": 0,
+          "last_threats": [],
+          "services": {},
+          "anchor_pulse": null,
+          "anchor_verdict": null,
+          "derived_utc": "2026-07-02T04:31:43.431986Z",
+          "linear_ns": 1782966703432052388
+        },
+        "anchor": {},
+        "ledger_lines": 0,
+        "redundant_files": 1,
+        "mirrors": [
+          "sovereign-time-anchor.json",
+          "sovereign-cycle-state.json",
+          "sovereign-time-pulse.json",
+          "sovereign-linear-time.json",
+          "field-operator-clock-anchor.json",
+          "sovereign-section-stamps.json"
+        ],
+        "never_lose_cycle": true,
+        "never_lose_data": true,
+        "never_misconstrued": true,
+        "never_desync": true,
+        "clock_source": "sovereign_linear",
+        "authoritative_module": "lib/sovereign-clock.py",
+        "fabric_encrypt": {
+          "slots": 4,
+          "zero_cost_idle": true,
+          "free": true,
+          "amouranthrtx": "FieldFabric.dispatchExtended"
+        },
+        "mirror": {
+          "mirrored": [
+            "sovereign-linear-time.json"
+          ],
+          "digests": {
+            "sovereign-linear-time.json": "e02280bf3ef46aeb"
+          },
+          "at": "2026-07-02T04:31:43.521902Z"
+        }
+      },
+      "znetwork": {
+        "operator": {},
+        "status": {}
+      },
+      "managed_live": 2,
+      "legacy_shims_live": 5,
+      "secured": true,
+      "policy": {
+        "managed": [
+          "field_net",
+          "znetwork_shadow",
+          "sovereign_sync"
+        ],
+        "legacy_compat": [
+          "http",
+          "https",
+          "dns",
+          "tcp",
+          "tls",
+          "websocket"
+        ]
+      },
+      "api": "/api/sovereign-protocol",
+      "ok": true
+    },
+    "ok": true,
     "api": "/api/field-legacy-connect"
   },
   "servers_updated": null,
   "fast": true,
   "pages": true,
   "lane": "pages-surfaces",
-  "exported": "2026-07-04T02:05:50Z"
+  "exported": "2026-07-04T03:20:44Z"
 }

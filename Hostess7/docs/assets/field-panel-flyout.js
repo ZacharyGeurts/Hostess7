@@ -105,6 +105,7 @@
         );
       })() +
       '<div class="fpnl-actions">' +
+      '<button type="button" class="fpnl-btn" data-act="botnet"><strong>Botnet</strong>DNS · DHCP · GitHub</button>' +
       '<button type="button" class="fpnl-btn" data-act="monster"><strong>Monster</strong>Tasks · orphans · fixes</button>' +
       '<button type="button" class="fpnl-btn" data-act="registry"><strong>Registry</strong>Endpoint movements</button>' +
       '<button type="button" class="fpnl-btn" data-act="perf"><strong>Performance</strong>Live graphs</button>' +
@@ -119,7 +120,19 @@
       btn.addEventListener("click", function (ev) {
         ev.stopPropagation();
         const act = btn.dataset.act;
-        if (act === "monster" && global.FieldMonsterMonitor?.open) global.FieldMonsterMonitor.open();
+        if (act === "botnet") {
+          if (global.NexusFieldShell?.launch) {
+            global.NexusFieldShell.launch({
+              id: "nexus-dns",
+              name: "Botnet · DNS & DHCP",
+              exec: apiUrl("/command?embed=1#dns"),
+              shell: true,
+              icon_url: "/assets/queen-prog-field.png",
+            });
+          } else {
+            global.open(apiUrl("/command?embed=1#dns"), "_blank", "noopener");
+          }
+        } else if (act === "monster" && global.FieldMonsterMonitor?.open) global.FieldMonsterMonitor.open();
         else if (act === "perf" && global.FieldPerformanceFlyout?.setOpen) global.FieldPerformanceFlyout.setOpen(true);
         else if (act === "registry") global.open(apiUrl("/api/field-endpoint-registry.json"), "_blank", "noopener");
         else if (act === "github" && global.Hostess7GithubEveryone?.pulse) global.Hostess7GithubEveryone.pulse();

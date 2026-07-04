@@ -160,7 +160,13 @@ html.fsl-desktop-hidden #hd-monitor {
   box-shadow: inset 0 1px 0 rgba(244, 114, 182, 0.1);
 }
 
-/* IRONCLAD — F9..F12 fast switch panel (DO NOT REMOVE) */
+/* IRONCLAD — F-key stack (keyboard only; visual overlay hidden) */
+.fsl-fast-switch,
+.fsl-hud,
+.fsl-bar .fsl-kbd {
+  display: none !important;
+}
+
 .fsl-fast-switch {
   position: fixed;
   left: 10px;

@@ -157,14 +157,14 @@
   <div class="kh-shell">
     <main class="kh-main" aria-label="KILROY field home">
       <div class="kh-seal">
-        <p class="kh-eyebrow">Layer -2 · DNS · KILROY lane · F10</p>
+        <p class="kh-eyebrow">Layer −2 · Botnet · DNS · DHCP</p>
         <h1 class="kh-name">KILROY</h1>
         <p class="kh-motto">DNS lane — loopback · defense · self-hosted Truth DNS + Field DHCP. We host these servers ourselves.</p>
         <div class="kh-stack" aria-label="Stack layers">
-          <span class="kh-pill">NEXUS C2 · F9</span>
-          <span class="kh-pill kh-pill--rose">DNS · DHCP · F10</span>
-          <span class="kh-pill">Queen · F11</span>
-          <span class="kh-pill kh-pill--rose">Userland · F12</span>
+          <span class="kh-pill">NEXUS C2</span>
+          <span class="kh-pill kh-pill--rose">Botnet · DNS · DHCP</span>
+          <span class="kh-pill">AmmoOS</span>
+          <span class="kh-pill kh-pill--rose">Hostess 7</span>
         </div>
         <section class="kh-update" aria-label="Personal update lane">
           <h2>Sovereign update</h2>
@@ -172,7 +172,8 @@
           <div class="kh-actions">
             <a class="kh-btn" id="kh-h7" href="https://zacharygeurts.github.io/H7updater/" target="_top" rel="noopener">H7updater</a>
             <a class="kh-btn" href="queen-nexus-c2.html" target="_top">NEXUS C2</a>
-            <a class="kh-btn kh-btn--rose" id="kh-dns" href="/command?embed=1#dns" target="_top">DNS &amp; DHCP</a>
+            <a class="kh-btn kh-btn--rose" id="kh-dns" href="/command?embed=1#dns" target="_top">Botnet DNS &amp; DHCP</a>
+            <a class="kh-btn kh-btn--rose" id="kh-botnet" href="/command?embed=1#dns" target="_top">Botnet Panel</a>
             <a class="kh-btn kh-btn--rose" href="kilroy-universal-terminal.html" target="_top">Universal CLI</a>
             <a class="kh-btn" href="https://github.com/ZacharyGeurts/Hostess7/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
           </div>
@@ -190,28 +191,37 @@
       var el = document.getElementById("kh-status");
       var h7 = document.getElementById("kh-h7");
       var dns = document.getElementById("kh-dns");
+      var botnet = document.getElementById("kh-botnet");
       var base = "";
       try {
         if (document.body && document.body.dataset.pagesRuntime === "1") {
           base = (window.HOSTESS7_PAGES_BASE || "/Hostess7").replace(/\/$/, "");
           if (h7) h7.href = base + "/h7updater/";
           if (dns) dns.href = base + "/command/?embed=1#dns";
+          if (botnet) botnet.href = base + "/command/?embed=1#dns";
         }
       } catch (_) {}
       var panel = base || "http://127.0.0.1:9477";
       Promise.allSettled([
+        fetch(panel + "/api/field-botnet-dns-dhcp", { cache: "no-store" }).then(function (r) {
+          return r.ok ? r.json() : null;
+        }),
         fetch(panel + "/api/znetwork", { cache: "no-store" }),
-        fetch(panel + "/api/field-keyboard-sovereign", { cache: "no-store" }),
       ]).then(function (results) {
-        var zn = results[0].status === "fulfilled" && results[0].value.ok;
-        var kb = results[1].status === "fulfilled" && results[1].value.ok;
+        var doc = results[0].status === "fulfilled" ? results[0].value : null;
+        var zn = results[1].status === "fulfilled" && results[1].value.ok;
         if (!el) return;
-        if (zn && kb) {
-          el.innerHTML = "<strong>ZNetwork</strong> active · keyboard sovereignty engaged · loopback held";
+        var nodes = doc && (doc.node_count || doc.nodes || doc.botnet_nodes);
+        var gh = doc && doc.github_open;
+        if (doc && doc.ok !== false) {
+          el.innerHTML =
+            "<strong>Botnet</strong> " + (nodes != null ? nodes + " nodes" : "linked") +
+            (gh ? " · <strong>GitHub open</strong>" : "") +
+            " · Truth DNS + Field DHCP";
         } else if (zn) {
-          el.innerHTML = "<strong>ZNetwork</strong> active · panel keyboard hooks pending";
+          el.innerHTML = "<strong>ZNetwork</strong> active · botnet panel linking…";
         } else {
-          el.textContent = "Field stack warming — use sovereign update lane above";
+          el.textContent = "Field stack warming — open Botnet DNS & DHCP panel above";
         }
       }).catch(function () {});
     })();
