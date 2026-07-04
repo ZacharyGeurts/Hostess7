@@ -565,19 +565,23 @@
       .catch(function () {});
   }
 
-  async function refresh() {
-    const loading = document.getElementById("hd-loading");
-    if (loading) loading.classList.remove("hidden");
-    fillViewport();
+  function mountStartbar(doc) {
+    const sb = document.getElementById("fsb-mount");
+    if (!sb || !window.FieldStartbar?.mount) return false;
     try {
-      const res = await fetch(apiUrl("/api/field-host-desktop"), { credentials: "same-origin" });
-      if (!res.ok) throw new Error("desktop API " + res.status);
-      const doc = await res.json();
-      applyDesktop(doc);
+      window.FieldStartbar.mount(sb, doc);
+      return !!document.getElementById("fsb-start");
+    } catch (_) {
+      return false;
+    }
+  }
 
+  function mountDesktopChrome(doc) {
+    const policy = doc?.policy || {};
+    mountStartbar(doc);
+
+    try {
       const mon = document.getElementById("hd-monitor");
-      const policy = doc?.policy || {};
-      const showAmmoNetBottom = policy.ammonet_bar_bottom !== false && policy.ammonet_display_right === false;
       const showWall = policy.six_tool_wall === true && policy.six_tool_wall_on_boot !== false;
       if (mon) {
         mon.classList.add("hd-monitor--hidden");
@@ -592,13 +596,16 @@
           }));
         }
       }
+    } catch (_) {}
+
+    try {
+      const showAmmoNetBottom = policy.ammonet_bar_bottom !== false && policy.ammonet_display_right === false;
       if (showAmmoNetBottom && window.FieldAmmoNetDisplay?.mountBottom) {
         window.FieldAmmoNetDisplay.mountBottom();
       }
+    } catch (_) {}
 
-      const sb = document.getElementById("fsb-mount");
-      if (sb && window.FieldStartbar) window.FieldStartbar.mount(sb, doc);
-
+    try {
       if (window.FieldDesktopScale) {
         const shell = doc?.shell?.settings || {};
         window.FieldDesktopScale.apply({
@@ -606,14 +613,45 @@
           desktop_icon_size: shell.desktop_icon_size || policy.desktop_icon_size_default || 96,
         }, { silent: true });
       }
+    } catch (_) {}
 
+    try {
       if (window.NexusFieldShell) window.NexusFieldShell.mount(doc);
+    } catch (_) {}
 
+    try {
       const tm = document.getElementById("c2tm-mount");
       if (tm && window.FieldC2TaskManager) window.FieldC2TaskManager.mount(tm);
+    } catch (_) {}
+  }
 
+  async function fetchDesktopDoc() {
+    const res = await fetch(apiUrl("/api/field-host-desktop"), { credentials: "same-origin" });
+    if (res.ok) return res.json();
+    if (pagesRuntime()) {
+      const jres = await fetch(apiUrl("/api/field-host-desktop.json"), { credentials: "same-origin" });
+      if (jres.ok) return jres.json();
+    }
+    throw new Error("desktop API " + res.status);
+  }
+
+  function ensureStartbar() {
+    if (document.getElementById("fsb-start")) return true;
+    const doc = state.data || global.__H7_DESKTOP_DOC__;
+    if (doc) return mountStartbar(doc);
+    return false;
+  }
+
+  async function refresh() {
+    const loading = document.getElementById("hd-loading");
+    if (loading) loading.classList.remove("hidden");
+    fillViewport();
+    try {
+      const doc = await fetchDesktopDoc();
+      applyDesktop(doc);
+      mountDesktopChrome(doc);
       engageKeyboardSovereign();
-      runInternetCleanIfDefault(policy);
+      runInternetCleanIfDefault(doc?.policy || {});
       if (pagesRuntime()) toast("AmmoOS desktop ready · click an icon to launch");
     } catch (e) {
       // Static GitHub Pages fallback for Hostess7/desktop/ — this IS our AmmoOS OS desktop.
@@ -630,10 +668,7 @@
         secure_routing: "NEXUS C2 + H7/Field Tech (all GitHub/X via our router, no middlemen)"
       };
       applyDesktop(staticDoc);
-
-      const sb = document.getElementById("fsb-mount");
-      if (sb && window.FieldStartbar) window.FieldStartbar.mount(sb, staticDoc);
-
+      mountDesktopChrome(staticDoc);
       if (pagesRuntime()) toast("AmmoOS desktop ready · Classic icons · Start menu");
     } finally {
       if (loading) loading.classList.add("hidden");
@@ -649,6 +684,8 @@
     renderDesktopIcons: renderDesktopIcons,
     toggleDesktopPin: toggleDesktopPin,
     openQueenBrowserClean: openQueenBrowserClean,
+    ensureStartbar: ensureStartbar,
+    mountStartbar: mountStartbar,
   };
 
   window.addEventListener("pagehide", function () {

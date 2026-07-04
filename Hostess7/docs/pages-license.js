@@ -21,6 +21,7 @@
     var b = document.body;
     if (!b) return true;
     if (b.dataset && b.dataset.noLicenseStrip === "1") return true;
+    if (document.documentElement.dataset.ammoosDesktop === "1") return true;
     return false;
   }
 
