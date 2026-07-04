@@ -3316,6 +3316,20 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in (
+            "/api/field-planetary-speed",
+            "/api/field-planetary-speed/manage",
+            "/api/planetary-speed",
+        ):
+            cmd = "manage" if path.endswith("/manage") else "json"
+            payload = _nexus_py_json(
+                INSTALL_ROOT / "lib" / "field-planetary-speed.py",
+                [cmd],
+                timeout=120 if cmd == "manage" else 30,
+            )
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path in (
             "/api/field-internet-unclean-hostile",
             "/api/field-internet-unclean-hostile/fry",
             "/api/internet-unclean-hostile",

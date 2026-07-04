@@ -1,0 +1,36 @@
+{
+  "schema": "field-planetary-speed/v1",
+  "title": "Planetary speed — thermal-aware field network for everyone",
+  "boss": "hostess7",
+  "motto": "Whole field running — reduce entropy on the path, manage all traffic everywhere, watch thermals.",
+  "policy": {
+    "thermal_gated": true,
+    "hardware_considerate": true,
+    "entropy_reduction_on_path": true,
+    "manage_all_traffic": true,
+    "planet_edge_relays": true,
+    "dns_cache_fold": true,
+    "bench_when_safe": true,
+    "never_blast_under_heat": true
+  },
+  "thermal_tiers": {
+    "full": {"headroom_min_pct": 45, "speed_factor": 1.0, "bench": "full"},
+    "normal": {"headroom_min_pct": 25, "speed_factor": 0.75, "bench": "light"},
+    "throttle": {"headroom_min_pct": 10, "speed_factor": 0.5, "bench": "dns_only"},
+    "pause": {"headroom_min_pct": 0, "speed_factor": 0.25, "bench": "none"}
+  },
+  "traffic_lanes": ["dns", "dhcp", "http", "io_packet", "botnet_egress", "ammonet", "github", "everything"],
+  "sources": [
+    "lib/field-thermal-guard.py",
+    "lib/field-unified-bus.py",
+    "lib/field-io-packet.py",
+    "lib/field-botnet-dns-dhcp.py",
+    "lib/field-planetary-dns-dhcp.py",
+    "lib/field-physics-witness.py",
+    "scripts/field-stack-benchmark.py"
+  ],
+  "module": "lib/field-planetary-speed.py",
+  "api": "/api/field-planetary-speed",
+  "pages_api": "/api/field-planetary-speed.json",
+  "ironclad_cite": "ironclad:planetary-speed:1"
+}

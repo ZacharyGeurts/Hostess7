@@ -90,6 +90,22 @@ if p.is_file():
     w = d.get('worldwide_suppression') or {}
     print('Internet open:', w.get('internet_open'), '| unclean hostile:', w.get('unclean_is_hostile'), '| unclean:', w.get('unclean_count'))
     print('Fry threats:', w.get('foreign_threat_count'), '| sole:', w.get('sole_authority'))
+" 2>/dev/null || true
+
+NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+  python3 "${ROOT}/lib/field-planetary-speed.py" manage \
+  > "${ROOT}/Hostess7/docs/api/field-planetary-speed.json" 2>/dev/null || true
+python3 -c "
+import json
+from pathlib import Path
+p = Path('${ROOT}/Hostess7/docs/api/field-planetary-speed.json')
+if p.is_file():
+    d = json.loads(p.read_text())
+    t = d.get('thermal') or {}
+    c = d.get('counts') or {}
+    print('PLANET SPEED tier:', t.get('tier'), '| factor:', t.get('speed_factor'))
+    print('Entropy reduction:', c.get('entropy_reduction_pct'), '% | avg latency:', c.get('avg_latency_ms'), 'ms')
+    print('Edge nodes:', c.get('edge_nodes'), '| field running:', (d.get('field_network') or {}).get('whole_field'))
     print('Track devices not numbers:', d.get('track_devices_not_numbers'))
     ia = d.get('internet_arbitrary') or {}
     print('Internet arbitrary:', ia.get('arbitrary_ipv4'), '| it just works:', ia.get('it_just_works'))

@@ -1627,6 +1627,15 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     (API / "field-device-map.json").write_text(json.dumps(device_map, indent=2) + "\n", encoding="utf-8")
     files.append("field-device-map.json")
 
+    planetary_speed = _run_nl_script_json("lib/field-planetary-speed.py", ["panel"], timeout=120)
+    if not planetary_speed.get("schema"):
+        planetary_speed = {**stub, "schema": "field-planetary-speed/v1", "counts": {}, "partial": True}
+    planetary_speed["pages"] = True
+    (API / "field-planetary-speed.json").write_text(
+        json.dumps(planetary_speed, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-planetary-speed.json")
+
     planetary_dns_dhcp = _run_nl_script_json("lib/field-planetary-dns-dhcp.py", ["panel"], timeout=90)
     if not planetary_dns_dhcp.get("schema"):
         planetary_dns_dhcp = {

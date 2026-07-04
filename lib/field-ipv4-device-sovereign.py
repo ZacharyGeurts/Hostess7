@@ -304,6 +304,9 @@ def manage(*, auto: bool = True) -> dict[str, Any]:
     _run_json("lib/field-internet-unclean-hostile.py", ["fry"], timeout=45)
     actions.append({"step": "unclean_hostile_fry"})
 
+    _run_json("lib/field-planetary-speed.py", ["manage"], timeout=120)
+    actions.append({"step": "planetary_speed"})
+
     _run_json("lib/field-device-map.py", ["panel"], timeout=60)
     actions.append({"step": "device_map"})
 
