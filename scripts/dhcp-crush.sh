@@ -15,6 +15,7 @@ export NEXUS_FIELD_DHCP_PING_PROBE="${NEXUS_FIELD_DHCP_PING_PROBE:-0}"
 export NEXUS_FIELD_INTERNET_UNRESTRICT="${NEXUS_FIELD_INTERNET_UNRESTRICT:-1}"
 export NEXUS_FIELD_DNS_FOREIGN_BLOCK="${NEXUS_FIELD_DNS_FOREIGN_BLOCK:-0}"
 export NEXUS_FIELD_FOREIGN_DNS_DHCP_THREAT="${NEXUS_FIELD_FOREIGN_DNS_DHCP_THREAT:-0}"
+export NEXUS_FIELD_INTERNET_UNCLEAN_HOSTILE="${NEXUS_FIELD_INTERNET_UNCLEAN_HOSTILE:-1}"
 
 PGREP="${PGREP:-/usr/bin/pgrep}"
 
@@ -87,7 +88,8 @@ if p.is_file():
     d = json.loads(p.read_text())
     print('IPv4 sovereign:', d.get('all_ipv4_every_box'), '| devices:', d.get('device_count'))
     w = d.get('worldwide_suppression') or {}
-    print('Internet open:', w.get('internet_open'), '| foreign blocks:', w.get('foreign_dns_dhcp_off'), '| sole:', w.get('sole_authority'))
+    print('Internet open:', w.get('internet_open'), '| unclean hostile:', w.get('unclean_is_hostile'), '| unclean:', w.get('unclean_count'))
+    print('Fry threats:', w.get('foreign_threat_count'), '| sole:', w.get('sole_authority'))
     print('Track devices not numbers:', d.get('track_devices_not_numbers'))
     ia = d.get('internet_arbitrary') or {}
     print('Internet arbitrary:', ia.get('arbitrary_ipv4'), '| it just works:', ia.get('it_just_works'))

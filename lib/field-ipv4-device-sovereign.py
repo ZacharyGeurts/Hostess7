@@ -222,15 +222,19 @@ def _worldwide_suppression() -> dict[str, Any]:
     node_count = int((botnet.get("bot_network") or {}).get("node_count") or 0)
     enforce = collision.get("enforce") or {}
     internet_open = bool(collision.get("internet_open", True))
+    unclean_hostile = bool(collision.get("unclean_is_hostile", True))
+    unclean = _run_json("lib/field-internet-unclean-hostile.py", ["json"], timeout=15)
     return {
-        "active": not internet_open,
+        "active": unclean_hostile,
         "internet_open": internet_open,
+        "unclean_is_hostile": unclean_hostile,
+        "unclean_count": unclean.get("unclean_count", 0),
         "foreign_dns_dhcp_off": False,
-        "foreign_threat_count": 0 if internet_open else collision.get("foreign_threat_count", 0),
-        "threats_eradicated": 0 if internet_open else enforce.get("threats_eradicated", 0),
+        "foreign_threat_count": collision.get("foreign_threat_count", 0) if unclean_hostile else 0,
+        "threats_eradicated": enforce.get("threats_eradicated", 0),
         "sole_authority": (collision.get("sole_authority") or {}).get("ok"),
-        "suppressor_nodes": 0 if internet_open else node_count + 1,
-        "motto": "Internet open — no blocks for anyone behind restricted",
+        "suppressor_nodes": node_count + 1 if unclean_hostile else 0,
+        "motto": "Unclean internet is hostile — fry the polluters; users stay open",
     }
 
 
@@ -296,6 +300,9 @@ def manage(*, auto: bool = True) -> dict[str, Any]:
 
     _run_json("lib/field-internet-unrestrict.py", ["apply"], timeout=25)
     actions.append({"step": "internet_unrestrict"})
+
+    _run_json("lib/field-internet-unclean-hostile.py", ["fry"], timeout=45)
+    actions.append({"step": "unclean_hostile_fry"})
 
     _run_json("lib/field-device-map.py", ["panel"], timeout=60)
     actions.append({"step": "device_map"})

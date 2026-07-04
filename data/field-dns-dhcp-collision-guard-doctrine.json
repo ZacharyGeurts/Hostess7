@@ -2,8 +2,9 @@
   "schema": "field-dns-dhcp-collision-guard/v1",
   "title": "DNS/DHCP collision guard — lease hygiene and sole serve",
   "boss": "hostess7",
-  "motto": "Prevent lease collisions and duplicate serves. Internet open — no foreign blocks.",
+  "motto": "Internet open for users. Anything making unclean internet is hostile.",
   "policy": {
+    "unclean_is_hostile": true,
     "prevent_lease_collisions": true,
     "ping_probe_before_offer": false,
     "prune_duplicate_serve_loops": true,

@@ -1,0 +1,27 @@
+{
+  "schema": "field-internet-unclean-hostile/v1",
+  "title": "Unclean internet is hostile — fry the polluters",
+  "boss": "hostess7",
+  "motto": "Internet stays open for everyone. Anything that makes it unclean — restriction, hijack, poison, telemetry, delay — is hostile.",
+  "policy": {
+    "unclean_is_hostile": true,
+    "internet_open_for_users": true,
+    "eradicate_unclean_makers": true,
+    "register_field_hostile": true,
+    "nft_block_hostile_only": true,
+    "vectors": [
+      "foreign_dhcp_hijack",
+      "foreign_dns_poison",
+      "resolver_restriction",
+      "delay_as_threat",
+      "dns_drift",
+      "telemetry_injection",
+      "stub_resolver_poison",
+      "isp_dns_redirect",
+      "access_restriction"
+    ]
+  },
+  "module": "lib/field-internet-unclean-hostile.py",
+  "api": "/api/field-internet-unclean-hostile",
+  "ironclad_cite": "ironclad:internet-unclean-hostile:1"
+}

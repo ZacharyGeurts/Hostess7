@@ -1666,6 +1666,15 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("field-ipv4-device-sovereign.json")
 
+    unclean_hostile = _run_nl_script_json("lib/field-internet-unclean-hostile.py", ["panel"], timeout=30)
+    if not unclean_hostile.get("schema"):
+        unclean_hostile = {**stub, "schema": "field-internet-unclean-hostile/v1", "unclean_makers": [], "partial": True}
+    unclean_hostile["pages"] = True
+    (API / "field-internet-unclean-hostile.json").write_text(
+        json.dumps(unclean_hostile, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-internet-unclean-hostile.json")
+
     internet_unrestrict = _run_nl_script_json("lib/field-internet-unrestrict.py", ["panel"], timeout=20)
     if not internet_unrestrict.get("schema"):
         internet_unrestrict = {**stub, "schema": "field-internet-unrestrict/v1", "partial": True}

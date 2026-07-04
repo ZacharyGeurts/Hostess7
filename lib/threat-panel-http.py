@@ -3315,6 +3315,20 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
+        if path in (
+            "/api/field-internet-unclean-hostile",
+            "/api/field-internet-unclean-hostile/fry",
+            "/api/internet-unclean-hostile",
+        ):
+            cmd = "fry" if path.endswith("/fry") else "json"
+            payload = _nexus_py_json(
+                INSTALL_ROOT / "lib" / "field-internet-unclean-hostile.py",
+                [cmd],
+                timeout=60 if cmd == "fry" else 20,
+            )
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
         if path in ("/api/field-internet-unrestrict", "/api/field-internet-unrestrict/apply", "/api/internet-unrestrict"):
             cmd = "apply" if path.endswith("/apply") else "json"
             payload = _nexus_py_json(

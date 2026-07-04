@@ -45,6 +45,13 @@ def _internet_unrestricted() -> bool:
     return not policy.get("foreign_server_is_threat", True)
 
 
+def _unclean_is_hostile() -> bool:
+    if os.environ.get("NEXUS_FIELD_INTERNET_UNCLEAN_HOSTILE", "1").strip().lower() in ("0", "false", "no", "off"):
+        return False
+    unclean_doc = _load(INSTALL / "data" / "field-internet-unclean-hostile-doctrine.json", {})
+    return bool((unclean_doc.get("policy") or {}).get("unclean_is_hostile", True))
+
+
 def _load(path: Path, default: Any = None) -> Any:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -273,7 +280,7 @@ def _probe_foreign_dhcp_offer() -> dict[str, Any] | None:
 
 
 def _foreign_server_threats(takeover: dict[str, Any]) -> list[dict[str, Any]]:
-    if _internet_unrestricted():
+    if _internet_unrestricted() and not _unclean_is_hostile():
         return []
     inc = takeover.get("incumbents") or {}
     phase = str(takeover.get("phase") or "observing")
@@ -291,6 +298,27 @@ def _foreign_server_threats(takeover: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _punish_foreign_servers(takeover: dict[str, Any]) -> list[dict[str, Any]]:
+    if _internet_unrestricted() and _unclean_is_hostile():
+        py = INSTALL / "lib" / "field-internet-unclean-hostile.py"
+        if py.is_file():
+            try:
+                proc = subprocess.run(
+                    [sys.executable, str(py), "fry"],
+                    cwd=str(INSTALL),
+                    capture_output=True,
+                    text=True,
+                    timeout=45,
+                    env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)},
+                )
+                raw = (proc.stdout or "").strip()
+                if raw.startswith("{"):
+                    doc = json.loads(raw)
+                    fry = doc.get("fry") or {}
+                    return [{"action": "fry_unclean_hostile", **fry}]
+            except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+                pass
+        _apply_internet_unrestrict()
+        return [{"action": "fry_unclean_hostile", "partial": True}]
     if _internet_unrestricted():
         _apply_internet_unrestrict()
         return [{"action": "internet_unrestricted", "foreign_threats": 0}]
@@ -454,8 +482,9 @@ def detect_collisions(*, refresh_takeover: bool = False) -> dict[str, Any]:
         "duplicate_processes": len(proc_rows),
         "incumbent_conflicts": len(inc_rows),
         "foreign_server_threats": foreign_threats,
-        "foreign_threat_count": 0 if _internet_unrestricted() else len(foreign_threats),
-        "only_our_dns_dhcp": not _internet_unrestricted(),
+        "foreign_threat_count": len(foreign_threats) if _unclean_is_hostile() else (0 if _internet_unrestricted() else len(foreign_threats)),
+        "unclean_is_hostile": _unclean_is_hostile(),
+        "only_our_dns_dhcp": not _internet_unrestricted() and not _unclean_is_hostile(),
         "internet_open": _internet_unrestricted(),
         "sole_authority": sole,
         "takeover_phase": takeover.get("phase"),
