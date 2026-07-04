@@ -3369,7 +3369,12 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in ("/api/field-rescue-ingress", "/api/rescue-ingress"):
-            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-rescue-ingress.py", ["rescue"], timeout=120)
+            payload = _nexus_py_json(INSTALL_ROOT / "lib/field-rescue-ingress.py", ["rescue"], timeout=120)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-grow-watch", "/api/grow-watch"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib/field-grow-watch.py", ["json"], timeout=25)
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
@@ -8499,6 +8504,8 @@ class Handler(BaseHTTPRequestHandler):
             target = PANEL_DIR / "mspaint.html"
         elif path in ("/field-ping", "/field-ping/"):
             target = PANEL_DIR / "field-ping.html"
+        elif path in ("/field-grow-watch", "/field-grow-watch/"):
+            target = PANEL_DIR / "field-grow-watch.html"
         elif path in ("/field-popcorn", "/field-popcorn/"):
             target = PANEL_DIR / "field-popcorn.html"
         elif path in ("/ammocode", "/ammocode/"):

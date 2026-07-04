@@ -159,6 +159,8 @@ Hostess 7 — one being · talk window (text + graphics)
   ./scripts/fire-field-repo.sh refire                 RE-FIRE stale field route (never disable)
   ./scripts/sweep-github-planet.sh                  Planet GitHub sweep → true DNS/DHCP index
   ./scripts/sweep-github-planet.sh --refire           RE-FIRE all stale routes from sweep doctrine
+  ./scripts/field-grow-watch.sh                     Live grow TUI — population · logical edges · DHCP/DNS
+  ./scripts/field-grow-watch.sh bash                Plain bash loop (no curses)
   ./Hostess7.sh learn-online          Alias for go-online
   ./Hostess7.sh online-wants          Show curated online learning plan (no fetch)
   ./Hostess7.sh memes-ingest seed     Ingest github.com/ZacharyGeurts/memes (image talk)
