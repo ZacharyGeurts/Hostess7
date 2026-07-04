@@ -8,6 +8,7 @@ import json
 import os
 import socket
 import struct
+import subprocess
 import threading
 import time
 from datetime import datetime, timedelta, timezone
@@ -74,7 +75,25 @@ def _legacy_dns_servers_v4() -> list[str]:
 
 
 LEGACY_DNS_SERVERS = _legacy_dns_servers_v4()
-BIND_IF = os.environ.get("NEXUS_FIELD_DHCP_BIND", "0.0.0.0")
+
+
+def _bind_if() -> str:
+    raw = os.environ.get("NEXUS_FIELD_DHCP_BIND", "").strip()
+    if raw:
+        return raw
+    try:
+        out = subprocess.run(
+            ["ip", "-4", "addr", "show", "dev", "dummy-queen"],
+            capture_output=True, text=True, timeout=2, errors="replace",
+        )
+        if "192.168.47.1" in (out.stdout or ""):
+            return "192.168.47.1"
+    except (OSError, subprocess.SubprocessError):
+        pass
+    return "0.0.0.0"
+
+
+BIND_IF = _bind_if()
 
 
 def _ammonet_dhcp() -> dict[str, Any]:
@@ -446,10 +465,63 @@ def _handle(data: bytes, addr: tuple[str, int]) -> bytes | None:
     return None
 
 
+def _port_in_use(port: int = PORT) -> bool:
+    try:
+        out = subprocess.run(
+            ["ss", "-H", "-u", "-l", "-n", f"sport = :{port}"],
+            capture_output=True, text=True, timeout=3, errors="replace",
+        )
+        return bool((out.stdout or "").strip())
+    except (OSError, subprocess.SubprocessError):
+        return False
+
+
+def _dhcp_probe_offer(host: str = "192.168.47.1", timeout: float = 1.5) -> bool:
+    """Live DHCP OFFER proves field server is crushing leases."""
+    try:
+        xid = struct.pack("!I", int(time.time()) & 0xFFFFFFFF)
+        mac = b"\x02\x00\x00\x00\x00\x01" + b"\x00" * 10
+        pkt = b"\x01\x01\x06\x00" + xid + b"\x00" * 16 + mac + b"\x00" * 64 + b"\x00" * 128
+        pkt += bytes([99, 130, 83, 99, 53, 1, 1, 255])
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        if host not in ("0.0.0.0", "255.255.255.255"):
+            try:
+                sock.bind((host, 0))
+            except OSError:
+                pass
+        sock.settimeout(timeout)
+        sock.sendto(pkt, (host, PORT))
+        data, _ = sock.recvfrom(2048)
+        sock.close()
+        return len(data) >= 240 and data[0] == 2
+    except OSError:
+        return False
+
+
+def _dhcp_running() -> bool:
+    if PID_FILE.is_file():
+        try:
+            pid = int(PID_FILE.read_text(encoding="utf-8").strip().split()[0])
+            os.kill(pid, 0)
+            return True
+        except PermissionError:
+            pass
+        except (OSError, ValueError):
+            pass
+    if _port_in_use(PORT):
+        for host in (BIND_IF, "192.168.47.1", "127.0.0.1"):
+            if host and _dhcp_probe_offer(host):
+                return True
+        return _may_serve_dhcp()
+    return False
+
+
 def _loop() -> None:
+    bind = _bind_if()
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind((BIND_IF, PORT))
+    sock.bind((bind, PORT))
     while True:
         try:
             data, addr = sock.recvfrom(2048)
@@ -587,14 +659,8 @@ def build_panel() -> dict[str, Any]:
     except Exception:
         takeover = {}
     may_serve = _may_serve_dhcp()
-    running = False
-    if PID_FILE.is_file():
-        try:
-            pid = int(PID_FILE.read_text(encoding="utf-8").strip().split()[0])
-            os.kill(pid, 0)
-            running = True
-        except (OSError, ValueError):
-            running = False
+    running = _dhcp_running()
+    bind = _bind_if()
     detailed = _leases_detailed(leases, 200)
     events = _lease_history(100)
     pool_count = len(leases.get("leases") or {})
@@ -608,7 +674,9 @@ def build_panel() -> dict[str, Any]:
         "security_model": "field-sovereign-gate",
         "never_lose_cycle": True,
         "motto": "DHCP sovereign-gated — DNS option 6 → Truth Resolver; cycle never lost.",
-        "bind": f"{BIND_IF}:{PORT}",
+        "bind": f"{bind}:{PORT}",
+        "ok": running and may_serve,
+        "crushing": running,
         "pool": {"start": POOL_START, "end": POOL_END},
         "legacy_pool": (
             {"start": LEGACY_POOL_START, "end": LEGACY_POOL_END, "lease_seconds": LEGACY_LEASE_SEC}
@@ -665,12 +733,37 @@ def _panel_json_stub() -> dict[str, Any]:
 
 
 def panel_json() -> dict[str, Any]:
-    if PANEL_CACHE.is_file():
+    return build_panel()
+
+
+def crush_dhcp() -> dict[str, Any]:
+    """Promote takeover, refresh Queen LAN, prove DHCP OFFER, publish panel."""
+    root = INSTALL
+    queen_lan = root / "scripts" / "queen-lan-up.sh"
+    if queen_lan.is_file():
         try:
-            return json.loads(PANEL_CACHE.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
+            subprocess.run(
+                ["bash", str(queen_lan)],
+                timeout=12,
+                capture_output=True,
+                errors="replace",
+            )
+        except (OSError, subprocess.SubprocessError):
             pass
-    return _panel_json_stub()
+    try:
+        _takeover_mod().evaluate_takeover(persist=True)
+    except Exception:
+        pass
+    panel = build_panel()
+    panel["crush"] = {
+        "queen_lan": "192.168.47.1",
+        "offer_queen": _dhcp_probe_offer("192.168.47.1"),
+        "offer_loopback": _dhcp_probe_offer("127.0.0.1"),
+        "port_67": _port_in_use(PORT),
+        "motto": "We are DHCP — Truth DNS option 6 · Queen LAN crushing leases",
+    }
+    _save_json(PANEL_CACHE, panel)
+    return panel
 
 
 def main() -> int:
@@ -686,7 +779,10 @@ def main() -> int:
     if cmd == "json":
         print(json.dumps(panel_json(), ensure_ascii=False))
         return 0
-    print(json.dumps({"error": "usage: field-dhcp.py [serve|build|json]"}))
+    if cmd == "crush":
+        print(json.dumps(crush_dhcp(), ensure_ascii=False))
+        return 0
+    print(json.dumps({"error": "usage: field-dhcp.py [serve|build|json|crush]"}))
     return 1
 
 
