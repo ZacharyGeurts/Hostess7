@@ -260,6 +260,22 @@ def _dns_for_mac(mac: str) -> list[str]:
     return DNS_SERVERS
 
 
+def _ip_in_use(ip: str, timeout: float = 0.9) -> bool:
+    """Ping probe before OFFER — prevent lease/IP collisions on the LAN."""
+    if os.environ.get("NEXUS_FIELD_DHCP_PING_PROBE", "1") != "1":
+        return False
+    try:
+        proc = subprocess.run(
+            ["ping", "-c", "1", "-W", "1", ip],
+            capture_output=True,
+            timeout=timeout,
+            errors="replace",
+        )
+        return proc.returncode == 0
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+
+
 def _next_lease(mac: str, *, renew: bool = False) -> str:
     leases = _load_json(LEASE_FILE, {"leases": {}})
     pool = leases.setdefault("leases", {})
@@ -284,6 +300,10 @@ def _next_lease(mac: str, *, renew: bool = False) -> str:
     for n in range(start, end + 1):
         if n not in used:
             ip = _int_to_ip(n)
+            if _ip_in_use(ip):
+                _stats["conflicts_detected"] = int(_stats.get("conflicts_detected") or 0) + 1
+                _append_event("pool_conflict", mac, ip, "ping_probe_in_use")
+                continue
             exp, rem = _lease_expiry(now)
             pool[mac] = {
                 "ip": ip,
@@ -718,9 +738,41 @@ def build_panel() -> dict[str, Any]:
             "we_are_every_lease": True,
             "api": "/api/field-planetary-dns-dhcp",
         },
+        "collision_guard": _collision_guard_slice(),
     }
     _save_json(PANEL_CACHE, doc)
     return doc
+
+
+def _collision_guard_slice() -> dict[str, Any]:
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "collision_guard_dhcp", INSTALL / "lib" / "field-dns-dhcp-collision-guard.py",
+        )
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            doc = mod.detect_collisions()
+            sole = doc.get("sole_authority") or {}
+            return {
+                "ok": bool(sole.get("ok")),
+                "sole_authority": sole,
+                "collision_count": doc.get("collision_count", 0),
+                "api": "/api/field-dns-dhcp-collision-guard",
+            }
+    except Exception:
+        pass
+    cached = _load_json(STATE / "field-dns-dhcp-collision-guard-panel.json", {})
+    if cached.get("sole_authority"):
+        return {
+            "ok": bool((cached.get("sole_authority") or {}).get("ok")),
+            "sole_authority": cached.get("sole_authority"),
+            "collision_count": cached.get("collision_count", 0),
+            "api": "/api/field-dns-dhcp-collision-guard",
+        }
+    return {"api": "/api/field-dns-dhcp-collision-guard", "partial": True}
 
 
 def _panel_json_stub() -> dict[str, Any]:

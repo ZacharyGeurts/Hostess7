@@ -361,6 +361,21 @@ def evaluate_takeover(*, persist: bool = True) -> dict[str, Any]:
                 "movement": "none",
             },
         },
+        "sole_authority": {
+            "dns": phase == "primary" and bool(inc.get("nexus_dns_running")) and not inc.get("incumbent_dns"),
+            "dhcp": phase == "primary" and bool(inc.get("nexus_dhcp_running")) and not inc.get("incumbent_dhcp"),
+            "truth": phase == "primary" and not foreign_ns,
+            "accuracy": phase == "primary",
+            "ok": (
+                phase == "primary"
+                and bool(inc.get("nexus_dns_running"))
+                and bool(inc.get("nexus_dhcp_running"))
+                and not inc.get("incumbent_dns")
+                and not inc.get("incumbent_dhcp")
+                and not foreign_ns
+            ),
+            "motto": "Sole authority of truth and accuracy — no collisions, no foreign resolvers",
+        },
         "phase_history": (prev.get("phase_history") or [])[-12:],
     }
     if phase != prev.get("phase"):

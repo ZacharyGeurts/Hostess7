@@ -10,9 +10,13 @@
     "absorb_device_map": true,
     "truth_dns_option_6": true,
     "never_lose_lease": true,
+    "sole_authority": true,
+    "prevent_collisions": true,
+    "truth_and_accuracy": true,
     "dhcp_port": 67,
     "dns_port": 53,
-    "queen_lan": "192.168.47.1"
+    "queen_lan": "192.168.47.1",
+    "collision_guard": "lib/field-dns-dhcp-collision-guard.py"
   },
   "sources": [
     "field-dhcp-leases",

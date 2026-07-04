@@ -33,6 +33,19 @@ print('takeover:', d.get('takeover_phase'), '| may_serve:', d.get('may_serve'))
 " "$json"
 
 NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+  python3 "${ROOT}/lib/field-dns-dhcp-collision-guard.py" enforce \
+  > "${NEXUS_STATE_DIR}/field-dns-dhcp-collision-guard-enforce.json" 2>/dev/null || true
+python3 -c "
+import json
+from pathlib import Path
+p = Path('${NEXUS_STATE_DIR}/field-dns-dhcp-collision-guard-enforce.json')
+if p.is_file():
+    d = json.loads(p.read_text())
+    s = d.get('sole_authority') or {}
+    print('SOLE authority:', s.get('ok'), '| collisions:', d.get('collision_count', 0))
+" 2>/dev/null || true
+
+NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
   python3 "${ROOT}/lib/field-planetary-dns-dhcp.py" panel \
   > "${ROOT}/Hostess7/docs/api/field-planetary-dns-dhcp.json" 2>/dev/null || true
 python3 -c "

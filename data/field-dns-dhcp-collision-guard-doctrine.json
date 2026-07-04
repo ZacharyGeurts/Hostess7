@@ -1,0 +1,17 @@
+{
+  "schema": "field-dns-dhcp-collision-guard/v1",
+  "title": "DNS/DHCP collision guard — sole truth and accuracy authority",
+  "boss": "hostess7",
+  "motto": "No collisions. Sole authority of truth and accuracy — DNS option 6, DHCP port 67, resolv locked.",
+  "policy": {
+    "prevent_lease_collisions": true,
+    "ping_probe_before_offer": true,
+    "prune_duplicate_serve_loops": true,
+    "reject_foreign_resolvers_on_primary": true,
+    "sole_authority_required": true,
+    "accuracy": "exact_match_egress_integrity"
+  },
+  "module": "lib/field-dns-dhcp-collision-guard.py",
+  "api": "/api/field-dns-dhcp-collision-guard",
+  "ironclad_cite": "ironclad:collision-guard:1"
+}

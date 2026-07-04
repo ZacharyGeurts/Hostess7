@@ -1641,6 +1641,15 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("field-planetary-dns-dhcp.json")
 
+    collision_guard = _run_nl_script_json("lib/field-dns-dhcp-collision-guard.py", ["panel"], timeout=45)
+    if not collision_guard.get("schema"):
+        collision_guard = {**stub, "schema": "field-dns-dhcp-collision-guard/v1", "partial": True}
+    collision_guard["pages"] = True
+    (API / "field-dns-dhcp-collision-guard.json").write_text(
+        json.dumps(collision_guard, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-dns-dhcp-collision-guard.json")
+
     threat_panel = {
         **stub,
         "schema": "threat-panel-pages/v1",

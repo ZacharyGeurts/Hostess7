@@ -349,9 +349,29 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "api": doctrine.get("api", "/api/field-planetary-dns-dhcp"),
         "ironclad_cite": doctrine.get("ironclad_cite"),
     }
+    collision: dict[str, Any] = {}
+    try:
+        cg = _mod("lib/field-dns-dhcp-collision-guard.py", "collision_guard")
+        if cg and hasattr(cg, "detect_collisions"):
+            collision = cg.detect_collisions()
+    except Exception:
+        collision = _load(STATE / "field-dns-dhcp-collision-guard-panel.json", {})
+
+    sole = collision.get("sole_authority") or takeover.get("sole_authority") or {}
+    doc["sole_authority"] = sole
+    doc["collision_guard"] = {
+        "ok": bool(sole.get("ok")),
+        "collision_count": collision.get("collision_count", 0),
+        "collisions": (collision.get("collisions") or [])[:24],
+        "api": "/api/field-dns-dhcp-collision-guard",
+    }
     doc["ok"] = bool(
-        doc["services"]["dhcp"].get("running")
-        or doc["services"]["dns"].get("running")
+        sole.get("ok")
+        or (
+            doc["services"]["dhcp"].get("running")
+            and doc["services"]["dns"].get("running")
+            and not collision.get("collision_count")
+        )
         or planet_dhcp + planet_dns > 0
     )
     if write:
@@ -360,9 +380,15 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
 
 
 def absorb_planet(*, crush: bool = True) -> dict[str, Any]:
-    """Promote takeover, optionally crush DHCP, rebuild planetary lease ledger."""
+    """Promote takeover, optionally crush DHCP, enforce sole authority, rebuild ledger."""
     if crush:
         _run_json("lib/field-dhcp.py", ["crush"], timeout=25)
+    try:
+        cg = _mod("lib/field-dns-dhcp-collision-guard.py", "collision_guard")
+        if cg and hasattr(cg, "enforce_sole_authority"):
+            cg.enforce_sole_authority(prune=True)
+    except Exception:
+        pass
     try:
         mod = _mod("lib/dns-service-takeover.py", "dns_takeover")
         if mod and hasattr(mod, "evaluate_takeover"):
