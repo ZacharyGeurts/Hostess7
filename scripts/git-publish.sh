@@ -54,8 +54,9 @@ _git_push_secure() {
   remote="$(git -C "$dir" remote get-url origin 2>/dev/null || echo "")"
   [[ "$remote" == *github.com* ]] || return 1
   [[ -f "$H7_SECURE" ]] || return 1
-  pythong "$H7_SECURE" verify >/dev/null
-  pythong "$H7_SECURE" push "$dir" --branch "$branch" --remote "$remote" --force
+  local py="${NEXUS_PYTHONG:-$(command -v pythong 2>/dev/null || command -v python3)}"
+  "$py" "$H7_SECURE" verify >/dev/null
+  "$py" "$H7_SECURE" push "$dir" --branch "$branch" --remote "$remote" --force
 }
 
 git_publish_dir() {
