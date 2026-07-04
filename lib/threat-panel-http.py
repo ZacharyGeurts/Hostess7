@@ -3368,6 +3368,11 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-rescue-ingress", "/api/rescue-ingress"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-rescue-ingress.py", ["rescue"], timeout=120)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path in (
             "/api/field-github-planet-sweep",
             "/api/github-planet-sweep",

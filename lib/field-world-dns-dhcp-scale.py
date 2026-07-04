@@ -82,6 +82,8 @@ def build_scale(*, years_ahead: float | None = None) -> dict[str, Any]:
     )
 
     ping_posture = _load(STATE / "field-ping-panel.json", {}).get("last_ping") or {}
+    edge_blast = _load(STATE / "field-edge-blast-panel.json", {})
+    local_edges = int(edge_blast.get("local_edges_deployed") or edge.get("local_edge_slots") or 0)
 
     return {
         "ok": True,
@@ -97,8 +99,15 @@ def build_scale(*, years_ahead: float | None = None) -> dict[str, Any]:
             "ipv4_usable": usable_ipv4,
             "beyond_ipv4": current_dev > usable_ipv4,
             "edge_hosts_recommended": edges_now,
+            "local_edge_hosts": local_edges,
+            "hosts_per_edge": hosts_per_edge,
             "dhcp_leases_if_one_per_device": int(current_dev),
             "dns_records_if_one_per_device": int(current_dev),
+        },
+        "edge_blast": edge_blast if edge_blast.get("ok") else {
+            "planet_edges_recommended": edges_now,
+            "hosts_per_edge": hosts_per_edge,
+            "rescue_module": edge.get("edge_blast_module"),
         },
         "projections": projections,
         "ping_rescue": {

@@ -1,0 +1,35 @@
+{
+  "schema": "field-rescue-ingress/v1",
+  "title": "Rescue ingress — clear fakes, DHCP/DNS through, more edges",
+  "boss": "hostess7",
+  "motto": "Remove fake shit in the way — everyone's lease and DNS comes through · quarantine never kill · blast more hosts and edges",
+  "ingress_policy": "quarantine_not_kill",
+  "clear_fakes": {
+    "enabled": true,
+    "dhcp_lease_is_real": true,
+    "never_evict_dhcp_sourced": true,
+    "min_corroboration_sources": 0,
+    "unblock_threat_guard_soft": true
+  },
+  "dhcp_pool": {
+    "start": "192.168.50.2",
+    "end": "192.168.51.254",
+    "legacy_start": "192.168.47.100",
+    "legacy_end": "192.168.47.200"
+  },
+  "edge_blast": {
+    "hosts_per_edge": 4096,
+    "local_edge_slots": 64,
+    "ping_rescue": true,
+    "ping_module": "lib/field-ping.py"
+  },
+  "api": "/api/field-rescue-ingress",
+  "module": "lib/field-rescue-ingress.py",
+  "wires": [
+    "lib/field-device-registry.py",
+    "lib/field-dhcp.py",
+    "lib/field-dns-dhcp-collision-guard.py",
+    "lib/field-world-dns-dhcp-scale.py",
+    "lib/field-planetary-dns-dhcp.py"
+  ]
+}

@@ -114,8 +114,27 @@ def eradicate_threat(
 
 
 def is_permanently_blocked(client_key: str) -> bool:
+    if os.environ.get("NEXUS_FIELD_DHCP_SOFT_INGRESS", "1") == "1":
+        return False
     blocks = _permanent_blocks().get("blocks") or []
     return any(b.get("client") == client_key and not b.get("undone") for b in blocks)
+
+
+def clear_soft_blocks() -> dict[str, Any]:
+    """Rescue ingress — lift permanent blocks so DHCP/DNS flows (soft ingress path)."""
+    blocks = _permanent_blocks()
+    cleared = 0
+    for b in blocks.get("blocks") or []:
+        if not b.get("undone"):
+            b["undone"] = True
+            b["cleared_at"] = _now()
+            b["cleared_by"] = "rescue-ingress"
+            cleared += 1
+    blocks["updated"] = _now()
+    blocks["soft_cleared"] = cleared
+    _save_json(PERM_BLOCK, blocks)
+    _rate.clear()
+    return {"ok": True, "cleared": cleared}
 
 
 def _invoke_autosanitize(vector: str, target: str, detail: str) -> None:

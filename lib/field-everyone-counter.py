@@ -234,6 +234,7 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
         "world_dns_dhcp_scale": world_scale.get("current") or {},
         "world_projections": (world_scale.get("projections") or [])[:4],
         "ingress_policy": world_scale.get("ingress_policy") or github_sweep.get("ingress_policy") or "quarantine_not_kill",
+        "rescue_ingress": _load(STATE / "field-rescue-ingress-panel.json", {}).get("edge_blast") or {},
         "github_planet_sweep": {
             "repos_indexed": int((github_sweep.get("counts") or {}).get("repos_cataloged") or 0),
             "stale_detected": int((github_sweep.get("counts") or {}).get("stale_detected") or 0),

@@ -15,7 +15,9 @@
     "usable": 4026531840
   },
   "edge_model": {
-    "hosts_per_edge_default": 65536,
+    "hosts_per_edge_default": 4096,
+    "local_edge_slots": 64,
+    "edge_blast_module": "lib/field-rescue-ingress.py",
     "ping_rescue": true,
     "ping_module": "lib/field-ping.py",
     "ingress_policy": "quarantine_not_kill",

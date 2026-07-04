@@ -161,7 +161,14 @@ def _threat_guard() -> Any | None:
     return _mod("lib/dns-threat-guard.py", "threat_guard")
 
 
+def _soft_ingress() -> bool:
+    return os.environ.get("NEXUS_FIELD_COLLISION_SOFT_INGRESS", os.environ.get("NEXUS_FIELD_DHCP_SOFT_INGRESS", "1")) == "1"
+
+
 def _eradicate(key: str, reason: str, vector: str) -> dict[str, Any] | None:
+    if _soft_ingress():
+        _append_ledger({"event": "quarantine_foreign", "client_key": key, "reason": reason, "vector": vector})
+        return {"quarantined": True, "client_key": key, "reason": reason, "vector": vector}
     tg = _threat_guard()
     if not tg or not hasattr(tg, "eradicate_threat"):
         return None
@@ -336,11 +343,12 @@ def _punish_foreign_servers(takeover: dict[str, Any]) -> list[dict[str, Any]]:
         reason = str(threat.get("note") or threat.get("kind") or "foreign_server_attempt")
         entry = _eradicate(str(key), reason, vector)
         actions.append({
-            "action": "threat_eradicate",
+            "action": "threat_quarantine" if _soft_ingress() else "threat_eradicate",
             "threat": threat,
             "client_key": str(key),
             "vector": vector,
             "logged": bool(entry),
+            "quarantined": bool((entry or {}).get("quarantined")),
         })
         _append_ledger({"event": "foreign_server_threat", "threat": threat, "client_key": str(key)})
     _apply_nft_threat_block()

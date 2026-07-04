@@ -378,7 +378,7 @@ def _dhcp_index_rows(analyzed: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "repo_slug": slug,
             "canonical_pages": item.get("canonical_pages"),
             "authority": "hostess7",
-            "quarantine": bool(item.get("stale") and item.get("pages_mode") == "redirect_hub"),
+            "quarantine": False,
             "ingress_policy": doc.get("ingress_policy") or "quarantine_not_kill",
             "absorbed": True,
         })

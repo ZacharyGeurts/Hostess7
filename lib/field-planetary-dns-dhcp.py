@@ -368,6 +368,14 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
             "stale_repos": (github_sweep.get("stale_repos") or [])[:24],
             "api": "/api/field-github-planet-sweep",
         },
+        "rescue_ingress": {
+            "ok": bool(rescue.get("ok")),
+            "fakes_cleared": bool((rescue.get("cleared_fakes") or {}).get("fakes_removed")),
+            "dhcp_host_slots": (rescue.get("dhcp_pool") or {}).get("host_slots"),
+            "local_edges": (rescue.get("edge_blast") or {}).get("local_edges_deployed"),
+            "planet_edges": (rescue.get("edge_blast") or {}).get("planet_edges_recommended"),
+            "api": "/api/field-rescue-ingress",
+        },
         "services": {
             "dhcp": {
                 "running": bool(dhcp.get("running")),
@@ -390,6 +398,15 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "api": doctrine.get("api", "/api/field-planetary-dns-dhcp"),
         "ironclad_cite": doctrine.get("ironclad_cite"),
     }
+    rescue: dict[str, Any] = _load(STATE / "field-rescue-ingress-panel.json", {})
+    if not rescue.get("ok"):
+        try:
+            rmod = _mod("lib/field-rescue-ingress.py", "rescue_ingress")
+            if rmod and hasattr(rmod, "rescue"):
+                rescue = rmod.rescue(write=False)
+        except Exception:
+            rescue = {}
+
     github_sweep: dict[str, Any] = {}
     try:
         sweep_mod = _mod("lib/field-github-planet-sweep.py", "github_planet_sweep")

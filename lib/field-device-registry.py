@@ -183,9 +183,24 @@ def reconcile_devices(
         if not row.get("last_timestamp"):
             row["last_timestamp"] = row.get("last_seen") or stamp
         is_self = bool(row.get("self"))
+        sources = row.get("sources") or row.get("tables") or []
+        dhcp_sourced = (
+            bool(pol.get("never_evict_dhcp_sourced"))
+            and (
+                row.get("kind") == "dhcp_lease"
+                or "field-dhcp" in sources
+                or str(row.get("id") or "").startswith("dhcp-")
+            )
+        )
+        if dhcp_sourced and bool(pol.get("dhcp_lease_is_real", True)):
+            row["active"] = True
+            row["fake"] = False
+            row["real"] = True
+            active.append(row)
+            continue
         stale = bool(pol.get("ai_evict_stale")) and not is_self and _is_stale(row, pol, lan=lan)
         min_src = int(pol.get("min_corroboration_sources") or 1)
-        under_corroborated = _corroboration_score(row) < min_src and not is_self
+        under_corroborated = _corroboration_score(row) < min_src and not is_self and not dhcp_sourced
         over_cap = bool(pol.get("never_exceed_existence")) and not is_self and len(active) >= cap
 
         if stale or under_corroborated or over_cap:
