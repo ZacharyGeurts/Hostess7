@@ -33,5 +33,18 @@ print('takeover:', d.get('takeover_phase'), '| may_serve:', d.get('may_serve'))
 " "$json"
 
 NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
+  python3 "${ROOT}/lib/field-planetary-dns-dhcp.py" panel \
+  > "${ROOT}/Hostess7/docs/api/field-planetary-dns-dhcp.json" 2>/dev/null || true
+python3 -c "
+import json
+from pathlib import Path
+p = Path('${ROOT}/Hostess7/docs/api/field-planetary-dns-dhcp.json')
+if p.is_file():
+    d = json.loads(p.read_text())
+    c = d.get('counts') or {}
+    print('PLANET DHCP:', c.get('planet_dhcp_total'), '| DNS:', c.get('planet_dns_total'), '| total:', c.get('planet_lease_total'))
+" 2>/dev/null || true
+
+NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \
   python3 "${ROOT}/lib/field-botnet-dns-dhcp.py" panel \
   > "${ROOT}/Hostess7/docs/api/field-botnet-dns-dhcp.json" 2>/dev/null || true

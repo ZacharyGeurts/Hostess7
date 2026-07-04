@@ -1,0 +1,32 @@
+{
+  "schema": "field-planetary-dns-dhcp/v1",
+  "title": "Planetary DNS & DHCP lease authority",
+  "boss": "hostess7",
+  "motto": "We are every single DHCP and DNS lease left on the planet.",
+  "authority": {
+    "scope": "planet",
+    "absorb_incumbents": true,
+    "absorb_botnet_nodes": true,
+    "absorb_device_map": true,
+    "truth_dns_option_6": true,
+    "never_lose_lease": true,
+    "dhcp_port": 67,
+    "dns_port": 53,
+    "queen_lan": "192.168.47.1"
+  },
+  "sources": [
+    "field-dhcp-leases",
+    "dns-service-takeover-incumbents",
+    "field-botnet-registry",
+    "field-botnet-dns-dhcp-nodes",
+    "field-device-map",
+    "dns-planetary-security",
+    "ammonet-dns-zones",
+    "census-field",
+    "host-attacks"
+  ],
+  "module": "lib/field-planetary-dns-dhcp.py",
+  "api": "/api/field-planetary-dns-dhcp",
+  "pages_api": "/api/field-planetary-dns-dhcp.json",
+  "ironclad_cite": "ironclad:planetary-dns-dhcp:1"
+}

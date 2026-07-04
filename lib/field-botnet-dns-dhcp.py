@@ -206,6 +206,27 @@ def _bot_nodes(doctrine: dict[str, Any], *, fast: bool = False) -> list[dict[str
     return nodes
 
 
+def _planetary_slice(*, fast: bool = False) -> dict[str, Any]:
+    cached = _load(STATE / "field-planetary-dns-dhcp-panel.json", {})
+    if cached.get("schema") == "field-planetary-dns-dhcp/v1":
+        if fast:
+            cached["updated"] = _utc()
+            return {
+                "ok": bool(cached.get("ok")),
+                "planet_authority": True,
+                "motto": cached.get("motto"),
+                "planet_dhcp_total": (cached.get("counts") or {}).get("planet_dhcp_total", 0),
+                "planet_dns_total": (cached.get("counts") or {}).get("planet_dns_total", 0),
+                "planet_lease_total": (cached.get("counts") or {}).get("planet_lease_total", 0),
+                "api": cached.get("api", "/api/field-planetary-dns-dhcp"),
+                "fast": True,
+            }
+        return cached
+    if fast:
+        return {"api": "/api/field-planetary-dns-dhcp", "fast": True, "partial": True}
+    return _run_json("lib/field-planetary-dns-dhcp.py", ["json"], timeout=25)
+
+
 def _dns_dhcp_slice(*, fast: bool = False) -> dict[str, Any]:
     dns_panel = _load(STATE / "field-dns-panel.json", {})
     dhcp_panel = _load(STATE / "field-dhcp-panel.json", {})
@@ -295,6 +316,7 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
             "unified_egress": "hostess7",
         },
         "dns_dhcp": services,
+        "planetary_authority": _planetary_slice(fast=fast),
         "stable": stable,
         "secure": secure,
         "internet_unified": {

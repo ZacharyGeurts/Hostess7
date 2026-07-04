@@ -1627,6 +1627,20 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     (API / "field-device-map.json").write_text(json.dumps(device_map, indent=2) + "\n", encoding="utf-8")
     files.append("field-device-map.json")
 
+    planetary_dns_dhcp = _run_nl_script_json("lib/field-planetary-dns-dhcp.py", ["panel"], timeout=90)
+    if not planetary_dns_dhcp.get("schema"):
+        planetary_dns_dhcp = {
+            **stub,
+            "schema": "field-planetary-dns-dhcp/v1",
+            "counts": {},
+            "partial": True,
+        }
+    planetary_dns_dhcp["pages"] = True
+    (API / "field-planetary-dns-dhcp.json").write_text(
+        json.dumps(planetary_dns_dhcp, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-planetary-dns-dhcp.json")
+
     threat_panel = {
         **stub,
         "schema": "threat-panel-pages/v1",

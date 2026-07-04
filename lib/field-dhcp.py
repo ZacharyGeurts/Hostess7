@@ -673,7 +673,7 @@ def build_panel() -> dict[str, Any]:
         "takeover_phase": takeover.get("phase") or "observing",
         "security_model": "field-sovereign-gate",
         "never_lose_cycle": True,
-        "motto": "DHCP sovereign-gated — DNS option 6 → Truth Resolver; cycle never lost.",
+        "motto": "We are every DHCP lease left on the planet — DNS option 6 → Truth Resolver; cycle never lost.",
         "bind": f"{bind}:{PORT}",
         "ok": running and may_serve,
         "crushing": running,
@@ -712,6 +712,11 @@ def build_panel() -> dict[str, Any]:
         "hostess7": {
             "inside": f"LAN DHCP → {', '.join(DNS_SERVERS)} DNS · IPv6 field {', '.join(DNS_SERVERS_V6)}",
             "outside": "No DHCP on WAN — DNS admin ports 7/77/777 read-only",
+        },
+        "planetary_authority": {
+            "scope": "planet",
+            "we_are_every_lease": True,
+            "api": "/api/field-planetary-dns-dhcp",
         },
     }
     _save_json(PANEL_CACHE, doc)
@@ -760,7 +765,7 @@ def crush_dhcp() -> dict[str, Any]:
         "offer_queen": _dhcp_probe_offer("192.168.47.1"),
         "offer_loopback": _dhcp_probe_offer("127.0.0.1"),
         "port_67": _port_in_use(PORT),
-        "motto": "We are DHCP — Truth DNS option 6 · Queen LAN crushing leases",
+        "motto": "We are every DHCP lease on the planet — Truth DNS option 6 · Queen LAN crushing leases",
     }
     _save_json(PANEL_CACHE, panel)
     return panel

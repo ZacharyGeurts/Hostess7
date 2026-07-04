@@ -1141,7 +1141,7 @@ def build_panel() -> dict[str, Any]:
     doc: dict[str, Any] = {
         "schema": "field-dns/v2",
         "updated": _now(),
-        "title": "NEXUS Truth DNS & DHCP",
+        "title": "NEXUS Truth DNS — every DNS lease on the planet",
         "running": bool(srv.get("running")),
         "self_hosted": True,
         "truthful": True,
@@ -1218,6 +1218,11 @@ def build_panel() -> dict[str, Any]:
         },
         "dhcp_leases_detailed": dhcp.get("leases_detailed") or [],
         "dhcp_events": dhcp.get("lease_history_events") or [],
+        "planetary_authority": {
+            "scope": "planet",
+            "we_are_every_lease": True,
+            "api": "/api/field-planetary-dns-dhcp",
+        },
     }
     tmp = PANEL_CACHE.with_suffix(".tmp")
     tmp.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
