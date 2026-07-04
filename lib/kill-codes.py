@@ -47,9 +47,9 @@ _OPERATOR_CODES: list[dict[str, Any]] = [
     },
     {
         "code": "KC-OP-rekill",
-        "label": "RE-KILL returner",
+        "label": "RE-KILL permanent",
         "tier": "lethal",
-        "plain": "Same hostile host returned — identity markers matched archived dossier.",
+        "plain": "Permanent RE-KILL — same hostile returned, forever firewall both ways, dossier archived. No hostiles live.",
         "api": "/api/attack-kit/rekill",
         "body_template": {"severity": "critical"},
         "requires_ip": True,
@@ -90,11 +90,21 @@ _OPERATOR_CODES: list[dict[str, Any]] = [
         "code": "KC-OP-laser",
         "label": "Laser corridor slice",
         "tier": "lethal",
-        "plain": "Undodgeable corridor — sever wire, block both directions, strike at certainty.",
+        "plain": "Undodgeable 6″ cube corridor — 6-pass sever raster, block both directions, strike at certainty.",
         "api": "/api/field-toolkit/laser-corridor",
         "body_template": {"vector": "LASER_CORRIDOR", "severity": "critical"},
         "requires_ip": True,
         "rank": 90,
+    },
+    {
+        "code": "KC-OP-slice_dice",
+        "label": "Slice & Dice · 6″ cube",
+        "tier": "lethal",
+        "plain": "6″ undodgeable laser cube + d20≤6 double kill pass — bigger volume, harder dodge.",
+        "api": "/api/field-toolkit/slice-and-dice",
+        "body_template": {"vector": "SLICE_AND_DICE", "severity": "critical"},
+        "requires_ip": True,
+        "rank": 92,
     },
     {
         "code": "KC-OP-crush_hot",
@@ -245,6 +255,7 @@ def _disablement_codes() -> list[dict[str, Any]]:
             "hell_rip": "/api/field-toolkit/hell-rip",
             "field_die": "/api/field-toolkit/field-die",
             "laser_corridor": "/api/field-toolkit/laser-corridor",
+            "slice_and_dice": "/api/field-toolkit/slice-and-dice",
             "forever_kill": "/api/attack-kit/kill",
         }
         if pid in api_map:
@@ -408,6 +419,8 @@ def recommend_for_alert(alert: dict[str, Any] | None) -> list[dict[str, Any]]:
     if source == "hazard" or cat == "rf":
         add("KC-RM-cease")
         add("KC-DM-laser_corridor")
+        add("KC-DM-slice_and_dice")
+        add("KC-OP-slice_dice")
     if source == "gatekeeper" and ip:
         add("KC-OP-kill", detail=f"Gatekeeper target {ip}")
 
@@ -482,6 +495,9 @@ def execute_code(code: str, body: dict[str, Any] | None = None) -> dict[str, Any
     if api == "/api/field-toolkit/laser-corridor":
         ft = _import_mod("field_toolkit", "field-toolkit-db.py")
         return {**ft.laser_corridor(ip, str(payload.get("vector") or "LASER_CORRIDOR"), str(payload.get("severity") or "critical")), "code": code}
+    if api == "/api/field-toolkit/slice-and-dice":
+        ft = _import_mod("field_toolkit", "field-toolkit-db.py")
+        return {**ft.slice_and_dice(ip, str(payload.get("vector") or "SLICE_AND_DICE"), str(payload.get("severity") or "critical")), "code": code}
     if api == "/api/field-toolkit/hell-rip":
         ft = _import_mod("field_toolkit", "field-toolkit-db.py")
         return {**ft.hell_rip(), "code": code}

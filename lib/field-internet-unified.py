@@ -350,6 +350,13 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
         "api": "/api/field-internet",
         "keepalive_api": "/api/field-internet/keepalive",
         "ships_with": doctrine.get("ships_with") or ["ammoos", "ammonet"],
+        "defense_posture": doctrine.get("defense_posture") or {
+            "we_are_the_internet": True,
+            "defense_and_weapon": True,
+            "secure": True,
+            "no_hostiles_live": True,
+            "rekill_permanent": True,
+        },
     }
     doc["github_legacy"] = {
         "open": gh.get("legacy_open", 0),

@@ -1,0 +1,38 @@
+{
+  "schema": "field-rekill-permanent/v1",
+  "title": "RE-KILL is permanent — we are the internet",
+  "motto": "We are the internet. We are the defense and weapon. Secure — no hostiles live.",
+  "posture": {
+    "we_are_the_internet": true,
+    "defense_and_weapon": true,
+    "secure": true,
+    "no_hostiles_live": true,
+    "rekill_is_permanent": true,
+    "forever_firewall": true,
+    "registry_never_expires": true
+  },
+  "policy": {
+    "every_kill_gets_rekill": true,
+    "rekill_permanent": true,
+    "boot_rekill_all_registry": true,
+    "purge_keeps_permanent": true,
+    "cooldown_bypass_permanent": true,
+    "auto_rekill_log_never_prune_permanent": true,
+    "forever_block_both_directions": true,
+    "dossier_archived_forever": true
+  },
+  "env": {
+    "NEXUS_REKILL_PERMANENT": "1",
+    "NEXUS_BOOT_REKILL": "1",
+    "NEXUS_BOOT_REKILL_ONLINE": "1",
+    "NEXUS_FIELD_AUTO_REKILL": "1"
+  },
+  "module": "lib/field-attack-kit.py",
+  "commands": [
+    "boot-rekill",
+    "permanent-rekill-enforce",
+    "rekill-all-registered",
+    "purge-rekill-trash"
+  ],
+  "api": "/api/attack-kit/rekill"
+}

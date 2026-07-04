@@ -281,7 +281,7 @@ sys.exit(1)
       declare -f nexus_hardware_destroy_target >/dev/null 2>&1 && nexus_hardware_destroy_target "$ip" "$dossier" || true
     fi
   fi
-  nexus_log "ALERT" "field-attack-kit" "TARGET_REKILLED ip=${ip} vector=${vector} reason=${reason}"
+  nexus_log "ALERT" "field-attack-kit" "TARGET_REKILLED_PERMANENT ip=${ip} vector=${vector} reason=${reason}"
   return 0
 }
 
@@ -470,13 +470,24 @@ nexus_field_attack_rekill_cycle() {
     printf '%s' "$now" >"$stamp" 2>/dev/null || true
   fi
   nexus_field_attack_auto_rekill >/dev/null 2>&1 || true
+  nexus_field_attack_permanent_rekill_enforce >/dev/null 2>&1 || true
   nexus_field_attack_forever_kill_enforce >/dev/null 2>&1 || true
+}
+
+nexus_field_attack_permanent_rekill_enforce() {
+  [[ "${NEXUS_REKILL_PERMANENT:-1}" == "1" ]] || return 0
+  local py script
+  py="$(nexus_field_attack_resolve_python)"
+  script="${NEXUS_INSTALL_ROOT}/lib/field-attack-kit.py"
+  [[ -f "$script" ]] || return 0
+  "$py" "$script" permanent-rekill-enforce 2>/dev/null || true
 }
 
 nexus_field_attack_autokill() {
   [[ "$(nexus_settings_get NEXUS_ATTACK_KIT_AUTO_CRUSH 2>/dev/null || echo "${NEXUS_ATTACK_KIT_AUTO_CRUSH:-1}")" == "1" ]] || return 0
   nexus_field_attack_autokill_needs_die >/dev/null 2>&1 || nexus_field_attack_autokill_certain >/dev/null 2>&1 || true
   nexus_field_attack_auto_rekill >/dev/null 2>&1 || true
+  nexus_field_attack_permanent_rekill_enforce >/dev/null 2>&1 || true
   nexus_field_attack_forever_kill_enforce >/dev/null 2>&1 || true
 }
 

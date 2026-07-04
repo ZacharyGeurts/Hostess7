@@ -911,6 +911,43 @@ def _read_field_panel_file(key: str) -> dict | None:
     return None
 
 
+def _read_zachub_panel_cache(name: str) -> dict | None:
+    """Fast loopback serve — avoid slow subprocess on panel hot paths."""
+    api_names = {
+        "storage": "field-zachub-storage.json",
+        "fork_guard": "field-zachub-fork-guard.json",
+        "qemu_racks": "field-zachub-qemu-racks.json",
+        "battle_stations": "field-battle-stations.json",
+    }
+    state_names = {
+        "storage": "field-zachub-storage-panel.json",
+        "fork_guard": "field-zachub-fork-guard-panel.json",
+        "qemu_racks": "field-zachub-qemu-racks-panel.json",
+        "battle_stations": "field-battle-stations-panel.json",
+    }
+    candidates: list[Path] = []
+    state_key = state_names.get(name)
+    if state_key:
+        candidates.append(STATE_DIR / state_key)
+    api_key = api_names.get(name)
+    if api_key:
+        candidates.append(INSTALL_ROOT / "Hostess7" / "docs" / "api" / api_key)
+    for fp in candidates:
+        if not fp.is_file():
+            continue
+        try:
+            doc = json.loads(fp.read_text(encoding="utf-8"))
+            if isinstance(doc, dict) and (doc.get("schema") or doc.get("ok") is not None):
+                out = dict(doc)
+                out["_panel_cache"] = True
+                out.setdefault("_incomplete", False)
+                out.setdefault("_partial", False)
+                return out
+        except (OSError, json.JSONDecodeError):
+            continue
+    return None
+
+
 def _read_botnet_panel_cache(name: str) -> dict | None:
     paths = {
         "registry": STATE_DIR / "field-botnet-registry-panel.json",
@@ -924,6 +961,28 @@ def _read_botnet_panel_cache(name: str) -> dict | None:
         if isinstance(doc, dict) and doc.get("schema"):
             out = dict(doc)
             out["_panel_cache"] = True
+            out.setdefault("_incomplete", False)
+            out.setdefault("_partial", False)
+            return out
+    except (OSError, json.JSONDecodeError):
+        pass
+    return None
+
+
+def _read_field_host_desktop_cache(*, max_age_sec: int = 300) -> dict | None:
+    """Serve cached field-host-desktop.json when fresh — skip slow subprocess scan."""
+    fp = STATE_DIR / "field-host-desktop.json"
+    if not fp.is_file():
+        return None
+    try:
+        age = time.time() - fp.stat().st_mtime
+        if age > max_age_sec:
+            return None
+        doc = json.loads(fp.read_text(encoding="utf-8"))
+        if isinstance(doc, dict) and doc.get("programs"):
+            out = dict(doc)
+            out["_panel_cache"] = True
+            out["_cache_age_sec"] = round(age, 1)
             out.setdefault("_incomplete", False)
             out.setdefault("_partial", False)
             return out
@@ -1600,6 +1659,25 @@ def _ensure_field_services_boot() -> None:
         pass
 
 
+def _kick_dynamic_trash_async(*, reason: str = "panel") -> None:
+    """Background purge — hostile/kill-rekill/DNS/fork-guard table trash after strikes or boot."""
+    if os.environ.get("NEXUS_DYNAMIC_ROUTES_KICK", "1") != "1":
+        return
+    dyn_py = INSTALL_ROOT / "lib" / "field-dynamic-routes.py"
+    if not dyn_py.is_file():
+        return
+    try:
+        subprocess.Popen(
+            [sys.executable, str(dyn_py), "kick-trash"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            env={**_field_stack_env(), "NEXUS_DYNAMIC_KICK_REASON": reason},
+            start_new_session=True,
+        )
+    except OSError:
+        pass
+
+
 def _merge_live_dhcp_into_dns(payload: dict) -> dict:
     """Refresh embedded DHCP slice — field-dns cache often lags field-dhcp-panel.json."""
     if not isinstance(payload, dict):
@@ -1706,10 +1784,18 @@ def _parse_subprocess_json(proc: subprocess.CompletedProcess[str] | None, *, scr
         }
 
 
-def _nexus_py_json(script: Path, args: list[str], timeout: int = 25) -> dict:
+def _nexus_py_json(
+    script: Path,
+    args: list[str],
+    timeout: int = 25,
+    *,
+    extra_env: dict[str, str] | None = None,
+) -> dict:
     if not script.is_file():
         return {"ok": False, "error": "script_missing"}
     env = _field_stack_env()
+    if extra_env:
+        env.update(extra_env)
     env.setdefault("NEXUS_PROBE_DEPTH", "1")
     try:
         proc = subprocess.run(
@@ -1722,6 +1808,54 @@ def _nexus_py_json(script: Path, args: list[str], timeout: int = 25) -> dict:
     except subprocess.TimeoutExpired:
         return {"ok": False, "error": "timeout", "script": script.name}
     return _parse_subprocess_json(proc, script=script.name)
+
+
+def _zachub_storage_api(
+    path: str,
+    *,
+    query: dict | None = None,
+    body: dict | None = None,
+    headers: Any = None,
+) -> dict:
+    zachub_py = INSTALL_ROOT / "lib" / "field-zachub-storage.py"
+    if not zachub_py.is_file():
+        return {"ok": False, "error": "field_zachub_storage_missing"}
+    sub = (
+        path.replace("/api/field-zachub-storage", "")
+        .replace("/api/zachub-storage", "")
+        .strip("/")
+    )
+    req = body if isinstance(body, dict) else {}
+    if sub in ("provision", "apply") or req.get("action") in ("provision", "apply"):
+        args = ["provision"]
+        if str(req.get("dry_run") or query.get("dry_run", ["0"])[0] if query else "0").strip().lower() in ("1", "true", "yes"):
+            args.append("--dry-run")
+        if str(req.get("full") or (query.get("full", ["0"])[0] if query else "0")).strip().lower() in ("1", "true", "yes"):
+            args.append("--full")
+    elif sub in ("capacity", "report"):
+        args = ["capacity"]
+    elif sub in ("mirror", "github-truth"):
+        args = ["mirror"]
+        if str(req.get("dry_run") or (query.get("dry_run", ["0"])[0] if query else "0")).strip().lower() in ("1", "true", "yes"):
+            args.append("--dry-run")
+    elif sub in ("sync", "siblings"):
+        args = ["sync"]
+        if str(req.get("dry_run") or (query.get("dry_run", ["0"])[0] if query else "0")).strip().lower() in ("1", "true", "yes"):
+            args.append("--dry-run")
+    elif sub in ("layout", "provision-layout"):
+        args = ["layout"]
+        if str(req.get("dry_run") or (query.get("dry_run", ["0"])[0] if query else "0")).strip().lower() in ("1", "true", "yes"):
+            args.append("--dry-run")
+    elif sub == "roots":
+        args = ["roots"]
+    else:
+        args = ["json"]
+    extra_env: dict[str, str] = {}
+    if headers and (headers.get("X-Zachub-Dry-Run") or "").strip().lower() in ("1", "yes", "on"):
+        extra_env["ZACHUB_DRY_RUN"] = "1"
+        if args[0] in ("provision", "mirror", "sync", "layout") and "--dry-run" not in args:
+            args.append("--dry-run")
+    return _nexus_py_json(zachub_py, args, timeout=300, extra_env=extra_env or None)
 
 
 def _queen_world_proxy_http(
@@ -2042,37 +2176,46 @@ def _field_operator_inproc():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     try:
-        mod.copilot(reload=True)
+        mod.plate_router(reload=True)
     except Exception:
         pass
     _FIELD_OPERATOR_MOD = mod
     return mod
 
 
-def _field_operator_copilot_route(target: str, *, override: str | None = None) -> dict:
+def _field_operator_hot_route(target: str, *, override: str | None = None) -> dict:
     mod = _field_operator_inproc()
     if mod is None:
         return _nexus_py_json(INSTALL_ROOT / "lib" / "field-operator.py", ["route", target], timeout=3)
     if override:
         return mod.route_to_board(target, override=override)
-    return mod.copilot_route(target)
+    return mod.hot_route(target)
 
 
-def _field_operator_copilot_batch(batch: list[str], *, override: str | None = None) -> dict:
+def _field_operator_hot_route_batch(batch: list[str], *, override: str | None = None) -> dict:
     mod = _field_operator_inproc()
     if mod is None:
         args = ["route-batch", *[str(x) for x in batch if x]]
         return _nexus_py_json(INSTALL_ROOT / "lib" / "field-operator.py", args, timeout=5)
     if override:
         return mod.route_batch(batch, override=override)
-    return mod.copilot_batch(batch)
+    return mod.hot_route_batch(batch)
 
 
-def _field_operator_copilot_status() -> dict:
+def _field_operator_hot_route_status() -> dict:
     mod = _field_operator_inproc()
     if mod is None:
-        return _nexus_py_json(INSTALL_ROOT / "lib" / "field-operator.py", ["copilot"], timeout=8)
-    return mod.copilot_status()
+        return _nexus_py_json(INSTALL_ROOT / "lib" / "field-operator.py", ["hot-route"], timeout=8)
+    return mod.hot_route_status()
+
+
+def _deprecated_hot_route_gone_payload(*, replacement: str) -> dict:
+    return {
+        "ok": False,
+        "removed": True,
+        "reason": "endpoint_removed_use_hot_route",
+        "replacement": replacement,
+    }
 
 
 def _jockey_json(args: list[str], timeout: int = 25) -> dict:
@@ -3296,12 +3439,17 @@ class Handler(BaseHTTPRequestHandler):
             if not target:
                 self._send(400, json.dumps({"ok": False, "error": "missing id"}), "application/json")
                 return
-            payload = _field_operator_copilot_route(target)
+            payload = _field_operator_hot_route(target)
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
         if path == "/api/field-operator/copilot":
-            payload = _field_operator_copilot_status()
+            payload = _deprecated_hot_route_gone_payload(replacement="/api/field-operator/hot-route")
+            self._send(410, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-operator/hot-route":
+            payload = _field_operator_hot_route_status()
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
@@ -3320,7 +3468,12 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/field-bus/copilot":
-            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-unified-bus.py", ["copilot"], timeout=15)
+            payload = _deprecated_hot_route_gone_payload(replacement="/api/field-bus/hot-route")
+            self._send(410, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/field-bus/hot-route":
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-unified-bus.py", ["hot-route"], timeout=15)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
@@ -3402,6 +3555,62 @@ class Handler(BaseHTTPRequestHandler):
             if (self.headers.get("X-Github-Mirror-Push") or "").strip().lower() in ("1", "yes", "on"):
                 args.append("--push-github")
             payload = _nexus_py_json(iso_py, args, timeout=120) if iso_py.is_file() else {"ok": False, "error": "field_github_isolation_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path.startswith("/api/field-zachub-storage") or path.startswith("/api/zachub-storage"):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            sub = path.replace("/api/field-zachub-storage", "").replace("/api/zachub-storage", "").strip("/")
+            payload = None if refresh or sub else _read_zachub_panel_cache("storage")
+            if payload is None:
+                payload = _zachub_storage_api(path, query=query, headers=self.headers)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
+            "/api/field-zachub-fork-guard",
+            "/api/zachub-fork-guard",
+            "/api/field-zachub-fork-guard/dry",
+            "/api/zachub-fork-guard/dry",
+        ):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            fork_py = INSTALL_ROOT / "lib" / "field-zachub-fork-guard.py"
+            if path.endswith("/dry"):
+                args = ["dry", "--dry"]
+                payload = _nexus_py_json(fork_py, args, timeout=180) if fork_py.is_file() else {"ok": False, "error": "field_zachub_fork_guard_missing"}
+            else:
+                dry_hdr = (self.headers.get("X-Zachub-Dry") or "").strip().lower()
+                if dry_hdr in ("1", "yes", "on"):
+                    args = ["dry", "--dry"]
+                    payload = _nexus_py_json(fork_py, args, timeout=180) if fork_py.is_file() else {"ok": False, "error": "field_zachub_fork_guard_missing"}
+                else:
+                    payload = None if refresh else _read_zachub_panel_cache("fork_guard")
+                    if payload is None:
+                        args = ["guard"]
+                        payload = _nexus_py_json(fork_py, args, timeout=180) if fork_py.is_file() else {"ok": False, "error": "field_zachub_fork_guard_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path.startswith("/api/field-zachub-qemu-racks") or path.startswith("/api/zachub-qemu-racks"):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            sub = path.rstrip("/").split("/")[-1]
+            if sub in ("provision", "apply", "burn", "burn-stale", "slots", "map"):
+                qemu_py = INSTALL_ROOT / "lib" / "field-zachub-qemu-racks.py"
+                if sub in ("provision", "apply"):
+                    args = ["provision"]
+                elif sub in ("burn", "burn-stale"):
+                    args = ["burn"]
+                else:
+                    args = ["slots"]
+                dry_hdr = (self.headers.get("X-Zachub-Dry") or "").strip().lower()
+                if dry_hdr in ("1", "yes", "on") or path.endswith("/dry"):
+                    args.append("--dry-run")
+                payload = _nexus_py_json(qemu_py, args, timeout=120) if qemu_py.is_file() else {"ok": False, "error": "field_zachub_qemu_racks_missing"}
+            else:
+                payload = None if refresh else _read_zachub_panel_cache("qemu_racks")
+                if payload is None:
+                    qemu_py = INSTALL_ROOT / "lib" / "field-zachub-qemu-racks.py"
+                    payload = _nexus_py_json(qemu_py, ["json"], timeout=30) if qemu_py.is_file() else {"ok": False, "error": "field_zachub_qemu_racks_missing"}
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
@@ -5605,6 +5814,27 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        if path in (
+            "/api/field-dynamic-routes",
+            "/api/field-dynamic-routes/return-routes",
+            "/api/field-dynamic-routes/kick-trash",
+            "/api/field-dynamic-routes/run",
+        ):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            dyn_py = INSTALL_ROOT / "lib" / "field-dynamic-routes.py"
+            if path.endswith("/run") or (path == "/api/field-dynamic-routes" and refresh):
+                fast = str(query.get("fast", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+                args = ["run"] + (["--fast"] if fast else [])
+                payload = _nexus_py_json(dyn_py, args, timeout=180) if dyn_py.is_file() else {"ok": False, "error": "field_dynamic_routes_missing"}
+            elif path.endswith("/return-routes"):
+                payload = _nexus_py_json(dyn_py, ["return-routes"], timeout=120) if dyn_py.is_file() else {"ok": False, "error": "field_dynamic_routes_missing"}
+            elif path.endswith("/kick-trash"):
+                payload = _nexus_py_json(dyn_py, ["kick-trash"], timeout=120) if dyn_py.is_file() else {"ok": False, "error": "field_dynamic_routes_missing"}
+            else:
+                payload = _nexus_py_json(dyn_py, ["json"], timeout=15) if dyn_py.is_file() else {"ok": False, "error": "field_dynamic_routes_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path == "/api/field-dns-table-clear":
             if os.environ.get("I_KNOW_DNS_CLEAR", "").strip().lower() not in ("1", "yes", "on"):
                 self._send(403, json.dumps({
@@ -6296,7 +6526,29 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/battle-stations", "/api/field-battle-stations"):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            payload = None if refresh else _read_zachub_panel_cache("battle_stations")
+            if payload is None:
+                script = INSTALL_ROOT / "lib" / "field-battle-stations.py"
+                if script.is_file():
+                    payload = _nexus_py_json(script, ["json"], timeout=30)
+                else:
+                    payload = {
+                        "schema": "field-battle-stations-panel/v1",
+                        "ok": False,
+                        "error": "field_battle_stations_missing",
+                    }
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
         if path == "/api/field-host-desktop":
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            if not refresh:
+                payload = _read_field_host_desktop_cache()
+                if payload:
+                    self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                    return
             script = INSTALL_ROOT / "lib" / "field-host-desktop.py"
             if script.is_file():
                 payload = _nexus_py_json(script, ["json"], timeout=60)
@@ -8759,6 +9011,30 @@ class Handler(BaseHTTPRequestHandler):
         if path.startswith("/api/") and not self._ironclad_api_gate(path, "POST", body):
             return
 
+        if path.startswith("/api/field-zachub-storage") or path.startswith("/api/zachub-storage"):
+            query = parse_qs(urlparse(self.path).query)
+            payload = _zachub_storage_api(path, query=query, body=body if isinstance(body, dict) else {}, headers=self.headers)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path.startswith("/api/field-zachub-qemu-racks") or path.startswith("/api/zachub-qemu-racks"):
+            qemu_py = INSTALL_ROOT / "lib" / "field-zachub-qemu-racks.py"
+            sub = path.rstrip("/").split("/")[-1]
+            if sub in ("provision", "apply"):
+                args = ["provision"]
+            elif sub in ("burn", "burn-stale"):
+                args = ["burn"]
+            elif sub in ("slots", "map"):
+                args = ["slots"]
+            else:
+                args = ["json"]
+            dry_hdr = (self.headers.get("X-Zachub-Dry") or "").strip().lower()
+            if dry_hdr in ("1", "yes", "on") or path.endswith("/dry"):
+                args.append("--dry-run")
+            payload = _nexus_py_json(qemu_py, args, timeout=120) if qemu_py.is_file() else {"ok": False, "error": "field_zachub_qemu_racks_missing"}
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path.startswith("/api/hostess7/kill-library") or path.startswith("/api/hostess7-kill-library"):
             kill_py = INSTALL_ROOT / "lib" / "hostess7-kill-library.py"
             if not kill_py.is_file():
@@ -8827,6 +9103,48 @@ class Handler(BaseHTTPRequestHandler):
                     )
             code = 200 if isinstance(payload, dict) and payload.get("ok") else 400
             self._send(code, json.dumps(payload if isinstance(payload, dict) else {"ok": False}), "application/json")
+            return
+
+        if path in ("/api/battle-stations", "/api/field-battle-stations"):
+            script = INSTALL_ROOT / "lib" / "field-battle-stations.py"
+            if not script.is_file():
+                self._send(
+                    503,
+                    json.dumps({"ok": False, "error": "field_battle_stations_missing"}),
+                    "application/json",
+                )
+                return
+            req = body if isinstance(body, dict) else {}
+            action = str(req.get("action") or "arm").strip().lower()
+            cmd_map = {
+                "arm": "arm",
+                "on": "on",
+                "enable": "on",
+                "off": "off",
+                "disable": "off",
+                "stand-down": "off",
+                "stand_down": "off",
+                "stamp": "stamp",
+                "policy": "policy",
+                "json": "json",
+                "status": "json",
+            }
+            cmd = cmd_map.get(action, action)
+            if cmd not in ("arm", "on", "off", "stamp", "policy", "json"):
+                self._send(
+                    400,
+                    json.dumps({"ok": False, "error": "unknown_action", "action": action}),
+                    "application/json",
+                )
+                return
+            timeout = 120 if cmd in ("arm", "on", "off", "stamp") else 30
+            payload = _nexus_py_json(script, [cmd], timeout=timeout)
+            code = 200 if isinstance(payload, dict) and payload.get("ok", True) else 400
+            self._send(
+                code,
+                json.dumps(payload if isinstance(payload, dict) else {"ok": False}),
+                "application/json",
+            )
             return
 
         if path == "/api/field-botnet-registry":
@@ -10616,16 +10934,20 @@ class Handler(BaseHTTPRequestHandler):
                     self._send(400, json.dumps({"ok": False, "error": "missing id"}), "application/json")
                     return
                 override = str(body.get("override") or "").strip() or None
-                payload = _field_operator_copilot_route(target, override=override)
+                payload = _field_operator_hot_route(target, override=override)
             elif sub == "route-batch":
                 batch = body.get("batch") or body.get("targets") or []
                 if not batch:
                     self._send(400, json.dumps({"ok": False, "error": "missing batch"}), "application/json")
                     return
                 override = str(body.get("override") or "").strip() or None
-                payload = _field_operator_copilot_batch([str(x) for x in batch if x], override=override)
+                payload = _field_operator_hot_route_batch([str(x) for x in batch if x], override=override)
             elif sub == "copilot":
-                payload = _field_operator_copilot_status()
+                payload = _deprecated_hot_route_gone_payload(replacement="/api/field-operator/hot-route")
+                self._send(410, json.dumps(payload, ensure_ascii=False), "application/json")
+                return
+            elif sub == "hot-route":
+                payload = _field_operator_hot_route_status()
             else:
                 self._send(404, json.dumps({"ok": False, "error": "unknown operator action"}), "application/json")
                 return
@@ -11630,6 +11952,22 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200 if payload.get("ok") else 400, json.dumps(payload), "application/json")
             return
 
+        if path.startswith("/api/field-dynamic-routes"):
+            dyn_py = INSTALL_ROOT / "lib" / "field-dynamic-routes.py"
+            sub = path.rstrip("/").split("/")[-1]
+            fast = bool((body or {}).get("fast")) or str((body or {}).get("fast", "")).lower() in ("1", "true", "yes")
+            if sub in ("return-routes", "return_routes", "routes"):
+                args = ["return-routes"] + (["--fast"] if fast else [])
+                payload = _nexus_py_json(dyn_py, args, timeout=120) if dyn_py.is_file() else {"ok": False, "error": "field_dynamic_routes_missing"}
+            elif sub in ("kick-trash", "kick_trash", "kick", "purge"):
+                args = ["kick-trash"]
+                payload = _nexus_py_json(dyn_py, args, timeout=120) if dyn_py.is_file() else {"ok": False, "error": "field_dynamic_routes_missing"}
+            else:
+                args = ["run"] + (["--fast"] if fast else [])
+                payload = _nexus_py_json(dyn_py, args, timeout=180) if dyn_py.is_file() else {"ok": False, "error": "field_dynamic_routes_missing"}
+            self._send(200 if payload.get("ok") else 400, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
         if path == "/api/field-toolkit/defense":
             defense_id = str(body.get("defense_id", body.get("id", ""))).strip()
             if not defense_id:
@@ -11650,6 +11988,7 @@ class Handler(BaseHTTPRequestHandler):
             "/api/field-toolkit/hell-rip",
             "/api/field-toolkit/field-die",
             "/api/field-toolkit/laser-corridor",
+            "/api/field-toolkit/slice-and-dice",
             "/api/field-toolkit/disable",
         ):
             script = INSTALL_ROOT / "lib" / "field-toolkit-db.py"
@@ -11681,6 +12020,16 @@ class Handler(BaseHTTPRequestHandler):
                     self._send(400, json.dumps({"ok": False, "error": "missing ip"}), "application/json")
                     return
                 payload = _nexus_py_json(script, ["laser-corridor", ip])
+                if payload.get("ok"):
+                    _kick_dynamic_trash_async(reason="laser_corridor")
+            elif path == "/api/field-toolkit/slice-and-dice":
+                ip = str(body.get("ip", "")).strip()
+                if not ip:
+                    self._send(400, json.dumps({"ok": False, "error": "missing ip"}), "application/json")
+                    return
+                payload = _nexus_py_json(script, ["slice-and-dice", ip])
+                if payload.get("ok"):
+                    _kick_dynamic_trash_async(reason="slice_and_dice")
             else:
                 payload = _nexus_py_json(
                     script,
@@ -13166,8 +13515,28 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/queen-browser/open":
             route = str((body or {}).get("route") or "")
+            focus_url = str(
+                (body or {}).get("focus_url") or (body or {}).get("url") or ""
+            ).strip()
             args = ["open", route] if route else ["open"]
-            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-queen-browser-open.py", args, timeout=50)
+            env = _field_stack_env()
+            if focus_url:
+                env["QUEEN_BROWSER_FOCUS_URL"] = focus_url
+            payload = _nexus_py_json(
+                INSTALL_ROOT / "lib" / "field-queen-browser-open.py",
+                args,
+                timeout=50,
+                extra_env=env,
+            )
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
+        if path == "/api/queen-telemetry/ai":
+            payload = _nexus_py_json(
+                INSTALL_ROOT / "lib" / "queen-telemetry-lock.py",
+                ["ingest", json.dumps(body or {})],
+                timeout=15,
+            )
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
@@ -13478,6 +13847,34 @@ def _startup_internet_clean() -> None:
         pass
 
 
+def _startup_dynamic_routes() -> None:
+    """Panel boot — kick hostile/DNS/kill-rekill table trash; optional full route return."""
+    if os.environ.get("NEXUS_DYNAMIC_ROUTES_BOOT", "1") != "1":
+        return
+    dyn_py = INSTALL_ROOT / "lib" / "field-dynamic-routes.py"
+    if not dyn_py.is_file():
+        return
+    try:
+        if os.environ.get("NEXUS_DYNAMIC_ROUTES_BOOT_FULL", "0").strip().lower() in ("1", "yes", "on"):
+            subprocess.run(
+                [sys.executable, str(dyn_py), "run", "--fast"],
+                capture_output=True,
+                text=True,
+                timeout=180,
+                env=_field_stack_env(),
+            )
+        else:
+            subprocess.run(
+                [sys.executable, str(dyn_py), "kick-trash"],
+                capture_output=True,
+                text=True,
+                timeout=120,
+                env=_field_stack_env(),
+            )
+    except (subprocess.TimeoutExpired, OSError):
+        pass
+
+
 def _startup_lab_sovereign() -> None:
     """Hostess 7 runs the lab — secure connection, share in, no share out."""
     if os.environ.get("HOSTESS7_LAB_SOVEREIGN_BOOT", "1") != "1":
@@ -13504,6 +13901,7 @@ def main():
     threading.Thread(target=_startup_field_stack_boot, daemon=True, name="field-stack-boot").start()
     threading.Thread(target=_startup_always_optimal, daemon=True, name="always-optimal-boot").start()
     threading.Thread(target=_startup_internet_clean, daemon=True, name="hostess7-internet-clean-boot").start()
+    threading.Thread(target=_startup_dynamic_routes, daemon=True, name="field-dynamic-routes-boot").start()
     threading.Thread(target=_startup_lab_sovereign, daemon=True, name="hostess7-lab-sovereign-boot").start()
     server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
     server.serve_forever()
