@@ -50,6 +50,7 @@ PAGES_DESKTOP_ICON_IDS = (
     "queen-gameroom",
     "queen-chips",
     "nexus-compatibility",
+    "device-map",
 )
 PAGES_DESKTOP_UI_SCALE = 200
 PAGES_DESKTOP_ICON_SIZE = 96
@@ -1618,6 +1619,13 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     spatial["pages"] = True
     (API / "field-spatial.json").write_text(json.dumps(spatial, indent=2) + "\n", encoding="utf-8")
     files.append("field-spatial.json")
+
+    device_map = _run_nl_script_json("lib/field-device-map.py", ["json"], timeout=60)
+    if not device_map.get("schema"):
+        device_map = {**stub, "schema": "field-device-map/v1", "operator": {}, "devices": [], "partial": True}
+    device_map["pages"] = True
+    (API / "field-device-map.json").write_text(json.dumps(device_map, indent=2) + "\n", encoding="utf-8")
+    files.append("field-device-map.json")
 
     threat_panel = {
         **stub,

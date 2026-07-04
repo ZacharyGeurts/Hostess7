@@ -1,0 +1,46 @@
+{
+  "schema": "field-device-map-doctrine/v1",
+  "title": "DeviceMap — sub-micron operator · 3D world device lattice",
+  "boss": "hostess7",
+  "motto": "Know your position to the sub-micron — map every connected device, flying or grounded, with precise distance and bearing.",
+  "operator": {
+    "module": "lib/operator-location.py",
+    "precision": "lib/gps-precision.py",
+    "resolution_nm": 0.111,
+    "anchor_role": "operator"
+  },
+  "sources": [
+    {"id": "precision_field", "module": "lib/precision-field.py"},
+    {"id": "botnet_registry", "module": "lib/field-botnet-registry.py"},
+    {"id": "botnet_dns_dhcp", "module": "lib/field-botnet-dns-dhcp.py"},
+    {"id": "host_attacks", "state": "host-attacks.json"},
+    {"id": "census_field", "api": "/api/census-field"},
+    {"id": "everyone_counter", "module": "lib/field-everyone-counter.py"},
+    {"id": "spatial", "module": "lib/field-spatial-cognition.py"}
+  ],
+  "geometry": {
+    "module": "lib/spatial-target-geometry.py",
+    "distance": "lib/geo-distance.py",
+    "precision": "sub_micron",
+    "enu_unit": "nanometer"
+  },
+  "flying_kinds": ["aircraft", "drone", "uav", "satellite", "flight", "flying", "orbital"],
+  "desktop": {
+    "id": "device-map",
+    "name": "DeviceMap",
+    "icon": "queen-prog-znetwork",
+    "exec": "/field-device-map",
+    "category": "NEXUS · Sense",
+    "pinned": true,
+    "desktop": true
+  },
+  "api": "/api/field-device-map",
+  "surface": "/field-device-map/",
+  "viewer": {
+    "engine": "three_wireframe",
+    "style": "hostess7-training-viewer",
+    "scale_m_per_unit": 1.0,
+    "show_bearing_arrows": true,
+    "show_distance_labels": true
+  }
+}

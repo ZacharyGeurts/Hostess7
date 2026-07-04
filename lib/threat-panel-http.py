@@ -3295,6 +3295,11 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
+        if path in ("/api/field-device-map", "/api/device-map"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-device-map.py", ["json"], timeout=45)
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
         if path in ("/api/humanoid-motion", "/api/humanoid-motion/status"):
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "humanoid-motion-training.py", ["json"], timeout=25)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
