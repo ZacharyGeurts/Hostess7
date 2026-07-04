@@ -11,7 +11,9 @@
 | Surface | URL |
 |---------|-----|
 | Textbook | https://zacharygeurts.github.io/GNUEOLTerminal/ |
-| Classic wiki | https://zacharygeurts.github.io/GNUEOLTerminal/wiki/ |
+| Classic wiki (Pages) | https://zacharygeurts.github.io/GNUEOLTerminal/wiki/ |
+| **GitHub wiki** | https://github.com/ZacharyGeurts/GNUEOLTerminal/wiki |
+| Full operator manual | https://github.com/ZacharyGeurts/GNUEOLTerminal/wiki/eol-terminal-full-manual |
 | Field Tech terminal | https://zacharygeurts.github.io/GNUEOLTerminal/terminal/ |
 | LIE of the Year | https://zacharygeurts.github.io/GNUEOLTerminal/back-matter/lie-of-the-year-2026.html |
 
