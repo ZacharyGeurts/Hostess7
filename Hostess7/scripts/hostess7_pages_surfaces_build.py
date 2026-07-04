@@ -59,6 +59,30 @@ def _ts() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def _enrich_everyone_counter(everyone_ctr: dict[str, Any], botnet_dns: dict[str, Any]) -> dict[str, Any]:
+    """Merge botnet lane counts from DNS/DHCP export when CI has no local state."""
+    bot_nodes = int((botnet_dns.get("bot_network") or {}).get("node_count") or 0)
+    if bot_nodes <= 0:
+        return everyone_ctr
+    lanes = everyone_ctr.setdefault("lanes", {})
+    bot_lane = lanes.setdefault("botnet", {"label": "Botnet nodes"})
+    if int(bot_lane.get("count") or 0) < bot_nodes:
+        bot_lane["count"] = bot_nodes
+    dist = everyone_ctr.setdefault("distributed_botnet", {"enabled": True})
+    if int(dist.get("nodes") or 0) < bot_nodes:
+        dist["nodes"] = bot_nodes
+    gh_open = bool((botnet_dns.get("github_control_plane") or {}).get("github_open"))
+    if gh_open:
+        dist["github_open"] = True
+    exe_n = int((lanes.get("executable_people") or {}).get("count") or 0)
+    gh_n = int((lanes.get("github_people") or {}).get("count") or 0)
+    loopback = int((lanes.get("loopback_sovereign") or {}).get("count") or 1)
+    total = bot_nodes + gh_n + exe_n + loopback
+    if int(everyone_ctr.get("everyone_total") or 0) < total:
+        everyone_ctr["everyone_total"] = total
+    return everyone_ctr
+
+
 def _run_queen_browser() -> dict[str, Any]:
     script = NL / "Queen" / "lib" / "queen-browser.py"
     if not script.is_file():
@@ -1885,6 +1909,7 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     else:
         everyone_ctr["pages"] = True
         everyone_ctr["pages_base"] = PAGES_BASE
+    everyone_ctr = _enrich_everyone_counter(everyone_ctr, botnet_dns)
     (API / "field-everyone-counter.json").write_text(
         json.dumps(everyone_ctr, indent=2) + "\n", encoding="utf-8"
     )

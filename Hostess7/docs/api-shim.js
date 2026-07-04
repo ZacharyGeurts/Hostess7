@@ -1018,6 +1018,37 @@
         });
       }
     }
+    if (path === "/api/field-everyone-counter" && method === "GET") {
+      try {
+        const r = await global.__H7_ORIG_FETCH__(LOOPBACK + "/api/field-everyone-counter", { cache: "no-store" });
+        if (r.ok) return jsonResponse(await r.json());
+      } catch (_e) {}
+      let doc = null;
+      let botnet = null;
+      try {
+        doc = await loadStatic("/api/field-everyone-counter.json");
+      } catch (_e2) {
+        doc = { ok: true, schema: "field-everyone-counter/v1", everyone_total: 0, pages: true };
+      }
+      try {
+        botnet = await loadStatic("/api/field-botnet-dns-dhcp.json");
+      } catch (_e3) { /* optional merge */ }
+      const botNodes = Number((botnet && botnet.bot_network && botnet.bot_network.node_count) || 0);
+      if (botNodes > 0) {
+        doc.lanes = doc.lanes || {};
+        doc.lanes.botnet = doc.lanes.botnet || { label: "Botnet nodes" };
+        if (Number(doc.lanes.botnet.count || 0) < botNodes) doc.lanes.botnet.count = botNodes;
+        doc.distributed_botnet = doc.distributed_botnet || { enabled: true };
+        if (Number(doc.distributed_botnet.nodes || 0) < botNodes) doc.distributed_botnet.nodes = botNodes;
+        const gh = Number((doc.lanes.github_people && doc.lanes.github_people.count) || 0);
+        const exe = Number((doc.lanes.executable_people && doc.lanes.executable_people.count) || 0);
+        const loop = Number((doc.lanes.loopback_sovereign && doc.lanes.loopback_sovereign.count) || 1);
+        const total = botNodes + gh + exe + loop;
+        if (Number(doc.everyone_total || 0) < total) doc.everyone_total = total;
+      }
+      doc.pages = true;
+      return jsonResponse(doc);
+    }
     if (path === "/api/field-internet/keepalive" && method === "POST") {
       try {
         const r = await global.__H7_ORIG_FETCH__(LOOPBACK + "/api/field-internet/keepalive", {
