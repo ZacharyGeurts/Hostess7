@@ -15,8 +15,8 @@
     {"rfc": "RFC 6761", "title": "Special-Use Domain Names", "section": "§6.3", "requirement": "localhost. names resolve only to loopback.", "compliance": "enforced", "nexus_control": "Loopback-only listener binding"},
     {"rfc": "RFC 6895", "title": "IANA DNS Parameters", "section": "§3", "requirement": "QTYPE/QCLASS assignments per IANA registry.", "compliance": "enforced", "nexus_control": "Unsupported QTYPE returns empty/SERVFAIL"},
     {"rfc": "RFC 7766", "title": "DNS Transport over TCP", "section": "§6", "requirement": "TCP fallback for responses >512 bytes.", "compliance": "documented", "nexus_control": "UDP-first; TCP noted in resolver policy"},
-    {"rfc": "RFC 7858", "title": "Specification for DNS over TLS (DoT)", "section": "§3", "requirement": "Port 853 TLS encapsulation — optional client path.", "compliance": "blocked_foreign", "nexus_control": "Foreign DoT resolvers stopped; local truth path only"},
-    {"rfc": "RFC 8484", "title": "DNS Queries over HTTPS (DoH)", "section": "§4", "requirement": "HTTPS application/dns-message wire format.", "compliance": "blocked_foreign", "nexus_control": "DoH bypass blocked under planetary EXTREME envelope"},
+    {"rfc": "RFC 7858", "title": "Specification for DNS over TLS (DoT)", "section": "§3", "requirement": "Port 853 TLS encapsulation — optional client path.", "compliance": "allowed", "nexus_control": "Internet open — client may use DoT"},
+    {"rfc": "RFC 8484", "title": "DNS Queries over HTTPS (DoH)", "section": "§4", "requirement": "HTTPS application/dns-message wire format.", "compliance": "allowed", "nexus_control": "Internet open — client may use DoH"},
     {"rfc": "RFC 9520", "title": "DNS Resolver Integrity Extensions", "section": "§1", "requirement": "Resolver must not substitute answers without operator policy.", "compliance": "enforced", "nexus_control": "No shortcut public DNS; trace-only answers"}
   ],
   "legal_framework": [
@@ -45,10 +45,5 @@
     {"letter": "l", "hostname": "l.root-servers.net", "ipv4": "199.7.83.42", "ipv6": "2001:500:9f::42", "operator": "ICANN"},
     {"letter": "m", "hostname": "m.root-servers.net", "ipv4": "202.12.27.33", "ipv6": "2001:dc3::35", "operator": "WIDE Project"}
   ],
-  "foreign_resolvers_blocked": [
-    {"name": "Google Public DNS", "ipv4": ["8.8.8.8", "8.8.4.4"], "ipv6": ["2001:4860:4860::8888", "2001:4860:4860::8844"], "reason": "RFC 9520 — non-authoritative shortcut"},
-    {"name": "Cloudflare DNS", "ipv4": ["1.1.1.1", "1.0.0.1"], "ipv6": ["2606:4700:4700::1111", "2606:4700:4700::1001"], "reason": "Foreign resolver bypass"},
-    {"name": "Charter/Spectrum", "ipv4": ["71.10.216.1", "71.10.216.2"], "ipv6": [], "reason": "ISP DNS redirection — 47 CFR CPNI class"},
-    {"name": "Quad9", "ipv4": ["9.9.9.9"], "ipv6": ["2620:fe::fe", "2620:fe::9"], "reason": "Third-party policy injection"}
-  ]
+  "foreign_resolvers_blocked": []
 }

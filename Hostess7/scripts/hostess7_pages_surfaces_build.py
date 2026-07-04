@@ -1666,6 +1666,15 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("field-ipv4-device-sovereign.json")
 
+    internet_unrestrict = _run_nl_script_json("lib/field-internet-unrestrict.py", ["panel"], timeout=20)
+    if not internet_unrestrict.get("schema"):
+        internet_unrestrict = {**stub, "schema": "field-internet-unrestrict/v1", "partial": True}
+    internet_unrestrict["pages"] = True
+    (API / "field-internet-unrestrict.json").write_text(
+        json.dumps(internet_unrestrict, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-internet-unrestrict.json")
+
     ipv4_arbitrary = _run_nl_script_json("lib/field-ipv4-arbitrary.py", ["panel"], timeout=20)
     if not ipv4_arbitrary.get("schema"):
         ipv4_arbitrary = {**stub, "schema": "field-ipv4-arbitrary/v1", "partial": True}

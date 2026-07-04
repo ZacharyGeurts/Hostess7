@@ -1,21 +1,22 @@
 {
   "schema": "field-dns-dhcp-collision-guard/v1",
-  "title": "DNS/DHCP collision guard — sole truth and accuracy authority",
+  "title": "DNS/DHCP collision guard — lease hygiene and sole serve",
   "boss": "hostess7",
-  "motto": "Only our DNS and DHCP — any other server is a threat; attempts are eradicated.",
+  "motto": "Prevent lease collisions and duplicate serves. Internet open — no foreign blocks.",
   "policy": {
     "prevent_lease_collisions": true,
-    "ping_probe_before_offer": true,
+    "ping_probe_before_offer": false,
     "prune_duplicate_serve_loops": true,
-    "reject_foreign_resolvers_on_primary": true,
+    "reject_foreign_resolvers_on_primary": false,
     "sole_authority_required": true,
-    "only_our_dns_dhcp": true,
-    "foreign_server_is_threat": true,
-    "eradicate_on_attempt": true,
-    "nft_block_foreign_offers": true,
-    "accuracy": "exact_match_egress_integrity"
+    "only_our_dns_dhcp": false,
+    "foreign_server_is_threat": false,
+    "eradicate_on_attempt": false,
+    "nft_block_foreign_offers": false,
+    "internet_open": true,
+    "accuracy": "device_mapped_not_numbers"
   },
   "module": "lib/field-dns-dhcp-collision-guard.py",
   "api": "/api/field-dns-dhcp-collision-guard",
-  "ironclad_cite": "ironclad:collision-guard:1"
+  "ironclad_cite": "ironclad:collision-guard:2"
 }

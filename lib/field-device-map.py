@@ -139,7 +139,8 @@ def _ipv4_authority(device: dict[str, Any]) -> dict[str, Any]:
         "track_ip": False,
         "dns_authority": "hostess7_truth",
         "dhcp_authority": "hostess7_field",
-        "suppress_foreign_dns_dhcp": True,
+        "suppress_foreign_dns_dhcp": False,
+        "internet_open": True,
         "auto_managed": True,
         "never_look_back": True,
     }

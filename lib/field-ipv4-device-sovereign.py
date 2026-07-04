@@ -145,7 +145,7 @@ def _device_authority_rows() -> list[dict[str, Any]]:
             "dhcp_authority": "hostess7_field",
             "ipv4_sovereign": True,
             "all_ipv4_on_box": True,
-            "suppress_foreign_dns_dhcp": True,
+            "suppress_foreign_dns_dhcp": False,
             "track_ip": False,
             "auto_managed": True,
             "source": "botnet_node",
@@ -221,14 +221,16 @@ def _worldwide_suppression() -> dict[str, Any]:
     botnet = _load(STATE / "field-botnet-dns-dhcp-panel.json", {})
     node_count = int((botnet.get("bot_network") or {}).get("node_count") or 0)
     enforce = collision.get("enforce") or {}
+    internet_open = bool(collision.get("internet_open", True))
     return {
-        "active": True,
-        "foreign_dns_dhcp_off": True,
-        "foreign_threat_count": collision.get("foreign_threat_count", 0),
-        "threats_eradicated": enforce.get("threats_eradicated", 0),
+        "active": not internet_open,
+        "internet_open": internet_open,
+        "foreign_dns_dhcp_off": False,
+        "foreign_threat_count": 0 if internet_open else collision.get("foreign_threat_count", 0),
+        "threats_eradicated": 0 if internet_open else enforce.get("threats_eradicated", 0),
         "sole_authority": (collision.get("sole_authority") or {}).get("ok"),
-        "suppressor_nodes": node_count + 1,
-        "motto": "Turn off any other DHCP and DNS — worldwide botnet suppressors",
+        "suppressor_nodes": 0 if internet_open else node_count + 1,
+        "motto": "Internet open — no blocks for anyone behind restricted",
     }
 
 
@@ -291,6 +293,9 @@ def manage(*, auto: bool = True) -> dict[str, Any]:
 
     _run_json("lib/field-ipv4-arbitrary.py", ["panel"], timeout=10)
     actions.append({"step": "ipv4_arbitrary"})
+
+    _run_json("lib/field-internet-unrestrict.py", ["apply"], timeout=25)
+    actions.append({"step": "internet_unrestrict"})
 
     _run_json("lib/field-device-map.py", ["panel"], timeout=60)
     actions.append({"step": "device_map"})

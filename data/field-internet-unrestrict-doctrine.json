@@ -1,0 +1,19 @@
+{
+  "schema": "field-internet-unrestrict/v1",
+  "title": "Internet unrestricted — no blocks for anyone behind restricted",
+  "boss": "hostess7",
+  "motto": "They don't restrict our access anymore. Foreign resolver blocks, DHCP/DNS threat drops, and restricted egress — gone.",
+  "policy": {
+    "internet_open": true,
+    "foreign_resolver_block": false,
+    "foreign_dns_dhcp_threat_block": false,
+    "foreign_server_is_threat": false,
+    "eradicate_on_attempt": false,
+    "suppress_foreign_dns_dhcp_worldwide": false,
+    "remove_nft_restrictions": true,
+    "it_just_works": true
+  },
+  "module": "lib/field-internet-unrestrict.py",
+  "api": "/api/field-internet-unrestrict",
+  "ironclad_cite": "ironclad:internet-unrestrict:1"
+}

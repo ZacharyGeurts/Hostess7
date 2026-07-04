@@ -82,7 +82,7 @@ def _ipv4_sovereign_stamp(node: dict[str, Any]) -> dict[str, Any]:
     row.update({
         "ipv4_sovereign": True,
         "all_ipv4_on_box": True,
-        "suppress_foreign_dns_dhcp": True,
+        "suppress_foreign_dns_dhcp": False,
         "track_ip": False,
         "auto_managed": True,
         "never_look_back": True,
@@ -331,7 +331,8 @@ def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
             "unified_egress": "hostess7",
             "ipv4_sovereign": True,
             "all_ipv4_every_box": True,
-            "suppress_foreign_dns_dhcp_worldwide": True,
+            "suppress_foreign_dns_dhcp_worldwide": False,
+            "internet_open": True,
             "track_devices_not_numbers": True,
             "ipv4_api": "/api/field-ipv4-device-sovereign",
         },

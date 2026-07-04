@@ -24,6 +24,7 @@ QUEEN_LAN = os.environ.get("NEXUS_FIELD_DHCP_BIND", os.environ.get("NEXUS_QUEEN_
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", Path(__file__).resolve().parents[1]))
 STATE = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state"))
 DOCTRINE = INSTALL / "data" / "field-dns-dhcp-collision-guard-doctrine.json"
+UNRESTRICT_DOCTRINE = INSTALL / "data" / "field-internet-unrestrict-doctrine.json"
 PANEL = STATE / "field-dns-dhcp-collision-guard-panel.json"
 LEDGER = STATE / "field-dns-dhcp-collision-guard.jsonl"
 PGREP = Path(os.environ.get("NEXUS_PGREP", "/usr/bin/pgrep"))
@@ -31,6 +32,17 @@ PGREP = Path(os.environ.get("NEXUS_PGREP", "/usr/bin/pgrep"))
 
 def _utc() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _internet_unrestricted() -> bool:
+    if os.environ.get("NEXUS_FIELD_INTERNET_UNRESTRICT", "1").strip().lower() in ("0", "false", "no", "off"):
+        return False
+    unrestrict = _load(UNRESTRICT_DOCTRINE, {})
+    if (unrestrict.get("policy") or {}).get("internet_open"):
+        return True
+    doctrine = _load(DOCTRINE, {})
+    policy = doctrine.get("policy") or {}
+    return not policy.get("foreign_server_is_threat", True)
 
 
 def _load(path: Path, default: Any = None) -> Any:
@@ -261,6 +273,8 @@ def _probe_foreign_dhcp_offer() -> dict[str, Any] | None:
 
 
 def _foreign_server_threats(takeover: dict[str, Any]) -> list[dict[str, Any]]:
+    if _internet_unrestricted():
+        return []
     inc = takeover.get("incumbents") or {}
     phase = str(takeover.get("phase") or "observing")
     nexus_dns = bool(inc.get("nexus_dns_running"))
@@ -277,6 +291,9 @@ def _foreign_server_threats(takeover: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _punish_foreign_servers(takeover: dict[str, Any]) -> list[dict[str, Any]]:
+    if _internet_unrestricted():
+        _apply_internet_unrestrict()
+        return [{"action": "internet_unrestricted", "foreign_threats": 0}]
     actions: list[dict[str, Any]] = []
     for threat in _foreign_server_threats(takeover):
         vector = str(threat.get("vector") or "FOREIGN_DNS_SERVER")
@@ -302,7 +319,26 @@ def _punish_foreign_servers(takeover: dict[str, Any]) -> list[dict[str, Any]]:
     return actions
 
 
+def _apply_internet_unrestrict() -> None:
+    py = INSTALL / "lib" / "field-internet-unrestrict.py"
+    if not py.is_file():
+        return
+    try:
+        subprocess.run(
+            [sys.executable, str(py), "apply"],
+            cwd=str(INSTALL),
+            capture_output=True,
+            timeout=20,
+            env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)},
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+
+
 def _apply_nft_threat_block() -> None:
+    if _internet_unrestricted():
+        _apply_internet_unrestrict()
+        return
     script = INSTALL / "lib" / "field-dns.sh"
     if not script.is_file():
         return
@@ -336,13 +372,14 @@ def _incumbent_collisions(takeover: dict[str, Any]) -> list[dict[str, Any]]:
             "listeners": inc.get("dhcp_listeners") or [],
             "severity": "high",
         })
-    foreign = list(inc.get("foreign_nameservers") or [])
-    if foreign and str(takeover.get("phase") or "") == "primary":
-        rows.append({
-            "kind": "foreign_resolver_collision",
-            "nameservers": foreign,
-            "severity": "critical",
-        })
+    if not _internet_unrestricted():
+        foreign = list(inc.get("foreign_nameservers") or [])
+        if foreign and str(takeover.get("phase") or "") == "primary":
+            rows.append({
+                "kind": "foreign_resolver_collision",
+                "nameservers": foreign,
+                "severity": "critical",
+            })
     return rows
 
 
@@ -350,11 +387,12 @@ def _sole_authority(takeover: dict[str, Any], collisions: list[dict[str, Any]]) 
     inc = takeover.get("incumbents") or {}
     phase = str(takeover.get("phase") or "observing")
     foreign = list(inc.get("foreign_nameservers") or [])
+    open_net = _internet_unrestricted()
     dup_proc = [c for c in collisions if c.get("kind") == "duplicate_serve_process"]
     lease_col = [c for c in collisions if c.get("kind") == "lease_ip_collision"]
     inc_col = [c for c in collisions if c.get("kind", "").startswith("incumbent")]
-    foreign_col = [c for c in collisions if c.get("kind") == "foreign_resolver_collision"]
-    foreign_srv = [
+    foreign_col = [] if open_net else [c for c in collisions if c.get("kind") == "foreign_resolver_collision"]
+    foreign_srv = [] if open_net else [
         c for c in collisions
         if str(c.get("kind", "")).startswith("foreign_") and c.get("kind") != "foreign_resolver_collision"
     ]
@@ -364,14 +402,14 @@ def _sole_authority(takeover: dict[str, Any], collisions: list[dict[str, Any]]) 
         phase == "primary"
         and bool(inc.get("nexus_dns_running"))
         and not inc.get("incumbent_dns")
-        and not foreign
+        and (open_net or not foreign)
     )
     dhcp_sole = (
         phase == "primary"
         and bool(inc.get("nexus_dhcp_running"))
         and not inc.get("incumbent_dhcp")
     )
-    truth_sole = dns_sole and not foreign_col
+    truth_sole = dns_sole and (open_net or not foreign_col)
     accuracy = not lease_col and not inc_col and not foreign_col
 
     return {
@@ -382,6 +420,7 @@ def _sole_authority(takeover: dict[str, Any], collisions: list[dict[str, Any]]) 
         "ok": dns_sole and dhcp_sole and truth_sole and accuracy,
         "phase": phase,
         "foreign_resolvers": foreign,
+        "internet_open": open_net,
         "collision_count": len(collisions),
         "authority_collision_count": len(authority_collisions),
         "hygiene_warnings": len(dup_proc),
@@ -415,8 +454,9 @@ def detect_collisions(*, refresh_takeover: bool = False) -> dict[str, Any]:
         "duplicate_processes": len(proc_rows),
         "incumbent_conflicts": len(inc_rows),
         "foreign_server_threats": foreign_threats,
-        "foreign_threat_count": len(foreign_threats),
-        "only_our_dns_dhcp": True,
+        "foreign_threat_count": 0 if _internet_unrestricted() else len(foreign_threats),
+        "only_our_dns_dhcp": not _internet_unrestricted(),
+        "internet_open": _internet_unrestricted(),
         "sole_authority": sole,
         "takeover_phase": takeover.get("phase"),
         "policy": _load(DOCTRINE, {}).get("policy") or {},

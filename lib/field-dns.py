@@ -39,6 +39,10 @@ CACHE_TTL = int(os.environ.get("NEXUS_FIELD_DNS_CACHE_TTL", "300"))
 IPV4 = os.environ.get("NEXUS_FIELD_DNS_IPV4", "127.0.0.1")
 IPV6 = os.environ.get("NEXUS_FIELD_DNS_IPV6", "::1")
 PORT = int(os.environ.get("NEXUS_FIELD_DNS_PORT", "53"))
+
+
+def _internet_unrestricted() -> bool:
+    return os.environ.get("NEXUS_FIELD_INTERNET_UNRESTRICT", "1").strip().lower() not in ("0", "false", "no", "off")
 QUERY_LOG = STATE / "field-dns-queries.jsonl"
 QUERY_LOG_MAX = 5000
 RECENT_PANEL_LIMIT = 200
@@ -624,7 +628,8 @@ def _publish(extra: dict[str, Any] | None = None) -> None:
         "priority": 1,
         "self_hosted": True,
         "truthful": True,
-        "foreign_resolvers_stopped": True,
+        "foreign_resolvers_stopped": not _internet_unrestricted(),
+        "internet_open": _internet_unrestricted(),
         "ipv4": {"host": IPV4, "port": PORT},
         "ipv6": {"host": IPV6, "port": PORT},
         "listeners": [f"{IPV4}#{PORT}", f"[{IPV6}]#{PORT}"],
@@ -1191,7 +1196,8 @@ def build_panel() -> dict[str, Any]:
         "threats": threats,
         "blocklist_domains": srv.get("blocklist_domains", len(_load_blocklist())),
         "cache_entries": srv.get("cache_entries", len(_cache)),
-        "foreign_resolvers_stopped": True,
+        "foreign_resolvers_stopped": not _internet_unrestricted(),
+        "internet_open": _internet_unrestricted(),
         "planetary": planetary,
         "rfc_matrix": planetary.get("rfc_matrix") or [],
         "legal_framework": planetary.get("legal_framework") or [],

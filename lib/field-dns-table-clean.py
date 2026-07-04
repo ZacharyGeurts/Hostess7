@@ -165,7 +165,7 @@ def _policy_theirs(doc: dict[str, Any], *, flush_stub: bool) -> list[dict[str, A
         except (OSError, subprocess.TimeoutExpired):
             rows.append({"action": "enforce_resolv", "ok": False, "destructive": False})
 
-    if clean.get("reaffirm_foreign_block", True):
+    if clean.get("reaffirm_foreign_block", False) and os.environ.get("NEXUS_FIELD_DNS_FOREIGN_BLOCK", "0") == "1":
         try:
             proc = subprocess.run(
                 ["bash", "-c", f'source "{dns_sh}" && nexus_field_dns_local_capture'],
