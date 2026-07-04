@@ -7,6 +7,8 @@
   if (document.body) document.body.dataset.pagesRuntime = "1";
   document.documentElement.dataset.h7Boss = "hostess7";
   document.documentElement.dataset.h7InteractionLane = "hostess7-github";
+  document.documentElement.dataset.battleStations = "1";
+  if (document.body) document.body.dataset.battleStations = "1";
 
   function bootDesktop() {
     if (document.body) document.body.dataset.pagesRuntime = "1";

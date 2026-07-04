@@ -1,0 +1,39 @@
+{
+  "schema": "field-battle-stations/v1",
+  "title": "Battle Stations — general quarters everywhere",
+  "motto": "All hands — six-tool wall live, war machine armed, DNS/DHCP smooth, alert posture ON. ALL RIGHTS RESERVED is the terms.",
+  "terms": "ALL RIGHTS RESERVED is the terms.",
+  "blame": "Blame terrorist scum — again.",
+  "fork_policy": "No forks. No branches. Cut unauthorized copies.",
+  "enabled": true,
+  "everywhere": true,
+  "policy": {
+    "battle_stations": true,
+    "six_tool_wall": true,
+    "six_tool_wall_on_boot": true,
+    "war_machine": true,
+    "command_deck": true,
+    "monster_monitor": true,
+    "security_hold": true,
+    "internet_clean_on_boot": true,
+    "cad_rescue": true,
+    "ammonet_bar_bottom": true
+  },
+  "env": {
+    "HOSTESS7_BATTLE_STATIONS": "1",
+    "HOSTESS7_WAR_PROFILE": "1",
+    "HOSTESS7_LICENSE_MODE": "war",
+    "NEXUS_PRESUME_HOSTILE": "1",
+    "NEXUS_WAR_MACHINE": "1",
+    "NEXUS_FIELD_IPV4_ARBITRARY": "1"
+  },
+  "boot_chain": [
+    "lib/field-war-hardening.py harden",
+    "Hostess7/scripts/field_alert_posture.py on",
+    "lib/field-battle-stations.py stamp"
+  ],
+  "pages": {
+    "wire_js": "pages-battle-stations.js",
+    "force_six_tool_wall": true
+  }
+}

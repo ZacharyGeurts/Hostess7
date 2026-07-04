@@ -200,6 +200,14 @@ def boot(*, web: bool = True, stack_learn: bool | None = None) -> int:
     rep = _run(["bash", str(shell), "alert-posture", "on"], step="alert-posture")
     steps.append({"name": "alert-posture", **rep})
 
+    bs_py = ROOT.parent / "lib" / "field-battle-stations.py"
+    if bs_py.is_file():
+        rep = _run([sys.executable, str(bs_py), "on"], step="battle-stations")
+        steps.append({"name": "battle-stations", **rep})
+    else:
+        rep = _run(["bash", str(shell), "battle-stations", "on"], step="battle-stations")
+        steps.append({"name": "battle-stations", **rep})
+
     if web:
         rep = _run(["bash", str(shell), "web-start"], step="web-start")
         from hostess7_sovereign_wait import wait_until  # noqa: WPS433

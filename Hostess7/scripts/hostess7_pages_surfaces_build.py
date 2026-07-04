@@ -357,6 +357,20 @@ def _patch_queen_browser_deep(obj: Any) -> None:
             _patch_queen_browser_deep(item)
 
 
+def _battle_stations_on() -> bool:
+    raw = os.environ.get("HOSTESS7_BATTLE_STATIONS", "").strip().lower()
+    if raw in ("0", "false", "no", "off"):
+        return False
+    if raw in ("1", "true", "yes", "on"):
+        return True
+    bs_path = NL / "data" / "field-battle-stations-doctrine.json"
+    try:
+        bs = json.loads(bs_path.read_text(encoding="utf-8"))
+        return bool(bs.get("enabled", True))
+    except (OSError, json.JSONDecodeError):
+        return True
+
+
 def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
     doc = json.loads(json.dumps(doc))
     doc["pages"] = True
@@ -366,8 +380,10 @@ def _patch_desktop_doc(doc: dict[str, Any]) -> dict[str, Any]:
     doc["exported"] = _ts()
 
     policy = doc.setdefault("policy", {})
-    policy["six_tool_wall"] = False
-    policy["six_tool_wall_on_boot"] = False
+    battle = _battle_stations_on()
+    policy["battle_stations"] = battle
+    policy["six_tool_wall"] = battle
+    policy["six_tool_wall_on_boot"] = battle
     policy["kiosk_launch"] = True
     policy["fullscreen_desktop"] = True
     policy["keyboard_sovereign"] = True

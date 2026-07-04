@@ -153,6 +153,7 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh go-online             Fetch + learn (Owner/Amouranth X, warfare, alert posture)
   ./Hostess7.sh people-learn          Truth-filtered ZacharyGeurts + Amouranth online
   ./Hostess7.sh alert-posture on      Heightened alert — stun/RF/terror vigilance
+  ./Hostess7.sh battle-stations on    General quarters — six-tool wall everywhere
   ./Hostess7.sh learn-online          Alias for go-online
   ./Hostess7.sh online-wants          Show curated online learning plan (no fetch)
   ./Hostess7.sh memes-ingest seed     Ingest github.com/ZacharyGeurts/memes (image talk)
@@ -631,6 +632,23 @@ main() {
         alert-posture|alert_posture|heightened-alert)
             shift
             exec pythong "$ROOT/scripts/field_alert_posture.py" "${1:-on}"
+            ;;
+        battle-stations|battle_stations|general-quarters)
+            shift
+            case "${1:-on}" in
+                on|enable|arm)
+                    exec bash "$ROOT/scripts/battle-stations-on.sh"
+                    ;;
+                off|disable|stand-down)
+                    HOSTESS7_BATTLE_STATIONS=0 exec pythong "$ROOT/lib/field-battle-stations.py" off
+                    ;;
+                status|json)
+                    exec pythong "$ROOT/lib/field-battle-stations.py" json
+                    ;;
+                *)
+                    exec pythong "$ROOT/lib/field-battle-stations.py" "${1:-on}"
+                    ;;
+            esac
             ;;
         warfare-expand|warfare_expand)
             HOSTESS7_WORKSPACE=alert exec pythong -c "

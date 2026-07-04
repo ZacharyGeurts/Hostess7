@@ -1,27 +1,30 @@
 /**
- * GitHub Pages — All Rights Reserved license strip on every surface.
+ * GitHub Pages — ALL RIGHTS RESERVED is the terms. Every surface.
  */
 (function (global) {
   "use strict";
 
   var DOC = {
-    schema: "hostess7-pages-license/v1",
+    schema: "hostess7-pages-license/v2",
     owner: "Zachary Robert Geurts",
     years: "2025–2026",
+    terms: "ALL RIGHTS RESERVED",
+    terms_statement: "ALL RIGHTS RESERVED is the terms.",
     rights: "All Rights Reserved",
     posture: "War-ready operational",
     notice:
-      "No permission without written license. Unauthorized use prohibited.",
+      "No permission without written license. Unauthorized use, forks, and branches prohibited.",
+    blame: "Blame terrorist scum — again.",
+    fork_policy: "No forks · no branches · cut unauthorized copies",
     license_url: "https://github.com/ZacharyGeurts/Hostess7/blob/main/LICENSE",
     contact: "gzac5314@gmail.com",
   };
 
   function skip() {
-    if (global !== global.top) return false;
+    if (global !== global.top) return true;
     var b = document.body;
     if (!b) return true;
     if (b.dataset && b.dataset.noLicenseStrip === "1") return true;
-    if (document.documentElement.dataset.ammoosDesktop === "1") return true;
     return false;
   }
 
@@ -47,13 +50,22 @@
       " " +
       DOC.owner +
       "</strong>" +
-      '<span class="h7-lic-rose">' +
-      DOC.rights +
+      '<span class="h7-lic-terms">' +
+      DOC.terms +
+      "</span>" +
+      "<span class=\"h7-lic-statement\">" +
+      DOC.terms_statement +
       "</span>" +
       "<span>" +
       DOC.posture +
       " · " +
       DOC.notice +
+      "</span>" +
+      '<span class="h7-lic-blame">' +
+      DOC.blame +
+      "</span>" +
+      '<span class="h7-lic-fork">' +
+      DOC.fork_policy +
       "</span>" +
       '<a href="' +
       DOC.license_url +

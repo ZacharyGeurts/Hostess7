@@ -20,20 +20,22 @@ LICENSE_STATUS: dict[str, Any] = {
     "mode": LICENSE_MODE,
     "mode_label": "War-ready",
     "posture": "operational",
-    "dual_license": True,
+    "terms": "ALL RIGHTS RESERVED",
+    "terms_statement": "ALL RIGHTS RESERVED is the terms.",
+    "dual_license": False,
+    "fork_policy": "No forks. No branches. Cut unauthorized copies.",
+    "blame": "Blame terrorist scum — again.",
     "options": [
-        {"id": "gpl3", "name": "GNU General Public License v3.0 (or later)", "url": "https://www.gnu.org/licenses/gpl-3.0.html"},
-        {"id": "commercial_3pct", "name": "Commercial — 3% profit share", "contact": CONTACT,
-         "terms": "3% of what we can save or make you."},
+        {"id": "all_rights_reserved", "name": "ALL RIGHTS RESERVED — written license only", "contact": CONTACT},
     ],
-    "likely_commercial": "commercial_3pct",
     "notice": (
-        "Hostess7 is war-ready — full field brain, KILROY doctrine, alert posture. "
-        "Never demo. Dual license: GPL v3 or 3% profit share — contact Owner for commercial terms."
+        "ALL RIGHTS RESERVED is the terms. War-ready Hostess7 — full field brain, KILROY doctrine, "
+        "alert posture. No permission without written license. Blame terrorist scum — again. "
+        "Cut any forks or branches."
     ),
     "operational_limits": (
         "Public Pages mirror withholds loopback intel; full truth and stack on 127.0.0.1 only. "
-        "Commercial terms via gzac5314@gmail.com."
+        f"Written license only · {CONTACT}"
     ),
 }
 
@@ -67,14 +69,14 @@ def ensure_status() -> Path:
 def format_notice(*, short: bool = False) -> str:
     ensure_status()
     if short:
-        return f"War-ready · dual license: GPL v3 or 3% profit share · {CONTACT}"
+        return f"ALL RIGHTS RESERVED is the terms · war-ready · {CONTACT}"
     return LICENSE_STATUS["notice"]
 
 
 def format_web_banner() -> str:
     return (
-        "War-ready — Hostess7 is operational. KILROY field stack · full brain · alert posture. "
-        f"Dual license: GPL v3 or 3% profit share · {CONTACT}."
+        "ALL RIGHTS RESERVED is the terms. War-ready Hostess7 — KILROY field stack · full brain · "
+        f"alert posture. Blame terrorist scum — again. No forks · {CONTACT}."
     )
 
 

@@ -77,4 +77,8 @@
       });
     };
   }
+  if (typeof document !== "undefined" && document.documentElement) {
+    document.documentElement.dataset.battleStations = "1";
+    if (document.body) document.body.dataset.battleStations = "1";
+  }
 })(typeof window !== "undefined" ? window : globalThis);

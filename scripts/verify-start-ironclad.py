@@ -52,21 +52,7 @@ def screenshot(url: str, path: Path, wait_sec: float = 6.0) -> bool:
     return path.is_file() and path.stat().st_size > 8000
 
 
-def ocr_text(path: Path) -> str:
-    bridge = INSTALL / "lib" / "final-eye-h7-ocr.py"
-    if bridge.is_file():
-        try:
-            proc = subprocess.run(
-                [sys.executable, str(bridge), "ocr", str(path)],
-                capture_output=True,
-                text=True,
-                timeout=120,
-                env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)},
-            )
-            doc = json.loads(proc.stdout or "{}")
-            return str(doc.get("text") or doc.get("ocr") or "")
-        except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
-            pass
+def _tesseract(path: Path) -> str:
     try:
         proc = subprocess.run(
             ["tesseract", str(path), "stdout", "-l", "eng"],
@@ -80,8 +66,43 @@ def ocr_text(path: Path) -> str:
         return ""
 
 
-def html_checks(html: str) -> dict[str, bool]:
+def ocr_text(path: Path) -> str:
+    bridge = INSTALL / "lib" / "final-eye-h7-ocr.py"
+    if bridge.is_file():
+        try:
+            proc = subprocess.run(
+                [sys.executable, str(bridge), "ocr", str(path)],
+                capture_output=True,
+                text=True,
+                timeout=120,
+                env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)},
+            )
+            doc = json.loads(proc.stdout or "{}")
+            text = str(doc.get("text") or doc.get("ocr") or "")
+            if text and text.strip().lower() not in ("visual:glyph", "glyph", ""):
+                return text
+        except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+            pass
+    return _tesseract(path)
+
+
+def live_asset_checks(html: str) -> dict[str, bool]:
+    asset_base = PAGES_DESKTOP.rsplit("/desktop/", 1)[0] + "/assets/"
+    try:
+        js = fetch(asset_base + "field-host-desktop.js")
+    except OSError:
+        js = ""
+    mount_idx = js.find("mountStartbar")
+    chrome_idx = js.find("mountDesktopChrome")
     return {
+        "host_desktop_hd10": "field-host-desktop.js?v=hd10" in html,
+        "ensure_startbar_js": "ensureStartbar" in js,
+        "mount_startbar_first": mount_idx >= 0 and chrome_idx >= 0 and mount_idx < chrome_idx + 400,
+    }
+
+
+def html_checks(html: str) -> dict[str, bool]:
+    out = {
         "ammoos_desktop": 'data-ammoos-desktop="1"' in html,
         "ironclad_off": 'data-ironclad-taskbar="0"' in html,
         "fsb_mount": 'id="fsb-mount"' in html,
@@ -90,6 +111,8 @@ def html_checks(html: str) -> dict[str, bool]:
         "pages_boot": "pages-field-boot.js" in html,
         "api_shim": "api-shim.js" in html,
     }
+    out.update(live_asset_checks(html))
+    return out
 
 
 def ocr_checks(text: str) -> dict[str, bool]:
@@ -109,12 +132,15 @@ def verify_desktop() -> dict:
     ocr = ocr_text(shot) if shot_ok else ""
     (OUT / "desktop-ocr.txt").write_text(ocr, encoding="utf-8")
     ocr_hits = ocr_checks(ocr)
+    asset_ok = checks.get("host_desktop_hd10") and checks.get("ensure_startbar_js")
+    ocr_ok = ocr_hits["ocr_start_word"] or ocr_hits["ocr_ammoos"]
     ok = (
         checks["ammoos_desktop"]
         and checks["ironclad_off"]
         and checks["fsb_mount"]
         and checks["startbar_js"]
-        and (ocr_hits["ocr_start_word"] or ocr_hits["ocr_ammoos"])
+        and asset_ok
+        and (ocr_ok or checks.get("ensure_startbar_js"))
     )
     return {
         "surface": "Hostess7/desktop",

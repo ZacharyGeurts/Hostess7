@@ -661,7 +661,7 @@
         version: "2.0",
         programs: desktopDefaultFallback(),
         desktop_icons: desktopDefaultFallback(),
-        policy: { desktop_icons_in_start: false, show_desktop_icons: true, six_tool_wall: false, ammonet_display_right: false, ammonet_bar_bottom: true, monitor_dashboard_right: false, desktop_ui_scale_default: 200, desktop_icon_size_default: 96 },
+        policy: { desktop_icons_in_start: false, show_desktop_icons: true, battle_stations: true, six_tool_wall: true, six_tool_wall_on_boot: true, ammonet_display_right: false, ammonet_bar_bottom: true, monitor_dashboard_right: false, desktop_ui_scale_default: 200, desktop_icon_size_default: 96 },
         shell: { settings: { desktop_icon_size: 96, ui_scale: 200, sort_desktop: "manual" } },
         startbar: { start_label: "Start", classic: true },
         guest_os: { system: "Field" },
