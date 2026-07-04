@@ -1,6 +1,6 @@
 /**
  * Hostess7 route cleanup — canonical desktop is /Hostess7/desktop/
- * Stale /field mirrors redirect; ALL RIGHTS RESERVED is the terms.
+ * Stale /field repo FIRED — redirect to canonical desktop only.
  */
 (function (global) {
   "use strict";
