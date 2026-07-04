@@ -163,6 +163,8 @@ def build_panel() -> dict[str, Any]:
         "policy": {
             "listen_before_reject": True,
             "dhcp_dns_only": True,
+            "only_our_dns_dhcp": True,
+            "foreign_server_is_threat": True,
             "no_lateral_movement": True,
             "max_qps_per_client": MAX_QPS_PER_CLIENT,
             "max_packet_bytes": MAX_PACKET_BYTES,

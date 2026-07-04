@@ -6,11 +6,20 @@ import importlib.util
 import json
 import os
 import signal
+import socket
+import struct
 import subprocess
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+TRUSTED_DNS_ADDRS = frozenset({
+    "127.0.0.1", "::1", "192.168.47.1", "0.0.0.0", "*", "[::]", "[::1]",
+})
+TRUSTED_DHCP_BINDS = frozenset({"0.0.0.0:67", "192.168.47.1:67", "127.0.0.1:67", "*:67"})
+QUEEN_LAN = os.environ.get("NEXUS_FIELD_DHCP_BIND", os.environ.get("NEXUS_QUEEN_LAN_DNS", "192.168.47.1"))
 
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", Path(__file__).resolve().parents[1]))
 STATE = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state"))
@@ -121,6 +130,197 @@ def _duplicate_process_collisions() -> list[dict[str, Any]]:
     return rows
 
 
+def _normalize_bind_addr(bind: str) -> str:
+    raw = str(bind or "").strip()
+    if not raw:
+        return ""
+    host = raw.rsplit(":", 1)[0]
+    return host.replace("%lo", "").strip("[]")
+
+
+def _threat_guard() -> Any | None:
+    return _mod("lib/dns-threat-guard.py", "threat_guard")
+
+
+def _eradicate(key: str, reason: str, vector: str) -> dict[str, Any] | None:
+    tg = _threat_guard()
+    if not tg or not hasattr(tg, "eradicate_threat"):
+        return None
+    try:
+        return tg.eradicate_threat(client_key=key, reason=reason, vector=vector, direction="ingress")
+    except Exception:
+        return None
+
+
+def _foreign_dns_listeners(inc: dict[str, Any], *, phase: str, nexus_running: bool) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for row in inc.get("dns_listeners") or []:
+        if not isinstance(row, dict):
+            continue
+        bind = str(row.get("bind") or "")
+        addr = _normalize_bind_addr(bind)
+        if not addr:
+            continue
+        if addr in ("127.0.0.53", "127.0.0.54") and phase == "primary" and nexus_running:
+            rows.append({
+                "kind": "foreign_dns_server",
+                "bind": bind,
+                "addr": addr,
+                "vector": "FOREIGN_DNS_SERVER",
+                "severity": "critical",
+                "note": "Non-truth DNS stub — sole authority violation",
+            })
+            continue
+        if addr in ("127.0.0.1", "::1", QUEEN_LAN) or bind.startswith("127.0.0.1:53") or bind.startswith(f"{QUEEN_LAN}:53"):
+            continue
+        rows.append({
+            "kind": "foreign_dns_server",
+            "bind": bind,
+            "addr": addr,
+            "vector": "FOREIGN_DNS_SERVER",
+            "severity": "critical",
+            "note": "Unauthorized DNS listener",
+        })
+    return rows
+
+
+def _foreign_dhcp_listeners(inc: dict[str, Any], *, nexus_running: bool) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    if not inc.get("dhcp_port_busy"):
+        return rows
+    for row in inc.get("dhcp_listeners") or []:
+        if not isinstance(row, dict):
+            continue
+        bind = str(row.get("bind") or "")
+        if nexus_running and ("0.0.0.0:67" in bind or f"{QUEEN_LAN}:67" in bind):
+            continue
+        rows.append({
+            "kind": "foreign_dhcp_server",
+            "bind": bind,
+            "vector": "FOREIGN_DHCP_SERVER",
+            "severity": "critical",
+            "note": "Unauthorized DHCP listener on port 67",
+        })
+    return rows
+
+
+def _foreign_resolvers(inc: dict[str, Any], *, phase: str) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    trusted = frozenset({"127.0.0.1", "::1"})
+    for ns in inc.get("foreign_nameservers") or inc.get("foreign_ipv4_resolvers") or []:
+        ns = str(ns).strip()
+        if not ns or ns in trusted:
+            continue
+        rows.append({
+            "kind": "foreign_dns_resolver",
+            "nameserver": ns,
+            "vector": "FOREIGN_DNS_SERVER",
+            "severity": "critical",
+            "note": "resolv.conf nameserver not truth",
+            "phase": phase,
+        })
+    return rows
+
+
+def _probe_foreign_dhcp_offer() -> dict[str, Any] | None:
+    """Broadcast DISCOVER — foreign OFFER siaddr is a threat."""
+    if os.environ.get("NEXUS_FIELD_DHCP_FOREIGN_PROBE", "1") != "1":
+        return None
+    trusted = {QUEEN_LAN, "127.0.0.1", "0.0.0.0"}
+    try:
+        xid = struct.pack("!I", int(time.time()) & 0xFFFFFFFF)
+        mac = b"\x02\x00\x00\x00\x00\x09" + b"\x00" * 10
+        pkt = b"\x01\x01\x06\x00" + xid + b"\x00" * 16 + mac + b"\x00" * 64 + b"\x00" * 128
+        pkt += bytes([99, 130, 83, 99, 53, 1, 1, 255])
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        try:
+            sock.bind(("0.0.0.0", 0))
+        except OSError:
+            pass
+        sock.settimeout(1.2)
+        sock.sendto(pkt, ("255.255.255.255", 67))
+        data, addr = sock.recvfrom(2048)
+        sock.close()
+        if len(data) < 28 or data[0] != 2:
+            return None
+        siaddr = socket.inet_ntoa(data[20:24])
+        if siaddr in trusted:
+            return None
+        return {
+            "kind": "foreign_dhcp_offer",
+            "server": siaddr,
+            "from": addr[0],
+            "vector": "FOREIGN_DHCP_SERVER",
+            "severity": "critical",
+            "note": f"Competing DHCP OFFER from {siaddr}",
+        }
+    except OSError:
+        return None
+
+
+def _foreign_server_threats(takeover: dict[str, Any]) -> list[dict[str, Any]]:
+    inc = takeover.get("incumbents") or {}
+    phase = str(takeover.get("phase") or "observing")
+    nexus_dns = bool(inc.get("nexus_dns_running"))
+    nexus_dhcp = bool(inc.get("nexus_dhcp_running"))
+    rows = (
+        _foreign_dns_listeners(inc, phase=phase, nexus_running=nexus_dns)
+        + _foreign_dhcp_listeners(inc, nexus_running=nexus_dhcp)
+        + _foreign_resolvers(inc, phase=phase)
+    )
+    offer = _probe_foreign_dhcp_offer()
+    if offer:
+        rows.append(offer)
+    return rows
+
+
+def _punish_foreign_servers(takeover: dict[str, Any]) -> list[dict[str, Any]]:
+    actions: list[dict[str, Any]] = []
+    for threat in _foreign_server_threats(takeover):
+        vector = str(threat.get("vector") or "FOREIGN_DNS_SERVER")
+        key = (
+            threat.get("nameserver")
+            or threat.get("server")
+            or threat.get("bind")
+            or threat.get("addr")
+            or threat.get("from")
+            or threat.get("kind")
+        )
+        reason = str(threat.get("note") or threat.get("kind") or "foreign_server_attempt")
+        entry = _eradicate(str(key), reason, vector)
+        actions.append({
+            "action": "threat_eradicate",
+            "threat": threat,
+            "client_key": str(key),
+            "vector": vector,
+            "logged": bool(entry),
+        })
+        _append_ledger({"event": "foreign_server_threat", "threat": threat, "client_key": str(key)})
+    _apply_nft_threat_block()
+    return actions
+
+
+def _apply_nft_threat_block() -> None:
+    script = INSTALL / "lib" / "field-dns.sh"
+    if not script.is_file():
+        return
+    try:
+        subprocess.run(
+            [
+                "bash", "-c",
+                f'export AML_BUILD=0 NEXUS_INSTALL_ROOT="{INSTALL}" NEXUS_STATE_DIR="{STATE}"; '
+                f'source "{script}" && nexus_field_foreign_dns_dhcp_threat_block',
+            ],
+            capture_output=True,
+            timeout=8,
+            errors="replace",
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+
+
 def _incumbent_collisions(takeover: dict[str, Any]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     inc = takeover.get("incumbents") or {}
@@ -154,7 +354,11 @@ def _sole_authority(takeover: dict[str, Any], collisions: list[dict[str, Any]]) 
     lease_col = [c for c in collisions if c.get("kind") == "lease_ip_collision"]
     inc_col = [c for c in collisions if c.get("kind", "").startswith("incumbent")]
     foreign_col = [c for c in collisions if c.get("kind") == "foreign_resolver_collision"]
-    authority_collisions = lease_col + inc_col + foreign_col
+    foreign_srv = [
+        c for c in collisions
+        if str(c.get("kind", "")).startswith("foreign_") and c.get("kind") != "foreign_resolver_collision"
+    ]
+    authority_collisions = lease_col + inc_col + foreign_col + foreign_srv
 
     dns_sole = (
         phase == "primary"
@@ -197,7 +401,8 @@ def detect_collisions(*, refresh_takeover: bool = False) -> dict[str, Any]:
     lease_rows = _lease_collisions()
     proc_rows = _duplicate_process_collisions()
     inc_rows = _incumbent_collisions(takeover)
-    collisions = lease_rows + proc_rows + inc_rows
+    foreign_threats = _foreign_server_threats(takeover)
+    collisions = lease_rows + proc_rows + inc_rows + foreign_threats
     sole = _sole_authority(takeover, collisions)
 
     return {
@@ -209,6 +414,9 @@ def detect_collisions(*, refresh_takeover: bool = False) -> dict[str, Any]:
         "lease_collisions": len(lease_rows),
         "duplicate_processes": len(proc_rows),
         "incumbent_conflicts": len(inc_rows),
+        "foreign_server_threats": foreign_threats,
+        "foreign_threat_count": len(foreign_threats),
+        "only_our_dns_dhcp": True,
         "sole_authority": sole,
         "takeover_phase": takeover.get("phase"),
         "policy": _load(DOCTRINE, {}).get("policy") or {},
@@ -318,6 +526,8 @@ def enforce_sole_authority(*, prune: bool = True) -> dict[str, Any]:
         if perms.get("enforce_resolv") or perms.get("remove_foreign_resolvers"):
             actions.append({"action": "resolv_truth_enforced", "foreign": takeover.get("foreign_enforcement")})
 
+    actions.extend(_punish_foreign_servers(takeover))
+
     panel = detect_collisions(refresh_takeover=True)
     panel["api"] = "/api/field-dns-dhcp-collision-guard"
     panel["ok"] = bool((panel.get("sole_authority") or {}).get("ok"))
@@ -325,6 +535,7 @@ def enforce_sole_authority(*, prune: bool = True) -> dict[str, Any]:
         "actions": actions,
         "pruned": sum(1 for a in actions if a.get("action") == "prune"),
         "lease_fixes": sum(1 for a in actions if a.get("action") == "drop_duplicate_lease"),
+        "threats_eradicated": sum(1 for a in actions if a.get("action") == "threat_eradicate"),
         "sole_authority": panel.get("sole_authority"),
     }
     _save(PANEL, panel)
@@ -358,7 +569,18 @@ def main() -> int:
         prune = "--no-prune" not in sys.argv[2:]
         print(json.dumps(enforce_sole_authority(prune=prune), ensure_ascii=False, indent=2))
         return 0
-    print(json.dumps({"usage": "field-dns-dhcp-collision-guard.py [json|detect|enforce]"}, ensure_ascii=False))
+    if cmd in ("threat-scan", "threats"):
+        takeover = _load(STATE / "dns-takeover-panel.json", {})
+        threats = _foreign_server_threats(takeover)
+        print(json.dumps({
+            "schema": "field-dns-dhcp-collision-guard-threats/v1",
+            "updated": _utc(),
+            "only_our_dns_dhcp": True,
+            "foreign_threat_count": len(threats),
+            "threats": threats,
+        }, ensure_ascii=False, indent=2))
+        return 0
+    print(json.dumps({"usage": "field-dns-dhcp-collision-guard.py [json|detect|enforce|threat-scan]"}, ensure_ascii=False))
     return 1
 
 

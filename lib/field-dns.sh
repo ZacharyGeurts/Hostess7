@@ -122,6 +122,7 @@ nexus_field_dns_takeover_cycle() {
   if [[ "$phase" == "primary" ]]; then
     declare -f nexus_field_dns_enforce_resolv >/dev/null 2>&1 && nexus_field_dns_enforce_resolv || true
     declare -f nexus_field_dns_local_capture >/dev/null 2>&1 && nexus_field_dns_local_capture || true
+    declare -f nexus_field_foreign_dns_dhcp_threat_block >/dev/null 2>&1 && nexus_field_foreign_dns_dhcp_threat_block || true
   fi
 }
 
@@ -222,6 +223,30 @@ nexus_field_dns_local_capture() {
   nft add rule inet "$table" input \
     ip6 daddr ::1 udp dport "${port}" drop comment "nexus-dns-ddos-drop6" 2>/dev/null || true
   nexus_log "INFO" "field-dns" "local DNS capture — foreign resolver egress blocked (IPv4+IPv6) · DDoS rate limit active"
+}
+
+nexus_field_foreign_dns_dhcp_threat_block() {
+  [[ "${NEXUS_FIELD_FOREIGN_DNS_DHCP_THREAT:-1}" == "1" ]] || return 0
+  command -v nft >/dev/null 2>&1 || return 0
+  local table="${NEXUS_FIREWALL_TABLE:-nexus}"
+  local queen="${NEXUS_QUEEN_LAN_DNS:-192.168.47.1}"
+  if ! nft list chain inet "$table" input 2>/dev/null | grep -q 'nexus-foreign-dhcp-threat'; then
+    nft add rule inet "$table" input \
+      udp sport 67 ip saddr != "{ ${queen}, 127.0.0.1 }" drop comment "nexus-foreign-dhcp-threat" 2>/dev/null || true
+  fi
+  if ! nft list chain inet "$table" input 2>/dev/null | grep -q 'nexus-foreign-dns-offer-threat'; then
+    local foreign_json foreign4
+    foreign_json="$(nexus_field_dns_foreign_ips)"
+    foreign4="$(printf '%s' "$foreign_json" | pythong -c 'import json,sys; d=json.load(sys.stdin); print(", ".join(d.get("ipv4") or []))' 2>/dev/null || true)"
+    foreign4="${foreign4:-8.8.8.8, 8.8.4.4, 1.1.1.1, 1.0.0.1, 9.9.9.9}"
+    if [[ -n "$foreign4" ]]; then
+      nft add rule inet "$table" input \
+        ip saddr "{ ${foreign4} }" udp sport 53 drop comment "nexus-foreign-dns-offer-threat" 2>/dev/null || true
+      nft add rule inet "$table" input \
+        ip saddr "{ ${foreign4} }" tcp sport 53 drop comment "nexus-foreign-dns-offer-threat-tcp" 2>/dev/null || true
+    fi
+  fi
+  nexus_log "INFO" "field-dns" "foreign DNS/DHCP server attempts — nft threat drop active"
 }
 
 nexus_field_dhcp_serve_loop() {

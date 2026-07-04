@@ -321,6 +321,8 @@ def evaluate_takeover(*, persist: bool = True) -> dict[str, Any]:
             "never_interrupt_on_arrival": True,
             "listen_before_reject": True,
             "dhcp_dns_only": True,
+            "only_our_dns_dhcp": True,
+            "foreign_server_is_threat": True,
             "no_lateral_movement": True,
             "legacy_open_secured": _legacy_open_secured(),
         },

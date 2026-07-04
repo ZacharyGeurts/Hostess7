@@ -43,6 +43,7 @@ if p.is_file():
     d = json.loads(p.read_text())
     s = d.get('sole_authority') or {}
     print('SOLE authority:', s.get('ok'), '| collisions:', d.get('collision_count', 0))
+    print('Foreign threats:', d.get('foreign_threat_count', 0), '| eradicated:', (d.get('enforce') or {}).get('threats_eradicated', 0))
 " 2>/dev/null || true
 
 NEXUS_STATE_DIR="$NEXUS_STATE_DIR" NEXUS_INSTALL_ROOT="$NEXUS_INSTALL_ROOT" \

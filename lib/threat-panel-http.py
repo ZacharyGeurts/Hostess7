@@ -3310,6 +3310,15 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
             return
 
+        if path in ("/api/field-dns-dhcp-collision-guard/threats", "/api/collision-guard/threats"):
+            payload = _nexus_py_json(
+                INSTALL_ROOT / "lib" / "field-dns-dhcp-collision-guard.py",
+                ["threat-scan"],
+                timeout=30,
+            )
+            self._send(200, json.dumps(payload or {"ok": False}), "application/json")
+            return
+
         if path in ("/api/field-dns-dhcp-collision-guard", "/api/collision-guard"):
             cmd = "enforce" if path.endswith("/enforce") else "json"
             payload = _nexus_py_json(

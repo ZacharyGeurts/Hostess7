@@ -693,7 +693,7 @@ def build_panel() -> dict[str, Any]:
         "takeover_phase": takeover.get("phase") or "observing",
         "security_model": "field-sovereign-gate",
         "never_lose_cycle": True,
-        "motto": "We are every DHCP lease left on the planet — DNS option 6 → Truth Resolver; cycle never lost.",
+        "motto": "Only our DHCP — foreign servers are threats; DNS option 6 → Truth Resolver.",
         "bind": f"{bind}:{PORT}",
         "ok": running and may_serve,
         "crushing": running,
