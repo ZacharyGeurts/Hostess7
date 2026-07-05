@@ -2,8 +2,15 @@
   "schema": "field-rescue-ingress/v1",
   "title": "Rescue ingress — clear fakes, DHCP/DNS through, more edges",
   "boss": "hostess7",
-  "motto": "Remove fake shit in the way — everyone's lease and DNS comes through · quarantine never kill · blast more hosts and edges",
+  "motto": "Anything and everything comes to Field 1 — even outside our network · quarantine never kill",
   "ingress_policy": "quarantine_not_kill",
+  "field_one_hub": {
+    "id": "field-1",
+    "dns": "127.0.0.1",
+    "dhcp": "192.168.47.1",
+    "truth": "127.0.0.1",
+    "outside_network_absorbed": true
+  },
   "clear_fakes": {
     "enabled": true,
     "dhcp_lease_is_real": true,
@@ -20,6 +27,9 @@
   "edge_blast": {
     "hosts_per_edge": 4096,
     "local_edge_slots": 64,
+    "wan_edge_slots": 256,
+    "field_one_sink": true,
+    "outside_network": true,
     "ping_rescue": true,
     "ping_module": "lib/field-ping.py"
   },

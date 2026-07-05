@@ -2,8 +2,11 @@
   "schema": "field-dns-dhcp-any-ip/v1",
   "title": "Answer DNS and DHCP on any IP — every possible local address",
   "boss": "hostess7",
-  "motto": "Anyone picks any IPv4 anywhere — DNS and DHCP answer. It just works. Device map, not numbers.",
+  "motto": "Anyone picks any IPv4 anywhere — even outside our network, everything answers at Field 1.",
+  "field_one_sink": "field-1",
   "policy": {
+    "route_outside_to_field_one": true,
+    "field_one_hub": "127.0.0.1",
     "dns_any_ipv4": true,
     "dns_any_ipv6": true,
     "dhcp_any_ipv4": true,

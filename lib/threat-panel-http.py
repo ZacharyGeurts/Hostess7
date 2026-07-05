@@ -3522,8 +3522,22 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-one", "/api/field-one/absorb", "/api/field1"):
+            cmd = "absorb" if path.endswith("/absorb") else "json"
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-one.py", [cmd], timeout=180)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path in ("/api/field-rescue-ingress", "/api/rescue-ingress"):
             payload = _nexus_py_json(INSTALL_ROOT / "lib/field-rescue-ingress.py", ["rescue"], timeout=120)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-truth-keepalive", "/api/truth-keepalive"):
+            tk_py = INSTALL_ROOT / "lib" / "field-truth-keepalive.py"
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            args = ["keepalive"] if refresh else ["json"]
+            payload = _nexus_py_json(tk_py, args, timeout=240) if tk_py.is_file() else {"ok": False, "error": "field_truth_keepalive_missing"}
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
@@ -11963,6 +11977,14 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200 if payload.get("ok") else 400, json.dumps(payload), "application/json")
             return
 
+        if path in ("/api/field-truth-keepalive", "/api/truth-keepalive"):
+            tk_py = INSTALL_ROOT / "lib" / "field-truth-keepalive.py"
+            no_retruth = bool((body or {}).get("no_retruth")) or str((body or {}).get("retruth", "1")).lower() in ("0", "false", "no")
+            args = ["keepalive"] + (["--no-retruth"] if no_retruth else [])
+            payload = _nexus_py_json(tk_py, args, timeout=300) if tk_py.is_file() else {"ok": False, "error": "field_truth_keepalive_missing"}
+            self._send(200 if payload.get("ok") else 400, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
         if path.startswith("/api/field-dynamic-routes"):
             dyn_py = INSTALL_ROOT / "lib" / "field-dynamic-routes.py"
             sub = path.rstrip("/").split("/")[-1]
@@ -13905,6 +13927,25 @@ def _startup_lab_sovereign() -> None:
         pass
 
 
+def _startup_truth_keepalive() -> None:
+    """Panel boot — truth every surface; retruth when below floor (soft ingress, no DHCP break)."""
+    if os.environ.get("NEXUS_TRUTH_KEEPALIVE_BOOT", "1") != "1":
+        return
+    script = INSTALL_ROOT / "lib" / "field-truth-keepalive.py"
+    if not script.is_file():
+        return
+    try:
+        subprocess.run(
+            [sys.executable, str(script), "keepalive"],
+            capture_output=True,
+            text=True,
+            timeout=300,
+            env=_field_stack_env(),
+        )
+    except (subprocess.TimeoutExpired, OSError):
+        pass
+
+
 def main():
     global PANEL_DIR
     PANEL_DIR = PANEL_DIR.resolve()
@@ -13914,6 +13955,7 @@ def main():
     threading.Thread(target=_startup_internet_clean, daemon=True, name="hostess7-internet-clean-boot").start()
     threading.Thread(target=_startup_dynamic_routes, daemon=True, name="field-dynamic-routes-boot").start()
     threading.Thread(target=_startup_lab_sovereign, daemon=True, name="hostess7-lab-sovereign-boot").start()
+    threading.Thread(target=_startup_truth_keepalive, daemon=True, name="field-truth-keepalive-boot").start()
     server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
     server.serve_forever()
 

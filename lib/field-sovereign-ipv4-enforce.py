@@ -75,8 +75,12 @@ def enforce(*, crush: bool = False, kick_trash: bool = True) -> dict[str, Any]:
     """Rescue live devices, enforce sole DHCP/DNS, destroy stale equipment only."""
     steps: list[dict[str, Any]] = []
 
-    rescue = _run("lib/field-rescue-ingress.py", ["rescue"], timeout=120)
-    steps.append({"step": "rescue_ingress", **rescue})
+    field_one = _run("lib/field-one.py", ["absorb"], timeout=180)
+    steps.append({"step": "field_one_absorb", **field_one})
+
+    rescue = field_one if field_one.get("ok") else _run("lib/field-rescue-ingress.py", ["rescue"], timeout=120)
+    if not field_one.get("ok"):
+        steps.append({"step": "rescue_ingress_fallback", **rescue})
 
     absorb_args = ["absorb"] if crush else ["absorb", "--no-crush"]
     absorb = _run("lib/field-planetary-dns-dhcp.py", absorb_args, timeout=120)
@@ -112,7 +116,9 @@ def enforce(*, crush: bool = False, kick_trash: bool = True) -> dict[str, Any]:
     steps.append({"step": "permanent_rekill_enforce", **rekill})
 
     sole = (collision.get("sole_authority") or absorb.get("sole_authority") or {})
-    connected = int((device_map.get("connected_count") or device_map.get("connected") or 0))
+    connected = int(field_one.get("connected_devices") or 0)
+    if not connected:
+        connected = int((device_map.get("connected_count") or device_map.get("connected") or 0))
     if not connected:
         connected = int((rescue.get("cleared_fakes") or {}).get("registry_devices") or 0)
 
@@ -120,7 +126,10 @@ def enforce(*, crush: bool = False, kick_trash: bool = True) -> dict[str, Any]:
         "ok": bool(rescue.get("ok")) and bool(collision.get("ok", True)),
         "schema": "field-sovereign-ipv4-enforce/v1",
         "updated": _utc(),
-        "motto": "Sole IPv4 DHCP/DNS — rescue live leases, burn stale equipment, ZNetwork sole internet",
+        "motto": "Field 1 universal ingress — anything outside network routes here; sole IPv4 DHCP/DNS",
+        "field_one": True,
+        "outside_network_absorbed": bool(field_one.get("outside_network_absorbed")),
+        "field_one_hub": (field_one.get("hub") or {}),
         "ingress_policy": "quarantine_not_kill",
         "crush_dhcp": crush,
         "connected_devices": connected,

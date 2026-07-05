@@ -175,8 +175,13 @@ def expand_dhcp_pool(*, write: bool = True) -> dict[str, Any]:
 def blast_edges(*, write: bool = True) -> dict[str, Any]:
     doc = _load(DOCTRINE, {})
     blast = doc.get("edge_blast") or {}
+    field_one = doc.get("field_one_hub") or {}
+    hub_dns = str(field_one.get("dns") or field_one.get("truth") or "127.0.0.1")
+    hub_dhcp = str(field_one.get("dhcp") or hub_dns)
     hosts_per_edge = int(blast.get("hosts_per_edge") or 4096)
     local_slots = int(blast.get("local_edge_slots") or 64)
+    wan_slots = int(blast.get("wan_edge_slots") or local_slots)
+    total_slots = local_slots + wan_slots if blast.get("outside_network") else local_slots
 
     scale_mod = _mod("lib/field-world-dns-dhcp-scale.py", "world_scale")
     scale: dict[str, Any] = {}
@@ -185,17 +190,28 @@ def blast_edges(*, write: bool = True) -> dict[str, Any]:
     cur = scale.get("current") or {}
     devices = int(cur.get("devices") or 22_275_000_000)
     edges_planet = max(1, math.ceil(devices / hosts_per_edge))
-    edges_local = min(local_slots, edges_planet)
+    edges_local = min(total_slots, edges_planet)
 
     edge_hosts: list[dict[str, Any]] = []
     ping_mod = INSTALL / str(blast.get("ping_module") or "lib/field-ping.py")
     for i in range(edges_local):
-        host = f"10.47.{(i // 256) & 0xff}.{max(1, i % 256)}"
+        if i < local_slots:
+            host = f"10.47.{(i // 254) & 0xff}.{(i % 254) + 1}"
+            outside = False
+        else:
+            wi = i - local_slots
+            host = f"47.{(wi // 65024) & 0xff}.{(wi // 254) & 0xff}.{(wi % 254) + 1}"
+            outside = True
         row: dict[str, Any] = {
             "edge_id": f"edge-{i:04d}",
             "bind": host,
             "hosts_per_edge": hosts_per_edge,
-            "dhcp_dns": "127.0.0.1",
+            "dhcp_dns": hub_dns,
+            "dhcp_server": hub_dhcp,
+            "field_one_sink": bool(blast.get("field_one_sink", True)),
+            "field_one": str(field_one.get("id") or "field-1"),
+            "outside_network": outside or bool(blast.get("outside_network")),
+            "route_to": "field-1",
             "leases_capacity": hosts_per_edge,
             "status": "ready",
         }
@@ -221,7 +237,11 @@ def blast_edges(*, write: bool = True) -> dict[str, Any]:
         "ok": True,
         "hosts_per_edge": hosts_per_edge,
         "planet_edges_recommended": edges_planet,
-        "local_edges_deployed": edges_local,
+        "local_edges_deployed": local_slots,
+        "wan_edges_deployed": max(0, edges_local - local_slots),
+        "total_edges_deployed": edges_local,
+        "field_one_hub": field_one or {"id": "field-1", "dns": hub_dns},
+        "outside_network_absorbed": bool(blast.get("outside_network")),
         "edge_hosts": edge_hosts,
         "devices": devices,
         "people_per_local_edge": int(devices / edges_local) if edges_local else devices,

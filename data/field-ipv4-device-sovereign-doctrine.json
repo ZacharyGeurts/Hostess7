@@ -2,8 +2,11 @@
   "schema": "field-ipv4-device-sovereign/v1",
   "title": "All IPv4 on every box — device-mapped, never look back",
   "boss": "hostess7",
-  "motto": "We are all of IPv4 on every box. Pick any number anywhere — it just works. Devices are the map.",
+  "motto": "We are all of IPv4 on every box — outside network routes to Field 1. Devices are the map.",
+  "field_one_sink": "field-1",
   "policy": {
+    "route_outside_to_field_one": true,
+    "field_one_hub": "127.0.0.1",
     "all_ipv4_every_box": true,
     "track_devices_not_numbers": true,
     "arbitrary_ipv4_worldwide": true,

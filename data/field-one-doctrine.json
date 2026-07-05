@@ -1,0 +1,54 @@
+{
+  "schema": "field-one-doctrine/v1",
+  "title": "Field 1 — everything on one field, even outside our network",
+  "boss": "hostess7",
+  "motto": "Anything and everything comes to Field 1 — LAN, WAN, planetary, outside network. Quarantine never kill.",
+  "field_one": true,
+  "one_field_whole_device": true,
+  "universal_ingress": true,
+  "outside_network_absorbed": true,
+  "hub": {
+    "id": "field-1",
+    "label": "Field One",
+    "dns": ["127.0.0.1", "192.168.47.1"],
+    "dhcp": ["192.168.47.1", "0.0.0.0"],
+    "truth": "127.0.0.1",
+    "loopback": "127.0.0.1",
+    "queen_lan": "192.168.47.1",
+    "wildcard": "0.0.0.0/0",
+    "pages": "https://zacharygeurts.github.io/Hostess7/"
+  },
+  "ingress_policy": "quarantine_not_kill",
+  "policy": {
+    "absorb_lan": true,
+    "absorb_wan": true,
+    "absorb_outside_network": true,
+    "absorb_planetary": true,
+    "absorb_github_planet": true,
+    "absorb_botnet_nodes": true,
+    "route_all_dns_to_field_one": true,
+    "route_all_dhcp_to_field_one": true,
+    "wildcard_any_ip": true,
+    "preserve_live_connections": true
+  },
+  "commands": {
+    "json": "Posture — storage, board, converter",
+    "sync": "Rsync fieldstorage → TEAM NVMe",
+    "compact": "World_Redata WRDT1/WRZC1 scan",
+    "restore": "Sovereign restore from field tails",
+    "absorb": "Universal ingress — everything to Field 1"
+  },
+  "wires": [
+    "lib/field-rescue-ingress.py",
+    "lib/field-dns-dhcp-any-ip.py",
+    "lib/field-planetary-dns-dhcp.py",
+    "lib/field-device-map.py",
+    "lib/field-device-registry.py",
+    "lib/field-sovereign-ipv4-enforce.py",
+    "lib/field-dns-dhcp-collision-guard.py",
+    "lib/ammonet-dns-zones.py"
+  ],
+  "module": "lib/field-one.py",
+  "api": "/api/field-one",
+  "ironclad_cite": "ironclad:field-one:1"
+}
