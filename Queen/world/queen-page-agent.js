@@ -208,47 +208,81 @@
     return text.length < 8;
   }
 
-  function isBrokenXLoginUrl() {
-    const path = location.pathname || "";
+  function isXLoginSurface() {
+    const path = (location.pathname || "").toLowerCase();
     return (
-      path.includes("/i/jf/onboarding/web/sso") ||
-      (path.includes("/i/jf/onboarding") && /provider=google|mode=sso/i.test(location.search))
+      /\/onboarding\/web\/sso/i.test(path) ||
+      /\/i\/jf\/onboarding/i.test(path) ||
+      /\/i\/onboarding/i.test(path) ||
+      /\/i\/flow\/login/i.test(path) ||
+      (/onboarding/i.test(path) && /mode=sso|provider=google/i.test(location.search))
     );
   }
 
-  function earlyRedirectXLogin() {
-    if (!isXHost() || !isBrokenXLoginUrl()) return false;
-    const key = "queen:x-login-redirect";
-    if (sessionStorage.getItem(key)) return false;
-    sessionStorage.setItem(key, "1");
-    notifyParent({ type: "queen:x-login", action: "early_redirect", to: "/i/flow/login" });
-    location.replace("/i/flow/login");
-    return true;
+  function xLoginFormVisible() {
+    const body = document.body?.innerText || "";
+    return /continue with (google|apple|phone)|email or username|sign up/i.test(body);
+  }
+
+  function killXLoginOverlay(el) {
+    if (!el?.parentNode) return;
+    el.setAttribute("data-x-overlay-killed", "1");
+    el.style.setProperty("display", "none", "important");
+    el.style.setProperty("pointer-events", "none", "important");
+    el.style.setProperty("opacity", "0", "important");
+    try { el.remove(); } catch (_) {}
   }
 
   function repairXJetfuelSsoModal() {
-    if (!isXHost()) return false;
-    if (earlyRedirectXLogin()) return true;
-    if (!isBrokenXLoginUrl()) return false;
-    const mask = document.querySelector('[data-testid="mask"]');
-    const dialog = document.querySelector('[role="dialog"][aria-modal="true"]');
-    if (!mask && !dialog) return false;
-    if (dialog && !xJetfuelSsoLooksEmpty(dialog)) return false;
-    mask?.remove();
-    dialog?.remove();
-    document.documentElement.setAttribute("data-x-sso-repaired", "1");
-    document.body.style.removeProperty("overflow");
-    document.body.style.removeProperty("pointer-events");
-    const fallback = "/i/flow/login";
-    const key = "queen:x-sso-repair";
-    if (!sessionStorage.getItem(key)) {
-      sessionStorage.setItem(key, "1");
-      notifyParent({ type: "queen:x-sso", action: "repaired", fallback });
-      location.replace(fallback);
+    if (!isXHost() || !isXLoginSurface()) return false;
+    let killed = 0;
+    document.querySelectorAll('[data-testid="mask"]').forEach((m) => {
+      killXLoginOverlay(m);
+      killed++;
+    });
+    document.querySelectorAll('[role="dialog"][aria-modal="true"]').forEach((dlg) => {
+      const hasLogin = dlg.querySelector("button, input, iframe, form, a[href]");
+      const empty = (dlg.innerText || "").replace(/\s+/g, "").length < 12 && !hasLogin;
+      const jetfuel = dlg.querySelector(".jetfuel-style-root, .jf-element");
+      if (empty || (jetfuel && !hasLogin) || (xLoginFormVisible() && !dlg.querySelector("button"))) {
+        killXLoginOverlay(dlg);
+        killed++;
+      }
+    });
+    const vw = window.innerWidth || 800;
+    const vh = window.innerHeight || 600;
+    document.querySelectorAll("div").forEach((el) => {
+      if (el.getAttribute("data-x-overlay-killed")) return;
+      const st = getComputedStyle(el);
+      if (st.position !== "fixed" && st.position !== "absolute") return;
+      const r = el.getBoundingClientRect();
+      if (r.width < vw * 0.35 || r.height < vh * 0.35) return;
+      const dark = /rgba?\(\s*0\s*,\s*0\s*,\s*0|rgb\(\s*0\s*,\s*0\s*,\s*0/i.test(st.backgroundColor || "");
+      const noInteract = !el.querySelector("button, input, iframe, a[href], form");
+      if (dark && noInteract && (el.classList.contains("jf-element") || el.querySelector(".jf-element"))) {
+        killXLoginOverlay(el);
+        killed++;
+      }
+    });
+    if (killed > 0) {
+      document.documentElement.setAttribute("data-x-login-killed", "1");
+      document.body?.style.setProperty("overflow", "auto", "important");
+      document.body?.style.setProperty("pointer-events", "auto", "important");
+      notifyParent({ type: "queen:x-login", action: "overlay_killed", count: killed });
+    }
+    document.querySelectorAll('iframe[src*="accounts.google"], iframe[src*="googleapis"]').forEach((f) => {
+      f.style.setProperty("display", "block", "important");
+      f.style.setProperty("visibility", "visible", "important");
+      f.style.setProperty("pointer-events", "auto", "important");
+    });
+    if (xLoginFormVisible()) return killed > 0;
+    const broken = /\/onboarding\/web\/sso|\/i\/jf\/onboarding\/web\/sso/i.test(location.pathname);
+    if (broken && !sessionStorage.getItem("queen:x-login-fallback")) {
+      sessionStorage.setItem("queen:x-login-fallback", "1");
+      location.replace("/i/flow/login");
       return true;
     }
-    notifyParent({ type: "queen:x-sso", action: "dismissed_empty_modal" });
-    return true;
+    return killed > 0;
   }
 
   function scanRandomAdSlots() {
@@ -456,11 +490,13 @@
       .qpa-highlight{outline:2px solid #f472b6!important;outline-offset:2px!important;}
       .qpa-picker *{cursor:crosshair!important;}
       .qpa-picker .qpa-hover{outline:2px dashed #22c55e!important;outline-offset:1px!important;}
-      html[data-x-sso-repaired="1"] [data-testid="mask"],
-      html[data-x-sso-repaired="1"] [role="dialog"][aria-modal="true"]:has(.jetfuel-style-root:not(:has(button,iframe,input,form,a[href]))) {
-        display:none!important;pointer-events:none!important;opacity:0!important;
+      html[data-x-login-killed="1"] [data-testid="mask"],
+      html[data-x-login-killed="1"] [role="dialog"][aria-modal="true"]:not(:has(button,input,iframe)),
+      html[data-x-login-killed="1"] [data-x-overlay-killed="1"],
+      html[data-x-login-killed="1"] .jetfuel-style-root:empty {
+        display:none!important;pointer-events:none!important;opacity:0!important;visibility:hidden!important;
       }
-      html[data-x-sso-repaired="1"] body{overflow:auto!important;pointer-events:auto!important;}
+      html[data-x-login-killed="1"] body{overflow:auto!important;pointer-events:auto!important;}
       iframe[src*="accounts.google"],iframe[src*="googleapis"]{display:block!important;visibility:visible!important;pointer-events:auto!important;}
     `;
     document.documentElement.appendChild(st);

@@ -1,7 +1,6 @@
 /**
- * X login fix — clean and secure for everyone.
- * Early redirect from broken Jetfuel SSO · dismiss empty modals · phishing guard.
- * Hosted: https://zacharygeurts.github.io/Hostess7/assets/x-jetfuel-sso-fix.js
+ * X login overlay killer — clean secure login for everyone.
+ * Kills mask/div bullshit on x.com/onboarding/* and /i/jf/onboarding/*.
  */
 (function () {
   "use strict";
@@ -9,110 +8,139 @@
   window.__X_LOGIN_FIX__ = true;
 
   var CLEAN_LOGIN = "https://x.com/i/flow/login";
-  var CLEAN_GOOGLE = "https://x.com/i/flow/login";
-  var ALLOWED = /^(x\.com|.*\.x\.com|twitter\.com|.*\.twitter\.com|accounts\.google\.com|.*\.google\.com|googleapis\.com|.*\.googleapis\.com|gstatic\.com|.*\.gstatic\.com)$/i;
   var host = (location.hostname || "").toLowerCase();
-  var onX = host === "x.com" || host.endsWith(".x.com") || host === "twitter.com" || host.endsWith(".twitter.com");
+  var onX = /(^|\.)x\.com$|(^|\.)twitter\.com$/.test(host);
 
   function notify(msg) {
-    try {
-      window.parent && window.parent.postMessage(msg, "*");
-    } catch (_) {}
+    try { window.parent && window.parent.postMessage(msg, "*"); } catch (_) {}
   }
 
-  function isBrokenSsoUrl() {
-    var path = location.pathname || "";
+  function isLoginSurface() {
+    var path = (location.pathname || "").toLowerCase();
     return (
-      path.indexOf("/i/jf/onboarding/web/sso") >= 0 ||
-      (path.indexOf("/i/jf/onboarding") >= 0 && /provider=google|mode=sso/i.test(location.search))
+      /\/onboarding\/web\/sso/i.test(path) ||
+      /\/i\/jf\/onboarding/i.test(path) ||
+      /\/i\/onboarding/i.test(path) ||
+      /\/i\/flow\/login/i.test(path) ||
+      (/onboarding/i.test(path) && /mode=sso|provider=google/i.test(location.search))
     );
   }
 
-  function earlyRedirect() {
-    if (!onX || !isBrokenSsoUrl()) return false;
-    var key = "hostess7:x-login-redirect";
-    if (sessionStorage.getItem(key)) return false;
-    sessionStorage.setItem(key, "1");
-    var dest = /provider=google/i.test(location.search) ? CLEAN_GOOGLE : CLEAN_LOGIN;
-    notify({ type: "hostess7:x-login", action: "early_redirect", from: location.href, to: dest });
-    location.replace(dest);
-    return true;
+  function loginFormVisible() {
+    var body = (document.body && document.body.innerText) || "";
+    return /continue with (google|apple|phone)|email or username|sign up/i.test(body);
   }
 
-  function looksEmpty(dialog) {
-    if (!dialog) return false;
-    var root = dialog.querySelector(".jetfuel-style-root, .jf-element");
-    if (!root) return false;
-    if (dialog.querySelector("button, iframe, input, textarea, select, form, a[href], [data-testid]")) {
-      return false;
-    }
-    return (root.innerText || "").replace(/\s+/g, "").length < 8;
+  function restorePage() {
+    document.documentElement.setAttribute("data-x-login-killed", "1");
+    document.body && document.body.style.setProperty("overflow", "auto", "important");
+    document.body && document.body.style.setProperty("pointer-events", "auto", "important");
+    document.documentElement.style.removeProperty("overflow");
   }
 
-  function repairModal() {
-    if (!onX) return false;
-    if (!isBrokenSsoUrl()) return false;
-    var mask = document.querySelector('[data-testid="mask"]');
-    var dialog = document.querySelector('[role="dialog"][aria-modal="true"]');
-    if (!mask && !dialog) return false;
-    if (dialog && !looksEmpty(dialog)) return false;
-    if (mask) mask.remove();
-    if (dialog) dialog.remove();
-    document.documentElement.setAttribute("data-x-sso-repaired", "1");
-    document.body.style.removeProperty("overflow");
-    document.body.style.removeProperty("pointer-events");
-    var key = "hostess7:x-sso-repair";
-    if (!sessionStorage.getItem(key)) {
-      sessionStorage.setItem(key, "1");
-      notify({ type: "hostess7:x-login", action: "modal_repaired", fallback: CLEAN_LOGIN });
-      location.replace(CLEAN_LOGIN);
-      return true;
-    }
-    notify({ type: "hostess7:x-login", action: "modal_dismissed" });
-    return true;
+  function killNode(el) {
+    if (!el || !el.parentNode) return;
+    el.setAttribute("data-x-overlay-killed", "1");
+    el.style.setProperty("display", "none", "important");
+    el.style.setProperty("pointer-events", "none", "important");
+    el.style.setProperty("opacity", "0", "important");
+    el.style.setProperty("visibility", "hidden", "important");
+    try { el.remove(); } catch (_) {}
   }
 
-  function guardPhishing() {
-    if (!onX && !/google/i.test(host)) return;
-    if (ALLOWED.test(host)) return;
-    document.documentElement.setAttribute("data-x-login-phishing", "1");
-    notify({ type: "hostess7:x-login", action: "phishing_guard", host: host });
+  function killMasksAndDialogs() {
+    var killed = 0;
+    document.querySelectorAll('[data-testid="mask"]').forEach(function (m) {
+      killNode(m);
+      killed++;
+    });
+    document.querySelectorAll('[role="dialog"][aria-modal="true"]').forEach(function (dlg) {
+      var hasLogin = dlg.querySelector("button, input, iframe, form, a[href]");
+      var isJetfuel = dlg.querySelector(".jetfuel-style-root, .jf-element");
+      var text = (dlg.innerText || "").replace(/\s+/g, "");
+      var empty = text.length < 12 && !hasLogin;
+      if (empty || (isJetfuel && !hasLogin) || (loginFormVisible() && !dlg.querySelector("button"))) {
+        killNode(dlg);
+        killed++;
+      }
+    });
+    return killed;
+  }
+
+  function killFixedOverlays() {
+    var killed = 0;
+    var vw = window.innerWidth || 800;
+    var vh = window.innerHeight || 600;
+    document.querySelectorAll("div, section").forEach(function (el) {
+      if (el.getAttribute("data-x-overlay-killed")) return;
+      if (el.closest("button, input, form, main, [role='main']")) return;
+      var st = window.getComputedStyle(el);
+      if (st.position !== "fixed" && st.position !== "absolute") return;
+      var r = el.getBoundingClientRect();
+      if (r.width < vw * 0.35 || r.height < vh * 0.35) return;
+      var bg = st.backgroundColor || "";
+      var dark = /rgba?\(\s*0\s*,\s*0\s*,\s*0|rgb\(\s*0\s*,\s*0\s*,\s*0/i.test(bg);
+      var opaque = parseFloat(st.opacity || "1") > 0.3;
+      var blocks = st.pointerEvents !== "none" || dark;
+      var noInteract = !el.querySelector("button, input, iframe, a[href], form");
+      var jetfuel = el.classList.contains("jf-element") || el.querySelector(".jf-element, .jetfuel-style-root");
+      if (blocks && opaque && noInteract && (dark || jetfuel) && isLoginSurface()) {
+        killNode(el);
+        killed++;
+      }
+    });
+    return killed;
   }
 
   function protectGoogleIframes() {
-    if (!onX) return;
-    document.querySelectorAll('iframe[src*="accounts.google"], iframe[src*="googleapis"]').forEach(function (f) {
+    document.querySelectorAll('iframe[src*="accounts.google"], iframe[src*="googleapis"], iframe[src*="gstatic"]').forEach(function (f) {
       f.style.setProperty("display", "block", "important");
       f.style.setProperty("visibility", "visible", "important");
       f.style.setProperty("pointer-events", "auto", "important");
+      f.style.setProperty("z-index", "2147483646", "important");
     });
   }
 
+  function killAll() {
+    if (!onX || !isLoginSurface()) return 0;
+    var n = killMasksAndDialogs() + killFixedOverlays();
+    if (n > 0) {
+      restorePage();
+      notify({ type: "hostess7:x-login", action: "overlay_killed", count: n, path: location.pathname });
+    }
+    protectGoogleIframes();
+    if (loginFormVisible()) return n;
+    if (/\/onboarding\/web\/sso|\/i\/jf\/onboarding\/web\/sso/i.test(location.pathname)) {
+      var key = "hostess7:x-login-fallback";
+      if (!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, "1");
+        notify({ type: "hostess7:x-login", action: "fallback_redirect", to: CLEAN_LOGIN });
+        location.replace(CLEAN_LOGIN);
+      }
+    }
+    return n;
+  }
+
   var css = document.createElement("style");
+  css.id = "hostess7-x-login-kill-css";
   css.textContent =
-    'html[data-x-sso-repaired="1"] [data-testid="mask"],' +
-    'html[data-x-sso-repaired="1"] [role="dialog"][aria-modal="true"]:has(.jetfuel-style-root:not(:has(button,iframe,input,form,a[href])))' +
-    "{display:none!important;pointer-events:none!important;opacity:0!important;}" +
-    'html[data-x-sso-repaired="1"] body{overflow:auto!important;pointer-events:auto!important;}' +
-    'html[data-x-login-phishing="1"] body::before{content:"⚠ Login host not trusted — use x.com/i/flow/login";' +
-    "display:block;background:#7f1d1d;color:#fff;padding:12px;text-align:center;font:14px system-ui;}";
-  document.documentElement.appendChild(css);
+    "html[data-x-login-killed='1'] [data-testid='mask']," +
+    "html[data-x-login-killed='1'] [role='dialog'][aria-modal='true']:not(:has(button,input,iframe))," +
+    "html[data-x-login-killed='1'] .jetfuel-style-root:empty," +
+    "html[data-x-login-killed='1'] [data-x-overlay-killed='1']" +
+    "{display:none!important;pointer-events:none!important;opacity:0!important;visibility:hidden!important;}" +
+    "html[data-x-login-killed='1'] body{overflow:auto!important;pointer-events:auto!important;}" +
+    "iframe[src*='accounts.google'],iframe[src*='googleapis']{display:block!important;visibility:visible!important;}";
+  (document.documentElement || document.head).appendChild(css);
 
   function arm() {
-    if (earlyRedirect()) return;
-    guardPhishing();
-    protectGoogleIframes();
-    repairModal();
-    window.setInterval(function () {
-      protectGoogleIframes();
-      repairModal();
-    }, 1200);
+    killAll();
+    var iv = window.setInterval(killAll, 400);
     try {
-      new MutationObserver(function () {
-        protectGoogleIframes();
-        repairModal();
-      }).observe(document.documentElement, { childList: true, subtree: true });
+      new MutationObserver(killAll).observe(document.documentElement, { childList: true, subtree: true, attributes: true });
     } catch (_) {}
+    window.addEventListener("load", killAll);
+    setTimeout(function () { window.clearInterval(iv); window.setInterval(killAll, 800); }, 15000);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", arm);

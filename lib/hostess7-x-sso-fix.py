@@ -30,14 +30,17 @@ SSO_HOST_PATCHES: dict[str, dict[str, Any]] = {
 }
 
 CLIENT_CSS = """
-/* hostess7-x-login-fix — clean secure login for everyone */
-html[data-x-sso-repaired="1"] [data-testid="mask"],
-html[data-x-sso-repaired="1"] [role="dialog"][aria-modal="true"]:has(.jetfuel-style-root:not(:has(button, iframe, input, form, a[href]))) {
+/* hostess7-x-login-fix — kill overlay bullshit, keep login form */
+html[data-x-login-killed="1"] [data-testid="mask"],
+html[data-x-login-killed="1"] [role="dialog"][aria-modal="true"]:not(:has(button, input, iframe)),
+html[data-x-login-killed="1"] [data-x-overlay-killed="1"],
+html[data-x-login-killed="1"] .jetfuel-style-root:empty {
   display: none !important;
   pointer-events: none !important;
   opacity: 0 !important;
+  visibility: hidden !important;
 }
-html[data-x-sso-repaired="1"] body {
+html[data-x-login-killed="1"] body {
   overflow: auto !important;
   pointer-events: auto !important;
 }

@@ -3,71 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>X Jetfuel SSO Fix — Hostess7</title>
-  <meta name="description" content="Kill stuck empty X.com Google SSO modal divs. DNS/DHCP sovereign lane." />
-  <link rel="stylesheet" href="../assets/nexus-field-shell.css" />
+  <title>X Login Overlay Killer</title>
   <style>
-    body { margin: 0; background: #0a0a0a; color: #e8e8e8; font-family: system-ui, sans-serif; }
+    body { margin: 0; background: #000; color: #e8e8e8; font-family: system-ui, sans-serif; }
     .wrap { max-width: 720px; margin: 2rem auto; padding: 0 1.25rem; }
-    h1 { font-size: 1.35rem; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; }
-    .verdict { color: #22c55e; font-weight: 600; }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 1.25rem 0; }
-    .actions a, .actions button {
-      display: inline-block; padding: 10px 16px; border-radius: 8px;
-      border: 1px solid #333; background: #111; color: #e8e8e8; text-decoration: none;
-      cursor: pointer; font: inherit;
-    }
-    .actions a.primary, .actions button.primary { border-color: #22c55e; color: #22c55e; }
-    pre { background: #111; border: 1px solid #222; padding: 12px; overflow: auto; font-size: 12px; }
-    .meta { color: #888; font-size: 0.9rem; }
+    h1 { color: #fff; font-size: 1.35rem; }
+    .ok { color: #22c55e; font-weight: 600; }
+    .btn { display: inline-block; margin: 8px 8px 8px 0; padding: 12px 18px; border-radius: 999px;
+      border: 1px solid #22c55e; color: #22c55e; background: #111; text-decoration: none; font-weight: 600; cursor: pointer; }
+    .btn.kill { background: #22c55e; color: #000; border-color: #22c55e; font-size: 1.05rem; }
+    pre { background: #111; padding: 12px; overflow: auto; font-size: 11px; word-break: break-all; }
+    .steps { background: #111; border: 1px solid #333; padding: 14px; border-radius: 8px; margin: 1rem 0; }
+    .steps li { margin: 6px 0; }
   </style>
-  <script>
-    window.HOSTESS7_PAGES_BASE = "/Hostess7";
-  </script>
+  <script>window.HOSTESS7_PAGES_BASE = "/Hostess7";</script>
 </head>
 <body>
   <div class="wrap">
-    <h1>X Jetfuel SSO Fix</h1>
-    <p class="verdict" id="status">Arming repair…</p>
-    <p class="meta">Stuck <code>data-testid="mask"</code> + empty <code>jf-element</code> shell on Google SSO — dismissed, login restored.</p>
-    <div class="actions">
-      <a class="primary" id="go-login" href="https://x.com/i/flow/login" rel="noopener">Open X login (clean)</a>
-      <a href="../x-login/">Everyone login page</a>
-      <a id="go-x" href="https://x.com/ZacharyGeurts" rel="noopener">@ZacharyGeurts</a>
-      <button type="button" id="copy-bookmarklet">Copy bookmarklet</button>
+    <h1>Kill the X login overlay</h1>
+    <p class="ok" id="status">Black div blocking Continue with Google? This kills it.</p>
+    <p>Works on <code>x.com/onboarding/web/sso</code> and <code>/i/jf/onboarding/web/sso</code>.</p>
+    <div class="steps">
+      <strong>Firefox / Chrome — stuck right now:</strong>
+      <ol>
+        <li>Drag <a class="btn kill" id="drag-bookmarklet" href="#">Kill X overlay</a> to your bookmarks bar</li>
+        <li>On the broken X login tab, click that bookmark</li>
+        <li>Click <strong>Continue with Google</strong> — overlay gone</li>
+      </ol>
     </div>
-    <p><strong>Bookmarklet</strong> — run on x.com when modal blocks you:</p>
+    <a class="btn" href="https://x.com/i/flow/login" rel="noopener">Clean login (skip broken URL)</a>
+    <a class="btn" href="../x-login/">Everyone login page</a>
+    <p><small>Bookmarklet code:</small></p>
     <pre id="bookmarklet"></pre>
-    <p class="meta">API: <a href="../api/hostess7-x-sso-fix.json">hostess7-x-sso-fix.json</a> · Queen page agent auto-fixes in browser shell.</p>
   </div>
   <script>
     (function () {
       var base = (window.HOSTESS7_PAGES_BASE || "").replace(/\/$/, "");
       var scriptUrl = location.origin + base + "/assets/x-jetfuel-sso-fix.js";
-      var bm =
-        "javascript:(function(){var s=document.createElement('script');s.src='" +
-        scriptUrl +
-        "?t=" +
-        Date.now() +
-        "';document.documentElement.appendChild(s);})();";
+      var bm = "javascript:(function(){var s=document.createElement('script');s.src='" + scriptUrl + "?v=" + Date.now() + "';document.documentElement.appendChild(s);})();";
       document.getElementById("bookmarklet").textContent = bm;
-      document.getElementById("copy-bookmarklet").addEventListener("click", function () {
-        navigator.clipboard.writeText(bm).catch(function () {});
-      });
-      fetch(base + "/api/hostess7-x-sso-fix.json", { cache: "no-store" })
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-          document.getElementById("status").textContent =
-            (d.motto || "Repair armed") + " · updated " + (d.updated || "");
-        })
-        .catch(function () {
-          document.getElementById("status").textContent = "Repair armed — static lane";
-        });
-      if (/x\.com|twitter\.com/.test(location.hostname)) {
+      document.getElementById("drag-bookmarklet").href = bm;
+      if (/x\.com|twitter\.com/i.test(location.hostname)) {
         var s = document.createElement("script");
-        s.src = scriptUrl;
+        s.src = scriptUrl + "?v=" + Date.now();
         document.documentElement.appendChild(s);
       }
+      fetch(base + "/api/hostess7-x-sso-fix.json", { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { document.getElementById("status").textContent = d.motto || "Overlay killer armed"; })
+        .catch(function () {});
     })();
   </script>
 </body>

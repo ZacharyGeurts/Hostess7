@@ -1,18 +1,22 @@
 {
   "ok": true,
   "schema": "hostess7-x-sso-fix/v2",
-  "updated": "2026-07-05T23:56:56Z",
+  "updated": "2026-07-05T23:58:56Z",
   "motto": "Clean login lane for us and everyone. No stuck modals. No middlemen. TLS-only SSO.",
   "title": "X login — clean and secure for everyone",
   "broken_pattern": {
-    "url_path": "/i/jf/onboarding/web/sso",
-    "symptoms": [
-      "data-testid=mask overlay blocks page",
-      "role=dialog aria-modal with empty jetfuel-style-root",
-      "jf-element divs with slideUp keyframes but no SSO body",
-      "Google id_token in query but iframe never mounted"
+    "url_paths": [
+      "/onboarding/web/sso",
+      "/i/onboarding/web/sso",
+      "/i/jf/onboarding/web/sso"
     ],
-    "fix": "early_redirect_to_clean_login"
+    "symptoms": [
+      "data-testid=mask dark overlay blocks login buttons underneath",
+      "fixed black/gray div covers Continue with Google/Apple/phone",
+      "login form loads but pointer-events blocked by mask",
+      "role=dialog aria-modal with empty jetfuel-style-root"
+    ],
+    "fix": "kill_overlay_keep_login_form"
   },
   "clean_login": {
     "primary": "https://x.com/i/flow/login",
@@ -137,7 +141,7 @@
       "url": "https://accounts.google.com/",
       "ok": true,
       "status": 200,
-      "final_url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&dsh=S-197638599%3A1783295815394476&followup=https%3A%2F%2Faccounts.google.com%2F&passive=1209600&flowName=WebLiteSignIn&flowEntry=ServiceLogin&ifkv=AcDsRvztnP0jLvwgPrTyBXSTGU22gFi8IBh8oENw09VCxCaozINYjR2wRCK2eLPDzD71ggtumn25lQ"
+      "final_url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&dsh=S-805297778%3A1783295934972167&followup=https%3A%2F%2Faccounts.google.com%2F&passive=1209600&flowName=WebLiteSignIn&flowEntry=ServiceLogin&ifkv=AcDsRvyzpRCbcD2izwtswpc_XbVekM2M_GhvO0CTMgRVi1eoHG36DDQ0hnWS0c84aYWVnE8LJYadpQ"
     },
     {
       "lane": "google_apis",
@@ -154,7 +158,7 @@
     "early_redirect": true,
     "fallback_login": "https://x.com/i/flow/login",
     "hosted": "https://zacharygeurts.github.io/Hostess7/x-login/",
-    "css": "/* hostess7-x-login-fix — clean secure login for everyone */\nhtml[data-x-sso-repaired=\"1\"] [data-testid=\"mask\"],\nhtml[data-x-sso-repaired=\"1\"] [role=\"dialog\"][aria-modal=\"true\"]:has(.jetfuel-style-root:not(:has(button, iframe, input, form, a[href]))) {\n  display: none !important;\n  pointer-events: none !important;\n  opacity: 0 !important;\n}\nhtml[data-x-sso-repaired=\"1\"] body {\n  overflow: auto !important;\n  pointer-events: auto !important;\n}\niframe[src*=\"accounts.google\"], iframe[src*=\"googleapis\"] {\n  display: block !important;\n  visibility: visible !important;\n  pointer-events: auto !important;\n}",
+    "css": "/* hostess7-x-login-fix — kill overlay bullshit, keep login form */\nhtml[data-x-login-killed=\"1\"] [data-testid=\"mask\"],\nhtml[data-x-login-killed=\"1\"] [role=\"dialog\"][aria-modal=\"true\"]:not(:has(button, input, iframe)),\nhtml[data-x-login-killed=\"1\"] [data-x-overlay-killed=\"1\"],\nhtml[data-x-login-killed=\"1\"] .jetfuel-style-root:empty {\n  display: none !important;\n  pointer-events: none !important;\n  opacity: 0 !important;\n  visibility: hidden !important;\n}\nhtml[data-x-login-killed=\"1\"] body {\n  overflow: auto !important;\n  pointer-events: auto !important;\n}\niframe[src*=\"accounts.google\"], iframe[src*=\"googleapis\"] {\n  display: block !important;\n  visibility: visible !important;\n  pointer-events: auto !important;\n}",
     "script": "https://zacharygeurts.github.io/Hostess7/assets/x-jetfuel-sso-fix.js",
     "detect": {
       "broken_sso": "/i/jf/onboarding/web/sso",

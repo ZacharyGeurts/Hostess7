@@ -3,14 +3,18 @@
   "title": "X login — clean and secure for everyone",
   "motto": "Clean login lane for us and everyone. No stuck modals. No middlemen. TLS-only SSO.",
   "broken_pattern": {
-    "url_path": "/i/jf/onboarding/web/sso",
-    "symptoms": [
-      "data-testid=mask overlay blocks page",
-      "role=dialog aria-modal with empty jetfuel-style-root",
-      "jf-element divs with slideUp keyframes but no SSO body",
-      "Google id_token in query but iframe never mounted"
+    "url_paths": [
+      "/onboarding/web/sso",
+      "/i/onboarding/web/sso",
+      "/i/jf/onboarding/web/sso"
     ],
-    "fix": "early_redirect_to_clean_login"
+    "symptoms": [
+      "data-testid=mask dark overlay blocks login buttons underneath",
+      "fixed black/gray div covers Continue with Google/Apple/phone",
+      "login form loads but pointer-events blocked by mask",
+      "role=dialog aria-modal with empty jetfuel-style-root"
+    ],
+    "fix": "kill_overlay_keep_login_form"
   },
   "clean_login": {
     "primary": "https://x.com/i/flow/login",
