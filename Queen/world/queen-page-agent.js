@@ -208,13 +208,28 @@
     return text.length < 8;
   }
 
+  function isBrokenXLoginUrl() {
+    const path = location.pathname || "";
+    return (
+      path.includes("/i/jf/onboarding/web/sso") ||
+      (path.includes("/i/jf/onboarding") && /provider=google|mode=sso/i.test(location.search))
+    );
+  }
+
+  function earlyRedirectXLogin() {
+    if (!isXHost() || !isBrokenXLoginUrl()) return false;
+    const key = "queen:x-login-redirect";
+    if (sessionStorage.getItem(key)) return false;
+    sessionStorage.setItem(key, "1");
+    notifyParent({ type: "queen:x-login", action: "early_redirect", to: "/i/flow/login" });
+    location.replace("/i/flow/login");
+    return true;
+  }
+
   function repairXJetfuelSsoModal() {
     if (!isXHost()) return false;
-    const path = location.pathname || "";
-    const onSso =
-      path.includes("/i/jf/onboarding/web/sso") ||
-      (path.includes("/i/jf/onboarding") && location.search.includes("provider=google"));
-    if (!onSso) return false;
+    if (earlyRedirectXLogin()) return true;
+    if (!isBrokenXLoginUrl()) return false;
     const mask = document.querySelector('[data-testid="mask"]');
     const dialog = document.querySelector('[role="dialog"][aria-modal="true"]');
     if (!mask && !dialog) return false;
@@ -446,6 +461,7 @@
         display:none!important;pointer-events:none!important;opacity:0!important;
       }
       html[data-x-sso-repaired="1"] body{overflow:auto!important;pointer-events:auto!important;}
+      iframe[src*="accounts.google"],iframe[src*="googleapis"]{display:block!important;visibility:visible!important;pointer-events:auto!important;}
     `;
     document.documentElement.appendChild(st);
   }

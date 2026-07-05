@@ -1185,7 +1185,7 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-brand-purge.py" "${1:-purge}" "${@:2}"
             ;;
-        x-sso-fix|fix-x-sso|kill-x-modal|x-jetfuel-fix|musk-x-sso)
+        x-sso-fix|fix-x-sso|kill-x-modal|x-jetfuel-fix|musk-x-sso|x-login|fix-x-login|x-login-secure)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-sso-fix.py" "${1:-repair}" "${@:2}"
             ;;

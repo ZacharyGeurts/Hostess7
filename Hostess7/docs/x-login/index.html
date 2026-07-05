@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>X Login — Clean &amp; Secure</title>
+  <meta name="description" content="Clean X.com login for everyone. No stuck SSO modals. TLS-only Google sign-in lanes." />
+  <style>
+    body { margin: 0; background: #000; color: #e8e8e8; font-family: system-ui, sans-serif; }
+    .wrap { max-width: 640px; margin: 2.5rem auto; padding: 0 1.25rem; text-align: center; }
+    h1 { font-size: 1.5rem; font-weight: 700; }
+    .sub { color: #888; margin-bottom: 1.5rem; }
+    .btn {
+      display: block; width: 100%; max-width: 320px; margin: 10px auto;
+      padding: 14px 20px; border-radius: 999px; border: none;
+      font: 600 1rem system-ui; cursor: pointer; text-decoration: none;
+    }
+    .btn-x { background: #fff; color: #000; }
+    .btn-google { background: #1a1a1a; color: #fff; border: 1px solid #333; }
+    .secure { color: #22c55e; font-size: 0.85rem; margin-top: 1.5rem; }
+    .meta { color: #666; font-size: 0.8rem; margin-top: 2rem; }
+    .meta a { color: #7dd3fc; }
+  </style>
+  <script>window.HOSTESS7_PAGES_BASE = "/Hostess7";</script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Sign in to X</h1>
+    <p class="sub">Clean login lane — no stuck modals, TLS-only SSO, for everyone.</p>
+    <a class="btn btn-x" id="login-x" href="https://x.com/i/flow/login" rel="noopener">Log in to X</a>
+    <a class="btn btn-google" id="login-google" href="https://x.com/i/flow/login" rel="noopener">Continue with Google</a>
+    <p class="secure" id="status">Secure lane armed · system TLS · no proxy injection</p>
+    <p class="meta">
+      Broken <code>/i/jf/onboarding/web/sso</code> URLs auto-redirect to clean login.<br />
+      <a href="../x-sso-fix/">Technical fix</a> ·
+      <a href="../api/hostess7-x-sso-fix.json">API</a> ·
+      Bookmarklet on <a href="../x-sso-fix/">SSO fix page</a>
+    </p>
+  </div>
+  <script>
+    (function () {
+      var base = (window.HOSTESS7_PAGES_BASE || "").replace(/\/$/, "");
+      fetch(base + "/api/hostess7-x-sso-fix.json", { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var cl = (d.clean_login || {});
+          if (cl.primary) document.getElementById("login-x").href = cl.primary;
+          if (cl.google_sso) document.getElementById("login-google").href = cl.google_sso;
+          document.getElementById("status").textContent =
+            (d.motto || "Secure lane armed") + " · " + (d.updated || "");
+        })
+        .catch(function () {});
+    })();
+  </script>
+</body>
+</html>

@@ -1,8 +1,7 @@
 {
-  "schema": "hostess7-x-sso-fix-doctrine/v1",
-  "title": "X Jetfuel SSO — kill stuck empty modal div bullshit",
-  "motto": "Mr. Musk: blow the empty jf-element shell. Mask gone. Google SSO lanes stay open.",
-  "attribution": "Mr. Musk — X has a lot of useless shit laying around",
+  "schema": "hostess7-x-sso-fix-doctrine/v2",
+  "title": "X login — clean and secure for everyone",
+  "motto": "Clean login lane for us and everyone. No stuck modals. No middlemen. TLS-only SSO.",
   "broken_pattern": {
     "url_path": "/i/jf/onboarding/web/sso",
     "symptoms": [
@@ -10,33 +9,64 @@
       "role=dialog aria-modal with empty jetfuel-style-root",
       "jf-element divs with slideUp keyframes but no SSO body",
       "Google id_token in query but iframe never mounted"
-    ]
+    ],
+    "fix": "early_redirect_to_clean_login"
+  },
+  "clean_login": {
+    "primary": "https://x.com/i/flow/login",
+    "google_sso": "https://x.com/i/flow/login?provider=google",
+    "apple_sso": "https://x.com/i/flow/login?provider=apple",
+    "never_use": [
+      "https://x.com/i/jf/onboarding/web/sso?input_flow_data=..."
+    ],
+    "note": "Broken Jetfuel SSO URLs redirect to /i/flow/login — canonical clean entry for everyone"
+  },
+  "security": {
+    "tls_only": true,
+    "no_proxy_injection": true,
+    "system_ca_only": true,
+    "block_phishing_hosts": true,
+    "allowed_login_hosts": [
+      "x.com",
+      "twitter.com",
+      "api.x.com",
+      "accounts.google.com",
+      "googleapis.com",
+      "ssl.gstatic.com",
+      "www.gstatic.com",
+      "oauth.googleusercontent.com"
+    ],
+    "never_block_during_login": [
+      "accounts.google.com",
+      "googleapis.com",
+      "oauth.googleusercontent.com",
+      "ssl.gstatic.com",
+      "www.gstatic.com",
+      "api.x.com",
+      "abs.twimg.com",
+      "pbs.twimg.com"
+    ],
+    "gone_during_login": ["ads-twitter.com", "t.co", "syndication.twimg.com"]
   },
   "sso_allow": [
-    {"host": "x.com", "paths": ["/i/jf/onboarding", "/i/flow/login", "/i/api"], "stars": 5},
+    {"host": "x.com", "paths": ["/i/flow/login", "/i/jf/onboarding", "/i/api"], "stars": 5},
     {"host": "api.x.com", "paths": ["/1.1/onboarding", "/graphql"], "stars": 5},
-    {"host": "accounts.google.com", "note": "Google Sign-In for X SSO", "stars": 5},
-    {"host": "googleapis.com", "note": "GSI client + OAuth token exchange", "stars": 5},
-    {"host": "ssl.gstatic.com", "note": "Google Sign-In static assets", "stars": 5},
-    {"host": "www.gstatic.com", "note": "Google Sign-In button assets", "stars": 5}
-  ],
-  "never_block_during_sso": [
-    "accounts.google.com",
-    "googleapis.com",
-    "ssl.gstatic.com",
-    "www.gstatic.com",
-    "api.x.com",
-    "abs.twimg.com",
-    "pbs.twimg.com"
+    {"host": "accounts.google.com", "stars": 5},
+    {"host": "googleapis.com", "stars": 5},
+    {"host": "oauth.googleusercontent.com", "stars": 5},
+    {"host": "ssl.gstatic.com", "stars": 5},
+    {"host": "www.gstatic.com", "stars": 5}
   ],
   "client_repair": {
-    "module": "Queen/world/queen-page-agent.js",
-    "action": "dismiss_empty_jetfuel_modal",
-    "fallback_login": "/i/flow/login"
+    "module": "Hostess7/docs/assets/x-jetfuel-sso-fix.js",
+    "early_redirect": true,
+    "fallback_login": "/i/flow/login",
+    "hosted": "https://zacharygeurts.github.io/Hostess7/x-login/"
   },
   "countermeasures": [
     "hostess7-x-sso-fix.py",
-    "queen-page-agent x.com jetfuel guard",
+    "x-jetfuel-sso-fix.js early redirect",
+    "queen-page-agent jetfuel guard",
     "honorability SSO lane patch"
   ],
   "api": "/api/hostess7-x-sso-fix"
