@@ -1193,6 +1193,10 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-straight-shot.py" "${1:-rip}" "${@:2}"
             ;;
+        censorship-clear|censorship-clear-worldwide|clear-censorship|just-ask)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-censorship-clear-worldwide.py" "${1:-clear}" "${@:2}"
+            ;;
         operator-x-comments|x-comments)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-comments.py" "${1:-json}" "${@:2}"

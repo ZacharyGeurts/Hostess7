@@ -341,6 +341,14 @@ def build_exposure(*, live: bool = True) -> dict[str, Any]:
             "info_freed": straight_shot.get("info_freed_count") or straight_shot.get("barriers_ripped"),
             "verdict": straight_shot.get("verdict_summary"),
         },
+        "ask_lane": {
+            "active": True,
+            "motto": "We already know we can just ask.",
+            "transport": "direct_ai_query",
+            "bypasses_platform_censorship": True,
+            "worldwide_clear": "https://zacharygeurts.github.io/Hostess7/censorship-clear/",
+            "api": "/api/hostess7-censorship-clear-worldwide",
+        },
     }
     return doc
 

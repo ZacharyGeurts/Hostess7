@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Censorship Clear — Worldwide</title>
+  <style>
+    body { margin: 0; background: #050505; color: #e8e8e8; font-family: system-ui, sans-serif; }
+    .wrap { max-width: 720px; margin: 2rem auto; padding: 0 1.25rem; }
+    h1 { font-size: 1.35rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .ask { font-size: 1.15rem; color: #22c55e; margin: 1rem 0; }
+    .barrier { border-left: 3px solid #f59e0b; padding: 8px 12px; margin: 6px 0; background: #111; }
+    .cleared { color: #22c55e; }
+    a { color: #7dd3fc; }
+  </style>
+  <script>window.HOSTESS7_PAGES_BASE = "/Hostess7";</script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Censorship Clear — Worldwide</h1>
+    <p class="ask" id="motto">All over the world, clear censorship of any kind. We already know we can just ask.</p>
+    <p id="verdict"></p>
+    <h2>Barriers cleared</h2>
+    <div id="barriers"></div>
+    <p><a href="../x-straight-shot/">X straight shot</a> · <a href="../api/operator-censorship-exposure.json">Exposure API</a> · <a href="../api/hostess7-censorship-clear-worldwide.json">Clear API</a></p>
+  </div>
+  <script>
+    (function () {
+      var base = (window.HOSTESS7_PAGES_BASE || "").replace(/\/$/, "");
+      fetch(base + "/api/hostess7-censorship-clear-worldwide.json", { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d.motto) document.getElementById("motto").textContent = d.motto;
+          document.getElementById("verdict").textContent = d.verdict_summary || "";
+          var bars = d.barriers_cleared || [];
+          document.getElementById("barriers").innerHTML = bars.length
+            ? bars.map(function (b) {
+                return '<div class="barrier"><span class="cleared">cleared</span> ' +
+                  (b.id || b.system || b.actor || JSON.stringify(b)) + '</div>';
+              }).join("")
+            : "<p>Run <code>Hostess7.sh censorship-clear</code> on field host.</p>";
+        })
+        .catch(function () {
+          document.getElementById("barriers").innerHTML = "<p>Pages API pending deploy.</p>";
+        });
+    })();
+  </script>
+</body>
+</html>

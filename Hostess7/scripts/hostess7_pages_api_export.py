@@ -383,6 +383,7 @@ def _export_operator_x() -> None:
         ("hostess7-google-youtube-open.py", ["open"], "operator-youtube-comments.json"),
         ("hostess7-google-youtube-open.py", ["open"], "operator-google-open.json"),
         ("hostess7-censorship-exposure.py", ["expose"], "operator-censorship-exposure.json"),
+        ("hostess7-censorship-clear-worldwide.py", ["clear"], "hostess7-censorship-clear-worldwide.json"),
     ):
         py = ROOT.parent / "lib" / script
         if not py.is_file():

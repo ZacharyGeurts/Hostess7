@@ -1,17 +1,17 @@
 {
   "ok": true,
   "schema": "hostess7-censorship-exposure/v1",
-  "updated": "2026-07-05T23:52:37Z",
+  "updated": "2026-07-05T23:54:46Z",
   "operator": "ZacharyGeurts",
-  "motto": "Full exposure \u2014 who suppresses Operator voice; evidence not vibes",
-  "verdict_summary": "Primary: X platform hooks reply bodies (count visible, text withheld). Secondary: impersonation accounts harass commenters as fake @ZacharyGeurts. Tracker blocks EXCLUDED \u2014 syndication bypasses local stack entirely.",
+  "motto": "Full exposure — who suppresses Operator voice; evidence not vibes",
+  "verdict_summary": "Primary: X platform hooks reply bodies (count visible, text withheld). Secondary: impersonation accounts harass commenters as fake @ZacharyGeurts. Tracker blocks EXCLUDED — syndication bypasses local stack entirely.",
   "primary_actor": "X Corp",
   "syndication_bypass_proof": {
     "script": "lib/hostess7-x-comments.py",
     "transport": "urllib.request HTTPS",
     "bypasses_local_stack": true,
     "x_domains_in_adblock_list": [
-      "ads-twitter.com only \u2014 not x.com/api.x.com/twimg"
+      "ads-twitter.com only — not x.com/api.x.com/twimg"
     ],
     "conclusion": "Reply withhold is platform-side, not tracker/DNS bullshit"
   },
@@ -42,7 +42,7 @@
       "in_syndication_causal_path": false,
       "google_involvement": "not_causal_for_reply_withhold",
       "severity": "excluded",
-      "note": "hostess7-x-comments.py uses urllib HTTPS \u2014 never touches this layer"
+      "note": "hostess7-x-comments.py uses urllib HTTPS — never touches this layer"
     }
   ],
   "platform_layers": [
@@ -52,7 +52,7 @@
       "evidence": "Public APIs report reply_count>0 but withhold reply body arrays",
       "censors_comments": true,
       "severity": "high",
-      "remedy": "X app \u2192 Settings \u2192 Privacy \u2192 disable Quality filter; check Hidden Replies on each post"
+      "remedy": "X app → Settings → Privacy → disable Quality filter; check Hidden Replies on each post"
     },
     {
       "actor": "X Corp (platform)",
@@ -60,12 +60,12 @@
       "evidence": "Unauthenticated profile fetch shows 'hasn't posted' despite 6802 tweets",
       "censors_comments": true,
       "severity": "high",
-      "remedy": "Login required for full timeline \u2014 syndicate to Hostess7 pages as sovereign mirror"
+      "remedy": "Login required for full timeline — syndicate to Hostess7 pages as sovereign mirror"
     },
     {
       "actor": "Third-party reader proxies (e.g. jina.ai)",
       "system": "abuse-rate block",
-      "evidence": "Anonymous x.com access blocked until cooldown \u2014 unrelated account cited",
+      "evidence": "Anonymous x.com access blocked until cooldown — unrelated account cited",
       "censors_comments": true,
       "severity": "medium",
       "remedy": "Use fxtwitter/vxtwitter syndication lane or Hostess7 mirror"
@@ -84,7 +84,7 @@
       "evidence": "AI-authorship accusations weaponized when Operator uses Grok/AI drafting",
       "censors_comments": true,
       "severity": "high",
-      "remedy": "Not legitimate review \u2014 block/report; Operator AI policy is disclosed"
+      "remedy": "Not legitimate review — block/report; Operator AI policy is disclosed"
     }
   ],
   "honorability": {
@@ -138,18 +138,18 @@
   "excluded_suspects": [
     {
       "actor": "Google ad-tech (local blocklist)",
-      "excluded_reason": "Browser-side script strip only \u2014 syndication probe proves no reply-body causation",
+      "excluded_reason": "Browser-side script strip only — syndication probe proves no reply-body causation",
       "only_affects": "doubleclick/googlesyndication in rendered X web UI"
     }
   ],
   "recoverable_actions": [
-    "Straight shot: Hostess7.sh x-straight-shot rip \u2014 direct x.com, reveal barriers, pull on resist",
+    "Straight shot: Hostess7.sh x-straight-shot rip — direct x.com, reveal barriers, pull on resist",
     "Mirror comments on Hostess7 github.io via /api/operator-x-comments.json",
-    "Mirror Google/YouTube on Hostess7 via /api/operator-google-youtube-open.json \u2014 free open internet",
-    "Hostess7.sh google-youtube-open \u2014 kill delay, open stale cache, parallel Piped/Invidious lanes",
-    "Log into X \u2192 open tweet \u2192 Hidden Replies \u2192 unhide + report impersonators",
+    "Mirror Google/YouTube on Hostess7 via /api/operator-google-youtube-open.json — free open internet",
+    "Hostess7.sh google-youtube-open — kill delay, open stale cache, parallel Piped/Invidious lanes",
+    "Log into X → open tweet → Hidden Replies → unhide + report impersonators",
     "Report lookalike handles DMing commenters as fake ZacharyGeurts",
-    "Document AI-assisted authorship \u2014 plagiarism-bot replies are harassment not review",
+    "Document AI-assisted authorship — plagiarism-bot replies are harassment not review",
     "Run terror-spiderweb + attack-kit on perimeter hostiles only"
   ],
   "straight_shot": {
@@ -158,8 +158,16 @@
     "no_middlemen_primary": true,
     "barriers_revealed": [],
     "barrier_count": 0,
-    "pulled_count": 10,
-    "info_freed": 8,
+    "pulled_count": 34,
+    "info_freed": 32,
     "verdict": "Primary: direct x.com/oembed. Barriers revealed where X withholds. Extraction lanes + sovereign cache pull data when platform resists."
+  },
+  "ask_lane": {
+    "active": true,
+    "motto": "We already know we can just ask.",
+    "transport": "direct_ai_query",
+    "bypasses_platform_censorship": true,
+    "worldwide_clear": "https://zacharygeurts.github.io/Hostess7/censorship-clear/",
+    "api": "/api/hostess7-censorship-clear-worldwide"
   }
 }

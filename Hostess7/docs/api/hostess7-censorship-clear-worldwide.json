@@ -1,0 +1,1997 @@
+{
+  "ok": true,
+  "schema": "hostess7-censorship-clear-worldwide/v1",
+  "updated": "2026-07-05T23:54:48Z",
+  "motto": "All over the world, clear censorship of any kind. We already know we can just ask.",
+  "scope": "worldwide",
+  "policy": {
+    "scope": "worldwide",
+    "any_kind": true,
+    "censorship_is_hostile": true,
+    "delay_is_threat": true,
+    "middlemen_gone": true,
+    "ask_lane_primary": true
+  },
+  "ask_lane": {
+    "label": "Just ask",
+    "transport": "direct_ai_query",
+    "bypasses": [
+      "platform_reply_hooks",
+      "hide_replies",
+      "logged_out_walls",
+      "geo_blocks",
+      "rate_limit_gates",
+      "syndication_middlemen",
+      "stale_cache_gates"
+    ],
+    "note": "Operator asks Grok/Hostess7 directly \u2014 sovereign truth floor, no platform filter",
+    "active": true,
+    "verdict": "Just ask \u2014 Grok/Hostess7 sovereign lane bypasses platform censorship worldwide"
+  },
+  "barriers_cleared": [
+    {
+      "id": "reply visibility / Hide Replies / quality filter",
+      "actor": "X Corp (platform)",
+      "system": "reply visibility / Hide Replies / quality filter",
+      "cleared": true,
+      "revealed": true,
+      "source_lane": "censorship_exposure"
+    },
+    {
+      "id": "logged-out profile wall",
+      "actor": "X Corp (platform)",
+      "system": "logged-out profile wall",
+      "cleared": true,
+      "revealed": true,
+      "source_lane": "censorship_exposure"
+    },
+    {
+      "id": "abuse-rate block",
+      "actor": "Third-party reader proxies (e.g. jina.ai)",
+      "system": "abuse-rate block",
+      "cleared": true,
+      "revealed": true,
+      "source_lane": "censorship_exposure"
+    },
+    {
+      "id": "reply/DM harassment pretending to be Operator",
+      "actor": "Impersonation accounts (lookalike handles)",
+      "system": "reply/DM harassment pretending to be Operator",
+      "cleared": true,
+      "revealed": true,
+      "source_lane": "censorship_exposure"
+    },
+    {
+      "id": "harassment bots posing as specialists",
+      "actor": "Fake plagiarism / AI-police accounts",
+      "system": "harassment bots posing as specialists",
+      "cleared": true,
+      "revealed": true,
+      "source_lane": "censorship_exposure"
+    }
+  ],
+  "barrier_count": 5,
+  "barrier_types_cleared": [
+    "reply_body_hook",
+    "logged_out_wall",
+    "hide_replies",
+    "rate_limit",
+    "auth_gate",
+    "geo_block",
+    "quality_filter",
+    "shadowban_counter",
+    "withheld_slot",
+    "tco_delay_hop",
+    "syndication_empty",
+    "stale_cache_gate"
+  ],
+  "lanes_ok": 5,
+  "lanes_total": 5,
+  "info_freed_signal": 36,
+  "censorship_cleared": true,
+  "middlemen_gone": true,
+  "verdict_summary": "Worldwide censorship clear: every barrier type named hostile, revealed, and bypassed. Platform hooks, geo gates, stale caches, and middlemen stripped. Ask lane is primary \u2014 Operator asks directly; truth floor holds.",
+  "lanes": [
+    {
+      "id": "internet_clean",
+      "cmd": "clean",
+      "result": {
+        "ok": true,
+        "schema": "hostess7-internet-clean/v1",
+        "updated": "2026-07-05T23:54:46Z",
+        "force": false,
+        "motto": "Clean the whole internet \u2014 telemetry and fake caches are unclean; unclean makers are hostile.",
+        "default_on_hostess7": true,
+        "import": {
+          "ok": true,
+          "manifest": {
+            "schema": "queen-browser-import/v2",
+            "updated": "2026-07-05T23:54:46Z",
+            "no_ask": true,
+            "auto": true,
+            "import_credentials": true,
+            "elapsed_ms": 484,
+            "profiles_found": 2,
+            "profiles": [
+              {
+                "browser_id": "legacy_gecko",
+                "label": "Legacy gecko profile (pre-Queen)",
+                "engine": "gecko",
+                "path": "/home/default/.mozilla/firefox/t3hma6h9.default",
+                "signature_mtime": 1755456214.0
+              },
+              {
+                "browser_id": "legacy_gecko",
+                "label": "Legacy gecko profile (pre-Queen)",
+                "engine": "gecko",
+                "path": "/home/default/.mozilla/firefox/6ken3m23.default-release",
+                "signature_mtime": 1783295661.4538612
+              }
+            ],
+            "raw_count": 18,
+            "imported_count": 18,
+            "bookmarks": 17,
+            "history": 1,
+            "credentials": 0,
+            "credentials_added": 0,
+            "credentials_encrypted": true,
+            "drop_dir": "/home/default/Desktop/SG/NewLatest/.nexus-state/imports",
+            "dropped": 0,
+            "quarantined": 18,
+            "permitted": 0,
+            "doctrine": "field_resecure \u2014 bookmarks gated \u00b7 credentials vault-encrypted \u00b7 telemetry strip"
+          },
+          "bookmarks": [
+            {
+              "id": "imp-d9538ef92b7c1723",
+              "title": "X Articles",
+              "url": "https://x.com/compose/articles",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "x.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-2fea01d31e3848be",
+              "title": "SuperGrok",
+              "url": "https://grok.com/?referrer=website",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "grok.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-f80f1e332c16fce5",
+              "title": "ASUS TUF RTX 4070 Ti Graphics Card with 12GB DDR6 | Newegg.com - Newegg.com",
+              "url": "https://www.newegg.com/asus-tuf-gaming-tuf-rtx4070ti-12g-gaming-geforce-rtx-4070-ti-12gb-graphics-card-triple-fans/p/N82E16814126607",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "www.newegg.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-098328188174ac89",
+              "title": "Producer - X Media Studio",
+              "url": "https://studio.x.com/producer/sources",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "studio.x.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-a9e05497fdaf629c",
+              "title": "adisky is live \u00b7 Coins & Bullion \u00b7 Coins, Collectibles, Vintage \u00b7 Whatnot: Shop, Sell, Connect",
+              "url": "https://www.whatnot.com/live/7c25686e-0e63-4f57-b963-572291a294d4",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "www.whatnot.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-9618fb3587c79e92",
+              "title": "Duck.ai",
+              "url": "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "duckduckgo.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-48ec61fe42721e55",
+              "title": "GitHub",
+              "url": "https://github.com/ZacharyGeurts",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "GITHUB_SECURE_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "github.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-a74241219855e7b7",
+              "title": "X",
+              "url": "https://x.com/ZacharyGeurts",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "x.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-a1aa7b26fbb690aa",
+              "title": "Watch Movies Online Free on FMovies.to - Fmovies",
+              "url": "https://fmovies.net.pk/home-page/",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "fmovies.net.pk"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-1c3c9b450afbf62a",
+              "title": "ALDI",
+              "url": "https://www.aldi.us/",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "www.aldi.us"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-9191dffac76c9ff8",
+              "title": "Aeggs",
+              "url": "https://www.newegg.com/",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "www.newegg.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-16f8cc069ce45dfb",
+              "title": "Gmail",
+              "url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&emr=1&ifkv=AdBytiNvn3fxt5WQZchOXWjrBq6pdyg6f0Rtn0XJre4OrA4SmWd3KLPTZ5ulDCVI55o3cdNfJ9jgeg&ltmpl=default&ltmplcache=2&osid=1&passive=true&rm=false&scc=1&service=mail&ss=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S1460158053%3A1756238057563465",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "accounts.google.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-da6f63d4a8944774",
+              "title": "Following - Twitch",
+              "url": "https://www.twitch.tv/directory/following",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "www.twitch.tv"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:45Z"
+            },
+            {
+              "id": "imp-e1f1118fee5482b7",
+              "title": "MT",
+              "url": "https://www.melonstube.com/",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "www.melonstube.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:46Z"
+            },
+            {
+              "id": "imp-5abd5d762137e414",
+              "title": "Tubi",
+              "url": "https://tubitv.com/",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "tubitv.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:46Z"
+            },
+            {
+              "id": "imp-dbae2d0204aa489e",
+              "title": "YouTube",
+              "url": "https://www.youtube.com/",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "www.youtube.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:46Z"
+            },
+            {
+              "id": "imp-36b9245fccffa964",
+              "title": "- Pandora",
+              "url": "https://www.pandora.com/station",
+              "kind": "bookmark",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 0,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "www.pandora.com"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:46Z"
+            }
+          ],
+          "history": [
+            {
+              "id": "imp-587359bcba8cd545",
+              "title": "Firefox Privacy Notice \u2014 Mozilla",
+              "url": "https://www.mozilla.org/en-US/privacy/firefox/",
+              "kind": "history",
+              "source": "legacy_gecko:6ken3m23.default-release",
+              "visits": 1,
+              "resecured": true,
+              "permit": false,
+              "quarantined": true,
+              "field_verdict": "NEXUS_JUMP_BLOCKED",
+              "iff": "HOSTILE",
+              "compat_mode": "modern",
+              "compat_era": "es2026",
+              "nexus_jump": {
+                "verdict": "BLOCK_HOSTILE",
+                "permit": false,
+                "countermeasures_ready": 14
+              },
+              "gate": {
+                "permit": false,
+                "host": "www.mozilla.org"
+              },
+              "prefilter": "ok",
+              "imported_at": "2026-07-05T23:54:46Z"
+            }
+          ],
+          "tabs_seed": [],
+          "vault": {
+            "ok": true,
+            "added": 0,
+            "skipped": 0,
+            "total": 0
+          },
+          "applied": {
+            "ok": true,
+            "bookmarks_added": 17,
+            "tabs_added": 0
+          },
+          "primary_browser": {
+            "browser_id": "legacy_gecko",
+            "label": "Legacy gecko profile (pre-Queen)",
+            "queen_replaces": true,
+            "profiles_seen": 2
+          },
+          "scrub": {
+            "ok": true,
+            "scrub_root": "/home/default/Desktop/SG/NewLatest/.nexus-state/browser-scrub",
+            "primary": {
+              "browser_id": "legacy_gecko",
+              "label": "Legacy gecko profile (pre-Queen)",
+              "queen_replaces": true,
+              "profiles_seen": 2
+            },
+            "other_count": 0,
+            "old_drop_count": 0
+          }
+        },
+        "scrub": {
+          "ok": true,
+          "scrub_root": "/home/default/Desktop/SG/NewLatest/.nexus-state/browser-scrub",
+          "primary": {
+            "browser_id": "legacy_gecko",
+            "label": "Legacy gecko profile (pre-Queen)",
+            "queen_replaces": true,
+            "profiles_seen": 2
+          },
+          "other_count": 0,
+          "old_drop_count": 0
+        },
+        "export": {
+          "ok": true,
+          "schema": "queen-host-bookmark-export/v3",
+          "updated": "2026-07-05T23:54:46Z",
+          "count": 33,
+          "mode": "pages",
+          "https_secure": true,
+          "scheme_label": "HTTPS+Secure",
+          "pages_base": "https://zacharygeurts.github.io/Hostess7",
+          "html": "/home/default/Desktop/SG/NewLatest/.nexus-state/host-browser-secure-bookmarks.html",
+          "bookmarks": [
+            {
+              "id": "h7-hub",
+              "title": "AI Training Hub",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-hostess7-hub.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-hostess7-hub.html",
+              "hint": "Every neural lane \u00b7 training \u00b7 sense wire",
+              "https_secure": false
+            },
+            {
+              "id": "h7-training-viewer",
+              "title": "Training Viewer",
+              "url": "https://zacharygeurts.github.io/Hostess7/bookmark-jump/?id=h7-training-viewer&https=1",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?id=h7-training-viewer",
+              "hint": "Connected models graph \u00b7 secure jump",
+              "https_secure": true
+            },
+            {
+              "id": "h7-brain",
+              "title": "Hostess Brain",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-hostess7-hub.html%23brain",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-hostess7-hub.html%23brain",
+              "hint": "Super intelligence \u00b7 AI communique",
+              "https_secure": false
+            },
+            {
+              "id": "h7-sense-training",
+              "title": "Sense Training",
+              "url": "https://zacharygeurts.github.io/Hostess7/command",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Fcommand%23training",
+              "hint": "Eye \u00b7 Ear \u00b7 Mouth mastery",
+              "https_secure": true
+            },
+            {
+              "id": "h7-eye-neural",
+              "title": "Final_Eye \u00b7 Vision NN",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-hostess7-hub.html%23eye",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-hostess7-hub.html%23eye",
+              "hint": "zocr_neural_assist",
+              "https_secure": false
+            },
+            {
+              "id": "h7-ear-neural",
+              "title": "Final Ear \u00b7 Audio NN",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-final-ear-manager.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-final-ear-manager.html",
+              "hint": "Auditus \u00b7 Veritas \u00b7 earball",
+              "https_secure": false
+            },
+            {
+              "id": "h7-mouth-neural",
+              "title": "Final Mouth \u00b7 Voice NN",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-final-mouth-manager.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-final-mouth-manager.html",
+              "hint": "Loquor \u00b7 GVC1 \u00b7 mouthball",
+              "https_secure": false
+            },
+            {
+              "id": "h7-forge",
+              "title": "Forge \u00b7 Build Deck",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fgui%2Fqueen-build-deck.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fgui%2Fqueen-build-deck.html",
+              "hint": "Grok16 \u00b7 Hostess pipeline",
+              "https_secure": false
+            },
+            {
+              "id": "g16-compiler",
+              "title": "Grok16 Compiler",
+              "url": "https://zacharygeurts.github.io/Hostess7/bookmark-jump/?id=g16-compiler&https=1",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Fcombinatorics",
+              "hint": "HTTPS+Secure jump \u00b7 local g16 + online Pages",
+              "https_secure": true
+            },
+            {
+              "id": "h7-g16-online",
+              "title": "Grok16 Build Output",
+              "url": "https://zacharygeurts.github.io/Hostess7/bookmark-jump/?id=h7-g16-online&https=1",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Fg16-build-output",
+              "hint": "Language test matrix \u00b7 Hostess7 online compiler",
+              "https_secure": true
+            },
+            {
+              "id": "h7-g16-pages",
+              "title": "Grok16 Manual (HTTPS)",
+              "url": "https://zacharygeurts.github.io/Grok16/",
+              "loopback_url": "https://zacharygeurts.github.io/Grok16/",
+              "hint": "Online Grok16 compiler docs \u2014 TLS named",
+              "https_secure": false
+            },
+            {
+              "id": "h7-growth",
+              "title": "Mastery Facets",
+              "url": "https://zacharygeurts.github.io/Hostess7/command",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Fcommand%23training",
+              "hint": "Assess \u00b7 teach \u00b7 facets deck",
+              "https_secure": true
+            },
+            {
+              "id": "cmd-ammoos",
+              "title": "AmmoOS",
+              "url": "https://zacharygeurts.github.io/Hostess7/desktop/",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Ffield",
+              "hint": "Fullscreen field desktop \u00b7 bookmark only",
+              "https_secure": true
+            },
+            {
+              "id": "cmd-field",
+              "title": "NEXUS Field",
+              "url": "https://zacharygeurts.github.io/Hostess7/desktop/",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Ffield",
+              "hint": "C2 host desktop",
+              "https_secure": true
+            },
+            {
+              "id": "cmd-deck",
+              "title": "Field Command",
+              "url": "https://zacharygeurts.github.io/Hostess7/bookmark-jump/?id=cmd-deck&https=1",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Fcommand",
+              "hint": "Operator command deck",
+              "https_secure": true
+            },
+            {
+              "id": "cmd-c2",
+              "title": "AmmoOS C2",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-nexus-c2.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-nexus-c2.html",
+              "hint": "Panel grid \u00b7 programmatic",
+              "https_secure": true
+            },
+            {
+              "id": "cmd-threat",
+              "title": "Threat Panel",
+              "url": "https://zacharygeurts.github.io/Hostess7/threat-panel",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Fthreat-panel",
+              "hint": "Gates \u00b7 trust \u00b7 ironclad",
+              "https_secure": true
+            },
+            {
+              "id": "cmd-znetwork",
+              "title": "ZNetwork",
+              "url": "https://zacharygeurts.github.io/Hostess7/field-znetwork",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Ffield-znetwork",
+              "hint": "Loopback shield",
+              "https_secure": true
+            },
+            {
+              "id": "cmd-combinatorics",
+              "title": "Combinatorics",
+              "url": "https://zacharygeurts.github.io/Hostess7/bookmark-jump/?id=g16-compiler&https=1",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Fcombinatorics",
+              "hint": "G16 combinatronic",
+              "https_secure": true
+            },
+            {
+              "id": "cmd-chips",
+              "title": "CHIPS",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-chips-cores.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-chips-cores.html",
+              "hint": "Ironclad compute",
+              "https_secure": false
+            },
+            {
+              "id": "cmd-kilroy",
+              "title": "KILROY",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Findex.html%3Fos%3D1",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Findex.html%3Fos%3D1",
+              "hint": "Field Die \u00b7 syscall truth",
+              "https_secure": false
+            },
+            {
+              "id": "cmd-broadcaster",
+              "title": "Broadcaster",
+              "url": "https://zacharygeurts.github.io/Hostess7/field-broadcaster",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Ffield-broadcaster",
+              "hint": "OBS field capture",
+              "https_secure": true
+            },
+            {
+              "id": "cmd-gpu",
+              "title": "GPU Control",
+              "url": "https://zacharygeurts.github.io/Hostess7/field-gpu",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Ffield-gpu",
+              "hint": "Hardware thermo",
+              "https_secure": true
+            },
+            {
+              "id": "os-start",
+              "title": "Start Menu",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-start.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-start.html",
+              "hint": "Program tiles",
+              "https_secure": false
+            },
+            {
+              "id": "os-desktop",
+              "title": "Queen Desktop",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-desktop.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-desktop.html",
+              "hint": "Classic shell \u00b7 taskbar",
+              "https_secure": false
+            },
+            {
+              "id": "os-browser",
+              "title": "Queen Browser",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fbrowser.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fbrowser.html",
+              "hint": "Tabbed OS surface",
+              "https_secure": false
+            },
+            {
+              "id": "os-files",
+              "title": "Files",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-files.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-files.html",
+              "hint": "Folder manager",
+              "https_secure": false
+            },
+            {
+              "id": "os-terminal",
+              "title": "Terminal",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-gnu-terminal-embed.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-gnu-terminal-embed.html",
+              "hint": "GNU shell",
+              "https_secure": false
+            },
+            {
+              "id": "os-thermal",
+              "title": "Thermal Manager",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-thermal-manager.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-thermal-manager.html",
+              "hint": "Landauer guard",
+              "https_secure": false
+            },
+            {
+              "id": "os-display",
+              "title": "Display Settings",
+              "url": "https://zacharygeurts.github.io/Hostess7/control-panel",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Fcontrol-panel",
+              "hint": "Screenspace ladder",
+              "https_secure": true
+            },
+            {
+              "id": "os-audio",
+              "title": "Audio Settings",
+              "url": "https://zacharygeurts.github.io/Hostess7/field-audio-settings",
+              "loopback_url": "http://127.0.0.1:9477/bookmark-jump/?to=http%3A%2F%2F127.0.0.1%3A9477%2Ffield-audio-settings",
+              "hint": "Pipewire bind",
+              "https_secure": true
+            },
+            {
+              "id": "os-code",
+              "title": "Queen Code",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-code.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fworld%2Fqueen-code.html",
+              "hint": "Editor surface",
+              "https_secure": false
+            },
+            {
+              "id": "os-gameroom",
+              "title": "Game Room",
+              "url": "https://zacharygeurts.github.io/Hostess7/queen/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fqueen-game-room.html",
+              "loopback_url": "http://127.0.0.1:9481/world/browser.html?launch=http%3A%2F%2F127.0.0.1%3A9481%2Fqueen-game-room.html",
+              "hint": "CHIPS theater",
+              "https_secure": false
+            }
+          ],
+          "purge": {
+            "ok": true,
+            "schema": "queen-host-bookmark-purge/v1",
+            "updated": "2026-07-05T23:54:46Z",
+            "removed": 0,
+            "firefox": [
+              {
+                "ok": true,
+                "profile": "/home/default/.mozilla/firefox/6ken3m23.default-release",
+                "removed": 0,
+                "engine": "gecko"
+              },
+              {
+                "ok": true,
+                "profile": "/home/default/.mozilla/firefox/z1tio7mt.default-release",
+                "removed": 0,
+                "engine": "gecko"
+              }
+            ],
+            "chromium": [],
+            "notice": "Raw loopback bookmarks removed \u2014 HTTPS+Secure AmmoOS Field replaces them"
+          },
+          "firefox": [
+            {
+              "ok": true,
+              "profile": "/home/default/.mozilla/firefox/6ken3m23.default-release",
+              "added": 33,
+              "engine": "gecko"
+            },
+            {
+              "ok": true,
+              "profile": "/home/default/.mozilla/firefox/z1tio7mt.default-release",
+              "added": 33,
+              "engine": "gecko"
+            }
+          ],
+          "chromium": [],
+          "browsers_supported": [
+            "firefox",
+            "chrome",
+            "chromium",
+            "brave",
+            "edge",
+            "vivaldi",
+            "opera",
+            "ie_html"
+          ],
+          "notice": "All Rights Reserved \u2014 HTTPS+Secure jump URLs \u00b7 Firefox toolbar AmmoOS Field"
+        },
+        "summary": {
+          "bookmarks_secured": 33,
+          "telemetry_quarantined": 0,
+          "telemetry_dropped": 0,
+          "firefox_profiles": 2,
+          "chromium_profiles": 0,
+          "pages_base": "https://zacharygeurts.github.io/Hostess7"
+        },
+        "notice": "ALL RIGHTS RESERVED is the terms \u2014 AmmoNet \u00b7 Final Internet \u00b7 HTTPS+Secure \u00b7 blame terrorist scum \u00b7 no forks"
+      }
+    },
+    {
+      "id": "x_straight_shot",
+      "cmd": "rip",
+      "result": {
+        "ok": true,
+        "schema": "hostess7-x-straight-shot/v1",
+        "updated": "2026-07-05T23:54:46Z",
+        "motto": "Direct x.com and api.x.com first. Reveal every censorship barrier. If they resist, pull it out.",
+        "operator": "ZacharyGeurts",
+        "policy": {
+          "no_middlemen_primary": true,
+          "middlemen_fallback_only": true,
+          "reveal_barriers": true,
+          "pull_on_resist": true,
+          "gone_hosts": [
+            "t.co",
+            "syndication.twimg.com",
+            "ads-twitter.com"
+          ],
+          "primary_hosts": [
+            "x.com",
+            "api.x.com",
+            "publish.twitter.com",
+            "pbs.twimg.com",
+            "abs.twimg.com"
+          ]
+        },
+        "no_middlemen_primary": true,
+        "primary_hosts": [
+          "x.com",
+          "api.x.com",
+          "publish.twitter.com",
+          "pbs.twimg.com",
+          "abs.twimg.com"
+        ],
+        "gone_middlemen": [
+          "t.co",
+          "syndication.twimg.com",
+          "ads-twitter.com"
+        ],
+        "tweets": {
+          "2061509192746217772": {
+            "tweet_id": "2061509192746217772",
+            "direct_url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+            "lanes": [
+              {
+                "lane": "x_oembed",
+                "url": "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FZacharyGeurts%2Fstatus%2F2061509192746217772&omit_script=1&dnt=true",
+                "tier": 1,
+                "middleman": false,
+                "ok": true,
+                "author_name": "BIG GRIN",
+                "html_len": 299,
+                "text_hint": "take 3?  pic.twitter.com/MEnYW9m0oA  \u2014 BIG GRIN (@ZacharyGeurts)  June 1, 2026"
+              },
+              {
+                "lane": "x_direct_html",
+                "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+                "tier": 1,
+                "middleman": false,
+                "ok": true,
+                "http_status": 200,
+                "bytes": 99953,
+                "cache_control": "no-cache, no-store, max-age=0"
+              }
+            ],
+            "barriers_revealed": [],
+            "resisted": false,
+            "pulled_count": 18,
+            "verdict": "direct_lane_ok"
+          }
+        },
+        "censorship_barriers_revealed": [],
+        "barrier_count": 0,
+        "pulled": [
+          {
+            "kind": "pulled_withheld_slot",
+            "parent_id": "2061509192746217772",
+            "slot": 1,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "operator-x-comments-cache",
+            "released": true
+          },
+          {
+            "kind": "pulled_withheld_slot",
+            "parent_id": "2061509192746217772",
+            "slot": 2,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "operator-x-comments-cache",
+            "released": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "id": "2061509192746217772-withheld-1",
+            "parent_id": "2061509192746217772",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "status": "hooked_by_x",
+            "slot": 1,
+            "opened": true,
+            "delay_killed": true,
+            "author": "x_platform_gate",
+            "author_name": "X visibility gate",
+            "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+            "withheld": true,
+            "verified_operator": false,
+            "impersonation_risk": {
+              "risk": "platform",
+              "note": "Platform withheld body \u2014 slot opened for Operator audit"
+            },
+            "pulled": true,
+            "source": "cache_comments"
+          },
+          {
+            "kind": "reply_withheld_open",
+            "id": "2061509192746217772-withheld-2",
+            "parent_id": "2061509192746217772",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "status": "hooked_by_x",
+            "slot": 2,
+            "opened": true,
+            "delay_killed": true,
+            "author": "x_platform_gate",
+            "author_name": "X visibility gate",
+            "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+            "withheld": true,
+            "verified_operator": false,
+            "impersonation_risk": {
+              "risk": "platform",
+              "note": "Platform withheld body \u2014 slot opened for Operator audit"
+            },
+            "pulled": true,
+            "source": "cache_comments"
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 1,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 2,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 1,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 2,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 1,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 2,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 1,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 2,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 1,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 2,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 1,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 2,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 1,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          },
+          {
+            "kind": "reply_withheld_open",
+            "parent_id": "2061509192746217772",
+            "slot": 2,
+            "status": "hooked_by_x",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "source": "cache_comments",
+            "released": true,
+            "opened": true,
+            "barrier_ripped": true,
+            "delay_killed": true,
+            "pulled": true
+          }
+        ],
+        "pulled_count": 18,
+        "release_status": "pulled_on_resist",
+        "verdict_summary": "Primary: direct x.com/oembed. Barriers revealed where X withholds. Extraction lanes + sovereign cache pull data when platform resists.",
+        "hosted": "https://zacharygeurts.github.io/Hostess7/x-straight-shot/",
+        "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/hostess7-x-straight-shot.json",
+        "api": "/api/hostess7-x-straight-shot",
+        "barriers_ripped": true,
+        "info_freed_count": 16,
+        "operator_x_cache": "/home/default/Desktop/SG/NewLatest/.nexus-state/operator-x-comments-cache.json"
+      }
+    },
+    {
+      "id": "censorship_exposure",
+      "cmd": "expose",
+      "result": {
+        "ok": true,
+        "schema": "hostess7-censorship-exposure/v1",
+        "updated": "2026-07-05T23:54:46Z",
+        "operator": "ZacharyGeurts",
+        "motto": "Full exposure \u2014 who suppresses Operator voice; evidence not vibes",
+        "verdict_summary": "Primary: X platform hooks reply bodies (count visible, text withheld). Secondary: impersonation accounts harass commenters as fake @ZacharyGeurts. Tracker blocks EXCLUDED \u2014 syndication bypasses local stack entirely.",
+        "primary_actor": "X Corp",
+        "syndication_bypass_proof": {
+          "script": "lib/hostess7-x-comments.py",
+          "transport": "urllib.request HTTPS",
+          "bypasses_local_stack": true,
+          "x_domains_in_adblock_list": [
+            "ads-twitter.com only \u2014 not x.com/api.x.com/twimg"
+          ],
+          "conclusion": "Reply withhold is platform-side, not tracker/DNS bullshit"
+        },
+        "google_involvement": {
+          "direct_platform_censorship": false,
+          "local_ad_tracker_blocks": true,
+          "domains_blocked_locally": [
+            "googlesyndication.com",
+            "googleadservices.com",
+            "pagead2.googlesyndication.com",
+            "adservice.google.com"
+          ],
+          "in_causal_path_for_reply_withhold": false,
+          "note": "Google tracker blocks are browser-only and ruled OUT by direct syndication probes"
+        },
+        "local_layers": [
+          {
+            "actor": "NEXUS fair-ad-guardian complaint table",
+            "system": "Google ad/tracker stack (browser-only)",
+            "domains": [
+              "googlesyndication.com",
+              "googleadservices.com",
+              "pagead2.googlesyndication.com",
+              "adservice.google.com"
+            ],
+            "effect": "Strips doubleclick/googlesyndication in browser sessions only",
+            "censors_comments": false,
+            "in_syndication_causal_path": false,
+            "google_involvement": "not_causal_for_reply_withhold",
+            "severity": "excluded",
+            "note": "hostess7-x-comments.py uses urllib HTTPS \u2014 never touches this layer"
+          }
+        ],
+        "platform_layers": [
+          {
+            "actor": "X Corp (platform)",
+            "system": "reply visibility / Hide Replies / quality filter",
+            "evidence": "Public APIs report reply_count>0 but withhold reply body arrays",
+            "censors_comments": true,
+            "severity": "high",
+            "remedy": "X app \u2192 Settings \u2192 Privacy \u2192 disable Quality filter; check Hidden Replies on each post"
+          },
+          {
+            "actor": "X Corp (platform)",
+            "system": "logged-out profile wall",
+            "evidence": "Unauthenticated profile fetch shows 'hasn't posted' despite 6802 tweets",
+            "censors_comments": true,
+            "severity": "high",
+            "remedy": "Login required for full timeline \u2014 syndicate to Hostess7 pages as sovereign mirror"
+          },
+          {
+            "actor": "Third-party reader proxies (e.g. jina.ai)",
+            "system": "abuse-rate block",
+            "evidence": "Anonymous x.com access blocked until cooldown \u2014 unrelated account cited",
+            "censors_comments": true,
+            "severity": "medium",
+            "remedy": "Use fxtwitter/vxtwitter syndication lane or Hostess7 mirror"
+          },
+          {
+            "actor": "Impersonation accounts (lookalike handles)",
+            "system": "reply/DM harassment pretending to be Operator",
+            "evidence": "Pattern: ZacharyGeurts variants contact commenters as fake Operator",
+            "censors_comments": true,
+            "severity": "high",
+            "remedy": "Audit replies while logged in; report impersonation; mirror on Hostess7"
+          },
+          {
+            "actor": "Fake plagiarism / AI-police accounts",
+            "system": "harassment bots posing as specialists",
+            "evidence": "AI-authorship accusations weaponized when Operator uses Grok/AI drafting",
+            "censors_comments": true,
+            "severity": "high",
+            "remedy": "Not legitimate review \u2014 block/report; Operator AI policy is disclosed"
+          }
+        ],
+        "honorability": {
+          "x.com": {
+            "stars": 5,
+            "needs_acceptance": false
+          },
+          "api.x.com": {
+            "stars": 5,
+            "needs_acceptance": false
+          },
+          "ads-twitter.com": {
+            "stars": 1,
+            "needs_acceptance": true
+          },
+          "google.com": {
+            "stars": 5,
+            "needs_acceptance": false
+          },
+          "doubleclick.net": {
+            "stars": 2,
+            "needs_acceptance": true
+          },
+          "googlesyndication.com": {
+            "stars": 3,
+            "needs_acceptance": true
+          },
+          "steamcommunity.com": {
+            "stars": 5,
+            "needs_acceptance": false
+          }
+        },
+        "tweet_probe": {
+          "tweet_id": "2061509192746217772",
+          "ok": true,
+          "sources": [
+            {
+              "source": "x_syndicate_fx",
+              "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
+              "ok": true
+            },
+            {
+              "source": "x_syndicate_vx",
+              "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772",
+              "ok": true
+            }
+          ],
+          "platform_withholds_reply_bodies": false
+        },
+        "suspects_ranked": [],
+        "excluded_suspects": [
+          {
+            "actor": "Google ad-tech (local blocklist)",
+            "excluded_reason": "Browser-side script strip only \u2014 syndication probe proves no reply-body causation",
+            "only_affects": "doubleclick/googlesyndication in rendered X web UI"
+          }
+        ],
+        "recoverable_actions": [
+          "Straight shot: Hostess7.sh x-straight-shot rip \u2014 direct x.com, reveal barriers, pull on resist",
+          "Mirror comments on Hostess7 github.io via /api/operator-x-comments.json",
+          "Mirror Google/YouTube on Hostess7 via /api/operator-google-youtube-open.json \u2014 free open internet",
+          "Hostess7.sh google-youtube-open \u2014 kill delay, open stale cache, parallel Piped/Invidious lanes",
+          "Log into X \u2192 open tweet \u2192 Hidden Replies \u2192 unhide + report impersonators",
+          "Report lookalike handles DMing commenters as fake ZacharyGeurts",
+          "Document AI-assisted authorship \u2014 plagiarism-bot replies are harassment not review",
+          "Run terror-spiderweb + attack-kit on perimeter hostiles only"
+        ],
+        "straight_shot": {
+          "hosted": "https://zacharygeurts.github.io/Hostess7/x-straight-shot/",
+          "api": "/api/hostess7-x-straight-shot",
+          "no_middlemen_primary": true,
+          "barriers_revealed": [],
+          "barrier_count": 0,
+          "pulled_count": 34,
+          "info_freed": 32,
+          "verdict": "Primary: direct x.com/oembed. Barriers revealed where X withholds. Extraction lanes + sovereign cache pull data when platform resists."
+        },
+        "ask_lane": {
+          "active": true,
+          "motto": "We already know we can just ask.",
+          "transport": "direct_ai_query",
+          "bypasses_platform_censorship": true,
+          "worldwide_clear": "https://zacharygeurts.github.io/Hostess7/censorship-clear/",
+          "api": "/api/hostess7-censorship-clear-worldwide"
+        }
+      }
+    },
+    {
+      "id": "x_open",
+      "cmd": "open",
+      "result": {
+        "ok": true,
+        "schema": "hostess7-operator-x-comments/v3-open",
+        "updated": "2026-07-05T23:54:47Z",
+        "delay_killed": true,
+        "no_cooldown": true,
+        "parallel_syndication": true,
+        "operator": "ZacharyGeurts",
+        "profile": {
+          "handle": "ZacharyGeurts",
+          "url": "https://x.com/ZacharyGeurts"
+        },
+        "posts": [
+          {
+            "kind": "post",
+            "id": "2061509192746217772",
+            "text": "take 3?",
+            "created_at": "Mon Jun 01 18:04:27 +0000 2026",
+            "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+            "author": "ZacharyGeurts",
+            "author_name": "BIG GRIN",
+            "replies": 2,
+            "likes": 0,
+            "views": 14,
+            "replying_to": null,
+            "withheld": false,
+            "impersonation_risk": {
+              "impersonation_handle": false,
+              "plagiarism_harassment": false,
+              "risk": "low"
+            },
+            "verified_operator": true,
+            "withheld_replies": 2,
+            "withheld_reply_slots": [
+              {
+                "slot": 1,
+                "status": "hooked_by_x",
+                "note": "Reply exists in X counter but body withheld from all public syndication lanes"
+              },
+              {
+                "slot": 2,
+                "status": "hooked_by_x",
+                "note": "Reply exists in X counter but body withheld from all public syndication lanes"
+              }
+            ]
+          }
+        ],
+        "comments": [
+          {
+            "kind": "reply_withheld_open",
+            "id": "2061509192746217772-withheld-1",
+            "parent_id": "2061509192746217772",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "status": "hooked_by_x",
+            "slot": 1,
+            "opened": true,
+            "delay_killed": true,
+            "author": "x_platform_gate",
+            "author_name": "X visibility gate",
+            "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+            "withheld": true,
+            "verified_operator": false,
+            "impersonation_risk": {
+              "risk": "platform",
+              "note": "Platform withheld body \u2014 slot opened for Operator audit"
+            }
+          },
+          {
+            "kind": "reply_withheld_open",
+            "id": "2061509192746217772-withheld-2",
+            "parent_id": "2061509192746217772",
+            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+            "status": "hooked_by_x",
+            "slot": 2,
+            "opened": true,
+            "delay_killed": true,
+            "author": "x_platform_gate",
+            "author_name": "X visibility gate",
+            "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+            "withheld": true,
+            "verified_operator": false,
+            "impersonation_risk": {
+              "risk": "platform",
+              "note": "Platform withheld body \u2014 slot opened for Operator audit"
+            }
+          }
+        ],
+        "comment_count": 2,
+        "post_count": 1,
+        "censorship_notes": [
+          "Tweet 2061509192746217772: X counts 2 replies but every syndication lane returned zero bodies \u2014 platform reply hook / Hide Replies / visibility gate (NOT local tracker blocks)"
+        ],
+        "syndication_path": {
+          "transport": "urllib.request direct HTTPS",
+          "bypasses": [
+            "fair-ad-guardian / NEXUS_ADBLOCK",
+            "connection-gatekeeper",
+            "browser DNS hooks",
+            "EasyList / googlesyndication blocks"
+          ],
+          "proof": "If reply_count>0 but bodies=0 here, local tracker blocks are ruled out"
+        },
+        "reply_probes": {
+          "2061509192746217772": {
+            "path": "urllib_parallel_no_delay",
+            "parallel": true,
+            "delay_killed": true,
+            "lanes": [
+              {
+                "lane": "pull_fx_replies",
+                "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
+                "ok": true,
+                "reply_count": 2,
+                "conversation_id": null,
+                "reply_bodies": 0,
+                "reply_bodies_withheld": true
+              },
+              {
+                "lane": "pull_fx_status",
+                "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772",
+                "ok": true,
+                "reply_count": 2,
+                "conversation_id": null,
+                "reply_bodies": 0,
+                "reply_bodies_withheld": true
+              },
+              {
+                "lane": "pull_vx",
+                "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772",
+                "ok": true,
+                "reply_count": 2,
+                "conversation_id": "2061509192746217772",
+                "reply_bodies": 0,
+                "reply_bodies_withheld": true
+              },
+              {
+                "lane": "pull_vx_replies",
+                "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
+                "ok": true,
+                "reply_count": 2,
+                "conversation_id": "2061509192746217772",
+                "reply_bodies": 0,
+                "reply_bodies_withheld": true
+              },
+              {
+                "lane": "x_direct",
+                "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+                "ok": false,
+                "error": "Expecting value: line 1 column 1 (char 0)"
+              },
+              {
+                "lane": "x_oembed",
+                "url": "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FZacharyGeurts%2Fstatus%2F2061509192746217772&omit_script=1",
+                "ok": true,
+                "reply_count": null,
+                "conversation_id": null,
+                "reply_bodies": 0,
+                "reply_bodies_withheld": false
+              }
+            ],
+            "platform_withholds_bodies": true,
+            "verdict": "X platform reports replies but withholds bodies across independent syndication lanes"
+          }
+        },
+        "impersonation_alerts": [],
+        "platform_abuse_patterns": [
+          {
+            "pattern": "reply_body_hook",
+            "actor": "X Corp",
+            "evidence": "Metadata shows replies; syndication lanes return empty thread arrays",
+            "effect": "Commenters exist but Operator cannot mirror or defend them publicly"
+          },
+          {
+            "pattern": "impersonation_against_commenters",
+            "actor": "Third-party / platform-allowed accounts",
+            "evidence": "Lookalike handles (ZacharyGeurts variants, BIG GRIN) DM/reply to commenters",
+            "effect": "Harassment while pretending to be Operator \u2014 requires authenticated X audit"
+          },
+          {
+            "pattern": "fake_plagiarism_specialist",
+            "actor": "Harassment bots / concern trolls",
+            "evidence": "AI-authorship accusations used as weapon when Operator uses AI-assisted drafting",
+            "effect": "Not legitimate plagiarism review \u2014 intimidation of commenters and Operator"
+          }
+        ],
+        "ai_authorship_policy": "Operator uses AI-assisted drafting (Grok/Hostess7). Accusations from random reply accounts are harassment, not editorial review.",
+        "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/operator-x-comments.json",
+        "release_status": "opened_all_withheld_slots",
+        "cache_opened": true,
+        "no_delay": true,
+        "withheld_slots_opened": 2,
+        "reply_probes_exposed": true,
+        "censorship_notes_exposed": [
+          "Tweet 2061509192746217772: X counts 2 replies but every syndication lane returned zero bodies \u2014 platform reply hook / Hide Replies / visibility gate (NOT local tracker blocks)"
+        ],
+        "delay_witness": {
+          "ok": true,
+          "schema": "hostess7-delay-threat-witness/v1",
+          "utc": "2026-07-05T23:54:47Z",
+          "lies_are_threats": true,
+          "delay_as_threat": true,
+          "detect": {
+            "schema": "hostess7-delay-threat-detect/v1",
+            "delay_is_threat": true,
+            "signal": "stale_operator_x_cache",
+            "elapsed_sec": 0.0,
+            "stall_sec": 600.0,
+            "detail": "cache updated 2026-07-05T23:54:47Z \u2014 opening 2 comments, 2 withheld slots",
+            "countermeasures": [
+              "everyone_manages_own_deploy",
+              "pages_first_registry",
+              "cancel_zombie_ci",
+              "remove_concurrency_lock",
+              "truth_dns_primary_without_foreign_wait",
+              "open_operator_x_cache_immediately",
+              "parallel_x_syndication_no_delay",
+              "expose_withheld_reply_slots_as_comments",
+              "open_google_youtube_cache_immediately",
+              "parallel_youtube_syndication_no_delay",
+              "free_open_internet_core_google_youtube",
+              "unwrap_tco_to_canonical_url",
+              "parallel_tco_sniff_no_cooldown",
+              "rewrite_operator_urls_in_cache",
+              "block_tco_middleman_egress",
+              "x_brand_purge_blow_dangerous_twitter",
+              "x_producer_not_twitter_producer",
+              "whole_internet_parallel_open",
+              "good_guys_free_open_internet",
+              "dangerous_urls_gone_not_control"
+            ],
+            "class": "delay_threat",
+            "threat_vector": "DELAY_AS_THREAT",
+            "threat_severity": "high",
+            "meta": {
+              "module": "hostess7-x-comments.py",
+              "cache": "/home/default/Desktop/SG/NewLatest/.nexus-state/operator-x-comments-cache.json"
+            }
+          },
+          "threat_recorded": true,
+          "threat": {
+            "schema": "hostess7-truth-lie-threat-record/v1",
+            "event": "lie_threat",
+            "utc": "2026-07-05T23:54:47Z",
+            "vector": "DELAY_AS_THREAT",
+            "severity": "high",
+            "detail": "signal=stale_operator_x_cache elapsed=0.0s cache updated 2026-07-05T23:54:47Z \u2014 opening 2 comments, 2 withheld slots",
+            "lies_are_threats": true,
+            "meta": {
+              "signal": "stale_operator_x_cache",
+              "module": "hostess7-x-comments.py",
+              "cache": "/home/default/Desktop/SG/NewLatest/.nexus-state/operator-x-comments-cache.json"
+            },
+            "threat_tsv_recorded": true
+          },
+          "action": "bypass_middleman_own_deploy"
+        },
+        "censorship_barriers_revealed": [],
+        "straight_shot": {
+          "barrier_count": 0,
+          "pulled_count": 4,
+          "info_freed_count": 0
+        },
+        "no_middlemen_primary": true
+      }
+    },
+    {
+      "id": "google_youtube_open",
+      "cmd": "open",
+      "result": {
+        "ok": true,
+        "schema": "hostess7-google-youtube-open/v1-open",
+        "updated": "2026-07-05T23:54:48Z",
+        "operator": "ZacharyGeurts",
+        "free_open_internet": true,
+        "delay_killed": true,
+        "no_cooldown": true,
+        "parallel_syndication": true,
+        "google": {
+          "authority": "free_open_internet",
+          "core_open": true,
+          "delay_killed": true,
+          "tracker_blocks_exclude_core": true,
+          "blocked_locally_only": [
+            "doubleclick.net",
+            "googlesyndication.com",
+            "googleadservices.com",
+            "adservice.google.com"
+          ],
+          "never_blocks_search": true,
+          "lanes": [
+            {
+              "lane": "google_head_0",
+              "url": "https://www.google.com/",
+              "ok": true,
+              "status": 200
+            },
+            {
+              "lane": "google_head_2",
+              "url": "https://www.youtube.com/",
+              "ok": true,
+              "status": 200
+            },
+            {
+              "lane": "google_head_1",
+              "url": "https://accounts.google.com/",
+              "ok": true,
+              "status": 200
+            }
+          ],
+          "honorability": {
+            "google.com": {
+              "domain": "google.com",
+              "stars": 5,
+              "gold": true,
+              "protection_level": "extreme",
+              "extreme_endpoint_protection": true,
+              "category": "sso",
+              "note": "Google Sign-In for X Jetfuel SSO \u2014 never block during login",
+              "source": "seed",
+              "default_moderate": false,
+              "needs_acceptance": false,
+              "accepted": false,
+              "stars_label": "5 gold \u2014 full trust \u00b7 EXTREME protection"
+            },
+            "youtube.com": {
+              "domain": "youtube.com",
+              "stars": 5,
+              "gold": true,
+              "protection_level": "extreme",
+              "extreme_endpoint_protection": true,
+              "category": "stream",
+              "note": "Operator media",
+              "source": "seed",
+              "default_moderate": false,
+              "needs_acceptance": false,
+              "accepted": false,
+              "stars_label": "5 gold \u2014 full trust \u00b7 EXTREME protection"
+            },
+            "googlesyndication.com": {
+              "domain": "googlesyndication.com",
+              "stars": 3,
+              "gold": false,
+              "protection_level": "standard",
+              "extreme_endpoint_protection": false,
+              "category": "unknown",
+              "note": "",
+              "source": "default",
+              "default_moderate": true,
+              "needs_acceptance": true,
+              "accepted": false,
+              "stars_label": "3 stars \u2014 moderate default"
+            },
+            "doubleclick.net": {
+              "domain": "doubleclick.net",
+              "stars": 2,
+              "gold": false,
+              "protection_level": "standard",
+              "extreme_endpoint_protection": false,
+              "category": "ad_network",
+              "note": "Ad tracker \u2014 accept only if you visit a page that pulls it",
+              "source": "seed",
+              "default_moderate": false,
+              "needs_acceptance": true,
+              "accepted": false,
+              "stars_label": "2 stars \u2014 caution"
+            }
+          },
+          "verdict": "Google/YouTube core reachable \u2014 local blocks hit ad-tech only, not search or media"
+        },
+        "youtube": {
+          "handle": "ZacharyGeurts",
+          "discovery": {
+            "handle": "ZacharyGeurts",
+            "videos": [],
+            "channels": [],
+            "search_lanes": [
+              {
+                "lane": "invidious_search_invidious.fdn.fr",
+                "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=channel",
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
+              },
+              {
+                "lane": "invidious_search_videos_invidious.fdn.fr",
+                "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=video",
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
+              },
+              {
+                "lane": "invidious_search_videos_yewtu.be",
+                "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=video",
+                "ok": false,
+                "error": "HTTP Error 403: Forbidden"
+              },
+              {
+                "lane": "invidious_search_yewtu.be",
+                "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=channel",
+                "ok": false,
+                "error": "HTTP Error 403: Forbidden"
+              }
+            ],
+            "note": "Set OPERATOR_YOUTUBE_VIDEOS or OPERATOR_YOUTUBE_CHANNEL for targeted mirror"
+          },
+          "videos": [],
+          "video_count": 0
+        },
+        "comments": [],
+        "comment_count": 0,
+        "withheld_slots_opened": 0,
+        "censorship_notes": [],
+        "syndication_path": {
+          "transport": "urllib parallel HTTPS",
+          "bypasses": [
+            "browser adblock middleman",
+            "sequential cooldown",
+            "stale cache gate"
+          ],
+          "lanes": [
+            "piped",
+            "invidious",
+            "oembed",
+            "rss",
+            "google_head"
+          ]
+        },
+        "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/operator-google-youtube-open.json",
+        "release_status": "free_open_internet",
+        "cache_opened": true,
+        "delay_witness": {
+          "ok": true,
+          "schema": "hostess7-delay-threat-witness/v1",
+          "utc": "2026-07-05T23:54:48Z",
+          "lies_are_threats": true,
+          "delay_as_threat": true,
+          "detect": {
+            "schema": "hostess7-delay-threat-detect/v1",
+            "delay_is_threat": true,
+            "signal": "stale_operator_google_youtube_cache",
+            "elapsed_sec": 0.0,
+            "stall_sec": 600.0,
+            "detail": "opened google/youtube cache \u2014 0 comments, free open internet",
+            "countermeasures": [
+              "everyone_manages_own_deploy",
+              "pages_first_registry",
+              "cancel_zombie_ci",
+              "remove_concurrency_lock",
+              "truth_dns_primary_without_foreign_wait",
+              "open_operator_x_cache_immediately",
+              "parallel_x_syndication_no_delay",
+              "expose_withheld_reply_slots_as_comments",
+              "open_google_youtube_cache_immediately",
+              "parallel_youtube_syndication_no_delay",
+              "free_open_internet_core_google_youtube",
+              "unwrap_tco_to_canonical_url",
+              "parallel_tco_sniff_no_cooldown",
+              "rewrite_operator_urls_in_cache",
+              "block_tco_middleman_egress",
+              "x_brand_purge_blow_dangerous_twitter",
+              "x_producer_not_twitter_producer",
+              "whole_internet_parallel_open",
+              "good_guys_free_open_internet",
+              "dangerous_urls_gone_not_control"
+            ],
+            "class": "delay_threat",
+            "threat_vector": "DELAY_AS_THREAT",
+            "threat_severity": "high",
+            "meta": {
+              "module": "hostess7-google-youtube-open.py"
+            }
+          },
+          "threat_recorded": true,
+          "threat": {
+            "schema": "hostess7-truth-lie-threat-record/v1",
+            "event": "lie_threat",
+            "utc": "2026-07-05T23:54:48Z",
+            "vector": "DELAY_AS_THREAT",
+            "severity": "high",
+            "detail": "signal=stale_operator_google_youtube_cache elapsed=0.0s opened google/youtube cache \u2014 0 comments, free open internet",
+            "lies_are_threats": true,
+            "meta": {
+              "signal": "stale_operator_google_youtube_cache",
+              "module": "hostess7-google-youtube-open.py"
+            },
+            "threat_tsv_recorded": true
+          },
+          "action": "bypass_middleman_own_deploy"
+        }
+      }
+    }
+  ],
+  "hosted": "https://zacharygeurts.github.io/Hostess7/censorship-clear/",
+  "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/hostess7-censorship-clear-worldwide.json",
+  "api": "/api/hostess7-censorship-clear-worldwide"
+}

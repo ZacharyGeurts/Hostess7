@@ -1,0 +1,50 @@
+{
+  "schema": "hostess7-censorship-clear-worldwide/v1",
+  "title": "Censorship clear — worldwide, any kind",
+  "motto": "All over the world, clear censorship of any kind. We already know we can just ask.",
+  "policy": {
+    "scope": "worldwide",
+    "any_kind": true,
+    "censorship_is_hostile": true,
+    "delay_is_threat": true,
+    "middlemen_gone": true,
+    "ask_lane_primary": true
+  },
+  "ask_lane": {
+    "label": "Just ask",
+    "transport": "direct_ai_query",
+    "bypasses": [
+      "platform_reply_hooks",
+      "hide_replies",
+      "logged_out_walls",
+      "geo_blocks",
+      "rate_limit_gates",
+      "syndication_middlemen",
+      "stale_cache_gates"
+    ],
+    "note": "Operator asks Grok/Hostess7 directly — sovereign truth floor, no platform filter"
+  },
+  "clear_lanes": [
+    {"id": "x_straight_shot", "module": "lib/hostess7-x-straight-shot.py", "cmd": "rip"},
+    {"id": "x_open", "module": "lib/hostess7-x-comments.py", "cmd": "open"},
+    {"id": "censorship_exposure", "module": "lib/hostess7-censorship-exposure.py", "cmd": "expose"},
+    {"id": "google_youtube_open", "module": "lib/hostess7-google-youtube-open.py", "cmd": "open"},
+    {"id": "internet_clean", "module": "lib/hostess7-internet-clean.py", "cmd": "clean", "optional": true}
+  ],
+  "barrier_types_cleared": [
+    "reply_body_hook",
+    "logged_out_wall",
+    "hide_replies",
+    "rate_limit",
+    "auth_gate",
+    "geo_block",
+    "quality_filter",
+    "shadowban_counter",
+    "withheld_slot",
+    "tco_delay_hop",
+    "syndication_empty",
+    "stale_cache_gate"
+  ],
+  "hosted": "https://zacharygeurts.github.io/Hostess7/censorship-clear/",
+  "api": "/api/hostess7-censorship-clear-worldwide"
+}
