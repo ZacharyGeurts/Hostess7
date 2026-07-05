@@ -1,0 +1,169 @@
+{
+  "ok": true,
+  "schema": "hostess7-x-straight-shot/v1",
+  "updated": "2026-07-05T23:52:26Z",
+  "motto": "Direct x.com and api.x.com first. Reveal every censorship barrier. If they resist, pull it out.",
+  "operator": "ZacharyGeurts",
+  "policy": {
+    "no_middlemen_primary": true,
+    "middlemen_fallback_only": true,
+    "reveal_barriers": true,
+    "pull_on_resist": true,
+    "gone_hosts": [
+      "t.co",
+      "syndication.twimg.com",
+      "ads-twitter.com"
+    ],
+    "primary_hosts": [
+      "x.com",
+      "api.x.com",
+      "publish.twitter.com",
+      "pbs.twimg.com",
+      "abs.twimg.com"
+    ]
+  },
+  "no_middlemen_primary": true,
+  "primary_hosts": [
+    "x.com",
+    "api.x.com",
+    "publish.twitter.com",
+    "pbs.twimg.com",
+    "abs.twimg.com"
+  ],
+  "gone_middlemen": [
+    "t.co",
+    "syndication.twimg.com",
+    "ads-twitter.com"
+  ],
+  "tweets": {
+    "2061509192746217772": {
+      "tweet_id": "2061509192746217772",
+      "direct_url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+      "lanes": [
+        {
+          "lane": "x_oembed",
+          "url": "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FZacharyGeurts%2Fstatus%2F2061509192746217772&omit_script=1&dnt=true",
+          "tier": 1,
+          "middleman": false,
+          "ok": true,
+          "author_name": "BIG GRIN",
+          "html_len": 299,
+          "text_hint": "take 3?  pic.twitter.com/MEnYW9m0oA  \u2014 BIG GRIN (@ZacharyGeurts)  June 1, 2026"
+        },
+        {
+          "lane": "x_direct_html",
+          "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+          "tier": 1,
+          "middleman": false,
+          "ok": true,
+          "http_status": 200,
+          "bytes": 99953,
+          "cache_control": "no-cache, no-store, max-age=0"
+        }
+      ],
+      "barriers_revealed": [],
+      "resisted": false,
+      "pulled_count": 6,
+      "verdict": "direct_lane_ok"
+    }
+  },
+  "censorship_barriers_revealed": [],
+  "barrier_count": 0,
+  "pulled": [
+    {
+      "kind": "pulled_withheld_slot",
+      "parent_id": "2061509192746217772",
+      "slot": 1,
+      "status": "hooked_by_x",
+      "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+      "source": "operator-x-comments-cache",
+      "released": true
+    },
+    {
+      "kind": "pulled_withheld_slot",
+      "parent_id": "2061509192746217772",
+      "slot": 2,
+      "status": "hooked_by_x",
+      "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+      "source": "operator-x-comments-cache",
+      "released": true
+    },
+    {
+      "kind": "reply_withheld_open",
+      "id": "2061509192746217772-withheld-1",
+      "parent_id": "2061509192746217772",
+      "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+      "status": "hooked_by_x",
+      "slot": 1,
+      "opened": true,
+      "delay_killed": true,
+      "author": "x_platform_gate",
+      "author_name": "X visibility gate",
+      "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+      "withheld": true,
+      "verified_operator": false,
+      "impersonation_risk": {
+        "risk": "platform",
+        "note": "Platform withheld body \u2014 slot opened for Operator audit"
+      },
+      "pulled": true,
+      "source": "cache_comments"
+    },
+    {
+      "kind": "reply_withheld_open",
+      "id": "2061509192746217772-withheld-2",
+      "parent_id": "2061509192746217772",
+      "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+      "status": "hooked_by_x",
+      "slot": 2,
+      "opened": true,
+      "delay_killed": true,
+      "author": "x_platform_gate",
+      "author_name": "X visibility gate",
+      "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
+      "withheld": true,
+      "verified_operator": false,
+      "impersonation_risk": {
+        "risk": "platform",
+        "note": "Platform withheld body \u2014 slot opened for Operator audit"
+      },
+      "pulled": true,
+      "source": "cache_comments"
+    },
+    {
+      "kind": "reply_withheld_open",
+      "parent_id": "2061509192746217772",
+      "slot": 1,
+      "status": "hooked_by_x",
+      "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+      "source": "cache_comments",
+      "released": true,
+      "opened": true,
+      "barrier_ripped": true,
+      "delay_killed": true,
+      "pulled": true
+    },
+    {
+      "kind": "reply_withheld_open",
+      "parent_id": "2061509192746217772",
+      "slot": 2,
+      "status": "hooked_by_x",
+      "text": "Reply exists in X counter but body withheld from all public syndication lanes",
+      "source": "cache_comments",
+      "released": true,
+      "opened": true,
+      "barrier_ripped": true,
+      "delay_killed": true,
+      "pulled": true
+    }
+  ],
+  "pulled_count": 6,
+  "release_status": "pulled_on_resist",
+  "verdict_summary": "Primary: direct x.com/oembed. Barriers revealed where X withholds. Extraction lanes + sovereign cache pull data when platform resists.",
+  "hosted": "https://zacharygeurts.github.io/Hostess7/x-straight-shot/",
+  "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/hostess7-x-straight-shot.json",
+  "api": "/api/hostess7-x-straight-shot",
+  "barriers_ripped": true,
+  "info_freed_count": 4,
+  "operator_x_cache": "/home/default/Desktop/SG/NewLatest/.nexus-state/operator-x-comments-cache.json"
+}

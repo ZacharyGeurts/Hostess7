@@ -3,34 +3,235 @@
   "default_stars": 3,
   "accept_below_stars": 5,
   "entries": [
-    {"domain": "x.com", "stars": 5, "category": "social", "note": "Operator social — browser egress permitted at full trust"},
-    {"domain": "twitter.com", "stars": 5, "category": "social", "note": "X/Twitter legacy domain"},
-    {"domain": "twimg.com", "stars": 5, "category": "cdn", "note": "X media CDN"},
-    {"domain": "api.x.com", "stars": 5, "category": "social_api", "note": "X GraphQL — replies and comments API lane"},
-    {"domain": "abs.twimg.com", "stars": 5, "category": "cdn", "note": "X comment and media asset CDN"},
-    {"domain": "pbs.twimg.com", "stars": 5, "category": "cdn", "note": "X profile and inline media CDN"},
-    {"domain": "steampowered.com", "stars": 5, "category": "gaming", "note": "Steam store and client — operator gaming lane"},
-    {"domain": "steamcommunity.com", "stars": 5, "category": "gaming", "note": "Steam discussions, guides, workshop — full trust"},
-    {"domain": "steamstatic.com", "stars": 5, "category": "cdn", "note": "Steam static assets CDN"},
-    {"domain": "steamcontent.com", "stars": 5, "category": "cdn", "note": "Steam content delivery"},
-    {"domain": "youtube.com", "stars": 5, "category": "stream", "note": "Operator media"},
-    {"domain": "googlevideo.com", "stars": 5, "category": "cdn", "note": "YouTube CDN"},
-    {"domain": "google.com", "stars": 5, "category": "search", "note": "Search and workspace"},
-    {"domain": "gstatic.com", "stars": 5, "category": "cdn", "note": "Google static"},
-    {"domain": "github.com", "stars": 5, "category": "dev", "note": "NEXUS source and releases"},
-    {"domain": "githubusercontent.com", "stars": 5, "category": "cdn", "note": "GitHub raw assets"},
-    {"domain": "wikipedia.org", "stars": 5, "category": "reference", "note": "Reference"},
-    {"domain": "mozilla.org", "stars": 5, "category": "engine", "note": "Gecko engine lineage — Queen Field Gecko backend (MPL 2.0)"},
-    {"domain": "ubuntu.com", "stars": 5, "category": "os", "note": "Host OS vendor"},
-    {"domain": "debian.org", "stars": 5, "category": "os", "note": "Host OS vendor"},
-    {"domain": "reddit.com", "stars": 4, "category": "social", "note": "Community — moderate-plus; accept on first visit"},
-    {"domain": "facebook.com", "stars": 4, "category": "social", "note": "Social — moderate-plus"},
-    {"domain": "instagram.com", "stars": 4, "category": "social", "note": "Meta social"},
-    {"domain": "tiktok.com", "stars": 3, "category": "social", "note": "Default moderate"},
-    {"domain": "doubleclick.net", "stars": 2, "category": "ad_network", "note": "Ad tracker — accept only if you visit a page that pulls it"},
-    {"domain": "ads-twitter.com", "stars": 2, "category": "ad_network", "note": "Third-party ad path"},
-    {"domain": "malware-traffic-analysis.net", "stars": 1, "category": "research_malware", "note": "Lab malware samples — explicit acceptance"},
-    {"domain": "pastebin.com", "stars": 2, "category": "paste", "note": "Paste sites often abused"},
-    {"domain": "torproject.org", "stars": 4, "category": "privacy", "note": "Privacy tool — moderate-plus"}
-  ]
+    {
+      "domain": "x.com",
+      "stars": 5,
+      "category": "social",
+      "note": "Operator social — browser egress permitted at full trust"
+    },
+    {
+      "domain": "twitter.com",
+      "stars": 4,
+      "category": "legacy_redirect",
+      "note": "Legacy redirect only — canonical X brand is x.com"
+    },
+    {
+      "domain": "twimg.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "X media CDN"
+    },
+    {
+      "domain": "api.x.com",
+      "stars": 5,
+      "category": "social_api",
+      "note": "X GraphQL — replies and comments API lane"
+    },
+    {
+      "domain": "t.co",
+      "stars": 2,
+      "category": "delay_shortener",
+      "note": "Blow hop — unwrap via tco-kill"
+    },
+    {
+      "domain": "abs.twimg.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "X comment and media asset CDN"
+    },
+    {
+      "domain": "pbs.twimg.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "X profile and inline media CDN"
+    },
+    {
+      "domain": "steampowered.com",
+      "stars": 5,
+      "category": "gaming",
+      "note": "Steam store and client — operator gaming lane"
+    },
+    {
+      "domain": "steamcommunity.com",
+      "stars": 5,
+      "category": "gaming",
+      "note": "Steam discussions, guides, workshop — full trust"
+    },
+    {
+      "domain": "steamstatic.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "Steam static assets CDN"
+    },
+    {
+      "domain": "steamcontent.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "Steam content delivery"
+    },
+    {
+      "domain": "youtube.com",
+      "stars": 5,
+      "category": "stream",
+      "note": "Operator media"
+    },
+    {
+      "domain": "googlevideo.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "YouTube CDN"
+    },
+    {
+      "domain": "google.com",
+      "stars": 5,
+      "category": "search",
+      "note": "Search and workspace"
+    },
+    {
+      "domain": "gstatic.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "Google static"
+    },
+    {
+      "domain": "accounts.google.com",
+      "stars": 5,
+      "category": "sso",
+      "note": "Google Sign-In for X Jetfuel SSO — never block during login"
+    },
+    {
+      "domain": "googleapis.com",
+      "stars": 5,
+      "category": "sso_api",
+      "note": "GSI client + OAuth token exchange for X SSO"
+    },
+    {
+      "domain": "ssl.gstatic.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "Google Sign-In static assets"
+    },
+    {
+      "domain": "www.gstatic.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "Google Sign-In button assets"
+    },
+    {
+      "domain": "github.com",
+      "stars": 5,
+      "category": "dev",
+      "note": "NEXUS source and releases"
+    },
+    {
+      "domain": "githubusercontent.com",
+      "stars": 5,
+      "category": "cdn",
+      "note": "GitHub raw assets"
+    },
+    {
+      "domain": "wikipedia.org",
+      "stars": 5,
+      "category": "reference",
+      "note": "Reference"
+    },
+    {
+      "domain": "mozilla.org",
+      "stars": 5,
+      "category": "engine",
+      "note": "Gecko engine lineage — Queen Field Gecko backend (MPL 2.0)"
+    },
+    {
+      "domain": "ubuntu.com",
+      "stars": 5,
+      "category": "os",
+      "note": "Host OS vendor"
+    },
+    {
+      "domain": "debian.org",
+      "stars": 5,
+      "category": "os",
+      "note": "Host OS vendor"
+    },
+    {
+      "domain": "reddit.com",
+      "stars": 4,
+      "category": "social",
+      "note": "Community — moderate-plus; accept on first visit"
+    },
+    {
+      "domain": "facebook.com",
+      "stars": 4,
+      "category": "social",
+      "note": "Social — moderate-plus"
+    },
+    {
+      "domain": "instagram.com",
+      "stars": 4,
+      "category": "social",
+      "note": "Meta social"
+    },
+    {
+      "domain": "tiktok.com",
+      "stars": 3,
+      "category": "social",
+      "note": "Default moderate"
+    },
+    {
+      "domain": "doubleclick.net",
+      "stars": 2,
+      "category": "ad_network",
+      "note": "Ad tracker — accept only if you visit a page that pulls it"
+    },
+    {
+      "domain": "ads-twitter.com",
+      "stars": 1,
+      "category": "dangerous_legacy",
+      "note": "Blow — Twitter ad path; block egress"
+    },
+    {
+      "domain": "syndication.twimg.com",
+      "stars": 2,
+      "category": "useless_legacy",
+      "note": "Broken/empty syndication — drop lane"
+    },
+    {
+      "domain": "periscope.tv",
+      "stars": 1,
+      "category": "dead_brand",
+      "note": "Periscope purged — X brand only"
+    },
+    {
+      "domain": "vine.co",
+      "stars": 1,
+      "category": "dead_brand",
+      "note": "Vine purged"
+    },
+    {
+      "domain": "malware-traffic-analysis.net",
+      "stars": 1,
+      "category": "research_malware",
+      "note": "Lab malware samples — explicit acceptance"
+    },
+    {
+      "domain": "pastebin.com",
+      "stars": 2,
+      "category": "paste",
+      "note": "Paste sites often abused"
+    },
+    {
+      "domain": "torproject.org",
+      "stars": 4,
+      "category": "privacy",
+      "note": "Privacy tool — moderate-plus"
+    },
+    {
+      "domain": "api.twitter.com",
+      "stars": 3,
+      "category": "legacy_api",
+      "note": "Use api.x.com — legacy hostname"
+    }
+  ],
+  "x_brand_purge": "2026-07-05T04:43:37Z",
+  "x_sso_fix": "2026-07-05T23:52:26Z"
 }

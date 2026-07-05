@@ -4540,6 +4540,51 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in (
+            "/api/hostess7/x-sso-fix",
+            "/api/hostess7-x-sso-fix",
+            "/api/x-sso-fix",
+            "/api/x-jetfuel-fix",
+        ):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            sso_py = INSTALL_ROOT / "lib" / "hostess7-x-sso-fix.py"
+            payload = None
+            if not refresh:
+                panel_path = STATE_DIR / "hostess7-x-sso-fix-panel.json"
+                if panel_path.is_file():
+                    try:
+                        payload = json.loads(panel_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError):
+                        payload = None
+            if payload is None or refresh:
+                args = ["repair"] if refresh else ["json"]
+                payload = _nexus_py_json(sso_py, args, timeout=45 if refresh else 12)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
+            "/api/hostess7/x-straight-shot",
+            "/api/hostess7-x-straight-shot",
+            "/api/x-straight-shot",
+            "/api/x-no-middlemen",
+        ):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            rip = str(query.get("rip", ["1"])[0]).strip().lower() in ("1", "true", "yes")
+            ss_py = INSTALL_ROOT / "lib" / "hostess7-x-straight-shot.py"
+            payload = None
+            if not refresh:
+                panel_path = STATE_DIR / "hostess7-x-straight-shot-panel.json"
+                if panel_path.is_file():
+                    try:
+                        payload = json.loads(panel_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError):
+                        payload = None
+            if payload is None or refresh:
+                args = ["rip"] if rip else ["run"]
+                payload = _nexus_py_json(ss_py, args, timeout=90 if refresh else 20)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
             "/api/hostess7/tco-kill",
             "/api/hostess7-tco-kill",
             "/api/operator-tco-kill",

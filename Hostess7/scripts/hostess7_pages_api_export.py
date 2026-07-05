@@ -169,6 +169,20 @@ def _export_ammodrive() -> list[str]:
     branding = h7_read_json(branding_path) if branding_path.is_file() else {}
     pairs: list[tuple[str, str, str, list[str], str]] = (
         (
+            "ammodrive-cloud.json",
+            "ammodrive-cloud.json",
+            "/api/ammodrive-cloud",
+            ["/api/field-ammodrive-cloud"],
+            "lib/ammodrive-cloud.py",
+        ),
+        (
+            "field-global-servers.json",
+            "field-global-servers.json",
+            "/api/field-global-servers",
+            ["/api/global-servers"],
+            "lib/field-global-servers.py",
+        ),
+        (
             "field-zachub-storage.json",
             "ammodrive-storage.json",
             "/api/ammodrive-storage",
@@ -238,10 +252,13 @@ def _export_ammodrive() -> list[str]:
         "desktop": "https://zacharygeurts.github.io/Hostess7/desktop/",
         "apis": {
             "public": "/api/ammodrive-public",
+            "cloud": "/api/ammodrive-cloud",
             "storage": "/api/ammodrive-storage",
             "qemu_racks": "/api/ammodrive-qemu-racks",
             "fork_guard": "/api/ammodrive-fork-guard",
         },
+        "the_new_cloud": True,
+        "protocol": "h7r/1",
         "api_aliases": branding.get("api_aliases") or [],
         "security": {
             "internet_isolated": bool(racks.get("internet_isolated", True)),
@@ -358,7 +375,13 @@ def _export_operator_x() -> None:
 
     env = {**os.environ, "HOSTESS7_ROOT": str(ROOT), "NEXUS_INSTALL_ROOT": str(ROOT.parent)}
     for script, args, out_name in (
-        ("hostess7-x-comments.py", ["syndicate"], "operator-x-comments.json"),
+        ("hostess7-x-comments.py", ["open"], "operator-x-comments.json"),
+        ("hostess7-x-straight-shot.py", ["rip"], "hostess7-x-straight-shot.json"),
+        ("hostess7-x-sso-fix.py", ["repair"], "hostess7-x-sso-fix.json"),
+        ("hostess7-field-status-update.py", ["build"], "hostess7-field-status-update.json"),
+        ("hostess7-google-youtube-open.py", ["open"], "operator-google-youtube-open.json"),
+        ("hostess7-google-youtube-open.py", ["open"], "operator-youtube-comments.json"),
+        ("hostess7-google-youtube-open.py", ["open"], "operator-google-open.json"),
         ("hostess7-censorship-exposure.py", ["expose"], "operator-censorship-exposure.json"),
     ):
         py = ROOT.parent / "lib" / script

@@ -1,0 +1,43 @@
+{
+  "schema": "hostess7-x-sso-fix-doctrine/v1",
+  "title": "X Jetfuel SSO — kill stuck empty modal div bullshit",
+  "motto": "Mr. Musk: blow the empty jf-element shell. Mask gone. Google SSO lanes stay open.",
+  "attribution": "Mr. Musk — X has a lot of useless shit laying around",
+  "broken_pattern": {
+    "url_path": "/i/jf/onboarding/web/sso",
+    "symptoms": [
+      "data-testid=mask overlay blocks page",
+      "role=dialog aria-modal with empty jetfuel-style-root",
+      "jf-element divs with slideUp keyframes but no SSO body",
+      "Google id_token in query but iframe never mounted"
+    ]
+  },
+  "sso_allow": [
+    {"host": "x.com", "paths": ["/i/jf/onboarding", "/i/flow/login", "/i/api"], "stars": 5},
+    {"host": "api.x.com", "paths": ["/1.1/onboarding", "/graphql"], "stars": 5},
+    {"host": "accounts.google.com", "note": "Google Sign-In for X SSO", "stars": 5},
+    {"host": "googleapis.com", "note": "GSI client + OAuth token exchange", "stars": 5},
+    {"host": "ssl.gstatic.com", "note": "Google Sign-In static assets", "stars": 5},
+    {"host": "www.gstatic.com", "note": "Google Sign-In button assets", "stars": 5}
+  ],
+  "never_block_during_sso": [
+    "accounts.google.com",
+    "googleapis.com",
+    "ssl.gstatic.com",
+    "www.gstatic.com",
+    "api.x.com",
+    "abs.twimg.com",
+    "pbs.twimg.com"
+  ],
+  "client_repair": {
+    "module": "Queen/world/queen-page-agent.js",
+    "action": "dismiss_empty_jetfuel_modal",
+    "fallback_login": "/i/flow/login"
+  },
+  "countermeasures": [
+    "hostess7-x-sso-fix.py",
+    "queen-page-agent x.com jetfuel guard",
+    "honorability SSO lane patch"
+  ],
+  "api": "/api/hostess7-x-sso-fix"
+}

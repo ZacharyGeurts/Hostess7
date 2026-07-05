@@ -1,0 +1,35 @@
+{
+  "schema": "hostess7-x-straight-shot-doctrine/v1",
+  "title": "X straight shot — no middlemen on content and data",
+  "motto": "Direct x.com and api.x.com first. Reveal every censorship barrier. If they resist, pull it out.",
+  "policy": {
+    "no_middlemen_primary": true,
+    "middlemen_fallback_only": true,
+    "reveal_barriers": true,
+    "pull_on_resist": true,
+    "gone_hosts": ["t.co", "syndication.twimg.com", "ads-twitter.com"],
+    "primary_hosts": ["x.com", "api.x.com", "publish.twitter.com", "pbs.twimg.com", "abs.twimg.com"]
+  },
+  "lanes": [
+    {"id": "x_direct_html", "url": "https://x.com/{handle}/status/{id}", "tier": 1, "middleman": false},
+    {"id": "x_oembed", "url": "https://publish.twitter.com/oembed?url=https://x.com/{handle}/status/{id}&omit_script=1", "tier": 1, "middleman": false},
+    {"id": "x_profile", "url": "https://x.com/{handle}", "tier": 1, "middleman": false},
+    {"id": "pull_fx", "url": "https://api.fxtwitter.com/{handle}/status/{id}/replies", "tier": 3, "middleman": true, "note": "extraction only when X resists"},
+    {"id": "pull_vx", "url": "https://api.vxtwitter.com/{handle}/status/{id}", "tier": 3, "middleman": true, "note": "extraction only when X resists"}
+  ],
+  "censorship_barriers": [
+    {"id": "reply_body_hook", "actor": "X Corp", "signal": "reply_count>0, bodies=0"},
+    {"id": "logged_out_wall", "actor": "X Corp", "signal": "profile empty when anonymous"},
+    {"id": "hide_replies", "actor": "X Corp", "signal": "conversation truncated"},
+    {"id": "rate_limit", "actor": "X Corp", "signal": "HTTP 429"},
+    {"id": "auth_gate", "actor": "X Corp", "signal": "HTTP 401/403 on api.x.com"}
+  ],
+  "countermeasures": [
+    "hostess7-x-straight-shot.py",
+    "hostess7-x-comments.py open_withheld_slots",
+    "hostess7-censorship-exposure.py",
+    "hostess7-x-sso-fix.py"
+  ],
+  "api": "/api/hostess7-x-straight-shot",
+  "hosted": "https://zacharygeurts.github.io/Hostess7/x-straight-shot/"
+}

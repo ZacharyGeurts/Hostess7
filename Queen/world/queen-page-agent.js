@@ -184,9 +184,62 @@
     scanRandomAdSlots();
   }
 
+  function isXHost() {
+    const h = state.host || "";
+    return h === "x.com" || h.endsWith(".x.com") || h === "twitter.com" || h.endsWith(".twitter.com");
+  }
+
+  function isXJetfuelSurface(el) {
+    if (!el || el.nodeType !== 1) return false;
+    return !!el.closest?.(
+      '[data-testid="mask"], [role="dialog"][aria-modal="true"], .jetfuel-style-root, .jf-element',
+    );
+  }
+
+  function xJetfuelSsoLooksEmpty(dialog) {
+    if (!dialog) return false;
+    const root = dialog.querySelector(".jetfuel-style-root, .jf-element");
+    if (!root) return false;
+    const interactive = dialog.querySelector(
+      "button, iframe, input, textarea, select, form, a[href], [data-testid]",
+    );
+    if (interactive) return false;
+    const text = (root.innerText || "").replace(/\s+/g, "").trim();
+    return text.length < 8;
+  }
+
+  function repairXJetfuelSsoModal() {
+    if (!isXHost()) return false;
+    const path = location.pathname || "";
+    const onSso =
+      path.includes("/i/jf/onboarding/web/sso") ||
+      (path.includes("/i/jf/onboarding") && location.search.includes("provider=google"));
+    if (!onSso) return false;
+    const mask = document.querySelector('[data-testid="mask"]');
+    const dialog = document.querySelector('[role="dialog"][aria-modal="true"]');
+    if (!mask && !dialog) return false;
+    if (dialog && !xJetfuelSsoLooksEmpty(dialog)) return false;
+    mask?.remove();
+    dialog?.remove();
+    document.documentElement.setAttribute("data-x-sso-repaired", "1");
+    document.body.style.removeProperty("overflow");
+    document.body.style.removeProperty("pointer-events");
+    const fallback = "/i/flow/login";
+    const key = "queen:x-sso-repair";
+    if (!sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, "1");
+      notifyParent({ type: "queen:x-sso", action: "repaired", fallback });
+      location.replace(fallback);
+      return true;
+    }
+    notifyParent({ type: "queen:x-sso", action: "dismissed_empty_modal" });
+    return true;
+  }
+
   function scanRandomAdSlots() {
     document.querySelectorAll("div, aside, section, ins").forEach((el) => {
       if (el.getAttribute("data-queen-shielded")) return;
+      if (isXHost() && isXJetfuelSurface(el)) return;
       const rect = el.getBoundingClientRect();
       if (rect.width < 40 || rect.height < 40) return;
       const classes = [...el.classList];
@@ -388,6 +441,11 @@
       .qpa-highlight{outline:2px solid #f472b6!important;outline-offset:2px!important;}
       .qpa-picker *{cursor:crosshair!important;}
       .qpa-picker .qpa-hover{outline:2px dashed #22c55e!important;outline-offset:1px!important;}
+      html[data-x-sso-repaired="1"] [data-testid="mask"],
+      html[data-x-sso-repaired="1"] [role="dialog"][aria-modal="true"]:has(.jetfuel-style-root:not(:has(button,iframe,input,form,a[href]))) {
+        display:none!important;pointer-events:none!important;opacity:0!important;
+      }
+      html[data-x-sso-repaired="1"] body{overflow:auto!important;pointer-events:auto!important;}
     `;
     document.documentElement.appendChild(st);
   }
@@ -465,9 +523,14 @@
     window.addEventListener("message", onMessage);
     const obs = new MutationObserver(() => {
       applyRulesLocal();
+      if (isXHost()) repairXJetfuelSsoModal();
     });
     obs.observe(document.documentElement, { childList: true, subtree: true });
     loadShields();
+    if (isXHost()) {
+      repairXJetfuelSsoModal();
+      window.setInterval(repairXJetfuelSsoModal, 1200);
+    }
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);

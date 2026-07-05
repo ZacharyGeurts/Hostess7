@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>X Jetfuel SSO Fix — Hostess7</title>
+  <meta name="description" content="Kill stuck empty X.com Google SSO modal divs. DNS/DHCP sovereign lane." />
+  <link rel="stylesheet" href="../assets/nexus-field-shell.css" />
+  <style>
+    body { margin: 0; background: #0a0a0a; color: #e8e8e8; font-family: system-ui, sans-serif; }
+    .wrap { max-width: 720px; margin: 2rem auto; padding: 0 1.25rem; }
+    h1 { font-size: 1.35rem; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; }
+    .verdict { color: #22c55e; font-weight: 600; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 1.25rem 0; }
+    .actions a, .actions button {
+      display: inline-block; padding: 10px 16px; border-radius: 8px;
+      border: 1px solid #333; background: #111; color: #e8e8e8; text-decoration: none;
+      cursor: pointer; font: inherit;
+    }
+    .actions a.primary, .actions button.primary { border-color: #22c55e; color: #22c55e; }
+    pre { background: #111; border: 1px solid #222; padding: 12px; overflow: auto; font-size: 12px; }
+    .meta { color: #888; font-size: 0.9rem; }
+  </style>
+  <script>
+    window.HOSTESS7_PAGES_BASE = "/Hostess7";
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>X Jetfuel SSO Fix</h1>
+    <p class="verdict" id="status">Arming repair…</p>
+    <p class="meta">Stuck <code>data-testid="mask"</code> + empty <code>jf-element</code> shell on Google SSO — dismissed, login restored.</p>
+    <div class="actions">
+      <a class="primary" id="go-login" href="https://x.com/i/flow/login" rel="noopener">Open X login (clean)</a>
+      <a id="go-x" href="https://x.com/ZacharyGeurts" rel="noopener">@ZacharyGeurts</a>
+      <button type="button" id="copy-bookmarklet">Copy bookmarklet</button>
+    </div>
+    <p><strong>Bookmarklet</strong> — run on x.com when modal blocks you:</p>
+    <pre id="bookmarklet"></pre>
+    <p class="meta">API: <a href="../api/hostess7-x-sso-fix.json">hostess7-x-sso-fix.json</a> · Queen page agent auto-fixes in browser shell.</p>
+  </div>
+  <script>
+    (function () {
+      var base = (window.HOSTESS7_PAGES_BASE || "").replace(/\/$/, "");
+      var scriptUrl = location.origin + base + "/assets/x-jetfuel-sso-fix.js";
+      var bm =
+        "javascript:(function(){var s=document.createElement('script');s.src='" +
+        scriptUrl +
+        "?t=" +
+        Date.now() +
+        "';document.documentElement.appendChild(s);})();";
+      document.getElementById("bookmarklet").textContent = bm;
+      document.getElementById("copy-bookmarklet").addEventListener("click", function () {
+        navigator.clipboard.writeText(bm).catch(function () {});
+      });
+      fetch(base + "/api/hostess7-x-sso-fix.json", { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          document.getElementById("status").textContent =
+            (d.motto || "Repair armed") + " · updated " + (d.updated || "");
+        })
+        .catch(function () {
+          document.getElementById("status").textContent = "Repair armed — static lane";
+        });
+      if (/x\.com|twitter\.com/.test(location.hostname)) {
+        var s = document.createElement("script");
+        s.src = scriptUrl;
+        document.documentElement.appendChild(s);
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -56,7 +56,11 @@ def _settings_override() -> dict[str, str]:
     path = STATE / "settings.override"
     if not path.is_file():
         return out
-    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+    try:
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return out
+    for line in lines:
         if "=" in line:
             k, v = line.split("=", 1)
             out[k.strip()] = v.strip()
@@ -87,9 +91,8 @@ def _adblock_hits() -> list[dict[str, Any]]:
 def _probe_tweet(tweet_id: str) -> dict[str, Any]:
     out: dict[str, Any] = {"tweet_id": tweet_id, "ok": False, "sources": []}
     for label, url in (
-        ("fxtwitter", f"https://api.fxtwitter.com/{HANDLE}/status/{tweet_id}/replies"),
-        ("vxtwitter", f"https://api.vxtwitter.com/{HANDLE}/status/{tweet_id}"),
-        ("syndication", f"https://cdn.syndication.twimg.com/timeline/profile.json?screen_name={HANDLE}"),
+        ("x_syndicate_fx", f"https://api.fxtwitter.com/{HANDLE}/status/{tweet_id}/replies"),
+        ("x_syndicate_vx", f"https://api.vxtwitter.com/{HANDLE}/status/{tweet_id}"),
     ):
         row: dict[str, Any] = {"source": label, "url": url, "ok": False}
         try:
@@ -228,6 +231,21 @@ def build_exposure(*, live: bool = True) -> dict[str, Any]:
 
     tweet_probe = _probe_tweet(PROBE_TWEET) if live else {"skipped": True}
 
+    straight_shot: dict[str, Any] = {}
+    barriers_revealed: list[dict[str, Any]] = []
+    py_ss = INSTALL / "lib" / "hostess7-x-straight-shot.py"
+    if live and py_ss.is_file():
+        try:
+            spec = importlib.util.spec_from_file_location("censorship_straight_shot", py_ss)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if hasattr(mod, "rip_barriers"):
+                    straight_shot = mod.rip_barriers(export=False)
+                    barriers_revealed = list(straight_shot.get("censorship_barriers_revealed") or [])
+        except Exception:
+            straight_shot = {"degraded": True}
+
     suspects: list[dict[str, Any]] = []
     if tweet_probe.get("platform_withholds_reply_bodies"):
         suspects.append({
@@ -304,12 +322,25 @@ def build_exposure(*, live: bool = True) -> dict[str, Any]:
         "suspects_ranked": suspects,
         "excluded_suspects": excluded,
         "recoverable_actions": [
+            "Straight shot: Hostess7.sh x-straight-shot rip — direct x.com, reveal barriers, pull on resist",
             "Mirror comments on Hostess7 github.io via /api/operator-x-comments.json",
+            "Mirror Google/YouTube on Hostess7 via /api/operator-google-youtube-open.json — free open internet",
+            "Hostess7.sh google-youtube-open — kill delay, open stale cache, parallel Piped/Invidious lanes",
             "Log into X → open tweet → Hidden Replies → unhide + report impersonators",
             "Report lookalike handles DMing commenters as fake ZacharyGeurts",
             "Document AI-assisted authorship — plagiarism-bot replies are harassment not review",
             "Run terror-spiderweb + attack-kit on perimeter hostiles only",
         ],
+        "straight_shot": {
+            "hosted": "https://zacharygeurts.github.io/Hostess7/x-straight-shot/",
+            "api": "/api/hostess7-x-straight-shot",
+            "no_middlemen_primary": True,
+            "barriers_revealed": barriers_revealed,
+            "barrier_count": len(barriers_revealed),
+            "pulled_count": straight_shot.get("pulled_count"),
+            "info_freed": straight_shot.get("info_freed_count") or straight_shot.get("barriers_ripped"),
+            "verdict": straight_shot.get("verdict_summary"),
+        },
     }
     return doc
 

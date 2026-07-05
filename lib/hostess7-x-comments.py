@@ -2,12 +2,14 @@
 """Operator X comments — syndicate recoverable posts/replies to Hostess7 pages."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import re
 import sys
 import urllib.error
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -17,7 +19,9 @@ STATE = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state"))
 DOCS_API = Path(os.environ.get("HOSTESS7_ROOT", INSTALL / "Hostess7")) / "docs" / "api"
 CACHE = STATE / "operator-x-comments-cache.json"
 HANDLE = os.environ.get("OPERATOR_X_HANDLE", "ZacharyGeurts")
-UA = "Hostess7-XComments/2.0"
+UA = "Hostess7-XComments/3.0"
+HTTP_TIMEOUT = int(os.environ.get("NEXUS_X_HTTP_TIMEOUT", "12"))
+NO_DELAY = os.environ.get("NEXUS_X_NO_DELAY", "1").strip().lower() not in ("0", "false", "no", "off")
 OPERATOR_ALIASES = frozenset({
     "zacharygeurts", "biggrin", "big_grin", "zachary_geurts", "zacharyrobertgeurts",
 })
@@ -31,10 +35,139 @@ def _now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _http_json(url: str) -> Any:
+def _http_json(url: str, *, timeout: int | None = None) -> Any:
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
-    with urllib.request.urlopen(req, timeout=20) as resp:
+    with urllib.request.urlopen(req, timeout=timeout or HTTP_TIMEOUT) as resp:
         return json.loads(resp.read().decode("utf-8", errors="replace"))
+
+
+def _load_cache() -> dict[str, Any]:
+    if not CACHE.is_file():
+        return {}
+    try:
+        return json.loads(CACHE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+        return {}
+
+
+def _witness_delay_kill(*, detail: str = "", signal: str = "stale_operator_x_cache") -> dict[str, Any]:
+    """Kill delay-as-threat on X cache — bypass middleman, open local truth now."""
+    py = INSTALL / "lib" / "hostess7-truth-lie-threat.py"
+    if not py.is_file():
+        return {"ok": True, "delay_killed": True, "skipped": "truth_lie_threat_missing"}
+    try:
+        spec = importlib.util.spec_from_file_location("x_delay_kill", py)
+        if not spec or not spec.loader:
+            return {"ok": True, "delay_killed": True}
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if hasattr(mod, "witness_delay_threat"):
+            return mod.witness_delay_threat(
+                signal=signal,
+                detail=detail or "operator-x-comments-cache opened — no cooldown, no stale gate",
+                elapsed_sec=0,
+                meta={"module": "hostess7-x-comments.py", "cache": str(CACHE)},
+            )
+    except Exception as exc:
+        return {"ok": True, "delay_killed": True, "degraded": str(exc)[:120]}
+    return {"ok": True, "delay_killed": True}
+
+
+def _open_withheld_as_comments(posts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Expose every withheld reply slot as a visible comment — nothing hidden behind delay."""
+    opened: list[dict[str, Any]] = []
+    for post in posts:
+        tid = str(post.get("id") or "")
+        for slot in post.get("withheld_reply_slots") or []:
+            if not isinstance(slot, dict):
+                continue
+            opened.append({
+                "kind": "reply_withheld_open",
+                "id": f"{tid}-withheld-{slot.get('slot', 0)}",
+                "parent_id": tid,
+                "text": str(slot.get("note") or "Reply body withheld by X platform"),
+                "status": slot.get("status") or "hooked_by_x",
+                "slot": slot.get("slot"),
+                "opened": True,
+                "delay_killed": True,
+                "author": "x_platform_gate",
+                "author_name": "X visibility gate",
+                "url": post.get("url"),
+                "withheld": True,
+                "verified_operator": False,
+                "impersonation_risk": {"risk": "platform", "note": "Platform withheld body — slot opened for Operator audit"},
+            })
+    return opened
+
+
+def _kill_tco_hops(doc: dict[str, Any]) -> dict[str, Any]:
+    py = INSTALL / "lib" / "hostess7-tco-kill.py"
+    if not py.is_file():
+        return {"ok": True, "skipped": "tco_kill_missing"}
+    try:
+        spec = importlib.util.spec_from_file_location("tco_kill", py)
+        if not spec or not spec.loader:
+            return {"ok": True, "skipped": "tco_kill_load"}
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if hasattr(mod, "kill_in_doc"):
+            return mod.kill_in_doc(doc)
+    except Exception as exc:
+        return {"ok": True, "degraded": str(exc)[:120]}
+    return {"ok": True, "skipped": "kill_in_doc_missing"}
+
+
+def open_cache(*, doc: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Open stale X cache — all posts, probes, censorship notes, withheld slots as visible comments."""
+    base = dict(doc or _load_cache())
+    if not base:
+        return {"ok": False, "error": "no_cache", "hint": "run syndicate or open first"}
+    posts = list(base.get("posts") or [])
+    comments = list(base.get("comments") or [])
+    withheld_open = _open_withheld_as_comments(posts)
+    seen = {str(c.get("id") or "") for c in comments}
+    for row in withheld_open:
+        cid = str(row.get("id") or "")
+        if cid and cid not in seen:
+            comments.append(row)
+            seen.add(cid)
+    delay_witness = _witness_delay_kill(
+        detail=f"cache updated {base.get('updated')} — opening {len(comments)} comments, {len(withheld_open)} withheld slots",
+    )
+    out = {
+        **base,
+        "ok": True,
+        "schema": "hostess7-operator-x-comments/v3-open",
+        "updated": _now(),
+        "cache_opened": True,
+        "delay_killed": True,
+        "no_delay": NO_DELAY,
+        "comments": comments,
+        "comment_count": len(comments),
+        "withheld_slots_opened": len(withheld_open),
+        "reply_probes_exposed": bool(base.get("reply_probes")),
+        "censorship_notes_exposed": list(base.get("censorship_notes") or []),
+        "delay_witness": delay_witness,
+        "release_status": "opened_all_withheld_slots" if withheld_open else base.get("release_status"),
+    }
+    tco = _kill_tco_hops(out)
+    if tco.get("tco_unwrapped"):
+        out["posts"] = tco.get("posts") or out.get("posts")
+        out["comments"] = tco.get("comments") or out.get("comments")
+        out["tco_kill"] = {
+            "tco_found": tco.get("tco_found"),
+            "tco_unwrapped": tco.get("tco_unwrapped"),
+            "mapping": tco.get("mapping"),
+            "sniff_median_ms": tco.get("sniff_median_ms"),
+            "witness": tco.get("witness"),
+        }
+    CACHE.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if DOCS_API.parent.is_dir():
+        DOCS_API.mkdir(parents=True, exist_ok=True)
+        (DOCS_API / "operator-x-comments.json").write_text(
+            json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+    return out
 
 
 def _norm_handle(h: str) -> str:
@@ -65,36 +198,83 @@ def _extract_thread(doc: dict[str, Any], tw: dict[str, Any]) -> list[dict[str, A
     return []
 
 
+def _url_gone(url: str) -> bool:
+    py = INSTALL / "lib" / "hostess7-url-kill.py"
+    if not py.is_file():
+        return False
+    try:
+        spec = importlib.util.spec_from_file_location("url_kill_gate", py)
+        if not spec or not spec.loader:
+            return False
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if hasattr(mod, "is_gone"):
+            return bool(mod.is_gone(url).get("gone"))
+    except Exception:
+        pass
+    return False
+
+
+def _probe_lane(label: str, url: str) -> dict[str, Any]:
+    row: dict[str, Any] = {"lane": label, "url": url, "ok": False}
+    if _url_gone(url):
+        row["gone"] = True
+        row["error"] = "url_killed"
+        return row
+    try:
+        doc = _http_json(url)
+        row["ok"] = True
+        tw = doc.get("tweet") or doc
+        if isinstance(tw, dict):
+            row["reply_count"] = tw.get("replies")
+            row["conversation_id"] = tw.get("conversationID") or tw.get("conversation_id_str")
+        thread = _extract_thread(doc, tw if isinstance(tw, dict) else {})
+        row["reply_bodies"] = len(thread)
+        row["reply_bodies_withheld"] = bool(
+            int((tw.get("replies") if isinstance(tw, dict) else 0) or 0) > 0 and not thread
+        )
+        if thread:
+            row["thread_sample"] = [
+                (t.get("text") or "")[:120] for t in thread[:3] if isinstance(t, dict)
+            ]
+    except (urllib.error.URLError, OSError, json.JSONDecodeError, TimeoutError) as exc:
+        row["error"] = str(exc)[:160]
+    return row
+
+
+def _reply_lane_urls(tid: str) -> list[tuple[str, str]]:
+    """Straight shot first — direct x.com/oembed; extraction middlemen only on resist."""
+    import urllib.parse
+
+    oembed_q = urllib.parse.urlencode({
+        "url": f"https://x.com/{HANDLE}/status/{tid}",
+        "omit_script": "1",
+    })
+    return [
+        ("x_direct", f"https://x.com/{HANDLE}/status/{tid}"),
+        ("x_oembed", f"https://publish.twitter.com/oembed?{oembed_q}"),
+        ("pull_fx_replies", f"https://api.fxtwitter.com/{HANDLE}/status/{tid}/replies"),
+        ("pull_fx_status", f"https://api.fxtwitter.com/{HANDLE}/status/{tid}"),
+        ("pull_vx", f"https://api.vxtwitter.com/{HANDLE}/status/{tid}"),
+        ("pull_vx_replies", f"https://api.vxtwitter.com/{HANDLE}/status/{tid}/replies"),
+    ]
+
+
 def _probe_reply_lanes(tid: str) -> dict[str, Any]:
-    """Direct urllib lane — bypasses browser, adblock, gatekeeper, DNS hooks on operator UI."""
+    """Parallel urllib lanes — no sequential delay, bypasses browser/adblock/gatekeeper."""
     lanes: list[dict[str, Any]] = []
-    for label, url in (
-        ("fxtwitter_replies", f"https://api.fxtwitter.com/{HANDLE}/status/{tid}/replies"),
-        ("fxtwitter_status", f"https://api.fxtwitter.com/{HANDLE}/status/{tid}"),
-        ("vxtwitter_status", f"https://api.vxtwitter.com/{HANDLE}/status/{tid}"),
-        ("vxtwitter_replies", f"https://api.vxtwitter.com/{HANDLE}/status/{tid}/replies"),
-        ("syndication_tweet", f"https://cdn.syndication.twimg.com/tweet-result?id={tid}&lang=en"),
-    ):
-        row: dict[str, Any] = {"lane": label, "url": url, "ok": False}
-        try:
-            doc = _http_json(url)
-            row["ok"] = True
-            tw = doc.get("tweet") or doc
-            if isinstance(tw, dict):
-                row["reply_count"] = tw.get("replies")
-                row["conversation_id"] = tw.get("conversationID") or tw.get("conversation_id_str")
-            thread = _extract_thread(doc, tw if isinstance(tw, dict) else {})
-            row["reply_bodies"] = len(thread)
-            row["reply_bodies_withheld"] = bool(
-                int((tw.get("replies") if isinstance(tw, dict) else 0) or 0) > 0 and not thread
-            )
-            lanes.append(row)
-        except (urllib.error.URLError, OSError, json.JSONDecodeError, TimeoutError) as exc:
-            row["error"] = str(exc)[:160]
-            lanes.append(row)
-    withheld = [l for l in lanes if l.get("reply_bodies_withheld")]
+    urls = _reply_lane_urls(tid)
+    workers = min(8, max(2, len(urls)))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futs = {pool.submit(_probe_lane, label, url): label for label, url in urls}
+        for fut in as_completed(futs):
+            lanes.append(fut.result())
+    lanes.sort(key=lambda r: r.get("lane") or "")
+    withheld = [lane for lane in lanes if lane.get("reply_bodies_withheld")]
     return {
-        "path": "urllib_direct_no_local_stack",
+        "path": "urllib_parallel_no_delay",
+        "parallel": True,
+        "delay_killed": NO_DELAY,
         "lanes": lanes,
         "platform_withholds_bodies": bool(withheld),
         "verdict": (
@@ -103,6 +283,25 @@ def _probe_reply_lanes(tid: str) -> dict[str, Any]:
             else "no_withhold_detected"
         ),
     }
+
+
+def _best_thread_from_probes(probe: dict[str, Any]) -> list[dict[str, Any]]:
+    best: list[dict[str, Any]] = []
+    for lane in probe.get("lanes") or []:
+        if not lane.get("ok"):
+            continue
+        label = str(lane.get("lane") or "")
+        if "repl" not in label and "syndication" not in label:
+            continue
+        try:
+            doc = _http_json(str(lane.get("url") or ""))
+            tw = doc.get("tweet") or doc
+            thread = _extract_thread(doc, tw if isinstance(tw, dict) else {})
+            if len(thread) > len(best):
+                best = thread
+        except (urllib.error.URLError, OSError, json.JSONDecodeError, TimeoutError):
+            continue
+    return best
 
 
 def _tweet_row(tw: dict[str, Any], *, kind: str = "post") -> dict[str, Any]:
@@ -131,7 +330,7 @@ def _tweet_row(tw: dict[str, Any], *, kind: str = "post") -> dict[str, Any]:
     }
 
 
-def syndicate(*, tweet_ids: list[str] | None = None) -> dict[str, Any]:
+def syndicate(*, tweet_ids: list[str] | None = None, open_all: bool = False) -> dict[str, Any]:
     ids = tweet_ids or []
     appearance = INSTALL / "data" / "hostess7-operator-appearance.json"
     if appearance.is_file():
@@ -166,6 +365,8 @@ def syndicate(*, tweet_ids: list[str] | None = None) -> dict[str, Any]:
     probe_by_tweet: dict[str, Any] = {}
     impersonation_alerts: list[dict[str, Any]] = []
 
+    _witness_delay_kill(detail="syndicate start — parallel lanes, no cooldown gate")
+
     for tid in ids[:12]:
         probe = _probe_reply_lanes(tid)
         probe_by_tweet[tid] = probe
@@ -175,6 +376,8 @@ def syndicate(*, tweet_ids: list[str] | None = None) -> dict[str, Any]:
             posts.append(_tweet_row(tw, kind="post"))
             rc = int(tw.get("replies") or 0)
             thread = _extract_thread(doc, tw if isinstance(tw, dict) else {})
+            if not thread:
+                thread = _best_thread_from_probes(probe)
             for item in thread:
                 row = _tweet_row(item, kind="reply")
                 comments.append(row)
@@ -204,15 +407,7 @@ def syndicate(*, tweet_ids: list[str] | None = None) -> dict[str, Any]:
         except (urllib.error.URLError, OSError, json.JSONDecodeError, TimeoutError) as exc:
             censorship_notes.append(f"Tweet {tid}: fetch failed — {exc}")
 
-    try:
-        tl = _http_json(f"https://cdn.syndication.twimg.com/timeline/profile.json?screen_name={HANDLE}")
-        timeline = tl.get("timeline") or []
-        if isinstance(timeline, list):
-            for item in timeline[:20]:
-                if isinstance(item, dict):
-                    posts.append(_tweet_row(item, kind="timeline"))
-    except (urllib.error.URLError, OSError, json.JSONDecodeError, TimeoutError):
-        pass
+    # syndication.twimg timeline dropped — useless legacy per X brand purge (Mr. Musk)
 
     seen: set[str] = set()
     deduped: list[dict[str, Any]] = []
@@ -225,8 +420,11 @@ def syndicate(*, tweet_ids: list[str] | None = None) -> dict[str, Any]:
 
     doc = {
         "ok": True,
-        "schema": "hostess7-operator-x-comments/v2",
+        "schema": "hostess7-operator-x-comments/v3",
         "updated": _now(),
+        "delay_killed": NO_DELAY,
+        "no_cooldown": True,
+        "parallel_syndication": True,
         "operator": HANDLE,
         "profile": profile,
         "posts": deduped,
@@ -283,15 +481,103 @@ def syndicate(*, tweet_ids: list[str] | None = None) -> dict[str, Any]:
         (DOCS_API / "operator-x-comments.json").write_text(
             json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
+    if open_all:
+        doc = open_cache(doc=doc)
+    _merge_straight_shot(doc)
     return doc
+
+
+def _merge_straight_shot(doc: dict[str, Any]) -> None:
+    """Rip censorship barriers — merge straight-shot pulled data into live doc."""
+    py = INSTALL / "lib" / "hostess7-x-straight-shot.py"
+    if not py.is_file():
+        return
+    try:
+        spec = importlib.util.spec_from_file_location("x_straight_shot", py)
+        if not spec or not spec.loader:
+            return
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if not hasattr(mod, "rip_barriers"):
+            return
+        shot = mod.rip_barriers(export=False)
+        pulled = shot.get("pulled") or []
+        comments = list(doc.get("comments") or [])
+        seen = {str(c.get("id") or "") for c in comments}
+        freed = 0
+        for row in pulled:
+            if row.get("kind") == "pulled_reply":
+                cid = f"{row.get('parent_id')}-ripped-{freed}"
+                if cid in seen:
+                    continue
+                comments.append({
+                    "kind": "reply_pulled",
+                    "id": cid,
+                    "parent_id": row.get("parent_id"),
+                    "text": row.get("text") or "",
+                    "author": row.get("author") or "unknown",
+                    "released": True,
+                    "barrier_ripped": True,
+                })
+                seen.add(cid)
+                freed += 1
+        doc["comments"] = comments
+        doc["comment_count"] = len(comments)
+        doc["censorship_barriers_revealed"] = shot.get("censorship_barriers_revealed")
+        doc["straight_shot"] = {
+            "barrier_count": shot.get("barrier_count"),
+            "pulled_count": shot.get("pulled_count"),
+            "info_freed_count": freed,
+        }
+        doc["no_middlemen_primary"] = True
+        if shot.get("barrier_count") or freed:
+            doc["release_status"] = "barriers_ripped_info_freed"
+        for note in shot.get("censorship_barriers_revealed") or []:
+            line = f"Barrier [{note.get('id')}]: tweet lane={note.get('lane')}"
+            notes = list(doc.get("censorship_notes") or [])
+            if line not in notes:
+                notes.append(line)
+            doc["censorship_notes"] = notes
+        if DOCS_API.parent.is_dir():
+            (DOCS_API / "hostess7-x-straight-shot.json").write_text(
+                json.dumps(shot, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+    except Exception:
+        pass
+
+
+def panel(*, refresh: bool = False) -> dict[str, Any]:
+    """Cache-first panel — instant open; refresh only when explicitly requested."""
+    if refresh:
+        return syndicate(open_all=True)
+    cached = _load_cache()
+    if cached:
+        return open_cache(doc=cached)
+    return syndicate(open_all=True)
 
 
 def main() -> int:
     cmd = (sys.argv[1] if len(sys.argv) > 1 else "json").strip().lower()
-    if cmd in ("json", "syndicate", "panel"):
-        print(json.dumps(syndicate(), ensure_ascii=False, indent=2))
+    refresh = "--refresh" in sys.argv or "--no-delay" in sys.argv
+    if cmd in ("open", "kill-delay", "unlock"):
+        print(json.dumps(syndicate(open_all=True), ensure_ascii=False, indent=2))
         return 0
-    print(json.dumps({"ok": False, "hint": "hostess7-x-comments.py [json|syndicate]"}, ensure_ascii=False))
+    if cmd == "syndicate":
+        print(json.dumps(syndicate(open_all="--open" in sys.argv), ensure_ascii=False, indent=2))
+        return 0
+    if cmd in ("json", "panel"):
+        print(json.dumps(panel(refresh=refresh), ensure_ascii=False, indent=2))
+        return 0
+    if cmd == "cache":
+        print(json.dumps(open_cache(), ensure_ascii=False, indent=2))
+        return 0
+    print(json.dumps({
+        "ok": False,
+        "hint": "hostess7-x-comments.py [json|open|syndicate|cache] [--refresh|--open]",
+        "cache": str(CACHE),
+        "delay_killed": NO_DELAY,
+    }, ensure_ascii=False))
     return 1
 
 

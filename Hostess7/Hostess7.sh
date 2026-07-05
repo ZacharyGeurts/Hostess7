@@ -1133,6 +1133,110 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-one-rollout.py" double "$@"
             ;;
+        field-double-total|field-double-total-no-repeat)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-one-rollout.py" double-total "$@"
+            ;;
+        field-botnet-rollout|field-botnet)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-one-rollout.py" botnet "$@"
+            ;;
+        field-botnet-double|field-botnet-double-until-complete)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-one-rollout.py" botnet-double "$@"
+            ;;
+        field-global-servers|global-servers|field-2500)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-global-servers.py" "${@:-json}"
+            ;;
+        ammodrive-rapid|storage-rapid|h7r-rapid)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/ammodrive-storage-rapid.py" distribute "$@"
+            ;;
+        field-h7r-stack|h7r-stack|h7r-full)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-h7r-stack.py" "${@:-distribute}"
+            ;;
+        field-h7r-all|h7r-all|h7r-distribute-all)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-h7r-stack.py" all "$@"
+            ;;
+        field-fleet-2500-protect|fleet-2500|fleet-protect|field-2500-protect)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-fleet-2500-protect.py" "${1:-protect}" "${@:2}"
+            ;;
+        field-ai-root-guard|ai-root-guard|ai-root-api-guard)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-ai-root-api-guard.py" "${1:-json}" "${@:2}"
+            ;;
+        field-server-root-login|root-login-hint|root-login|server-root-login)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-server-root-login.py" "${1:-json}" "${@:2}"
+            ;;
+        operator-x-open|x-comments-open|x-open|kill-x-delay)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-comments.py" open "$@"
+            ;;
+        tco-kill|kill-tco|tco-unwrap|rekill-tco)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-tco-kill.py" "${1:-kill}" "${@:2}"
+            ;;
+        x-brand-purge|purge-twitter|blow-twitter|x-producer|musk-x-purge)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-brand-purge.py" "${1:-purge}" "${@:2}"
+            ;;
+        x-sso-fix|fix-x-sso|kill-x-modal|x-jetfuel-fix|musk-x-sso)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-sso-fix.py" "${1:-repair}" "${@:2}"
+            ;;
+        x-straight-shot|straight-shot|rip-barriers|free-x-info|x-no-middlemen)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-straight-shot.py" "${1:-rip}" "${@:2}"
+            ;;
+        operator-x-comments|x-comments)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-comments.py" "${1:-json}" "${@:2}"
+            ;;
+        url-heuristics|steel-urls|heuristics-steel|meld-url-heuristics)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-url-heuristics-steel.py" "${1:-meld}" "${@:2}"
+            ;;
+        url-kill|kill-urls|gone-urls|dangerous-gone)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-url-kill.py" "${1:-kill}" "${@:2}"
+            ;;
+        whole-internet|good-guys-internet|internet-good-guys|whole-web|good-guys)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-whole-internet.py" "${1:-run}" "${@:2}"
+            ;;
+        field-watch-dhcp|dhcp-watch|watch-dhcp)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-watch-dhcp.py" "${1:-ensure}" "${@:2}"
+            ;;
+        big-grin-pwnership|pwnership|look-pwnership)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-big-grin-pwnership.py" "${1:-propagate}" "${@:2}"
+            ;;
+        never-down|field-never-down|instantiate|always-field-1)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-never-down.py" "${1:-instantiate}" "${@:2}"
+            ;;
+        fix-dns-dhcp|fix-dns|fix-dhcp|dns-dhcp-fix|fix-everywhere)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-dns-dhcp-fix.py" "${1:-fix}" "${@:2}"
+            ;;
+        root-status|field-root-status|motd|telnet-status)
+            shift
+            exec bash "${NEXUS_INSTALL_ROOT}/scripts/field-root-status.sh" "${1:-telnet}" "${@:2}"
+            ;;
+        kill-orphans|orphans)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/.nexus-state/kill-orphans-now.py" "${@:2}"
+            ;;
+        google-youtube-open|youtube-open|google-open|free-open-internet|internet-open)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-google-youtube-open.py" "${1:-open}" "${@:2}"
+            ;;
         team-sync|field-sync)
             shift
             exec pythong "$FIELD_ONE" sync "$@"
