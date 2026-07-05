@@ -9,7 +9,7 @@ UNIT_DST="/etc/systemd/system/${UNIT_NAME}"
 STATE_DIR="${NEXUS_STATE_DIR:-$ROOT/.nexus-state}"
 PY="${PYTHON:-python3}"
 
-log() { printf '[grok-spawner-kill] %s\n' "$*"; }
+log() { printf '[GrokSpawnKiller] %s\n' "$*"; }
 
 if ! echo "$PW" | sudo -S -v 2>/dev/null; then
   log "ERROR: sudo password required — set HOSTESS7_SUDO_PW or use mememe"

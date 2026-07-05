@@ -1,7 +1,10 @@
 {
   "schema": "field-grok-spawner-patterns/v1",
+  "product": "GrokSpawnKiller",
   "description": "Grok agent spawner signatures — instakill duplicates, orphans, and rogue harness sleepers",
-  "interval_ms": 250,
+  "motto": "Grok never Sleeps — instakill spawners, sudo mememe, zero grace.",
+  "never_sleeps": true,
+  "interval_ms": 100,
   "patterns": [
     {
       "id": "dump-bash-state",
@@ -25,8 +28,20 @@
     {
       "id": "grok-agent-inhibit",
       "match": "systemd-inhibit --what=idle --who=grok --why=agent",
-      "keep": 1,
-      "reason": "Grok agent turn inhibit sleeper spawner"
+      "keep": 0,
+      "reason": "Grok never Sleeps — instakill agent-turn systemd-inhibit spawner"
+    },
+    {
+      "id": "grok-never-sleeps-inhibit",
+      "match": "agent turn in progress sleep infinity",
+      "keep": 0,
+      "reason": "Grok never Sleeps — kill sleep infinity beside live harness"
+    },
+    {
+      "id": "grok-who-sleep-infinity",
+      "match": "--who=grok",
+      "keep": 0,
+      "reason": "Grok never Sleeps — rogue --who=grok idle/sleep spawner"
     },
     {
       "id": "grok-agent-serve",

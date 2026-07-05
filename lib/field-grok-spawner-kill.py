@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Grok agent spawner instakill — sudo mememe, lethal on rogue harness spawners."""
+"""GrokSpawnKiller — Grok never Sleeps; instakill rogue harness spawners (sudo mememe)."""
 from __future__ import annotations
 
 import json
@@ -167,7 +167,6 @@ def instakill(*, write: bool = True) -> dict[str, Any]:
         n = _instakill(pids, sudo_pw=pw)
         key = str(pat.get("id") or pat.get("match", ""))[:36]
         cooked[key] = n
-        all_pids.extend(pids)
         victims.append({"id": pat.get("id"), "pids": pids, "killed": n, "reason": pat.get("reason")})
 
     remaining: dict[str, int] = {}
@@ -183,8 +182,10 @@ def instakill(*, write: bool = True) -> dict[str, Any]:
     out = {
         "ok": True,
         "schema": "field-grok-spawner-kill/v1",
+        "product": doc.get("product", "GrokSpawnKiller"),
         "updated": _utc(),
-        "motto": "Instakill Grok agent spawners — sudo mememe, zero grace.",
+        "motto": doc.get("motto", "Grok never Sleeps — instakill spawners, sudo mememe, zero grace."),
+        "never_sleeps": bool(doc.get("never_sleeps", True)),
         "cooked": cooked,
         "cooked_total": sum(cooked.values()),
         "victims": victims[:24],
@@ -212,7 +213,8 @@ def instakill(*, write: bool = True) -> dict[str, Any]:
 
 def serve() -> int:
     doc = _load(PATTERNS, {})
-    interval_ms = max(50, int(doc.get("interval_ms", 250)))
+    base_ms = 100 if doc.get("never_sleeps") else 250
+    interval_ms = max(50, int(doc.get("interval_ms", base_ms)))
     while True:
         try:
             instakill(write=True)
