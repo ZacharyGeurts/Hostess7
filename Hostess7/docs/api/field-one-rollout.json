@@ -1,0 +1,454 @@
+{
+  "last_test": {
+    "ok": true,
+    "schema": "field-one-rollout-test/v1",
+    "updated": "2026-07-05T00:52:04Z",
+    "motto": "Test the most secure stack first \u00b7 roll 10 racks per wave \u00b7 double worldwide on green",
+    "security_score": 100,
+    "checks_passed": 7,
+    "checks_total": 7,
+    "checks": [
+      {
+        "id": "absorb_ok",
+        "ok": true,
+        "registry": 351,
+        "outside_absorbed": 351
+      },
+      {
+        "id": "universal_ingress",
+        "ok": true
+      },
+      {
+        "id": "quarantine_not_kill",
+        "ok": true
+      },
+      {
+        "id": "registry_floor",
+        "ok": true,
+        "count": 351,
+        "floor": 1
+      },
+      {
+        "id": "field_one_hub",
+        "ok": true,
+        "hub": "field-1"
+      },
+      {
+        "id": "wildcard_any_ip",
+        "ok": true
+      },
+      {
+        "id": "racks_internet_isolated",
+        "ok": true,
+        "rack_count": 16
+      }
+    ],
+    "absorb": {
+      "registry_devices": 351,
+      "wan_edges": 256,
+      "hub": {
+        "id": "field-1",
+        "label": "Field One",
+        "dns": [
+          "127.0.0.1",
+          "192.168.47.1"
+        ],
+        "dhcp": [
+          "192.168.47.1",
+          "0.0.0.0"
+        ],
+        "truth": "127.0.0.1",
+        "loopback": "127.0.0.1",
+        "queen_lan": "192.168.47.1",
+        "wildcard": "0.0.0.0/0",
+        "pages": "https://zacharygeurts.github.io/Hostess7/"
+      }
+    },
+    "ready_for_rollout": true,
+    "api": "/api/field-one-rollout/test"
+  },
+  "updated": "2026-07-05T00:52:05Z",
+  "wave": 1,
+  "deployed_total": 10,
+  "last_batch": 10,
+  "regions_live": [
+    "me-central",
+    "eu-west",
+    "ap-northeast",
+    "us-west",
+    "eu-central",
+    "sa-east",
+    "us-east",
+    "oc-pacific",
+    "af-south",
+    "ap-southeast"
+  ],
+  "last_rollout": {
+    "ok": true,
+    "schema": "field-one-rollout-wave/v1",
+    "updated": "2026-07-05T00:52:05Z",
+    "wave": 1,
+    "batch_size": 10,
+    "deployed_this_wave": 10,
+    "deployed_total": 10,
+    "dry_run": false,
+    "test_score": 100,
+    "regions": [
+      {
+        "slot": 0,
+        "region_id": "us-east",
+        "region_label": "US East",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      },
+      {
+        "slot": 1,
+        "region_id": "us-west",
+        "region_label": "US West",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      },
+      {
+        "slot": 2,
+        "region_id": "eu-west",
+        "region_label": "EU West",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      },
+      {
+        "slot": 3,
+        "region_id": "eu-central",
+        "region_label": "EU Central",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      },
+      {
+        "slot": 4,
+        "region_id": "ap-northeast",
+        "region_label": "AP Northeast",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      },
+      {
+        "slot": 5,
+        "region_id": "ap-southeast",
+        "region_label": "AP Southeast",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      },
+      {
+        "slot": 6,
+        "region_id": "sa-east",
+        "region_label": "SA East",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      },
+      {
+        "slot": 7,
+        "region_id": "af-south",
+        "region_label": "AF South",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      },
+      {
+        "slot": 8,
+        "region_id": "me-central",
+        "region_label": "ME Central",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      },
+      {
+        "slot": 9,
+        "region_id": "oc-pacific",
+        "region_label": "Oceania Pacific",
+        "wave": 1,
+        "field_one_sink": "field-1"
+      }
+    ],
+    "racks": [
+      {
+        "field_id": "qemu-rack-0",
+        "slot": 0,
+        "node_id": "qemu-world-0",
+        "primary_role": "dhcp",
+        "roles": [
+          "dhcp",
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-0/h7-shard/redundant-pool.json"
+        ]
+      },
+      {
+        "field_id": "qemu-rack-1",
+        "slot": 1,
+        "node_id": "qemu-world-1",
+        "primary_role": "dns",
+        "roles": [
+          "dns",
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-1/h7-shard/redundant-pool.json"
+        ]
+      },
+      {
+        "field_id": "qemu-rack-2",
+        "slot": 2,
+        "node_id": "qemu-world-2",
+        "primary_role": "edge",
+        "roles": [
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-2/h7-shard/redundant-pool.json"
+        ]
+      },
+      {
+        "field_id": "qemu-rack-3",
+        "slot": 3,
+        "node_id": "qemu-world-3",
+        "primary_role": "github_mirror_witness",
+        "roles": [
+          "github_mirror_witness",
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-3/h7-shard/redundant-pool.json"
+        ]
+      },
+      {
+        "field_id": "qemu-rack-4",
+        "slot": 4,
+        "node_id": "qemu-world-4",
+        "primary_role": "dhcp",
+        "roles": [
+          "dhcp",
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-4/h7-shard/redundant-pool.json"
+        ]
+      },
+      {
+        "field_id": "qemu-rack-5",
+        "slot": 5,
+        "node_id": "qemu-world-5",
+        "primary_role": "dns",
+        "roles": [
+          "dns",
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-5/h7-shard/redundant-pool.json"
+        ]
+      },
+      {
+        "field_id": "qemu-rack-6",
+        "slot": 6,
+        "node_id": "qemu-world-6",
+        "primary_role": "edge",
+        "roles": [
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-6/h7-shard/redundant-pool.json"
+        ]
+      },
+      {
+        "field_id": "qemu-rack-7",
+        "slot": 7,
+        "node_id": "qemu-world-7",
+        "primary_role": "github_mirror_witness",
+        "roles": [
+          "github_mirror_witness",
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-7/h7-shard/redundant-pool.json"
+        ]
+      },
+      {
+        "field_id": "qemu-rack-8",
+        "slot": 8,
+        "node_id": "qemu-world-8",
+        "primary_role": "dhcp",
+        "roles": [
+          "dhcp",
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-8/h7-shard/redundant-pool.json"
+        ]
+      },
+      {
+        "field_id": "qemu-rack-9",
+        "slot": 9,
+        "node_id": "qemu-world-9",
+        "primary_role": "dns",
+        "roles": [
+          "dns",
+          "edge",
+          "dns_relay",
+          "dhcp_relay",
+          "truth_mirror"
+        ],
+        "storage_root": "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9",
+        "gb_quota": 91,
+        "ok": true,
+        "created": [
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/nexus-field",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/h7-shard",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/edge",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/dns",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/dhcp",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/witness",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/zachub-github-truth",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/manifest.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/h7-shard/quota.json",
+          "/home/default/Desktop/SG/NewLatest/GrokLab/deploy/qemu-racks/qemu-rack-9/h7-shard/redundant-pool.json"
+        ]
+      }
+    ],
+    "motto": "Field 1 rolled out \u2014 test green, batch deployed, connections preserved",
+    "api": "/api/field-one-rollout"
+  },
+  "pages": true,
+  "lane": "github-mirror",
+  "exported": "2026-07-05T00:52:25Z"
+}

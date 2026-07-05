@@ -1,0 +1,38 @@
+{
+  "schema": "field-truth-keepalive/v1",
+  "title": "Truth keepalive — everything truthed, retruthed when not",
+  "motto": "Sole internet under Hostess7 — every surface rated; below floor → retruth until held.",
+  "boss": "hostess7",
+  "policy": {
+    "quarantine_not_kill": true,
+    "never_break_dhcp": true,
+    "soft_ingress": true,
+    "retruth_on_drift": true,
+    "max_retruth_passes": 2
+  },
+  "truth_floor_pct": 40,
+  "ironclad_floor_pct": 58,
+  "interval_sec_loopback": 90,
+  "interval_sec_pages": 300,
+  "surfaces": [
+    {"id": "field_one_absorb", "script": "lib/field-one.py", "args": ["absorb"], "floor": 40, "timeout": 150, "cache": "field-one-absorb-panel.json"},
+    {"id": "field_one_rollout_test", "script": "lib/field-one-rollout.py", "args": ["test"], "floor": 58, "timeout": 180, "cache": "field-one-rollout-panel.json"},
+    {"id": "rescue_ingress", "script": "lib/field-rescue-ingress.py", "args": ["clear-fakes"], "floor": 40, "timeout": 30},
+    {"id": "device_map", "script": "lib/field-device-map.py", "args": ["build"], "floor": 40},
+    {"id": "internet_unified", "script": "lib/field-internet-unified.py", "args": ["json"], "floor": 50, "timeout": 30, "cache": "field-internet-unified-panel.json"},
+    {"id": "botnet_keepalive", "script": "lib/field-botnet-dns-dhcp.py", "args": ["json"], "floor": 50, "timeout": 30, "cache": "field-botnet-dns-dhcp-panel.json"},
+    {"id": "ironclad_cycle", "script": "lib/ironclad-reality-field.py", "args": ["json"], "floor": 58, "timeout": 45, "cache": "ironclad-reality-field-panel.json"},
+    {"id": "endpoint_verify", "script": "lib/field-endpoint-registry.py", "args": ["verify"], "floor": 30, "timeout": 30},
+    {"id": "github_paths", "script": "lib/field-github-path-harden.py", "args": ["audit", "--quick"], "floor": 50, "timeout": 30},
+    {"id": "h7t_truth", "script": "lib/field-h7t-truth.py", "args": ["json"], "floor": 40, "timeout": 20, "cache": "field-h7t-truth-panel.json"},
+    {"id": "planetary_dns_dhcp", "script": "lib/field-planetary-dns-dhcp.py", "args": ["json"], "floor": 40, "timeout": 30, "cache": "field-planetary-dns-dhcp-panel.json"},
+    {"id": "dynamic_kick_trash", "script": "lib/field-dynamic-routes.py", "args": ["kick-trash"], "floor": 40, "timeout": 90},
+    {"id": "everyone_counter", "script": "lib/field-everyone-counter.py", "args": ["json"], "floor": 40}
+  ],
+  "retruth_hooks": [
+    {"when": "endpoint_verify", "ok_false": true, "script": "lib/field-endpoint-registry.py", "args": ["seed", "--append"]},
+    {"when": "endpoint_verify", "ok_false": true, "script": "scripts/propagate-pages-registry.sh", "args": []}
+  ],
+  "api": "/api/field-truth-keepalive",
+  "module": "lib/field-truth-keepalive.py"
+}

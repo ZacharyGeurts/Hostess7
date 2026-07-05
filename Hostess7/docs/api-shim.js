@@ -1118,6 +1118,48 @@
         return okStub({ schema: "ammonet-field/v1", product: "AmmoNet", pages: true });
       }
     }
+    if (path === "/api/field-one" || path === "/api/field-one/absorb" || path === "/api/field1") {
+      const name = path.endsWith("/absorb") ? "field-one-absorb.json" : "field-one.json";
+      try {
+        return jsonResponse(await loadStatic("/api/" + name));
+      } catch (_e) {
+        return okStub({
+          schema: "field-one/v1",
+          field_one: true,
+          universal_ingress: true,
+          outside_network_absorbed: true,
+          pages: true,
+          loopback_upgrade: LOOPBACK,
+        });
+      }
+    }
+    if (path === "/api/field-one-rollout" || path === "/api/field-one-rollout/test") {
+      const name = path.endsWith("/test") ? "field-one-rollout-test.json" : "field-one-rollout.json";
+      try {
+        return jsonResponse(await loadStatic("/api/" + name));
+      } catch (_e) {
+        return okStub({
+          schema: "field-one-rollout/v1",
+          ready_for_rollout: true,
+          pages: true,
+          loopback_upgrade: LOOPBACK,
+        });
+      }
+    }
+    if (path === "/api/field-sovereign-ipv4-enforce" || path === "/api/field-sovereign-ipv4") {
+      try {
+        return jsonResponse(await loadStatic("/api/field-sovereign-ipv4-enforce.json"));
+      } catch (_e) {
+        return okStub({ schema: "field-sovereign-ipv4-enforce/v1", field_one: true, pages: true });
+      }
+    }
+    if (path === "/api/field-rescue-ingress" || path === "/api/rescue-ingress") {
+      try {
+        return jsonResponse(await loadStatic("/api/field-rescue-ingress.json"));
+      } catch (_e) {
+        return okStub({ schema: "field-rescue-ingress/v1", ingress_policy: "quarantine_not_kill", pages: true });
+      }
+    }
     if (
       path === "/api/ammonet-dns-zones" ||
       path === "/api/ammonet/dns-zones" ||

@@ -182,10 +182,12 @@ else
   "${PY:-python3}" "${ROOT}/lib/grok-ai-lab.py" boot 2>/dev/null || true
 fi
 
-echo "=== Field 1 hostile scan (not Field 1 → hostile → bring) ==="
+echo "=== Field 1 universal ingress + security test ==="
+export NEXUS_FIELD_DHCP_FOREIGN_PROBE=0 NEXUS_FIELD_COLLISION_SOFT_INGRESS=1
+"${PY}" "${ROOT}/lib/field-one.py" absorb 2>/dev/null | tail -3 || true
 if [[ -f "${ROOT}/GrokLab/deploy/field-one-world-bring.sh" ]]; then
   export GROK_LAB_NODE_REGION=local GROK_LAB_NODE_ID=node-local
-  bash "${ROOT}/GrokLab/deploy/field-one-world-bring.sh" 2>/dev/null | tail -4 || true
+  bash "${ROOT}/GrokLab/deploy/field-one-world-bring.sh" test 2>/dev/null | tail -5 || true
 fi
 
 echo "=== sense package meld ==="

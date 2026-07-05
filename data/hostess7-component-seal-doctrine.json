@@ -497,6 +497,32 @@
       "api": "/api/field-botnet-legal-ports"
     },
     {
+      "id": "field_one",
+      "tier": "security",
+      "label": "Field 1 universal ingress",
+      "module": "lib/field-one.py",
+      "owned": true,
+      "api": "/api/field-one",
+      "doctrine": "data/field-one-doctrine.json"
+    },
+    {
+      "id": "field_one_rollout",
+      "tier": "security",
+      "label": "Field 1 worldwide rollout",
+      "module": "lib/field-one-rollout.py",
+      "owned": true,
+      "api": "/api/field-one-rollout",
+      "doctrine": "data/field-one-rollout-doctrine.json"
+    },
+    {
+      "id": "field_sovereign_ipv4",
+      "tier": "security",
+      "label": "Sole IPv4 DHCP/DNS enforce",
+      "module": "lib/field-sovereign-ipv4-enforce.py",
+      "owned": true,
+      "api": "/api/field-sovereign-ipv4-enforce"
+    },
+    {
       "id": "ammonet_dns",
       "tier": "security",
       "label": "AmmoNet DNS zones",

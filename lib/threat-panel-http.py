@@ -3528,6 +3528,29 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-one-rollout", "/api/field-one-rollout/test"):
+            cmd = "test" if path.endswith("/test") else "json"
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-one-rollout.py", [cmd], timeout=180)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-one-rollout/rollout",):
+            batch = str(query.get("batch", ["10"])[0])
+            args = ["rollout", batch] if batch.isdigit() else ["rollout"]
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-one-rollout.py", args, timeout=300)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-one-rollout/double",):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-one-rollout.py", ["double"], timeout=300)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-sovereign-ipv4-enforce", "/api/field-sovereign-ipv4"):
+            payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-sovereign-ipv4-enforce.py", ["enforce"], timeout=240)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
         if path in ("/api/field-rescue-ingress", "/api/rescue-ingress"):
             payload = _nexus_py_json(INSTALL_ROOT / "lib/field-rescue-ingress.py", ["rescue"], timeout=120)
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")

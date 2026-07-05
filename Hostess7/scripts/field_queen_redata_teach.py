@@ -92,6 +92,20 @@ BUILD_TOOLS: tuple[dict[str, str], ...] = (
         "role": "94% noise / 6% truth per segment",
     },
     {
+        "id": "field_one_absorb",
+        "title": "Field 1 universal absorb",
+        "summary": "Anything outside network routes to Field 1 — quarantine never kill",
+        "script": "NewLatest/lib/field-one.py",
+        "cmd": "./Hostess7.sh field-absorb",
+    },
+    {
+        "id": "field_one_rollout",
+        "title": "Field 1 rollout test + wave",
+        "summary": "Test secure stack, roll 10 racks, double worldwide",
+        "script": "NewLatest/lib/field-one-rollout.py",
+        "cmd": "./Hostess7.sh field-rollout-test",
+    },
+    {
         "id": "field_one_sync",
         "title": "Field 1 sync",
         "cmd": "./Hostess7.sh field sync",

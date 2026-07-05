@@ -45,9 +45,18 @@
     "lib/field-device-map.py",
     "lib/field-device-registry.py",
     "lib/field-sovereign-ipv4-enforce.py",
+    "lib/field-one-rollout.py",
+    "lib/field-zachub-qemu-racks.py",
     "lib/field-dns-dhcp-collision-guard.py",
     "lib/ammonet-dns-zones.py"
   ],
+  "rollout": {
+    "module": "lib/field-one-rollout.py",
+    "doctrine": "data/field-one-rollout-doctrine.json",
+    "api": "/api/field-one-rollout",
+    "batch_size": 10,
+    "double_worldwide": true
+  },
   "module": "lib/field-one.py",
   "api": "/api/field-one",
   "ironclad_cite": "ironclad:field-one:1"

@@ -1,0 +1,33 @@
+{
+  "schema": "field-one-rollout-doctrine/v1",
+  "title": "Field 1 worldwide rollout — test, 10 at a time, double around the world",
+  "boss": "hostess7",
+  "motto": "Test the most secure stack first · roll 10 racks per wave · double worldwide on green",
+  "policy": {
+    "test_before_rollout": true,
+    "quarantine_not_kill": true,
+    "preserve_live_connections": true,
+    "internet_isolated_racks": true,
+    "batch_size": 10,
+    "double_on_success": true,
+    "max_slots_per_wave": 64,
+    "field_one_stack_required": true
+  },
+  "security_gates": {
+    "min_registry_devices": 1,
+    "require_universal_ingress": true,
+    "require_wildcard_any_ip": true,
+    "require_field_one_hub": true,
+    "require_internet_isolated": true
+  },
+  "world_regions": "GrokLab/deploy/world-node-regions.json",
+  "module": "lib/field-one-rollout.py",
+  "api": "/api/field-one-rollout",
+  "wires": [
+    "lib/field-one.py",
+    "lib/field-zachub-qemu-racks.py",
+    "lib/field-sovereign-ipv4-enforce.py",
+    "lib/grok-lab-world.py"
+  ],
+  "ironclad_cite": "ironclad:field-one-rollout:1"
+}

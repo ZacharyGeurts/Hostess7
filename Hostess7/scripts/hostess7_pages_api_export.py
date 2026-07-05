@@ -295,6 +295,46 @@ def _export_ammonet_dns() -> list[str]:
     return files
 
 
+def _export_field_one() -> list[str]:
+    files: list[str] = []
+    state = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state"))
+    pairs = (
+        ("field-one-absorb-panel.json", "field-one-absorb.json", "lib/field-one.py", ["absorb"]),
+        ("field-one-rollout-panel.json", "field-one-rollout.json", "lib/field-one-rollout.py", ["json"]),
+        ("field-sovereign-ipv4-enforce-panel.json", "field-sovereign-ipv4-enforce.json", None, None),
+        ("field-rescue-ingress-panel.json", "field-rescue-ingress.json", None, None),
+    )
+    for src_name, dst_name, script_rel, args in pairs:
+        doc: dict[str, Any] = {}
+        src = state / src_name
+        if src.is_file():
+            try:
+                doc = h7_read_json(src)
+            except Exception:
+                doc = {}
+        if not doc and script_rel and args:
+            doc = _run_install_json(script_rel, args, timeout=120)
+        if not doc:
+            continue
+        doc["pages"] = True
+        doc["lane"] = "github-mirror"
+        doc["exported"] = _ts()
+        files.append(_write(dst_name, doc).name)
+    test_doc = _run_install_json("lib/field-one-rollout.py", ["test"], timeout=60)
+    if test_doc:
+        test_doc["pages"] = True
+        test_doc["lane"] = "github-mirror"
+        test_doc["exported"] = _ts()
+        files.append(_write("field-one-rollout-test.json", test_doc).name)
+    one_json = _run_install_json("lib/field-one.py", ["json"], timeout=30)
+    if one_json:
+        one_json["pages"] = True
+        one_json["lane"] = "github-mirror"
+        one_json["exported"] = _ts()
+        files.append(_write("field-one.json", one_json).name)
+    return files
+
+
 def _export_truth_keepalive() -> list[str]:
     files: list[str] = []
     panel_path = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state")) / "field-truth-keepalive-panel.json"
@@ -356,6 +396,7 @@ def export_all(*, full: bool = True) -> dict[str, Any]:
         files.append(_write("ask-seeds.json", _export_ask_seeds()).name)
     files.extend(_export_ammodrive())
     files.extend(_export_ammonet_dns())
+    files.extend(_export_field_one())
     files.extend(_export_truth_keepalive())
     total = sum((API / f).stat().st_size for f in files if (API / f).is_file())
     return {"ok": True, "lane": "github-mirror", "api_dir": str(API), "files": files, "bytes": total, "exported": _ts()}

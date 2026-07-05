@@ -1117,6 +1117,22 @@ print('OK warfare-expand')
             shift
             exec pythong "$FIELD_ONE" "${@:-json}"
             ;;
+        field-absorb|field-one-absorb)
+            shift
+            exec pythong "$FIELD_ONE" absorb "$@"
+            ;;
+        field-rollout|field-one-rollout)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-one-rollout.py" "${@:-json}"
+            ;;
+        field-rollout-test)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-one-rollout.py" test "$@"
+            ;;
+        field-double|field-double-worldwide)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-one-rollout.py" double "$@"
+            ;;
         team-sync|field-sync)
             shift
             exec pythong "$FIELD_ONE" sync "$@"

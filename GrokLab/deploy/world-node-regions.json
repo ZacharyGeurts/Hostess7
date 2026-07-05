@@ -1,87 +1,25 @@
 {
-  "schema": "grok-lab-world-node-regions/v1",
-  "updated": "2026-07-01",
-  "target_geographic_nodes": 57,
-  "batch_size": 3,
-  "qemu_concurrent_slots": 6,
-  "motto": "Fifty-seven sovereign field nodes — six QEMU slots spin the global perimeter",
-  "ssh_port_base": 2222,
+  "schema": "grok-lab-world-regions/v1",
+  "title": "Worldwide Field 1 rollout regions",
   "tunnel_port_base": 19477,
-  "nodes": [
-    {"id": "node-qemu-us-phoenix", "region": "us-phoenix-1", "geo": "Americas", "city": "Phoenix", "batch": 1, "mem_mb": 1536},
-    {"id": "node-qemu-eu-frankfurt", "region": "eu-frankfurt-1", "geo": "Europe", "city": "Frankfurt", "batch": 1, "mem_mb": 1536},
-    {"id": "node-qemu-ap-tokyo", "region": "ap-tokyo-1", "geo": "Asia-Pacific", "city": "Tokyo", "batch": 1, "mem_mb": 1536},
-
-    {"id": "node-qemu-ap-sydney", "region": "ap-sydney-1", "geo": "Asia-Pacific", "city": "Sydney", "batch": 2, "mem_mb": 1024},
-    {"id": "node-qemu-sa-saopaulo", "region": "sa-saopaulo-1", "geo": "Americas", "city": "São Paulo", "batch": 2, "mem_mb": 1024},
-    {"id": "node-qemu-ap-mumbai", "region": "ap-mumbai-1", "geo": "Asia-Pacific", "city": "Mumbai", "batch": 2, "mem_mb": 1024},
-
-    {"id": "node-qemu-uk-london", "region": "uk-london-1", "geo": "Europe", "city": "London", "batch": 3, "mem_mb": 1024},
-    {"id": "node-qemu-ca-montreal", "region": "ca-montreal-1", "geo": "Americas", "city": "Montreal", "batch": 3, "mem_mb": 1024},
-    {"id": "node-qemu-us-ashburn", "region": "us-ashburn-1", "geo": "Americas", "city": "Ashburn", "batch": 3, "mem_mb": 1024},
-
-    {"id": "node-qemu-ap-seoul", "region": "ap-seoul-1", "geo": "Asia-Pacific", "city": "Seoul", "batch": 4, "mem_mb": 1024},
-    {"id": "node-qemu-us-dallas", "region": "us-dallas-1", "geo": "Americas", "city": "Dallas", "batch": 4, "mem_mb": 1024},
-    {"id": "node-qemu-us-seattle", "region": "us-seattle-1", "geo": "Americas", "city": "Seattle", "batch": 4, "mem_mb": 1024},
-
-    {"id": "node-qemu-us-atlanta", "region": "us-atlanta-1", "geo": "Americas", "city": "Atlanta", "batch": 5, "mem_mb": 1024},
-    {"id": "node-qemu-mx-monterrey", "region": "mx-monterrey-1", "geo": "Americas", "city": "Monterrey", "batch": 5, "mem_mb": 1024},
-    {"id": "node-qemu-ca-toronto", "region": "ca-toronto-1", "geo": "Americas", "city": "Toronto", "batch": 5, "mem_mb": 1024},
-
-    {"id": "node-qemu-eu-amsterdam", "region": "eu-amsterdam-1", "geo": "Europe", "city": "Amsterdam", "batch": 6, "mem_mb": 1024},
-    {"id": "node-qemu-eu-paris", "region": "eu-paris-1", "geo": "Europe", "city": "Paris", "batch": 6, "mem_mb": 1024},
-    {"id": "node-qemu-eu-madrid", "region": "eu-madrid-1", "geo": "Europe", "city": "Madrid", "batch": 6, "mem_mb": 1024},
-
-    {"id": "node-qemu-eu-stockholm", "region": "eu-stockholm-1", "geo": "Europe", "city": "Stockholm", "batch": 7, "mem_mb": 1024},
-    {"id": "node-qemu-eu-milan", "region": "eu-milan-1", "geo": "Europe", "city": "Milan", "batch": 7, "mem_mb": 1024},
-    {"id": "node-qemu-me-dubai", "region": "me-dubai-1", "geo": "Middle East", "city": "Dubai", "batch": 7, "mem_mb": 1024},
-
-    {"id": "node-qemu-me-riyadh", "region": "me-riyadh-1", "geo": "Middle East", "city": "Riyadh", "batch": 8, "mem_mb": 1024},
-    {"id": "node-qemu-af-johannesburg", "region": "af-johannesburg-1", "geo": "Africa", "city": "Johannesburg", "batch": 8, "mem_mb": 1024},
-    {"id": "node-qemu-af-cairo", "region": "af-cairo-1", "geo": "Africa", "city": "Cairo", "batch": 8, "mem_mb": 1024},
-
-    {"id": "node-qemu-ap-singapore", "region": "ap-singapore-1", "geo": "Asia-Pacific", "city": "Singapore", "batch": 9, "mem_mb": 1024},
-    {"id": "node-qemu-ap-osaka", "region": "ap-osaka-1", "geo": "Asia-Pacific", "city": "Osaka", "batch": 9, "mem_mb": 1024},
-    {"id": "node-qemu-ap-hongkong", "region": "ap-hongkong-1", "geo": "Asia-Pacific", "city": "Hong Kong", "batch": 9, "mem_mb": 1024},
-
-    {"id": "node-qemu-ap-jakarta", "region": "ap-jakarta-1", "geo": "Asia-Pacific", "city": "Jakarta", "batch": 10, "mem_mb": 1024},
-    {"id": "node-qemu-ap-taipei", "region": "ap-taipei-1", "geo": "Asia-Pacific", "city": "Taipei", "batch": 10, "mem_mb": 1024},
-    {"id": "node-qemu-nz-auckland", "region": "nz-auckland-1", "geo": "Oceania", "city": "Auckland", "batch": 10, "mem_mb": 1024},
-
-    {"id": "node-qemu-us-austin", "region": "us-austin-1", "geo": "Americas", "city": "Austin", "batch": 11, "mem_mb": 1024},
-    {"id": "node-qemu-us-chicago", "region": "us-chicago-1", "geo": "Americas", "city": "Chicago", "batch": 11, "mem_mb": 1024},
-    {"id": "node-qemu-us-denver", "region": "us-denver-1", "geo": "Americas", "city": "Denver", "batch": 11, "mem_mb": 1024},
-
-    {"id": "node-qemu-us-miami", "region": "us-miami-1", "geo": "Americas", "city": "Miami", "batch": 12, "mem_mb": 1024},
-    {"id": "node-qemu-ca-vancouver", "region": "ca-vancouver-1", "geo": "Americas", "city": "Vancouver", "batch": 12, "mem_mb": 1024},
-    {"id": "node-qemu-mx-mexicocity", "region": "mx-mexicocity-1", "geo": "Americas", "city": "Mexico City", "batch": 12, "mem_mb": 1024},
-
-    {"id": "node-qemu-br-rio", "region": "br-rio-1", "geo": "Americas", "city": "Rio de Janeiro", "batch": 13, "mem_mb": 1024},
-    {"id": "node-qemu-eu-dublin", "region": "eu-dublin-1", "geo": "Europe", "city": "Dublin", "batch": 13, "mem_mb": 1024},
-    {"id": "node-qemu-eu-warsaw", "region": "eu-warsaw-1", "geo": "Europe", "city": "Warsaw", "batch": 13, "mem_mb": 1024},
-
-    {"id": "node-qemu-eu-zurich", "region": "eu-zurich-1", "geo": "Europe", "city": "Zurich", "batch": 14, "mem_mb": 1024},
-    {"id": "node-qemu-me-telaviv", "region": "me-telaviv-1", "geo": "Middle East", "city": "Tel Aviv", "batch": 14, "mem_mb": 1024},
-    {"id": "node-qemu-af-lagos", "region": "af-lagos-1", "geo": "Africa", "city": "Lagos", "batch": 14, "mem_mb": 1024},
-
-    {"id": "node-qemu-af-nairobi", "region": "af-nairobi-1", "geo": "Africa", "city": "Nairobi", "batch": 15, "mem_mb": 1024},
-    {"id": "node-qemu-ap-bangkok", "region": "ap-bangkok-1", "geo": "Asia-Pacific", "city": "Bangkok", "batch": 15, "mem_mb": 1024},
-    {"id": "node-qemu-ap-manila", "region": "ap-manila-1", "geo": "Asia-Pacific", "city": "Manila", "batch": 15, "mem_mb": 1024},
-
-    {"id": "node-qemu-au-melbourne", "region": "au-melbourne-1", "geo": "Oceania", "city": "Melbourne", "batch": 16, "mem_mb": 1024},
-    {"id": "node-qemu-in-chennai", "region": "in-chennai-1", "geo": "Asia-Pacific", "city": "Chennai", "batch": 16, "mem_mb": 1024},
-    {"id": "node-qemu-us-boston", "region": "us-boston-1", "geo": "Americas", "city": "Boston", "batch": 16, "mem_mb": 1024},
-
-    {"id": "node-qemu-us-portland", "region": "us-portland-1", "geo": "Americas", "city": "Portland", "batch": 17, "mem_mb": 1024},
-    {"id": "node-qemu-cl-santiago", "region": "cl-santiago-1", "geo": "Americas", "city": "Santiago", "batch": 17, "mem_mb": 1024},
-    {"id": "node-qemu-us-detroit", "region": "us-detroit-1", "geo": "Americas", "city": "Detroit", "batch": 17, "mem_mb": 1024, "note": "Michigan — southeast / Metro Detroit"},
-
-    {"id": "node-qemu-us-grandrapids", "region": "us-grandrapids-1", "geo": "Americas", "city": "Grand Rapids", "batch": 18, "mem_mb": 1024, "note": "Michigan — west lower peninsula"},
-    {"id": "node-qemu-us-lansing", "region": "us-lansing-1", "geo": "Americas", "city": "Lansing", "batch": 18, "mem_mb": 1024, "note": "Michigan — central lower peninsula"},
-    {"id": "node-qemu-us-marquette", "region": "us-marquette-1", "geo": "Americas", "city": "Marquette", "batch": 18, "mem_mb": 1024, "note": "Michigan — upper peninsula / Lake Superior"},
-
-    {"id": "node-qemu-us-traversecity", "region": "us-traversecity-1", "geo": "Americas", "city": "Traverse City", "batch": 19, "mem_mb": 1024, "note": "Michigan — northwest lower peninsula"},
-    {"id": "node-qemu-us-kalamazoo", "region": "us-kalamazoo-1", "geo": "Americas", "city": "Kalamazoo", "batch": 19, "mem_mb": 1024, "note": "Michigan — southwest lower peninsula"},
-    {"id": "node-qemu-us-saultstemarie", "region": "us-saultstemarie-1", "geo": "Americas", "city": "Sault Ste. Marie", "batch": 19, "mem_mb": 1024, "note": "Michigan — eastern upper peninsula"}
+  "ssh_port_base": 2222,
+  "qemu_concurrent_slots": 16,
+  "rollout": {
+    "batch_size": 10,
+    "double_on_success": true,
+    "field_one_sink": "field-1"
+  },
+  "regions": [
+    {"id": "us-east", "label": "US East", "tz": "America/New_York"},
+    {"id": "us-west", "label": "US West", "tz": "America/Los_Angeles"},
+    {"id": "eu-west", "label": "EU West", "tz": "Europe/London"},
+    {"id": "eu-central", "label": "EU Central", "tz": "Europe/Berlin"},
+    {"id": "ap-northeast", "label": "AP Northeast", "tz": "Asia/Tokyo"},
+    {"id": "ap-southeast", "label": "AP Southeast", "tz": "Asia/Singapore"},
+    {"id": "sa-east", "label": "SA East", "tz": "America/Sao_Paulo"},
+    {"id": "af-south", "label": "AF South", "tz": "Africa/Johannesburg"},
+    {"id": "me-central", "label": "ME Central", "tz": "Asia/Dubai"},
+    {"id": "oc-pacific", "label": "Oceania Pacific", "tz": "Australia/Sydney"},
+    {"id": "local", "label": "Operator local", "tz": "America/Detroit"}
   ]
 }
