@@ -1,0 +1,98 @@
+{
+  "schema": "field-grok-spawner-patterns/v1",
+  "description": "Grok agent spawner signatures — instakill duplicates, orphans, and rogue harness sleepers",
+  "interval_ms": 250,
+  "patterns": [
+    {
+      "id": "dump-bash-state",
+      "match": "dump_bash_state",
+      "keep": 1,
+      "reason": "Grok agent dump_bash_state harness spawner"
+    },
+    {
+      "id": "grok-bash-state-markers",
+      "match": "__GROK_BASH_STATE_START__",
+      "keep": 1,
+      "reason": "Grok agent bash state harness spawner"
+    },
+    {
+      "id": "grok-agent-export",
+      "match": "GROK_AGENT=1",
+      "shell_only": true,
+      "keep": 1,
+      "reason": "Grok agent shell wrapper spawner"
+    },
+    {
+      "id": "grok-agent-inhibit",
+      "match": "systemd-inhibit --what=idle --who=grok --why=agent",
+      "keep": 1,
+      "reason": "Grok agent turn inhibit sleeper spawner"
+    },
+    {
+      "id": "grok-agent-serve",
+      "match": "grok agent serve",
+      "keep": 1,
+      "reason": "Duplicate grok agent serve spawner"
+    },
+    {
+      "id": "grok-agent-stdio",
+      "match": "grok agent --model",
+      "keep": 1,
+      "reason": "Duplicate grok agent stdio spawner"
+    },
+    {
+      "id": "grok-session-orphan",
+      "match": ".grok/sessions",
+      "shell_only": true,
+      "keep": 0,
+      "reason": "Orphaned Grok CLI session bash spawner"
+    },
+    {
+      "id": "grok-project-harness",
+      "match": ".grok/projects",
+      "shell_only": true,
+      "keep": 0,
+      "reason": "Orphaned Grok project harness spawner"
+    },
+    {
+      "id": "grok-shadow-find",
+      "match": "__grok_shadow_find",
+      "keep": 1,
+      "reason": "Grok agent find shim spawner"
+    },
+    {
+      "id": "grok-shadow-grep",
+      "match": "__grok_shadow_grep",
+      "keep": 1,
+      "reason": "Grok agent grep shim spawner"
+    },
+    {
+      "id": "grok-subagent",
+      "match": "subagent_type",
+      "keep": 0,
+      "reason": "Rogue Grok subagent spawner"
+    },
+    {
+      "id": "grok-task-spawn",
+      "match": "Task tool",
+      "keep": 0,
+      "reason": "Rogue Grok Task tool spawner"
+    },
+    {
+      "id": "grok-firmware-audit",
+      "match": "grok-firmware-audit.sh",
+      "keep": 0,
+      "reason": "Stale grok-firmware-audit spawner"
+    },
+    {
+      "id": "grok-boot-simulate",
+      "match": "boot-simulate.sh",
+      "shell_only": true,
+      "keep": 0,
+      "reason": "Orphaned boot-simulate spawner"
+    }
+  ],
+  "exclude_cmd": [
+    "field-grok-spawner-kill.py"
+  ]
+}

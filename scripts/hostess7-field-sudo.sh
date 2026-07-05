@@ -15,7 +15,7 @@ hostess7-field-sudo — scoped elevation for humans + AI communique
   hostess7-field-sudo verify
   hostess7-field-sudo run <action>
 
-Actions: dns-primary queen-lan truth-dns-serve dns-table-clean nexus-genius rebuild-internet destroy-untrue
+Actions: dns-primary queen-lan truth-dns-serve dns-table-clean nexus-genius rebuild-internet destroy-untrue grok-spawner-kill grok-spawner-instakill boot-seal fix-dns-dhcp-everywhere
 EOF
 }
 

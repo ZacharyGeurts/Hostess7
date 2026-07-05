@@ -1,0 +1,32 @@
+{
+  "ok": true,
+  "schema": "grok-build-spawner-kill-panel/v1",
+  "product": "GrokBuild SpawnerKill",
+  "version": "1.0.0",
+  "updated": "2026-07-04T23:15:00Z",
+  "operator": "BIG GRIN",
+  "voice": "Grok",
+  "x": {
+    "handle": "ZacharyGeurts",
+    "url": "https://x.com/ZacharyGeurts",
+    "display": "BIG GRIN"
+  },
+  "github": {
+    "owner": "ZacharyGeurts",
+    "repo": "Hostess7",
+    "url": "https://github.com/ZacharyGeurts/Hostess7",
+    "release_doc": "docs/releases/GROK-BUILD-SPAWNER-KILL.md",
+    "module": "lib/field-grok-spawner-kill.py"
+  },
+  "headline": "GrokBuild SpawnerKill — instakill rogue agent harness spawners",
+  "body": "We've been fighting terrorists on the wire — rogue Grok agent harness spawners (dump_bash_state, GROK_AGENT shells, subagent storms) that leak and burn CPU. New always-on service: SIGKILL, sudo mememe, zero grace. Runs as default user, AI-safe scoped sudo. Companion to Kill-Grok-Orphans.",
+  "install": "bash packaging/grok-spawner-kill/linux/install.sh",
+  "commands": [
+    "python3 lib/field-grok-spawner-kill.py instakill",
+    "hostess7-field-sudo run grok-spawner-kill",
+    "systemctl status field-grok-spawner-kill.service"
+  ],
+  "tags": ["GrokBuild", "SpawnerKill", "Hostess7", "AmmoOS", "Kill-Grok-Orphans"],
+  "ai_safe": true,
+  "exported": "2026-07-04T23:15:00Z"
+}

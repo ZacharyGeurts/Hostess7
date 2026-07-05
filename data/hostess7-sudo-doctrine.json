@@ -17,15 +17,19 @@
       "role": "Truth DNS + Field DHCP primary",
       "ai_safe": true
     },
+    "fix-dns-dhcp-everywhere": {
+      "script": "scripts/fix-dns-dhcp-everywhere.sh",
+      "role": "Prune pile-up, recover hung DNS, promote DHCP primary everywhere",
+      "ai_safe": true
+    },
     "queen-lan": {
       "script": "scripts/queen-lan-up.sh",
       "role": "Queen LAN 192.168.47.1 for retro DHCP",
       "ai_safe": true
     },
     "truth-dns-serve": {
-      "module": "lib/field-dns.py",
-      "args": ["serve"],
-      "role": "Bind truth resolver 127.0.0.1:53",
+      "script": "scripts/truth-dns-serve.sh",
+      "role": "Bind truth resolver 127.0.0.1:53 (loopback-first recovery)",
       "ai_safe": true
     },
     "dns-table-clean": {
@@ -50,6 +54,28 @@
       "role": "Truth DNS primary + foreign block + drift eradicate",
       "ai_safe": true,
       "internal": true
+    },
+    "grok-spawner-kill": {
+      "systemctl": ["restart", "field-grok-spawner-kill.service"],
+      "role": "Instakill rogue Grok agent harness spawners (sudo mememe)",
+      "ai_safe": true
+    },
+    "grok-spawner-instakill": {
+      "module": "lib/field-grok-spawner-kill.py",
+      "args": ["instakill"],
+      "role": "One-shot SIGKILL sweep of Grok agent spawners",
+      "ai_safe": true
+    },
+    "boot-seal": {
+      "module": "lib/field-boot-seal.py",
+      "args": ["seal"],
+      "role": "Boot seal — globe DNS/DHCP, X.com probe, no root PIDs, stack fused",
+      "ai_safe": true
+    },
+    "fix-dns-dhcp-everywhere": {
+      "script": "scripts/fix-dns-dhcp-everywhere.sh",
+      "role": "Prune pile-up, recover hung DNS, promote DHCP primary everywhere",
+      "ai_safe": true
     }
   },
   "ai_communique": {
