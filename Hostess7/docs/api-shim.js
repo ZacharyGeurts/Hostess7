@@ -802,6 +802,43 @@
       }
     }
     if (
+      path === "/api/field-internet-clean-all" ||
+      path === "/api/internet-clean-all" ||
+      path.startsWith("/api/field-internet-clean-all/")
+    ) {
+      const sub = path.replace(/^\/api\/(field-)?internet-clean-all\/?/, "") || "panel";
+      if (method === "GET") {
+        try {
+          const loopPath = "/api/field-internet-clean-all" + (sub && sub !== "panel" ? "/" + sub : "");
+          const r = await global.__H7_ORIG_FETCH__(LOOPBACK + loopPath, { cache: "no-store" });
+          if (r.ok) return jsonResponse(await r.json());
+        } catch (_e) {}
+        try {
+          const doc = await loadStatic("/api/field-internet-clean-all.json");
+          doc.pages = true;
+          doc.loopback = false;
+          return jsonResponse(doc);
+        } catch (_e2) {
+          return okStub({
+            schema: "field-internet-clean-all/v1",
+            motto: "Big and little names — clean the whole internet for humans and robots alike.",
+            pages: true,
+          });
+        }
+      }
+      if (method === "POST" && (sub === "clean" || sub === "run" || sub === "core")) {
+        try {
+          const r = await global.__H7_ORIG_FETCH__(LOOPBACK + "/api/field-internet-clean-all/" + sub, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: (opts && opts.body) || "{}",
+            cache: "no-store",
+          });
+          if (r.ok) return jsonResponse(await r.json());
+        } catch (_e) {}
+      }
+    }
+    if (
       path === "/api/field-grok-spawner-kill" ||
       path === "/api/grok-spawn-killer" ||
       path.startsWith("/api/field-grok-spawner-kill/") ||

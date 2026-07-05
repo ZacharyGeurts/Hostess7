@@ -241,6 +241,11 @@ def _microsoft_botnet_kill() -> dict[str, Any]:
     return _run_py("lib/field-botnet-microsoft-kill.py", "kill", timeout=45)
 
 
+def _internet_clean_core() -> dict[str, Any]:
+    """Big and little names — core hostile sweep for humans and robots."""
+    return _run_py("lib/field-internet-clean-all.py", "core", timeout=90)
+
+
 def purge_dogshit() -> dict[str, Any]:
     """Kill orphan panel storms and dogshit — explicit names only; DNS/DHCP protected."""
     doc = _load(DOGSHIT, {})
@@ -580,6 +585,8 @@ def serve() -> int:
                 purge_dogshit()
             elif sweep_n % 40 == 0:
                 _microsoft_botnet_kill()
+            elif sweep_n % 60 == 0:
+                _internet_clean_core()
         except Exception as exc:
             err = {"ok": False, "error": str(exc)[:200], "ts": _utc()}
             try:
@@ -608,6 +615,9 @@ def main() -> int:
         return 0
     if cmd in ("purge", "dogshit", "clean"):
         print(json.dumps(purge_dogshit(), ensure_ascii=False, indent=2))
+        return 0
+    if cmd in ("internet", "internet-clean", "clean-all"):
+        print(json.dumps(_internet_clean_core(), ensure_ascii=False, indent=2))
         return 0
     if cmd in ("serve", "watch", "daemon"):
         serve()

@@ -2235,6 +2235,23 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
         )
         files.append("hostess7-big-grin-pwnership.json")
 
+    clean_all = _run_nl_script_json("lib/field-internet-clean-all.py", ["names"], timeout=45)
+    if not clean_all.get("schema"):
+        clean_all = {
+            **stub,
+            "schema": "field-internet-clean-all-names/v1",
+            "motto": "Big and little names — clean the whole internet for humans and robots alike.",
+            "big_count": 0,
+            "little_count": 0,
+        }
+    else:
+        clean_all["pages"] = True
+        clean_all["pages_base"] = PAGES_BASE
+    (API / "field-internet-clean-all.json").write_text(
+        json.dumps(clean_all, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("field-internet-clean-all.json")
+
     gsk = _run_nl_script_json("lib/field-grok-spawner-kill.py", ["panel"], timeout=25)
     if not gsk.get("schema"):
         gsk = {

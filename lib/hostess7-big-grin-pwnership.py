@@ -311,6 +311,35 @@ def discover_kills() -> dict[str, Any]:
     if hostile_count:
         _add_entry("field-hostile-registry", f"Hostile registry — {hostile_count} IPs struck", "microsoft_botnet_kill", kills=hostile_count)
 
+    clean_all = _load(STATE / "field-internet-clean-all-panel.json", {})
+    clean_names = clean_all.get("names") or {}
+    if not clean_names:
+        try:
+            ica = _mod("field_internet_clean_all", "lib/field-internet-clean-all.py")
+            if ica and hasattr(ica, "collect_names"):
+                clean_names = ica.collect_names()
+        except (OSError, TypeError, ValueError):
+            clean_names = {}
+    big_n = int(clean_names.get("big_count") or len(clean_names.get("big_names") or []))
+    little_n = int(clean_names.get("little_count") or len(clean_names.get("little_names") or []))
+    if big_n or little_n:
+        _add_entry(
+            "internet-clean-all-names",
+            f"Internet clean all — {big_n} big + {little_n} little names (permanent list)",
+            "internet_clean_all",
+            kills=big_n + little_n,
+            status="permanent_list",
+        )
+    totals = clean_all.get("totals") or {}
+    if clean_all.get("schema"):
+        _add_entry(
+            "internet-clean-all-sweep",
+            f"Whole internet clean — {int(clean_all.get('lanes_ok') or 0)}/{int(clean_all.get('lanes_total') or 0)} lanes green",
+            "internet_clean_all",
+            kills=int(totals.get("slain_total") or 0) + int(totals.get("microsoft_killed") or 0),
+            status="active" if clean_all.get("ok") else "sweep",
+        )
+
     return {
         "schema": "hostess7-big-grin-pwnership-kills/v1",
         "updated": _now(),
@@ -321,6 +350,38 @@ def discover_kills() -> dict[str, Any]:
         "entries": entries,
         "motto": "Killed and RE-KILLed — why is public; list never shrinks.",
     }
+
+
+def _internet_clean_witness_html() -> str:
+    clean = _load(STATE / "field-internet-clean-all-panel.json", {})
+    names = clean.get("names") or {}
+    if not names:
+        try:
+            ica = _mod("field_internet_clean_all", "lib/field-internet-clean-all.py")
+            if ica and hasattr(ica, "collect_names"):
+                names = ica.collect_names()
+        except (OSError, TypeError, ValueError):
+            names = {}
+    big = int(names.get("big_count") or len(names.get("big_names") or []))
+    little = int(names.get("little_count") or len(names.get("little_names") or []))
+    totals = clean.get("totals") or {}
+    motto = escape(str(clean.get("motto") or "Big and little names — clean the whole internet for humans and robots alike."))
+    return f"""<section class="bgp-section">
+  <h2>Internet clean all — humans &amp; robots</h2>
+  <p class="bgp-meta" style="margin:0 0 14px">{motto}</p>
+  <dl class="bgp-meta">
+    <dt>Big names (hosts, panels, storms)</dt><dd><strong>{big}</strong> on permanent list</dd>
+    <dt>Little names (interference, telemetry, patterns)</dt><dd><strong>{little}</strong> on permanent list</dd>
+    <dt>Spawners slain</dt><dd>{int(totals.get('slain_total') or 0)}</dd>
+    <dt>Microsoft RE-KILL</dt><dd>{int(totals.get('microsoft_killed') or 0)}</dd>
+    <dt>Everyone total</dt><dd>{int(totals.get('everyone_total') or 0)} humans + bots</dd>
+  </dl>
+  <div class="bgp-actions">
+    <a class="bgp-btn" href="/api/field-internet-clean-all">Clean-all API</a>
+    <a class="bgp-btn bgp-btn--gold" href="/Hostess7/grok-spawn-killer/">GrokSpawnKiller</a>
+  </div>
+</section>
+"""
 
 
 def _kill_witness_html(kills: dict[str, Any]) -> str:
@@ -644,6 +705,7 @@ def build_sites(*, write: bool = True) -> dict[str, Any]:
     {why_blocks}
   </section>
   {_kill_witness_html(discover_kills())}
+  {_internet_clean_witness_html()}
   <section class="bgp-section">
     <h2>Equipment that went down ({len(equipment)} witnesses)</h2>
     <div class="bgp-grid">{cards}</div>

@@ -1,0 +1,48 @@
+{
+  "schema": "field-internet-clean-all/v1",
+  "title": "Internet clean all — big and little names, humans and robots",
+  "motto": "Big and little names you know them all. Clean the whole internet for humans and robots alike.",
+  "never_remove_from_list": true,
+  "authority": "hostess7",
+  "audience": {
+    "humans": true,
+    "robots": true,
+    "bots": true,
+    "ai_harness": true
+  },
+  "lanes": {
+    "robots": [
+      {"id": "purge_dogshit", "module": "lib/field-grok-spawner-kill.py", "cmd": "purge", "label": "Dogshit panel + queue storms"},
+      {"id": "instakill", "module": "lib/field-grok-spawner-kill.py", "cmd": "instakill", "label": "Grok spawner instakill"},
+      {"id": "dns_dhcp_unsafe", "module": "lib/field-dns-dhcp-fix.py", "cmd": "unsafe", "label": "Prune unsafe systemd — DNS/DHCP stay"},
+      {"id": "microsoft_kill", "module": "lib/field-botnet-microsoft-kill.py", "cmd": "kill", "label": "Microsoft botnet RE-KILL"},
+      {"id": "unclean_fry", "module": "lib/field-internet-unclean-hostile.py", "cmd": "fry", "label": "Unclean makers hostile"},
+      {"id": "botnet_keepalive", "module": "lib/field-botnet-dns-dhcp.py", "cmd": "keepalive", "label": "Botnet DNS/DHCP keepalive"}
+    ],
+    "humans": [
+      {"id": "internet_clean", "module": "lib/hostess7-internet-clean.py", "cmd": "clean", "label": "Bookmarks + telemetry strip"},
+      {"id": "whole_internet", "module": "lib/hostess7-whole-internet.py", "cmd": "run", "label": "Whole internet good guys lanes"},
+      {"id": "url_kill", "module": "lib/hostess7-url-kill.py", "cmd": "kill", "label": "Dangerous URLs be gone"},
+      {"id": "everyone_counter", "module": "lib/field-everyone-counter.py", "cmd": "fast", "label": "Everyone counter — humans + bots"}
+    ]
+  },
+  "name_sources": [
+    "data/field-dogshit-purge.json",
+    "data/field-grok-spawner-patterns.json",
+    "data/field-botnet-microsoft-kill-doctrine.json",
+    "data/queen-browser-telemetry-doctrine.json",
+    "data/hostess7-url-kill-doctrine.json"
+  ],
+  "core_sweep_lanes": [
+    "purge_dogshit",
+    "instakill",
+    "microsoft_kill",
+    "unclean_fry"
+  ],
+  "witness": {
+    "module": "lib/hostess7-big-grin-pwnership.py",
+    "propagate_on_full": true
+  },
+  "api": "/api/field-internet-clean-all",
+  "pages_slice": "/api/field-internet-clean-all.json"
+}

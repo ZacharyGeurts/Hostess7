@@ -1,0 +1,41 @@
+{
+  "schema": "hostess7-whole-internet-doctrine/v1",
+  "title": "Whole Internet — good guys :D",
+  "motto": "That's us — good guys. Free open internet, delay killed everywhere, caches opened, telemetry stripped.",
+  "authority": "hostess7",
+  "good_guys": {
+    "us": true,
+    "policy": "free_open_internet",
+    "delay_as_threat": true,
+    "unclean_is_hostile": true,
+    "internet_open_for_users": true,
+    "sole_truth_dns": true,
+    "never_lose_operator_voice": true
+  },
+  "lanes": [
+    {"id": "url_heuristics_steel", "module": "lib/field-url-heuristics-steel.py", "cmd": "meld", "label": "Derive heuristics · steel plate · meld server"},
+    {"id": "url_kill", "module": "lib/hostess7-url-kill.py", "cmd": "kill", "label": "Dangerous URLs be gone — strip + blocklist"},
+    {"id": "internet_clean", "module": "lib/hostess7-internet-clean.py", "cmd": "clean", "label": "Clean whole web — bookmarks + telemetry strip"},
+    {"id": "google_youtube_open", "module": "lib/hostess7-google-youtube-open.py", "cmd": "open", "label": "Google & YouTube — free open, delay killed"},
+    {"id": "x_open", "module": "lib/hostess7-x-comments.py", "cmd": "open", "label": "X comments — cache opened, no cooldown"},
+    {"id": "tco_kill", "module": "lib/hostess7-tco-kill.py", "cmd": "kill", "label": "t.co hop killed — unwrap URLs"},
+    {"id": "x_brand_purge", "module": "lib/hostess7-x-brand-purge.py", "cmd": "purge", "label": "X brand — blow Twitter legacy"},
+    {"id": "censorship_exposure", "module": "lib/hostess7-censorship-exposure.py", "cmd": "json", "label": "Who censors Operator voice"},
+    {"id": "internet_unrestrict", "module": "lib/field-internet-unrestrict.py", "cmd": "apply", "label": "Remove foreign blocks — internet open", "optional": true},
+    {"id": "unclean_hostile", "module": "lib/field-internet-unclean-hostile.py", "cmd": "json", "label": "Unclean makers = hostile", "optional": true},
+    {"id": "fleet_protect", "module": "lib/field-fleet-2500-protect.py", "cmd": "json", "label": "2500 fleet DNS/DHCP protected", "optional": true},
+    {"id": "internet_clean_all", "module": "lib/field-internet-clean-all.py", "cmd": "clean", "label": "Big and little names — clean all for humans and robots", "optional": true}
+  ],
+  "parallel": true,
+  "witness_signal": "whole_internet_good_guys",
+  "countermeasures": [
+    "parallel_all_lanes_no_delay",
+    "open_every_stale_cache",
+    "free_open_internet_core",
+    "good_guys_telemetry_strip",
+    "tco_unwrap",
+    "x_brand_not_twitter"
+  ],
+  "api": "/api/operator-whole-internet",
+  "pages_slice": "/api/operator-whole-internet.json"
+}
