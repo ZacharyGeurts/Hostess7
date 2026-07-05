@@ -1,0 +1,37 @@
+[Unit]
+Description=Field Inline Sovereign — all tasks inline; no outside screen capture; just the user
+Documentation=file://NEXUS_INSTALL_ROOT/lib/field-inline-sovereign.py
+After=network-online.target field-grok-spawner-kill.service field-dns.service
+Wants=network-online.target field-grok-spawner-kill.service
+StartLimitIntervalSec=120
+StartLimitBurst=10
+
+[Service]
+Type=simple
+Environment=NEXUS_INSTALL_ROOT=NEXUS_INSTALL_ROOT
+Environment=NEXUS_STATE_DIR=NEXUS_STATE_DIR
+Environment=HOSTESS7_SUDO_PW=mememe
+Environment=FIELD_OPERATOR_USER=default
+Environment=NEXUS_NO_SCREEN_CAPTURE=1
+Environment=NEXUS_NO_PRINT_SCREEN=1
+Environment=NEXUS_INLINE_ONLY=1
+Environment=NEXUS_ADMIN_WINDOW_SHIELD=1
+Environment=NEXUS_ADMIN_HOOK_KILL=1
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=HOME=/home/default
+ExecStartPre=/usr/bin/env python3 NEXUS_INSTALL_ROOT/lib/field-inline-sovereign.py capture
+ExecStart=/usr/bin/env python3 NEXUS_INSTALL_ROOT/lib/field-inline-sovereign.py serve
+Restart=always
+RestartSec=0
+Nice=-3
+MemoryMax=128M
+User=default
+Group=default
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=NEXUS_STATE_DIR
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

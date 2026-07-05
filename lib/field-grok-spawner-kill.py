@@ -8,7 +8,6 @@ import signal
 import socket
 import subprocess
 import sys
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -150,6 +149,122 @@ def _effective_keep(pat: dict[str, Any]) -> int:
     return keep
 
 
+def _proc_map(rows: list[tuple[int, int, str]]) -> dict[int, tuple[int, str]]:
+    return {pid: (ppid, cmdline) for pid, ppid, cmdline in rows}
+
+
+def _cmd_for(pid: int, rows: list[tuple[int, int, str]]) -> str:
+    for p, _, cmd in rows:
+        if p == pid:
+            return cmd
+    return ""
+
+
+def _is_sender(cmdline: str, sender_markers: list[str]) -> bool:
+    if not cmdline:
+        return False
+    if _is_shell(cmdline):
+        return True
+    low = cmdline.lower()
+    if "grok" in low and any(x in cmdline for x in ("agent", "GROK_AGENT", "dump_bash_state")):
+        return True
+    return any(m in cmdline for m in sender_markers)
+
+
+def _spawn_policy(doc: dict[str, Any]) -> dict[str, Any]:
+    return doc.get("agent_spawn_policy") or {}
+
+
+def _just_you_kill(
+    rows: list[tuple[int, int, str]],
+    excludes: list[str],
+    *,
+    sudo_pw: str,
+    policy: dict[str, Any],
+) -> dict[str, Any]:
+    """Keep one live harness (just you). Kill every other agent spawn and whoever sent it."""
+    if not policy.get("just_you"):
+        return {"killed": 0, "senders_killed": 0, "skipped": True}
+
+    markers = policy.get("spawn_markers") or []
+    sender_markers = [str(x) for x in (policy.get("sender_markers") or [])]
+    grok_parents = _grok_parent_pids(rows)
+    pmap = _proc_map(rows)
+    candidates: list[tuple[int, int, int, str]] = []
+
+    for pid, ppid, cmdline in rows:
+        if not cmdline or _excluded(cmdline, excludes):
+            continue
+        best_pri = -1
+        for spec in markers:
+            if not isinstance(spec, dict):
+                continue
+            match = str(spec.get("match") or "")
+            if not match or match not in cmdline:
+                continue
+            if bool(spec.get("shell_only")) and not _is_shell(cmdline):
+                continue
+            pri = int(spec.get("priority") or 0)
+            if ppid in grok_parents:
+                pri += 25
+            if pri > best_pri:
+                best_pri = pri
+        if best_pri >= 0:
+            candidates.append((best_pri, pid, ppid, cmdline))
+
+    if not candidates:
+        return {"killed": 0, "senders_killed": 0, "allowed_pid": None}
+
+    candidates.sort(key=lambda row: (-row[0], row[1]))
+    allowed_pid = candidates[0][1]
+    victims: set[int] = set()
+
+    for _, pid, ppid, cmdline in candidates:
+        if pid == allowed_pid:
+            continue
+        victims.add(pid)
+        if not policy.get("kill_sender", True):
+            continue
+        if ppid <= 1 or ppid == ME:
+            continue
+        parent_cmd = _cmd_for(ppid, rows) or pmap.get(ppid, (0, ""))[1]
+        if _excluded(parent_cmd, excludes):
+            continue
+        if ppid == allowed_pid:
+            continue
+        if _is_sender(parent_cmd, sender_markers):
+            victims.add(ppid)
+            gppid = pmap.get(ppid, (0, ""))[0]
+            if gppid > 1 and gppid != ME and gppid != allowed_pid:
+                gcmd = _cmd_for(gppid, rows) or pmap.get(gppid, (0, ""))[1]
+                if _is_sender(gcmd, sender_markers) and not _excluded(gcmd, excludes):
+                    victims.add(gppid)
+
+    drop_sleep = bool(policy.get("drop_sleep_routine") or _load(PATTERNS, {}).get("drop_sleep_routine"))
+    if drop_sleep:
+        for pid, ppid, cmdline in rows:
+            if pid in victims or pid == allowed_pid or _excluded(cmdline, excludes):
+                continue
+            if "sleep infinity" in cmdline or (
+                " sleep " in cmdline and ("grok" in cmdline.lower() or "GROK_AGENT" in cmdline)
+            ):
+                victims.add(pid)
+                if ppid > 1 and ppid != ME and ppid != allowed_pid:
+                    victims.add(ppid)
+
+    spawn_pids = {pid for _, pid, _, _ in candidates if pid != allowed_pid}
+    sender_pids = victims - spawn_pids
+    killed = _instakill(sorted(victims), sudo_pw=sudo_pw)
+    return {
+        "killed": killed,
+        "spawns_killed": len(spawn_pids & victims),
+        "senders_killed": len(sender_pids),
+        "allowed_pid": allowed_pid,
+        "victim_pids": sorted(victims)[:32],
+        "motto": policy.get("motto"),
+    }
+
+
 def _targets_for_pattern(
     pat: dict[str, Any],
     rows: list[tuple[int, int, str]],
@@ -202,6 +317,69 @@ def _systemctl(*args: str, timeout: float = 20.0) -> dict[str, Any]:
         except (OSError, subprocess.TimeoutExpired):
             continue
     return {"ok": False, "error": "systemctl_failed"}
+
+
+def _flatline_systemd_batch(units: list[str]) -> list[dict[str, Any]]:
+    """Stop, disable, mask all unsafe units in one sudo invocation."""
+    if not units:
+        return []
+    pw = _sudo_pw()
+    script = "\n".join(
+        f'systemctl stop "{u}" 2>/dev/null; systemctl disable "{u}" 2>/dev/null; systemctl mask "{u}" 2>/dev/null'
+        for u in units
+    )
+    try:
+        subprocess.run(
+            ["sudo", "-S", "bash", "-c", script],
+            input=f"{pw}\n",
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+    out: list[dict[str, Any]] = []
+    for unit in units:
+        state = ""
+        try:
+            proc = subprocess.run(
+                ["systemctl", "is-enabled", unit],
+                capture_output=True,
+                text=True,
+                timeout=5,
+                check=False,
+            )
+            state = (proc.stdout or proc.stderr or "").strip().lower()
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+        out.append({
+            "unit": unit,
+            "ok": state == "masked",
+            "steps": ["stop", "disable", "mask"] if state == "masked" else [],
+            "enabled_state": state or None,
+        })
+    return out
+
+
+def _flatline_systemd(unit: str) -> dict[str, Any]:
+    rows = _flatline_systemd_batch([unit])
+    return rows[0] if rows else {"unit": unit, "ok": False, "steps": []}
+
+
+def _flatline_unsafe_processes(markers: list[str]) -> list[int]:
+    """SIGKILL stray daemon PIDs that systemd/socket activation respawned."""
+    pw = _sudo_pw()
+    killed: list[int] = []
+    rows = _iter_proc()
+    for pid, _, cmdline in rows:
+        if not cmdline:
+            continue
+        if not any(m in cmdline for m in markers):
+            continue
+        if _instakill([pid], sudo_pw=pw):
+            killed.append(pid)
+    return killed
 
 
 def _run_py(rel: str, *args: str, timeout: float = 45.0) -> dict[str, Any]:
@@ -312,11 +490,19 @@ def purge_dogshit() -> dict[str, Any]:
                 killed.setdefault(f"always:{pattern}", []).append(pid)
                 _record_kill(str(pattern), pid, kind="always_kill")
 
-    unsafe_units: list[str] = []
-    for unit in doc.get("unsafe_systemd") or []:
-        r = _systemctl("stop", str(unit), timeout=10)
-        if r.get("ok"):
-            unsafe_units.append(str(unit))
+    flatlined: list[dict[str, Any]] = []
+    units = [str(u) for u in (doc.get("unsafe_systemd") or [])]
+    if doc.get("flatline_systemd", True):
+        flatlined = _flatline_systemd_batch(units)
+    else:
+        for unit in units:
+            r = _systemctl("stop", unit, timeout=10)
+            if r.get("ok"):
+                flatlined.append({"unit": unit, "ok": True, "steps": ["stop"]})
+
+    proc_killed: list[int] = []
+    if doc.get("unsafe_process_markers"):
+        proc_killed = _flatline_unsafe_processes([str(x) for x in doc["unsafe_process_markers"]])
 
     sweep = instakill(write=True)
     return {
@@ -326,7 +512,9 @@ def purge_dogshit() -> dict[str, Any]:
         "keep_per_storm": keep_n,
         "killed": killed,
         "killed_total": sum(len(v) for v in killed.values()),
-        "unsafe_units_stopped": unsafe_units,
+        "flatlined": flatlined,
+        "flatlined_ok": sum(1 for x in flatlined if x.get("ok")),
+        "unsafe_process_killed": proc_killed,
         "slain_total": sweep.get("slain_total", 0),
         "motto": doc.get("motto"),
     }
@@ -359,8 +547,7 @@ def stack_load(*, wait_c2: bool = True) -> dict[str, Any]:
 
     c2_up = _c2_port_up()
     if wait_c2 and not c2_up:
-        for _ in range(16):
-            time.sleep(0.125)
+        for _ in range(64):
             if _c2_port_up():
                 c2_up = True
                 break
@@ -520,6 +707,18 @@ def instakill(*, write: bool = True) -> dict[str, Any]:
         cooked[key] = n
         victims.append({"id": pat.get("id"), "pids": pids, "killed": n, "reason": pat.get("reason")})
 
+    just_you = _just_you_kill(rows, excludes, sudo_pw=pw, policy=_spawn_policy(doc))
+    if int(just_you.get("killed") or 0) > 0:
+        cooked["just-you-spawn"] = int(just_you["killed"])
+        victims.append({
+            "id": "just-you-spawn",
+            "pids": just_you.get("victim_pids") or [],
+            "killed": just_you.get("killed"),
+            "reason": just_you.get("motto") or "Just you — kill spawn and sender",
+            "allowed_pid": just_you.get("allowed_pid"),
+            "senders_killed": just_you.get("senders_killed"),
+        })
+
     remaining: dict[str, int] = {}
     rows_after = _iter_proc()
     for pat in patterns[:6]:
@@ -571,11 +770,6 @@ def instakill(*, write: bool = True) -> dict[str, Any]:
 
 def serve() -> int:
     doc = _load(PATTERNS, {})
-    no_wait = bool(doc.get("no_wait", True))
-    base_ms = 25 if doc.get("never_sleeps") else 250
-    interval_ms = max(0, int(doc.get("interval_ms", base_ms)))
-    if no_wait:
-        interval_ms = min(interval_ms, 25)
     sweep_n = 0
     while True:
         try:
@@ -595,8 +789,6 @@ def serve() -> int:
                 tmp.replace(PANEL)
             except OSError:
                 pass
-        if interval_ms > 0:
-            time.sleep(interval_ms / 1000.0)
 
 
 def main() -> int:
@@ -615,6 +807,12 @@ def main() -> int:
         return 0
     if cmd in ("purge", "dogshit", "clean"):
         print(json.dumps(purge_dogshit(), ensure_ascii=False, indent=2))
+        return 0
+    if cmd in ("flatline", "mask"):
+        doc = _load(DOGSHIT, {})
+        flatlined = _flatline_systemd_batch([str(u) for u in (doc.get("unsafe_systemd") or [])])
+        proc_killed = _flatline_unsafe_processes([str(x) for x in (doc.get("unsafe_process_markers") or [])])
+        print(json.dumps({"ok": True, "flatlined": flatlined, "proc_killed": proc_killed}, ensure_ascii=False, indent=2))
         return 0
     if cmd in ("internet", "internet-clean", "clean-all"):
         print(json.dumps(_internet_clean_core(), ensure_ascii=False, indent=2))

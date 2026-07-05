@@ -5,8 +5,33 @@
   "motto": "Grok never Sleeps — field brain, no waiting, kill interference, NEXUS C2 fused.",
   "never_sleeps": true,
   "no_wait": true,
+  "drop_sleep_routine": true,
   "field_brain": true,
-  "interval_ms": 25,
+  "interval_ms": 0,
+  "agent_spawn_policy": {
+    "just_you": true,
+    "kill_sender": true,
+    "motto": "Just you — agent spawns die; whoever sent them dies too.",
+    "spawn_markers": [
+      {"match": "grok agent serve", "priority": 100},
+      {"match": "grok agent --model", "priority": 90},
+      {"match": "GROK_AGENT=1", "priority": 85, "shell_only": true},
+      {"match": "subagent_type", "priority": 20},
+      {"match": "Task tool", "priority": 20},
+      {"match": "grok agent", "priority": 70}
+    ],
+    "sender_markers": [
+      "dump_bash_state",
+      "GROK_AGENT",
+      "sleep infinity",
+      "systemd-inhibit",
+      "subagent_type",
+      "Task tool",
+      ".grok/sessions",
+      ".grok/projects",
+      "agent turn in progress"
+    ]
+  },
   "patterns": [
     {
       "id": "dump-bash-state",

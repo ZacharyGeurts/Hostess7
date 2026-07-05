@@ -90,13 +90,25 @@
     "threat-panel-http.py",
     "nexus-daemon.sh",
     "field-dns-dhcp-fix.py",
-    "field-internet-clean-all.py"
+    "field-internet-clean-all.py",
+    "field-inline-sovereign.py"
   ],
   "unsafe_systemd": [
     "ModemManager.service",
     "touchegg.service",
     "kerneloops.service",
     "fwupd.service",
-    "colord.service"
+    "colord.service",
+    "fwupd-refresh.service",
+    "fwupd-refresh.timer"
+  ],
+  "flatline_systemd": true,
+  "unsafe_process_markers": [
+    "/usr/sbin/ModemManager",
+    "touchegg",
+    "/usr/sbin/kerneloops",
+    "/usr/libexec/fwupd/fwupd",
+    "fwupd",
+    "colord"
   ]
 }

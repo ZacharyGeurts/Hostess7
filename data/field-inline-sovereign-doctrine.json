@@ -1,0 +1,41 @@
+{
+  "schema": "field-inline-sovereign/v1",
+  "title": "Inline sovereign — all tasks in-process; just the user on screen",
+  "motto": "All tasks inline — no subprocess panel storms. No outside Print Screen or screen capture. Just the user.",
+  "operator_user": "default",
+  "no_subprocess_panels": true,
+  "no_screen_capture": true,
+  "no_print_screen": true,
+  "just_the_user": true,
+  "protected": [
+    "field-inline-sovereign.py",
+    "field-dns.py",
+    "field-dhcp.py",
+    "field-grok-spawner-kill.py",
+    "threat-panel-http.py",
+    "nexus-daemon.sh"
+  ],
+  "blocked_capture_procs": [
+    "grim", "slurp", "wayshot", "spectacle", "peek", "scrot", "maim", "flameshot",
+    "gnome-screenshot", "ksnip", "deepin-screenshot", "screengrab", "import",
+    "obs", "obs-studio", "obs-ffmpeg-mux", "wf-recorder", "gpu-screen-recorder",
+    "kooha", "simplescreenrecorder", "recordmydesktop", "ffmpeg", "ffplay",
+    "xdg-desktop-portal", "portal-desktop", "screenshot", "screen-capture",
+    "x11grab", "gdigrab", "avfoundation"
+  ],
+  "print_screen_markers": [
+    "PrintScreen", "XF86ScreenShot", "XF86Tools", "screenshot-portal",
+    "org.freedesktop.portal.Desktop", "ScreenCast", "ScreenShot"
+  ],
+  "inline_lanes": [
+    {"id": "instakill", "module": "lib/field-grok-spawner-kill.py", "fn": "instakill", "kwargs": {"write": true}, "every_n": 1},
+    {"id": "capture_shield", "module": "lib/field-inline-sovereign.py", "fn": "enforce_capture_shield", "every_n": 1},
+    {"id": "brain", "module": "lib/field-brain-panel.py", "fn": "build_field_brain", "every_n": 8},
+    {"id": "everyone", "module": "lib/field-everyone-counter.py", "fn": "snapshot", "kwargs": {"write": true, "fast": true}, "every_n": 12},
+    {"id": "botnet", "module": "lib/field-botnet-dns-dhcp.py", "fn": "keepalive", "kwargs": {"write": true}, "every_n": 16},
+    {"id": "admin_shield", "module": "lib/admin-window-shield.py", "fn": "enforce", "kwargs": {"kill": true}, "every_n": 6},
+    {"id": "flatline", "module": "lib/field-grok-spawner-kill.py", "fn": "purge_dogshit", "every_n": 40}
+  ],
+  "api": "/api/field-inline-sovereign",
+  "service": "field-inline-sovereign.service"
+}

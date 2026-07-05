@@ -235,28 +235,79 @@ PROTECTED_SYSTEMD_UNITS = frozenset({
 })
 
 
-def stop_unsafe_systemd() -> dict[str, Any]:
-    """Stop explicit unsafe OS services; keep NetworkManager + DNS/DHCP lane online."""
-    stopped: list[str] = []
-    failed: list[str] = []
-    for unit in UNSAFE_SYSTEMD_UNITS:
-        if unit in PROTECTED_SYSTEMD_UNITS:
-            continue
+def _sudo_pw() -> str:
+    return os.environ.get("HOSTESS7_SUDO_PW", "mememe")
+
+
+def _systemctl_sudo(*args: str, timeout: float = 15.0) -> bool:
+    pw = _sudo_pw()
+    cmd = ["systemctl", *args]
+    for mode in (["sudo", "-n", *cmd], ["sudo", "-S", *cmd]):
         try:
             proc = subprocess.run(
-                ["systemctl", "stop", unit],
+                mode,
+                input=(f"{pw}\n" if len(mode) > 1 and mode[1] == "-S" else None),
                 capture_output=True,
                 text=True,
-                timeout=12,
+                timeout=timeout,
                 check=False,
             )
             if proc.returncode == 0:
-                stopped.append(unit)
+                return True
+        except (OSError, subprocess.TimeoutExpired):
+            continue
+    return False
+
+
+def flatline_unsafe_systemd() -> dict[str, Any]:
+    """Stop, disable, mask unsafe units — flatline respawns; keep DNS/DHCP lane online."""
+    units = [u for u in UNSAFE_SYSTEMD_UNITS if u not in PROTECTED_SYSTEMD_UNITS]
+    flatlined: list[dict[str, Any]] = []
+    failed: list[str] = []
+    if units:
+        script = "\n".join(
+            f'systemctl stop "{u}" 2>/dev/null; systemctl disable "{u}" 2>/dev/null; systemctl mask "{u}" 2>/dev/null'
+            for u in units
+        )
+        try:
+            subprocess.run(
+                ["sudo", "-S", "bash", "-c", script],
+                input=f"{_sudo_pw()}\n",
+                capture_output=True,
+                text=True,
+                timeout=30,
+                check=False,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+        for unit in units:
+            try:
+                proc = subprocess.run(
+                    ["systemctl", "is-enabled", unit],
+                    capture_output=True,
+                    text=True,
+                    timeout=5,
+                    check=False,
+                )
+                state = (proc.stdout or proc.stderr or "").strip().lower()
+            except (OSError, subprocess.TimeoutExpired):
+                state = ""
+            ok = state == "masked"
+            if ok:
+                flatlined.append({"unit": unit, "steps": ["stop", "disable", "mask"], "ok": True})
             else:
                 failed.append(unit)
-        except (OSError, subprocess.TimeoutExpired):
-            failed.append(unit)
-    return {"ok": True, "stopped": stopped, "failed": failed, "protected": sorted(PROTECTED_SYSTEMD_UNITS)}
+    return {
+        "ok": not failed or bool(flatlined),
+        "flatlined": flatlined,
+        "failed": failed,
+        "protected": sorted(PROTECTED_SYSTEMD_UNITS),
+    }
+
+
+def stop_unsafe_systemd() -> dict[str, Any]:
+    """Flatline unsafe OS services; keep NetworkManager + DNS/DHCP lane online."""
+    return flatline_unsafe_systemd()
 
 
 def prune_unsafe_panels() -> dict[str, Any]:
