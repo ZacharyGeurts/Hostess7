@@ -186,7 +186,8 @@ def _c2_port_up() -> bool:
 
 def _systemctl(*args: str, timeout: float = 20.0) -> dict[str, Any]:
     pw = _sudo_pw()
-    for mode in (["sudo", "-n", *args], ["sudo", "-S", *args]):
+    cmd = ["systemctl", *args]
+    for mode in (["sudo", "-n", *cmd], ["sudo", "-S", *cmd]):
         try:
             proc = subprocess.run(
                 mode,
@@ -545,7 +546,9 @@ def serve() -> int:
         try:
             instakill(write=True)
             sweep_n += 1
-            if sweep_n % 40 == 0:
+            if sweep_n % 20 == 0:
+                purge_dogshit()
+            elif sweep_n % 40 == 0:
                 _microsoft_botnet_kill()
         except Exception as exc:
             err = {"ok": False, "error": str(exc)[:200], "ts": _utc()}
