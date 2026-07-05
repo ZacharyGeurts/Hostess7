@@ -16,6 +16,7 @@ from typing import Any
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", Path(__file__).resolve().parents[1]))
 STATE = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state"))
 PATTERNS = INSTALL / "data" / "field-grok-spawner-patterns.json"
+DOGSHIT = INSTALL / "data" / "field-dogshit-purge.json"
 PANEL = STATE / "field-grok-spawner-kill-panel.json"
 LEDGER = STATE / "field-grok-spawner-kill-ledger.jsonl"
 ME = os.getpid()
@@ -138,13 +139,24 @@ def _pattern_hits(
     return hits
 
 
+def _effective_keep(pat: dict[str, Any]) -> int:
+    keep = int(pat.get("keep", 0))
+    pat_id = str(pat.get("id") or "")
+    if pat_id.startswith("unsafe-panel") or pat_id.startswith("dogshit-"):
+        doc = _load(DOGSHIT, {})
+        if not _c2_port_up():
+            return int(doc.get("panel_storms_keep_when_c2_down", 0))
+        return int(doc.get("panel_storms_keep_when_c2_up", keep))
+    return keep
+
+
 def _targets_for_pattern(
     pat: dict[str, Any],
     rows: list[tuple[int, int, str]],
     excludes: list[str],
     grok_parents: set[int],
 ) -> list[int]:
-    keep = int(pat.get("keep", 0))
+    keep = _effective_keep(pat)
     hits = _pattern_hits(pat, rows, excludes)
     if not hits:
         return []
@@ -226,6 +238,62 @@ def _secure_stack() -> dict[str, Any]:
 def _microsoft_botnet_kill() -> dict[str, Any]:
     """If Microsoft hits us — botnet kills them."""
     return _run_py("lib/field-botnet-microsoft-kill.py", "kill", timeout=45)
+
+
+def purge_dogshit() -> dict[str, Any]:
+    """Kill orphan panel storms and dogshit — explicit names only; DNS/DHCP protected."""
+    doc = _load(DOGSHIT, {})
+    protected = list(doc.get("protected") or [])
+    excludes = list(_load(PATTERNS, {}).get("exclude_cmd") or []) + protected
+    c2_up = _c2_port_up()
+    keep_n = int(doc.get("panel_storms_keep_when_c2_up", 1) if c2_up else doc.get("panel_storms_keep_when_c2_down", 0))
+    pw = _sudo_pw()
+    killed: dict[str, list[int]] = {}
+    rows = _iter_proc()
+
+    for pattern in doc.get("panel_storms") or []:
+        pids: list[int] = []
+        for pid, _, cmdline in rows:
+            if not cmdline or _excluded(cmdline, excludes):
+                continue
+            if pattern not in cmdline:
+                continue
+            pids.append(pid)
+        pids.sort()
+        victims = pids[:-keep_n] if keep_n > 0 and len(pids) > keep_n else (pids if keep_n <= 0 else [])
+        for pid in victims:
+            if _instakill([pid], sudo_pw=pw):
+                killed.setdefault(str(pattern), []).append(pid)
+
+    for pattern in doc.get("always_kill") or []:
+        pids = []
+        for pid, _, cmdline in rows:
+            if not cmdline or _excluded(cmdline, excludes):
+                continue
+            if pattern in cmdline:
+                pids.append(pid)
+        for pid in pids:
+            if _instakill([pid], sudo_pw=pw):
+                killed.setdefault(f"always:{pattern}", []).append(pid)
+
+    unsafe_units: list[str] = []
+    for unit in doc.get("unsafe_systemd") or []:
+        r = _systemctl("stop", str(unit), timeout=10)
+        if r.get("ok"):
+            unsafe_units.append(str(unit))
+
+    sweep = instakill(write=True)
+    return {
+        "ok": True,
+        "schema": "field-dogshit-purge/v1",
+        "c2_up": c2_up,
+        "keep_per_storm": keep_n,
+        "killed": killed,
+        "killed_total": sum(len(v) for v in killed.values()),
+        "unsafe_units_stopped": unsafe_units,
+        "slain_total": sweep.get("slain_total", 0),
+        "motto": doc.get("motto"),
+    }
 
 
 def stack_load(*, wait_c2: bool = True) -> dict[str, Any]:
@@ -505,12 +573,15 @@ def main() -> int:
     if cmd in ("stack", "c2", "nexus"):
         print(json.dumps(stack_load(), ensure_ascii=False, indent=2))
         return 0
+    if cmd in ("purge", "dogshit", "clean"):
+        print(json.dumps(purge_dogshit(), ensure_ascii=False, indent=2))
+        return 0
     if cmd in ("serve", "watch", "daemon"):
         serve()
         return 0
     print(
         json.dumps(
-            {"usage": "field-grok-spawner-kill.py [instakill|panel|install|stack|serve]"},
+            {"usage": "field-grok-spawner-kill.py [instakill|panel|install|stack|purge|serve]"},
             ensure_ascii=False,
         )
     )

@@ -207,10 +207,19 @@ def _sudo_action(action: str) -> dict[str, Any]:
 
 
 # Explicit unsafe units — direct systemd list, no glob discovery.
-UNSAFE_SYSTEMD_UNITS = (
-    "ModemManager.service",
-    "touchegg.service",
-    "kerneloops.service",
+_DOGSHIT_DOC = INSTALL / "data" / "field-dogshit-purge.json"
+
+
+def _dogshit_doc() -> dict[str, Any]:
+    try:
+        return json.loads(_DOGSHIT_DOC.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+UNSAFE_SYSTEMD_UNITS = tuple(
+    _dogshit_doc().get("unsafe_systemd")
+    or ("ModemManager.service", "touchegg.service", "kerneloops.service", "fwupd.service", "colord.service")
 )
 
 # Protected online + truth stack — never stop these units.
@@ -252,16 +261,18 @@ def stop_unsafe_systemd() -> dict[str, Any]:
 
 def prune_unsafe_panels() -> dict[str, Any]:
     """Kill duplicate panel subprocess storms — explicit patterns only."""
-    storms = (
-        ("hostess7-lab-sovereign.py panel", 1),
-        ("field-internet-unified.py panel", 1),
-        ("qemu-world-status.py json", 1),
-        ("hostess7-g16-online.py panel", 1),
-        ("connection-gatekeeper.py", 1),
-        ("field-sovereign-protocol-bridge.py json", 1),
-        ("ammonet-field.py panel", 1),
-        ("znetwork-orchestrator.py status", 1),
-    )
+    doc = _dogshit_doc()
+    keep_n = 1
+    storms = [(p, keep_n) for p in (doc.get("panel_storms") or (
+        "hostess7-lab-sovereign.py panel",
+        "field-internet-unified.py panel",
+        "qemu-world-status.py json",
+        "hostess7-g16-online.py panel",
+        "connection-gatekeeper.py",
+        "field-sovereign-protocol-bridge.py json",
+        "ammonet-field.py panel",
+        "znetwork-orchestrator.py status",
+    ))]
     protected = (
         "field-dns.py",
         "field-dhcp.py",

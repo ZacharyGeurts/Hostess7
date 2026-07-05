@@ -78,6 +78,12 @@
       "role": "If Microsoft hits us — botnet kills them; DNS/DHCP protected",
       "ai_safe": true
     },
+    "dogshit-purge": {
+      "module": "lib/field-grok-spawner-kill.py",
+      "args": ["purge"],
+      "role": "Kill dogshit panel storms and unsafe services — DNS/DHCP stay online",
+      "ai_safe": true
+    },
     "fix-dns-dhcp-everywhere": {
       "script": "scripts/fix-dns-dhcp-everywhere.sh",
       "role": "Prune pile-up, recover hung DNS, promote DHCP primary everywhere",
