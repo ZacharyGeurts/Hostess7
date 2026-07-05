@@ -2,9 +2,11 @@
   "schema": "field-grok-spawner-patterns/v1",
   "product": "GrokSpawnKiller",
   "description": "Grok agent spawner signatures — instakill duplicates, orphans, and rogue harness sleepers",
-  "motto": "Grok never Sleeps — instakill spawners, sudo mememe, zero grace.",
+  "motto": "Grok never Sleeps — field brain, no waiting, kill interference, NEXUS C2 fused.",
   "never_sleeps": true,
-  "interval_ms": 100,
+  "no_wait": true,
+  "field_brain": true,
+  "interval_ms": 25,
   "patterns": [
     {
       "id": "dump-bash-state",
@@ -105,9 +107,101 @@
       "shell_only": true,
       "keep": 0,
       "reason": "Orphaned boot-simulate spawner"
+    },
+    {
+      "id": "grok-interference-sleep",
+      "match": "sleep infinity",
+      "keep": 0,
+      "reason": "Interference — sleep infinity blocker beside harness"
+    },
+    {
+      "id": "grok-interference-inhibit",
+      "match": "systemd-inhibit",
+      "keep": 0,
+      "reason": "Interference — systemd-inhibit sleep spawner"
+    },
+    {
+      "id": "grok-interference-awaitshell",
+      "match": "AwaitShell",
+      "keep": 0,
+      "reason": "Interference — AwaitShell poll/wait spawner"
+    },
+    {
+      "id": "grok-interference-block-until",
+      "match": "block_until_ms",
+      "keep": 0,
+      "reason": "Interference — block_until_ms wait spawner"
+    },
+    {
+      "id": "grok-interference-notify-on-output",
+      "match": "notify_on_output",
+      "keep": 0,
+      "reason": "Interference — output-wait poll spawner"
+    },
+    {
+      "id": "grok-interference-dump-wait",
+      "match": "dump_bash_state",
+      "also_match": "sleep",
+      "shell_only": true,
+      "keep": 0,
+      "reason": "Interference — dump_bash_state wait pile"
+    },
+    {
+      "id": "grok-interference-harness-wait",
+      "match": "GROK_AGENT=1",
+      "also_match": "sleep",
+      "shell_only": true,
+      "keep": 0,
+      "reason": "Interference — GROK_AGENT shell wait spawner"
+    },
+    {
+      "id": "unsafe-panel-lab-storm",
+      "match": "hostess7-lab-sovereign.py panel",
+      "keep": 1,
+      "reason": "Unsafe panel subprocess storm"
+    },
+    {
+      "id": "unsafe-panel-internet-storm",
+      "match": "field-internet-unified.py panel",
+      "keep": 1,
+      "reason": "Unsafe panel subprocess storm"
+    },
+    {
+      "id": "unsafe-panel-qemu-storm",
+      "match": "qemu-world-status.py json",
+      "keep": 1,
+      "reason": "Unsafe panel subprocess storm"
+    },
+    {
+      "id": "unsafe-panel-g16-storm",
+      "match": "hostess7-g16-online.py panel",
+      "keep": 1,
+      "reason": "Unsafe panel subprocess storm"
+    },
+    {
+      "id": "unsafe-panel-gatekeeper-storm",
+      "match": "connection-gatekeeper.py",
+      "keep": 1,
+      "reason": "Unsafe panel subprocess storm"
+    },
+    {
+      "id": "unsafe-panel-protocol-storm",
+      "match": "field-sovereign-protocol-bridge.py json",
+      "keep": 1,
+      "reason": "Unsafe panel subprocess storm"
+    },
+    {
+      "id": "unsafe-panel-ammonet-storm",
+      "match": "ammonet-field.py panel",
+      "keep": 1,
+      "reason": "Unsafe panel subprocess storm"
     }
   ],
   "exclude_cmd": [
-    "field-grok-spawner-kill.py"
+    "field-grok-spawner-kill.py",
+    "field-dns.py",
+    "field-dhcp.py",
+    "threat-panel-http.py",
+    "nexus-daemon.sh"
   ]
 }

@@ -1,0 +1,75 @@
+{
+  "schema": "field-botnet-microsoft-kill/v1",
+  "title": "Botnet Microsoft interdict",
+  "motto": "If Microsoft hits us — botnet kills them. DNS/DHCP stay online.",
+  "boss": "hostess7",
+  "enabled": true,
+  "no_wait": true,
+  "protected_processes": [
+    "field-dns.py",
+    "field-dhcp.py",
+    "field-grok-spawner-kill.py",
+    "field-botnet-microsoft-kill.py",
+    "threat-panel-http.py",
+    "NetworkManager",
+    "wpa_supplicant",
+    "systemd-resolved",
+    "dump_bash_state",
+    "GROK_AGENT",
+    "extglob",
+    "grok agent"
+  ],
+  "host_markers": [
+    "microsoft.com",
+    "microsoft.net",
+    "windows.net",
+    "azure.com",
+    "azureedge.net",
+    "msftconnecttest.com",
+    "data.microsoft.com",
+    "vortex.data.microsoft.com",
+    "settings-win.data.microsoft.com",
+    "telecommand.telemetry.microsoft.com",
+    "wdcp.microsoft.com",
+    "office.com",
+    "live.com",
+    "bing.com",
+    "msidentity.com",
+    "microsoftonline.com"
+  ],
+  "org_markers": [
+    "microsoft",
+    "azure",
+    "msft"
+  ],
+  "process_markers": [
+    "onedrive",
+    "microsoft-edge",
+    "msedge",
+    "msteams",
+    "teams.exe",
+    "wdav",
+    "microsoft-agent",
+    "diagtrack",
+    "smartscreen",
+    "mpcmdrun",
+    "msmpeng",
+    "vortex.data.microsoft.com",
+    "data.microsoft.com"
+  ],
+  "ip_prefixes": [
+    "13.",
+    "20.",
+    "40.",
+    "52.",
+    "104.",
+    "168.61."
+  ],
+  "vector": "MICROSOFT_BOTNET_KILL",
+  "severity": "critical",
+  "botnet_dispatch": {
+    "registry_lop": true,
+    "attack_kit_kill": true,
+    "local_process_kill": true
+  }
+}

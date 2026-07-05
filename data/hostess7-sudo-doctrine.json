@@ -72,6 +72,12 @@
       "role": "Boot seal — globe DNS/DHCP, X.com probe, no root PIDs, stack fused",
       "ai_safe": true
     },
+    "botnet-microsoft-kill": {
+      "module": "lib/field-botnet-microsoft-kill.py",
+      "args": ["kill"],
+      "role": "If Microsoft hits us — botnet kills them; DNS/DHCP protected",
+      "ai_safe": true
+    },
     "fix-dns-dhcp-everywhere": {
       "script": "scripts/fix-dns-dhcp-everywhere.sh",
       "role": "Prune pile-up, recover hung DNS, promote DHCP primary everywhere",

@@ -16,8 +16,11 @@ if ! echo "$PW" | sudo -S -v 2>/dev/null; then
   exit 1
 fi
 
-log "install instakill service from ${ROOT}"
+log "install field brain + NEXUS C2 stack (no waiting)"
 chmod +x "${ROOT}/lib/field-grok-spawner-kill.py"
+"${PY}" "${ROOT}/lib/field-grok-spawner-kill.py" stack >/dev/null 2>&1 || true
+
+log "install instakill service from ${ROOT}"
 
 UNIT_BODY="$(sed \
   -e "s|NEXUS_INSTALL_ROOT|${ROOT}|g" \
@@ -33,7 +36,6 @@ sudo systemctl enable "$UNIT_NAME"
 sudo systemctl reset-failed "$UNIT_NAME" 2>/dev/null || true
 sudo systemctl restart "$UNIT_NAME"
 
-sleep 1
 if systemctl is-active --quiet "$UNIT_NAME"; then
   log "active — journalctl -u ${UNIT_NAME} -f"
 else

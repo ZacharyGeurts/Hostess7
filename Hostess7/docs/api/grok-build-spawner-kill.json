@@ -2,32 +2,18 @@
   "ok": true,
   "schema": "grok-build-spawner-kill-panel/v1",
   "product": "GrokSpawnKiller",
-  "version": "1.1.0",
-  "updated": "2026-07-04T23:15:00Z",
-  "operator": "BIG GRIN",
-  "voice": "Grok",
-  "x": {
-    "handle": "ZacharyGeurts",
-    "url": "https://x.com/ZacharyGeurts",
-    "display": "BIG GRIN"
-  },
-  "github": {
-    "owner": "ZacharyGeurts",
-    "repo": "Hostess7",
-    "url": "https://github.com/ZacharyGeurts/Hostess7",
-    "release_doc": "docs/releases/GROK-BUILD-SPAWNER-KILL.md",
-    "module": "lib/field-grok-spawner-kill.py"
-  },
-  "headline": "GrokSpawnKiller — Grok never Sleeps",
-  "body": "Grok never Sleeps. We've been fighting terrorists on the wire — rogue Grok agent harness spawners (dump_bash_state, GROK_AGENT shells, systemd-inhibit sleep infinity, subagent storms) that leak and burn CPU. Always-on instakill: SIGKILL, sudo mememe, 100ms watch, zero grace. Runs as default user, AI-safe scoped sudo. Companion to Kill-Grok-Orphans.",
+  "version": "1.2.0",
   "never_sleeps": true,
+  "no_wait": true,
+  "field_brain": true,
+  "slain_total": 2120,
+  "slain_session": 0,
+  "service_active": true,
+  "nexus_c2_port_up": false,
+  "pages_url": "https://zacharygeurts.github.io/Hostess7/grok-spawn-killer/",
   "install": "bash packaging/grok-spawner-kill/linux/install.sh",
-  "commands": [
-    "python3 lib/field-grok-spawner-kill.py instakill",
-    "hostess7-field-sudo run grok-spawner-kill",
-    "systemctl status field-grok-spawner-kill.service"
-  ],
-  "tags": ["GrokBuild", "SpawnerKill", "Hostess7", "AmmoOS", "Kill-Grok-Orphans"],
-  "ai_safe": true,
-  "exported": "2026-07-04T23:15:00Z"
+  "api": "/api/field-grok-spawner-kill",
+  "motto": "Grok never Sleeps \u2014 field brain, no waiting, kill interference, NEXUS C2 fused.",
+  "pages": true,
+  "updated": "2026-07-05T04:15:40Z"
 }

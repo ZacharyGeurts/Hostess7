@@ -1,0 +1,163 @@
+:root {
+  --bg: #010403;
+  --surface: #0a1410;
+  --border: #1a3d2e;
+  --text: #e8fff4;
+  --muted: #7a9e8c;
+  --emerald: #1a9b6e;
+  --rose: #c9a66b;
+  --kill: #ff4d6d;
+  --glow: rgba(26, 155, 110, 0.35);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: radial-gradient(ellipse 120% 80% at 50% -20%, #0d2818 0%, var(--bg) 55%);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.gsk-shell { max-width: 44rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+.gsk-header { text-align: center; margin-bottom: 2rem; }
+
+.gsk-header h1 {
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.gsk-header h1 span { color: var(--emerald); }
+
+.gsk-tagline {
+  color: var(--rose);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.gsk-sub { color: var(--muted); margin-top: 0.75rem; font-size: 0.95rem; }
+
+.gsk-counter {
+  background: var(--surface);
+  border: 2px solid var(--emerald);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 0 40px var(--glow);
+  margin-bottom: 1.5rem;
+}
+
+.gsk-counter-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.gsk-counter-num {
+  font-size: clamp(3.5rem, 14vw, 6rem);
+  font-weight: 900;
+  color: var(--kill);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  margin: 0.25rem 0;
+}
+
+.gsk-counter-num.pulse { animation: gsk-pulse 0.35s ease; }
+
+@keyframes gsk-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.06); color: #fff; }
+  100% { transform: scale(1); }
+}
+
+.gsk-session { color: var(--emerald); font-size: 0.9rem; }
+
+.gsk-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.gsk-pill {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.gsk-pill.live { border-color: var(--emerald); color: var(--emerald); }
+
+.gsk-pill.warn { border-color: var(--rose); color: var(--rose); }
+
+.gsk-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.gsk-card h2 { font-size: 1rem; color: var(--emerald); margin-bottom: 0.5rem; }
+
+.gsk-card p, .gsk-card li { color: var(--muted); font-size: 0.9rem; }
+
+.gsk-card ul { margin: 0.5rem 0 0 1.1rem; }
+
+pre.gsk-cmd {
+  background: #020806;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  font-size: 0.78rem;
+  overflow-x: auto;
+  margin-top: 0.75rem;
+  color: var(--text);
+}
+
+.gsk-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+
+.gsk-btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.gsk-btn:hover { border-color: var(--emerald); }
+
+.gsk-btn--primary {
+  background: var(--emerald);
+  border-color: var(--emerald);
+  color: #021208;
+  font-weight: 700;
+}
+
+.gsk-log {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 1rem;
+  min-height: 1.2rem;
+}
+
+footer.gsk-foot {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+footer.gsk-foot a { color: var(--emerald); }

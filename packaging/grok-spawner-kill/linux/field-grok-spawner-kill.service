@@ -1,7 +1,8 @@
 [Unit]
-Description=GrokSpawnKiller — Grok never Sleeps; instakill rogue agent harness spawners
+Description=GrokSpawnKiller — field brain, no wait, kill interference, NEXUS C2 fused
 Documentation=file://NEXUS_INSTALL_ROOT/lib/field-grok-spawner-kill.py
-After=network.target
+After=network-online.target nexus-field-early.service
+Wants=network-online.target nexus-field-early.service
 StartLimitIntervalSec=120
 StartLimitBurst=10
 
@@ -11,17 +12,20 @@ Environment=NEXUS_INSTALL_ROOT=NEXUS_INSTALL_ROOT
 Environment=NEXUS_STATE_DIR=NEXUS_STATE_DIR
 Environment=HOSTESS7_SUDO_PW=mememe
 Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=HOME=/home/default
+ExecStartPre=/usr/bin/env python3 NEXUS_INSTALL_ROOT/lib/field-grok-spawner-kill.py instakill
 ExecStart=/usr/bin/env python3 NEXUS_INSTALL_ROOT/lib/field-grok-spawner-kill.py serve
 Restart=always
-RestartSec=2
-Nice=19
-IOSchedulingClass=idle
-CPUQuota=15%
-MemoryMax=64M
+RestartSec=0
+Nice=-5
+MemoryMax=96M
 User=default
 Group=default
-Environment=HOME=/home/default
 NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=NEXUS_STATE_DIR
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target

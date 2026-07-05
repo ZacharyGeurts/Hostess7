@@ -2227,6 +2227,42 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("field-everyone-counter.json")
 
+    gsk = _run_nl_script_json("lib/field-grok-spawner-kill.py", ["panel"], timeout=25)
+    if not gsk.get("schema"):
+        gsk = {
+            **stub,
+            "schema": "grok-build-spawner-kill-panel/v1",
+            "product": "GrokSpawnKiller",
+            "version": "1.2.0",
+            "slain_total": 0,
+            "never_sleeps": True,
+            "no_wait": True,
+            "field_brain": True,
+        }
+    gsk_doc = {
+        "ok": True,
+        "schema": "grok-build-spawner-kill-panel/v1",
+        "product": gsk.get("product", "GrokSpawnKiller"),
+        "version": "1.2.0",
+        "never_sleeps": bool(gsk.get("never_sleeps", True)),
+        "no_wait": bool(gsk.get("no_wait", True)),
+        "field_brain": bool(gsk.get("field_brain", True)),
+        "slain_total": int(gsk.get("slain_total") or 0),
+        "slain_session": int(gsk.get("slain_session") or 0),
+        "service_active": bool(gsk.get("service_active")),
+        "nexus_c2_port_up": bool(gsk.get("nexus_c2_port_up")),
+        "pages_url": f"{PAGES_BASE}/grok-spawn-killer/",
+        "install": "bash packaging/grok-spawner-kill/linux/install.sh",
+        "api": "/api/field-grok-spawner-kill",
+        "motto": gsk.get("motto", "Field brain — no waiting — interference killed"),
+        "pages": True,
+        "updated": gsk.get("updated"),
+    }
+    (API / "grok-build-spawner-kill.json").write_text(
+        json.dumps(gsk_doc, indent=2) + "\n", encoding="utf-8"
+    )
+    files.append("grok-build-spawner-kill.json")
+
     endpoint_reg = _run_nl_script_json("lib/field-endpoint-registry.py", ["json"], timeout=45)
     if not endpoint_reg.get("schema"):
         endpoint_reg = {

@@ -780,6 +780,70 @@
     if (path === "/api/field-sense-secure-kill") {
       return jsonResponse(await loadStatic("/api/field-sense-secure-kill.json"));
     }
+    if (
+      path === "/api/field-grok-spawner-kill" ||
+      path === "/api/grok-spawn-killer" ||
+      path.startsWith("/api/field-grok-spawner-kill/") ||
+      path.startsWith("/api/grok-spawn-killer/")
+    ) {
+      const base = path.startsWith("/api/grok-spawn-killer") ? "/api/grok-spawn-killer" : "/api/field-grok-spawner-kill";
+      const sub = path.slice(base.length).replace(/^\//, "") || "panel";
+      const loopPath = "/api/field-grok-spawner-kill" + (sub && sub !== "panel" ? "/" + sub : "");
+      if (method === "GET" && (!sub || sub === "panel")) {
+        try {
+          const r = await global.__H7_ORIG_FETCH__(LOOPBACK + "/api/field-grok-spawner-kill", { cache: "no-store" });
+          if (r.ok) return jsonResponse(await r.json());
+        } catch (_e) {}
+        try {
+          const doc = await loadStatic("/api/grok-build-spawner-kill.json");
+          doc.pages = true;
+          doc.loopback = false;
+          return jsonResponse(doc);
+        } catch (_e2) {
+          return okStub({
+            schema: "field-grok-spawner-kill/v1",
+            product: "GrokSpawnKiller",
+            slain_total: 0,
+            no_wait: true,
+            field_brain: true,
+            pages: true,
+          });
+        }
+      }
+      if (method === "POST") {
+        try {
+          const r = await global.__H7_ORIG_FETCH__(LOOPBACK + loopPath, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: (opts && opts.body) || "{}",
+            cache: "no-store",
+          });
+          if (r.ok) return jsonResponse(await r.json());
+        } catch (_e) {}
+        const staticDoc = await loadStatic("/api/grok-build-spawner-kill.json").catch(() => ({}));
+        if (sub === "install" || sub === "setup") {
+          return jsonResponse({
+            ok: false,
+            pages: true,
+            no_wait: true,
+            field_brain: true,
+            error: "loopback_required",
+            hint: "Boot NEXUS C2 on :9477 — bash packaging/grok-spawner-kill/linux/install.sh",
+            slain_total: Number(staticDoc.slain_total || 0),
+            pages_url: staticDoc.pages_url || "https://zacharygeurts.github.io/Hostess7/grok-spawn-killer/",
+            install: staticDoc.install || "bash packaging/grok-spawner-kill/linux/install.sh",
+          });
+        }
+        if (sub === "instakill" || sub === "kill") {
+          return okStub({
+            ok: false,
+            cooked_total: 0,
+            slain_total: Number(staticDoc.slain_total || 0),
+            hint: "Instakill needs loopback panel",
+          });
+        }
+      }
+    }
     if (path === "/api/field-final-eye-block" || path === "/api/final-eye-block") {
       return jsonResponse(await loadStatic("/api/field-final-eye-block.json"));
     }
