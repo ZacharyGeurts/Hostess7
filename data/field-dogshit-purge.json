@@ -1,8 +1,23 @@
 {
   "schema": "field-dogshit-purge/v1",
-  "motto": "Kill the dogshit — keep DNS, DHCP, field brain, one grok harness.",
+  "motto": "Kill the dogshit — keep DNS, DHCP, field brain, one grok harness. Never remove from list.",
+  "never_remove_from_list": true,
+  "append_only_registry": ".nexus-state/field-dogshit-kill-registry.jsonl",
   "panel_storms_keep_when_c2_up": 1,
   "panel_storms_keep_when_c2_down": 0,
+  "queue_storms": [
+    "github-pages-queue.sh",
+    "publish-hostess7-pages.sh",
+    "publish-pages.sh",
+    "publish-stack-pages.sh",
+    "publish-ammoos-pages.sh",
+    "publish-ammoos-hub-pages.sh",
+    "publish-profile-pages.sh",
+    "publish-field-pages.sh",
+    "git-publish.sh",
+    "hostess7_pages_surfaces_build.py",
+    "publish-hostess7-github.sh"
+  ],
   "panel_storms": [
     "hostess7-lab-sovereign.py panel",
     "field-internet-unified.py panel",
@@ -49,7 +64,13 @@
     "smart-wire.py json",
     "field-clipboard-wire.py json",
     "field-never-down.py ensure",
-    "dig @127.0.0.1"
+    "dig @127.0.0.1",
+    "github-pages-queue.sh",
+    "publish-hostess7-pages.sh",
+    "publish-pages.sh",
+    "publish-stack-pages.sh",
+    "publish-ammoos-pages.sh",
+    "hostess7_pages_surfaces_build.py"
   ],
   "always_kill": [
     "grok-firmware-audit.sh",

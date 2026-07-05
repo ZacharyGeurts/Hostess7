@@ -781,6 +781,27 @@
       return jsonResponse(await loadStatic("/api/field-sense-secure-kill.json"));
     }
     if (
+      path === "/api/hostess7-big-grin-pwnership" ||
+      path === "/api/big-grin-pwnership" ||
+      path === "/api/operator-pwnership" ||
+      path === "/api/look-pwnership"
+    ) {
+      try {
+        const r = await global.__H7_ORIG_FETCH__(LOOPBACK + "/api/hostess7-big-grin-pwnership", { cache: "no-store" });
+        if (r.ok) return jsonResponse(await r.json());
+      } catch (_e) {}
+      try {
+        return jsonResponse(await loadStatic("/api/hostess7-big-grin-pwnership.json"));
+      } catch (_e2) {
+        return okStub({
+          schema: "hostess7-big-grin-pwnership/v1",
+          pages: true,
+          hub: "/Hostess7/big-grin-pwnership/",
+          motto: "What went down gets a witness page.",
+        });
+      }
+    }
+    if (
       path === "/api/field-grok-spawner-kill" ||
       path === "/api/grok-spawn-killer" ||
       path.startsWith("/api/field-grok-spawner-kill/") ||

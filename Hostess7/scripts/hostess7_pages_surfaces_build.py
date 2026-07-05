@@ -2227,6 +2227,14 @@ def _export_apis(desktop: dict[str, Any]) -> list[str]:
     )
     files.append("field-everyone-counter.json")
 
+    pwn = _run_nl_script_json("lib/hostess7-big-grin-pwnership.py", ["propagate"], timeout=90)
+    if pwn.get("schema"):
+        (API / "hostess7-big-grin-pwnership.json").write_text(
+            json.dumps({**pwn, "pages": True, "pages_base": PAGES_BASE}, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        files.append("hostess7-big-grin-pwnership.json")
+
     gsk = _run_nl_script_json("lib/field-grok-spawner-kill.py", ["panel"], timeout=25)
     if not gsk.get("schema"):
         gsk = {

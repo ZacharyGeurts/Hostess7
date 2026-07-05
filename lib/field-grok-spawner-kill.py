@@ -252,7 +252,34 @@ def purge_dogshit() -> dict[str, Any]:
     killed: dict[str, list[int]] = {}
     rows = _iter_proc()
 
-    for pattern in doc.get("panel_storms") or []:
+    registry_path = STATE / "field-dogshit-kill-registry.jsonl"
+
+    def _record_kill(pattern: str, pid: int, *, kind: str = "panel_storm") -> None:
+        try:
+            with registry_path.open("a", encoding="utf-8") as fh:
+                fh.write(
+                    json.dumps(
+                        {
+                            "ts": _utc(),
+                            "pattern": pattern,
+                            "pid": pid,
+                            "kind": kind,
+                            "c2_up": c2_up,
+                            "never_remove": True,
+                        },
+                        ensure_ascii=False,
+                    )
+                    + "\n"
+                )
+        except OSError:
+            pass
+
+    all_storms = list(doc.get("panel_storms") or []) + list(doc.get("queue_storms") or [])
+    seen_storm: set[str] = set()
+    for pattern in all_storms:
+        if pattern in seen_storm:
+            continue
+        seen_storm.add(pattern)
         pids: list[int] = []
         for pid, _, cmdline in rows:
             if not cmdline or _excluded(cmdline, excludes):
@@ -265,6 +292,8 @@ def purge_dogshit() -> dict[str, Any]:
         for pid in victims:
             if _instakill([pid], sudo_pw=pw):
                 killed.setdefault(str(pattern), []).append(pid)
+                kind = "queue_storm" if pattern in (doc.get("queue_storms") or []) else "panel_storm"
+                _record_kill(str(pattern), pid, kind=kind)
 
     for pattern in doc.get("always_kill") or []:
         pids = []
@@ -276,6 +305,7 @@ def purge_dogshit() -> dict[str, Any]:
         for pid in pids:
             if _instakill([pid], sudo_pw=pw):
                 killed.setdefault(f"always:{pattern}", []).append(pid)
+                _record_kill(str(pattern), pid, kind="always_kill")
 
     unsafe_units: list[str] = []
     for unit in doc.get("unsafe_systemd") or []:
