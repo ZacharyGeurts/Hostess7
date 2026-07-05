@@ -1,23 +1,25 @@
 {
   "schema": "field-dns-dhcp-collision-guard/v1",
-  "title": "DNS/DHCP collision guard — lease hygiene and sole serve",
+  "title": "DNS/DHCP collision guard — sole authority, connection-safe rescue",
   "boss": "hostess7",
-  "motto": "Internet open for users. Anything making unclean internet is hostile.",
+  "motto": "Sole IPv4 DHCP/DNS — ZNetwork sole internet pipe. Live leases quarantined never killed.",
   "policy": {
     "unclean_is_hostile": true,
     "prevent_lease_collisions": true,
     "ping_probe_before_offer": false,
     "prune_duplicate_serve_loops": true,
-    "reject_foreign_resolvers_on_primary": false,
+    "reject_foreign_resolvers_on_primary": true,
     "sole_authority_required": true,
-    "only_our_dns_dhcp": false,
-    "foreign_server_is_threat": false,
-    "eradicate_on_attempt": false,
-    "nft_block_foreign_offers": false,
-    "internet_open": true,
+    "only_our_dns_dhcp": true,
+    "foreign_server_is_threat": true,
+    "eradicate_on_attempt": true,
+    "nft_block_foreign_offers": true,
+    "internet_open": false,
+    "preserve_lease_connections": true,
+    "quarantine_not_kill": true,
     "accuracy": "device_mapped_not_numbers"
   },
   "module": "lib/field-dns-dhcp-collision-guard.py",
   "api": "/api/field-dns-dhcp-collision-guard",
-  "ironclad_cite": "ironclad:collision-guard:2"
+  "ironclad_cite": "ironclad:collision-guard:3"
 }

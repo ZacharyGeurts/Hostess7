@@ -1,20 +1,23 @@
 {
   "schema": "field-internet-unrestrict/v1",
-  "title": "Internet unrestricted — no blocks for anyone behind restricted",
+  "title": "Sole internet — ZNetwork pipe open; sole DHCP/DNS authority enforced",
   "boss": "hostess7",
-  "motto": "Internet open for everyone. Unclean makers — restriction, hijack, poison — are hostile and get fried.",
+  "motto": "ZNetwork is the sole internet in/out. Users browse freely — only our Truth DNS + Field DHCP answer leases.",
   "policy": {
-    "internet_open": true,
+    "internet_open": false,
+    "sole_internet_pipe": true,
     "unclean_is_hostile": true,
-    "foreign_resolver_block": false,
-    "foreign_dns_dhcp_threat_block": false,
-    "foreign_server_is_threat": false,
-    "eradicate_on_attempt": false,
-    "suppress_foreign_dns_dhcp_worldwide": false,
-    "remove_nft_restrictions": true,
-    "it_just_works": true
+    "foreign_resolver_block": true,
+    "foreign_dns_dhcp_threat_block": true,
+    "foreign_server_is_threat": true,
+    "eradicate_on_attempt": true,
+    "suppress_foreign_dns_dhcp_worldwide": true,
+    "remove_nft_restrictions": false,
+    "it_just_works": true,
+    "preserve_lease_connections": true,
+    "quarantine_not_kill": true
   },
   "module": "lib/field-internet-unrestrict.py",
   "api": "/api/field-internet-unrestrict",
-  "ironclad_cite": "ironclad:internet-unrestrict:1"
+  "ironclad_cite": "ironclad:internet-unrestrict:2"
 }

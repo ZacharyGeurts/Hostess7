@@ -273,6 +273,46 @@ def _export_ammodrive() -> list[str]:
     return files
 
 
+def _export_ammonet_dns() -> list[str]:
+    files: list[str] = []
+    doc = _run_install_json("lib/ammonet-dns-zones.py", ["panel"], timeout=25)
+    if not doc:
+        doctrine_path = INSTALL / "data" / "ammonet-dns-zones.json"
+        if doctrine_path.is_file():
+            try:
+                doc = h7_read_json(doctrine_path)
+                doc["ok"] = True
+                doc["zone_count"] = len(doc.get("zones") or [])
+                doc["record_count"] = sum(len(z.get("records") or []) for z in (doc.get("zones") or []))
+            except Exception:
+                doc = {}
+    if doc:
+        doc["pages"] = True
+        doc["lane"] = "github-mirror"
+        doc["sole_dns_authority"] = bool(doc.get("sole_dns_authority", True))
+        doc["exported"] = _ts()
+        files.append(_write("ammonet-dns-zones.json", doc).name)
+    return files
+
+
+def _export_truth_keepalive() -> list[str]:
+    files: list[str] = []
+    panel_path = Path(os.environ.get("NEXUS_STATE_DIR", INSTALL / ".nexus-state")) / "field-truth-keepalive-panel.json"
+    if panel_path.is_file():
+        try:
+            doc = h7_read_json(panel_path)
+        except Exception:
+            doc = {}
+    else:
+        doc = _run_install_json("lib/field-truth-keepalive.py", ["json"], timeout=30)
+    if doc:
+        doc["pages"] = True
+        doc["lane"] = "github-mirror"
+        doc["exported"] = _ts()
+        files.append(_write("field-truth-keepalive.json", doc).name)
+    return files
+
+
 def _export_operator_x() -> None:
     import subprocess
 
@@ -315,6 +355,8 @@ def export_all(*, full: bool = True) -> dict[str, Any]:
         files.append(_write("videogames-index.json", _export_search_index("videogames", "videogames", "mario zelda")).name)
         files.append(_write("ask-seeds.json", _export_ask_seeds()).name)
     files.extend(_export_ammodrive())
+    files.extend(_export_ammonet_dns())
+    files.extend(_export_truth_keepalive())
     total = sum((API / f).stat().st_size for f in files if (API / f).is_file())
     return {"ok": True, "lane": "github-mirror", "api_dir": str(API), "files": files, "bytes": total, "exported": _ts()}
 

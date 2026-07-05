@@ -307,6 +307,60 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         ipv4_enum = _load(STATE / "field-ipv4-enumerate-panel.json", {})
 
     enum_counts = ipv4_enum.get("counts") or {}
+
+    rescue: dict[str, Any] = _load(STATE / "field-rescue-ingress-panel.json", {})
+    if not rescue.get("ok"):
+        try:
+            rmod = _mod("lib/field-rescue-ingress.py", "rescue_ingress")
+            if rmod and hasattr(rmod, "rescue"):
+                rescue = rmod.rescue(write=False)
+        except Exception:
+            rescue = {}
+
+    github_sweep: dict[str, Any] = {}
+    try:
+        sweep_mod = _mod("lib/field-github-planet-sweep.py", "github_planet_sweep")
+        if sweep_mod and hasattr(sweep_mod, "sweep"):
+            github_sweep = sweep_mod.sweep(probe=False, record_fixes=False, use_gh=False)
+        else:
+            github_sweep = _load(STATE / "field-github-planet-sweep-panel.json", {})
+    except Exception:
+        github_sweep = _load(STATE / "field-github-planet-sweep-panel.json", {})
+    gh_index = github_sweep.get("github_index") or {}
+    gh_dns = list(gh_index.get("dns_index") or [])
+    gh_dhcp = list(gh_index.get("dhcp_index") or [])
+    if gh_dns:
+        all_dns = all_dns + [
+            {
+                "kind": "dns",
+                "source": "github_planet_sweep",
+                "name": r.get("name"),
+                "type": r.get("type"),
+                "value": r.get("value"),
+                "repo_slug": r.get("repo_slug"),
+                "authority": r.get("authority") or "hostess7_truth",
+                "absorbed": True,
+            }
+            for r in gh_dns if isinstance(r, dict)
+        ]
+    if gh_dhcp:
+        all_dhcp = all_dhcp + [
+            {
+                "kind": "dhcp",
+                "source": "github_planet_sweep",
+                "lease_id": r.get("lease_id"),
+                "mac": r.get("mac"),
+                "ip": r.get("ip"),
+                "dns": r.get("dns"),
+                "hostname": r.get("hostname"),
+                "repo_slug": r.get("repo_slug"),
+                "quarantine": r.get("quarantine"),
+                "authority": r.get("authority") or "hostess7",
+                "absorbed": True,
+            }
+            for r in gh_dhcp if isinstance(r, dict)
+        ]
+
     if enum_counts.get("ipv4_enumerated_total"):
         planet_dhcp = int(enum_counts.get("planet_dhcp_total") or enum_counts["ipv4_enumerated_total"])
         planet_dns = int(enum_counts.get("planet_dns_total") or enum_counts["ipv4_enumerated_total"])
@@ -398,58 +452,6 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "api": doctrine.get("api", "/api/field-planetary-dns-dhcp"),
         "ironclad_cite": doctrine.get("ironclad_cite"),
     }
-    rescue: dict[str, Any] = _load(STATE / "field-rescue-ingress-panel.json", {})
-    if not rescue.get("ok"):
-        try:
-            rmod = _mod("lib/field-rescue-ingress.py", "rescue_ingress")
-            if rmod and hasattr(rmod, "rescue"):
-                rescue = rmod.rescue(write=False)
-        except Exception:
-            rescue = {}
-
-    github_sweep: dict[str, Any] = {}
-    try:
-        sweep_mod = _mod("lib/field-github-planet-sweep.py", "github_planet_sweep")
-        if sweep_mod and hasattr(sweep_mod, "sweep"):
-            github_sweep = sweep_mod.sweep(probe=False, record_fixes=False, use_gh=False)
-        else:
-            github_sweep = _load(STATE / "field-github-planet-sweep-panel.json", {})
-    except Exception:
-        github_sweep = _load(STATE / "field-github-planet-sweep-panel.json", {})
-    gh_index = github_sweep.get("github_index") or {}
-    gh_dns = list(gh_index.get("dns_index") or [])
-    gh_dhcp = list(gh_index.get("dhcp_index") or [])
-    if gh_dns:
-        all_dns = all_dns + [
-            {
-                "kind": "dns",
-                "source": "github_planet_sweep",
-                "name": r.get("name"),
-                "type": r.get("type"),
-                "value": r.get("value"),
-                "repo_slug": r.get("repo_slug"),
-                "authority": r.get("authority") or "hostess7_truth",
-                "absorbed": True,
-            }
-            for r in gh_dns if isinstance(r, dict)
-        ]
-    if gh_dhcp:
-        all_dhcp = all_dhcp + [
-            {
-                "kind": "dhcp",
-                "source": "github_planet_sweep",
-                "lease_id": r.get("lease_id"),
-                "mac": r.get("mac"),
-                "ip": r.get("ip"),
-                "dns": r.get("dns"),
-                "hostname": r.get("hostname"),
-                "repo_slug": r.get("repo_slug"),
-                "quarantine": r.get("quarantine"),
-                "authority": r.get("authority") or "hostess7",
-                "absorbed": True,
-            }
-            for r in gh_dhcp if isinstance(r, dict)
-        ]
 
     collision: dict[str, Any] = {}
     try:

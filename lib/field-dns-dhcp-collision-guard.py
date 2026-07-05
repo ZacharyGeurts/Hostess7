@@ -35,13 +35,15 @@ def _utc() -> str:
 
 
 def _internet_unrestricted() -> bool:
-    if os.environ.get("NEXUS_FIELD_INTERNET_UNRESTRICT", "1").strip().lower() in ("0", "false", "no", "off"):
-        return False
     unrestrict = _load(UNRESTRICT_DOCTRINE, {})
-    if (unrestrict.get("policy") or {}).get("internet_open"):
-        return True
+    if not (unrestrict.get("policy") or {}).get("internet_open", True):
+        return False
     doctrine = _load(DOCTRINE, {})
     policy = doctrine.get("policy") or {}
+    if not policy.get("internet_open", True):
+        return False
+    if os.environ.get("NEXUS_FIELD_INTERNET_UNRESTRICT", "1").strip().lower() in ("0", "false", "no", "off"):
+        return False
     return not policy.get("foreign_server_is_threat", True)
 
 
@@ -199,6 +201,12 @@ def _foreign_dns_listeners(inc: dict[str, Any], *, phase: str, nexus_running: bo
             continue
         if addr in ("127.0.0.1", "::1", QUEEN_LAN) or bind.startswith("127.0.0.1:53") or bind.startswith(f"{QUEEN_LAN}:53"):
             continue
+        if nexus_running and (
+            addr in ("0.0.0.0", "::", "*")
+            or bind.startswith("0.0.0.0:53")
+            or bind.startswith("[::]:53")
+        ):
+            continue
         rows.append({
             "kind": "foreign_dns_server",
             "bind": bind,
@@ -218,7 +226,7 @@ def _foreign_dhcp_listeners(inc: dict[str, Any], *, nexus_running: bool) -> list
         if not isinstance(row, dict):
             continue
         bind = str(row.get("bind") or "")
-        if nexus_running and ("0.0.0.0:67" in bind or f"{QUEEN_LAN}:67" in bind):
+        if nexus_running and ("0.0.0.0:67" in bind or f"{QUEEN_LAN}:67" in bind or bind.startswith("[::]:67")):
             continue
         rows.append({
             "kind": "foreign_dhcp_server",
@@ -492,7 +500,8 @@ def detect_collisions(*, refresh_takeover: bool = False) -> dict[str, Any]:
         "foreign_server_threats": foreign_threats,
         "foreign_threat_count": len(foreign_threats) if _unclean_is_hostile() else (0 if _internet_unrestricted() else len(foreign_threats)),
         "unclean_is_hostile": _unclean_is_hostile(),
-        "only_our_dns_dhcp": not _internet_unrestricted() and not _unclean_is_hostile(),
+        "only_our_dns_dhcp": bool((_load(DOCTRINE, {}).get("policy") or {}).get("only_our_dns_dhcp"))
+        or (not _internet_unrestricted() and not _unclean_is_hostile()),
         "internet_open": _internet_unrestricted(),
         "sole_authority": sole,
         "takeover_phase": takeover.get("phase"),

@@ -1118,6 +1118,23 @@
         return okStub({ schema: "ammonet-field/v1", product: "AmmoNet", pages: true });
       }
     }
+    if (
+      path === "/api/ammonet-dns-zones" ||
+      path === "/api/ammonet/dns-zones" ||
+      path === "/api/ammonet-dns"
+    ) {
+      try {
+        return jsonResponse(await loadStatic("/api/ammonet-dns-zones.json"));
+      } catch (_e) {
+        return okStub({
+          schema: "ammonet-dns-zones-panel/v1",
+          product: "AmmoNet",
+          sole_dns_authority: true,
+          pages: true,
+          pages_base: "https://zacharygeurts.github.io/Hostess7/",
+        });
+      }
+    }
     if (path === "/api/ammonet/meld" && method === "POST") {
       try {
         const r = await global.__H7_ORIG_FETCH__(LOOPBACK + "/api/ammonet/meld", {
@@ -1128,6 +1145,20 @@
         if (r.ok) return jsonResponse(await r.json());
       } catch (_e) {}
       return okStub({ melded: true, pages: true, note: "Full steel meld on loopback panel" });
+    }
+    if (path === "/api/field-truth-keepalive" || path === "/api/truth-keepalive") {
+      try {
+        return jsonResponse(await loadStatic("/api/field-truth-keepalive.json"));
+      } catch (_e) {
+        return okStub({
+          schema: "field-truth-keepalive/v1",
+          ok: true,
+          sole_internet: true,
+          pages: true,
+          motto: "Truth keepalive — retruth on loopback panel",
+          loopback_upgrade: LOOPBACK,
+        });
+      }
     }
     if (
       path === "/api/ammodrive-public" ||

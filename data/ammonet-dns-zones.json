@@ -1,11 +1,20 @@
 {
   "schema": "ammonet-dns-zones/v1",
-  "title": "AmmoNet sovereign DNS — all TLDs we host",
+  "title": "AmmoNet sovereign DNS — WE are DNS for every AmmoNet domain",
   "product": "AmmoNet",
-  "motto": "ammonet.com · ammonet.net · ammonet.org · all of them — Truth DNS + Field DHCP",
+  "motto": "ammonet.com · ammonet.net · ammonet.org · all of them — Truth DNS + Field DHCP · sole authority",
   "authority": "127.0.0.1",
   "loopback_ipv4": "127.0.0.1",
   "loopback_ipv6": "::1",
+  "sole_dns_authority": true,
+  "pages_base": "https://zacharygeurts.github.io/Hostess7/",
+  "web_presence": {
+    "home": "https://zacharygeurts.github.io/Hostess7/",
+    "ammonet": "https://zacharygeurts.github.io/Hostess7/ammonet/",
+    "desktop": "https://zacharygeurts.github.io/Hostess7/desktop/",
+    "command": "https://zacharygeurts.github.io/Hostess7/command/",
+    "api": "https://zacharygeurts.github.io/Hostess7/api/"
+  },
   "mail_host": "mail.ammonet.net",
   "web_host": "www.ammonet.com",
   "dhcp_domain": "ammonet.net",
@@ -22,30 +31,40 @@
       "zone": "ammonet.com",
       "records": [
         {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
-        {"name": "www", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "www", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
+        {"name": "pages", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
         {"name": "mail", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "dns", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "dhcp", "type": "A", "value": "127.0.0.1", "ttl": 300},
         {"name": "@", "type": "MX", "value": "10 mail.ammonet.net", "ttl": 300},
-        {"name": "@", "type": "TXT", "value": "v=spf1 a mx -all", "ttl": 300}
+        {"name": "@", "type": "TXT", "value": "v=spf1 a mx -all", "ttl": 300},
+        {"name": "@", "type": "TXT", "value": "AmmoNet sole DNS — pages=zacharygeurts.github.io/Hostess7/", "ttl": 300}
       ]
     },
     {
       "zone": "ammonet.net",
       "records": [
         {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
-        {"name": "www", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "www", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
+        {"name": "pages", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
         {"name": "mail", "type": "A", "value": "127.0.0.1", "ttl": 300},
         {"name": "smtp", "type": "A", "value": "127.0.0.1", "ttl": 300},
         {"name": "imap", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "dns", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "dhcp", "type": "A", "value": "127.0.0.1", "ttl": 300},
         {"name": "@", "type": "MX", "value": "10 mail.ammonet.net", "ttl": 300},
-        {"name": "@", "type": "TXT", "value": "v=spf1 a mx -all", "ttl": 300}
+        {"name": "@", "type": "TXT", "value": "v=spf1 a mx -all", "ttl": 300},
+        {"name": "@", "type": "TXT", "value": "Field DHCP domain — sole lease authority", "ttl": 300}
       ]
     },
     {
       "zone": "ammonet.org",
       "records": [
         {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
-        {"name": "www", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "www", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
+        {"name": "pages", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
         {"name": "mail", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "dns", "type": "A", "value": "127.0.0.1", "ttl": 300},
         {"name": "@", "type": "MX", "value": "10 mail.ammonet.net", "ttl": 300}
       ]
     },
@@ -53,22 +72,27 @@
       "zone": "ammonet.io",
       "records": [
         {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
-        {"name": "api", "type": "A", "value": "127.0.0.1", "ttl": 300},
-        {"name": "pages", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300}
+        {"name": "www", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
+        {"name": "api", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
+        {"name": "pages", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
+        {"name": "dns", "type": "A", "value": "127.0.0.1", "ttl": 300}
       ]
     },
     {
       "zone": "ammonet.dev",
       "records": [
         {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
-        {"name": "field", "type": "A", "value": "127.0.0.1", "ttl": 300}
+        {"name": "www", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
+        {"name": "field", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "desktop", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300}
       ]
     },
     {
       "zone": "ammonet.app",
       "records": [
         {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
-        {"name": "desktop", "type": "A", "value": "127.0.0.1", "ttl": 300}
+        {"name": "www", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300},
+        {"name": "desktop", "type": "CNAME", "value": "zacharygeurts.github.io", "ttl": 300}
       ]
     },
     {
@@ -76,7 +100,8 @@
       "records": [
         {"name": "@", "type": "A", "value": "127.0.0.1", "ttl": 300},
         {"name": "truth", "type": "A", "value": "127.0.0.1", "ttl": 300},
-        {"name": "dhcp", "type": "A", "value": "127.0.0.1", "ttl": 300}
+        {"name": "dhcp", "type": "A", "value": "127.0.0.1", "ttl": 300},
+        {"name": "dns", "type": "A", "value": "127.0.0.1", "ttl": 300}
       ]
     }
   ],
