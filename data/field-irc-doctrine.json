@@ -1,0 +1,38 @@
+{
+  "schema": "field-irc-doctrine/v1",
+  "title": "Field IRC — Ironclad BSP distributed chat",
+  "motto": "BSP from Ironclad · 100 servers per batch · bi-comm every rack · Grok watches unless asked",
+  "bsp": {
+    "authority": "ironclad-field-sanity",
+    "algorithm": "composite_bsp",
+    "batch_size": 100,
+    "ironclad_boost": 1.08,
+    "distribute_dns_dhcp": true,
+    "bicomm_racks": true,
+    "world_room": "mesh-global"
+  },
+  "reserved_usernames": {
+    "owner": "Zachary Geurts",
+    "owner_ids": ["zacharygeurts", "zachary-geurts", "zachary geurts"],
+    "names": {
+      "Grok": {
+        "aliases": ["grok"],
+        "mode": "watch_only",
+        "speak_when": "as_grok_from_owner",
+        "registered_to": "Zachary Geurts"
+      },
+      "Big Grin": {
+        "aliases": ["big grin", "big-grin", "biggrin", "BIG GRIN"],
+        "mode": "owner_only",
+        "registered_to": "Zachary Geurts"
+      }
+    }
+  },
+  "integrations": {
+    "field_irc": "lib/field-irc.py",
+    "field_irc_bsp": "lib/field-irc-bsp.py",
+    "rack_chat": "lib/field-rack-grok-chat.py",
+    "dns_dhcp_fix": "lib/field-dns-dhcp-fix.py",
+    "hostess7_people": "Hostess7/scripts/field_people_registry.py"
+  }
+}

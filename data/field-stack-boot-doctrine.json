@@ -1,0 +1,56 @@
+{
+  "schema": "field-stack-boot-doctrine/v1",
+  "title": "Field stack boot — phased stop at AmmoOS",
+  "motto": "Full NEXUS C2 → KILROY → KILROY iPXE → AmmoOS → stop. Queen Browser is a window icon only.",
+  "boot_stages": [
+    {
+      "id": "nexus_c2",
+      "label": "NEXUS C2 · full",
+      "role": "command_security_defense",
+      "port": 9477,
+      "modules": [
+        "lib/threat-panel-http.py",
+        "lib/connection-gatekeeper.py",
+        "lib/field-dns-dhcp-fix.py",
+        "lib/field-war-hardening.py"
+      ]
+    },
+    {
+      "id": "kilroy",
+      "label": "KILROY PC core",
+      "role": "pc_core_syscall_network_defense",
+      "module": "lib/kilroy-core.sh",
+      "services": "lib/kilroy-boot-services.py"
+    },
+    {
+      "id": "kilroy_ipxe",
+      "label": "KILROY iPXE",
+      "role": "netboot_ping_lane",
+      "module": "lib/field-ping.py",
+      "lineage": "KILROY iPXE ping_cmd.c"
+    },
+    {
+      "id": "ammoos_desktop",
+      "label": "AmmoOS desktop",
+      "role": "field_os_desktop",
+      "surface": "/field",
+      "stop_after": true
+    }
+  ],
+  "on_demand": {
+    "queen_browser": {
+      "id": "queen",
+      "label": "Queen Browser",
+      "role": "window_icon_new_window",
+      "port": 9481,
+      "shell": "/world/browser.html",
+      "not_in_boot": true
+    }
+  },
+  "env": {
+    "NEXUS_STACK_BOOT_PHASED": "1",
+    "NEXUS_FIELD_LAUNCH_BROWSER": "0",
+    "NEXUS_AUTO_LAUNCH_QUEEN_BROWSER": "0",
+    "NEXUS_QUEEN_LAYER_AUTOSTART": "0"
+  }
+}

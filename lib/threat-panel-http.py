@@ -7071,6 +7071,33 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
+        if path in ("/api/field-irc", "/api/field-irc/"):
+            script = INSTALL_ROOT / "lib" / "field-irc.py"
+            if script.is_file():
+                payload = _nexus_py_json(script, ["json"], timeout=45)
+            else:
+                payload = {"schema": "field-irc/v1", "ok": False, "error": "field_irc_missing"}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-stack-boot", "/api/field-stack-boot/"):
+            script = INSTALL_ROOT / "lib" / "field-stack-boot.py"
+            if script.is_file():
+                payload = _nexus_py_json(script, ["json"], timeout=120)
+            else:
+                payload = {"schema": "field-stack-boot/v1", "ok": False, "error": "field_stack_boot_missing"}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/ammoos-incorporate/check", "/api/ammoos-incorporate/status"):
+            script = INSTALL_ROOT / "lib" / "ammoos-incorporate.py"
+            if script.is_file():
+                payload = _nexus_py_json(script, ["json"], timeout=60)
+            else:
+                payload = {"schema": "ammoos-incorporate/v1", "ok": False, "error": "ammoos_incorporate_missing"}
+            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            return
+
         if path in ("/api/field-eol-code", "/api/field-eol-code/"):
             script = INSTALL_ROOT / "lib" / "field-eol-code.py"
             if script.is_file():
@@ -9431,6 +9458,8 @@ class Handler(BaseHTTPRequestHandler):
                 target = PANEL_DIR / "field-ellie-diag.html"
         elif path in ("/field-gnu-terminal", "/field-gnu-terminal/", "/terminal", "/terminal/"):
             target = PANEL_DIR / "field-gnu-terminal-embed.html"
+        elif path in ("/field-irc-chat", "/field-irc-chat/"):
+            target = PANEL_DIR / "field-irc-chat-embed.html"
         elif path in ("/eol-code", "/eol-code/"):
             target = PANEL_DIR / "eol-code.html"
         elif path in ("/controller-test", "/controller-test/"):
@@ -10911,6 +10940,78 @@ class Handler(BaseHTTPRequestHandler):
                 payload = _parse_subprocess_json(proc, script="field-eol-code.py")
             except subprocess.TimeoutExpired:
                 payload = {"ok": False, "error": "timeout", "schema": "field-eol-code-panel/v1"}
+            code = 200 if (payload or {}).get("ok", True) else 400
+            self._send(code, json.dumps(payload or {"ok": False, "error": "empty_payload"}, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-irc", "/api/field-irc/"):
+            script = INSTALL_ROOT / "lib" / "field-irc.py"
+            if not script.is_file():
+                self._send(503, json.dumps({"ok": False, "error": "field_irc_missing"}), "application/json")
+                return
+            req = body if isinstance(body, dict) else {}
+            proc = None
+            try:
+                proc = subprocess.run(
+                    [sys.executable, str(script), "dispatch"],
+                    input=json.dumps(req, ensure_ascii=False),
+                    capture_output=True,
+                    text=True,
+                    timeout=int(req.get("timeout") or 60),
+                    env=_field_stack_env(),
+                    cwd=str(INSTALL_ROOT),
+                )
+                payload = _parse_subprocess_json(proc, script="field-irc.py")
+            except subprocess.TimeoutExpired:
+                payload = {"ok": False, "error": "timeout", "schema": "field-irc/v1"}
+            code = 200 if (payload or {}).get("ok", True) else 400
+            self._send(code, json.dumps(payload or {"ok": False, "error": "empty_payload"}, ensure_ascii=False), "application/json")
+            return
+
+        if path in ("/api/field-stack-boot", "/api/field-stack-boot/"):
+            script = INSTALL_ROOT / "lib" / "field-stack-boot.py"
+            if not script.is_file():
+                self._send(503, json.dumps({"ok": False, "error": "field_stack_boot_missing"}), "application/json")
+                return
+            req = body if isinstance(body, dict) else {}
+            proc = None
+            try:
+                proc = subprocess.run(
+                    [sys.executable, str(script), "dispatch"],
+                    input=json.dumps(req, ensure_ascii=False),
+                    capture_output=True,
+                    text=True,
+                    timeout=int(req.get("timeout") or 180),
+                    env=_field_stack_env(),
+                    cwd=str(INSTALL_ROOT),
+                )
+                payload = _parse_subprocess_json(proc, script="field-stack-boot.py")
+            except subprocess.TimeoutExpired:
+                payload = {"ok": False, "error": "timeout", "schema": "field-stack-boot/v1"}
+            code = 200 if (payload or {}).get("ok", True) else 400
+            self._send(code, json.dumps(payload or {"ok": False, "error": "empty_payload"}, ensure_ascii=False), "application/json")
+            return
+
+        if path == "/api/ammoos-incorporate/apply":
+            script = INSTALL_ROOT / "lib" / "ammoos-incorporate.py"
+            if not script.is_file():
+                self._send(503, json.dumps({"ok": False, "error": "ammoos_incorporate_missing"}), "application/json")
+                return
+            req = body if isinstance(body, dict) else {}
+            proc = None
+            try:
+                proc = subprocess.run(
+                    [sys.executable, str(script), "dispatch"],
+                    input=json.dumps(req, ensure_ascii=False),
+                    capture_output=True,
+                    text=True,
+                    timeout=300,
+                    env=_field_stack_env(),
+                    cwd=str(INSTALL_ROOT),
+                )
+                payload = _parse_subprocess_json(proc, script="ammoos-incorporate.py")
+            except subprocess.TimeoutExpired:
+                payload = {"ok": False, "error": "timeout", "schema": "ammoos-incorporate/v1"}
             code = 200 if (payload or {}).get("ok", True) else 400
             self._send(code, json.dumps(payload or {"ok": False, "error": "empty_payload"}, ensure_ascii=False), "application/json")
             return
