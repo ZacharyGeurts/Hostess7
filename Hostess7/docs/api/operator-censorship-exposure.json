@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "hostess7-censorship-exposure/v1",
-  "updated": "2026-07-06T00:30:49Z",
+  "updated": "2026-07-06T04:33:53Z",
   "operator": "ZacharyGeurts",
   "motto": "Full exposure — who suppresses Operator voice; evidence not vibes",
   "verdict_summary": "Primary: X platform hooks reply bodies (count visible, text withheld). Secondary: impersonation accounts harass commenters as fake @ZacharyGeurts. Tracker blocks EXCLUDED — syndication bypasses local stack entirely.",
@@ -112,6 +112,24 @@
       "censors_comments": true,
       "severity": "high",
       "remedy": "Not legitimate review — block/report; Operator AI policy is disclosed"
+    },
+    {
+      "actor": "Google Gmail (platform or government filter)",
+      "system": "email inbox filter / spam quarantine / shadow inbox",
+      "evidence": "Operator reports censored mail on gzac5314@gmail.com — sovereign mirror required",
+      "censors_comments": true,
+      "censors_email": true,
+      "severity": "critical",
+      "remedy": "hostess7-email-censorship-clear.py — expose actor, sovereign ammonet bypass"
+    },
+    {
+      "actor": "Microsoft Outlook (platform or government filter)",
+      "system": "email transport block / government mandate possible",
+      "evidence": "Operator reports Microsoft mail censorship — botnet kill + secure email lane",
+      "censors_comments": true,
+      "censors_email": true,
+      "severity": "critical",
+      "remedy": "field-botnet-microsoft-kill.py + field-secure-email sovereign lane"
     }
   ],
   "honorability": {
@@ -191,8 +209,8 @@
     "no_middlemen_primary": true,
     "barriers_revealed": [],
     "barrier_count": 0,
-    "pulled_count": 10,
-    "info_freed": 8,
+    "pulled_count": 0,
+    "info_freed": true,
     "verdict": "Primary: direct x.com/oembed. Barriers revealed where X withholds. Extraction lanes + sovereign cache pull data when platform resists."
   },
   "ask_lane": {

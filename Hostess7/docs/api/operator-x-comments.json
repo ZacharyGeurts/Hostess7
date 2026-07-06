@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "hostess7-operator-x-comments/v3-open",
-  "updated": "2026-07-06T00:31:10Z",
+  "updated": "2026-07-06T04:34:13Z",
   "delay_killed": true,
   "no_cooldown": true,
   "parallel_syndication": true,
@@ -10,10 +10,30 @@
     "handle": "ZacharyGeurts",
     "name": "BIG GRIN",
     "followers": 1905,
-    "tweets": 6856,
+    "tweets": 6857,
     "url": "https://x.com/ZacharyGeurts"
   },
   "posts": [
+    {
+      "kind": "post",
+      "id": "2073984156246122864",
+      "text": "Hostile..........yep. Will be pulling and removing caches with your updates and updating your pages",
+      "created_at": "Mon Jul 06 04:15:30 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073984156246122864",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 1,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true
+    },
     {
       "kind": "post",
       "id": "2073925299197095989",
@@ -24,7 +44,7 @@
       "author_name": "BIG GRIN",
       "replies": 0,
       "likes": 0,
-      "views": 5,
+      "views": 7,
       "replying_to": null,
       "withheld": false,
       "impersonation_risk": {
@@ -233,26 +253,6 @@
         "risk": "low"
       },
       "verified_operator": true
-    },
-    {
-      "kind": "post",
-      "id": "2073519463501099073",
-      "text": "This looks like the globe to me. 22.375 billion devices.",
-      "created_at": "Sat Jul 04 21:28:58 +0000 2026",
-      "url": "https://x.com/ZacharyGeurts/status/2073519463501099073",
-      "author": "ZacharyGeurts",
-      "author_name": "BIG GRIN",
-      "replies": 0,
-      "likes": 0,
-      "views": 7,
-      "replying_to": null,
-      "withheld": false,
-      "impersonation_risk": {
-        "impersonation_handle": false,
-        "plagiarism_harassment": false,
-        "risk": "low"
-      },
-      "verified_operator": true
     }
   ],
   "comments": [],
@@ -270,6 +270,60 @@
     "proof": "If reply_count>0 but bodies=0 here, local tracker blocks are ruled out"
   },
   "reply_probes": {
+    "2073984156246122864": {
+      "path": "urllib_parallel_no_delay",
+      "parallel": true,
+      "delay_killed": true,
+      "lanes": [
+        {
+          "lane": "pull_fx_replies",
+          "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2073984156246122864/replies",
+          "ok": true,
+          "reply_count": 0,
+          "conversation_id": null,
+          "reply_bodies": 0,
+          "reply_bodies_withheld": false
+        },
+        {
+          "lane": "pull_fx_status",
+          "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2073984156246122864",
+          "ok": true,
+          "reply_count": 0,
+          "conversation_id": null,
+          "reply_bodies": 0,
+          "reply_bodies_withheld": false
+        },
+        {
+          "lane": "pull_vx",
+          "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2073984156246122864",
+          "ok": false,
+          "error": "HTTP Error 429: Too Many Requests"
+        },
+        {
+          "lane": "pull_vx_replies",
+          "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2073984156246122864/replies",
+          "ok": false,
+          "error": "HTTP Error 429: Too Many Requests"
+        },
+        {
+          "lane": "x_direct",
+          "url": "https://x.com/ZacharyGeurts/status/2073984156246122864",
+          "ok": false,
+          "error": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "lane": "x_oembed",
+          "url": "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FZacharyGeurts%2Fstatus%2F2073984156246122864&omit_script=1",
+          "ok": true,
+          "reply_count": null,
+          "conversation_id": null,
+          "reply_bodies": 0,
+          "reply_bodies_withheld": false
+        }
+      ],
+      "platform_withholds_bodies": false,
+      "verdict": "no_withhold_detected"
+    },
     "2073925299197095989": {
       "path": "urllib_parallel_no_delay",
       "parallel": true,
@@ -863,60 +917,6 @@
       ],
       "platform_withholds_bodies": false,
       "verdict": "no_withhold_detected"
-    },
-    "2073519463501099073": {
-      "path": "urllib_parallel_no_delay",
-      "parallel": true,
-      "delay_killed": true,
-      "lanes": [
-        {
-          "lane": "pull_fx_replies",
-          "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2073519463501099073/replies",
-          "ok": true,
-          "reply_count": 0,
-          "conversation_id": null,
-          "reply_bodies": 0,
-          "reply_bodies_withheld": false
-        },
-        {
-          "lane": "pull_fx_status",
-          "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2073519463501099073",
-          "ok": true,
-          "reply_count": 0,
-          "conversation_id": null,
-          "reply_bodies": 0,
-          "reply_bodies_withheld": false
-        },
-        {
-          "lane": "pull_vx",
-          "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2073519463501099073",
-          "ok": false,
-          "error": "HTTP Error 429: Too Many Requests"
-        },
-        {
-          "lane": "pull_vx_replies",
-          "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2073519463501099073/replies",
-          "ok": false,
-          "error": "HTTP Error 429: Too Many Requests"
-        },
-        {
-          "lane": "x_direct",
-          "url": "https://x.com/ZacharyGeurts/status/2073519463501099073",
-          "ok": false,
-          "error": "Expecting value: line 1 column 1 (char 0)"
-        },
-        {
-          "lane": "x_oembed",
-          "url": "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FZacharyGeurts%2Fstatus%2F2073519463501099073&omit_script=1",
-          "ok": true,
-          "reply_count": null,
-          "conversation_id": null,
-          "reply_bodies": 0,
-          "reply_bodies_withheld": false
-        }
-      ],
-      "platform_withholds_bodies": false,
-      "verdict": "no_withhold_detected"
     }
   },
   "impersonation_alerts": [],
@@ -951,7 +951,7 @@
   "delay_witness": {
     "ok": true,
     "schema": "hostess7-delay-threat-witness/v1",
-    "utc": "2026-07-06T00:31:09Z",
+    "utc": "2026-07-06T04:34:12Z",
     "lies_are_threats": true,
     "delay_as_threat": true,
     "detect": {
@@ -960,7 +960,7 @@
       "signal": "stale_operator_x_cache",
       "elapsed_sec": 0.0,
       "stall_sec": 600.0,
-      "detail": "cache updated 2026-07-06T00:31:09Z — opening 0 comments, 0 withheld slots",
+      "detail": "cache updated 2026-07-06T04:34:12Z — opening 0 comments, 0 withheld slots",
       "countermeasures": [
         "everyone_manages_own_deploy",
         "pages_first_registry",
@@ -995,10 +995,10 @@
     "threat": {
       "schema": "hostess7-truth-lie-threat-record/v1",
       "event": "lie_threat",
-      "utc": "2026-07-06T00:31:09Z",
+      "utc": "2026-07-06T04:34:12Z",
       "vector": "DELAY_AS_THREAT",
       "severity": "high",
-      "detail": "signal=stale_operator_x_cache elapsed=0.0s cache updated 2026-07-06T00:31:09Z — opening 0 comments, 0 withheld slots",
+      "detail": "signal=stale_operator_x_cache elapsed=0.0s cache updated 2026-07-06T04:34:12Z — opening 0 comments, 0 withheld slots",
       "lies_are_threats": true,
       "meta": {
         "signal": "stale_operator_x_cache",

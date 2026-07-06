@@ -1,0 +1,54 @@
+{
+  "schema": "hostess7-email-censorship-clear/v1",
+  "title": "Email censorship clear — Google · Microsoft · government exposure",
+  "motto": "Operator mail is sovereign truth — platform or government withhold is hostile; mirror + alternate lane.",
+  "module": "lib/hostess7-email-censorship-clear.py",
+  "api": "/api/hostess7-email-censorship-clear",
+  "operator_mailboxes": [
+    {"id": "gmail_primary", "provider": "google", "address": "gzac5314@gmail.com", "role": "operator_primary"},
+    {"id": "sovereign_ammonet", "provider": "ammonet", "address": "operator@mail.ammonet.net", "role": "sovereign_bypass"}
+  ],
+  "providers": {
+    "google": {
+      "domains": ["gmail.com", "googlemail.com", "mail.google.com", "accounts.google.com"],
+      "mx_hosts": ["gmail-smtp-in.l.google.com", "alt1.gmail-smtp-in.l.google.com"],
+      "imap": "imap.gmail.com:993",
+      "smtp": "smtp.gmail.com:587"
+    },
+    "microsoft": {
+      "domains": ["outlook.com", "hotmail.com", "live.com", "office365.com"],
+      "mx_hosts": ["outlook-com.olc.protection.outlook.com"],
+      "imap": "outlook.office365.com:993",
+      "smtp": "smtp.office365.com:587"
+    }
+  },
+  "barrier_types": [
+    "inbox_filter",
+    "spam_quarantine",
+    "government_mandate",
+    "platform_policy_block",
+    "dns_sinkhole",
+    "auth_gate",
+    "rate_limit",
+    "shadow_inbox"
+  ],
+  "countermeasures": [
+    "expose_censor_actor",
+    "sovereign_mirror_manifest",
+    "field_secure_email_bypass",
+    "microsoft_botnet_kill",
+    "truth_dns_primary",
+    "parallel_imap_probe_no_delay"
+  ],
+  "government_censorship": {
+    "rule": "If government mandate confirmed — document actor, jurisdiction signal, and sovereign bypass; never accept silent loss.",
+    "exposure_required": true,
+    "sovereign_lane": "field-secure-email + ammonet DNS"
+  },
+  "paired": {
+    "secure_email": "lib/field-secure-email.py",
+    "microsoft_kill": "lib/field-botnet-microsoft-kill.py",
+    "censorship_exposure": "lib/hostess7-censorship-exposure.py",
+    "x_producer": "lib/hostess7-x-producer.py"
+  }
+}

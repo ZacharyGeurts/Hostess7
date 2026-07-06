@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "hostess7-google-youtube-open/v1-open",
-  "updated": "2026-07-06T00:30:51Z",
+  "updated": "2026-07-06T04:33:55Z",
   "operator": "ZacharyGeurts",
   "free_open_internet": true,
   "delay_killed": true,
@@ -107,26 +107,26 @@
       "channels": [],
       "search_lanes": [
         {
-          "lane": "invidious_search_invidious.fdn.fr",
-          "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=channel",
-          "ok": false,
-          "error": "<urlopen error [Errno -2] Name or service not known>"
-        },
-        {
           "lane": "invidious_search_videos_invidious.fdn.fr",
           "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=video",
           "ok": false,
           "error": "<urlopen error [Errno -2] Name or service not known>"
         },
         {
-          "lane": "invidious_search_videos_yewtu.be",
-          "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=video",
+          "lane": "invidious_search_invidious.fdn.fr",
+          "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=channel",
           "ok": false,
-          "error": "HTTP Error 403: Forbidden"
+          "error": "<urlopen error [Errno -2] Name or service not known>"
         },
         {
           "lane": "invidious_search_yewtu.be",
           "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=channel",
+          "ok": false,
+          "error": "HTTP Error 403: Forbidden"
+        },
+        {
+          "lane": "invidious_search_videos_yewtu.be",
+          "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=video",
           "ok": false,
           "error": "HTTP Error 403: Forbidden"
         }
@@ -161,7 +161,7 @@
   "delay_witness": {
     "ok": true,
     "schema": "hostess7-delay-threat-witness/v1",
-    "utc": "2026-07-06T00:30:51Z",
+    "utc": "2026-07-06T04:33:55Z",
     "lies_are_threats": true,
     "delay_as_threat": true,
     "detect": {
@@ -204,7 +204,7 @@
     "threat": {
       "schema": "hostess7-truth-lie-threat-record/v1",
       "event": "lie_threat",
-      "utc": "2026-07-06T00:30:51Z",
+      "utc": "2026-07-06T04:33:55Z",
       "vector": "DELAY_AS_THREAT",
       "severity": "high",
       "detail": "signal=stale_operator_google_youtube_cache elapsed=0.0s opened google/youtube cache — 0 comments, free open internet",

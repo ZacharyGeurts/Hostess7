@@ -4683,6 +4683,27 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in (
+            "/api/hostess7/email-censorship-clear",
+            "/api/hostess7-email-censorship-clear",
+            "/api/operator-email-censorship-clear",
+            "/api/email-censorship-clear",
+        ):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            email_py = INSTALL_ROOT / "lib" / "hostess7-email-censorship-clear.py"
+            payload = None
+            if not refresh:
+                panel_path = STATE_DIR / "hostess7-email-censorship-clear-panel.json"
+                if panel_path.is_file():
+                    try:
+                        payload = json.loads(panel_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError):
+                        payload = None
+            if payload is None or refresh:
+                payload = _nexus_py_json(email_py, ["clear"], timeout=180 if refresh else 45)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
             "/api/hostess7/tco-kill",
             "/api/hostess7-tco-kill",
             "/api/operator-tco-kill",

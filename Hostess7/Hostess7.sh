@@ -1213,6 +1213,10 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-censorship-clear-worldwide.py" "${1:-clear}" "${@:2}"
             ;;
+        email-censorship|email-censorship-clear|clear-email|gmail-censored|outlook-censored)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-email-censorship-clear.py" "${1:-clear}" "${@:2}"
+            ;;
         operator-x-comments|x-comments)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-comments.py" "${1:-json}" "${@:2}"

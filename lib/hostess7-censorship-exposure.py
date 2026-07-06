@@ -219,6 +219,24 @@ def build_exposure(*, live: bool = True) -> dict[str, Any]:
             "severity": "high",
             "remedy": "Not legitimate review — block/report; Operator AI policy is disclosed",
         },
+        {
+            "actor": "Google Gmail (platform or government filter)",
+            "system": "email inbox filter / spam quarantine / shadow inbox",
+            "evidence": "Operator reports censored mail on gzac5314@gmail.com — sovereign mirror required",
+            "censors_comments": True,
+            "censors_email": True,
+            "severity": "critical",
+            "remedy": "hostess7-email-censorship-clear.py — expose actor, sovereign ammonet bypass",
+        },
+        {
+            "actor": "Microsoft Outlook (platform or government filter)",
+            "system": "email transport block / government mandate possible",
+            "evidence": "Operator reports Microsoft mail censorship — botnet kill + secure email lane",
+            "censors_comments": True,
+            "censors_email": True,
+            "severity": "critical",
+            "remedy": "field-botnet-microsoft-kill.py + field-secure-email sovereign lane",
+        },
     ]
 
     honor_samples = {
