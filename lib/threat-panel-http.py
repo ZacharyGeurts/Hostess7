@@ -3528,11 +3528,6 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
-        if path == "/api/field-operator/copilot":
-            payload = _deprecated_hot_route_gone_payload(replacement="/api/field-operator/hot-route")
-            self._send(410, json.dumps(payload, ensure_ascii=False), "application/json")
-            return
-
         if path == "/api/field-operator/hot-route":
             payload = _field_operator_hot_route_status()
             self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
@@ -3550,11 +3545,6 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/field-bus/cycle":
             payload = _nexus_py_json(INSTALL_ROOT / "lib" / "field-unified-bus.py", ["cycle"], timeout=45)
             self._send(200, json.dumps(payload or {"ok": False}), "application/json")
-            return
-
-        if path == "/api/field-bus/copilot":
-            payload = _deprecated_hot_route_gone_payload(replacement="/api/field-bus/hot-route")
-            self._send(410, json.dumps(payload, ensure_ascii=False), "application/json")
             return
 
         if path == "/api/field-bus/hot-route":
@@ -11769,10 +11759,6 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 override = str(body.get("override") or "").strip() or None
                 payload = _field_operator_hot_route_batch([str(x) for x in batch if x], override=override)
-            elif sub == "copilot":
-                payload = _deprecated_hot_route_gone_payload(replacement="/api/field-operator/hot-route")
-                self._send(410, json.dumps(payload, ensure_ascii=False), "application/json")
-                return
             elif sub == "hot-route":
                 payload = _field_operator_hot_route_status()
             else:

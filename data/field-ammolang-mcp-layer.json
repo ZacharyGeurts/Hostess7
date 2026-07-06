@@ -6,6 +6,11 @@
   "fallback_order": ["mcp_secure", "gh_cli", "tcp"],
   "mcp_layer": "data/ammoos-mcp-layer.json",
   "grok_mcp_server": "grok_com_github",
+  "grok_fast": {
+    "model": "grok-composer-2.5-fast",
+    "doctrine": "data/grok-fast-github-doctrine.json",
+    "replaces_copilot": true
+  },
   "stdio": "scripts/github-mcp-stdio.sh",
   "env_file": "~/.config/sg/github-mcp.env",
   "owner": "ZacharyGeurts",

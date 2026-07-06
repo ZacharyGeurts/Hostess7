@@ -66,11 +66,27 @@ REPO_LOCAL_ROOT: dict[str, str] = {
     "AmmoOS": "NewLatest",
     "Hostess7": "NewLatest",
     "H7updater": "NewLatest/H7updater",
+    "Grok16": "NewLatest/docs/repo-hubs/Grok16",
+    "KILROY": "NewLatest/docs/repo-hubs/KILROY",
+    "Queen": "NewLatest/docs/repo-hubs/Queen",
 }
 
 
 def repo_local_dir(repo: str) -> Path:
-    return SG / REPO_LOCAL_ROOT.get(repo, repo)
+    rel = REPO_LOCAL_ROOT.get(repo, repo)
+    base = ROOT if rel.startswith("NewLatest") else SG
+    rel_path = rel.removeprefix("NewLatest/") if rel.startswith("NewLatest") else rel
+    target = (base / rel_path) if rel.startswith("NewLatest") else (SG / rel)
+    try:
+        target.resolve(strict=False)
+    except (OSError, RuntimeError):
+        return ROOT / "docs" / "repo-hubs" / repo
+    if target.is_symlink():
+        try:
+            target.resolve(strict=True)
+        except (OSError, RuntimeError):
+            return ROOT / "docs" / "repo-hubs" / repo
+    return target
 
 
 def gh_json(path: str) -> Any:
@@ -538,7 +554,14 @@ def write_repo_index(repo: str, meta: dict[str, Any]) -> Path | None:
     if not meta.get("latest_release"):
         return None
     tag = meta.get("latest_tag") or ""
-    local.mkdir(parents=True, exist_ok=True)
+    try:
+        local.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        local = ROOT / "docs" / "repo-hubs" / repo
+        local.mkdir(parents=True, exist_ok=True)
+        idx = local / "index.html"
+        if idx.is_file():
+            return None
     idx.write_text(
         f"""<!DOCTYPE html>
 <html lang="en">
@@ -568,7 +591,11 @@ def write_repo_index(repo: str, meta: dict[str, Any]) -> Path | None:
 def write_repo_releases(repo: str, meta: dict[str, Any]) -> Path | None:
     local = repo_local_dir(repo) / "docs"
     if not local.is_dir():
-        local.mkdir(parents=True, exist_ok=True)
+        try:
+            local.mkdir(parents=True, exist_ok=True)
+        except OSError:
+            local = ROOT / "docs" / "repo-hubs" / repo
+            local.mkdir(parents=True, exist_ok=True)
     if not meta.get("latest_release") and not repo_local_dir(repo).is_dir():
         return None
     all_rels = fetch_all_releases(repo, limit=8) if meta.get("latest_release") else []

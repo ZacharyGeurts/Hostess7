@@ -152,6 +152,7 @@ if gh repo clone ZacharyGeurts/AmmoOS "$AMMOOS_CLONE" -- --depth=1; then
   git commit -m "AmmoOS ${AMMOOS_VERSION} — CLASSIC_START (cache-cut export)" || true
   git push origin main 2>/dev/null || git push -u origin main --force
   cd "$ROOT"
+  rm -rf "$AMMOOS_CLONE"
   log "AmmoOS main → ${AMMOOS_REMOTE} ($(du -sh "$EXPORT" | awk '{print $1}') export)"
 else
   log "WARN AmmoOS clone failed — gh release/pages only"
@@ -201,11 +202,12 @@ if [[ -n "$VSYNC_VER" ]]; then
   done
 fi
 
-if gh release view "$TAG" >/dev/null 2>&1; then
-  gh release edit "$TAG" --title "AmmoOS ${AMMOOS_VERSION}" --notes-file "$NOTES"
-  [[ ${#assets[@]} -gt 0 ]] && gh release upload "$TAG" "${assets[@]}" --clobber
+AMMOOS_SLUG="${AMMOOS_GITHUB_REPO:-ZacharyGeurts/AmmoOS}"
+if gh release view "$TAG" -R "$AMMOOS_SLUG" >/dev/null 2>&1; then
+  gh release edit "$TAG" -R "$AMMOOS_SLUG" --title "AmmoOS ${AMMOOS_VERSION}" --notes-file "$NOTES"
+  [[ ${#assets[@]} -gt 0 ]] && gh release upload "$TAG" -R "$AMMOOS_SLUG" "${assets[@]}" --clobber
 else
-  gh release create "$TAG" --title "AmmoOS ${AMMOOS_VERSION}" --notes-file "$NOTES" "${assets[@]}"
+  gh release create "$TAG" -R "$AMMOOS_SLUG" --title "AmmoOS ${AMMOOS_VERSION}" --notes-file "$NOTES" "${assets[@]}"
 fi
 
 log "publish GitHub Pages"

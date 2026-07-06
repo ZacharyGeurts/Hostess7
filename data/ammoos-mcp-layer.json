@@ -1,8 +1,14 @@
 {
   "schema": "ammoos-mcp-layer/v1",
-  "version": "1.9.9h",
+  "version": "2.0.0-beta6",
   "title": "AmmoOS GitHub MCP integration layer",
-  "description": "Private stdio MCP for ZacharyGeurts repos — drives AmmoOS publish, wiki, release, and AmmoLang github lane from NewLatest.",
+  "description": "Private stdio MCP for ZacharyGeurts repos — Grok Fast (grok-composer-2.5-fast) drives incorporate + publish; no Copilot.",
+  "grok_fast": {
+    "doctrine": "data/grok-fast-github-doctrine.json",
+    "model": "grok-composer-2.5-fast",
+    "mcp_server": "grok_com_github",
+    "profile": "fastest"
+  },
   "ammolang_layer": "data/field-ammolang-mcp-layer.json",
   "setup": "scripts/github-mcp-private-setup.sh",
   "stdio": "scripts/github-mcp-stdio.sh",

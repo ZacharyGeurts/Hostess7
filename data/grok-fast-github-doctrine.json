@@ -1,0 +1,36 @@
+{
+  "schema": "grok-fast-github-doctrine/v1",
+  "title": "Grok Fast — GitHub publish agent",
+  "motto": "Grok Composer 2.5 Fast owns GitHub incorporate + publish — no Copilot, no stale cache clones.",
+  "agent": {
+    "model": "grok-composer-2.5-fast",
+    "model_slug": "composer-2.5-fast",
+    "role": "github_publish_incorporate",
+    "mcp_server": "grok_com_github",
+    "replaces": ["github_copilot", "copilot", "copilot_space"]
+  },
+  "publish_lane": {
+    "incorporate": "lib/ammoos-incorporate.py apply",
+    "release": "scripts/ammoos-release.sh --push",
+    "profile_sync": "lib/github-profile-sync.py sync",
+    "planet_sweep": "scripts/sweep-github-planet.sh --push",
+    "cache_cut": "scripts/publish-kill-preflight.sh"
+  },
+  "cache_policy": {
+    "cut_before_publish": true,
+    "never_commit_clones": [
+      ".ammoos-github-clone",
+      ".hostess7-github-clone",
+      ".gnueol-terminal-github-clone",
+      "Hostess7/.pages-*-publish",
+      "Hostess7/.pages-build-state"
+    ],
+    "canonical_tree": "NewLatest live tree — not publish mirror caches"
+  },
+  "github_repos": {
+    "canonical_code": "ZacharyGeurts/AmmoOS",
+    "brain_hub": "ZacharyGeurts/Hostess7",
+    "owner": "ZacharyGeurts"
+  },
+  "version": "2.0.0-beta6"
+}
