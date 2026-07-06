@@ -31,6 +31,28 @@ html[data-field-layer-sovereign="exclusive"] .fsl-fast-switch {
   background: #060806;
 }
 
+html[data-nexus-c2-stack="ironclad"] .fsl-root {
+  z-index: 9040;
+}
+
+html[data-field-layer="-1"] .fsl-root,
+html[data-field-screen-layer="-1"] .fsl-root {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+html[data-nexus-c2="1"] .hd-shell,
+html[data-nexus-c2="1"] #hd-desktop {
+  position: relative;
+  z-index: 2;
+}
+
+.hd-shell,
+#hd-desktop {
+  position: relative;
+  z-index: 2;
+}
+
 .fsl-root:not([hidden]) {
   pointer-events: auto;
 }

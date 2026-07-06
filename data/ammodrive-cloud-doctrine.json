@@ -1,0 +1,49 @@
+{
+  "schema": "ammodrive-cloud-doctrine/v1",
+  "title": "AmmoDrive Cloud — the new cloud",
+  "product": "AmmoDrive",
+  "motto": "AmmoDrive is the new cloud — open to everyone, personhood-owned files, H7r rackmount redundant, hack-proof forever hash",
+  "tagline": "Sovereign cloud · H7r redundant · personhood + AmmoDrive ids · nothing deletes without forever hash",
+  "cloud": {
+    "replaces": ["vendor object storage", "forced cloud surrender", "delete-without-consent"],
+    "open_to_everyone": true,
+    "pages_read_mirror": "https://zacharygeurts.github.io/Hostess7/",
+    "loopback_write": "http://127.0.0.1:9477",
+    "identity_free": true,
+    "everyone_gets_ammodrive_id": true
+  },
+  "storage": {
+    "protocol": "h7r/1",
+    "hot_lane": "h7s/1",
+    "rack_fabric": "lib/field-zachub-qemu-racks.py",
+    "format_module": "lib/field-h7r-format.py",
+    "cloud_module": "lib/ammodrive-cloud.py",
+    "gb_per_rack": 91,
+    "rack_count_live": 2500,
+    "global_servers": 2500,
+    "physical_gb": 227500,
+    "h7s_logical_multiplier": 23.2,
+    "erasure_factor": 1.5,
+    "never_lose_mirrors": 6
+  },
+  "security": {
+    "hack_proof": true,
+    "hash_gated_delete": true,
+    "personhood_bound": true,
+    "internet_isolated_racks": true,
+    "pages_read_only": true,
+    "ironclad_gate": true,
+    "quarantine_not_kill": true
+  },
+  "api": "/api/ammodrive-cloud",
+  "api_aliases": ["/api/field-ammodrive-cloud", "/api/ammodrive-cloud"],
+  "module": "lib/ammodrive-cloud.py",
+  "wires": [
+    "lib/field-h7r-format.py",
+    "lib/field-h7r-rackmount.py",
+    "lib/field-zachub-qemu-racks.py",
+    "lib/field-rack-uniqueness.py",
+    "lib/field-device-registry.py"
+  ],
+  "ironclad_cite": "ironclad:ammodrive-cloud:1"
+}

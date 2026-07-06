@@ -124,15 +124,20 @@
     if (comments) {
       comments.innerHTML = (doc.comments || [])
         .map(function (c) {
+          var cls = c.kind === "reply_withheld_open" ? " x-comment x-withheld-open" : " x-comment";
+          var badge = c.opened ? ' <span class="x-opened-badge">opened</span>' : "";
           return (
-            "<li class=\"x-comment\"><strong>" +
+            "<li class=\"" + cls.trim() + "\"><strong>" +
             esc(c.author_name || c.author) +
-            "</strong><p>" +
+            "</strong>" + badge + "<p>" +
             esc(c.text) +
             "</p></li>"
           );
         })
         .join("");
+    }
+    if (doc.cache_opened && meta) {
+      meta.textContent += " · cache opened · delay killed";
     }
     if ((doc.censorship_notes || []).length && meta) {
       meta.textContent += " · " + doc.censorship_notes.join(" · ");

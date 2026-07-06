@@ -192,25 +192,70 @@ def _bot_nodes(doctrine: dict[str, Any], *, fast: bool = False) -> list[dict[str
     if not fast:
         qemu = _run_json("lib/qemu-world-status.py", [], timeout=12)
     else:
-        qemu = _load(STATE / "qemu-world-pipeline.json", {})
+        for cache_path in (
+            STATE / "field-zachub-qemu-racks-panel.json",
+            INSTALL / "Hostess7" / "docs" / "api" / "field-zachub-qemu-racks.json",
+            STATE / "qemu-world-pipeline.json",
+        ):
+            cached = _load(cache_path, {})
+            if cached.get("slots"):
+                qemu = cached
+                break
+        if not qemu:
+            qemu = _load(STATE / "qemu-world-pipeline.json", {})
+    regions = _load(INSTALL / "GrokLab" / "deploy" / "world-node-regions.json", {})
+    concurrent = int(
+        os.environ.get("WORLD_PIPELINE_SLOTS")
+        or regions.get("qemu_concurrent_slots")
+        or 6
+    )
     target = int(qemu.get("target") or 0)
     completed = int(qemu.get("completed") or 0)
-    qemu_cap = int(net.get("max_qemu_placeholder_nodes") or 64)
-    qemu_total = min(max(target, completed, 0), qemu_cap if nodes else max(target, completed, 0))
-    for i in range(qemu_total):
-        wid = f"qemu-world-{i + 1}"
-        if any(n.get("id") == wid for n in nodes):
-            continue
-        nodes.append({
-            "id": wid,
-            "kind": "qemu_world",
-            "roles": ["dns_relay", "dhcp_relay", "truth_mirror"],
-            "dns_upstream": "127.0.0.1:53",
-            "dhcp_dns_option": ["127.0.0.1"],
-            "github_sync": True,
-            "boss": "hostess7",
-            "pipeline": qemu.get("schema"),
-        })
+    qemu_cap = int(net.get("max_qemu_placeholder_nodes") or concurrent)
+    qemu_total = min(concurrent, qemu_cap, max(target, completed, 0) if not qemu.get("slots") else concurrent)
+    qemu_slots = list(qemu.get("slots") or [])
+    if qemu_slots:
+        for row in qemu_slots:
+            if not isinstance(row, dict):
+                continue
+            wid = str(row.get("node_id") or row.get("id") or "")
+            if not wid or any(n.get("id") == wid for n in nodes):
+                continue
+            roles = list(row.get("botnet_roles") or row.get("roles") or ["dns_relay", "dhcp_relay", "truth_mirror"])
+            nodes.append({
+                "id": wid,
+                "kind": "qemu_world",
+                "field_id": row.get("field_id"),
+                "slot": row.get("slot"),
+                "primary_role": row.get("primary_role"),
+                "roles": roles,
+                "dns_upstream": "127.0.0.1:53",
+                "dhcp_dns_option": ["127.0.0.1"],
+                "github_sync": True,
+                "boss": "hostess7",
+                "pipeline": qemu.get("schema"),
+                "tunnel": row.get("tunnel"),
+                "storage_root": row.get("storage_root"),
+            })
+    else:
+        for i in range(qemu_total):
+            wid = f"qemu-world-{i}"
+            if any(n.get("id") == wid for n in nodes):
+                continue
+            cycle = ["dhcp", "dns", "edge", "github_mirror_witness"]
+            nodes.append({
+                "id": wid,
+                "kind": "qemu_world",
+                "field_id": f"qemu-rack-{i}",
+                "slot": i,
+                "primary_role": cycle[i % len(cycle)],
+                "roles": ["dns_relay", "dhcp_relay", "truth_mirror", cycle[i % len(cycle)]],
+                "dns_upstream": "127.0.0.1:53",
+                "dhcp_dns_option": ["127.0.0.1"],
+                "github_sync": True,
+                "boss": "hostess7",
+                "pipeline": qemu.get("schema"),
+            })
     if not nodes:
         nodes = [
             {
@@ -313,10 +358,57 @@ def _dns_dhcp_slice(*, fast: bool = False) -> dict[str, Any]:
     }
 
 
+def _qemu_slots_from_cache() -> list[dict[str, Any]]:
+    for cache_path in (
+        STATE / "field-zachub-qemu-racks-panel.json",
+        INSTALL / "Hostess7" / "docs" / "api" / "field-zachub-qemu-racks.json",
+    ):
+        cached = _load(cache_path, {})
+        slots = cached.get("slots")
+        if isinstance(slots, list) and slots:
+            return [s for s in slots if isinstance(s, dict)]
+    status = _run_json("lib/qemu-world-status.py", [], timeout=12)
+    return [s for s in (status.get("slots") or []) if isinstance(s, dict)]
+
+
+def _patch_qemu_world_nodes(nodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    slots = _qemu_slots_from_cache()
+    if not slots:
+        return nodes
+    kept = [n for n in nodes if n.get("kind") != "qemu_world"]
+    seen = {str(n.get("id")) for n in kept if n.get("id")}
+    for row in slots:
+        wid = str(row.get("node_id") or row.get("id") or "")
+        if not wid or wid in seen:
+            continue
+        seen.add(wid)
+        roles = list(row.get("botnet_roles") or row.get("roles") or ["dns_relay", "dhcp_relay", "truth_mirror"])
+        kept.append({
+            "id": wid,
+            "kind": "qemu_world",
+            "field_id": row.get("field_id"),
+            "slot": row.get("slot"),
+            "primary_role": row.get("primary_role"),
+            "roles": roles,
+            "dns_upstream": "127.0.0.1:53",
+            "dhcp_dns_option": ["127.0.0.1"],
+            "github_sync": True,
+            "boss": "hostess7",
+            "pipeline": "qemu-world-pipeline/v1",
+            "tunnel": row.get("tunnel"),
+            "storage_root": row.get("storage_root"),
+            "no_team_drive": True,
+        })
+    return kept
+
+
 def panel(*, write: bool = True, fast: bool = False) -> dict[str, Any]:
     if fast and PANEL.is_file():
         cached = _load(PANEL, {})
         if cached.get("schema") == "field-botnet-dns-dhcp-panel/v1":
+            net = cached.get("bot_network") or {}
+            nodes = _patch_qemu_world_nodes(list(net.get("nodes") or []))
+            cached["bot_network"] = {**net, "nodes": nodes, "node_count": len(nodes)}
             cached["updated"] = _utc()
             cached["fast"] = True
             return cached

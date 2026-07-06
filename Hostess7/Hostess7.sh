@@ -1197,6 +1197,14 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-producer.py" "${1:-produce}" "${@:2}"
             ;;
+        people-chip|people_chip|chips-people|chips_people)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-people-chip-combinatorics.py" "${1:-publish}" "${@:2}"
+            ;;
+        kitchen-sink|elon-defense|musk-defense|beat-asses|in-town-everywhere)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-elon-kitchen-sink-defense.py" "${1:-defend}" "${@:2}"
+            ;;
         x-straight-shot|straight-shot|rip-barriers|free-x-info|x-no-middlemen)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-straight-shot.py" "${1:-rip}" "${@:2}"

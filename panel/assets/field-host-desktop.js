@@ -301,7 +301,7 @@
       { id: "field-popcorn", name: "Popcorn", hint: "Media player · Layer 0", icon: "queen-prog-popcorn", exec: base + "/field-popcorn", icon_url: assets + "/queen-prog-popcorn.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
       { id: "ammocode", name: "AmmoCode", hint: "Syntax editor · Layer 0", icon: "queen-prog-ammocode", exec: base + "/ammocode", icon_url: assets + "/queen-prog-ammocode.png", pinned: true, shell: true, os_layer: 0, category: "AmmoOS · Layer 0" },
       { id: "hostess7-folder", name: "Hostess 7", kind: "desktop_folder", hint: "Hostess 7 panels", icon: "queen-prog-hostess", icon_url: assets + "/queen-prog-hostess.png", pinned: true, os_layer: 0, category: "AmmoOS · Layer 0", folder_children: [] },
-      { id: "queen-browser", name: "Queen Browser", hint: "Queen web engine", icon: "queen-prog-browser", exec: base + "/queen/browser.html", icon_url: assets + "/queen-prog-browser.png", pinned: true, shell: true, category: "NEXUS · Queen" },
+      { id: "queen-browser", name: "Queen Browser", hint: "Queen web engine · classic shell", icon: "queen-prog-browser", exec: base ? base + "/queen/browser.html" : "http://127.0.0.1:9481/world/browser.html", icon_url: assets + "/queen-prog-browser.png", pinned: true, shell: true, category: "NEXUS · Queen" },
       { id: "field-broadcaster", name: "Broadcaster", hint: "OBS rebranded · Layer 0 · Final_Eye Ear Mouth", icon: "queen-prog-broadcaster", exec: base + "/field-broadcaster", icon_url: assets + "/queen-prog-broadcaster.png", pinned: true, shell: true, live: true, os_layer: 0, ensure_api: "/api/field-broadcaster/launch", category: "AmmoOS · Media" },
       { id: "queen-gameroom", name: "Game Room", hint: "Queen Game Room · cartridges · arcade", icon: "queen-prog-gameroom", exec: world + "/queen-game-room.html", icon_url: assets + "/queen-prog-gameroom.png", pinned: true, shell: true, category: "NEXUS · Queen" },
       { id: "queen-chips", name: "CHIPS", hint: "Emulators · chip cores · combinatronic", icon: "queen-prog-chips", exec: world + "/queen-chips-cores.html", icon_url: assets + "/queen-prog-chips.png", pinned: true, shell: true, category: "NEXUS · Queen" },
@@ -477,11 +477,11 @@
     };
     if (window.FieldScreenLayers?.openQueen) {
       window.FieldScreenLayers.openQueen();
-      toast("Queen Browser · own browser space");
+      toast("Queen Browser");
       return;
     }
     if (shellLaunch(app)) {
-      toast("Queen Browser · own browser space");
+      toast("Queen Browser");
       return;
     }
     toast("Queen Browser unavailable");
@@ -593,22 +593,12 @@
 
     try {
       const mon = document.getElementById("hd-monitor");
-      const showWall = policy.six_tool_wall === true && policy.six_tool_wall_on_boot !== false;
       if (mon) {
         mon.classList.remove("hd-monitor--solo");
         mon.classList.add("hd-monitor--hidden");
         mon.hidden = true;
+        mon.setAttribute("aria-hidden", "true");
         mon.innerHTML = "";
-        if (showWall && window.FieldMonitorDashboard) {
-          mon.classList.add("hd-monitor--solo");
-          mon.classList.remove("hd-monitor--hidden");
-          mon.hidden = false;
-          mon.setAttribute("aria-hidden", "false");
-          window.FieldMonitorDashboard.mount(mon, Object.assign({}, doc?.monitor_dashboard || {}, {
-            programs: doc.programs || [],
-            icon_dock: doc.icon_dock || [],
-          }));
-        }
       }
     } catch (_) {}
 
@@ -639,6 +629,26 @@
     } catch (_) {}
   }
 
+  async function armBattleStations() {
+    try {
+      const res = await fetch(apiUrl("/api/battle-stations"), {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "arm" }),
+      });
+      if (!res.ok) return null;
+      const doc = await res.json();
+      if (doc?.enabled || doc?.policy?.battle_stations) {
+        document.documentElement.dataset.battleStations = "1";
+        if (document.body) document.body.dataset.battleStations = "1";
+      }
+      return doc;
+    } catch (_) {
+      return null;
+    }
+  }
+
   async function fetchDesktopDoc() {
     const res = await fetch(apiUrl("/api/field-host-desktop"), { credentials: "same-origin" });
     if (res.ok) return res.json();
@@ -661,6 +671,7 @@
     if (loading) loading.classList.remove("hidden");
     fillViewport();
     try {
+      await armBattleStations();
       const doc = await fetchDesktopDoc();
       applyDesktop(doc);
       mountDesktopChrome(doc);
@@ -675,7 +686,7 @@
         version: "2.0",
         programs: desktopDefaultFallback(),
         desktop_icons: desktopDefaultFallback(),
-        policy: { desktop_icons_in_start: false, show_desktop_icons: true, battle_stations: true, six_tool_wall: true, six_tool_wall_on_boot: true, ammonet_display_right: false, ammonet_bar_bottom: true, monitor_dashboard_right: false, desktop_ui_scale_default: 200, desktop_icon_size_default: 96 },
+        policy: { desktop_icons_in_start: false, show_desktop_icons: true, battle_stations: true, six_tool_wall: false, six_tool_wall_on_boot: false, ammonet_display_right: false, ammonet_bar_bottom: true, monitor_dashboard_right: false, desktop_ui_scale_default: 125, desktop_icon_size_default: 96 },
         shell: { settings: { desktop_icon_size: 96, ui_scale: 200, sort_desktop: "manual" } },
         startbar: { start_label: "Start", classic: true },
         guest_os: { system: "Field" },
@@ -691,6 +702,7 @@
 
   window.FieldHostDesktop = {
     refresh: refresh,
+    armBattleStations: armBattleStations,
     applyDesktop: applyDesktop,
     applyWallpaper: applyWallpaper,
     toast: toast,

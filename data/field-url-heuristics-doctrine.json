@@ -1,0 +1,49 @@
+{
+  "schema": "field-url-heuristics-doctrine/v1",
+  "title": "URL heuristics — derived from field data, steel-plated, melded into server",
+  "motto": "Heuristics from evidence, not vibes. Steel plate it. Meld it in. Know why.",
+  "why_meld": {
+    "summary": "Dangerous URLs were scattered across annoyance TSV, honorability, X purge, tco-kill, and operator ledgers. One steel plate fuses them so DNS, gatekeeper, API, and caches read the same gone-truth.",
+    "reasons": [
+      {"id": "evidence_not_guess", "why": "Annoyance scores and honor stars are witnessed complaints — heuristics inherit complaint_score ≥ 8 and stars ≤ 1 as gone."},
+      {"id": "delay_is_threat", "why": "t.co and syndication.twimg add middleman hops — unwrap_kill or drop_lane from X brand purge data."},
+      {"id": "good_guys_open", "why": "Canonical allow list from honorability 5★ + operator lanes — x.com, google, youtube, github stay open."},
+      {"id": "fail_closed", "why": "Unknown shorteners and pipe-to-shell patterns inherit gone until proven allow — steel plate fail-closed."},
+      {"id": "one_server_truth", "why": "Plate meld + ironclad extension — server reads meld first; no drift between adblock, url-kill, and gatekeeper."}
+    ]
+  },
+  "derive_from": [
+    "data/annoyance-complaints.tsv",
+    "data/honorability-seed.json",
+    "data/hostess7-x-brand-purge-doctrine.json",
+    "data/hostess7-url-kill-doctrine.json",
+    "data/hostess7-tco-kill-doctrine.json",
+    "data/hostess7-truth-lie-threat-doctrine.json",
+    "state/hostess7-url-kill-ledger.jsonl",
+    "state/hostess7-url-kill-registry.json"
+  ],
+  "thresholds": {
+    "annoyance_gone_min": 8,
+    "honor_gone_max_stars": 1,
+    "honor_allow_min_stars": 5,
+    "delay_shortener_gone": true
+  },
+  "steel_plate": {
+    "schema": "field-url-heuristics-steel/v1",
+    "panel": "field-url-heuristics-steel-plate.json",
+    "chain_hash_algo": "sha256",
+    "ironclad_citation": "ironclad:url-heuristics:1"
+  },
+  "meld": {
+    "plate_meld_source": "url_heuristics_steel",
+    "module": "lib/field-url-heuristics-steel.py",
+    "wires": [
+      "lib/hostess7-url-kill.py",
+      "lib/connection-gatekeeper.py",
+      "lib/ironclad-secure-api.py",
+      "lib/field-plate-meld.py",
+      "lib/hostess7-whole-internet.py"
+    ]
+  },
+  "api": "/api/field-url-heuristics-steel"
+}

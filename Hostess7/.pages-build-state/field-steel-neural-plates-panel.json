@@ -1,51 +1,13 @@
 {
   "schema": "field-steel-neural-plates-panel/v1",
-  "updated": "2026-07-02T09:52:00Z",
+  "updated": "2026-07-02T13:19:05Z",
   "stack_fabric": {
-    "available": true,
-    "schema": "g16-stack-fabric-witness/v1",
-    "fabric": {
-      "schema": "g16-stack-fabric/v1",
-      "profile": {
-        "schema": "g16-stack-fabric-profile/v1",
-        "profile": "field_opt",
-        "blocked": false,
-        "reason": "ok",
-        "truth": {
-          "ok": true,
-          "score": 75,
-          "floor": 58,
-          "checks": {
-            "ironclad": false,
-            "field_sanity": true,
-            "g1id": true,
-            "voltage": true
-          },
-          "reason": "match"
-        },
-        "thermal": "normal",
-        "autoloaded": true
-      },
-      "truth": {
-        "ok": true,
-        "score": 75,
-        "floor": 58,
-        "checks": {
-          "ironclad": false,
-          "field_sanity": true,
-          "g1id": true,
-          "voltage": true
-        },
-        "reason": "match"
-      },
-      "manifest": "nexus-field-stack-manifest/v1",
-      "autoload_profile": "field_opt"
-    }
+    "available": false
   },
   "meld_citation": "ironclad:meld:2",
   "ok": true,
   "motto": "Steel holds depth — every domain a plate, every plate wired neural-deep across the combinatoric base.",
-  "plate_count": 10,
+  "plate_count": 13,
   "connection_depth": {
     "max": 4,
     "achieved": 4,
@@ -53,10 +15,10 @@
     "deep_path_count": 128
   },
   "wires": {
-    "intra": 144,
+    "intra": 192,
     "cross": 64,
     "matrix": 0,
-    "total": 208
+    "total": 256
   },
   "top_plates": [
     {
@@ -1045,39 +1007,7 @@
       "kind": "deep_steel"
     }
   ],
-  "elapsed_ms": 2524.55,
+  "elapsed_ms": 179.23,
   "combinatronic": true,
-  "fast_path": true,
-  "_g16_seal": {
-    "schema": "g16-sealed-output/v1",
-    "algorithm": "sha256",
-    "digest": "7fb51bf128c024c95a06054e53e252b740e3e0876e7a4b604884081c2ce655d4",
-    "sealed_at": "2026-07-04T20:35:27Z",
-    "path": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/field-steel-neural-plates-panel.json",
-    "g1id_meld": {
-      "id": "g1id",
-      "absorbed": true,
-      "meld_citation": "ironclad:meld:2",
-      "citation": "ironclad:time:1",
-      "policy": "sovereign_time_only",
-      "time_is_linear": true,
-      "sovereign_time_ok": true,
-      "sovereign_time": {
-        "source": "lib/sovereign-time.py",
-        "clock": "lib/sovereign-clock.py",
-        "schema": "sovereign-time-meld-input/v1",
-        "linear_ns": 1782985920607566900,
-        "derived_utc": "2026-07-02T09:52:00Z",
-        "sealed": true,
-        "synced": false,
-        "never_desync": true,
-        "immutable_linear": true,
-        "witness_only": true,
-        "not_geometry_t": true,
-        "citation": "ironclad:g1id:2"
-      },
-      "example_valid": true,
-      "updated": "2026-07-02T09:52:00Z"
-    }
-  }
+  "fast_path": false
 }

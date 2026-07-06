@@ -1,0 +1,40 @@
+{
+  "schema": "field-people-chip-doctrine/v1",
+  "title": "People CHIP — combinatronic truth extraction for real humans",
+  "motto": "Pull real people out from the shit — combinatronics + registry + X truth lanes.",
+  "module": "lib/field-people-chip-combinatorics.py",
+  "chip_id": "chips_people",
+  "combinatorics_leaf": "chip:chips_hot:chips_people",
+  "policy": {
+    "extract_verified_only": true,
+    "exclude_bad_tags": ["liar", "terrorist", "bad", "fraud", "abuser", "predator", "review_pending"],
+    "include_disposition": ["goodguy", "owner", "founder", "neutral"],
+    "include_roles": ["celebrity", "musician", "streamer", "scientist", "athlete"],
+    "owner_review_required_for_bad": true,
+    "x_archive_persist": true,
+    "ammodrive_distribute": true,
+    "pages_export_sanitized": true,
+    "no_harm_no_censor": true
+  },
+  "sources": [
+    {"id": "people_registry", "path": "Hostess7/cache/fieldstorage/brain/people/entities"},
+    {"id": "x_producer_feed", "path": "Hostess7/docs/data/x-producer-feed.json"},
+    {"id": "x_profile_fix", "path": ".nexus-state/hostess7-x-profile-fix-cache.json"},
+    {"id": "operator_appearance", "path": "data/hostess7-operator-appearance.json"}
+  ],
+  "storage": {
+    "archive": "Hostess7/cache/fieldstorage/brain/people/x_archive",
+    "chip_panel": ".nexus-state/field-people-chip-panel.json",
+    "chip_combinatorics": "data/panel-seeds/field-people-chip-combinatorics.json"
+  },
+  "api": "/api/field-people-chip",
+  "deliver_heart": {
+    "module": "lib/hostess7-self-view.py",
+    "commands": ["deliver", "truth"],
+    "note": "Deliver heart — operator appearance + core-of-truth delivery"
+  },
+  "hosted": {
+    "panel": "https://zacharygeurts.github.io/Hostess7/api/field-people-chip.json",
+    "people_intel": "intel/people"
+  }
+}

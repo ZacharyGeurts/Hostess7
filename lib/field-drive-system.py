@@ -75,6 +75,9 @@ SELECTED_FILE = "field-drive-selected.json"
 STATE_GLOBS = (
     "threat-panel.json",
     "field-*-panel.json",
+    "field-dhcp-leases.json",
+    "field-dhcp-events.jsonl",
+    "field-device-registry.json",
     "field-outside-talk-*.jsonl",
     "field-outside-talk-*.json",
     "firewall*.tsv",
@@ -623,7 +626,27 @@ def sync_state_only() -> dict[str, Any]:
     st_dst = state_dir(for_publish=True)
     st_dst.mkdir(parents=True, exist_ok=True)
     state_files = _sync_state_globs(_host_state_dir(), st_dst)
-    return {"ok": True, "synced": state_files, "count": len(state_files), "ts": _now()}
+    lease_merge: dict[str, Any] = {}
+    dhcp_py = INSTALL / "lib" / "field-dhcp.py"
+    if dhcp_py.is_file():
+        try:
+            import importlib.util
+
+            spec = importlib.util.spec_from_file_location("field_dhcp_sync", dhcp_py)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if hasattr(mod, "ensure_lease_persistence"):
+                    lease_merge = mod.ensure_lease_persistence()
+        except Exception as exc:
+            lease_merge = {"ok": False, "error": str(exc)}
+    return {
+        "ok": True,
+        "synced": state_files,
+        "count": len(state_files),
+        "lease_persist": lease_merge,
+        "ts": _now(),
+    }
 
 
 def _outside_mod() -> Any:

@@ -2,7 +2,7 @@
 """Plate meld — uninterruptable fused state across all plates.
 
 flock + fsync + chain-hash + triple mirror. Plates always share actual
-generation-linked truth; copilot/bus read meld first.
+generation-linked truth; hot router/bus read meld first.
 """
 from __future__ import annotations
 
@@ -94,6 +94,7 @@ PLATE_SOURCES: tuple[tuple[str, str], ...] = (
     ("field_host_desktop", "field-host-desktop.json"),
     ("sovereign_stack", "field-sovereign-stack-meld-panel.json"),
     ("code_bugfinder", "field-code-bugfinder-panel.json"),
+    ("url_heuristics_steel", "field-url-heuristics-steel-plate.json"),
 )
 
 _GEN = 0

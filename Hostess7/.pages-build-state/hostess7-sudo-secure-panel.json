@@ -1,0 +1,83 @@
+{
+  "last_run": {
+    "schema": "hostess7-sudo-secure-run/v1",
+    "updated": "2026-07-05T03:05:46Z",
+    "action": "truth-dns-serve",
+    "role": "Bind truth resolver 127.0.0.1:53",
+    "ai_safe": true,
+    "ok": true,
+    "mode": "password",
+    "rc": 0,
+    "stdout": "",
+    "stderr": "[sudo] password for default: "
+  },
+  "verify": {
+    "schema": "hostess7-sudo-secure/v1",
+    "updated": "2026-07-05T03:05:47Z",
+    "ok": true,
+    "sudo_mode": "nopasswd",
+    "password_configured": true,
+    "human_lane": "any_human_in_sudo_group",
+    "ai_lane": "hostess7-ai-communique",
+    "wrapper": "/usr/local/bin/hostess7-field-sudo",
+    "actions": [
+      {
+        "action": "dns-primary",
+        "ai_safe": true,
+        "present": true,
+        "role": "Truth DNS + Field DHCP primary"
+      },
+      {
+        "action": "fix-dns-dhcp-everywhere",
+        "ai_safe": true,
+        "present": true,
+        "role": "Prune pile-up, recover hung DNS, promote DHCP primary everywhere"
+      },
+      {
+        "action": "queen-lan",
+        "ai_safe": true,
+        "present": true,
+        "role": "Queen LAN 192.168.47.1 for retro DHCP"
+      },
+      {
+        "action": "truth-dns-serve",
+        "ai_safe": true,
+        "present": true,
+        "role": "Bind truth resolver 127.0.0.1:53"
+      },
+      {
+        "action": "dns-table-clean",
+        "ai_safe": true,
+        "present": true,
+        "role": "Safe Truth DNS table hygiene"
+      },
+      {
+        "action": "nexus-genius",
+        "ai_safe": true,
+        "present": true,
+        "role": "Start nexus-genius field service"
+      },
+      {
+        "action": "rebuild-internet",
+        "ai_safe": true,
+        "present": true,
+        "role": "Secure internet route rebuild — ultimate truth"
+      },
+      {
+        "action": "destroy-untrue",
+        "ai_safe": true,
+        "present": true,
+        "role": "Truth DNS primary + foreign block + drift eradicate"
+      }
+    ],
+    "policy": {
+      "human_password_env": "HOSTESS7_SUDO_PW",
+      "human_config": "~/.config/ammo-shield/sudo.env",
+      "ai_config": "~/.config/ammo-shield/ai-sudo.env",
+      "sudo_group": "%sudo",
+      "nopasswd_wrapper": "/usr/local/bin/hostess7-field-sudo",
+      "never_log_password": true,
+      "never_pages_publish": true
+    }
+  }
+}

@@ -164,7 +164,11 @@ def _threat_guard() -> Any | None:
 
 
 def _soft_ingress() -> bool:
-    return os.environ.get("NEXUS_FIELD_COLLISION_SOFT_INGRESS", os.environ.get("NEXUS_FIELD_DHCP_SOFT_INGRESS", "1")) == "1"
+    env = os.environ.get("NEXUS_FIELD_COLLISION_SOFT_INGRESS", os.environ.get("NEXUS_FIELD_DHCP_SOFT_INGRESS", ""))
+    if env.strip():
+        return env.strip().lower() in ("1", "true", "yes", "on")
+    policy = (_load(DOCTRINE, {}) or {}).get("policy") or {}
+    return bool(policy.get("quarantine_not_kill", False))
 
 
 def _eradicate(key: str, reason: str, vector: str) -> dict[str, Any] | None:

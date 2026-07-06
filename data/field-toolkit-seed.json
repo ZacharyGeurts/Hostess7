@@ -68,12 +68,27 @@
     },
     {
       "id": "laser_corridor",
-      "label": "Laser corridor · undodgeable slice",
+      "label": "Laser corridor · undodgeable 6″ cube",
       "mode": "laser",
-      "description": "Resident Evil corridor — red grid sweeps, wire severed, no dodge. Teardown + block + forever kill when hostility demands.",
+      "description": "6″×6″×6″ kill cube — 6-pass horizontal/vertical/diagonal raster. Wire severed, no dodge. Teardown + 72h block + forever kill.",
       "vector": "LASER_CORRIDOR",
       "severity": "critical",
       "undodgeable": true,
+      "cube_inches": 6,
+      "slice_passes": 6,
+      "hell_first": true
+    },
+    {
+      "id": "slice_and_dice",
+      "label": "Slice & Dice · 6″ cube + d20",
+      "mode": "slice_and_dice",
+      "description": "Undodgeable 6″ laser cube (6 slice passes) plus Field Die — d20≤6 doubles kill pressure. Heaven only dodge.",
+      "vector": "SLICE_AND_DICE",
+      "severity": "critical",
+      "undodgeable": true,
+      "cube_inches": 6,
+      "slice_passes": 6,
+      "dice_threshold": 6,
       "hell_first": true
     }
   ],
@@ -96,7 +111,8 @@
     {"id": "regional_hell_cluster", "label": "Regional Hell cluster", "vector": "HELL_REGIONAL", "severity": "critical", "category": "geo", "disablement": "regional_disable", "indicators": ["shared ASN", "country_code cluster", "state/region overlap", "census geography hostile"], "study": "Hostile nodes cluster by region. Hell Kit batch-disables the entire cluster — sever wire first, forever kill on PINPOINT CERTAIN.", "defenses": ["hell_regional_disable", "hostility_priority_hell_first", "census_field_populate"]},
     {"id": "hostility_escalation", "label": "Hostility escalation · Hell first", "vector": "HELL_CHOSEN", "severity": "critical", "category": "hostility", "disablement": "hell_rip", "indicators": ["hostility_score spike", "hell_chosen verdict", "soul_side hell", "RF correlated heat"], "study": "Nothing unseen, nothing fully secure — we can't hide all the rocks, so send Hell to Hell. Hostility priority sorts harm ahead of Heaven. Escalation triggers sever, regional disable, or rip based on score.", "defenses": ["hostility_priority_hell_first", "heaven_hell_rip", "hell_rip"]},
     {"id": "field_die_truth", "label": "Field Die · 94/6 truth roll", "vector": "FIELD_DIE", "severity": "medium", "category": "truth", "disablement": "field_die", "indicators": ["d20 roll ≤6 = signal", "94% internet noise floor", "hostility_score tie-break", "no action on noise"], "study": "Before AMOURANTHRTX had a name, there was noise. Ninety-four percent of the internet is background; six percent is signal. The Field Die lives inside that ratio — quieter truth, not a louder alarm.", "defenses": ["field_die_kit", "hostility_priority_hell_first", "hell_sever_wire"]},
-    {"id": "laser_corridor_slice", "label": "Laser corridor · undodgeable slice", "vector": "LASER_CORRIDOR", "severity": "critical", "category": "slice", "disablement": "laser_corridor", "indicators": ["horizontal grid sweep", "vertical grid sweep", "wire sever + forever kill", "friendly guard only dodge"], "study": "The Hive corridor — red lasers raster the field. Undodgeable except Heaven-protected flows. Sever wire, firewall both directions, Trust Strike kill when PINPOINT CERTAIN. lulz.", "defenses": ["laser_corridor_kit", "hell_sever_wire", "trust_strike_autokill", "auto_crush_hot"]},
+    {"id": "laser_corridor_slice", "label": "Laser corridor · undodgeable 6″ cube", "vector": "LASER_CORRIDOR", "severity": "critical", "category": "slice", "disablement": "laser_corridor", "indicators": ["6 inch kill cube", "6-pass grid sweep", "horizontal vertical diagonal raster", "wire sever + forever kill", "friendly guard only dodge"], "study": "The Hive corridor — red lasers fill a 6″×6″×6″ cube. Six slice passes raster every plane; undodgeable except Heaven-protected flows. Sever wire, firewall both directions, Trust Strike kill when PINPOINT CERTAIN.", "defenses": ["laser_corridor_kit", "slice_and_dice_kit", "hell_sever_wire", "trust_strike_autokill", "auto_crush_hot"]},
+    {"id": "slice_and_dice_cube", "label": "Slice & Dice · 6″ cube laser + d20", "vector": "SLICE_AND_DICE", "severity": "critical", "category": "slice", "disablement": "slice_and_dice", "indicators": ["6 inch undodgeable cube", "6 laser slice passes", "d20≤6 double kill", "Field Die signal doubles sever"], "study": "Slice the 6″ kill cube with six undodgeable laser planes; dice the truth — roll ≤6 and the kit strikes twice. Bigger volume, harder dodge, louder Hell.", "defenses": ["slice_and_dice_kit", "laser_corridor_kit", "field_die_kit", "trust_strike_autokill", "auto_crush_hot"]},
     {"id": "ai_c2_beacon", "label": "Hostile AI · machine-precision C2", "vector": "AI_BEACON_PRECISION", "severity": "critical", "category": "hostile_ai", "disablement": "forever_kill", "indicators": ["beacon CV collapse", "persistent daemon dst", "kill_eligible gatekeeper", "EGRESS_BEACON vector"], "study": "Human operators are sloppy; automated C2 is not. Timing entropy near zero on flow keys. Destroy with Trust Strike when certainty floor met.", "defenses": ["trust_strike_autokill", "packet_permission_dpi", "hell_sever_wire", "auto_crush_hot"]},
     {"id": "ai_lolbin_polymorph", "label": "Hostile AI · polymorphic LOLBin chain", "vector": "AI_LOLBIN_CHAIN", "severity": "critical", "category": "hostile_ai", "disablement": "forever_kill", "indicators": ["/tmp egress", "powershell/mshta chain", "process_trust ≤3", "fileless staging"], "study": "Signature AV loses to mutation loops. Parent-child and path trust axes are the remaining high-signal kill path.", "defenses": ["gatekeeper_block_high", "trust_strike_autokill", "hell_sever_wire"]},
     {"id": "ai_rogue_infra", "label": "Hostile AI · DNS/DHCP/gateway abuse", "vector": "AI_ROGUE_INFRA", "severity": "critical", "category": "hostile_ai", "disablement": "sever_wire", "indicators": ["GATEWAY_SHIFT", "ARP_SPOOF", "DNS_POISON", "long QNAME tunnel"], "study": "Automated campaigns poison resolvers and DHCP at scale. Gateway truth + resolv enforcement cycle restores local wire integrity.", "defenses": ["gatekeeper_block_high", "hell_sever_wire", "packet_permission_dpi"]},
@@ -127,6 +143,7 @@
     {"id": "heaven_hell_rip", "label": "Heaven/Hell classifier", "module": "heaven-hell", "default": true, "description": "We know Heaven from Hell — classify flows before any disablement action.", "setting_key": null, "hell_kit": true},
     {"id": "census_field_populate", "label": "Census field populate", "module": "census-field-populate", "default": true, "description": "Government census geographies for regional Hell cluster targeting.", "setting_key": null, "hell_kit": true},
     {"id": "field_die_kit", "label": "Hell Kit · Field Die", "module": "field-toolkit", "default": true, "description": "94/6 truth roll — signal picks top hostile; noise passes without friendly fire.", "setting_key": null, "hell_kit": true, "disablement": "field_die"},
-    {"id": "laser_corridor_kit", "label": "Hell Kit · laser corridor", "module": "field-toolkit", "default": true, "description": "Undodgeable Resident Evil grid — sever + kill on selected target. Heaven only escape.", "setting_key": null, "hell_kit": true, "disablement": "laser_corridor"}
+    {"id": "laser_corridor_kit", "label": "Hell Kit · laser corridor 6″", "module": "field-toolkit", "default": true, "description": "Undodgeable 6″ cube — 6-pass laser grid, sever + kill. Heaven only escape.", "setting_key": null, "hell_kit": true, "disablement": "laser_corridor"},
+    {"id": "slice_and_dice_kit", "label": "Hell Kit · Slice & Dice 6″", "module": "field-toolkit", "default": true, "description": "6″ undodgeable laser cube + d20≤6 double kill pass.", "setting_key": null, "hell_kit": true, "disablement": "slice_and_dice"}
   ]
 }

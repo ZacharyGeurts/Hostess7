@@ -1,0 +1,32 @@
+{
+  "schema": "hostess7-google-youtube-open-doctrine/v1",
+  "title": "Google & YouTube — free and open internet, delay killed",
+  "motto": "Core Google/YouTube open · tracker blocks never gate search or media · comments mirrored sovereign",
+  "module": "lib/hostess7-google-youtube-open.py",
+  "api": "/api/operator-google-youtube-open",
+  "free_open_internet": {
+    "policy": "truth_dns_primary",
+    "delay_killed": true,
+    "tracker_blocks_exclude_core": true,
+    "google_search_open": true,
+    "youtube_media_open": true,
+    "local_adblock_never_blocks_google_com": true,
+    "local_adblock_never_blocks_youtube_com": true
+  },
+  "prejudice": {
+    "delay_as_threat": true,
+    "stale_cache_open_immediately": true,
+    "countermeasure": "parallel_syndication_no_cooldown"
+  },
+  "youtube": {
+    "handle": "ZacharyGeurts",
+    "lanes": ["piped", "invidious", "oembed", "syndication_rss"],
+    "parallel": true
+  },
+  "google": {
+    "core_domains": ["google.com", "www.google.com", "accounts.google.com", "googlevideo.com"],
+    "blocked_locally_only": ["doubleclick.net", "googlesyndication.com", "googleadservices.com", "adservice.google.com"],
+    "never_blocks_search": true
+  },
+  "ironclad_cite": "ironclad:internet:google-youtube:open:1"
+}

@@ -77,6 +77,12 @@
         "headline": "Big and little names — whole internet clean for humans and robots",
         "detail": "Every big host marker, little interference pattern, panel storm, queue orphan, telemetry beacon, and gone URL is on the permanent list. Internet clean all orchestrates hostile sweeps for robots and bookmark/telemetry lanes for humans — never remove from list.",
         "sources": ["field-internet-clean-all.py", "field-internet-clean-all-doctrine.json", "hostess7-whole-internet.py"]
+      },
+      {
+        "id": "world_dns_dhcp_hook",
+        "headline": "Foreign world DNS/DHCP hooks — KILL and RE-KILL on sight",
+        "detail": "ISP CPE resolvers, foreign DHCP OFFERs, and rogue listeners that try to hijack planetary DNS/DHCP authority get permanent blocks, nft drops, and SIGKILL. No quarantine. No grace. Truth Resolver on 127.0.0.1 and field DHCP on 192.168.47.1 stay sole authority — every attempt is witnessed on Big Grin Pwnership.",
+        "sources": ["field-dns-dhcp-collision-guard.py", "dns-threat-guard.py", "field-dns-dhcp-collision-guard-doctrine.json"]
       }
     ]
   },
@@ -87,7 +93,9 @@
       "field-grok-spawner-kill-ledger.jsonl",
       "field-grok-spawner-kill-panel.json",
       "field-botnet-microsoft-kill-panel.json",
-      "field-hostile.tsv"
+      "field-hostile.tsv",
+      "field-dns-dhcp-collision-guard-panel.json",
+      "dns-threat-eradicated.jsonl"
     ]
   },
   "equipment_seed": [
@@ -174,6 +182,26 @@
       "role": "local stub resolver",
       "replacement": "Truth Resolver — RFC 6761 special-use",
       "why_id": "truth_resolver_supersedes"
+    },
+    {
+      "id": "charter-world-dns-hook",
+      "name": "Charter/Spectrum world DNS hook (209.18.47.0/24)",
+      "vendor": "ISP CPE / Charter",
+      "status": "blocked",
+      "role": "foreign resolver injection via resolv.conf",
+      "replacement": "127.0.0.1 Truth Resolver — sole authority",
+      "why_id": "world_dns_dhcp_hook",
+      "notes": "209.18.47.61/62/63 — quarantined then eradicated; RE-KILL on every re-attempt"
+    },
+    {
+      "id": "foreign-dhcp-offer-hook",
+      "name": "Foreign DHCP OFFER on world wire",
+      "vendor": "Rogue DHCP",
+      "status": "blocked",
+      "role": "competing DHCP authority",
+      "replacement": "field-dhcp.py on 192.168.47.1:67",
+      "why_id": "world_dns_dhcp_hook",
+      "notes": "Broadcast DISCOVER probe — foreign siaddr = threat_eradicate"
     }
   ],
   "module": "lib/hostess7-big-grin-pwnership.py",

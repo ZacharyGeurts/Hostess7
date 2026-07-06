@@ -1,0 +1,81 @@
+{
+  "schema": "dns-egress-integrity/v1",
+  "updated": "2026-07-02T13:20:05Z",
+  "motto": "Allowed egress verified — payload hash match or logged mismatch.",
+  "policy": "Only permitted DNS/DHCP paths; tamper = threat eradication.",
+  "stats": {
+    "total_checks": 5,
+    "verified_exact": 0,
+    "mismatches": 5,
+    "last_probe_ok": false
+  },
+  "recent": [
+    {
+      "ts": "2026-07-02T15:50:22Z",
+      "kind": "egress_probe",
+      "dest": "root-hints",
+      "permitted": true,
+      "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+      "recv_hash": "b127de83e8eae785441eec02bb87afe0",
+      "exact_match": false,
+      "sent_len": 23,
+      "recv_len": 1025,
+      "ok": true,
+      "returncode": 0
+    },
+    {
+      "ts": "2026-07-02T15:50:21Z",
+      "kind": "egress_probe",
+      "dest": "root-hints",
+      "permitted": true,
+      "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+      "recv_hash": "a7569cf481dc9f42cd8610edf1ad819d",
+      "exact_match": false,
+      "sent_len": 23,
+      "recv_len": 1031,
+      "ok": true,
+      "returncode": 0
+    },
+    {
+      "ts": "2026-07-02T15:50:21Z",
+      "kind": "egress_probe",
+      "dest": "root-hints",
+      "permitted": true,
+      "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+      "recv_hash": "cb67b3bf94212839268e54fe3958b581",
+      "exact_match": false,
+      "sent_len": 23,
+      "recv_len": 1028,
+      "ok": true,
+      "returncode": 0
+    },
+    {
+      "ts": "2026-07-02T15:50:20Z",
+      "kind": "egress_probe",
+      "dest": "root-hints",
+      "permitted": true,
+      "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+      "recv_hash": "3c39ad750e831bd0022ffdb5f86b02e0",
+      "exact_match": false,
+      "sent_len": 23,
+      "recv_len": 1032,
+      "ok": true,
+      "returncode": 0
+    },
+    {
+      "ts": "2026-07-02T15:50:20Z",
+      "kind": "egress_probe",
+      "dest": "root-hints",
+      "permitted": true,
+      "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+      "recv_hash": "18e38f28d07f26d8e635bc61d7aacb94",
+      "exact_match": false,
+      "sent_len": 23,
+      "recv_len": 1027,
+      "ok": true,
+      "returncode": 0
+    }
+  ],
+  "probes": [],
+  "healthy": false
+}

@@ -1,0 +1,1015 @@
+{
+  "ok": true,
+  "schema": "field-stack-benchmark/v1",
+  "at": "2026-07-06T00:40:20Z",
+  "panel_origin": "http://127.0.0.1:9477",
+  "summary": {
+    "http_ok": 2,
+    "http_total": 8,
+    "avg_latency_ms": 2.0,
+    "max_mbps": 50.384,
+    "ammonet_pipe_percent": null,
+    "qemu_transfer_mbps": null,
+    "truth_post_ok": false,
+    "truth_latency_ms": 1
+  },
+  "http": {
+    "panel_status": {
+      "ok": false,
+      "status": 403,
+      "latency_ms": 12,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    "gnu_terminal": {
+      "ok": false,
+      "status": 403,
+      "latency_ms": 2,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    "underlay_html": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 0,
+      "bytes": 6298,
+      "mbps": 50.384,
+      "sample": {
+        "_raw_bytes": 6298
+      }
+    },
+    "terminal_embed": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 0,
+      "bytes": 1487,
+      "mbps": 11.896,
+      "sample": {
+        "_raw_bytes": 1487
+      }
+    },
+    "ammonet": {
+      "ok": false,
+      "status": 403,
+      "latency_ms": 0,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    "github_secure": {
+      "ok": false,
+      "status": 403,
+      "latency_ms": 1,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    "os_keybindings": {
+      "ok": false,
+      "status": 403,
+      "latency_ms": 1,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    "ironclad_immediate": {
+      "ok": false,
+      "status": 403,
+      "latency_ms": 0,
+      "error": "HTTP Error 403: Forbidden"
+    }
+  },
+  "truth_post": {
+    "ok": false,
+    "status": 403,
+    "latency_ms": 1,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  "modules": {
+    "truth_cli": {
+      "ok": true,
+      "schema": "field-ironclad-truth/v1",
+      "usage": "truth [diagnostic] <query>",
+      "modes": [
+        "information",
+        "diagnostic"
+      ],
+      "_bench_ms": 22,
+      "_bench_bytes": 151
+    },
+    "gnu_terminal_cli": {
+      "ok": true,
+      "schema": "field-gnu-terminal/v2",
+      "shell_terminal_identical": true,
+      "combinatronic_optional": true,
+      "universal_cli": true,
+      "universal": {
+        "schema": "kilroy-universal-cli/v1",
+        "title": "KILROY Universal CLI",
+        "motto": "Every OS · one truth — same name, same shit",
+        "rule": "Duplicate command names across POSIX, CMD, PowerShell, and BSD generally do the same job. Resolve to one canonical op, then execute.",
+        "families": [
+          "posix",
+          "gnu",
+          "bsd",
+          "cmd",
+          "powershell",
+          "kilroy",
+          "darwin"
+        ],
+        "commands": [
+          {
+            "id": "list_dir",
+            "label": "List directory",
+            "aliases": [
+              "ls",
+              "dir",
+              "gci",
+              "get-childitem"
+            ],
+            "posix": "ls",
+            "builtin": true
+          },
+          {
+            "id": "print",
+            "label": "Print text",
+            "aliases": [
+              "echo",
+              "write-output",
+              "write-host"
+            ],
+            "posix": "echo",
+            "builtin": true
+          },
+          {
+            "id": "cat",
+            "label": "Show file",
+            "aliases": [
+              "cat",
+              "type",
+              "get-content",
+              "gc"
+            ],
+            "posix": "cat",
+            "builtin": true
+          },
+          {
+            "id": "pwd",
+            "label": "Print working directory",
+            "aliases": [
+              "pwd",
+              "get-location",
+              "gl"
+            ],
+            "posix": "pwd",
+            "builtin": true
+          },
+          {
+            "id": "cd",
+            "label": "Change directory",
+            "aliases": [
+              "cd",
+              "chdir",
+              "set-location",
+              "sl"
+            ],
+            "posix": "cd",
+            "builtin": true
+          },
+          {
+            "id": "clear",
+            "label": "Clear screen",
+            "aliases": [
+              "clear",
+              "cls",
+              "clear-host",
+              "reset"
+            ],
+            "posix": "clear",
+            "builtin": true
+          },
+          {
+            "id": "whoami",
+            "label": "Current user",
+            "aliases": [
+              "whoami"
+            ],
+            "posix": "whoami",
+            "builtin": true
+          },
+          {
+            "id": "hostname",
+            "label": "Host name",
+            "aliases": [
+              "hostname"
+            ],
+            "posix": "hostname",
+            "builtin": true
+          },
+          {
+            "id": "uname",
+            "label": "System identity",
+            "aliases": [
+              "uname",
+              "ver",
+              "sw_vers"
+            ],
+            "posix": "uname",
+            "builtin": true
+          },
+          {
+            "id": "date",
+            "label": "Date and time",
+            "aliases": [
+              "date",
+              "get-date"
+            ],
+            "posix": "date",
+            "builtin": false
+          },
+          {
+            "id": "which",
+            "label": "Locate command",
+            "aliases": [
+              "which",
+              "where",
+              "where.exe",
+              "get-command",
+              "gcm"
+            ],
+            "posix": "which",
+            "builtin": false
+          },
+          {
+            "id": "grep",
+            "label": "Search text",
+            "aliases": [
+              "grep",
+              "findstr",
+              "rg",
+              "select-string",
+              "sls"
+            ],
+            "posix": "grep",
+            "builtin": false
+          },
+          {
+            "id": "find",
+            "label": "Find files",
+            "aliases": [
+              "find",
+              "locate"
+            ],
+            "posix": "find",
+            "builtin": false
+          },
+          {
+            "id": "mkdir",
+            "label": "Make directory",
+            "aliases": [
+              "mkdir",
+              "md",
+              "new-item"
+            ],
+            "posix": "mkdir",
+            "builtin": true
+          },
+          {
+            "id": "copy",
+            "label": "Copy files",
+            "aliases": [
+              "cp",
+              "copy",
+              "copy-item",
+              "cpi"
+            ],
+            "posix": "cp",
+            "builtin": false
+          },
+          {
+            "id": "move",
+            "label": "Move/rename",
+            "aliases": [
+              "mv",
+              "move",
+              "ren",
+              "rename",
+              "move-item",
+              "mi"
+            ],
+            "posix": "mv",
+            "builtin": false
+          },
+          {
+            "id": "remove",
+            "label": "Delete",
+            "aliases": [
+              "rm",
+              "del",
+              "erase",
+              "remove-item",
+              "ri"
+            ],
+            "posix": "rm",
+            "builtin": false
+          },
+          {
+            "id": "head",
+            "label": "First lines",
+            "aliases": [
+              "head"
+            ],
+            "posix": "head",
+            "builtin": false
+          },
+          {
+            "id": "tail",
+            "label": "Last lines",
+            "aliases": [
+              "tail"
+            ],
+            "posix": "tail",
+            "builtin": false
+          },
+          {
+            "id": "wc",
+            "label": "Word/line count",
+            "aliases": [
+              "wc"
+            ],
+            "posix": "wc",
+            "builtin": false
+          },
+          {
+            "id": "env",
+            "label": "Environment",
+            "aliases": [
+              "env",
+              "set",
+              "printenv"
+            ],
+            "posix": "env",
+            "builtin": false
+          },
+          {
+            "id": "git",
+            "label": "Git",
+            "aliases": [
+              "git"
+            ],
+            "posix": "git",
+            "builtin": false
+          },
+          {
+            "id": "make",
+            "label": "Make",
+            "aliases": [
+              "make",
+              "gmake"
+            ],
+            "posix": "make",
+            "builtin": false
+          },
+          {
+            "id": "python",
+            "label": "Python",
+            "aliases": [
+              "python",
+              "python3",
+              "pythong",
+              "py"
+            ],
+            "posix": "python3",
+            "builtin": false
+          },
+          {
+            "id": "help",
+            "label": "Command help",
+            "aliases": [
+              "help",
+              "?",
+              "man"
+            ],
+            "posix": "help",
+            "builtin": true
+          },
+          {
+            "id": "kilroy_status",
+            "label": "KILROY kernel witness",
+            "aliases": [
+              "kilroy",
+              "kilroy-status",
+              "kernel"
+            ],
+            "posix": "kilroy-status",
+            "builtin": true
+          },
+          {
+            "id": "source_tree",
+            "label": "Source tree hint",
+            "aliases": [
+              "source",
+              "tree"
+            ],
+            "posix": "source",
+            "builtin": true
+          }
+        ],
+        "alias_count": 80
+      },
+      "cwd_default": "/home/default/Desktop/SG/NewLatest",
+      "sg_root": "/home/default/Desktop/SG/NewLatest",
+      "kilroy_root": "/home/default/Desktop/SG/KILROY",
+      "shell": "/bin/bash",
+      "field_kernel": {
+        "field_kernel_running": false,
+        "proc_kilroy_field": false,
+        "dev_kilroy_field": false,
+        "kernel_version": "Linux version 6.14.0-37-generic (buildd@lcy02-amd64-031) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC T",
+        "is_kilroy": false,
+        "kilroy_root": "/home/default/Desktop/SG/KILROY",
+        "kilroy_present": false,
+        "ai_default_mode": "home",
+        "proc_ai_snippet": null
+      },
+      "field_native": {
+        "g16": false,
+        "gpy16": false,
+        "path": "/home/default/Desktop/SG/Grok16/bin:/home/default/Desktop/SG/Grok16/libexec/grok16:/home/default/Desktop/SG/NewLatest/GrokPy/bin:/home/default/Desktop/SG/NewLatest/PythonG/bin:/usr/bin:/bin:/home/default/Desktop/SG/NewLatest/PythonG/bin:/ho",
+        "kilroy_by_default": true
+      },
+      "ansi": {
+        "enabled": true,
+        "palette": "256+truecolor",
+        "parser": "ellie-nav"
+      },
+      "themes": [],
+      "theme_default": "black_emerald_rose_2026",
+      "theme_mono": "mono_terminal",
+      "themes_api": "/api/ammoos-themes",
+      "minibrowser_proxy": "/browse/view",
+      "menus": [
+        "File",
+        "Edit",
+        "View",
+        "Options",
+        "Help"
+      ],
+      "programs": [
+        "truth",
+        "mspaint",
+        "modules",
+        "load-module"
+      ],
+      "dos40": true,
+      "dos40_api": "/api/field-dos40",
+      "product": "GNU EOL Terminal",
+      "posture": "GNU EOL Terminal — shell ≡ terminal · MS-DOS 4.0 modules · combinatronic optional · Ironclad truth",
+      "combinatronic_commands": [
+        "combinatorics",
+        "combinatronic",
+        "g16-combinatronics",
+        "bash -c combinatorics"
+      ],
+      "aliases": [
+        "terminal",
+        "gnu-terminal",
+        "shell",
+        "gnueol"
+      ],
+      "_bench_ms": 32,
+      "_bench_bytes": 5395
+    },
+    "github_secure_cli": {
+      "ok": true,
+      "schema": "field-github-secure/v1",
+      "github_secure": {
+        "schema": "queen-github-secure/v1",
+        "updated": "2026-07-06T00:40:03Z",
+        "owner": "zacharygeurts",
+        "verify": {
+          "ok": true,
+          "push_ok": true,
+          "full_ok": true,
+          "known_hosts": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/hostess7-github-known_hosts",
+          "ssh_key_match": {
+            "ok": true,
+            "hosts": {
+              "github.com": {
+                "port": 22,
+                "ok": true,
+                "pinned_ed25519": 1,
+                "live_ed25519": 1
+              },
+              "ssh.github.com": {
+                "port": 443,
+                "ok": true,
+                "pinned_ed25519": 1,
+                "live_ed25519": 1
+              }
+            }
+          },
+          "dns_pin": {
+            "ok": true,
+            "authority": "truth_dns",
+            "truth_up": true,
+            "resolver": "127.0.0.1:53",
+            "hosts": {
+              "github.com": {
+                "ips": [
+                  "140.82.112.4"
+                ],
+                "ok": true,
+                "bad": [],
+                "source": "truth_dns"
+              },
+              "ssh.github.com": {
+                "ips": [
+                  "140.82.113.36"
+                ],
+                "ok": true,
+                "bad": [],
+                "source": "truth_dns"
+              }
+            }
+          },
+          "route": "tunnel",
+          "tls_ok": true,
+          "tls_note": "skipped_no_pin",
+          "gh_cli": true,
+          "token_present": true,
+          "anti_hook": {
+            "git_config": {
+              "ok": true,
+              "blockers": [],
+              "warnings": [
+                {
+                  "scope": "global",
+                  "line": "credential.https://github.com.helper=",
+                  "risk": "credential helper (bypassed by secure git)"
+                },
+                {
+                  "scope": "global",
+                  "line": "credential.https://github.com.helper=!/usr/bin/gh auth git-credential",
+                  "risk": "credential helper (bypassed by secure git)"
+                },
+                {
+                  "scope": "global",
+                  "line": "credential.https://gist.github.com.helper=",
+                  "risk": "credential helper (bypassed by secure git)"
+                },
+                {
+                  "scope": "global",
+                  "line": "credential.https://gist.github.com.helper=!/usr/bin/gh auth git-credential",
+                  "risk": "credential helper (bypassed by secure git)"
+                }
+              ]
+            },
+            "git_hooks": {
+              "ok": true,
+              "findings": []
+            },
+            "dns": {
+              "ok": true,
+              "authority": "truth_dns",
+              "truth_up": true,
+              "resolver": "127.0.0.1:53",
+              "hosts": {
+                "github.com": {
+                  "ips": [
+                    "140.82.112.4"
+                  ],
+                  "ok": true,
+                  "bad": [],
+                  "source": "truth_dns"
+                },
+                "ssh.github.com": {
+                  "ips": [
+                    "140.82.113.36"
+                  ],
+                  "ok": true,
+                  "bad": [],
+                  "source": "truth_dns"
+                }
+              }
+            },
+            "anti_hook": {
+              "ignore_ssh_config": true,
+              "disable_git_hooks": true,
+              "block_credential_helpers": true,
+              "block_url_insteadOf": true,
+              "block_proxy": true,
+              "dns_pin_git_cidrs": true
+            }
+          },
+          "lanes": {
+            "schema": "hostess7-github-lanes/v1",
+            "lanes": [
+              {
+                "id": "ssh_direct_22",
+                "ok": true,
+                "host": "github.com",
+                "port": 22
+              },
+              {
+                "id": "ssh_tunnel_443",
+                "ok": true,
+                "host": "ssh.github.com",
+                "port": 443
+              },
+              {
+                "id": "api_https_443",
+                "ok": true,
+                "host": "api.github.com",
+                "port": 443
+              },
+              {
+                "id": "pages_cdn_443",
+                "ok": true,
+                "host": "zacharygeurts.github.io",
+                "port": 443
+              },
+              {
+                "id": "raw_github_443",
+                "ok": true,
+                "host": "raw.githubusercontent.com",
+                "port": 443
+              },
+              {
+                "id": "https_token_push",
+                "ok": true,
+                "note": "GITHUB_TOKEN/HOSTESS7_GITHUB_TOKEN set"
+              }
+            ],
+            "recommended": "ssh_direct_22",
+            "route": "direct"
+          },
+          "policy": "Pinned SSH host keys only — StrictHostKeyChecking=yes, no MITM; presume hostile ISP — tunnel ssh.github.com:443 first; no redirects, hooks, or proxy hijacks",
+          "repos": {
+            "Hostess7": "git@github.com:ZacharyGeurts/Hostess7.git",
+            "Hostess7.wiki": "git@github.com:ZacharyGeurts/Hostess7.wiki.git",
+            "command": "git@github.com:ZacharyGeurts/command.git",
+            "GNUEOLTerminal": "git@github.com:ZacharyGeurts/GNUEOLTerminal.git"
+          }
+        },
+        "doctrine": "/home/default/Desktop/SG/NewLatest/Hostess7/data/github-known-hosts.json",
+        "policy": "Pinned GitHub DNS + SSH keys — no MITM, redirect, or credential hooks",
+        "browser": "Queen",
+        "legacy_engine_label": "legacy_gecko"
+      },
+      "secure_git": {
+        "ok": true,
+        "push_ok": true,
+        "full_ok": true,
+        "known_hosts": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/hostess7-github-known_hosts",
+        "ssh_key_match": {
+          "ok": true,
+          "hosts": {
+            "github.com": {
+              "port": 22,
+              "ok": true,
+              "pinned_ed25519": 1,
+              "live_ed25519": 1
+            },
+            "ssh.github.com": {
+              "port": 443,
+              "ok": true,
+              "pinned_ed25519": 1,
+              "live_ed25519": 1
+            }
+          }
+        },
+        "dns_pin": {
+          "ok": true,
+          "authority": "truth_dns",
+          "truth_up": true,
+          "resolver": "127.0.0.1:53",
+          "hosts": {
+            "github.com": {
+              "ips": [
+                "140.82.112.4"
+              ],
+              "ok": true,
+              "bad": [],
+              "source": "truth_dns"
+            },
+            "ssh.github.com": {
+              "ips": [
+                "140.82.113.36"
+              ],
+              "ok": true,
+              "bad": [],
+              "source": "truth_dns"
+            }
+          }
+        },
+        "route": "tunnel",
+        "tls_ok": true,
+        "tls_note": "skipped_no_pin",
+        "gh_cli": true,
+        "token_present": true,
+        "anti_hook": {
+          "git_config": {
+            "ok": true,
+            "blockers": [],
+            "warnings": [
+              {
+                "scope": "global",
+                "line": "credential.https://github.com.helper=",
+                "risk": "credential helper (bypassed by secure git)"
+              },
+              {
+                "scope": "global",
+                "line": "credential.https://github.com.helper=!/usr/bin/gh auth git-credential",
+                "risk": "credential helper (bypassed by secure git)"
+              },
+              {
+                "scope": "global",
+                "line": "credential.https://gist.github.com.helper=",
+                "risk": "credential helper (bypassed by secure git)"
+              },
+              {
+                "scope": "global",
+                "line": "credential.https://gist.github.com.helper=!/usr/bin/gh auth git-credential",
+                "risk": "credential helper (bypassed by secure git)"
+              }
+            ]
+          },
+          "git_hooks": {
+            "ok": true,
+            "findings": []
+          },
+          "dns": {
+            "ok": true,
+            "authority": "truth_dns",
+            "truth_up": true,
+            "resolver": "127.0.0.1:53",
+            "hosts": {
+              "github.com": {
+                "ips": [
+                  "140.82.112.4"
+                ],
+                "ok": true,
+                "bad": [],
+                "source": "truth_dns"
+              },
+              "ssh.github.com": {
+                "ips": [
+                  "140.82.113.36"
+                ],
+                "ok": true,
+                "bad": [],
+                "source": "truth_dns"
+              }
+            }
+          },
+          "anti_hook": {
+            "ignore_ssh_config": true,
+            "disable_git_hooks": true,
+            "block_credential_helpers": true,
+            "block_url_insteadOf": true,
+            "block_proxy": true,
+            "dns_pin_git_cidrs": true
+          }
+        },
+        "lanes": {
+          "schema": "hostess7-github-lanes/v1",
+          "lanes": [
+            {
+              "id": "ssh_direct_22",
+              "ok": true,
+              "host": "github.com",
+              "port": 22
+            },
+            {
+              "id": "ssh_tunnel_443",
+              "ok": true,
+              "host": "ssh.github.com",
+              "port": 443
+            },
+            {
+              "id": "api_https_443",
+              "ok": true,
+              "host": "api.github.com",
+              "port": 443
+            },
+            {
+              "id": "pages_cdn_443",
+              "ok": true,
+              "host": "zacharygeurts.github.io",
+              "port": 443
+            },
+            {
+              "id": "raw_github_443",
+              "ok": true,
+              "host": "raw.githubusercontent.com",
+              "port": 443
+            },
+            {
+              "id": "https_token_push",
+              "ok": true,
+              "note": "GITHUB_TOKEN/HOSTESS7_GITHUB_TOKEN set"
+            }
+          ],
+          "recommended": "ssh_direct_22",
+          "route": "direct"
+        },
+        "policy": "Pinned SSH host keys only — StrictHostKeyChecking=yes, no MITM; presume hostile ISP — tunnel ssh.github.com:443 first; no redirects, hooks, or proxy hijacks",
+        "repos": {
+          "Hostess7": "git@github.com:ZacharyGeurts/Hostess7.git",
+          "Hostess7.wiki": "git@github.com:ZacharyGeurts/Hostess7.wiki.git",
+          "command": "git@github.com:ZacharyGeurts/command.git",
+          "GNUEOLTerminal": "git@github.com:ZacharyGeurts/GNUEOLTerminal.git"
+        }
+      },
+      "mcp_transport": {
+        "ready": true,
+        "mode": "mcp_secure",
+        "owner": "ZacharyGeurts",
+        "grok_mcp_server": "grok_com_github",
+        "env_file": "/home/default/.config/sg/github-mcp.env",
+        "binary_present": true,
+        "gh_present": true,
+        "token_present": true
+      },
+      "ammonet_api": "/api/ammonet",
+      "push_lane": "Hostess7/scripts/hostess7_secure_git.py push",
+      "transport_default": "mcp_secure",
+      "_bench_ms": 28829,
+      "_bench_bytes": 9994
+    },
+    "ammonet_panel": {
+      "_bench_ms": 2840,
+      "_bench_bytes": 0
+    },
+    "os_keybindings": {
+      "schema": "field-os-keybindings-panel/v1",
+      "ok": true,
+      "updated": "2026-07-06T00:40:20Z",
+      "bindings": [
+        {
+          "id": "f12_hostess7",
+          "keys": [
+            "F12"
+          ],
+          "action": "launch",
+          "target": "hostess7",
+          "layer": "infinity",
+          "desktop": true
+        },
+        {
+          "id": "f11_layer3_cycle",
+          "keys": [
+            "F11"
+          ],
+          "action": "cycle_layer3_plus",
+          "layer": 3,
+          "desktop": true
+        },
+        {
+          "id": "f10_znetwork",
+          "keys": [
+            "F10"
+          ],
+          "action": "launch",
+          "target": "znetwork",
+          "layer": 2,
+          "desktop": true
+        },
+        {
+          "id": "f9_ammonet",
+          "keys": [
+            "F9"
+          ],
+          "action": "launch",
+          "target": "ammonet",
+          "layer": 1,
+          "desktop": true
+        },
+        {
+          "id": "f8_presume_path",
+          "keys": [
+            "F8"
+          ],
+          "action": "launch",
+          "target": "chips-presume-path",
+          "layer": 0.5,
+          "desktop": true
+        },
+        {
+          "id": "f7_eol_code",
+          "keys": [
+            "F7"
+          ],
+          "action": "launch",
+          "target": "eol-code",
+          "layer": 0,
+          "desktop": true
+        },
+        {
+          "id": "f6_field_one",
+          "keys": [
+            "F6"
+          ],
+          "action": "desktop",
+          "target": "field-one",
+          "layer": -1,
+          "desktop": true
+        },
+        {
+          "id": "f5_botnet",
+          "keys": [
+            "F5"
+          ],
+          "action": "launch",
+          "target": "kilroy-dns",
+          "layer": -2,
+          "desktop": true
+        },
+        {
+          "id": "f4_nexus_c2",
+          "keys": [
+            "F4"
+          ],
+          "action": "launch",
+          "target": "nexus-c2",
+          "layer": -3,
+          "desktop": true
+        },
+        {
+          "id": "ctrl_alt_t",
+          "keys": [
+            "Control",
+            "Alt",
+            "t"
+          ],
+          "action": "launch",
+          "target": "gnu-eol-terminal",
+          "desktop": true
+        },
+        {
+          "id": "ctrl_alt_b",
+          "keys": [
+            "Control",
+            "Alt",
+            "b"
+          ],
+          "action": "launch",
+          "target": "field-broadcaster",
+          "desktop": true
+        }
+      ],
+      "launch_targets": {
+        "hostess7": {
+          "id": "hostess7",
+          "exec": "http://127.0.0.1:9477/brain.html",
+          "label": "Hostess 7"
+        },
+        "eol-code": {
+          "id": "eol-code",
+          "exec": "http://127.0.0.1:9477/eol-code",
+          "label": "EOL Code"
+        },
+        "chips-presume-path": {
+          "id": "chips-presume-path",
+          "exec": "http://127.0.0.1:9477/api/chips/presume-path",
+          "label": "Presume path"
+        },
+        "nexus-c2": {
+          "id": "nexus-c2",
+          "exec": "http://127.0.0.1:9481/world/queen-nexus-c2.html",
+          "label": "NEXUS C2"
+        },
+        "kilroy-dns": {
+          "id": "field-botnet-dns-dhcp",
+          "exec": "http://127.0.0.1:9477/command?embed=1#dns",
+          "label": "Botnet · DNS · DHCP"
+        },
+        "controller-setup": {
+          "id": "controller-setup",
+          "exec": "/queen-game-room.html#arcade",
+          "label": "Arcade controller setup"
+        },
+        "gnu-eol-terminal": {
+          "id": "gnu-eol-terminal",
+          "exec": "http://127.0.0.1:9477/field-gnu-terminal-embed.html",
+          "label": "GNU EOL Terminal",
+          "aliases": [
+            "queen-terminal"
+          ]
+        },
+        "field-broadcaster": {
+          "id": "field-broadcaster",
+          "exec": "http://127.0.0.1:9477/field-broadcaster",
+          "label": "Broadcaster"
+        }
+      },
+      "kernel_queue": {},
+      "motto": "F12 Hostess 7 · F11 layer 3+ cycle · stack descends F10–F1 · layer 3+ owns all input",
+      "_bench_ms": 26,
+      "_bench_bytes": 3468
+    }
+  },
+  "fkeys": {
+    "doctrine": "/home/default/Desktop/SG/NewLatest/data/field-os-keybindings-doctrine.json",
+    "screen_layers": "/home/default/Desktop/SG/NewLatest/data/field-screen-layer-doctrine.json",
+    "bindings": [
+      "F9",
+      "F10",
+      "F11",
+      "F12"
+    ]
+  }
+}

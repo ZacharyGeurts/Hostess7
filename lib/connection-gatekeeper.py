@@ -138,7 +138,7 @@ SITE_IP_HINTS = {
 }
 HOST_ALIASES = {
     "twitter.com": "x.com",
-    "t.co": "x.com",
+    "t.co": "t.co",
     "twimg.com": "x.com",
 }
 _honor_mod: Any = None

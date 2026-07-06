@@ -68,7 +68,7 @@ def status_json() -> dict[str, Any]:
         else:
             port_base = int(doc.get("tunnel_port_base") or 19477)
             slots_n = int(doc.get("target") or doc.get("slots_total") or 6)
-            slots_n = max(1, min(slots_n, 16))
+            slots_n = max(1, min(slots_n, int(os.environ.get("NEXUS_GLOBAL_SERVER_TARGET") or 2500)))
             cycle = ["dhcp", "dns", "edge", "github_mirror_witness"]
             doc["slots"] = [
                 {

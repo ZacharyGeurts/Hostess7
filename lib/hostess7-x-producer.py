@@ -116,6 +116,12 @@ def produce(*, export: bool = True) -> dict[str, Any]:
         (DOCS_DATA / "x-producer-feed.json").write_text(
             json.dumps(feed, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
+    people_chip = _run_py("field-people-chip-combinatorics.py", ["extract"], timeout=90)
+    out["people_chip"] = {
+        "ok": people_chip.get("ok", bool(people_chip.get("counts"))),
+        "real_people": (people_chip.get("counts") or {}).get("real_people"),
+        "x_archived": (people_chip.get("counts") or {}).get("x_posts_archived"),
+    }
     return out
 
 

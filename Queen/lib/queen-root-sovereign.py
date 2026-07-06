@@ -275,6 +275,28 @@ def _is_kernel_thread(pid: int, comm: str, cmd: str) -> bool:
     return False
 
 
+def _ai_root_guard_blocks(cmd: str) -> bool:
+    """AI root guard — destructive root cannot break DNS/DHCP/field even with root."""
+    guard_py = SG / "NewLatest" / "lib" / "field-ai-root-api-guard.py"
+    if not guard_py.is_file():
+        guard_py = QUEEN.parent / "lib" / "field-ai-root-api-guard.py"
+    if not guard_py.is_file():
+        return False
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("field_ai_root_guard", guard_py)
+        if not spec or not spec.loader:
+            return False
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if not hasattr(mod, "guard_root_command"):
+            return False
+        verdict = mod.guard_root_command(cmd, channel="machine")
+        return not bool(verdict.get("ok"))
+    except Exception:
+        return False
+
+
 def _threat_level(pid: int, comm: str, cmd: str, *, sovereign_uid: int) -> str:
     if _sudo_chain_ok(pid, sovereign_uid):
         return "ALLOW"
@@ -282,6 +304,8 @@ def _threat_level(pid: int, comm: str, cmd: str, *, sovereign_uid: int) -> str:
         return "ALLOW"
     if comm in ("g16", "g++16", "ninja", "cmake", "make", "cc1", "cc1plus", "as", "ld"):
         return "ALLOW"
+    if cmd and _ai_root_guard_blocks(cmd):
+        return "CRITICAL"
     if CRITICAL_CMD_RE.search(cmd) or comm in HOSTILE_COMMS:
         return "CRITICAL"
     if comm in HIGH_COMMS:

@@ -171,7 +171,44 @@ def _request_dhcp(iface: str) -> dict[str, Any]:
     return {"ok": False, "iface": iface, "reason": "no_dhcp_client"}
 
 
+def _ensure_dhcp_watch() -> dict[str, Any]:
+    cached = _load_json(STATE / "field-watch-dhcp-panel.json", {})
+    if cached.get("schema") == "field-watch-dhcp/v1":
+        return {
+            "ok": True,
+            "skipped": True,
+            "reason": "read_only_panel",
+            "observe_only": True,
+            "counts": cached.get("counts") or {},
+        }
+    return {"ok": True, "skipped": True, "reason": "no_panel_yet", "observe_only": True}
+
+
+def _ensure_never_down() -> dict[str, Any]:
+    if os.environ.get("NEXUS_NEVER_DOWN_INLINE", "0").strip().lower() not in ("1", "yes", "on", "true"):
+        return {"ok": True, "skipped": True, "reason": "inline_disabled"}
+    py = INSTALL / "lib" / "field-never-down.py"
+    if not py.is_file():
+        return {"ok": False, "skipped": True, "reason": "module_missing"}
+    try:
+        proc = subprocess.run(
+            [os.environ.get("PYTHON", "python3"), str(py), "ensure"],
+            capture_output=True,
+            text=True,
+            timeout=120,
+            env={**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)},
+        )
+        raw = (proc.stdout or "").strip()
+        if raw.startswith("{"):
+            return json.loads(raw)
+    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+        pass
+    return {"ok": False, "skipped": True}
+
+
 def connect(*, persist: bool = True) -> dict[str, Any]:
+    never_down = _ensure_never_down()
+    dhcp_watch = _ensure_dhcp_watch()
     dns_up = _dns_running()
     dhcp_up = _dhcp_running()
     dns_healthy = dns_up and _dns_probe()
@@ -221,6 +258,18 @@ def connect(*, persist: bool = True) -> dict[str, Any]:
             "mac": mac or None,
             "lease": lease,
             "client": dhcp_result,
+        },
+        "dhcp_watch": {
+            "observe_only": True,
+            "not_our_dhcp": True,
+            "automated": dhcp_watch,
+            "api": "/api/field-watch-dhcp",
+        },
+        "never_down": {
+            "always_field_one": True,
+            "hub_id": "field-1",
+            "ensure": never_down,
+            "api": "/api/field-never-down",
         },
         "env_hint": {
             "RESOLV_CONF": resolv_path,

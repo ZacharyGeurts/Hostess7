@@ -1,7 +1,7 @@
 {
   "schema": "field-unified-bus-doctrine/v1",
-  "title": "Unified Field Bus — data_bus[64] + per-lane copilot",
-  "motto": "Scan once, pack the bus, copilot every lane at arithmetic rate — Field Die discipline on the host.",
+  "title": "Unified Field Bus — data_bus[64] + per-lane hot router",
+  "motto": "Scan once, pack the bus, hot-route every lane at arithmetic rate — Field Die discipline on the host.",
   "amouranthrtx": "FieldLayer::BusMap + data_bus[64] + FieldFabric parallel lanes",
   "bus_size": 64,
   "die_compatible": true,
@@ -19,7 +19,7 @@
     "io_packet": {"slots": [44, 45, 46, 47], "role": "Truth-gated I/O — sovereign in, conversation stream out"},
     "thermal": {"slots": [48, 49, 50, 51], "role": "Hwmon thermo quota entropy fold"},
     "firmware": {"slots": [56, 57, 58, 59], "role": "BIOS/firmware threat scan removal verdict"},
-    "copilot": {"slots": [52, 53, 54, 55], "role": "Per-lane bench checksums"}
+    "hot_router": {"slots": [52, 53, 54, 55], "role": "Per-lane bench checksums"}
   },
   "slot_map": [
     {"slot": 0, "die": "REGISTRY_TAG", "nexus": "bus_generation"},

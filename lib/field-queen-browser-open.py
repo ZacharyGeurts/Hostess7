@@ -570,7 +570,8 @@ def main() -> int:
         out = launch_ammoos_desktop()
     elif cmd == "open":
         route = sys.argv[2] if len(sys.argv) > 2 else ""
-        out = open_sovereign_browser(route=route)
+        focus = os.environ.get("QUEEN_BROWSER_FOCUS_URL", "").strip()
+        out = open_sovereign_browser(route=route, focus_url=focus)
     else:
         print(json.dumps({
             "error": "usage",

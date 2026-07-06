@@ -33,7 +33,7 @@ _SOVEREIGN_MOD: Any = None
 _FABRIC_ENCRYPT: Any = None
 _CLOCK_ANCHOR_MEM: dict[str, Any] | None = None
 _PLATE_RT_MEM: tuple[float, dict[str, Any]] | None = None
-_COPILOT_CPU: "CopilotCPU | None" = None
+_PLATE_ROUTER: "PlateRouter | None" = None
 
 COMM_CHANNELS = (
     "field_mmio_shadow",
@@ -369,7 +369,7 @@ def _write_plate_runtime(
         _PLATE_RT_MEM = (PLATE_RUNTIME.stat().st_mtime, rt)
     except OSError:
         _PLATE_RT_MEM = (time.time(), rt)
-    copilot(reload=True)
+    plate_router(reload=True)
     _refresh_unified_bus()
     return rt
 
@@ -400,8 +400,8 @@ def _refresh_unified_bus() -> None:
         pass
 
 
-class CopilotCPU:
-    """Plate copilot — field intelligence in silicon arithmetic, 0ms hot route, faster than sysfs CPU."""
+class PlateRouter:
+    """Plate hot router — field intelligence in silicon arithmetic, 0ms hot route, faster than sysfs CPU."""
 
     __slots__ = (
         "_words",
@@ -452,7 +452,7 @@ class CopilotCPU:
         if hit is None:
             return {
                 "ok": False,
-                "copilot": True,
+                "hot_route": True,
                 "field_intelligence": False,
                 "elapsed_ms": 0,
                 "elapsed_ns": 0,
@@ -463,7 +463,7 @@ class CopilotCPU:
         intel = (word >> 22) & 0xFF
         return {
             "ok": True,
-            "copilot": True,
+            "hot_route": True,
             "field_intelligence": intel >= 192,
             "elapsed_ms": 0,
             "elapsed_ns": 0,
@@ -479,7 +479,7 @@ class CopilotCPU:
             "label": self._labels[slot] if slot < len(self._labels) else "",
             "communicate": {
                 "channel": channel,
-                "reason": "copilot_plate",
+                "reason": "hot_route_plate",
                 "secure": channel in ("field_mmio_shadow", "netlink_field", "ioctl_direct", "znetwork_shadow"),
             },
         }
@@ -495,7 +495,7 @@ class CopilotCPU:
             routes.append(hit)
         return {
             "ok": True,
-            "copilot": True,
+            "hot_route": True,
             "elapsed_ms": 0,
             "elapsed_ns": 0,
             "count": len(routes),
@@ -505,7 +505,7 @@ class CopilotCPU:
 
     def bench(self, *, samples: int = 50_000) -> dict[str, Any]:
         if not self._words or not self._slots:
-            return {"ok": False, "error": "copilot_empty"}
+            return {"ok": False, "error": "hot_route_empty"}
         probe_key = next(iter(self._slots))
         probe_slot = self._slots[probe_key]
         probe_word = self._words[probe_slot]
@@ -536,27 +536,27 @@ class CopilotCPU:
         }
 
 
-def copilot(*, reload: bool = False) -> CopilotCPU:
-    global _COPILOT_CPU
-    if _COPILOT_CPU is None:
-        _COPILOT_CPU = CopilotCPU()
-    if reload or not _COPILOT_CPU.hot:
-        _COPILOT_CPU.absorb(_plate_runtime())
-    return _COPILOT_CPU
+def plate_router(*, reload: bool = False) -> PlateRouter:
+    global _PLATE_ROUTER
+    if _PLATE_ROUTER is None:
+        _PLATE_ROUTER = PlateRouter()
+    if reload or not _PLATE_ROUTER.hot:
+        _PLATE_ROUTER.absorb(_plate_runtime())
+    return _PLATE_ROUTER
 
 
-def copilot_route(target: str) -> dict[str, Any]:
-    return copilot().route(target)
+def hot_route(target: str) -> dict[str, Any]:
+    return plate_router().route(target)
 
 
-def copilot_batch(targets: list[str]) -> dict[str, Any]:
-    return copilot().route_batch(targets)
+def hot_route_batch(targets: list[str]) -> dict[str, Any]:
+    return plate_router().route_batch(targets)
 
 
-def copilot_status(*, bench: bool = True) -> dict[str, Any]:
-    cpu = copilot()
+def hot_route_status(*, bench: bool = True) -> dict[str, Any]:
+    cpu = plate_router()
     doc: dict[str, Any] = {
-        "schema": "field-operator-copilot/v1",
+        "schema": "field-operator-hot-route/v1",
         "ts": _now(),
         "hot": cpu.hot,
         "elapsed_ms": 0,
@@ -564,7 +564,7 @@ def copilot_status(*, bench: bool = True) -> dict[str, Any]:
         "wires": len(cpu._words),
         "board_direct": cpu._direct,
         "iommu": cpu._iommu,
-        "policy": "Plate field intelligence — copilot routes at arithmetic rate, 0ms reported on hot path",
+        "policy": "Plate field intelligence — hot routes at arithmetic rate, 0ms reported on hot path",
     }
     if bench and cpu.hot:
         doc["bench"] = cpu.bench(samples=20_000)
@@ -1350,9 +1350,9 @@ def board(*, override: str | None = None, include_hw_wire: bool = True) -> dict[
 
 
 def route_to_board(target: str, *, override: str | None = None) -> dict[str, Any]:
-    """Copilot-first O(1) route — 0ms on plate hot path."""
+    """Hot-route-first O(1) route — 0ms on plate hot path."""
     if not override:
-        hit = copilot_route(target)
+        hit = hot_route(target)
         if hit.get("ok"):
             hit["connection"] = {
                 "id": hit.get("id"),
@@ -1364,7 +1364,7 @@ def route_to_board(target: str, *, override: str | None = None) -> dict[str, Any
                 "route_word": hit.get("route_word"),
                 "communicate": hit.get("communicate"),
             }
-            hit["lookup"] = "copilot"
+            hit["lookup"] = "hot_route"
             return hit
     t0 = time.perf_counter_ns()
     rt = _plate_runtime()
@@ -1401,7 +1401,7 @@ def route_to_board(target: str, *, override: str | None = None) -> dict[str, Any
 
 def route_batch(targets: list[str], *, override: str | None = None) -> dict[str, Any]:
     if not override:
-        return copilot_batch(targets)
+        return hot_route_batch(targets)
     t0 = time.perf_counter_ns()
     rt = _plate_runtime()
     slots = rt.get("slots") or {}
@@ -1478,14 +1478,14 @@ def operator_tick(*, seal: bool = False) -> dict[str, Any]:
     scan = amazing_scan(use_cache=True, seal=seal and not _anchor_fresh())
     plate = build_iron_plate(fast=scan)
     rt = _plate_runtime()
-    cpu = copilot(reload=True)
+    cpu = plate_router(reload=True)
     return {
         "ok": True,
         "scan_ms": (scan.get("scan") or {}).get("elapsed_ms"),
         "plate_ms": (plate.get("scan") or {}).get("elapsed_ms"),
         "connections": plate.get("connection_count"),
         "board_direct": rt.get("direct_count"),
-        "copilot": {"hot": cpu.hot, "wires": len(cpu._words), "elapsed_ms": 0},
+        "hot_route": {"hot": cpu.hot, "wires": len(cpu._words), "elapsed_ms": 0},
         "clock": scan.get("clock"),
     }
 
@@ -1567,7 +1567,7 @@ def main() -> int:
         "clock": profile_clock,
         "seal-clock": lambda: seal_clock_anchor(chain="operator-cli"),
         "route": lambda: route_to_board(sys.argv[2], override=override) if len(sys.argv) > 2 else {"ok": False, "error": "usage: route <id>"},
-        "copilot": lambda: copilot_status(),
+        "hot-route": lambda: hot_route_status(),
         "irq": profile_irq,
         "dma": profile_dma,
     }
@@ -1594,7 +1594,7 @@ def main() -> int:
                             "seal-clock",
                             "route <id>",
                             "route-batch <id>...",
-                            "copilot",
+                            "hot-route",
                             "irq",
                             "dma",
                             "communicate <id>",

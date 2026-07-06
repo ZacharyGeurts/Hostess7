@@ -7,7 +7,7 @@
   const API = (function () {
     if (globalThis.H7Api) return globalThis.H7Api("/api/field-gnu-terminal");
     try {
-      const p = new URL(globalThis.location?.href || "http://127.0.0.1:9477/");
+      const p = new URL(globalThis.location?.href || "/Hostess7/");
       if (p.port === "9481") return `${p.origin}/api/field-gnu-terminal`;
       return "/api/field-gnu-terminal";
     } catch (_) {

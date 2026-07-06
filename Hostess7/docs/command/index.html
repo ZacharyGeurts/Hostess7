@@ -252,33 +252,66 @@
     }
     .laser-corridor-overlay {
       position: fixed; inset: 0; z-index: 99999; pointer-events: none;
-      background: rgba(4, 0, 8, 0.55); opacity: 0; transition: opacity 0.15s ease;
+      background: radial-gradient(ellipse at center, rgba(40, 0, 12, 0.72), rgba(4, 0, 8, 0.88));
+      opacity: 0; transition: opacity 0.12s ease;
     }
     .laser-corridor-overlay.active { opacity: 1; }
     .laser-corridor-overlay .laser-grid {
       position: absolute; inset: 0; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .laser-cube-6in {
+      position: relative;
+      width: 6in; height: 6in;
+      max-width: min(72vmin, 6in); max-height: min(72vmin, 6in);
+      border: 4px solid rgba(255, 48, 72, 0.95);
+      box-shadow:
+        0 0 48px rgba(255, 0, 48, 0.75),
+        0 0 120px rgba(255, 0, 60, 0.35),
+        inset 0 0 60px rgba(255, 0, 40, 0.22);
+      transform: perspective(900px) rotateX(14deg) rotateY(-16deg);
+      background: rgba(8, 0, 4, 0.55);
+    }
+    .laser-cube-6in::before {
+      content: "6″ KILL CUBE";
+      position: absolute; left: 50%; top: -1.6rem; transform: translateX(-50%);
+      font-size: 11pt; letter-spacing: 0.22em; color: #ff6b7a;
+      text-shadow: 0 0 12px #ff0033;
+      white-space: nowrap;
     }
     .laser-corridor-overlay .laser-beam {
-      position: absolute; background: linear-gradient(90deg, transparent, #ff1a3a 35%, #fff 50%, #ff1a3a 65%, transparent);
-      box-shadow: 0 0 18px #ff0033, 0 0 40px rgba(255, 0, 60, 0.6);
+      position: absolute; pointer-events: none;
+      background: linear-gradient(90deg, transparent, #ff1a3a 28%, #fff 50%, #ff1a3a 72%, transparent);
+      box-shadow: 0 0 28px #ff0033, 0 0 64px rgba(255, 0, 60, 0.85), 0 0 2px #fff;
     }
     .laser-corridor-overlay .laser-beam.h {
-      left: 0; right: 0; height: 3px; animation: laser-sweep-h 1.1s ease-in-out forwards;
+      left: 0; right: 0; height: 6px;
+      animation: laser-sweep-h 0.85s ease-in-out forwards;
     }
     .laser-corridor-overlay .laser-beam.v {
-      top: 0; bottom: 0; width: 3px;
-      background: linear-gradient(180deg, transparent, #ff1a3a 35%, #fff 50%, #ff1a3a 65%, transparent);
-      animation: laser-sweep-v 0.9s ease-in-out 0.55s forwards;
+      top: 0; bottom: 0; width: 6px;
+      background: linear-gradient(180deg, transparent, #ff1a3a 28%, #fff 50%, #ff1a3a 72%, transparent);
+      animation: laser-sweep-v 0.75s ease-in-out forwards;
+    }
+    .laser-corridor-overlay .laser-beam.d {
+      height: 8px; width: 140%;
+      left: -20%; transform-origin: center;
+      animation: laser-sweep-d 0.9s ease-in-out forwards;
     }
     @keyframes laser-sweep-h {
-      0% { top: 8%; opacity: 0; }
-      15% { opacity: 1; }
-      100% { top: 92%; opacity: 0.85; }
+      0% { top: 0%; opacity: 0; }
+      12% { opacity: 1; }
+      100% { top: 100%; opacity: 0.95; }
     }
     @keyframes laser-sweep-v {
-      0% { left: 6%; opacity: 0; }
+      0% { left: 0%; opacity: 0; }
+      12% { opacity: 1; }
+      100% { left: 100%; opacity: 0.95; }
+    }
+    @keyframes laser-sweep-d {
+      0% { top: 0%; transform: rotate(-42deg); opacity: 0; }
       15% { opacity: 1; }
-      100% { left: 94%; opacity: 0.85; }
+      100% { top: 100%; transform: rotate(-42deg); opacity: 0.9; }
     }
     .honor-stars { display: inline-flex; gap: 1px; letter-spacing: 0; font-size: 0.95rem; }
     .honor-stars .star-gold { color: var(--gold); text-shadow: 0 0 6px rgba(212, 175, 55, 0.45); }
@@ -2308,8 +2341,7 @@
 
   <div id="laser-corridor-overlay" class="laser-corridor-overlay" aria-hidden="true">
     <div class="laser-grid">
-      <div class="laser-beam h"></div>
-      <div class="laser-beam v"></div>
+      <div id="laser-cube-6in" class="laser-cube-6in" aria-hidden="true"></div>
     </div>
   </div>
 
@@ -3215,7 +3247,8 @@
           <button type="button" id="ft-hell-rip" class="ghost" data-tip="Heaven/Hell rip — Hell-chosen flows only. No friendly fire.">Hell rip</button>
           <button type="button" id="ft-field-die" class="ghost" data-tip="Field Die — d20 roll. ≤6 = 6% signal (sever top hostile). &gt;6 = 94% noise (pass).">🎲 Field Die</button>
           <span id="ft-die-readout" class="ft-die-readout" aria-live="polite">d20 —</span>
-          <button type="button" id="ft-laser-corridor" class="ghost" data-tip="Undodgeable laser corridor — Resident Evil grid slice on map target. Sever + kill. Heaven only dodge.">☇ Laser corridor</button>
+          <button type="button" id="ft-slice-and-dice" class="ghost" data-tip="Slice &amp; Dice — 6″ undodgeable laser cube (6 passes) + d20≤6 double kill.">⚔ Slice &amp; Dice</button>
+          <button type="button" id="ft-laser-corridor" class="ghost" data-tip="Undodgeable 6″ laser cube — 6-pass grid slice. Sever + kill. Heaven only dodge.">☇ Laser 6″ cube</button>
         </div>
         <div class="field-toolkit-grid" style="margin-top:10px;">
           <div>
@@ -7513,18 +7546,36 @@
 
     let hellKitBound = false;
 
-    function playLaserCorridor(ms = 1700) {
+    function playLaserCorridor(ms = 3200, passes = 6) {
       const overlay = $("laser-corridor-overlay");
-      if (!overlay) return Promise.resolve();
+      const cube = $("laser-cube-6in");
+      if (!overlay || !cube) return Promise.resolve();
       overlay.classList.add("active");
       overlay.setAttribute("aria-hidden", "false");
-      overlay.querySelectorAll(".laser-beam").forEach((b) => {
-        b.style.animation = "none";
-        void b.offsetWidth;
-        b.style.animation = "";
-      });
+      cube.querySelectorAll(".laser-beam").forEach((b) => b.remove());
+      const n = Math.max(4, Math.min(passes || 6, 12));
+      for (let i = 0; i < n; i += 1) {
+        const h = document.createElement("div");
+        h.className = "laser-beam h";
+        h.style.animationDelay = `${(i * 0.18).toFixed(2)}s`;
+        h.style.top = `${(i / Math.max(1, n - 1)) * 100}%`;
+        cube.appendChild(h);
+        const v = document.createElement("div");
+        v.className = "laser-beam v";
+        v.style.animationDelay = `${(i * 0.18 + 0.08).toFixed(2)}s`;
+        v.style.left = `${(i / Math.max(1, n - 1)) * 100}%`;
+        cube.appendChild(v);
+        if (i % 2 === 0) {
+          const d = document.createElement("div");
+          d.className = "laser-beam d";
+          d.style.animationDelay = `${(i * 0.22 + 0.12).toFixed(2)}s`;
+          d.style.top = `${(i / Math.max(1, n - 1)) * 100}%`;
+          cube.appendChild(d);
+        }
+      }
       return new Promise((resolve) => {
         setTimeout(() => {
+          cube.querySelectorAll(".laser-beam").forEach((b) => b.remove());
           overlay.classList.remove("active");
           overlay.setAttribute("aria-hidden", "true");
           resolve();
@@ -7642,30 +7693,44 @@
           alert("Field Die unreachable.");
         } finally { btn.disabled = false; }
       });
-      $("ft-laser-corridor")?.addEventListener("click", async (ev) => {
-        const btn = ev.currentTarget;
-        const p = hostLastPoints?.find((x) => x.id === hostSelectedId) || hostLastPoints?.[0];
-        const ip = p?.ip;
-        if (!ip) { alert("Select a map target first."); return; }
-        if (!confirm(`Laser corridor on ${ip}?\n\nUndodgeable grid slice — sever + kill. Heaven-protected only escape. lulz`)) return;
+      async function runLaserKit(btn, apiPath, confirmMsg, ip, p, passes = 6) {
         btn.disabled = true;
-        const anim = playLaserCorridor();
+        const anim = playLaserCorridor(3200, passes);
         try {
-          const res = await fetch("/api/field-toolkit/laser-corridor", {
+          const res = await fetch(apiPath, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ip, vector: p.vector || "LASER_CORRIDOR", severity: p.severity || "critical" }),
           });
           const data = await res.json();
           await anim;
-          if (data.friendly_refused) alert(`Heaven dodged the grid — ${ip} protected.`);
-          else if (data.ok) alert(`Laser corridor — ${ip} sliced.\nKilled: ${data.killed ? "yes" : "sever only"}. Undodgeable. lulz`);
-          else alert(`Laser failed — ${data.error || data.reason || "unknown"}`);
+          if (data.friendly_refused) alert(`Heaven dodged the 6″ cube — ${ip} protected.`);
+          else if (data.ok) {
+            const cube = data.cube?.cube_inches || 6;
+            const dice = data.dice ? `\nd20=${data.dice.roll} · ${data.dice.signal ? "SIGNAL double kill" : "noise — laser still sliced"}` : "";
+            alert(`${confirmMsg} — ${ip}\n${cube}″ cube · ${data.slice_passes || passes} passes\nKilled: ${data.killed ? "yes" : "sever only"}. Undodgeable.${dice}`);
+          } else alert(`Failed — ${data.error || data.reason || "unknown"}`);
           refresh();
         } catch {
           await anim;
-          alert("Laser corridor unreachable.");
+          alert("Laser kit unreachable.");
         } finally { btn.disabled = false; }
+      }
+      $("ft-slice-and-dice")?.addEventListener("click", async (ev) => {
+        const btn = ev.currentTarget;
+        const p = hostLastPoints?.find((x) => x.id === hostSelectedId) || hostLastPoints?.[0];
+        const ip = p?.ip;
+        if (!ip) { alert("Select a map target first."); return; }
+        if (!confirm(`Slice & Dice on ${ip}?\n\n6″ undodgeable laser cube + d20. ≤6 doubles kill. Heaven only escape.`)) return;
+        await runLaserKit(btn, "/api/field-toolkit/slice-and-dice", "Slice & Dice", ip, p, 6);
+      });
+      $("ft-laser-corridor")?.addEventListener("click", async (ev) => {
+        const btn = ev.currentTarget;
+        const p = hostLastPoints?.find((x) => x.id === hostSelectedId) || hostLastPoints?.[0];
+        const ip = p?.ip;
+        if (!ip) { alert("Select a map target first."); return; }
+        if (!confirm(`Laser 6″ cube on ${ip}?\n\n6-pass undodgeable grid — sever + kill. Heaven-protected only escape.`)) return;
+        await runLaserKit(btn, "/api/field-toolkit/laser-corridor", "Laser 6″ cube", ip, p, 6);
       });
     }
 

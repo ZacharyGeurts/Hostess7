@@ -10,6 +10,7 @@
 - [Historic Truth Corpus](Historic-Truth-Corpus)
 
 ### Stack & security
+- [H7 Updater](H7-Updater)
 - [Old Projects (Stack Siblings)](Stack-Siblings)
 - [NEXUS-Shield](NEXUS-Shield)
 

@@ -350,7 +350,7 @@
       card("Field plate", sum.field_dimension_count ?? "—", "∞ dim · amp " + (sum.field_peak_amplitude ?? "—")) +
       card("Kernel meld", sum.bzimage_ready ? "fused" : "—", "boot " + (sum.boot_vector ?? "—")) +
       card("Firmware", sum.firmware_verdict || "—", "removed " + (sum.firmware_removed ?? 0)) +
-      card("Bus checksum", sum.bus_checksum ?? "—", "copilot lane") +
+      card("Bus checksum", sum.bus_checksum ?? "—", "hot-router lane") +
       '</div><pre class="f9-pre f9-wide">' +
       esc(JSON.stringify(pm, null, 2)) +
       "</pre>";
@@ -425,7 +425,7 @@
       card("Host freeze", frozen, isolated) +
       card("Sense meld", "POST /api/sense-package/meld", "eye · ear · mouth · redata · hostess7") +
       card("Meld cycle", "POST /api/plate-meld/cycle", "sense → firmware → kernel → plates → bus") +
-      card("Bus pack", "POST /api/field-bus/cycle", "data_bus[64] copilot") +
+      card("Bus pack", "POST /api/field-bus/cycle", "data_bus[64] hot route") +
       "</div>" +
       '<p class="f9-lead">Operator cycle fuses all plates under flock — kernel meld, firmware strip, unified bus refresh. Host freeze locks memory and suspends the guest OS; field slice keeps drawing on soft freeze.</p>' +
       '<div class="f9-actions" style="margin-top:0.75rem">' +

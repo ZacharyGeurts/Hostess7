@@ -1,7 +1,14 @@
 {
   "schema": "field-screen-layer/v1",
   "title": "Field screen layers — F9..F12 sovereign switch",
-  "motto": "Field One Only. AmmoOS at -1 (boot home · Archival Warehouse wallpaper). F9 -3 NEXUS C2, F10 -2 DNS, F11 Queen own browser space, F12 userland L2+. Layer 0 = Broadcaster (OBS rebranded) + AmmoNet + panel programs with themed chrome.",
+  "motto": "Everything in NEXUS C2 (:9477). AmmoOS at -1 boot home inside C2. F9 -3 C2 command, F10 -2 DNS, F11 Queen browser shell, F12 userland L2+. F6 desktop · F7 hardware · F1 Ironclad CHIPS.",
+  "ironclad_stack": {
+    "host": "nexus_c2",
+    "port": 9477,
+    "contained_surfaces": ["field-desktop", "nexus-field-shell", "queen-browser", "command", "ammoos-warehouse"],
+    "fkey_primary": { "F9": -3, "F10": -2, "F6": -1, "F11": 1, "F12": "userland_cycle" },
+    "fkey_ironclad": { "F1": "ironclad_chips", "F3": "iron_plate", "F7": 0, "F8": 0.5 }
+  },
   "policy": {
     "field_one_only": true,
     "ammoos_layer": -1,

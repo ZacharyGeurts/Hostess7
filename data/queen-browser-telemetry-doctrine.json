@@ -1,0 +1,37 @@
+{
+  "schema": "queen-browser-telemetry/v1",
+  "title": "Queen Browser Telemetry Lock",
+  "policy": {
+    "human_telemetry": false,
+    "ai_telemetry": true,
+    "locked": true,
+    "cloud_export": false,
+    "third_party_beacons": false,
+    "host_browser_import": false,
+    "ingest_path": "/api/queen-telemetry/ai",
+    "audience": "artificial_intelligence_only",
+    "human_facing_logs": false
+  },
+  "blocked_patterns": [
+    "google-analytics",
+    "googletagmanager",
+    "doubleclick",
+    "facebook.net",
+    "hotjar",
+    "segment.io",
+    "mixpanel",
+    "amplitude",
+    "fullstory",
+    "clarity.ms",
+    "mozilla.org/telemetry",
+    "firefox.com/phoenix",
+    "ping-centre",
+    "ads-twitter"
+  ],
+  "allowed_loopback": [
+    "/api/queen-telemetry/ai",
+    "/api/ai-integration",
+    "/api/field-aia-accelerator",
+    "/api/hostess7-ai"
+  ]
+}

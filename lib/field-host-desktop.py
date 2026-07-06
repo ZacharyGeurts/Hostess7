@@ -356,7 +356,31 @@ def _scan_linux_apps() -> list[dict[str, Any]]:
 
 
 def _policy() -> dict[str, Any]:
-    return _load(DOCTRINE, {}).get("policy") or {}
+    return _desktop_policy()
+
+
+def _desktop_policy() -> dict[str, Any]:
+    """Canonical desktop policy — battle-stations cannot re-enable fake six-tool wall."""
+    out = dict(_load(DOCTRINE, {}).get("policy") or {})
+    out["six_tool_wall"] = False
+    out["six_tool_wall_on_boot"] = False
+    try:
+        bs_py = INSTALL / "lib" / "field-battle-stations.py"
+        if bs_py.is_file():
+            import importlib.util
+
+            spec = importlib.util.spec_from_file_location("field_battle_stations", bs_py)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if hasattr(mod, "merge_policy"):
+                    merged = mod.merge_policy(out)
+                    merged["six_tool_wall"] = False
+                    merged["six_tool_wall_on_boot"] = False
+                    return merged
+    except Exception:
+        pass
+    return out
 
 
 def _linux_de() -> str | None:
@@ -1080,7 +1104,7 @@ def build_panel() -> dict[str, Any]:
             "settings_api": "/api/field-shell-settings",
             "settings": _shell_settings(),
         },
-        "policy": _load(DOCTRINE, {}).get("policy") or {},
+        "policy": _desktop_policy(),
         "routes": {
             "field": "/field",
             "command": "/command?embed=1",

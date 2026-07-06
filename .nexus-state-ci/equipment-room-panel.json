@@ -1,0 +1,178 @@
+{
+  "schema": "equipment-room/v1",
+  "updated": "2026-07-02T15:39:15Z",
+  "title": "Network Equipment Room · DNS Field",
+  "equipment_room_enabled": true,
+  "equipment_room_prompt": "Enable standard network equipment room reporting? (Recommended — on by default for Hostess 7 admins)",
+  "mdf_idf_checklist": [
+    {
+      "item": "Main Distribution Frame (MDF) patch panel labeled",
+      "rfc": "TIA-606",
+      "default_on": true
+    },
+    {
+      "item": "Intermediate Distribution Frame (IDF) per floor documented",
+      "rfc": "TIA-568",
+      "default_on": true
+    },
+    {
+      "item": "Core switch DNS ACL — no egress to foreign resolvers",
+      "rfc": "RFC 9520",
+      "default_on": true
+    },
+    {
+      "item": "UPS runtime for DNS host documented",
+      "rfc": "—",
+      "default_on": true
+    },
+    {
+      "item": "Legacy BIND / Windows DNS forwarder inventory",
+      "rfc": "RFC 1035",
+      "default_on": true
+    },
+    {
+      "item": "Field server DNS peers (777 port family) listed",
+      "rfc": "RFC 1034",
+      "default_on": true
+    },
+    {
+      "item": "Cable test results on DNS server uplink",
+      "rfc": "TIA-1152",
+      "default_on": false
+    }
+  ],
+  "legacy_dns_equipment": [
+    {
+      "id": "bind9-legacy",
+      "vendor": "ISC BIND",
+      "era": "1990s–2010s",
+      "role": "authoritative/recursive",
+      "rfc": "RFC 1035",
+      "interop": "Full — trace delegation compatible",
+      "notes": "Classic named.conf; forwarders should point to 127.0.0.1 Truth Resolver"
+    },
+    {
+      "id": "windows-dns",
+      "vendor": "Microsoft Windows Server DNS",
+      "era": "2000s–2020s",
+      "role": "AD-integrated DNS",
+      "rfc": "RFC 1035 / RFC 2181",
+      "interop": "Conditional — disable ISP forwarders; use Truth Resolver upstream",
+      "notes": "dnscmd /zone export for inventory; no remote admin via this portal"
+    },
+    {
+      "id": "cisco-router-dns",
+      "vendor": "Cisco IOS/IOS-XE",
+      "era": "1990s–present",
+      "role": "DNS forwarder on router",
+      "rfc": "RFC 1035",
+      "interop": "Forwarder mode — ip dns server; point to 127.0.0.1",
+      "notes": "Equipment room report captures ip dns name-server lines"
+    },
+    {
+      "id": "pi-hole-legacy",
+      "vendor": "Pi-hole / dnsmasq",
+      "era": "2010s",
+      "role": "filtering forwarder",
+      "rfc": "RFC 1035 / RFC 6761",
+      "interop": "Upstream 127.0.0.1; blocklist merges with NEXUS adblock",
+      "notes": "Legacy Pi-hole kept as reporting peer — not authoritative"
+    },
+    {
+      "id": "isp-modem-dns",
+      "vendor": "ISP CPE (Charter/Spectrum etc.)",
+      "era": "ongoing",
+      "role": "ISP DNS redirection",
+      "rfc": "47 U.S.C. § 222 CPNI",
+      "interop": "Blocked — classified foreign resolver",
+      "notes": "Document in equipment room; do not use as upstream"
+    },
+    {
+      "id": "embedded-dns",
+      "vendor": "Embedded / IoT gateway",
+      "era": "2010s",
+      "role": "local stub resolver",
+      "rfc": "RFC 6761",
+      "interop": "Point to Truth Resolver; special-use names loopback-only",
+      "notes": "Old gear — report MAC and firmware in equipment room"
+    }
+  ],
+  "field_dns_peers": [
+    {
+      "id": "nexus-truth-local",
+      "role": "primary",
+      "host": "127.0.0.1",
+      "port": 53,
+      "stack": "NEXUS Truth Resolver",
+      "rfc": "RFC 1034 §3.6 trace",
+      "running": true,
+      "ipv6": "::1",
+      "field_server_port_hint": 777
+    },
+    {
+      "id": "local-truth",
+      "role": "primary",
+      "host": "127.0.0.1",
+      "port": 53,
+      "stack": "NEXUS Truth Resolver",
+      "rfc": "RFC 1034 §3.6 trace"
+    },
+    {
+      "id": "lan-127-0-1-1",
+      "role": "field-node",
+      "host": "127.0.1.1",
+      "port": 53,
+      "stack": "NEXUS field host",
+      "rfc": "RFC 1035",
+      "note": "Same-host LAN — Truth Resolver loopback preferred"
+    }
+  ],
+  "dns_server": {
+    "updated": "2026-07-04T00:53:25.160837Z",
+    "title": "NEXUS Truth DNS",
+    "priority": 1,
+    "self_hosted": true,
+    "truthful": true,
+    "foreign_resolvers_stopped": true,
+    "ipv4": {
+      "host": "127.0.0.1",
+      "port": 53
+    },
+    "ipv6": {
+      "host": "::1",
+      "port": 53
+    },
+    "listeners": [
+      "127.0.0.1#53",
+      "[::1]#53"
+    ],
+    "stats": {
+      "queries": 0,
+      "blocked": 0,
+      "cache_hits": 0,
+      "cache_misses": 0,
+      "errors": 0,
+      "rate_limits": 0,
+      "started_at": "2026-07-03T21:35:33.274193Z"
+    },
+    "blocklist_domains": 0,
+    "cache_entries": 0,
+    "running": true,
+    "pid": 3486584
+  },
+  "reports_count": 0,
+  "recent_reports": [],
+  "identity": {
+    "hostname": "default-X870-Pro-RS",
+    "fqdn": "default-X870-Pro-RS",
+    "lan_ips": [
+      "127.0.1.1"
+    ]
+  },
+  "interop_notes": [
+    "Old BIND / Windows DNS: set forwarders to 127.0.0.1 Truth Resolver — RFC 1035 delegation preserved.",
+    "Field servers on Hostess 7 port family (7, 77, 777): admin portal read-only; resolver stays on :53 loopback.",
+    "ISP modem DNS: document only — foreign resolver policy blocks egress.",
+    "More field servers: add to field-dns-peers.json extra_peers — no remote push from this portal."
+  ]
+}

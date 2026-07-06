@@ -82,12 +82,19 @@ def collect_snapshot(*, started: float, tick: int, skip_api: bool = False) -> di
     ipv4 = _load(STATE / "field-ipv4-enumerate-panel.json") or _run_json("lib/field-ipv4-enumerate.py", ["json"], timeout=8.0)
     everyone = _load(STATE / "field-everyone-counter-panel.json") or _run_json("lib/field-everyone-counter.py", ["fast"], timeout=6.0)
     dhcp = _load(STATE / "field-dhcp-panel.json")
+    dhcp_watch = _load(STATE / "field-watch-dhcp-panel.json") or _run_json(
+        "lib/field-watch-dhcp.py", ["once"], timeout=10.0,
+    )
     planetary = _load(STATE / "field-planetary-dns-dhcp-panel.json")
 
     cur = scale.get("current") or {}
     logical = scale.get("logical_edges") or {}
     enum = (ipv4.get("counts") or {}) if ipv4 else {}
-    leases = len((_load(STATE / "field-dhcp-leases.json").get("leases") or {}))
+    watch_counts = dhcp_watch.get("counts") or {}
+    observed_clients = int(watch_counts.get("observed_clients") or 0)
+    leases = observed_clients if dhcp_watch.get("observe_only") else len(
+        (_load(STATE / "field-dhcp-leases.json").get("leases") or {})
+    )
 
     pop_sim = _population_growth_tick(started)
     devices_sim = int(pop_sim * 2.75)
@@ -108,9 +115,15 @@ def collect_snapshot(*, started: float, tick: int, skip_api: bool = False) -> di
         "planet_dhcp": int(enum.get("planet_dhcp_total") or (planetary.get("counts") or {}).get("planet_dhcp_total") or 2**32),
         "planet_dns": int(enum.get("planet_dns_total") or (planetary.get("counts") or {}).get("planet_dns_total") or 2**32),
         "local_dhcp_leases": max(leases, int((planetary.get("counts") or {}).get("field_dhcp_leases") or 0)),
+        "dhcp_watch_observe_only": bool(dhcp_watch.get("observe_only")),
+        "dhcp_watch_foreign_servers": int(watch_counts.get("foreign_servers") or 0),
+        "dhcp_watch_offers": int(watch_counts.get("dhcp_offers_seen") or 0),
+        "our_dhcp_running": bool(dhcp_watch.get("our_dhcp_running")),
         "dhcp_pool_slots": (rescue.get("dhcp_pool") or {}).get("host_slots") or 610,
-        "quarantined": int(dhcp.get("quarantined") or 0),
-        "soft_offers": int(dhcp.get("soft_offers") or 0),
+        "quarantined": int(dhcp.get("quarantined") or 0) if not dhcp_watch.get("observe_only") else 0,
+        "soft_offers": int(dhcp.get("soft_offers") or 0) if not dhcp_watch.get("observe_only") else int(
+            watch_counts.get("dhcp_offers_seen") or 0
+        ),
         "everyone_total": int(everyone.get("everyone_total") or 0),
         "qemu_witnesses": int((everyone.get("arcade_lobby") or {}).get("qemu_witnesses") or 0),
         "ingress_policy": scale.get("ingress_policy") or "quarantine_not_kill",

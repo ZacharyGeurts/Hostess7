@@ -466,7 +466,7 @@ def build_connection_graph() -> dict[str, Any]:
         {"id": "truth_blocks", "module": "Grok16/lib/field_truth_blocks.py", "panel": "g16-truth-blocks-panel.json", "feeds": ["combinatorics", "condense"]},
         {"id": "combinatorics", "module": "Grok16/lib/field_combinatorics.py", "panel": "g16-field-combinatorics-panel.json", "feeds": ["bridge", "condense", "studio"]},
         {"id": "bridge", "module": "lib/field-plate-combinatorics-bridge.py", "panel": "field-plate-combinatorics-bridge.json", "feeds": ["meld", "comb", "studio"]},
-        {"id": "meld", "module": "lib/field-plate-meld.py", "panel": "field-plate-meld.json", "feeds": ["bus", "copilot", "threat_panel"]},
+        {"id": "meld", "module": "lib/field-plate-meld.py", "panel": "field-plate-meld.json", "feeds": ["bus", "hot_router", "threat_panel"]},
         {"id": "surfaces", "module": "lib/field-field-surfaces-doctrine.json", "panel": "field-*-panel.json", "feeds": ["bridge", "meld", "condense"]},
         {"id": "c2_taskbar", "module": "lib/field-c2-taskbar-plate.py", "panel": "field-c2-taskbar-panel.json", "feeds": ["bridge", "meld", "bsp"]},
         {"id": "studio", "module": "lib/field-combinatorics-studio.py", "panel": "combinatorics API", "feeds": ["operator"]},

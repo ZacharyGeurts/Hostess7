@@ -389,7 +389,8 @@ def _slot_count(status: dict[str, Any]) -> tuple[int, int, int]:
         or status.get("slots_total")
         or 6
     )
-    slots = max(1, min(slots, 16))
+    cap = int(regions.get("global_server_target") or os.environ.get("NEXUS_GLOBAL_SERVER_TARGET") or 2500)
+    slots = max(1, min(slots, cap))
     return slots, port_base, ssh_base
 
 
@@ -559,6 +560,7 @@ def provision_rack(
     doc = doctrine()
     layout = doc.get("rack_layout") or {}
     dirs = list(layout.get("per_rack_dirs") or [])
+    dirs.extend(["h7-shard/h7r-vault", "h7-shard/h7r-stripes"])
     fid = str(slot_meta.get("field_id") or "")
     root = _racks_base() / fid
     created: list[str] = []
@@ -594,7 +596,15 @@ def provision_rack(
             "tunnel": slot_meta.get("tunnel"),
             "ssh_port": slot_meta.get("ssh_port"),
             "gb_quota": _gb_per_unit(),
-            "h7_protocol": "field-h7s-fs",
+            "h7_protocol": "field-h7r-rackmount",
+            "h7_hot_lane": "field-h7s-fs",
+            "h7_stack": True,
+            "stack_version": "h7r/1",
+            "truth_security_version": "h7r/1-prejudice",
+            "prejudice_enforced": True,
+            "more_than_permissible": True,
+            "services": ["dns", "dhcp", "edge", "witness", "botnet", "truth", "security", "prejudice"],
+            "ammodrive_cloud": True,
             "one_big_drive": True,
             "qemu_source": "GrokLab/deploy/qemu-world-pipeline.py",
             "deploy_root": str(_deploy_root()),
@@ -624,7 +634,8 @@ def provision_rack(
                 "field_id": fid,
                 "converted_gb": 0.0,
                 "pending_gb": round(_gb_per_unit() - sum(ceilings.values()) * 0.25, 3),
-                "protocol": "field-h7s-fs",
+                "protocol": "field-h7r-rackmount",
+                "hot_protocol": "field-h7s-fs",
                 "internet_isolated": True,
             })
             created.append(str(pool))

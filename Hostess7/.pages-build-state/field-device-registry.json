@@ -1,0 +1,58 @@
+{
+  "schema": "field-device-registry/v1",
+  "title": "Field device registry — local authority + peer displays",
+  "motto": "DHCP leases are real people — fakes cleared on rescue ingress; DNS/DHCP through.",
+  "policy": {
+    "never_exceed_existence": false,
+    "ai_evict_stale": false,
+    "stale_after_seconds": 86400,
+    "lan_stale_after_seconds": 7200,
+    "min_corroboration_sources": 0,
+    "existence_floor": 1,
+    "dhcp_lease_is_real": true,
+    "never_evict_dhcp_sourced": true,
+    "field_one_sink": true,
+    "outside_network_absorbed": true
+  },
+  "devices": [
+    {
+      "id": "default-X870-Pro-RS",
+      "role": "primary",
+      "display_name": "This host",
+      "kind": "workstation",
+      "panel_port": 9477,
+      "queen_port": 9481,
+      "self": true,
+      "display_open": true,
+      "drop_in": true,
+      "hostname": "default-X870-Pro-RS",
+      "machine": "x86_64",
+      "last_seen": "2026-07-06T00:38:34Z",
+      "last_timestamp": "2026-07-06T00:38:34Z",
+      "active": true,
+      "fake": false,
+      "displays": [
+        {
+          "id": "None-1",
+          "name": "None-1",
+          "backend": "x11",
+          "connected": true,
+          "primary": true,
+          "resolution": "1920x1080+0+0"
+        }
+      ]
+    }
+  ],
+  "ts": "2026-07-06T00:38:34Z",
+  "devices_in_existence": {
+    "count": 36,
+    "hardware": 36,
+    "lan_corroborated": 0,
+    "last_timestamp": "2026-07-06T00:38:34Z"
+  },
+  "device_count": 1,
+  "evicted": [],
+  "evicted_count": 0,
+  "ai_note": "Active devices never exceed devices_in_existence.count. Entries without fresh last_timestamp are marked fake and evicted.",
+  "local_id": "default-X870-Pro-RS"
+}

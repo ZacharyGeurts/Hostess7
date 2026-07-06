@@ -1,5 +1,5 @@
 #!/usr/bin/env pythong
-"""Unified Field Bus — data_bus[64] packed from all lanes; copilot hot route per lane.
+"""Unified Field Bus — data_bus[64] packed from all lanes; hot route per lane.
 
 Field Die discipline on host NEXUS: scan/pack once, arithmetic decode forever.
 Compatible with FieldLayer::BusMap slot bases from AMOURANTHRTX.
@@ -36,7 +36,7 @@ LANE_SLOTS: dict[str, tuple[int, ...]] = {
     "sovereign": (40, 41, 42, 43),
     "io_packet": (44, 45, 46, 47),
     "thermal": (48, 49, 50, 51),
-    "copilot": (52, 53, 54, 55),
+    "hot_router": (52, 53, 54, 55),
 }
 
 LANE_KEYS: dict[str, dict[str, int]] = {
@@ -55,7 +55,7 @@ LANE_KEYS: dict[str, dict[str, int]] = {
     "thermal": {"peak_c": 48, "level": 49, "entropy": 50, "quota": 51},
 }
 
-_BUS_COPILOT: "BusCopilot | None" = None
+_BUS_HOT_ROUTER: "BusHotRouter | None" = None
 _RT_MEM: tuple[float, dict[str, Any]] | None = None
 _GEN = 0
 
@@ -97,7 +97,7 @@ def _save_atomic(path: Path, doc: Any, *, compact: bool = False) -> None:
 
 
 def pack_word(*, magnitude: int, tier: int = 0, flags: int = 0, lane_id: int = 0) -> int:
-    """uint32 bus word — hot-decode with AND/SHR on copilot path."""
+    """uint32 bus word — hot-decode with AND/SHR on hot route path."""
     return (
         (magnitude & 0xFF)
         | ((tier & 0xFF) << 8)
@@ -301,7 +301,7 @@ def pack_bus() -> list[int]:
     return bus
 
 
-class BusCopilot:
+class BusHotRouter:
     """Per-lane hot router on unified data_bus[64]."""
 
     __slots__ = ("_words", "_gen", "_keys", "_per_route_ns")
@@ -334,14 +334,14 @@ class BusCopilot:
         key_l = key.strip().lower()
         slot = (self._keys.get(lane_l) or {}).get(key_l)
         if slot is None:
-            return {"ok": False, "error": "unknown_lane_key", "lane": lane_l, "key": key_l, "copilot": True}
+            return {"ok": False, "error": "unknown_lane_key", "lane": lane_l, "key": key_l, "hot_route": True}
         word = self.word_at(slot)
         decoded = decode_word(word)
         elapsed_ns = time.perf_counter_ns() - t0
         self._per_route_ns = float(elapsed_ns)
         return {
             "ok": True,
-            "copilot": True,
+            "hot_route": True,
             "lane": lane_l,
             "key": key_l,
             "slot": slot,
@@ -358,7 +358,7 @@ class BusCopilot:
         total_ns = time.perf_counter_ns() - t0
         return {
             "ok": True,
-            "copilot": True,
+            "hot_route": True,
             "count": len(hits),
             "hits": hits,
             "elapsed_ms": round(total_ns / 1_000_000, 3),
@@ -400,17 +400,17 @@ class BusCopilot:
         }
 
 
-def bus_copilot(*, reload: bool = False) -> BusCopilot:
-    global _BUS_COPILOT
-    if _BUS_COPILOT is None:
-        _BUS_COPILOT = BusCopilot()
-    if reload or not _BUS_COPILOT.hot:
-        _BUS_COPILOT.absorb(bus_runtime())
-    return _BUS_COPILOT
+def bus_hot_router(*, reload: bool = False) -> BusHotRouter:
+    global _BUS_HOT_ROUTER
+    if _BUS_HOT_ROUTER is None:
+        _BUS_HOT_ROUTER = BusHotRouter()
+    if reload or not _BUS_HOT_ROUTER.hot:
+        _BUS_HOT_ROUTER.absorb(bus_runtime())
+    return _BUS_HOT_ROUTER
 
 
 def bus_route(lane: str, key: str) -> dict[str, Any]:
-    return bus_copilot().route(lane, key)
+    return bus_hot_router().route(lane, key)
 
 
 def bus_runtime(*, rebuild: bool = False) -> dict[str, Any]:
@@ -447,13 +447,13 @@ def build_runtime() -> dict[str, Any]:
         _RT_MEM = (RUNTIME.stat().st_mtime, rt)
     except OSError:
         _RT_MEM = (time.time(), rt)
-    bus_copilot(reload=True)
+    bus_hot_router(reload=True)
     return rt
 
 
 def build_panel() -> dict[str, Any]:
     rt = build_runtime()
-    cpu = bus_copilot()
+    cpu = bus_hot_router()
     doc: dict[str, Any] = {
         "schema": "field-unified-bus/v1",
         "updated": _now(),
@@ -464,13 +464,13 @@ def build_panel() -> dict[str, Any]:
         "lanes": list(LANE_SLOTS.keys()),
         "data_bus": rt.get("data_bus"),
         "lane_snapshots": {lane: cpu.lane_snapshot(lane) for lane in LANE_SLOTS},
-        "copilot": {
+        "hot_router": {
             "hot": cpu.hot,
             "policy": "data_bus[64] — pack once, route every lane at arithmetic rate",
         },
     }
     if cpu.hot:
-        doc["copilot"]["bench"] = cpu.bench(samples=20_000)
+        doc["hot_router"]["bench"] = cpu.bench(samples=20_000)
     _save_atomic(PANEL, doc)
     return doc
 
@@ -499,20 +499,20 @@ def main() -> int:
         build_runtime()
         print(json.dumps(bus_route(sys.argv[2], sys.argv[3]), ensure_ascii=False))
         return 0
-    if cmd == "copilot":
+    if cmd == "hot-route":
         build_runtime()
         print(json.dumps({
-            "schema": "field-unified-bus-copilot/v1",
+            "schema": "field-unified-bus-hot-route/v1",
             "ts": _now(),
-            **bus_copilot().bench(samples=20_000),
+            **bus_hot_router().bench(samples=20_000),
             "lanes": list(LANE_SLOTS.keys()),
         }, ensure_ascii=False, indent=2))
         return 0
     if cmd == "snapshot" and len(sys.argv) > 2:
         build_runtime()
-        print(json.dumps(bus_copilot().lane_snapshot(sys.argv[2]), ensure_ascii=False, indent=2))
+        print(json.dumps(bus_hot_router().lane_snapshot(sys.argv[2]), ensure_ascii=False, indent=2))
         return 0
-    print(json.dumps({"error": "usage: field-unified-bus.py [json|cycle|route <lane> <key>|copilot|snapshot <lane>]"}))
+    print(json.dumps({"error": "usage: field-unified-bus.py [json|cycle|route <lane> <key>|hot-route|snapshot <lane>]"}))
     return 1
 
 

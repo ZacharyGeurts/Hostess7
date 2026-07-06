@@ -86,8 +86,8 @@
     "ammonet_display_right": false,
     "ammonet_bar_bottom": true,
     "battle_stations": true,
-    "six_tool_wall": true,
-    "six_tool_wall_on_boot": true,
+    "six_tool_wall": false,
+    "six_tool_wall_on_boot": false,
     "desktop_ui_scale_default": 125,
     "desktop_ui_scale_min": 50,
     "desktop_ui_scale_max": 200,
@@ -140,7 +140,7 @@
     {"id": "nexus-threats", "name": "Threats", "icon": "nexus-shield", "exec": "/command?embed=1#threats", "tiny": true, "shell": true}
   ],
   "monitor_dashboard": {
-    "enabled": true,
+    "enabled": false,
     "programmatic": true,
     "width_pct": 100,
     "theme": "nexus_military_v8",
@@ -175,7 +175,7 @@
     {"id": "nexus-system", "name": "System Settings", "exec": "/command?embed=1#system", "view": "system", "icon": "queen-prog-os", "category": "NEXUS · C2 Command", "shell": true},
     {"id": "nexus-actions", "name": "Actions", "exec": "/command?embed=1#actions", "view": "actions", "icon": "queen-prog-command", "category": "NEXUS · C2 Command", "shell": true},
     {"id": "tristate", "name": "2026 Tristate Installer", "exec": "/tristate-installer", "icon": "queen-prog-tristate", "category": "NEXUS · C2 Command", "shell": true},
-    {"id": "queen-browser", "name": "Queen Browser", "exec": "http://127.0.0.1:9481/world/browser.html", "icon": "queen-prog-browser", "category": "NEXUS · Operator", "pinned": true, "shell": false, "fullscreen": true, "display_tech": false, "launcher_visible": true, "desktop": true, "c2_embedded": false, "standalone_queen": true, "open_via": "api", "role": "sovereign_web_browser"},
+    {"id": "queen-browser", "name": "Queen Browser", "exec": "http://127.0.0.1:9481/world/browser.html", "icon": "queen-prog-browser", "category": "NEXUS · Operator", "pinned": true, "shell": true, "fullscreen": true, "display_tech": false, "launcher_visible": true, "desktop": true, "c2_embedded": false, "standalone_queen": true, "open_via": "api", "role": "sovereign_web_browser", "hint": "Queen Browser · classic shell · AI telemetry only"},
     {"id": "nexus-command", "name": "Hostess 7 Command", "exec": "/command?embed=1#command", "view": "command", "icon": "queen-prog-command", "category": "NEXUS · Operator", "pinned": true, "shell": true},
     {"id": "nexus-us", "name": "US Field Identity", "exec": "/command?embed=1#us", "view": "us", "icon": "nexus-field", "category": "NEXUS · Operator", "pinned": true, "shell": true},
     {"id": "nexus-packets", "name": "Packets", "exec": "/command?embed=1#packets", "view": "packets", "icon": "queen-prog-nexus", "category": "NEXUS · Network", "pinned": true, "shell": true},

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="field-root-status">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#070d14" />
+  <title>Field Root Status</title>
+  <link rel="stylesheet" href="/assets/field-root-status.css?v=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:*; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <main class="frs-root">
+    <header class="frs-hero">
+      <div class="frs-kicker">Field One · read-only</div>
+      <h1>Root Status</h1>
+      <p class="frs-tagline">Telnet · SSH · JSON · CSS — no PID spawn on root</p>
+    </header>
+    <pre class="frs-pre" id="frs-pre" aria-label="Telnet status">loading…</pre>
+    <div class="frs-grid">
+      <section class="frs-card"><h2>DNS</h2><div class="frs-val" id="frs-dns">—</div></section>
+      <section class="frs-card"><h2>DHCP</h2><div class="frs-val" id="frs-dhcp">—</div></section>
+      <section class="frs-card"><h2>Watch</h2><div class="frs-val" id="frs-watch">—</div></section>
+      <section class="frs-card"><h2>Takeover</h2><div class="frs-val" id="frs-phase">—</div></section>
+    </div>
+    <p class="frs-foot">updated <span id="frs-updated">—</span> · spawn guard lethal on injection</p>
+  </main>
+  <script src="/assets/field-root-status.js?v=1" defer></script>
+</body>
+</html>

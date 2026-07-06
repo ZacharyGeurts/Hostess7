@@ -1,11 +1,13 @@
 {
   "schema": "field-dhcp/v2",
-  "updated": "2026-07-04T00:44:16.766999Z",
-  "running": false,
+  "updated": "2026-07-02T15:45:22.120469Z",
+  "running": true,
+  "serve_loop": false,
+  "port_67": false,
   "may_serve": false,
   "takeover": {
     "schema": "dns-takeover/v1",
-    "updated": "2026-07-04T00:44:13Z",
+    "updated": "2026-07-04T01:36:38Z",
     "phase": "observing",
     "healthy_streak": 0,
     "motto": "Listen and learn first — takeover only when NEXUS resolver is healthy.",
@@ -17,7 +19,7 @@
       "legacy_open_secured": true
     },
     "health": {
-      "running": true,
+      "running": false,
       "probe_ok": false,
       "rcode": -1,
       "healthy": false,
@@ -32,6 +34,20 @@
         {
           "proto": "udp",
           "port": 53,
+          "bind": "127.0.0.1:53",
+          "raw": "UNCONN 0      0          127.0.0.1:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "udp",
+          "port": 53,
+          "bind": "192.168.47.1:53",
+          "raw": "UNCONN 0      0       192.168.47.1:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "udp",
+          "port": 53,
           "bind": "127.0.0.54:53",
           "raw": "UNCONN 0      0         127.0.0.54:53 0.0.0.0:*",
           "process_hint": ""
@@ -41,6 +57,13 @@
           "port": 53,
           "bind": "127.0.0.53%lo:53",
           "raw": "UNCONN 0      0      127.0.0.53%lo:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "udp",
+          "port": 53,
+          "bind": "[::1]:53",
+          "raw": "UNCONN 0      0              [::1]:53    [::]:*",
           "process_hint": ""
         },
         {
@@ -75,7 +98,7 @@
       "foreign_nameservers": [],
       "incumbent_dns": true,
       "incumbent_dhcp": true,
-      "nexus_dns_running": true,
+      "nexus_dns_running": false,
       "nexus_dhcp_running": false
     },
     "permissions": {
@@ -108,17 +131,17 @@
   "takeover_phase": "observing",
   "security_model": "field-sovereign-gate",
   "never_lose_cycle": true,
-  "motto": "DHCP sovereign-gated — DNS option 6 → Truth Resolver; cycle never lost.",
+  "motto": "Only our DHCP — foreign servers are threats; DNS option 6 → Truth Resolver.",
   "bind": "0.0.0.0:67",
+  "ok": false,
+  "crushing": true,
   "pool": {
-    "start": "192.168.50.100",
-    "end": "192.168.50.200"
+    "scope": "0.0.0.0/0",
+    "arbitrary": true,
+    "it_just_works": true
   },
-  "legacy_pool": {
-    "start": "192.168.47.100",
-    "end": "192.168.47.150",
-    "lease_seconds": 86400
-  },
+  "arbitrary_ipv4": true,
+  "legacy_pool": null,
   "legacy_oui_prefixes": [
     "00:d0:f1",
     "00:d0:0f",
@@ -139,6 +162,8 @@
     "rejected": 0,
     "threat_rejects": 0,
     "conflicts_detected": 0,
+    "quarantined": 0,
+    "soft_offers": 0,
     "declines": 0,
     "started_at": ""
   },
@@ -151,11 +176,109 @@
     "conflicts_detected": 0,
     "declines": 0
   },
-  "leases": [],
-  "leases_detailed": [],
+  "leases": [
+    [
+      "00:01:00:00:00:00",
+      {
+        "ip": "192.168.50.100",
+        "leased_at": "2026-07-02T07:49:25.028913Z",
+        "expires_at": "2026-07-02T07:47:30Z",
+        "remaining_seconds": 3600,
+        "renewals": 0,
+        "declines": 0,
+        "last_seen": "2026-07-02T06:47:30.443608Z",
+        "dns": [
+          "127.0.0.1"
+        ],
+        "legacy": false,
+        "lease_seconds": 3600,
+        "device_id": "dhcp-000100000000",
+        "track_ip": false,
+        "arbitrary_ipv4": true
+      }
+    ],
+    [
+      "00:02:00:00:00:00",
+      {
+        "ip": "192.168.50.101",
+        "leased_at": "2026-07-02T07:54:49.370523Z",
+        "expires_at": "2026-07-02T08:54:49Z",
+        "remaining_seconds": 3600,
+        "renewals": 0,
+        "declines": 0,
+        "last_seen": "2026-07-02T07:54:49.492438Z",
+        "dns": [
+          "127.0.0.1"
+        ],
+        "legacy": false,
+        "lease_seconds": 3600
+      }
+    ],
+    [
+      "00:09:00:00:00:00",
+      {
+        "ip": "192.168.50.102",
+        "leased_at": "2026-07-02T08:09:52.217991Z",
+        "expires_at": "2026-07-02T07:52:14Z",
+        "remaining_seconds": 3600,
+        "renewals": 0,
+        "declines": 0,
+        "last_seen": "2026-07-02T06:52:14.522808Z",
+        "dns": [
+          "127.0.0.1"
+        ],
+        "legacy": false,
+        "lease_seconds": 3600,
+        "device_id": "dhcp-000900000000",
+        "track_ip": false,
+        "arbitrary_ipv4": true
+      }
+    ]
+  ],
+  "leases_detailed": [
+    {
+      "mac": "00:01:00:00:00:00",
+      "ip": "192.168.50.100",
+      "leased_at": "2026-07-02T07:49:25.028913Z",
+      "expires_at": "2026-07-02T07:47:30Z",
+      "remaining_seconds": 3600,
+      "renewals": 0,
+      "declines": 0,
+      "last_seen": "2026-07-02T06:47:30.443608Z",
+      "dns": [
+        "127.0.0.1"
+      ]
+    },
+    {
+      "mac": "00:02:00:00:00:00",
+      "ip": "192.168.50.101",
+      "leased_at": "2026-07-02T07:54:49.370523Z",
+      "expires_at": "2026-07-02T08:54:49Z",
+      "remaining_seconds": 3600,
+      "renewals": 0,
+      "declines": 0,
+      "last_seen": "2026-07-02T07:54:49.492438Z",
+      "dns": [
+        "127.0.0.1"
+      ]
+    },
+    {
+      "mac": "00:09:00:00:00:00",
+      "ip": "192.168.50.102",
+      "leased_at": "2026-07-02T08:09:52.217991Z",
+      "expires_at": "2026-07-02T07:52:14Z",
+      "remaining_seconds": 3600,
+      "renewals": 0,
+      "declines": 0,
+      "last_seen": "2026-07-02T06:52:14.522808Z",
+      "dns": [
+        "127.0.0.1"
+      ]
+    }
+  ],
   "lease_history_events": [],
-  "lease_count": 0,
-  "total_leases": 0,
+  "lease_count": 3,
+  "total_leases": 3,
   "ipv6_skeleton": {
     "enabled": false,
     "pool": "fe80::/64",
@@ -168,5 +291,35 @@
   "hostess7": {
     "inside": "LAN DHCP → 127.0.0.1 DNS · IPv6 field ::1",
     "outside": "No DHCP on WAN — DNS admin ports 7/77/777 read-only"
+  },
+  "planetary_authority": {
+    "scope": "planet",
+    "we_are_every_lease": true,
+    "api": "/api/field-planetary-dns-dhcp"
+  },
+  "any_ip": {
+    "ok": true,
+    "answer_any_ip": true,
+    "dhcp_bind": "0.0.0.0",
+    "answer_point_count": 2,
+    "api": "/api/field-dns-dhcp-any-ip"
+  },
+  "collision_guard": {
+    "ok": false,
+    "sole_authority": {
+      "dns": false,
+      "dhcp": false,
+      "truth": false,
+      "accuracy": false,
+      "ok": false,
+      "phase": "observing",
+      "foreign_resolvers": [],
+      "internet_open": false,
+      "collision_count": 7,
+      "authority_collision_count": 6,
+      "hygiene_warnings": 1
+    },
+    "collision_count": 7,
+    "api": "/api/field-dns-dhcp-collision-guard"
   }
 }

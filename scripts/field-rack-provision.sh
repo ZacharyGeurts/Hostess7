@@ -23,6 +23,20 @@ print('  field_id:', d.get('field_id'))
 print('  rack_root:', d.get('rack_root'))
 "
 
+if [[ -n "${WORLD_PIPELINE_SLOT:-}" ]]; then
+  log "QEMU slot ${WORLD_PIPELINE_SLOT} — provision GrokLab/deploy rack (no TEAM drive servers)"
+  "$PY" "$ROOT/lib/field-zachub-qemu-racks.py" provision | "$PY" -c "
+import json,sys
+d=json.load(sys.stdin)
+s=next((x for x in (d.get('slots') or []) if str(x.get('slot'))==str('${WORLD_PIPELINE_SLOT}')), {})
+print('  field_id:', s.get('field_id'))
+print('  storage:', s.get('storage_root'))
+print('  role:', s.get('primary_role'))
+"
+  log "done — QEMU rack on GrokLab/deploy"
+  exit 0
+fi
+
 log "publish whole nexus-field system to rack"
 "$PY" "$ROOT/lib/field-rack-uniqueness.py" publish | "$PY" -c "
 import json,sys

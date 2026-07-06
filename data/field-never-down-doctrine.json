@@ -1,0 +1,43 @@
+{
+  "schema": "field-never-down/v1",
+  "title": "Never go down — every server instantiates Field 1",
+  "motto": "We never go down. Every server can instantiate. We are always Field 1.",
+  "policy": {
+    "never_go_down": true,
+    "always_field_one": true,
+    "every_server_instantiates": true,
+    "auto_restart_services": true,
+    "observe_dhcp_separate": true,
+    "quarantine_not_kill": true
+  },
+  "field_one_hub": {
+    "id": "field-1",
+    "label": "Field One",
+    "dns": ["127.0.0.1", "192.168.47.1"],
+    "dhcp": ["192.168.47.1", "0.0.0.0"],
+    "truth": "127.0.0.1",
+    "loopback": "127.0.0.1",
+    "queen_lan": "192.168.47.1"
+  },
+  "instantiate_lanes": [
+    {"id": "truth_dns", "module": "lib/field-dns-resolve.py", "cmd": "ensure"},
+    {"id": "field_dns_serve", "module": "lib/field-dns.py", "cmd": "serve", "background": true},
+    {"id": "field_dhcp_serve", "module": "lib/field-dhcp.py", "cmd": "serve", "background": true},
+    {"id": "legacy_primary", "module": "lib/field-legacy-connect.py", "cmd": "ensure-primary"},
+    {"id": "dhcp_watch", "module": "lib/field-watch-dhcp.py", "cmd": "ensure"},
+    {"id": "local_connect", "module": "lib/field-local-dns-connect.py", "cmd": "connect"},
+    {"id": "h7r_local", "module": "lib/field-h7r-stack.py", "cmd": "stamp-local"},
+    {"id": "fleet_protect", "module": "lib/field-fleet-2500-protect.py", "cmd": "verify"}
+  ],
+  "why_we_did": {
+    "summary": "Physical rack or logical global server — identity is Field 1. Instantiate brings DNS, DHCP, H7r stack, and fleet protect online without waiting for a human. Down is a lie; we restart.",
+    "reasons": [
+      "2,500 logical servers must self-bootstrap as field-1, not orphan shards.",
+      "DNS and DHCP are authority lanes — instantiate starts them on any box that can.",
+      "DHCP watch stays observe-only; our DHCP is field-dhcp serve, separate witness.",
+      "Fleet protect verifies H7r/DNS/DHCP after every instantiate."
+    ]
+  },
+  "module": "lib/field-never-down.py",
+  "api": "/api/field-never-down"
+}

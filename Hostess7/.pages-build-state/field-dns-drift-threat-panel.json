@@ -1,12 +1,12 @@
 {
   "ok": false,
   "schema": "field-dns-drift-threat-panel/v1",
-  "updated": "2026-07-04T20:44:36Z",
+  "updated": "2026-07-06T00:43:19Z",
   "title": "DNS drift threat — Truth vs witness divergence is hostile",
   "motto": "We are our own DNS — any drift from Truth @127.0.0.1 is a threat, not noise.",
   "drift": {
     "schema": "field-dns-drift-threat/v1",
-    "ts": "2026-07-04T20:44:33Z",
+    "ts": "2026-07-06T00:43:19Z",
     "ok": false,
     "threat": true,
     "threat_level": "high",
@@ -36,15 +36,15 @@
       {
         "host": "api.github.com",
         "truth": [
-          "140.82.114.6"
+          "140.82.113.5"
         ],
         "authority": [
-          "140.82.114.6"
+          "140.82.113.5"
         ],
         "stub": [],
         "trace": [],
         "system": [
-          "140.82.113.5"
+          "140.82.114.5"
         ],
         "source": "truth_dns",
         "truth_up": true,
@@ -57,15 +57,15 @@
       {
         "host": "ssh.github.com",
         "truth": [
-          "140.82.112.36"
+          "140.82.113.36"
         ],
         "authority": [
-          "140.82.112.36"
+          "140.82.113.36"
         ],
         "stub": [],
         "trace": [],
         "system": [
-          "140.82.113.35"
+          "140.82.114.35"
         ],
         "source": "truth_dns",
         "truth_up": true,
@@ -94,8 +94,8 @@
         "system": [
           "185.199.111.133",
           "185.199.108.133",
-          "185.199.110.133",
-          "185.199.109.133"
+          "185.199.109.133",
+          "185.199.110.133"
         ],
         "source": "truth_dns",
         "truth_up": true,
@@ -108,16 +108,16 @@
   },
   "servers_updated": {
     "schema": "field-dns-dhcp-servers-updated/v1",
-    "ts": "2026-07-04T20:44:36Z",
-    "ok": false,
+    "ts": "2026-07-06T00:43:19Z",
+    "ok": true,
     "queen": {
-      "dns_running": false,
+      "dns_running": true,
       "dhcp_dns_option": [
         "127.0.0.1"
       ],
-      "takeover_phase": "observing",
+      "takeover_phase": "primary",
       "truth_resolver_up": true,
-      "updated": false
+      "updated": true
     },
     "field_nodes": 0,
     "stale_nodes": 0,

@@ -2,7 +2,7 @@
 
 `field-plate-meld.py` motto: flock + fsync + chain-hash + triple mirror.
 
-Plates always share **generation-linked truth**. Copilot and bus read meld first.
+Plates always share **generation-linked truth**. Hot router and bus read meld first.
 
 ![Plate meld — chain hash fusion](../assets/images/plate-meld-art.jpg)
 

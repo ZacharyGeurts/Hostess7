@@ -65,8 +65,9 @@ def battle_stations_policy() -> dict[str, Any]:
     if not battle_stations_enabled():
         return {"battle_stations": False, "six_tool_wall": False, "six_tool_wall_on_boot": False}
     base.setdefault("battle_stations", True)
-    base.setdefault("six_tool_wall", True)
-    base.setdefault("six_tool_wall_on_boot", True)
+    # Six-tool iframe wall is FIRED — fake panels blocked; real programs use NexusFieldShell only.
+    base["six_tool_wall"] = False
+    base["six_tool_wall_on_boot"] = False
     return base
 
 

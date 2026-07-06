@@ -1,0 +1,30 @@
+{
+  "schema": "field-global-servers-doctrine/v1",
+  "title": "2500 global servers — unique metros, heterogeneous QEMU machines",
+  "target_servers": 2500,
+  "motto": "Unique places · different machines · QEMU where it works — not only official racks",
+  "location_key": "{metro_id}:{metro_slot}:{machine_profile}",
+  "machine_profiles": {
+    "official": ["pc-q35", "pc-i440fx", "virt"],
+    "unofficial_working": ["microvm", "isapc", "pc", "q35-nested", "kvm-host", "edge-bind", "homelab", "registry-host"]
+  },
+  "host_sources": [
+    "qemu_local_probe",
+    "field-device-registry",
+    "field-edge-blast",
+    "grok-lab-world-registry",
+    "github-planet-dhcp",
+    "ammodrive-racks"
+  ],
+  "metros_catalog": "data/world-global-metros.json",
+  "regions_base": "GrokLab/deploy/world-node-regions.json",
+  "module": "lib/field-global-servers.py",
+  "pipeline": "GrokLab/deploy/qemu-world-pipeline.py",
+  "api": "/api/field-global-servers",
+  "wires": [
+    "lib/field-zachub-qemu-racks.py",
+    "lib/field-one-rollout.py",
+    "lib/ammodrive-cloud.py",
+    "lib/grok-lab-world.py"
+  ]
+}

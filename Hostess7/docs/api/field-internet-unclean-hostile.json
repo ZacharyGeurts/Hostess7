@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "field-internet-unclean-hostile/v1",
-  "updated": "2026-07-04T20:34:41Z",
+  "updated": "2026-07-06T00:41:54Z",
   "title": "Unclean internet is hostile \u2014 fry the polluters",
   "motto": "Internet stays open for everyone. Anything that makes it unclean \u2014 restriction, hijack, poison, telemetry, delay \u2014 is hostile.",
   "boss": "hostess7",
@@ -9,60 +9,46 @@
   "internet_open_for_users": true,
   "unclean_makers": [
     {
-      "kind": "foreign_dns_server",
-      "bind": "127.0.0.54:53",
-      "addr": "127.0.0.54",
+      "kind": "foreign_dns_resolver",
+      "nameserver": "209.18.47.61",
       "vector": "FOREIGN_DNS_SERVER",
       "severity": "critical",
-      "note": "Unauthorized DNS listener",
+      "note": "resolv.conf nameserver not truth",
+      "phase": "primary",
       "unclean_kind": "foreign_server",
-      "hostile_reason": "Unauthorized DNS listener",
-      "key": "127.0.0.54:53",
-      "hostile": true,
-      "unclean": true
-    },
-    {
-      "kind": "foreign_dns_server",
-      "bind": "127.0.0.53%lo:53",
-      "addr": "127.0.0.53",
-      "vector": "FOREIGN_DNS_SERVER",
-      "severity": "critical",
-      "note": "Unauthorized DNS listener",
-      "unclean_kind": "foreign_server",
-      "hostile_reason": "Unauthorized DNS listener",
-      "key": "127.0.0.53%lo:53",
-      "hostile": true,
-      "unclean": true
-    },
-    {
-      "unclean_kind": "isp_dns_redirect",
-      "hostile_reason": "unclean nameserver 209.18.47.61",
+      "hostile_reason": "resolv.conf nameserver not truth",
       "key": "209.18.47.61",
-      "vector": "INTERNET_UNCLEAN_HOSTILE",
-      "severity": "high",
       "hostile": true,
       "unclean": true
     },
     {
-      "unclean_kind": "isp_dns_redirect",
-      "hostile_reason": "unclean nameserver 209.18.47.62",
+      "kind": "foreign_dns_resolver",
+      "nameserver": "209.18.47.62",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "resolv.conf nameserver not truth",
+      "phase": "primary",
+      "unclean_kind": "foreign_server",
+      "hostile_reason": "resolv.conf nameserver not truth",
       "key": "209.18.47.62",
-      "vector": "INTERNET_UNCLEAN_HOSTILE",
-      "severity": "high",
       "hostile": true,
       "unclean": true
     },
     {
-      "unclean_kind": "isp_dns_redirect",
-      "hostile_reason": "unclean nameserver 209.18.47.63",
+      "kind": "foreign_dns_resolver",
+      "nameserver": "209.18.47.63",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "resolv.conf nameserver not truth",
+      "phase": "primary",
+      "unclean_kind": "foreign_server",
+      "hostile_reason": "resolv.conf nameserver not truth",
       "key": "209.18.47.63",
-      "vector": "INTERNET_UNCLEAN_HOSTILE",
-      "severity": "high",
       "hostile": true,
       "unclean": true
     }
   ],
-  "unclean_count": 5,
+  "unclean_count": 3,
   "hostile_vector": "INTERNET_UNCLEAN_HOSTILE",
   "policy": {
     "unclean_is_hostile": true,
@@ -85,5 +71,5 @@
   "api": "/api/field-internet-unclean-hostile",
   "pages": true,
   "lane": "pages-surfaces",
-  "exported": "2026-07-04T20:34:41Z"
+  "exported": "2026-07-06T00:41:54Z"
 }

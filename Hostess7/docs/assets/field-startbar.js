@@ -798,7 +798,7 @@
         global.FieldQueenNav.openStandalone({ id: "queen-browser", name: "Bookmarks" });
         return;
       }
-      launchApp({ id: "queen-browser", name: "Queen Browser", exec: "/Hostess7/queen/browser.html" });
+      launchApp({ id: "queen-browser", name: "Queen Browser", exec: "/Hostess7/queen/browser.html", shell: true });
       return;
     }
     launchApp(app);

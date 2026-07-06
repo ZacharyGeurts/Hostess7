@@ -380,6 +380,8 @@ def _export_operator_x() -> None:
         ("hostess7-x-sso-fix.py", ["repair"], "hostess7-x-sso-fix.json"),
         ("hostess7-x-profile-fix.py", ["repair"], "hostess7-x-profile-fix.json"),
         ("hostess7-x-producer.py", ["produce"], "hostess7-x-producer.json"),
+        ("field-people-chip-combinatorics.py", ["publish"], "field-people-chip.json"),
+        ("hostess7-elon-kitchen-sink-defense.py", ["defend"], "hostess7-elon-kitchen-sink.json"),
         ("hostess7-field-status-update.py", ["build"], "hostess7-field-status-update.json"),
         ("hostess7-google-youtube-open.py", ["open"], "operator-google-youtube-open.json"),
         ("hostess7-google-youtube-open.py", ["open"], "operator-youtube-comments.json"),

@@ -1,0 +1,79 @@
+{
+  "schema": "field-ai-root-api-guard-doctrine/v1",
+  "title": "AI root & API guard — full root for AI work only; cannot break the system",
+  "motto": "Featured root for AI — prejudice kills anything that would break DNS, DHCP, truth, or the field",
+  "policy": {
+    "ai_root_scope": "ai_work_only",
+    "human_root_forbidden": false,
+    "operator_sovereign_root": true,
+    "fail_closed": true,
+    "loopback_ai_token_required": true,
+    "destructive_blocked_everywhere": true,
+    "cannot_break_via_root": true,
+    "cannot_break_via_api": true
+  },
+  "actor_channels": {
+    "ai": ["ai", "grok", "compiler", "machine", "secure_channel"],
+    "human": ["keystroke", "voice", "typed", "paste", "human", "operator"],
+    "foreign": ["c2", "malware", "bot", "automated", "scan", "ai_injection"]
+  },
+  "blocked_root_patterns": [
+    "rm\\s+-rf\\s+/(?!tmp)",
+    "mkfs\\.",
+    "dd\\s+if=.*of=/dev/",
+    "chmod\\s\\+s",
+    "userdel\\s+root",
+    "passwd\\s+root",
+    "iptables\\s+-F",
+    "nft\\s+flush",
+    "systemctl\\s+(stop|disable|mask)\\s+(dnsmasq|bind9|unbound|systemd-resolved|NetworkManager|nexus-daemon|queen-root-sovereign)",
+    "truncate\\s+-s\\s+0",
+    ">\\s*/etc/(passwd|shadow|sudoers)",
+    "curl\\s+[^\\s|]+\\s*\\|\\s*(ba)?sh",
+    "wget\\s+[^\\s]+\\s*-O\\s*/tmp/"
+  ],
+  "blocked_api_actions": [
+    "write_file", "save_file", "delete_file", "exec_shell", "exec", "eval",
+    "overwrite", "patch_file", "rmtree", "unlink", "format_drive",
+    "kill_process", "terminate", "wipe", "destroy", "purge", "drop_database",
+    "disable_dns", "disable_dhcp", "flush_iptables", "revoke_sovereign"
+  ],
+  "blocked_api_path_prefixes": [
+    "/api/destroy",
+    "/api/wipe",
+    "/api/exec",
+    "/api/shell",
+    "/api/root-kill",
+    "/api/field-destroy"
+  ],
+  "protected_system_paths": [
+    "GrokLab/deploy/qemu-racks",
+    ".nexus-state",
+    ".nexus-field-drive",
+    "data/field-h7r-doctrine.json",
+    "data/field-h7r-truth-security-doctrine.json",
+    "lib/field-dns.py",
+    "lib/field-dhcp.py",
+    "lib/field-h7r-stack.py",
+    "Queen/lib/queen-root-sovereign.py"
+  ],
+  "allowed_ai_work": {
+    "compile": true,
+    "probe": true,
+    "read_panel": true,
+    "stamp_stack": true,
+    "fleet_protect": true,
+    "truth_mirror": true,
+    "grok_build": true,
+    "field_compiler": true
+  },
+  "headers": {
+    "ai_actor": "X-Nexus-AI-Actor",
+    "ai_token": "X-Nexus-AI-Token",
+    "human_input": "X-Human-Input"
+  },
+  "verdict_headers": {
+    "guard": "X-Field-AI-Root-Guard",
+    "scope": "X-Field-AI-Root-Scope"
+  }
+}

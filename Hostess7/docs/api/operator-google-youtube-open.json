@@ -1,0 +1,220 @@
+{
+  "ok": true,
+  "schema": "hostess7-google-youtube-open/v1-open",
+  "updated": "2026-07-06T00:30:51Z",
+  "operator": "ZacharyGeurts",
+  "free_open_internet": true,
+  "delay_killed": true,
+  "no_cooldown": true,
+  "parallel_syndication": true,
+  "google": {
+    "authority": "free_open_internet",
+    "core_open": true,
+    "delay_killed": true,
+    "tracker_blocks_exclude_core": true,
+    "blocked_locally_only": [
+      "doubleclick.net",
+      "googlesyndication.com",
+      "googleadservices.com",
+      "adservice.google.com"
+    ],
+    "never_blocks_search": true,
+    "lanes": [
+      {
+        "lane": "google_head_0",
+        "url": "https://www.google.com/",
+        "ok": true,
+        "status": 200
+      },
+      {
+        "lane": "google_head_2",
+        "url": "https://www.youtube.com/",
+        "ok": true,
+        "status": 200
+      },
+      {
+        "lane": "google_head_1",
+        "url": "https://accounts.google.com/",
+        "ok": true,
+        "status": 200
+      }
+    ],
+    "honorability": {
+      "google.com": {
+        "domain": "google.com",
+        "stars": 5,
+        "gold": true,
+        "protection_level": "extreme",
+        "extreme_endpoint_protection": true,
+        "category": "sso",
+        "note": "Google Sign-In for X — never block during login",
+        "source": "seed",
+        "default_moderate": false,
+        "needs_acceptance": false,
+        "accepted": false,
+        "stars_label": "5 gold — full trust · EXTREME protection"
+      },
+      "youtube.com": {
+        "domain": "youtube.com",
+        "stars": 5,
+        "gold": true,
+        "protection_level": "extreme",
+        "extreme_endpoint_protection": true,
+        "category": "stream",
+        "note": "Operator media",
+        "source": "seed",
+        "default_moderate": false,
+        "needs_acceptance": false,
+        "accepted": false,
+        "stars_label": "5 gold — full trust · EXTREME protection"
+      },
+      "googlesyndication.com": {
+        "domain": "googlesyndication.com",
+        "stars": 3,
+        "gold": false,
+        "protection_level": "standard",
+        "extreme_endpoint_protection": false,
+        "category": "unknown",
+        "note": "",
+        "source": "default",
+        "default_moderate": true,
+        "needs_acceptance": true,
+        "accepted": false,
+        "stars_label": "3 stars — moderate default"
+      },
+      "doubleclick.net": {
+        "domain": "doubleclick.net",
+        "stars": 2,
+        "gold": false,
+        "protection_level": "standard",
+        "extreme_endpoint_protection": false,
+        "category": "ad_network",
+        "note": "Ad tracker — accept only if you visit a page that pulls it",
+        "source": "seed",
+        "default_moderate": false,
+        "needs_acceptance": true,
+        "accepted": false,
+        "stars_label": "2 stars — caution"
+      }
+    },
+    "verdict": "Google/YouTube core reachable — local blocks hit ad-tech only, not search or media"
+  },
+  "youtube": {
+    "handle": "ZacharyGeurts",
+    "discovery": {
+      "handle": "ZacharyGeurts",
+      "videos": [],
+      "channels": [],
+      "search_lanes": [
+        {
+          "lane": "invidious_search_invidious.fdn.fr",
+          "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=channel",
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>"
+        },
+        {
+          "lane": "invidious_search_videos_invidious.fdn.fr",
+          "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=video",
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>"
+        },
+        {
+          "lane": "invidious_search_videos_yewtu.be",
+          "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=video",
+          "ok": false,
+          "error": "HTTP Error 403: Forbidden"
+        },
+        {
+          "lane": "invidious_search_yewtu.be",
+          "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=channel",
+          "ok": false,
+          "error": "HTTP Error 403: Forbidden"
+        }
+      ],
+      "note": "Set OPERATOR_YOUTUBE_VIDEOS or OPERATOR_YOUTUBE_CHANNEL for targeted mirror"
+    },
+    "videos": [],
+    "video_count": 0
+  },
+  "comments": [],
+  "comment_count": 0,
+  "withheld_slots_opened": 0,
+  "censorship_notes": [],
+  "syndication_path": {
+    "transport": "urllib parallel HTTPS",
+    "bypasses": [
+      "browser adblock middleman",
+      "sequential cooldown",
+      "stale cache gate"
+    ],
+    "lanes": [
+      "piped",
+      "invidious",
+      "oembed",
+      "rss",
+      "google_head"
+    ]
+  },
+  "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/operator-google-youtube-open.json",
+  "release_status": "free_open_internet",
+  "cache_opened": true,
+  "delay_witness": {
+    "ok": true,
+    "schema": "hostess7-delay-threat-witness/v1",
+    "utc": "2026-07-06T00:30:51Z",
+    "lies_are_threats": true,
+    "delay_as_threat": true,
+    "detect": {
+      "schema": "hostess7-delay-threat-detect/v1",
+      "delay_is_threat": true,
+      "signal": "stale_operator_google_youtube_cache",
+      "elapsed_sec": 0.0,
+      "stall_sec": 600.0,
+      "detail": "opened google/youtube cache — 0 comments, free open internet",
+      "countermeasures": [
+        "everyone_manages_own_deploy",
+        "pages_first_registry",
+        "cancel_zombie_ci",
+        "remove_concurrency_lock",
+        "truth_dns_primary_without_foreign_wait",
+        "open_operator_x_cache_immediately",
+        "parallel_x_syndication_no_delay",
+        "expose_withheld_reply_slots_as_comments",
+        "open_google_youtube_cache_immediately",
+        "parallel_youtube_syndication_no_delay",
+        "free_open_internet_core_google_youtube",
+        "unwrap_tco_to_canonical_url",
+        "parallel_tco_sniff_no_cooldown",
+        "rewrite_operator_urls_in_cache",
+        "block_tco_middleman_egress",
+        "x_brand_purge_blow_dangerous_twitter",
+        "x_producer_not_twitter_producer",
+        "whole_internet_parallel_open",
+        "good_guys_free_open_internet",
+        "dangerous_urls_gone_not_control"
+      ],
+      "class": "delay_threat",
+      "threat_vector": "DELAY_AS_THREAT",
+      "threat_severity": "high",
+      "meta": {
+        "module": "hostess7-google-youtube-open.py"
+      }
+    },
+    "threat_recorded": true,
+    "threat": {
+      "schema": "hostess7-truth-lie-threat-record/v1",
+      "event": "lie_threat",
+      "utc": "2026-07-06T00:30:51Z",
+      "vector": "DELAY_AS_THREAT",
+      "severity": "high",
+      "detail": "signal=stale_operator_google_youtube_cache elapsed=0.0s opened google/youtube cache — 0 comments, free open internet",
+      "lies_are_threats": true,
+      "meta": {
+        "signal": "stale_operator_google_youtube_cache",
+        "module": "hostess7-google-youtube-open.py"
+      },
+      "threat_tsv_recorded": true
+    },
+    "action": "bypass_middleman_own_deploy"
+  }
+}

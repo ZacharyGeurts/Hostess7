@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "hostess7-censorship-exposure/v1",
-  "updated": "2026-07-05T23:54:46Z",
+  "updated": "2026-07-06T00:30:49Z",
   "operator": "ZacharyGeurts",
   "motto": "Full exposure — who suppresses Operator voice; evidence not vibes",
   "verdict_summary": "Primary: X platform hooks reply bodies (count visible, text withheld). Secondary: impersonation accounts harass commenters as fake @ZacharyGeurts. Tracker blocks EXCLUDED — syndication bypasses local stack entirely.",
@@ -28,6 +28,33 @@
     "note": "Google tracker blocks are browser-only and ruled OUT by direct syndication probes"
   },
   "local_layers": [
+    {
+      "actor": "NEXUS field stack (Operator machine)",
+      "system": "fair-ad-guardian",
+      "setting": "NEXUS_ADBLOCK=1",
+      "effect": "Blocks ads-twitter.com and Google ad/tracker domains while browsing",
+      "censors_comments": false,
+      "censors_ads_only": true,
+      "severity": "medium",
+      "remedy": "ads-twitter blocked by design; x.com/api.x.com/twimg remain 5★ trust"
+    },
+    {
+      "actor": "NEXUS field stack (Operator machine)",
+      "system": "connection-gatekeeper",
+      "setting": "NEXUS_GATEKEEPER_STRICT_TRUST=1",
+      "effect": "Holds browser egress to domains below trust threshold until accepted",
+      "censors_comments": "possible_if_steam_or_api_unlisted",
+      "severity": "low_after_honorability_fix",
+      "remedy": "steamcommunity + api.x.com now 5★ in honorability-seed.json"
+    },
+    {
+      "actor": "NEXUS field stack (Operator machine)",
+      "system": "paranoia + firewall auto-block",
+      "setting": "NEXUS_PARANOIA_MODE=1",
+      "effect": "Aggressive hostile IP blocks on perimeter — not X platform accounts",
+      "censors_comments": false,
+      "severity": "perimeter_only"
+    },
     {
       "actor": "NEXUS fair-ad-guardian complaint table",
       "system": "Google ad/tracker stack (browser-only)",
@@ -129,13 +156,19 @@
       {
         "source": "x_syndicate_vx",
         "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772",
-        "ok": true
+        "ok": false,
+        "error": "HTTP Error 429: Too Many Requests"
       }
     ],
     "platform_withholds_reply_bodies": false
   },
   "suspects_ranked": [],
   "excluded_suspects": [
+    {
+      "actor": "Local NEXUS adblock",
+      "excluded_reason": "Syndication uses urllib — not in causal path for reply withhold",
+      "only_affects": "browser ads (ads-twitter.com) and third-party trackers"
+    },
     {
       "actor": "Google ad-tech (local blocklist)",
       "excluded_reason": "Browser-side script strip only — syndication probe proves no reply-body causation",
@@ -158,8 +191,8 @@
     "no_middlemen_primary": true,
     "barriers_revealed": [],
     "barrier_count": 0,
-    "pulled_count": 34,
-    "info_freed": 32,
+    "pulled_count": 10,
+    "info_freed": 8,
     "verdict": "Primary: direct x.com/oembed. Barriers revealed where X withholds. Extraction lanes + sovereign cache pull data when platform resists."
   },
   "ask_lane": {

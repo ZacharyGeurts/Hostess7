@@ -1,0 +1,59 @@
+{
+  "schema": "field-local-dns-connect/v1",
+  "ok": false,
+  "ts": "2026-07-06T00:42:49Z",
+  "motto": "Use our local Truth DNS and Field DHCP — connect when either starts.",
+  "dns": {
+    "running": false,
+    "healthy": false,
+    "connected": false,
+    "resolver": "127.0.0.1",
+    "port": 53,
+    "resolv_stub": "",
+    "system_resolv_enforced": false
+  },
+  "dhcp": {
+    "running": false,
+    "connected": false,
+    "iface": "enp10s0",
+    "mac": "9c:6b:00:84:63:ff",
+    "lease": null,
+    "client": {
+      "ok": false,
+      "skipped": true
+    }
+  },
+  "dhcp_watch": {
+    "observe_only": true,
+    "not_our_dhcp": true,
+    "automated": {
+      "ok": true,
+      "skipped": true,
+      "reason": "read_only_panel",
+      "observe_only": true,
+      "counts": {
+        "foreign_listeners": 0,
+        "dhcp_offers_seen": 0,
+        "lan_neigh_hosts": 0,
+        "external_lease_rows": 0,
+        "foreign_servers": 0,
+        "observed_clients": 0
+      }
+    },
+    "api": "/api/field-watch-dhcp"
+  },
+  "never_down": {
+    "always_field_one": true,
+    "hub_id": "field-1",
+    "ensure": {
+      "ok": true,
+      "skipped": true,
+      "reason": "inline_disabled"
+    },
+    "api": "/api/field-never-down"
+  },
+  "env_hint": {
+    "RESOLV_CONF": "",
+    "NEXUS_FIELD_DNS_IPV4": "127.0.0.1"
+  }
+}

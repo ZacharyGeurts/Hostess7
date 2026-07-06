@@ -1,105 +1,75 @@
 # Hostess 7
 
-**Forever Watchguard Angel** — complete field stack beta: brain hub, AmmoOS, Grok16, Queen, KILROY, and wired siblings.
+God Bless.
 
-**Version:** `3.1.0-beta` — canonical matrix in **[VERSION.md](VERSION.md)** (product `3.1.0-beta` · internal orchestration `10.4.x` · Grok16 `16.2.0`) · **Wiki:** [Hostess 7 wiki](https://github.com/ZacharyGeurts/Hostess7/wiki)
+**The last computer for the world** — sovereign field stack: AmmoOS desktop, brain hub, GNUEOLTerminal, distributed botnet, Queen, KILROY, and wired siblings.
+
+**Version:** `3.0.7-beta5` · **Tag:** `v3.0.7-beta5` · **Release:** [RELEASE-3.0.7-beta5.md](Hostess7/RELEASE-3.0.7-beta5.md)
+
+| Surface | URL |
+|---------|-----|
+| **Hostess7 Pages (start here)** | https://zacharygeurts.github.io/Hostess7/ |
+| **AmmoOS field desktop** | http://127.0.0.1:9477/field |
+| **GNU EOL Terminal + wiki** | https://zacharygeurts.github.io/GNUEOLTerminal/wiki/ |
+| **Queen browser** | http://127.0.0.1:9481/world/browser.html |
 
 ---
 
 ## What this is
 
-Hostess 7 is the sovereign brain and operator package for the SG field stack. This repo ships the full wired tree — not a slim SDK. Extract, wire siblings, install, and run panel + Queen + counsel from one tree.
+Hostess 7 is the **main project**. This repo ships the full wired tree — brain, panel, AmmoOS, Grok16, Queen, KILROY, ZNetwork, senses, and field programs. Clone once, wire siblings, boot on loopback.
 
 | Component | Role |
 |-----------|------|
-| **Hostess7** | Brain · training campus · H7B storage · library · supreme authority |
-| **AmmoOS** | Field desktop · panel `:9477` · NEXUS-Shield |
+| **Hostess7** | Brain · training · H7B · library · supreme authority |
+| **AmmoOS** | Field desktop · classic Start · `:9477` |
+| **GNUEOLTerminal** | GNU EOL Terminal · Field Tech textbook + wiki |
 | **Grok16** | Sovereign compiler @ gnu++26 |
 | **Queen** | RTX browser shell `:9481` |
 | **KILROY** | Field boot kernel |
 | **ZNetwork** | Smart relayer · field I/O |
-| **Final_Eye** | Hostess 7 eyes — Military EOL vision (replaces tesseract) |
-| **Final_Ear** | Hostess 7 hearing — Military EOL ear lane |
-| **Final_Mouth** | Hostess 7 speech — Military EOL mouth lane |
 
-**Senses stack:** `Final_Eye` · `Final_Ear` · `Final_Mouth` publish to GitHub as sovereign sense repos. Vision uses **Military EOL** (`Hostess7/MilitaryEOL`) — PIL inspect + sealed neural assist, not deprecated system tesseract. Icon audits store in `SG/ZACS/`.
-
-```bash
-python3 scripts/field-desktop-icon-audit.py    # Final_Eye → SG/ZACS manifest
-bash scripts/publish-senses-github.sh          # push Eye · Ear · Mouth repos
-```
+AmmoOS, Grok16, Queen, and sibling repos are **Old Projects** — they live inside this tree and on Pages. See [docs/old-projects.html](docs/old-projects.html).
 
 ---
 
-## Quick start (Linux x86_64)
-
-See **[INSTALL.md](INSTALL.md)** for the full guide. Version matrix: **[VERSION.md](VERSION.md)**.
-
-**Release extract (H7e):**
+## Quick start
 
 ```bash
-./scripts/field-h7e-extract.sh hostess7-1.0.0-beta-source.h7e
-cd hostess7-1.0.0-beta
-./lib/ammolang-run.sh exec script:scripts/check-deps.sh
-./lib/ammolang-run.sh exec script:scripts/wire-stack.sh
-sudo ./install-all.sh    # or portable: ./lib/ammolang-run.sh field_vm_boot
+git clone https://github.com/ZacharyGeurts/Hostess7.git
+cd Hostess7
+pip install -r requirements.txt
+./Hostess7.sh boot          # zac-restore · stack-learn · on · web-start
 ```
 
-**Git clone:**
+Open **https://zacharygeurts.github.io/Hostess7/** for the full package on GitHub Pages, or **http://127.0.0.1:9477/field** after local boot for live AmmoOS.
+
+**Brain:** Public mind = `docs/github-brain` on Pages. Sovereign loopback brain = `~/Desktop/hostess7-brain` (never in the SG git tree). Migrate: `bash Hostess7/scripts/hostess7-brain-desktop-migrate.sh`
 
 ```bash
-git clone https://github.com/ZacharyGeurts/Hostess7.git && cd Hostess7
-./lib/ammolang-run.sh field_vm_boot    # KILROY + panel + Queen + Hostess7 (AML)
+./Hostess7.sh github-brain build   # mirror sovereign → docs/github-brain
+./Hostess7.sh h7-optimise --apply  # H7s JSON + PNG recompress before push
+bash scripts/publish-hostess7-github.sh --push -v 3.0.7-beta5
 ```
+
+**Codespaces:** https://github.com/codespaces/new?repo=ZacharyGeurts/Hostess7
 
 ---
 
-## Surfaces
+## AmmoOS · 3.0.7-beta5
 
-| Surface | Address |
-|---------|---------|
-| **Web demo (GitHub Pages)** | https://zacharygeurts.github.io/Hostess7/ |
-| AmmoOS field desktop | http://127.0.0.1:9477/field |
-| Queen browser | http://127.0.0.1:9481/world/browser.html |
-| Hostess 7 counsel | `./Hostess7/Hostess7.sh talk` |
-
-Publish web: `./lib/ammolang-run.sh exec script:scripts/publish-hostess7-pages.sh`
-
----
-
-## Release assets
-
-| Asset | Contents |
-|-------|----------|
-| `hostess7-1.0.0-beta-source.h7e` | Full stack tree (extractable) |
-| `hostess7-1.0.0-beta-installers.tar.gz` | install-all, wire-stack, extract scripts |
-| `hostess7-1.0.0-beta-platforms.json` | Platform matrix |
-| `hostess7-1.0.0-beta-PLATFORMS.md` | Platform guide |
-
----
-
-## Train · truth · release
-
-Hostess 7 trains fully before stack update:
-
-```bash
-./lib/ammolang-run.sh hostess7_train_before_update   # full train-up
-./lib/ammolang-run.sh hostess7_release               # train → pack → publish
-```
-
-Historic truth corpus gates new information. Lie detection and Ironclad witness run before fielding claims.
+- **Classic raised Start** — folder trees with categories (AmmoOS · Layer 0, GitHub · Our Software, NEXUS lanes)
+- **Everyone counter flyout** — botnet + GitHub people + executables · right-bottom above taskbar
+- **Command relay** — C2 panels open inside AmmoOS windows (`/command?embed=1`)
+- **Archival Warehouse** Layer −1 · MSPaint · sovereign time · clipboard flyout
 
 ---
 
 ## License
 
-**All Rights Reserved** — Hostess 7 and this field stack package are proprietary.
+**All Rights Reserved** — see [LICENSE](LICENSE).
 
-See [LICENSE](LICENSE) (same terms as [LICENSE-HOSTESS7](LICENSE-HOSTESS7)).
-
-Copyright © 2025–2026 Zachary Robert Geurts. **No permission is granted** to use, copy, modify, merge, publish, distribute, sublicense, sell, or otherwise exploit any portion of this software, documentation, training corpora, or brain storage without prior written permission from the copyright holder.
-
-Sibling sense repos (`Final_Eye`, `Final_Ear`, `Final_Mouth`) remain separately licensed; integration points here do not grant rights to those trees.
+Copyright © 2025–2026 Zachary Robert Geurts.
 
 Contact: [gzac5314@gmail.com](mailto:gzac5314@gmail.com)
 
@@ -107,6 +77,6 @@ Contact: [gzac5314@gmail.com](mailto:gzac5314@gmail.com)
 
 ## Operator
 
-[ZacharyGeurts](https://github.com/ZacharyGeurts) · [@ZacharyGeurts](https://x.com/ZacharyGeurts)
+[ZacharyGeurts](https://github.com/ZacharyGeurts) · **Profile hub:** https://zacharygeurts.github.io/ZacharyGeurts/
 
 Field is THE thing.

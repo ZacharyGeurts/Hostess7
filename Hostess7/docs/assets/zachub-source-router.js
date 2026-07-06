@@ -27,7 +27,7 @@
   };
 
   function loopback() {
-    return (global.H7_LOOPBACK_AUTHORITY || global.ZACHUB_LOOPBACK || "http://127.0.0.1:9477").replace(/\/$/, "");
+    return (global.H7_LOOPBACK_AUTHORITY || global.ZACHUB_LOOPBACK || "/Hostess7").replace(/\/$/, "");
   }
 
   function sovereignDesktop() {

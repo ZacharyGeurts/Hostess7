@@ -1,0 +1,89 @@
+{
+  "schema": "field-h7r-doctrine/v1",
+  "title": "H7r — rackmount redundant storage · forever hash · personhood ACL",
+  "format": "h7r/1",
+  "magic": "H7R\\x01",
+  "canonical_extension": ".h7r",
+  "module": "lib/field-h7r-format.py",
+  "rackmount_module": "lib/field-h7r-rackmount.py",
+  "motto": "Fast · small · cool rackmount — erasure redundant, hack-proof open cloud, nothing deletes without forever hash + personhood",
+  "erasure": {
+    "data_shards": 4,
+    "parity_shards": 2,
+    "recover_min": 4,
+    "algorithm": "xor_parity_v1",
+    "stripe_mirror_racks": 3
+  },
+  "forever": {
+    "hash": "sha256",
+    "hash_bits": 256,
+    "delete_requires_hash_match": true,
+    "delete_requires_personhood_or_grant": true,
+    "ledger": "field-h7r-forever-ledger.jsonl",
+    "tombstone_never_unlink_without_verify": true
+  },
+  "identity": {
+    "personhood_id": "sha256(device|machine-id|hostname|display) — embodied operator, separate from AmmoDrive id",
+    "ammodrive_id": "ammodrive-{rack|box digest} — cloud locker key for lock/unlock grants",
+    "open_to_everyone": true,
+    "statement": "Everyone gets an AmmoDrive id; personhood id ties files to the embodied device; owners grant read/write by AmmoDrive id"
+  },
+  "acl": {
+    "default_locked": true,
+    "owner_controls": ["readers", "writers", "open_read", "open_write"],
+    "grant_by_ammodrive_id": true,
+    "revoke_by_owner_only": true
+  },
+  "rackmount": {
+    "vault_subdir": "h7-shard/h7r-vault",
+    "stripe_subdir": "h7-shard/h7r-stripes",
+    "protocol_stack": ["field-h7r-format", "field-h7s-fs"],
+    "gb_per_rack": 91,
+    "internet_isolated": true
+  },
+  "family_roles": {
+    "h7r/1": "rackmount redundant forever storage — AmmoDrive cloud blobs",
+    "h7s/1": "hot-read speedup lane on top of h7r vault index",
+    "h7/7": "lossless canonical export lane"
+  },
+  "truth_security": {
+    "version": "h7r/1-prejudice",
+    "doctrine": "data/field-h7r-truth-security-doctrine.json",
+    "prejudice": true,
+    "more_than_permissible": true,
+    "truth_beyond_bands": true,
+    "security_beyond_darpa": true
+  },
+  "services": {
+    "stack_version": "h7r/1",
+    "truth_security_version": "h7r/1-prejudice",
+    "module": "lib/field-h7r-stack.py",
+    "lanes": ["dns", "dhcp", "edge", "witness", "botnet", "truth", "security", "prejudice"],
+    "authority": {
+      "dns": "hostess7_truth",
+      "dhcp": "hostess7_field",
+      "edge": "field-zachub-qemu-racks",
+      "witness": "truth_mirror",
+      "botnet": "hostess7"
+    },
+    "wildcard_any_ip": true,
+    "rack_manifest": "field-h7r-stack.json",
+    "per_lane_manifest": "h7r-service.json",
+    "wires": [
+      "lib/field-dns.py",
+      "lib/field-dhcp.py",
+      "lib/field-dns-dhcp-any-ip.py",
+      "lib/field-botnet-dns-dhcp.py",
+      "lib/field-zachub-qemu-racks.py",
+      "lib/ammodrive-storage-rapid.py"
+    ],
+    "rapid": {
+      "workers": 48,
+      "batch": 512,
+      "targets": "500+ botnet + 2500 global + all racks"
+    }
+  },
+  "api": "/api/ammodrive-cloud",
+  "stack_api": "/api/field-h7r-stack",
+  "ironclad_cite": "ironclad:h7r:1"
+}

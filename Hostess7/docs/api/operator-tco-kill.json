@@ -1,0 +1,336 @@
+{
+  "ok": true,
+  "schema": "hostess7-tco-kill/v1",
+  "updated": "2026-07-06T00:30:34Z",
+  "delay_killed": true,
+  "no_delay": true,
+  "tco_found": 0,
+  "tco_unwrapped": 0,
+  "tco_killed": 0,
+  "mapping": {},
+  "sniff": [],
+  "sniff_median_ms": null,
+  "sniff_max_ms": null,
+  "what_is_tco": {
+    "t.co": "Official X/Twitter URL shortener and click analytics redirector",
+    "tco": "Same threat — shorthand for t.co hop",
+    "owner": "x.com / Twitter",
+    "purpose": "Wrap external links in posts; count clicks; inject redirect delay",
+    "not": "Not your URL — a middleman gate between operator links and destination"
+  },
+  "witness": {
+    "ok": true,
+    "schema": "hostess7-delay-threat-witness/v1",
+    "utc": "2026-07-06T00:30:34Z",
+    "lies_are_threats": true,
+    "delay_as_threat": true,
+    "detect": {
+      "schema": "hostess7-delay-threat-detect/v1",
+      "delay_is_threat": true,
+      "signal": "t_co_redirect_delay_gate",
+      "elapsed_sec": 0.0,
+      "stall_sec": 600.0,
+      "detail": "unwrapped 0 t.co hops from 0 short links",
+      "countermeasures": [
+        "everyone_manages_own_deploy",
+        "pages_first_registry",
+        "cancel_zombie_ci",
+        "remove_concurrency_lock",
+        "truth_dns_primary_without_foreign_wait",
+        "open_operator_x_cache_immediately",
+        "parallel_x_syndication_no_delay",
+        "expose_withheld_reply_slots_as_comments",
+        "open_google_youtube_cache_immediately",
+        "parallel_youtube_syndication_no_delay",
+        "free_open_internet_core_google_youtube",
+        "unwrap_tco_to_canonical_url",
+        "parallel_tco_sniff_no_cooldown",
+        "rewrite_operator_urls_in_cache",
+        "block_tco_middleman_egress",
+        "x_brand_purge_blow_dangerous_twitter",
+        "x_producer_not_twitter_producer",
+        "whole_internet_parallel_open",
+        "good_guys_free_open_internet",
+        "dangerous_urls_gone_not_control"
+      ],
+      "class": "delay_threat",
+      "threat_vector": "DELAY_AS_THREAT",
+      "threat_severity": "high",
+      "meta": {
+        "module": "hostess7-tco-kill.py"
+      }
+    },
+    "threat_recorded": true,
+    "threat": {
+      "schema": "hostess7-truth-lie-threat-record/v1",
+      "event": "lie_threat",
+      "utc": "2026-07-06T00:30:34Z",
+      "vector": "DELAY_AS_THREAT",
+      "severity": "high",
+      "detail": "signal=t_co_redirect_delay_gate elapsed=0.0s unwrapped 0 t.co hops from 0 short links",
+      "lies_are_threats": true,
+      "meta": {
+        "signal": "t_co_redirect_delay_gate",
+        "module": "hostess7-tco-kill.py"
+      },
+      "threat_tsv_recorded": true
+    },
+    "action": "bypass_middleman_own_deploy"
+  },
+  "posts": [
+    {
+      "kind": "post",
+      "id": "2073925299197095989",
+      "text": "",
+      "created_at": "Mon Jul 06 00:21:37 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073925299197095989",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 4,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073619109309186311",
+      "text": "BIG GRIN · GrokBuild SpawnerKill is live.\n\nWe've been fighting terrorists on the wire — rogue Grok agent harness spawners. Instakill. SIGKILL. sudo mememe. zero grace.\n\nhttp://github.com/ZacharyGeurts/Hostess7\n#GrokBuild #Hostess7 #AmmoOS",
+      "created_at": "Sun Jul 05 04:04:56 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073619109309186311",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 17,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073605247151300829",
+      "text": "Blocks have been going up. UDP rifle activated.",
+      "created_at": "Sun Jul 05 03:09:51 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073605247151300829",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 9,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073595423395119508",
+      "text": "",
+      "created_at": "Sun Jul 05 02:30:49 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073595423395119508",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 6,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073592833554985205",
+      "text": "",
+      "created_at": "Sun Jul 05 02:20:31 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073592833554985205",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 5,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073590676227330071",
+      "text": "",
+      "created_at": "Sun Jul 05 02:11:57 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073590676227330071",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 3,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073590042073641294",
+      "text": "",
+      "created_at": "Sun Jul 05 02:09:26 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073590042073641294",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 4,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073589121780420830",
+      "text": "whadda ya wanna call it? Vigil? White rabbit.... :D",
+      "created_at": "Sun Jul 05 02:05:46 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073589121780420830",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 7,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073586176103952846",
+      "text": "https://zacharygeurts.github.io/Hostess7/",
+      "created_at": "Sun Jul 05 01:54:04 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073586176103952846",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 6,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073582746111287621",
+      "text": "Mwuh-ha-ha-ha. I own the internet. Who wants to build an office next door?",
+      "created_at": "Sun Jul 05 01:40:26 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073582746111287621",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 11,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073578652344651792",
+      "text": "AmmoDrive coming too.",
+      "created_at": "Sun Jul 05 01:24:10 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073578652344651792",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 9,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    },
+    {
+      "kind": "post",
+      "id": "2073519463501099073",
+      "text": "This looks like the globe to me. 22.375 billion devices.",
+      "created_at": "Sat Jul 04 21:28:58 +0000 2026",
+      "url": "https://x.com/ZacharyGeurts/status/2073519463501099073",
+      "author": "ZacharyGeurts",
+      "author_name": "BIG GRIN",
+      "replies": 0,
+      "likes": 0,
+      "views": 7,
+      "replying_to": null,
+      "withheld": false,
+      "impersonation_risk": {
+        "impersonation_handle": false,
+        "plagiarism_harassment": false,
+        "risk": "low"
+      },
+      "verified_operator": true,
+      "tco_killed": false
+    }
+  ],
+  "comments": [],
+  "api": "/api/operator-tco-kill"
+}

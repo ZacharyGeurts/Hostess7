@@ -2,7 +2,9 @@
   "schema": "field-zachub-redundant-storage/v1",
   "title": "Redundant H7 storage — DNS/DHCP remainder converts slowly; new rack grows data",
   "motto": "Each rack adds redundant shard capacity. DNS and DHCP keep only what they need; remainder converts to field-h7s-fs. Super secure — no outside internet on the storage plane.",
-  "protocol": "field-h7s-fs",
+  "protocol": "field-h7r-rackmount",
+  "hot_protocol": "field-h7s-fs",
+  "cloud": "lib/ammodrive-cloud.py",
   "security": {
     "internet_exposure": false,
     "outside_internet": false,

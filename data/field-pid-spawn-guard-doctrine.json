@@ -1,0 +1,19 @@
+{
+  "schema": "field-pid-spawn-guard/v1",
+  "title": "PID spawn guard — nothing outside us starts our processes",
+  "motto": "Nothing outside us can ever start a PID on our shit. Lethal force on injection.",
+  "policy": {
+    "spawn_only_internal": true,
+    "http_root_status_only": true,
+    "no_pid_in_root_status": true,
+    "lethal_on_rogue_spawn": true,
+    "allowlist_roots": [
+      "/home/default/Desktop/SG/NewLatest/lib",
+      "/home/default/Desktop/SG/NewLatest/scripts",
+      "/home/default/Desktop/SG/NewLatest/Hostess7"
+    ]
+  },
+  "services": ["dns", "dhcp", "dhcp_watch", "never_down"],
+  "module": "lib/field-pid-spawn-guard.py",
+  "api": "/api/field-pid-spawn-guard"
+}

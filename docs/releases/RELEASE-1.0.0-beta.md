@@ -1,53 +1,44 @@
-# AmmoOS 1.0.1-beta
+# Hostess 7 — 1.0.0-beta
 
-**Tag:** `v1.0.1-beta` · **Lineage:** NEXUS-Shield 10.4.1 · **Grok16:** 4.7.1 · **Platforms:** 10
+**Tag:** `v1.0.0-beta` · **Repo:** [ZacharyGeurts/Hostess7](https://github.com/ZacharyGeurts/Hostess7)
+
+Complete field stack beta — Hostess 7 brain hub with AmmoOS, Grok16, Queen, KILROY, and stack siblings.
 
 ## What shipped
 
-- **AmmoOS product repo** — SG/NewLatest field stack as standalone field OS beta
-- **Combinatronic optimal pipeline** — rebalance, condense, combine, connect before pack
-- **Launch registry** — every surface as browser URL or native program path
-- **Queen AmmoOS plates** — `Queen/AmmoOS/net/*.fld` guest networking fused into engine
-- **Multi-platform releases** — Linux, Windows, macOS, FreeBSD, Android bootstrap matrix
-- **GitHub Pages manual** — full operator manual at zacharygeurts.github.io/AmmoOS
+- **War-ready posture** — never demo; `./Hostess7.sh boot` · alert posture on · KILROY doctrine
+- **GitHub Pages boot** — https://zacharygeurts.github.io/Hostess7/ · Codespaces auto-boot
+- **Hostess 7 brain** — training campus, H7B storage, curiosity corpus, Fifth Amendment literacy, positional awareness
+- **AmmoOS field desktop** — panel :9477, threat panel, ironclad plate meld
+- **Grok16** — compiler toolchain @ 16.2.0
+- **Queen** — standalone RTX browser :9481
+- **Stack wire** — materialized siblings in one tree (`wire-stack.sh`)
 
 ## Install (Linux x86_64)
 
 ```bash
-tar -xzf ammooos-1.0.1-beta-source.tar.gz
-cd ammooos-1.0.1-beta
+./scripts/field-h7e-extract.sh hostess7-1.0.0-beta-source.h7e
+cd hostess7-1.0.0-beta
+./scripts/wire-stack.sh
 sudo ./install-all.sh
+./Hostess7/Hostess7.sh on
 ```
-
-## Surfaces
-
-| URL | Role |
-|-----|------|
-| http://127.0.0.1:9477/field | Host desktop — first page |
-| http://127.0.0.1:9477/command | Field C2 command deck |
-| http://127.0.0.1:9481/world/browser.html | Queen Browser OS shell |
-| http://127.0.0.1:9477/underlay-f9?sector=underlay | Underlay F9 Tristate |
 
 ## Release assets
 
 | Asset | Contents |
 |-------|----------|
-| `ammoos-1.0.1-beta-source.tar.gz` | Full AmmoOS tree |
-| `ammoos-1.0.1-beta-installers.tar.gz` | install-all, nexus, stealth scripts |
-| `ammoos-1.0.1-beta-windows-x86_64.zip` | Windows PowerShell bootstrap |
-| `ammoos-1.0.1-beta-platforms.json` | Platform bootstrap matrix |
-| `ammoos-1.0.1-beta-PLATFORMS.md` | Human-readable platform guide |
+| `hostess7-1.0.0-beta-source.h7e` | Full stack tree (extractable) |
+| `hostess7-1.0.0-beta-installers.tar.gz` | install-all, wire-stack, unpack scripts |
+| `hostess7-1.0.0-beta-platforms.json` | Platform matrix |
+| `hostess7-1.0.0-beta-PLATFORMS.md` | Platform guide |
 
-## Beta pipeline
+## Live release monitor
 
 ```bash
-./scripts/ammoos-beta-pipeline.sh
-./scripts/ammoos-launch-verify.sh
+tail -f .nexus-state/hostess7-release-progress.json
 ```
 
-## Gates
+## Operator
 
-1. Combinatronic optimal cycle writes `.nexus-state/ammoos-combinatronic-optimal.json`
-2. Launch verify passes browser + program registry
-3. Platform manifest lists 10 target families
-4. GitHub Pages manual builds from `docs/build-ammoos-manual.py`
+[ZacharyGeurts](https://github.com/ZacharyGeurts) · [@ZacharyGeurts](https://x.com/ZacharyGeurts)

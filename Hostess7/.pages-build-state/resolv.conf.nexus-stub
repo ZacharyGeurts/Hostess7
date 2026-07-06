@@ -1,0 +1,7 @@
+# NEXUS Truth DNS — all local queries use our resolver (RFC 1035, RFC 6761, RFC 9520)
+# User DNS settings overridden — multipoint secure identification
+nameserver 127.0.0.1
+nameserver ::1
+options edns0 trust-ad single-request-reopen
+# NEXUS_FIELD_DNS_PORT=53
+# NEXUS_FIELD_DNS_BINDS=127.0.0.1,192.168.47.1

@@ -1,12 +1,15 @@
 {
   "schema": "ammolang-boundary-spec/v1",
   "target": "script:lib/field-dns.sh",
-  "args": [],
-  "resolved": "2026-07-04T19:17:45Z",
+  "args": [
+    "cd /home/default/Desktop/SG/NewLatest && export NEXUS_INSTALL_ROOT=/home/default/Desktop/SG/NewLatest NEXUS_STATE_DIR=/home/default/Desktop/SG/NewLatest/.nexus-state-ci NEXUS_FIELD_DNS=1 NEXUS_FIELD_DHCP=1 && source lib/field-dns.sh && nexus_field_services_boot && sleep 3 && ss -H -u -l -n 'sport = :53' && ss -H -u -l -n 'sport = :67' && pgrep -af 'field-dns.py serve|field-dhcp.py serve' | head -6"
+  ],
+  "resolved": "2026-07-05T02:29:35Z",
   "kind": "script",
   "path": "lib/field-dns.sh",
   "argv": [
     "bash",
-    "/home/default/Desktop/SG/NewLatest/lib/field-dns.sh"
+    "/home/default/Desktop/SG/NewLatest/lib/field-dns.sh",
+    "cd /home/default/Desktop/SG/NewLatest && export NEXUS_INSTALL_ROOT=/home/default/Desktop/SG/NewLatest NEXUS_STATE_DIR=/home/default/Desktop/SG/NewLatest/.nexus-state-ci NEXUS_FIELD_DNS=1 NEXUS_FIELD_DHCP=1 && source lib/field-dns.sh && nexus_field_services_boot && sleep 3 && ss -H -u -l -n 'sport = :53' && ss -H -u -l -n 'sport = :67' && pgrep -af 'field-dns.py serve|field-dhcp.py serve' | head -6"
   ]
 }

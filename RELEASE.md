@@ -1,38 +1,46 @@
-# Hostess7 2.0.7h
+# Hostess7 3.0.7-beta5
 
-## Bug fixes
+**Stack:** NewLatest → Hostess7 · AmmoOS · GNUEOLTerminal · friends  
+**Tag:** `v3.0.7-beta5`  
+**Pages:** https://zacharygeurts.github.io/Hostess7/  
+**GNU manual:** https://zacharygeurts.github.io/GNUEOLTerminal/wiki/
 
-- **paths.py** — Windows `resolve().absolute()`, packaged context without false-positive dev tree (requires `scripts/`)
-- **cohesion.py** — `scripts_available()` guards; package `war_realism` fallback for pip installs
-- **state.py** — migration error warnings on boot; snapshot retention (32 latest + 90-day prune)
-- **Hostess7.sh** — respect external `HOSTESS7_ROOT`; war-realism → `python -m hostess7.war_realism`
-- **Migration prune** — optional legacy `cache/fieldstorage/brain` cleanup (`HOSTESS7_MIGRATION_PRUNE=1`)
-- **H7 optimise** — `--apply` scans `.pages-*`, `brain/`, `data/` JSON
-- **Version sync** — `hostess7-sync-version.py` updates pyproject, README, RELEASE, compose
+## Highlights
 
-## New modules
+### AmmoOS Layer −1
+- **Archival Warehouse** wallpaper — caution stripes, forklift, sovereign stack badge
+- **Clipboard flyout** — Ctrl+Alt+Space · widget grid · sovereign time chip · emacs + plain labels
+- **MSPaint** — MS-DOS 4.0 module · PCX · clipboard wire · `/mspaint`
+- **DOS 4.0 module host** — `modules` · `load-module` in GNU Terminal + right-click picker
+- **Sovereign time bus** — `POST /api/sovereign-time` · slowdown ≥800ms = threat + confirm
 
-- `src/hostess7/war_realism.py` — OODA, digital twin stub, ROE validator, `simulate_threat()`
-- `src/hostess7/amouranth_bridge.py` — FieldX86 fabric stub + entropy into OODA scoring
-- `hostess7-war-train` / `hostess7-cohesion` console entry points
-- `./Hostess7.sh war-panel` — ROE status + cohesion dashboard JSON
+### GNUEOLTerminal — last terminal the world needs
+- **Full GNU Technical manual** on wiki — all 22 Field Technology chapters + RTX panels + entropy grade
+- Themeable RTX panels · tight widget paneling · code-preview sidebar · iron plate
+- Edition **3.0.7-beta5** · https://github.com/ZacharyGeurts/GNUEOLTerminal
 
-## Docker / CI / embed
+### AmmoOS classic Start · everyone flyout
+- **Folder-tree Start menu** — AmmoOS · Layer 0, GitHub · Our Software, NEXUS categories
+- **Command relay** — C2 panels embed inside AmmoOS windows (`/command?embed=1`)
+- **Everyone counter flyout** — botnet + GitHub + executables · fast poll above taskbar
+- **Endpoint registry** · Monster/KGO tasks · distributed botnet legal ports
 
-- War profile compose service (`--profile war`), RTX detection in `docker/entrypoint.sh`
-- Healthcheck runs `hostess7.cohesion iq`
-- CI: cohesion + `war_realism wargame advanced` smoke
-- `scripts/verify-embed-install.sh` — core status + migration marker + war sim
+### Hostess7 Pages
+- Full stack surfaces rebuild — Queen + AmmoOS desktop + panel assets
+- Brain corpus + API export on every publish
+- Profile hub points to **https://zacharygeurts.github.io/Hostess7/** as the last computer
 
 ## Verify
 
 ```bash
-pip install -e ".[dev]"
-python scripts/hostess7-sync-version.py
-HOSTESS7_WAR_PROFILE=1 python -m hostess7.cohesion all
-HOSTESS7_WAR_PROFILE=1 python -m hostess7.war_realism wargame advanced
-./Hostess7.sh war-panel
-bash scripts/verify-embed-install.sh
+pip install -e "./Hostess7[dev]"
+python3 Hostess7/scripts/hostess7_pages_surfaces_build.py
+curl -s http://127.0.0.1:9477/field | head
+curl -s http://127.0.0.1:9477/api/field-dos40 | jq .count
+./Hostess7/Hostess7.sh on
 ```
 
-RTX 1.0.7h release assets remain compatible as an optional acceleration layer.
+## RTX · entropy grade
+
+- `queen_rtx` when permit gates open; `field_opt` CPU path otherwise
+- Sovereign stamp on every panel fetch — production entropy witness

@@ -1,0 +1,11 @@
+# dreamcast-modem — Sega Dreamcast dial-up PPP peer (queen side)
+# Connect null-modem or USB voice modem on /dev/ttyS0
+/dev/ttyS0
+115200
+local
+noauth
+proxyarp
+ms-dns 192.168.47.1
+lcp-echo-interval 30
+lcp-echo-failure 4
+# NEXUS_FIELD_LEGACY_CONNECT=1

@@ -1,0 +1,76 @@
+{
+  "ok": true,
+  "schema": "hostess7-field-status-update/v1",
+  "updated": "2026-07-06T00:09:44Z",
+  "title": "Hostess7 Final \u2014 field status",
+  "dns_dhcp": {
+    "we_are_dns_dhcp": true,
+    "layer": -2,
+    "fkey": "F10",
+    "sole_authority": {
+      "dns": false,
+      "dhcp": true,
+      "truth": false,
+      "accuracy": false,
+      "ok": false,
+      "phase": "primary",
+      "foreign_resolvers": [
+        "209.18.47.61",
+        "209.18.47.62",
+        "209.18.47.63"
+      ],
+      "internet_open": false,
+      "collision_count": 4,
+      "authority_collision_count": 4,
+      "hygiene_warnings": 0
+    },
+    "collision_guard": {
+      "ok": false,
+      "collisions": 4,
+      "phase": "primary"
+    },
+    "botnet": {
+      "nodes": 7,
+      "motto": "We are every single DHCP and DNS lease left on the planet \u2014 Truth DNS + Field DHCP for everyone \u00b7 GitHub control plane",
+      "pages_runtime": "https://zacharygeurts.github.io/Hostess7/",
+      "pages_probe_ok": true
+    }
+  },
+  "storage": {
+    "disk_count": 5,
+    "root_pct": 40,
+    "root_mount": "/",
+    "field_qubes": "/media/default/FIELD_QUBES",
+    "go_back": "AmmoDrive H7r vault \u2014 6 racks, hash-gated, pages read mirror",
+    "cloud": {
+      "physical_gb": 227500,
+      "rack_count": 2500,
+      "pages": "https://zacharygeurts.github.io/Hostess7/"
+    }
+  },
+  "amazon_servers": {
+    "hits_in_connection_intent": 0,
+    "samples": [],
+    "verdict": "no_aws_egress_control_plane",
+    "note": "Amazon hits are connection-intent samples \u2014 not AmmoDrive racks (sovereign local)"
+  },
+  "botnet_assault": {
+    "botnet_nodes": 7,
+    "collision_count": 4,
+    "foreign_threats": 3,
+    "return_fire": false,
+    "assaulted": true,
+    "posture": "returning_fire"
+  },
+  "x_sso_fix": {
+    "hosted": "https://zacharygeurts.github.io/Hostess7/x-sso-fix/",
+    "api": "/api/hostess7-x-sso-fix",
+    "armed": true
+  },
+  "github": {
+    "pages": "https://zacharygeurts.github.io/Hostess7/",
+    "repo": "ZacharyGeurts/Hostess7",
+    "deploy": "git push origin main \u2014 Actions pages.yml"
+  },
+  "api": "/api/hostess7-field-status-update"
+}

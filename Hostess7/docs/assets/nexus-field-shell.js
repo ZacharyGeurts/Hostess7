@@ -49,7 +49,7 @@
 
   function panelOrigin() {
     if (pagesRuntime()) return global.HOSTESS7_PAGES_BASE || "/Hostess7";
-    return "http://127.0.0.1:9477";
+    return "/Hostess7";
   }
 
   function queenBrowserUrl() {
@@ -57,7 +57,7 @@
       const base = global.HOSTESS7_PAGES_BASE || "/Hostess7";
       return base + "/queen/browser.html";
     }
-    return "http://127.0.0.1:9481/world/browser.html";
+    return "/Hostess7/queen/browser.html";
   }
 
   function pageResolve(path) {
@@ -97,7 +97,7 @@
       const browser = queenBrowserUrl();
       if (p.pathname.startsWith("/browse/view") || p.pathname === "/browse/view") return browser;
       if (pagesRuntime() && p.pathname.includes("/queen/") && !p.pathname.endsWith("/browser.html")) return exec;
-      if (p.pathname.startsWith("/world/") && !p.pathname.endsWith("/browser.html")) return exec;
+      if (p.pathname.startsWith("/Hostess7/queen/") && !p.pathname.endsWith("/browser.html")) return exec;
       if (p.pathname.endsWith("/browser.html")) return browser;
     } catch (_) {}
     return exec;

@@ -1,6 +1,6 @@
 {
   "schema": "field-github-traffic-shard-panel/v1",
-  "updated": "2026-07-04T20:44:54Z",
+  "updated": "2026-07-06T00:40:20Z",
   "ok": true,
   "title": "GitHub traffic shard — thermal-settle style field offload",
   "motto": "Queen probes ~10% per cycle; field nodes carry ~90% — rotate like thermal headroom.",
@@ -18,17 +18,17 @@
   ],
   "rotation": {
     "schema": "field-github-traffic-rotation/v1",
-    "updated": "2026-07-04T20:44:54Z",
+    "updated": "2026-07-06T00:40:19Z",
     "active_shard": "field-loopback",
     "field_nodes": 1,
     "offload_pct": 90.0,
     "host_share_pct": 10.0,
-    "live_batch": 3,
+    "live_batch": 1,
     "cached_rows": 0,
     "stale_shards": [],
     "thermal_headroom": 100.0,
-    "fast": false,
-    "probe_kind": "legacy"
+    "fast": true,
+    "probe_kind": "resilience"
   },
   "thermal_headroom": 100.0,
   "cache_ttl_fast_sec": 90,

@@ -1,0 +1,47 @@
+{
+  "schema": "hostess7-x-brand-purge-doctrine/v1",
+  "title": "X brand purge — blow dangerous Twitter legacy; Producer is X not Twitter",
+  "motto": "All they want now is the X brand. Blow the useless and dangerous Twitter shit.",
+  "attribution": "Mr. Musk — X has a lot of useless shit laying around",
+  "brand": {
+    "canonical": "X",
+    "forbidden_labels": ["Twitter", "Twitter Producer", "Twitter Media Studio", "Periscope Producer"],
+    "producer_label": "X Producer",
+    "producer_note": "Live streaming setup — X brand only, never Twitter Producer"
+  },
+  "dangerous_blow": [
+    {"host": "ads-twitter.com", "reason": "Ad/tracker injection — dangerous third-party path", "action": "block", "stars": 1},
+    {"host": "t.co", "reason": "Click-tracking shortener — delay-as-threat middleman", "action": "unwrap_kill", "stars": 2},
+    {"host": "syndication.twimg.com", "reason": "Broken/empty syndication — useless legacy lane", "action": "drop_lane", "stars": 2},
+    {"host": "api.twitter.com", "reason": "Legacy API hostname — use api.x.com", "action": "redirect_canonical", "stars": 3},
+    {"host": "mobile.twitter.com", "reason": "Legacy mobile shell — canonical x.com", "action": "redirect_canonical", "stars": 3},
+    {"host": "periscope.tv", "reason": "Dead Periscope brand — purged", "action": "block", "stars": 1},
+    {"host": "vine.co", "reason": "Dead Vine — purged", "action": "block", "stars": 1}
+  ],
+  "legacy_redirect_only": [
+    {"host": "twitter.com", "canonical": "x.com", "stars": 4, "note": "Legacy redirect — X brand is canonical"}
+  ],
+  "keep_functional": [
+    {"host": "x.com", "stars": 5},
+    {"host": "api.x.com", "stars": 5},
+    {"host": "pbs.twimg.com", "stars": 5, "note": "Media CDN until fully migrated to X CDN naming"},
+    {"host": "abs.twimg.com", "stars": 5},
+    {"host": "twimg.com", "stars": 5, "note": "CDN suffix — functional, not brand"}
+  ],
+  "useless_twitter_shit": [
+    "Twitter Producer branding",
+    "Periscope",
+    "Vine",
+    "ads-twitter click paths",
+    "empty syndication.twimg timeline",
+    "t.co redirect hops"
+  ],
+  "countermeasures": [
+    "hostess7-tco-kill.py",
+    "hostess7-x-sso-fix.py",
+    "drop_syndication_twimg_lanes",
+    "rewrite_twitter_urls_to_x",
+    "x_producer_broadcaster_platform",
+    "block_ads_twitter_egress"
+  ]
+}

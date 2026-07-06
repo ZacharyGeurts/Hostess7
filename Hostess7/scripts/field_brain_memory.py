@@ -18,7 +18,7 @@ STORAGE = ROOT / "cache" / "fieldstorage"
 BRAIN = STORAGE / "brain"
 MEMORY_FILE = BRAIN / "grok_memory.jsonl"
 INDEX_FILE = BRAIN / "index.json"
-TEAM_DEV = os.environ.get("TEAM_DRIVE_DEV", "/dev/nvme2n1")
+TEAM_DEV = os.environ.get("TEAM_DRIVE_DEV", "/dev/nvme1n1")
 
 
 def setup() -> int:

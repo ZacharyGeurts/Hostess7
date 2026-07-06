@@ -1,0 +1,52 @@
+:root {
+  --bg: #0a0c12;
+  --panel: #121826;
+  --edge: #1a9b6e;
+  --warn: #c9a66b;
+  --text: #e8edf7;
+  --dim: #94a3b8;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 1rem 1.25rem 2rem;
+}
+.fwd-header h1 { margin: 0 0 0.25rem; font-size: 1.35rem; color: var(--edge); }
+.fwd-motto { margin: 0; color: var(--dim); font-size: 0.92rem; }
+.fwd-meta { color: var(--warn); font-size: 0.85rem; }
+.fwd-banner {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  background: var(--panel);
+  border-left: 3px solid var(--edge);
+  font-size: 0.9rem;
+}
+.fwd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.fwd-card {
+  background: var(--panel);
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+}
+.fwd-card .label { color: var(--dim); font-size: 0.78rem; text-transform: uppercase; }
+.fwd-card .val { font-size: 1.25rem; color: var(--edge); margin-top: 0.25rem; }
+.fwd-section h2 { font-size: 0.95rem; color: var(--warn); margin: 0 0 0.5rem; }
+.fwd-pre {
+  background: var(--panel);
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.78rem;
+  overflow: auto;
+  max-height: 280px;
+}
+.fwd-footer { margin-top: 2rem; color: var(--dim); font-size: 0.8rem; }

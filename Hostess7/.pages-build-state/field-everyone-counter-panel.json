@@ -3,20 +3,20 @@
   "schema": "field-everyone-counter/v1",
   "title": "Everyone — botnet · GitHub · executables",
   "motto": "Fast live counter — distributed botnet + GitHub for everyone + sealed executables",
-  "updated": "2026-07-04T17:10:02Z",
+  "updated": "2026-07-06T00:42:39Z",
   "boss": "hostess7",
   "version": "3.1.0-beta",
   "distributed_botnet": {
     "enabled": true,
-    "nodes": 492,
+    "nodes": 1,
     "registry_members": 0,
-    "distributed_relay": 492,
-    "dns_dhcp_stable": true,
+    "distributed_relay": 1,
+    "dns_dhcp_stable": false,
     "github_open": true
   },
   "lanes": {
     "botnet": {
-      "count": 492,
+      "count": 1,
       "label": "Botnet nodes"
     },
     "github_people": {
@@ -41,19 +41,19 @@
   },
   "arcade_lobby": {
     "enabled": true,
-    "sap_beacons": 1,
-    "qemu_witnesses": 16,
-    "game_room_live": true,
+    "sap_beacons": 0,
+    "qemu_witnesses": 6,
+    "game_room_live": false,
     "pump_running": false,
     "system": null,
     "layer_stack": "Layer 3 and up is for developers and third-party. Hostess 7 is layer ∞ — we view her through panels from down here.",
     "api": "/api/field-arcade-battalion"
   },
-  "everyone_total": 526,
+  "everyone_total": 35,
   "perf": {
     "cpu_pct": 0.0,
-    "mem_pct": 9.4,
-    "load": 6.11
+    "mem_pct": 9.67,
+    "load": 7.81
   },
   "planetary_leases": {
     "ipv4_owned": 4294967296,
@@ -63,31 +63,101 @@
     "planet_dns": 4294967296,
     "planet_total": 8589934592,
     "local_dhcp": 4294967296,
-    "devices": 492,
+    "devices": 4,
     "botnet_dhcp_slots": 492,
     "botnet_dns_slots": 492,
     "incumbent_dhcp": 0,
     "incumbent_dns": 4,
-    "dhcp_crushing": true,
+    "dhcp_crushing": false,
     "sole_authority": true,
     "speed_tier": "full",
     "entropy_reduction_pct": 76.0,
-    "avg_latency_ms": 40.31,
-    "internet_open": true,
-    "unclean_count": 2,
+    "avg_latency_ms": 40.12,
+    "internet_open": false,
+    "unclean_count": 3,
     "true_dns_authority": true,
     "dns_zones_expanded": 19,
     "foreign_removed": false,
     "api": "/api/field-planetary-dns-dhcp"
   },
+  "world_dns_dhcp_scale": {
+    "calendar_year": 2026,
+    "population": 8136368354,
+    "devices": 22375012974,
+    "ipv4_usable": 4026531840,
+    "beyond_ipv4": true,
+    "edge_hosts_recommended": 5462650,
+    "logical_edge_shards": 1048576,
+    "logical_edges_total": 4294967296,
+    "edges_are_real": false,
+    "inside_field": true,
+    "hosts_per_edge": 4096,
+    "dhcp_leases_if_one_per_device": 22375012974,
+    "dns_records_if_one_per_device": 22375012974
+  },
+  "world_projections": [
+    {
+      "years_ahead": 10,
+      "calendar_year": 2036,
+      "population": 8899021670,
+      "devices": 24472309594,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 5974685,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    },
+    {
+      "years_ahead": 25,
+      "calendar_year": 2052,
+      "population": 10179108836,
+      "devices": 27992549299,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 6834119,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    },
+    {
+      "years_ahead": 50,
+      "calendar_year": 2076,
+      "population": 12734705729,
+      "devices": 35020440756,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 8549913,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    },
+    {
+      "years_ahead": 100,
+      "calendar_year": 2126,
+      "population": 19931832354,
+      "devices": 54812538974,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 13381968,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    }
+  ],
+  "ingress_policy": "quarantine_not_kill",
+  "rescue_ingress": {},
+  "github_planet_sweep": {
+    "repos_indexed": 27,
+    "stale_detected": 8,
+    "dns_index_rows": 31,
+    "dhcp_index_rows": 27,
+    "api": "/api/field-github-planet-sweep"
+  },
   "services": {
     "dns": false,
-    "dhcp": true,
-    "dhcp_crushing": true,
+    "dhcp": false,
+    "dhcp_crushing": false,
     "panel": true
   },
   "api": "/api/field-everyone-counter",
   "poll_ms": 1000,
   "fast": true,
-  "_cached_at": 1783185002.6643612
+  "_cached_at": 1783298559.557076
 }

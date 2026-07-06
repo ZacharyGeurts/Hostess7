@@ -285,6 +285,90 @@
     return killed > 0;
   }
 
+  function isXOperatorProfile() {
+    return /^\/ZacharyGeurts\/?$/i.test(location.pathname || "");
+  }
+
+  const X_PRODUCER_API = [
+    "https://zacharygeurts.github.io/Hostess7/api/hostess7-x-profile-fix.json",
+    "/Hostess7/api/hostess7-x-profile-fix",
+  ];
+  let xProducerCache = null;
+
+  async function fetchXProducerFeed() {
+    if (xProducerCache) return xProducerCache;
+    for (const url of X_PRODUCER_API) {
+      try {
+        const r = await fetch(url, { cache: "no-store", credentials: "omit" });
+        if (!r.ok) continue;
+        xProducerCache = await r.json();
+        return xProducerCache;
+      } catch (_) {
+        /* next lane */
+      }
+    }
+    return null;
+  }
+
+  function repairXProfileCensorship() {
+    if (!isXHost() || !isXOperatorProfile()) return false;
+    const body = document.body?.innerText || "";
+    if (!/hasn.t posted/i.test(body) && !document.getElementById("h7-x-producer-feed")) return false;
+    document.querySelectorAll("h1,h2,h3,div,span").forEach((el) => {
+      if (el.id?.startsWith("h7-x-producer")) return;
+      const t = (el.innerText || "").trim();
+      if (/hasn.t posted/i.test(t) && t.length < 80) {
+        const box = el.closest("section,article,div[data-testid]") || el;
+        box.style.setProperty("display", "none", "important");
+      }
+    });
+    if (!document.getElementById("h7-x-producer-banner")) {
+      const el = document.createElement("div");
+      el.id = "h7-x-producer-banner";
+      el.setAttribute("role", "alert");
+      el.style.cssText =
+        "position:fixed;top:0;left:0;right:0;z-index:2147483647;background:linear-gradient(90deg,#000,#14532d);" +
+        "color:#fff;padding:10px 16px;font:600 13px/1.4 system-ui,sans-serif;border-bottom:2px solid #1d9bf0;";
+      el.innerHTML =
+        '<span style="color:#1d9bf0">𝕏 Producer</span> Timeline restored — ' +
+        '<a href="https://zacharygeurts.github.io/Hostess7/x-producer/" style="color:#7dd3fc">Open Producer →</a>';
+      document.documentElement.appendChild(el);
+    }
+    document.documentElement.setAttribute("data-x-producer", "1");
+    fetchXProducerFeed().then((doc) => {
+      if (!doc?.posts?.length) return;
+      const target =
+        document.querySelector('[data-testid="primaryColumn"]') ||
+        document.querySelector("main") ||
+        document.body;
+      if (!target) return;
+      let box = document.getElementById("h7-x-producer-feed");
+      if (!box) {
+        box = document.createElement("section");
+        box.id = "h7-x-producer-feed";
+        box.style.cssText = "margin:56px 16px 24px;color:#e7e9ea;font-family:system-ui,sans-serif;";
+        target.insertBefore(box, target.firstChild);
+      }
+      const posts = doc.posts.slice(0, 25);
+      box.innerHTML =
+        `<div style="border:1px solid #2f3336;border-radius:16px;background:#000;overflow:hidden">` +
+        `<div style="padding:12px 16px;border-bottom:1px solid #2f3336;font-weight:700;color:#1d9bf0">` +
+        `Producer restore (${posts.length} posts)</div>` +
+        posts
+          .map(
+            (p) =>
+              `<article style="padding:12px 16px;border-bottom:1px solid #2f3336">` +
+              `<div style="font-weight:700">BIG GRIN <span style="color:#71767b">@ZacharyGeurts</span></div>` +
+              `<div style="margin:8px 0;white-space:pre-wrap">${(p.text || "").replace(/</g, "&lt;")}</div>` +
+              `<a href="${p.url}" style="color:#1d9bf0" target="_blank" rel="noopener">View →</a></article>`,
+          )
+          .join("") +
+        `</div>`;
+      notifyParent({ type: "queen:x-producer", action: "feed_injected", count: posts.length });
+    });
+    return true;
+  }
+
   function scanRandomAdSlots() {
     document.querySelectorAll("div, aside, section, ins").forEach((el) => {
       if (el.getAttribute("data-queen-shielded")) return;
@@ -575,13 +659,18 @@
     window.addEventListener("message", onMessage);
     const obs = new MutationObserver(() => {
       applyRulesLocal();
-      if (isXHost()) repairXJetfuelSsoModal();
+      if (isXHost()) {
+        repairXJetfuelSsoModal();
+        repairXProfileCensorship();
+      }
     });
     obs.observe(document.documentElement, { childList: true, subtree: true });
     loadShields();
     if (isXHost()) {
       repairXJetfuelSsoModal();
+      repairXProfileCensorship();
       window.setInterval(repairXJetfuelSsoModal, 1200);
+      window.setInterval(repairXProfileCensorship, 1200);
     }
   }
 

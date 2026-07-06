@@ -2,9 +2,38 @@
   "schema": "field-broadcaster-platforms/v1",
   "title": "AmmoOS Broadcaster — preconfigured streaming destinations",
   "motto": "One-click platform posture — paste stream key, go live. No cloud login required.",
-  "default_platform": "kick",
-  "protocols": ["rtmp", "rtmps"],
+  "default_platform": "x",
+  "protocols": [
+    "rtmp",
+    "rtmps"
+  ],
+  "x_producer_default": true,
+  "twitter_legacy_removed": true,
   "platforms": [
+    {
+      "id": "x",
+      "label": "X Live",
+      "brand": "X Producer",
+      "color": "#000000",
+      "rtmp_url": "rtmps://live-api-s.twitter.com:443/live",
+      "rtmp_url_note": "Legacy ingest hostname — canonical brand is X Producer (not Twitter)",
+      "stream_key_hint": "X Producer → Go Live → Streaming software setup",
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 4500,
+        "keyframe_sec": 2
+      },
+      "legacy_purged": [
+        "Twitter",
+        "Twitter Producer",
+        "Twitter Media Studio",
+        "Periscope Producer"
+      ],
+      "canonical_brand": "X",
+      "musk_doctrine": "Mr. Musk — X has a lot of useless shit laying around"
+    },
     {
       "id": "kick",
       "label": "Kick",
@@ -13,7 +42,13 @@
       "rtmp_url": "rtmp://fa723fc1b171.global-contribute.live-video.net/app",
       "rtmp_url_alt": "rtmp://ingest.kick.com/live",
       "stream_key_hint": "Creator Dashboard → Settings → Stream → Stream Key",
-      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2},
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 4500,
+        "keyframe_sec": 2
+      },
       "docs": "https://help.kick.com/en/articles/7066931-how-to-stream-on-kick-com"
     },
     {
@@ -23,7 +58,13 @@
       "color": "#9146ff",
       "rtmp_url": "rtmp://live.twitch.tv/app",
       "stream_key_hint": "Creator Dashboard → Settings → Stream",
-      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 6000, "keyframe_sec": 2}
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 6000,
+        "keyframe_sec": 2
+      }
     },
     {
       "id": "youtube",
@@ -32,7 +73,13 @@
       "color": "#ff0000",
       "rtmp_url": "rtmp://a.rtmp.youtube.com/live2",
       "stream_key_hint": "YouTube Studio → Go Live → Stream settings",
-      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2}
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 4500,
+        "keyframe_sec": 2
+      }
     },
     {
       "id": "facebook",
@@ -41,7 +88,13 @@
       "color": "#1877f2",
       "rtmp_url": "rtmps://live-api-s.facebook.com:443/rtmp",
       "stream_key_hint": "Live Producer → Streaming software setup",
-      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4000, "keyframe_sec": 2}
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 4000,
+        "keyframe_sec": 2
+      }
     },
     {
       "id": "rumble",
@@ -50,7 +103,13 @@
       "color": "#85c742",
       "rtmp_url": "rtmp://rumble.com/live",
       "stream_key_hint": "Rumble Studio → Live → Stream URL + Key",
-      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2}
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 4500,
+        "keyframe_sec": 2
+      }
     },
     {
       "id": "trovo",
@@ -59,7 +118,13 @@
       "color": "#19c56f",
       "rtmp_url": "rtmp://livepush.trovo.live/live",
       "stream_key_hint": "Trovo Creator → Stream Key",
-      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2}
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 4500,
+        "keyframe_sec": 2
+      }
     },
     {
       "id": "instagram",
@@ -68,7 +133,13 @@
       "color": "#e1306c",
       "rtmp_url": "rtmps://live-upload.instagram.com:443/rtmp",
       "stream_key_hint": "Instagram professional dashboard stream key",
-      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 3500, "keyframe_sec": 2}
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 3500,
+        "keyframe_sec": 2
+      }
     },
     {
       "id": "linkedin",
@@ -77,7 +148,13 @@
       "color": "#0a66c2",
       "rtmp_url": "rtmp://rtmp.linkedin.com:1935/live",
       "stream_key_hint": "LinkedIn Live setup stream URL",
-      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 3000, "keyframe_sec": 2}
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 3000,
+        "keyframe_sec": 2
+      }
     },
     {
       "id": "custom",
@@ -86,7 +163,14 @@
       "color": "#38bdf8",
       "rtmp_url": "",
       "stream_key_hint": "Full RTMP URL or server + stream key",
-      "recommended": {"video": "h264", "audio": "aac", "container": "flv", "bitrate_kbps": 4500, "keyframe_sec": 2}
+      "recommended": {
+        "video": "h264",
+        "audio": "aac",
+        "container": "flv",
+        "bitrate_kbps": 4500,
+        "keyframe_sec": 2
+      }
     }
-  ]
+  ],
+  "updated": "2026-07-06T00:30:32Z"
 }

@@ -1,7 +1,7 @@
 {
   "schema": "field-one/v1",
   "title": "Field 1",
-  "motto": "Anything and everything comes to Field 1 \u2014 LAN, WAN, planetary, outside network. Quarantine never kill.",
+  "motto": "Anything and everything comes to Field 1 \u2014 LAN, WAN, planetary, outside network. Quarantine never kill. We never go down \u2014 every server instantiates; we are always Field 1.",
   "field_one": true,
   "one_field_whole_device": true,
   "universal_ingress": true,
@@ -25,10 +25,10 @@
   },
   "absorb": {
     "ok": true,
-    "connected_devices": 351,
-    "registry_devices": 351,
-    "outside_absorbed": 351,
-    "updated": "2026-07-05T00:45:43Z",
+    "connected_devices": 2848,
+    "registry_devices": 2848,
+    "outside_absorbed": 346,
+    "updated": "2026-07-06T00:04:25Z",
     "api": "/api/field-one/absorb"
   },
   "storage_root": "/media/default/HOSTESS7_TEAM",
@@ -37,7 +37,7 @@
   "world_redata": "/home/default/Desktop/SG/NewLatest/World_Redata",
   "converter": {
     "schema": "field-drive-converter/v1",
-    "ts": "2026-07-01T22:22:39Z",
+    "ts": "2026-07-06T00:10:21Z",
     "title": "World_Redata Drive Converter",
     "subtitle": "World redump \u2014 in-place WRDT1, non-destructive",
     "world_redata_root": null,
@@ -48,35 +48,26 @@
     "panel": {
       "schema": "field-drive-converter/v1",
       "restore_scanned": true,
-      "restore_scanned_at": "2026-07-01T21:08:38Z",
+      "restore_scanned_at": "2026-07-02T06:43:19Z",
       "restore_totals": {
         "restorable_files": 0,
         "stored_bytes": 0,
-        "roots": 2
+        "roots": 1
       }
     },
     "plan": {},
     "restore_plan": {
       "schema": "field-drive-restore-plan/v1",
-      "ts": "2026-07-01T21:08:38Z",
+      "ts": "2026-07-02T06:43:19Z",
       "title": "Sovereign restore \u2014 bring tail formats back out",
       "motto": "After re-field \u2014 WRZC / WRDT / ZAC come back out under shadow (zero loss).",
       "virtual": false,
       "roots": [
-        "/home/default/Desktop/SG/NewLatest/Hostess7/cache/fieldstorage",
-        "/media/default/HOSTESS7_TEAM"
+        "/media/default/HOSTESS7_TEAM1/fieldstorage"
       ],
       "scans": [
         {
-          "root": "/home/default/Desktop/SG/NewLatest/Hostess7/cache/fieldstorage",
-          "scan": {
-            "ok": false,
-            "error": "world_redata_missing",
-            "hint": "Clone World_Redata beside SG"
-          }
-        },
-        {
-          "root": "/media/default/HOSTESS7_TEAM",
+          "root": "/media/default/HOSTESS7_TEAM1/fieldstorage",
           "scan": {
             "ok": false,
             "error": "world_redata_missing",
@@ -87,7 +78,7 @@
       "totals": {
         "restorable_files": 0,
         "stored_bytes": 0,
-        "roots": 2
+        "roots": 1
       },
       "in_place": true,
       "destructive": false
@@ -103,7 +94,7 @@
   "team": {
     "ok": true,
     "returncode": 0,
-    "tail": "=== TEAM Field Drive (mirrors SG/Hostess7 \u2014 canonical local) ===\nDevice: /dev/nvme1n1 (present)\nMount: /media/default/HOSTESS7_TEAM1 (writable)\nTEAM storage: 208.5 MiB @ /media/default/HOSTESS7_TEAM1/fieldstorage\nTEAM Hostess7: yes @ /media/default/HOSTESS7_TEAM1/Hostess7\nLocal storage: 200.7 MiB\nKILROY_FIELD: absent @ /media/default/KILROY_FIELD\nMETRIC team_drive=1\n"
+    "tail": "=== TEAM Field Drive (mirrors SG/Hostess7 \u2014 canonical local) ===\nDevice: /dev/nvme1n1 (present)\nMount: /media/default/HOSTESS7_TEAM1 (not ready)\nTEAM storage: 0.0 MiB @ /media/default/HOSTESS7_TEAM1/fieldstorage\nTEAM Hostess7: no @ /media/default/HOSTESS7_TEAM1/Hostess7\nLocal storage: 345.8 MiB\nKILROY_FIELD: absent @ /media/default/KILROY_FIELD\nMETRIC team_drive=1\n"
   },
   "board": {},
   "commands": {
@@ -115,5 +106,5 @@
   },
   "pages": true,
   "lane": "github-mirror",
-  "exported": "2026-07-05T00:52:30Z"
+  "exported": "2026-07-06T00:10:22Z"
 }

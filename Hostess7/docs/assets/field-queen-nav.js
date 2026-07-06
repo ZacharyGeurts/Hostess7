@@ -1,5 +1,5 @@
 /**
- * Field Queen Nav — all web I/O through Queen Browser. Never a host browser (no Firefox).
+ * Field Queen Nav — all web I/O through Queen Browser. Never a host browser.
  */
 (function (global) {
   "use strict";
@@ -196,7 +196,7 @@
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ engine: "queen-rtx", focus_url: opts.focus_url || "" }),
+        body: JSON.stringify({ engine: "queen-shell", focus_url: opts.focus_url || "" }),
       })
         .then(function (r) { return r.json(); })
         .then(function (doc) {
@@ -208,17 +208,13 @@
           } catch (_) {
             global.location.href = openUrl;
           }
-          global.FieldHostDesktop?.toast?.(
-            (doc.engine === "queen-rtx" ? "Queen RTX · " : "Opened · ") + name
-          );
+          global.FieldHostDesktop?.toast?.("Opened · " + name);
           global.FieldStartbar?.trackRunning?.(app || { id: "queen-browser", name: name });
           return doc;
         })
         .catch(function () {
-          const features =
-            "width=1280,height=840,menubar=no,toolbar=no,location=yes,resizable=yes,scrollbars=yes,status=yes";
           try {
-            global.open(url, "QueenBrowser", features);
+            global.open(url, "QueenBrowser", "noopener");
           } catch (_) {
             global.location.href = url;
           }
@@ -229,7 +225,7 @@
       method: "POST",
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(opts.body || {}),
+      body: JSON.stringify(opts.body || { engine: "queen-shell" }),
     })
       .then(function (r) { return r.json(); })
       .then(function (doc) {

@@ -1,0 +1,32 @@
+{
+  "schema": "field-server-root-login-doctrine/v1",
+  "title": "Server root login — protected host, featured AI-work root",
+  "motto": "We protect the server. Root is for AI work only — featured safely on the login screen.",
+  "login": {
+    "username": "root",
+    "password_hint": "mememe",
+    "password_display_on_greeter": true,
+    "scope": "ai_work_only",
+    "greeter_message": "Protected server — root login for AI work only. User: root  Pass: mememe",
+    "greeter_submessage": "Operator sovereign root via sudo. Foreign root killed with prejudice.",
+    "featured_safe": true
+  },
+  "protection": {
+    "queen_root_sovereign": true,
+    "ai_root_api_guard": true,
+    "dns_dhcp_protected": true,
+    "fleet_2500_striped": true,
+    "cannot_break_system": true
+  },
+  "install": {
+    "greeter_dropin": "field-server-root-login.conf",
+    "state_panel": "field-server-root-login-panel.json",
+    "module": "lib/field-server-root-login.py"
+  },
+  "architecture_note": {
+    "logical_global_servers": 2500,
+    "physical_qemu_racks": 20,
+    "striping": "global-XXXX hashed onto qemu-rack-NN vault stamps",
+    "all_protected": "DNS + DHCP + edge + witness + botnet + truth + security + prejudice on every logical node"
+  }
+}

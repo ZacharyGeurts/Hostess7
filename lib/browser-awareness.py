@@ -31,7 +31,7 @@ HOST_ALIASES = {
     "mobile.twitter.com": "x.com",
     "api.twitter.com": "x.com",
     "api.x.com": "x.com",
-    "t.co": "x.com",
+    "t.co": "t.co",
     "pbs.twimg.com": "x.com",
     "abs.twimg.com": "x.com",
     "video.twimg.com": "x.com",

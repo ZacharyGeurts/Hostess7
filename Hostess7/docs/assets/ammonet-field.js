@@ -179,49 +179,6 @@
       .join("");
   }
 
-  function renderDnsAuthority(zones) {
-    const note = $("an-dns-note");
-    const el = $("an-dns-catalog");
-    if (!el || !zones) return;
-    const base = zones.pages_base || zones.web_presence?.home || pagesBase();
-    if (note) {
-      note.textContent =
-        (zones.sole_dns_authority ? "Sole authority · " : "") +
-        (zones.zone_count || 0) +
-        " zones · " +
-        (zones.record_count || 0) +
-        " records · Pages " +
-        base;
-    }
-    const list = zones.zones || [];
-    el.innerHTML = list
-      .map(function (z) {
-        const recs = (z.records || []).slice(0, 6);
-        const rows = recs
-          .map(function (r) {
-            const name = r.name === "@" ? z.zone : r.name + "." + z.zone;
-            return (
-              "<tr><td>" +
-              esc(name) +
-              "</td><td>" +
-              esc(r.type) +
-              "</td><td>" +
-              esc(r.value) +
-              "</td></tr>"
-            );
-          })
-          .join("");
-        return (
-          '<div class="an-card"><strong>' +
-          esc(z.zone) +
-          '</strong><table class="an-dns-table"><tbody>' +
-          rows +
-          "</tbody></table></div>"
-        );
-      })
-      .join("");
-  }
-
   function renderQemu(doc) {
     const el = $("an-qemu");
     if (!el) return;
@@ -240,12 +197,8 @@
   }
 
   async function refresh() {
-    const [doc, zones] = await Promise.all([
-      fetchJson("/api/ammonet"),
-      fetchJson("/api/ammonet-dns-zones"),
-    ]);
+    const doc = await fetchJson("/api/ammonet");
     if (!doc) return;
-    if (zones) renderDnsAuthority(zones);
     renderPills(doc);
     renderMigration(doc);
     renderLayers(doc);

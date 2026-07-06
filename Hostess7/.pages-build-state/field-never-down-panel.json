@@ -1,0 +1,49 @@
+{
+  "ok": false,
+  "schema": "field-never-down/v1",
+  "updated": "2026-07-05T02:53:59Z",
+  "never_go_down": true,
+  "restarted": [
+    "dhcp"
+  ],
+  "services": {
+    "dns_running": false,
+    "dhcp_running": true,
+    "dhcp_watch_running": true,
+    "field_one": true,
+    "hub_id": "field-1"
+  },
+  "identity": {
+    "schema": "field-one-identity/v1",
+    "updated": "2026-07-05T02:53:59Z",
+    "never_go_down": true,
+    "always_field_one": true,
+    "every_server_instantiates": true,
+    "hub": {
+      "id": "field-1",
+      "label": "Field One",
+      "dns": [
+        "127.0.0.1",
+        "192.168.47.1"
+      ],
+      "dhcp": [
+        "192.168.47.1",
+        "0.0.0.0"
+      ],
+      "truth": "127.0.0.1",
+      "loopback": "127.0.0.1",
+      "queen_lan": "192.168.47.1",
+      "wildcard": "0.0.0.0/0",
+      "pages": "https://zacharygeurts.github.io/Hostess7/"
+    },
+    "node": {
+      "node_id": "field-1-default-X870-Pro-RS",
+      "kind": "field_one_local",
+      "field_id": "field-1",
+      "hostname": "default-X870-Pro-RS",
+      "always_field_one": true,
+      "source": "instantiate"
+    }
+  },
+  "motto": "We never go down. Every server can instantiate. We are always Field 1."
+}

@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "field-planetary-dns-authority/v1",
-  "updated": "2026-07-04T19:10:15Z",
+  "updated": "2026-07-06T00:29:29Z",
   "title": "True planetary DNS authority — generate, expand, remove foreign servers",
   "motto": "Generate true DNS authority across every IPv4 — expand planet-wide — remove foreign DHCP and DNS once complete.",
   "boss": "hostess7",
@@ -96,49 +96,49 @@
       "kind": "ammonet_forward",
       "name": "ammonet.com",
       "authority": "ammonet_truth_dns",
-      "record_count": 5,
+      "record_count": 9,
       "records": "expanded"
     },
     {
       "kind": "ammonet_forward",
       "name": "ammonet.net",
       "authority": "ammonet_truth_dns",
-      "record_count": 7,
+      "record_count": 11,
       "records": "expanded"
     },
     {
       "kind": "ammonet_forward",
       "name": "ammonet.org",
       "authority": "ammonet_truth_dns",
-      "record_count": 4,
+      "record_count": 6,
       "records": "expanded"
     },
     {
       "kind": "ammonet_forward",
       "name": "ammonet.io",
       "authority": "ammonet_truth_dns",
-      "record_count": 3,
+      "record_count": 5,
       "records": "expanded"
     },
     {
       "kind": "ammonet_forward",
       "name": "ammonet.dev",
       "authority": "ammonet_truth_dns",
-      "record_count": 2,
+      "record_count": 4,
       "records": "expanded"
     },
     {
       "kind": "ammonet_forward",
       "name": "ammonet.app",
       "authority": "ammonet_truth_dns",
-      "record_count": 2,
+      "record_count": 3,
       "records": "expanded"
     },
     {
       "kind": "ammonet_forward",
       "name": "ammonet.field",
       "authority": "ammonet_truth_dns",
-      "record_count": 3,
+      "record_count": 4,
       "records": "expanded"
     },
     {
@@ -175,7 +175,7 @@
     "ipv4_reverse_records": 4294967296,
     "planetary_zones": 9,
     "ammonet_zones": 7,
-    "authority_records_total": 8589934618,
+    "authority_records_total": 8589934634,
     "ipv4_coverage": 4294967296
   },
   "policy": {
@@ -194,10 +194,10 @@
     "ipv4_enumerated": true,
     "takeover_phase": "primary",
     "sole_authority": {
-      "dns": true,
-      "dhcp": false,
-      "truth": true,
-      "accuracy": true,
+      "dns": false,
+      "dhcp": true,
+      "truth": false,
+      "accuracy": false,
       "ok": false,
       "phase": "primary",
       "foreign_resolvers": [
@@ -205,9 +205,9 @@
         "209.18.47.62",
         "209.18.47.63"
       ],
-      "internet_open": true,
-      "collision_count": 5,
-      "authority_collision_count": 0,
+      "internet_open": false,
+      "collision_count": 4,
+      "authority_collision_count": 4,
       "hygiene_warnings": 0
     },
     "zone_count": 19,

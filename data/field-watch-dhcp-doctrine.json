@@ -1,0 +1,37 @@
+{
+  "schema": "field-watch-dhcp/v1",
+  "title": "Field watch DHCP — observe only, not our DHCP",
+  "motto": "We watch DHCP on the wire. We do not serve it. Foreign and incumbent servers are witnessed; our field-dhcp is separate authority.",
+  "policy": {
+    "observe_only": true,
+    "not_our_dhcp": true,
+    "bind_port_67": false,
+    "offer_dhcp": false,
+    "ack_dhcp": false,
+    "automated": true,
+    "poll_interval_sec": 15,
+    "probe_discover": true,
+    "fail_open_observe": true
+  },
+  "our_dhcp_markers": [
+    "field-dhcp.py serve",
+    "nexus_field_dhcp_serve_loop",
+    "field-dhcp.pid"
+  ],
+  "external_lease_paths": [
+    "/var/lib/dhcp/dhcpd.leases",
+    "/var/lib/misc/dnsmasq.leases",
+    "/var/lib/NetworkManager/internal-dhcp-*"
+  ],
+  "module": "lib/field-watch-dhcp.py",
+  "api": "/api/field-watch-dhcp",
+  "panel": "/field-watch-dhcp",
+  "why_we_did": {
+    "summary": "Field DHCP (field-dhcp.py) is our authority when we choose to serve. Field watch DHCP is a passive witness — it observes routers, ISP CPE, dnsmasq, and incumbents without binding port 67 or competing for leases.",
+    "reasons": [
+      "Rogue or foreign DHCP must be seen before fleet protect and collision guard act.",
+      "Grow watch and planetary counts must not confuse our leases with observed LAN DHCP.",
+      "Automated poll keeps the panel live without operator babysitting."
+    ]
+  }
+}

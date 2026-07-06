@@ -34,7 +34,9 @@ Materializes sibling repos into the release tree. Canonical hub: **SG/Hostess7**
 | Component | Pages |
 |-----------|-------|
 | Hostess 7 | https://zacharygeurts.github.io/Hostess7/ |
+| H7 Updater | https://zacharygeurts.github.io/H7updater/ |
 | AmmoOS | https://zacharygeurts.github.io/AmmoOS/ |
+| Final Eye / Ear / Mouth | https://zacharygeurts.github.io/Final_Eye/ · Ear · Mouth |
 | Stack index | https://zacharygeurts.github.io/ZacharyGeurts/stack.html |
 
 AmmoOS manual and wiki cover panel, Queen, Field I/O, and operator guides. This wiki covers **Hostess 7 brain, counsel, training, and truth doctrine**.

@@ -1,0 +1,35 @@
+{
+  "schema": "hostess7-tco-kill-doctrine/v1",
+  "title": "t.co kill — X URL shortener is delay-as-threat; unwrap, never hop",
+  "motto": "t.co is Twitter/X click-tracking middleman. Sniff it, unwrap to truth URL, rekill the hop.",
+  "what_is_tco": {
+    "t.co": "Official X/Twitter URL shortener and click analytics redirector",
+    "tco": "Same threat — shorthand for t.co hop",
+    "owner": "x.com / Twitter",
+    "purpose": "Wrap external links in posts; count clicks; inject redirect delay",
+    "not": "Not your URL — a middleman gate between operator links and destination"
+  },
+  "policy": {
+    "kill_redirect_hop": true,
+    "unwrap_to_destination": true,
+    "parallel_sniff_no_delay": true,
+    "block_browser_egress_to_tco": true,
+    "delay_as_threat": true,
+    "rewrite_in_cache": true,
+    "rewrite_in_posts": true
+  },
+  "hosts": ["t.co", "www.t.co"],
+  "shortener_pattern": "https?://t\\.co/[A-Za-z0-9]+",
+  "delay_signals": ["t_co_redirect_delay_gate", "tco_click_tracker_hop"],
+  "countermeasures": [
+    "unwrap_tco_to_canonical_url",
+    "parallel_tco_sniff_no_cooldown",
+    "rewrite_operator_urls_in_cache",
+    "block_tco_middleman_egress"
+  ],
+  "honorability": {
+    "stars": 2,
+    "category": "delay_shortener",
+    "note": "X click tracker — unwrap; do not follow hop"
+  }
+}

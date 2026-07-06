@@ -26,6 +26,21 @@ REDIRECT_HUB_RE = re.compile(r"redirect hub|AmmoOS manual|canonical docs", re.I)
 FIRED_PAGE_RE = re.compile(r"FIRED|route destroyed|Stale field route", re.I)
 
 
+def _canonical_desktop(doc: dict[str, Any] | None = None, *, prefer: str = "pages") -> str:
+    doc = doc or _load(DOCTRINE, {})
+    raw = doc.get("canonical_desktop")
+    if isinstance(raw, dict):
+        if prefer == "sovereign":
+            return str(raw.get("sovereign") or raw.get("primary") or raw.get("pages") or "")
+        return str(raw.get("pages") or raw.get("sovereign") or raw.get("primary") or "")
+    sovereign = doc.get("sovereign_primary")
+    if isinstance(sovereign, dict):
+        sovereign = sovereign.get("panel") or sovereign.get("desktop") or sovereign.get("primary")
+    if prefer == "sovereign" and sovereign:
+        return str(sovereign)
+    return str(raw or sovereign or "")
+
+
 def _utc() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -279,7 +294,7 @@ def _analyze_repo(slug: str, row: dict[str, Any], *, probe: bool = True) -> dict
             "stale": True,
             "stale_kind": stale_rule.get("kind") or "repo_fired",
             "redirect_to": stale_rule.get("to"),
-            "canonical_pages": stale_rule.get("to") or doc.get("canonical_desktop"),
+            "canonical_pages": stale_rule.get("to") or _canonical_desktop(doc, prefer="sovereign"),
             "witness": stale_rule.get("witness"),
             "reason": stale_rule.get("reason"),
             "refire": bool(stale_rule.get("refire")),
@@ -409,7 +424,7 @@ def _refire_targets(analyzed: list[dict[str, Any]] | None = None) -> list[dict[s
         rule = redirects.get(slug) or {}
         targets.append({
             "slug": slug,
-            "to": rule.get("to") or doc.get("canonical_desktop"),
+            "to": rule.get("to") or _canonical_desktop(doc, prefer="sovereign"),
             "refire": bool(rule.get("refire", True)),
         })
     if analyzed:
@@ -422,7 +437,7 @@ def _refire_targets(analyzed: list[dict[str, Any]] | None = None) -> list[dict[s
             seen.add(slug)
             targets.append({
                 "slug": slug,
-                "to": item.get("redirect_to") or doc.get("canonical_desktop"),
+                "to": item.get("redirect_to") or _canonical_desktop(doc, prefer="sovereign"),
                 "refire": True,
             })
     return targets
@@ -441,7 +456,7 @@ def refire_stale(*, execute: bool = False, analyzed: list[dict[str, Any]] | None
     for t in targets:
         slug = str(t.get("slug") or "")
         repo = slug.split("/", 1)[-1] if "/" in slug else slug
-        canonical = str(t.get("to") or doc.get("canonical_desktop") or "")
+        canonical = str(t.get("to") or _canonical_desktop(doc, prefer="sovereign") or "")
         row: dict[str, Any] = {
             "slug": slug,
             "repo": repo,

@@ -4584,6 +4584,29 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in (
+            "/api/hostess7/elon-kitchen-sink",
+            "/api/hostess7-elon-kitchen-sink",
+            "/api/hostess7/kitchen-sink",
+            "/api/kitchen-sink",
+            "/api/elon-defense",
+        ):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            ks_py = INSTALL_ROOT / "lib" / "hostess7-elon-kitchen-sink-defense.py"
+            payload = None
+            if not refresh:
+                panel_path = STATE_DIR / "hostess7-elon-kitchen-sink-panel.json"
+                if panel_path.is_file():
+                    try:
+                        payload = json.loads(panel_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError):
+                        payload = None
+            if payload is None or refresh:
+                args = ["defend"] if refresh else ["json"]
+                payload = _nexus_py_json(ks_py, args, timeout=720 if refresh else 30)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
             "/api/hostess7/x-producer",
             "/api/hostess7-x-producer",
             "/api/x-producer",
@@ -4601,6 +4624,27 @@ class Handler(BaseHTTPRequestHandler):
             if payload is None or refresh:
                 args = ["produce"] if refresh else ["json"]
                 payload = _nexus_py_json(prod_py, args, timeout=120 if refresh else 25)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
+            "/api/field-people-chip",
+            "/api/field/people-chip",
+            "/api/chips/people",
+        ):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            pc_py = INSTALL_ROOT / "lib" / "field-people-chip-combinatorics.py"
+            payload = None
+            if not refresh:
+                panel_path = STATE_DIR / "field-people-chip-panel.json"
+                if panel_path.is_file():
+                    try:
+                        payload = json.loads(panel_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError):
+                        payload = None
+            if payload is None or refresh:
+                args = ["publish"] if refresh else ["json"]
+                payload = _nexus_py_json(pc_py, args, timeout=150 if refresh else 30)
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 

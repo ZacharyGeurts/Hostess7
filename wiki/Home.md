@@ -21,6 +21,8 @@ Hostess 7 is not a chatbot bolt-on. She is the **supreme authority anchor** for 
 | AmmoOS field desktop | http://127.0.0.1:9477/field |
 | Queen browser | http://127.0.0.1:9481/world/browser.html |
 | Training panel | http://127.0.0.1:9477/command#training |
+| H7 Updater (Layer 0) | https://zacharygeurts.github.io/H7updater/ |
+| Archival Warehouse | Hostess7 Pages `/h7updater/` or `/ammoos-warehouse` |
 
 ---
 
@@ -59,6 +61,7 @@ Historic truth corpus gates every new claim. See **[Historic Truth Corpus](Histo
 - **[Brain and Counsel](Brain-and-Counsel)** — Prime, experts, talk UI
 - **[Training Campus](Training-Campus)** — curriculum, floors, doctrine tracks
 - **[NEXUS-Shield](NEXUS-Shield)** — status, verify, threat panel
+- **[H7 Updater](H7-Updater)** — sovereign catalog · personal OAuth lane
 - **Release v2.0.7** — source at 2.0.7 (tag when ready)
 - **[License](License)** — All Rights Reserved
 

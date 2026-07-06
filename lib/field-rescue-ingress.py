@@ -179,8 +179,8 @@ def blast_edges(*, write: bool = True) -> dict[str, Any]:
     hub_dns = str(field_one.get("dns") or field_one.get("truth") or "127.0.0.1")
     hub_dhcp = str(field_one.get("dhcp") or hub_dns)
     hosts_per_edge = int(blast.get("hosts_per_edge") or 4096)
-    local_slots = int(blast.get("local_edge_slots") or 64)
-    wan_slots = int(blast.get("wan_edge_slots") or local_slots)
+    local_slots = int(os.environ.get("NEXUS_FIELD_LOCAL_EDGE_SLOTS") or blast.get("local_edge_slots") or 64)
+    wan_slots = int(os.environ.get("NEXUS_FIELD_WAN_EDGE_SLOTS") or blast.get("wan_edge_slots") or local_slots)
     total_slots = local_slots + wan_slots if blast.get("outside_network") else local_slots
 
     scale_mod = _mod("lib/field-world-dns-dhcp-scale.py", "world_scale")

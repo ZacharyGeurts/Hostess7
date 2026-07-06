@@ -340,6 +340,49 @@ def discover_kills() -> dict[str, Any]:
             status="active" if clean_all.get("ok") else "sweep",
         )
 
+    eradicated_counts: dict[str, int] = {}
+    for row in _read_jsonl(STATE / "dns-threat-eradicated.jsonl", 400):
+        client = str(row.get("client") or "")
+        if client:
+            eradicated_counts[client] = eradicated_counts.get(client, 0) + 1
+
+    cg = _load(STATE / "field-dns-dhcp-collision-guard-panel.json", {})
+    threats = list(cg.get("foreign_server_threats") or [])
+    for row in cg.get("collisions") or []:
+        if isinstance(row, dict) and row.get("kind", "").startswith("foreign"):
+            threats.append(row)
+    for threat in threats:
+        if not isinstance(threat, dict):
+            continue
+        key = (
+            threat.get("nameserver")
+            or threat.get("server")
+            or threat.get("bind")
+            or threat.get("addr")
+        )
+        if not key:
+            continue
+        slug = str(key).replace(".", "-").replace(":", "-").replace("/", "-")[:48]
+        vector = str(threat.get("vector") or threat.get("kind") or "FOREIGN_DNS_SERVER")
+        kills = eradicated_counts.get(str(key), 0) or 1
+        _add_entry(
+            f"world-dns-dhcp-{slug}",
+            f"World DNS/DHCP hook — {key} ({vector})",
+            "world_dns_dhcp_hook",
+            kills=kills,
+            status="eradicated" if kills else "threat",
+        )
+    enforce = cg.get("enforce") or {}
+    eradicated_n = int(enforce.get("threats_eradicated") or 0)
+    if threats or eradicated_n:
+        _add_entry(
+            "world-dns-dhcp-collision-guard",
+            f"Collision guard — {len(threats)} foreign hooks, {eradicated_n} eradicated on sight",
+            "world_dns_dhcp_hook",
+            kills=max(eradicated_n, len(threats)),
+            status="active" if cg.get("ok") else "sweep",
+        )
+
     return {
         "schema": "hostess7-big-grin-pwnership-kills/v1",
         "updated": _now(),
@@ -644,6 +687,52 @@ def _equipment_detail_page(eq: dict[str, Any], brand: dict[str, Any]) -> str:
     return body
 
 
+def _kill_detail_page(entry: dict[str, Any], brand: dict[str, Any]) -> str:
+    lp = look_pwnership()
+    assets = lp.get("assets") or {}
+    badge = escape(str(assets.get("badge") or "/Hostess7/assets/big-grin-pwnership/look-pwnership-badge.jpg"))
+    name = escape(str(entry.get("name") or entry.get("id") or "Kill witness"))
+    status = escape(str(entry.get("status") or entry.get("witness") or "killed"))
+    kills = int(entry.get("kill_count") or 0)
+    why = entry.get("why") or {}
+    why_head = escape(str(why.get("headline") or ""))
+    why_detail = escape(str(why.get("detail") or ""))
+    sources = ", ".join(escape(str(s)) for s in (why.get("sources") or []))
+    rekill = " · RE-KILL" if entry.get("rekill") or kills > 1 else ""
+    title = f"{name} — Killed{rekill}"
+    body = _head_block(title)
+    body += f"""<div class="bgp-root">
+  <p class="bgp-eyebrow"><a href="/Hostess7/big-grin-pwnership/" style="color:inherit">← Big Grin Pwnership</a></p>
+  <div class="bgp-badge-row">
+    <img class="bgp-badge" src="{badge}" alt="Look Pwnership" width="72" height="72" />
+    <div>
+      <p class="bgp-look-label">KILL witness — on sight</p>
+      <h1 class="bgp-title" style="font-size:1.5rem">{name}</h1>
+      <span class="bgp-status bgp-status--down">{status}</span>
+    </div>
+  </div>
+  <section class="bgp-section bgp-detail">
+    <h2>Why we killed it</h2>
+    <div class="bgp-why">
+      <h3>{why_head}</h3>
+      <p>{why_detail}</p>
+      <p class="bgp-why-sources">Sources: {sources or 'hostess7-big-grin-pwnership-doctrine.json'}</p>
+    </div>
+  </section>
+  <section class="bgp-section">
+    <h2>Kill record</h2>
+    <dl class="bgp-meta">
+      <dt>Strike count</dt><dd><strong>{kills if kills else 1}</strong>{rekill}</dd>
+      <dt>Policy</dt><dd>No quarantine · eradicate on attempt · permanent block</dd>
+      <dt>Never remove</dt><dd>Append-only kill list — RE-KILL every re-attempt</dd>
+    </dl>
+  </section>
+</div>
+"""
+    body += _footer_block(brand)
+    return body
+
+
 def build_sites(*, write: bool = True) -> dict[str, Any]:
     doc = doctrine()
     brand = doc.get("brand") or {}
@@ -731,6 +820,17 @@ def build_sites(*, write: bool = True) -> dict[str, Any]:
             out = SITE_ROOT / "equipment" / f"{eid}.html"
             out.write_text(page, encoding="utf-8")
             pages_written.append(f"equipment/{eid}.html")
+
+        kills = discover_kills()
+        (SITE_ROOT / "kills").mkdir(parents=True, exist_ok=True)
+        for entry in kills.get("entries") or []:
+            eid = str(entry.get("id") or "")
+            if not eid:
+                continue
+            page = _kill_detail_page(entry, brand)
+            out = SITE_ROOT / "kills" / f"{eid}.html"
+            out.write_text(page, encoding="utf-8")
+            pages_written.append(f"kills/{eid}.html")
 
     digest = hashlib.sha256(json.dumps(equipment, sort_keys=True).encode()).hexdigest()[:16]
     return {

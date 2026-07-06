@@ -17,7 +17,7 @@ fi
 unset -f _aml_find_root 2>/dev/null || true
 
 #!/bin/bash
-# Unified field bus — pack data_bus[64] + copilot all lanes.
+# Unified field bus — pack data_bus[64] + hot-route all lanes.
 
 nexus_unified_bus_enabled() {
   [[ "${NEXUS_UNIFIED_BUS:-1}" == "1" ]]

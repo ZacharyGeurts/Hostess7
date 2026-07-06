@@ -1,0 +1,115 @@
+{
+  "ok": true,
+  "schema": "field-world-dns-dhcp-scale/v1",
+  "updated": "2026-07-06T00:42:31Z",
+  "motto": "Rescue everyone · more hosts and edges · ping blast · quarantine ingress — never full-kill devices on the way in",
+  "world_dns_dhcp": {
+    "scope": "planet_and_beyond",
+    "truth_dns_option_6": "127.0.0.1",
+    "never_lose_lease": true,
+    "absorb_incumbents": true
+  },
+  "ingress_policy": "quarantine_not_kill",
+  "current": {
+    "calendar_year": 2026,
+    "population": 8136368354,
+    "devices": 22375012974,
+    "ipv4_usable": 4026531840,
+    "beyond_ipv4": true,
+    "edge_hosts_recommended": 5462650,
+    "logical_edge_shards": 1048576,
+    "logical_edges_total": 4294967296,
+    "edges_are_real": false,
+    "inside_field": true,
+    "hosts_per_edge": 4096,
+    "dhcp_leases_if_one_per_device": 22375012974,
+    "dns_records_if_one_per_device": 22375012974
+  },
+  "logical_edges": {
+    "kind": "logical",
+    "ipv4_enumerated": 4294967296,
+    "shards": 1048576,
+    "hosts_per_shard": 4096,
+    "materialized_rows": false,
+    "motto": "Inside field we own all IPs — edges are range-backed index shards, not QEMU boxes"
+  },
+  "projections": [
+    {
+      "years_ahead": 10,
+      "calendar_year": 2036,
+      "population": 8899021670,
+      "devices": 24472309594,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 5974685,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    },
+    {
+      "years_ahead": 25,
+      "calendar_year": 2052,
+      "population": 10179108836,
+      "devices": 27992549299,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 6834119,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    },
+    {
+      "years_ahead": 50,
+      "calendar_year": 2076,
+      "population": 12734705729,
+      "devices": 35020440756,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 8549913,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    },
+    {
+      "years_ahead": 100,
+      "calendar_year": 2126,
+      "population": 19931832354,
+      "devices": 54812538974,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 13381968,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    },
+    {
+      "years_ahead": 500,
+      "calendar_year": 2526,
+      "population": 717816968552,
+      "devices": 1973996663518,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 481932780,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    },
+    {
+      "years_ahead": 1000,
+      "calendar_year": 3026,
+      "population": 63328155497892,
+      "devices": 174152427619204,
+      "ipv4_capacity": 4026531840,
+      "beyond_ipv4": true,
+      "edge_hosts_min": 42517682525,
+      "people_per_edge": 1489,
+      "leases_per_edge": 4095
+    }
+  ],
+  "ping_rescue": {
+    "enabled": true,
+    "module": "lib/field-ping.py",
+    "last_probe": null,
+    "last_rtt_ms": null
+  },
+  "formula": {
+    "population": "P(t) = P0 * (1+r)^(t-t0)",
+    "devices": "D(t) = P(t) * devices_per_capita",
+    "edges": "max(ceil(D/ipv4_usable), ceil(D/hosts_per_edge))"
+  }
+}

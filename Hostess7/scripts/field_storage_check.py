@@ -70,8 +70,10 @@ def scan_storage() -> dict[str, Any]:
         "lossless_policy": "prefer json jsonl ppm png tiff flac persist — avoid lossy ingest unless source-only",
         "infinite_legal_lines": sum(1 for _ in infinite_legal.open()) if infinite_legal.is_file() else 0,
         "infinite_medical_lines": sum(1 for _ in infinite_med.open()) if infinite_med.is_file() else 0,
-        "team_device": os.environ.get("TEAM_DRIVE_DEV", "/dev/nvme2n1"),
-        "team_device_present": Path(os.environ.get("TEAM_DRIVE_DEV", "/dev/nvme2n1")).exists(),
+        "team_device": os.environ.get("TEAM_DRIVE_DEV", "/dev/nvme1n1"),
+        "team_mount": os.environ.get("HOSTESS7_TEAM_FIELD", "/media/default/HOSTESS7_TEAM1/fieldstorage"),
+        "team_kind": "native_ext4",
+        "team_device_present": Path(os.environ.get("TEAM_DRIVE_DEV", "/dev/nvme1n1")).exists(),
     }
 
     bench = ROOT / "scripts" / "bench_storage.py"

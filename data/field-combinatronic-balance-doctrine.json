@@ -40,7 +40,8 @@
     {"id": "visuals", "panel": "data/field-combinatronic-visuals-registry.json", "key": "file_count", "count_only": true},
     {"id": "h7c", "panel": "field-h7c-balance-table.json", "key": "entries", "count_only": true},
     {"id": "library_registry", "panel": "field-library-registry.json", "key": "entries", "id_field": "id"},
-    {"id": "steel_plates", "panel": "field-steel-neural-plates.json", "key": "plates", "id_field": "id"}
+    {"id": "steel_plates", "panel": "field-steel-neural-plates.json", "key": "plates", "id_field": "id"},
+    {"id": "people_chip", "panel": "field-people-chip-combinatorics.json", "key": "leaves", "id_field": "id"}
   ],
   "entry_batteries": [
     {"id": "chips", "combinatorics": "field-ironclad-chips-combinatorics.json", "module": "field-ironclad-chips-combinatorics.py", "publish": "publish"},
@@ -55,11 +56,12 @@
     {"id": "sequence", "battery": "field-combinatorics-sequence.json", "module": "field-combinatorics-sequence.py", "publish": "publish_panel"},
     {"id": "spider", "battery": "field-combinatronic-spider-wire.json", "module": "field-combinatronic-spider-wire.py", "publish": "publish_panel"},
     {"id": "visuals", "battery": "field-combinatronic-visuals-panel.json", "module": "field-combinatronic-visuals.py", "publish": "publish_panel", "light": true},
-    {"id": "steel_plates", "battery": "field-steel-neural-plates.json", "module": "field-steel-neural-plates.py", "publish": "publish_panel"}
+    {"id": "steel_plates", "battery": "field-steel-neural-plates.json", "module": "field-steel-neural-plates.py", "publish": "publish_panel"},
+    {"id": "people_chip", "battery": "field-people-chip-combinatorics.json", "module": "field-people-chip-combinatorics.py", "publish": "publish", "light": true}
   ],
   "sync_order": [
     "chips", "programs", "files", "library", "library_registry", "cpu", "growth",
-    "universal", "matrix", "sequence", "spider", "visuals", "steel_plates"
+    "universal", "matrix", "sequence", "spider", "visuals", "steel_plates", "people_chip"
   ],
   "api": "/api/combinatronic/balance"
 }

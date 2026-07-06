@@ -12,6 +12,7 @@ import fcntl
 import json
 import os
 import re
+import signal
 import socket
 import struct
 import subprocess
@@ -688,6 +689,53 @@ def _release_serve_lock() -> None:
         _SERVE_LOCK_HANDLE = None
 
 
+def _dns_probe_local() -> bool:
+    qname = os.environ.get("NEXUS_DNS_TAKEOVER_HEALTH_QNAME", "example.com")
+    txn = struct.pack("!H", int(time.time()) & 0xFFFF)
+    header = txn + struct.pack("!HHHHH", 0x0100, 1, 0, 0, 0)
+    out = bytearray()
+    for label in qname.rstrip(".").split("."):
+        raw = label.encode("ascii")[:63]
+        out.append(len(raw))
+        out.extend(raw)
+    out.append(0)
+    packet = header + bytes(out) + struct.pack("!HH", 1, 1)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.settimeout(2.0)
+    try:
+        sock.sendto(packet, (IPV4, PORT))
+        data, _ = sock.recvfrom(4096)
+        return len(data) >= 12
+    except OSError:
+        return False
+    finally:
+        sock.close()
+
+
+def _terminate_stale_dns_pid(pid: int) -> None:
+    for sig in (signal.SIGTERM, signal.SIGKILL):
+        try:
+            os.kill(pid, sig)
+            time.sleep(0.25)
+            return
+        except PermissionError:
+            try:
+                subprocess.run(
+                    ["sudo", "-n", "kill", "-9", str(pid)],
+                    capture_output=True,
+                    timeout=5,
+                    check=False,
+                )
+                time.sleep(0.25)
+                return
+            except (OSError, subprocess.TimeoutExpired):
+                pass
+        except ProcessLookupError:
+            return
+        except OSError:
+            pass
+
+
 def _acquire_serve_lock() -> bool:
     """Single resolver instance — duplicate binds cause silent query loss."""
     global _SERVE_LOCK_HANDLE
@@ -696,7 +744,10 @@ def _acquire_serve_lock() -> bool:
         try:
             old = int(PID_FILE.read_text(encoding="utf-8").strip().split()[0])
             os.kill(old, 0)
-            return False
+            if _dns_probe_local():
+                return False
+            _terminate_stale_dns_pid(old)
+            PID_FILE.unlink(missing_ok=True)
         except (OSError, ValueError):
             PID_FILE.unlink(missing_ok=True)
     try:
@@ -714,6 +765,19 @@ def _acquire_serve_lock() -> bool:
 
 
 def serve() -> int:
+    try:
+        sg = importlib.util.spec_from_file_location(
+            "field_pid_spawn_guard",
+            INSTALL / "lib" / "field-pid-spawn-guard.py",
+        )
+        if sg and sg.loader:
+            mod = importlib.util.module_from_spec(sg)
+            sg.loader.exec_module(mod)
+            mod.authorize_spawn_or_exit(service="dns", action="serve")
+    except SystemExit:
+        raise
+    except Exception:
+        pass
     if not _acquire_serve_lock():
         await_seconds(5, STATE)
         return 0
@@ -729,6 +793,18 @@ def serve() -> int:
     time.sleep(0.75)
     with _listener_lock:
         listeners = list(_active_listeners)
+    if not listeners:
+        fallback_v4 = [IPV4] if IPV4 not in _bind_hosts_v4() else []
+        fallback_v6 = [IPV6] if IPV6 not in _bind_hosts_v6() else []
+        for host in fallback_v4:
+            threads.append(threading.Thread(target=_udp_loop, args=(socket.AF_INET, host), daemon=True))
+        for host in fallback_v6:
+            threads.append(threading.Thread(target=_udp_loop, args=(socket.AF_INET6, host), daemon=True))
+        for t in threads[len(threads) - len(fallback_v4) - len(fallback_v6):]:
+            t.start()
+        time.sleep(0.75)
+        with _listener_lock:
+            listeners = list(_active_listeners)
     if not listeners:
         _publish({"running": False, "pid": os.getpid(), "listeners": [], "bind_error": True})
         _release_serve_lock()

@@ -201,6 +201,31 @@ class IroncladSecureAPI:
                     "singleton": True,
                 }
 
+        if isinstance(body, dict):
+            for key in ("url", "href", "link", "target", "redirect"):
+                raw = str(body.get(key) or "").strip()
+                if raw.startswith("http"):
+                    steel_py = INSTALL / "lib" / "field-url-heuristics-steel.py"
+                    if steel_py.is_file():
+                        try:
+                            spec = importlib.util.spec_from_file_location("steel_url_gate", steel_py)
+                            if spec and spec.loader:
+                                mod = importlib.util.module_from_spec(spec)
+                                spec.loader.exec_module(mod)
+                                if hasattr(mod, "gate_url"):
+                                    v = mod.gate_url(raw)
+                                    if v.get("gone"):
+                                        return {
+                                            "ok": False,
+                                            "code": 403,
+                                            "error": "url_heuristics_gone",
+                                            "detail": v.get("reason"),
+                                            "steel_plated": True,
+                                            "singleton": True,
+                                        }
+                        except Exception:
+                            pass
+
         hdrs = {k.lower(): v for k, v in (headers or {}).items()}
         if policy.get("human_integration_forbidden", True):
             if hdrs.get("x-human-integration") in ("1", "true", "yes"):

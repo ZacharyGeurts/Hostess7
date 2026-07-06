@@ -1,8 +1,8 @@
 #!/usr/bin/env pythong
 """TEAM field drive — Field 1 sync impl (library, bulk). Use ./Hostess7.sh field sync.
 
-Default device: /dev/nvme2n1 (TEAM TM8FP6001T). Mount at HOSTESS7_TEAM_MOUNT (/mnt/team).
-KILROY_FIELD on nvme1 is alternate: /media/default/KILROY_FIELD.
+Default device: /dev/nvme1n1 (HOSTESS7_TEAM whole-disk ext4). Mount: /media/default/HOSTESS7_TEAM1.
+Not team_drive.img — that 1GiB file is staging only. Legacy nvme2n1 = boot/KILROY alt.
 """
 from __future__ import annotations
 
@@ -18,8 +18,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 LOCAL_STORAGE = ROOT / "cache" / "fieldstorage"
-DEFAULT_DEV = os.environ.get("TEAM_DRIVE_DEV", "/dev/nvme2n1")
-DEFAULT_MOUNT = Path(os.environ.get("HOSTESS7_TEAM_MOUNT", "/mnt/team"))
+DEFAULT_DEV = os.environ.get("TEAM_DRIVE_DEV", "/dev/nvme1n1")
+DEFAULT_MOUNT = Path(os.environ.get("HOSTESS7_TEAM_MOUNT", "/media/default/HOSTESS7_TEAM1"))
 KILROY_MOUNT = Path("/media/default/KILROY_FIELD")
 TEAM_LABEL = os.environ.get("HOSTESS7_TEAM_LABEL", "HOSTESS7_TEAM")
 

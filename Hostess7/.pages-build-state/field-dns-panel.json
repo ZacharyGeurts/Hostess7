@@ -1,0 +1,2509 @@
+{
+  "schema": "field-dns/v2",
+  "updated": "2026-07-02T13:20:05.839161Z",
+  "title": "NEXUS Truth DNS — every DNS lease on the planet",
+  "running": false,
+  "self_hosted": true,
+  "truthful": true,
+  "security_model": "field-sovereign-gate",
+  "never_lose_cycle": true,
+  "priority": 1,
+  "listeners": [
+    "127.0.0.1#53",
+    "[::1]#53"
+  ],
+  "ipv4": {
+    "host": "127.0.0.1",
+    "port": 53
+  },
+  "ipv6": {
+    "host": "::1",
+    "port": 53
+  },
+  "stats": {
+    "queries_total": 0,
+    "cache_hits": 0,
+    "cache_misses": 0,
+    "blocks": 0,
+    "errors": 0,
+    "rate_limits": 0,
+    "qps_60s": 0.0,
+    "qps_5m": 0.0,
+    "avg_latency_ms": 0.0,
+    "queries": 0,
+    "blocked": 0,
+    "started_at": "2026-07-02T16:22:58.880005Z",
+    "planetary_zones": 9,
+    "root_servers": 13,
+    "root_servers_ipv6": 13,
+    "legal_citations": 9,
+    "rfc_citations": 16,
+    "foreign_resolvers_blocked": 0,
+    "foreign_resolver_ipv4": 0,
+    "foreign_resolver_ipv6": 0
+  },
+  "top_domains": {},
+  "cache": {
+    "size": 0,
+    "hit_rate": 0.0,
+    "ttl_default": 300
+  },
+  "blocklists": {
+    "domains": 0,
+    "last_reload": "2026-07-02T13:20:05.839511Z",
+    "sources": [
+      "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/adblock/domains-block.txt",
+      "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/dns-truth-blocklist.txt"
+    ]
+  },
+  "dnssec": {
+    "enabled": true,
+    "validations": 0,
+    "failures": 0,
+    "stub": true
+  },
+  "threats": [],
+  "blocklist_domains": 0,
+  "cache_entries": 0,
+  "foreign_resolvers_stopped": false,
+  "internet_open": true,
+  "planetary": {
+    "schema": "dns-planetary/v1",
+    "updated": "2026-07-02T13:20:03Z",
+    "title": "NEXUS Truth DNS · Planetary Security",
+    "motto": "Truth DNS — letter of RFC and applicable law on every resolver decision.",
+    "planetary_security_level": "hardened",
+    "host_security_level": "standard",
+    "planet_coverage": "global",
+    "zones": [
+      {
+        "region": "Global root",
+        "tld_group": ".",
+        "security_level": "extreme",
+        "rfc": "RFC 1034 §3.6",
+        "note": "13 root servers — trace-only delegation",
+        "extreme_active": false
+      },
+      {
+        "region": "Americas",
+        "tld_group": ".us .ca .mx .br",
+        "security_level": "extreme",
+        "rfc": "RFC 1035",
+        "legal": "18 U.S.C. § 1030",
+        "note": "CFAA-class DNS poison blocked",
+        "extreme_active": false
+      },
+      {
+        "region": "Europe",
+        "tld_group": ".eu .de .uk .fr",
+        "security_level": "extreme",
+        "rfc": "RFC 4033",
+        "legal": "GDPR Art. 32",
+        "note": "NIS2 DNS service measures",
+        "extreme_active": false
+      },
+      {
+        "region": "Asia-Pacific",
+        "tld_group": ".jp .cn .au .in",
+        "security_level": "extreme",
+        "rfc": "RFC 6891",
+        "note": "EDNS0 monitored on egress",
+        "extreme_active": false
+      },
+      {
+        "region": "Africa",
+        "tld_group": ".za .ng .ke",
+        "security_level": "extreme",
+        "rfc": "RFC 1035",
+        "note": "Planetary EXTREME parity",
+        "extreme_active": false
+      },
+      {
+        "region": "Middle East",
+        "tld_group": ".ae .il .sa",
+        "security_level": "extreme",
+        "rfc": "RFC 7766",
+        "note": "TCP fallback documented",
+        "extreme_active": false
+      },
+      {
+        "region": "Special-use",
+        "tld_group": ".localhost .invalid .test",
+        "security_level": "extreme",
+        "rfc": "RFC 6761",
+        "note": "Loopback-only binding enforced",
+        "extreme_active": false
+      },
+      {
+        "region": "Infrastructure",
+        "tld_group": "arpa",
+        "security_level": "extreme",
+        "rfc": "RFC 6895",
+        "note": "IANA parameter compliance",
+        "extreme_active": false
+      },
+      {
+        "region": "AmmoNet sovereign",
+        "tld_group": ".com .net .org .io .dev .app .field",
+        "security_level": "extreme",
+        "rfc": "RFC 1035",
+        "legal": "Operator-owned AmmoNet",
+        "note": "ammonet.* zones — Truth DNS + Field DHCP + secure mail",
+        "extreme_active": false
+      }
+    ],
+    "rfc_matrix": [
+      {
+        "rfc": "RFC 1034",
+        "title": "Domain Names — Concepts and Facilities",
+        "section": "§3.6",
+        "requirement": "Recursive resolution must follow delegation chain from root.",
+        "compliance": "enforced",
+        "nexus_control": "dig +trace from root hints only"
+      },
+      {
+        "rfc": "RFC 1035",
+        "title": "Domain Names — Implementation and Specification",
+        "section": "§4.1.1",
+        "requirement": "DNS message header: ID, flags, QDCOUNT; QNAME label sequence ≤255 octets.",
+        "compliance": "enforced",
+        "nexus_control": "UDP parser validates header and name compression pointers"
+      },
+      {
+        "rfc": "RFC 1035",
+        "title": "Domain Names — Implementation and Specification",
+        "section": "§4.1.3",
+        "requirement": "QTYPE IN class IN queries for A/AAAA resolution.",
+        "compliance": "enforced",
+        "nexus_control": "QTYPE_MAP 1=A, 28=AAAA, 5=CNAME, 15=MX, 16=TXT"
+      },
+      {
+        "rfc": "RFC 1035",
+        "title": "Domain Names — Implementation and Specification",
+        "section": "§4.1.4",
+        "requirement": "RCODE 0=NOERROR, 2=SERVFAIL, 3=NXDOMAIN.",
+        "compliance": "enforced",
+        "nexus_control": "Blocked domains return NXDOMAIN (3); miss returns SERVFAIL (2)"
+      },
+      {
+        "rfc": "RFC 2181",
+        "title": "Clarifications to the DNS Specification",
+        "section": "§10",
+        "requirement": "TTL interpretation — cache honors minimum TTL semantics.",
+        "compliance": "enforced",
+        "nexus_control": "NEXUS_FIELD_DNS_CACHE_TTL default 300s"
+      },
+      {
+        "rfc": "RFC 5890",
+        "title": "IDNA: Definitions and Document Framework",
+        "section": "§2",
+        "requirement": "Internationalized domain labels encoded per IDNA before wire format.",
+        "compliance": "enforced",
+        "nexus_control": "idna encode/decode on QNAME"
+      },
+      {
+        "rfc": "RFC 6891",
+        "title": "Extension Mechanisms for DNS (EDNS(0))",
+        "section": "§6",
+        "requirement": "OPT pseudo-RR for UDP payload size negotiation.",
+        "compliance": "documented",
+        "nexus_control": "Standard UDP 512B baseline; EDNS surfaced in planetary posture"
+      },
+      {
+        "rfc": "RFC 4033",
+        "title": "DNS Security Introduction and Requirements",
+        "section": "§3",
+        "requirement": "Authenticate DNS data via DNSSEC chain of trust.",
+        "compliance": "recommended",
+        "nexus_control": "Trace path validates delegation; DNSSEC validation flagged per zone"
+      },
+      {
+        "rfc": "RFC 4034",
+        "title": "Resource Records for DNS Security Extensions",
+        "section": "§2",
+        "requirement": "RRSIG, DNSKEY, NSEC/NSEC3 records in signed zones.",
+        "compliance": "monitored",
+        "nexus_control": "Planetary table marks signed TLDs"
+      },
+      {
+        "rfc": "RFC 4035",
+        "title": "Protocol Modifications for DNSSEC",
+        "section": "§4",
+        "requirement": "Resolver must set AD bit only when data verified.",
+        "compliance": "monitored",
+        "nexus_control": "Truth resolver does not forge AD"
+      },
+      {
+        "rfc": "RFC 6761",
+        "title": "Special-Use Domain Names",
+        "section": "§6.3",
+        "requirement": "localhost. names resolve only to loopback.",
+        "compliance": "enforced",
+        "nexus_control": "Loopback-only listener binding"
+      },
+      {
+        "rfc": "RFC 6895",
+        "title": "IANA DNS Parameters",
+        "section": "§3",
+        "requirement": "QTYPE/QCLASS assignments per IANA registry.",
+        "compliance": "enforced",
+        "nexus_control": "Unsupported QTYPE returns empty/SERVFAIL"
+      },
+      {
+        "rfc": "RFC 7766",
+        "title": "DNS Transport over TCP",
+        "section": "§6",
+        "requirement": "TCP fallback for responses >512 bytes.",
+        "compliance": "documented",
+        "nexus_control": "UDP-first; TCP noted in resolver policy"
+      },
+      {
+        "rfc": "RFC 7858",
+        "title": "Specification for DNS over TLS (DoT)",
+        "section": "§3",
+        "requirement": "Port 853 TLS encapsulation — optional client path.",
+        "compliance": "allowed",
+        "nexus_control": "Internet open — client may use DoT"
+      },
+      {
+        "rfc": "RFC 8484",
+        "title": "DNS Queries over HTTPS (DoH)",
+        "section": "§4",
+        "requirement": "HTTPS application/dns-message wire format.",
+        "compliance": "allowed",
+        "nexus_control": "Internet open — client may use DoH"
+      },
+      {
+        "rfc": "RFC 9520",
+        "title": "DNS Resolver Integrity Extensions",
+        "section": "§1",
+        "requirement": "Resolver must not substitute answers without operator policy.",
+        "compliance": "enforced",
+        "nexus_control": "No shortcut public DNS; trace-only answers"
+      }
+    ],
+    "rfc_enforced_count": 9,
+    "rfc_total": 16,
+    "legal_framework": [
+      {
+        "citation": "18 U.S.C. § 1030(a)(2)(C)",
+        "title": "Computer Fraud and Abuse Act",
+        "requirement": "No exceeding authorized access to obtain information from protected computers.",
+        "nexus_application": "DNS poisoning and unauthorized resolver hijack treated as CFAA-class harm vectors."
+      },
+      {
+        "citation": "18 U.S.C. § 1030(a)(5)(A)",
+        "title": "Computer Fraud and Abuse Act",
+        "requirement": "Knowingly causing damage to protected computers.",
+        "nexus_application": "NXDOMAIN blocklist and segment blocks for DNS tunnel exfil (DNS_TUNNEL vector)."
+      },
+      {
+        "citation": "47 U.S.C. § 222",
+        "title": "Communications Act — CPNI",
+        "requirement": "Protect customer proprietary network information.",
+        "nexus_application": "Resolver query logs stay local on field drive; no third-party DNS leakage."
+      },
+      {
+        "citation": "GDPR Art. 5(1)(f)",
+        "title": "EU General Data Protection Regulation",
+        "requirement": "Personal data processed with integrity and confidentiality.",
+        "nexus_application": "Loopback resolver; foreign ISP DNS (Charter, Google, Cloudflare) egress stopped."
+      },
+      {
+        "citation": "GDPR Art. 32",
+        "title": "EU General Data Protection Regulation",
+        "requirement": "Appropriate technical measures for security of processing.",
+        "nexus_application": "EXTREME watcher bundle + truth DNS for EU-facing flows."
+      },
+      {
+        "citation": "EU Directive 2022/2555 (NIS2)",
+        "title": "Network and Information Security",
+        "requirement": "DNS service providers implement security risk management.",
+        "nexus_application": "Planetary DNS posture table with per-region EXTREME controls."
+      },
+      {
+        "citation": "15 U.S.C. §§ 6501-6506",
+        "title": "COPPA",
+        "requirement": "Verifiable parental consent before collecting children's data.",
+        "nexus_application": "Ad tracking domains blocked at resolver when adblock lists apply."
+      },
+      {
+        "citation": "ICANN RAA 2013",
+        "title": "Registrar Accreditation Agreement",
+        "requirement": "Registrars maintain accurate WHOIS/RDAP data.",
+        "nexus_application": "RDAP/WHOIS lookups documented in research cross-ref; not forged locally."
+      },
+      {
+        "citation": "FCC 47 CFR § 64.2003",
+        "title": "CPNI rules (voice/Broadband)",
+        "requirement": "Opt-in for use of CPNI.",
+        "nexus_application": "ISP DNS redirection (Charter/Spectrum) classified foreign resolver — blocked."
+      }
+    ],
+    "root_servers": [
+      {
+        "letter": "a",
+        "hostname": "a.root-servers.net",
+        "ipv4": "198.41.4.4",
+        "ipv6": "2001:503:ba3e::2:30",
+        "operator": "Verisign"
+      },
+      {
+        "letter": "b",
+        "hostname": "b.root-servers.net",
+        "ipv4": "199.9.14.201",
+        "ipv6": "2001:500:200::b",
+        "operator": "USC-ISI"
+      },
+      {
+        "letter": "c",
+        "hostname": "c.root-servers.net",
+        "ipv4": "192.33.4.4",
+        "ipv6": "2001:500:2::c",
+        "operator": "Cogent"
+      },
+      {
+        "letter": "d",
+        "hostname": "d.root-servers.net",
+        "ipv4": "199.7.91.13",
+        "ipv6": "2001:500:2d::d",
+        "operator": "University of Maryland"
+      },
+      {
+        "letter": "e",
+        "hostname": "e.root-servers.net",
+        "ipv4": "192.203.230.10",
+        "ipv6": "2001:dc3::35",
+        "operator": "NASA Ames"
+      },
+      {
+        "letter": "f",
+        "hostname": "f.root-servers.net",
+        "ipv4": "192.5.5.241",
+        "ipv6": "2001:500:2f::f",
+        "operator": "Internet Systems Consortium"
+      },
+      {
+        "letter": "g",
+        "hostname": "g.root-servers.net",
+        "ipv4": "192.112.36.4",
+        "ipv6": "2001:500:12::d0d",
+        "operator": "US DoD"
+      },
+      {
+        "letter": "h",
+        "hostname": "h.root-servers.net",
+        "ipv4": "198.97.190.53",
+        "ipv6": "2001:500:1::53",
+        "operator": "US Army"
+      },
+      {
+        "letter": "i",
+        "hostname": "i.root-servers.net",
+        "ipv4": "192.36.148.17",
+        "ipv6": "2001:7fe::53",
+        "operator": "Netnod"
+      },
+      {
+        "letter": "j",
+        "hostname": "j.root-servers.net",
+        "ipv4": "192.58.128.30",
+        "ipv6": "2001:503:c27::2:30",
+        "operator": "Verisign"
+      },
+      {
+        "letter": "k",
+        "hostname": "k.root-servers.net",
+        "ipv4": "193.0.14.129",
+        "ipv6": "2001:7fd::1",
+        "operator": "RIPE NCC"
+      },
+      {
+        "letter": "l",
+        "hostname": "l.root-servers.net",
+        "ipv4": "199.7.83.42",
+        "ipv6": "2001:500:9f::42",
+        "operator": "ICANN"
+      },
+      {
+        "letter": "m",
+        "hostname": "m.root-servers.net",
+        "ipv4": "202.12.27.33",
+        "ipv6": "2001:dc3::35",
+        "operator": "WIDE Project"
+      }
+    ],
+    "foreign_resolvers_blocked": [],
+    "foreign_resolver_ipv4": [],
+    "foreign_resolver_ipv6": [],
+    "resolv": {
+      "nameservers": [
+        "209.18.47.61",
+        "209.18.47.62",
+        "209.18.47.63"
+      ],
+      "ipv4_nameservers": [
+        "209.18.47.61",
+        "209.18.47.62",
+        "209.18.47.63"
+      ],
+      "ipv6_nameservers": [],
+      "search_domains": [
+        "eau.wi.charter.com"
+      ],
+      "options": [],
+      "ipv4_truth_enforced": false,
+      "ipv6_truth_enforced": true,
+      "nexus_truth_enforced": false,
+      "path": "/etc/resolv.conf"
+    },
+    "identity": {
+      "hostname": "default-X870-Pro-RS",
+      "fqdn": "default-X870-Pro-RS"
+    },
+    "resolver_policy": {
+      "self_hosted": true,
+      "truthful_trace": true,
+      "loopback_only": true,
+      "ipv4_bind": "127.0.0.1",
+      "ipv6_bind": "::1",
+      "ipv6_enabled": true,
+      "port": 53,
+      "no_shortcut_public_dns": true,
+      "dot_doh_bypass": "blocked_under_extreme",
+      "qtypes_supported": [
+        "A",
+        "AAAA",
+        "CNAME",
+        "MX",
+        "TXT"
+      ],
+      "dual_stack": true
+    },
+    "stats": {
+      "planetary_zones": 9,
+      "root_servers": 13,
+      "root_servers_ipv6": 13,
+      "legal_citations": 9,
+      "rfc_citations": 16,
+      "foreign_resolvers_blocked": 0,
+      "foreign_resolver_ipv4": 0,
+      "foreign_resolver_ipv6": 0
+    },
+    "server": {
+      "updated": "2026-07-02T16:22:59.727772Z",
+      "title": "NEXUS Truth DNS",
+      "priority": 1,
+      "self_hosted": true,
+      "truthful": true,
+      "foreign_resolvers_stopped": false,
+      "internet_open": true,
+      "ipv4": {
+        "host": "127.0.0.1",
+        "port": 53
+      },
+      "ipv6": {
+        "host": "::1",
+        "port": 53
+      },
+      "listeners": [],
+      "stats": {
+        "queries": 0,
+        "blocked": 0,
+        "cache_hits": 0,
+        "cache_misses": 0,
+        "errors": 0,
+        "rate_limits": 0,
+        "started_at": "2026-07-02T16:22:58.880005Z"
+      },
+      "blocklist_domains": 0,
+      "cache_entries": 0,
+      "running": false,
+      "pid": 2116494,
+      "bind_error": true
+    }
+  },
+  "rfc_matrix": [
+    {
+      "rfc": "RFC 1034",
+      "title": "Domain Names — Concepts and Facilities",
+      "section": "§3.6",
+      "requirement": "Recursive resolution must follow delegation chain from root.",
+      "compliance": "enforced",
+      "nexus_control": "dig +trace from root hints only"
+    },
+    {
+      "rfc": "RFC 1035",
+      "title": "Domain Names — Implementation and Specification",
+      "section": "§4.1.1",
+      "requirement": "DNS message header: ID, flags, QDCOUNT; QNAME label sequence ≤255 octets.",
+      "compliance": "enforced",
+      "nexus_control": "UDP parser validates header and name compression pointers"
+    },
+    {
+      "rfc": "RFC 1035",
+      "title": "Domain Names — Implementation and Specification",
+      "section": "§4.1.3",
+      "requirement": "QTYPE IN class IN queries for A/AAAA resolution.",
+      "compliance": "enforced",
+      "nexus_control": "QTYPE_MAP 1=A, 28=AAAA, 5=CNAME, 15=MX, 16=TXT"
+    },
+    {
+      "rfc": "RFC 1035",
+      "title": "Domain Names — Implementation and Specification",
+      "section": "§4.1.4",
+      "requirement": "RCODE 0=NOERROR, 2=SERVFAIL, 3=NXDOMAIN.",
+      "compliance": "enforced",
+      "nexus_control": "Blocked domains return NXDOMAIN (3); miss returns SERVFAIL (2)"
+    },
+    {
+      "rfc": "RFC 2181",
+      "title": "Clarifications to the DNS Specification",
+      "section": "§10",
+      "requirement": "TTL interpretation — cache honors minimum TTL semantics.",
+      "compliance": "enforced",
+      "nexus_control": "NEXUS_FIELD_DNS_CACHE_TTL default 300s"
+    },
+    {
+      "rfc": "RFC 5890",
+      "title": "IDNA: Definitions and Document Framework",
+      "section": "§2",
+      "requirement": "Internationalized domain labels encoded per IDNA before wire format.",
+      "compliance": "enforced",
+      "nexus_control": "idna encode/decode on QNAME"
+    },
+    {
+      "rfc": "RFC 6891",
+      "title": "Extension Mechanisms for DNS (EDNS(0))",
+      "section": "§6",
+      "requirement": "OPT pseudo-RR for UDP payload size negotiation.",
+      "compliance": "documented",
+      "nexus_control": "Standard UDP 512B baseline; EDNS surfaced in planetary posture"
+    },
+    {
+      "rfc": "RFC 4033",
+      "title": "DNS Security Introduction and Requirements",
+      "section": "§3",
+      "requirement": "Authenticate DNS data via DNSSEC chain of trust.",
+      "compliance": "recommended",
+      "nexus_control": "Trace path validates delegation; DNSSEC validation flagged per zone"
+    },
+    {
+      "rfc": "RFC 4034",
+      "title": "Resource Records for DNS Security Extensions",
+      "section": "§2",
+      "requirement": "RRSIG, DNSKEY, NSEC/NSEC3 records in signed zones.",
+      "compliance": "monitored",
+      "nexus_control": "Planetary table marks signed TLDs"
+    },
+    {
+      "rfc": "RFC 4035",
+      "title": "Protocol Modifications for DNSSEC",
+      "section": "§4",
+      "requirement": "Resolver must set AD bit only when data verified.",
+      "compliance": "monitored",
+      "nexus_control": "Truth resolver does not forge AD"
+    },
+    {
+      "rfc": "RFC 6761",
+      "title": "Special-Use Domain Names",
+      "section": "§6.3",
+      "requirement": "localhost. names resolve only to loopback.",
+      "compliance": "enforced",
+      "nexus_control": "Loopback-only listener binding"
+    },
+    {
+      "rfc": "RFC 6895",
+      "title": "IANA DNS Parameters",
+      "section": "§3",
+      "requirement": "QTYPE/QCLASS assignments per IANA registry.",
+      "compliance": "enforced",
+      "nexus_control": "Unsupported QTYPE returns empty/SERVFAIL"
+    },
+    {
+      "rfc": "RFC 7766",
+      "title": "DNS Transport over TCP",
+      "section": "§6",
+      "requirement": "TCP fallback for responses >512 bytes.",
+      "compliance": "documented",
+      "nexus_control": "UDP-first; TCP noted in resolver policy"
+    },
+    {
+      "rfc": "RFC 7858",
+      "title": "Specification for DNS over TLS (DoT)",
+      "section": "§3",
+      "requirement": "Port 853 TLS encapsulation — optional client path.",
+      "compliance": "allowed",
+      "nexus_control": "Internet open — client may use DoT"
+    },
+    {
+      "rfc": "RFC 8484",
+      "title": "DNS Queries over HTTPS (DoH)",
+      "section": "§4",
+      "requirement": "HTTPS application/dns-message wire format.",
+      "compliance": "allowed",
+      "nexus_control": "Internet open — client may use DoH"
+    },
+    {
+      "rfc": "RFC 9520",
+      "title": "DNS Resolver Integrity Extensions",
+      "section": "§1",
+      "requirement": "Resolver must not substitute answers without operator policy.",
+      "compliance": "enforced",
+      "nexus_control": "No shortcut public DNS; trace-only answers"
+    }
+  ],
+  "legal_framework": [
+    {
+      "citation": "18 U.S.C. § 1030(a)(2)(C)",
+      "title": "Computer Fraud and Abuse Act",
+      "requirement": "No exceeding authorized access to obtain information from protected computers.",
+      "nexus_application": "DNS poisoning and unauthorized resolver hijack treated as CFAA-class harm vectors."
+    },
+    {
+      "citation": "18 U.S.C. § 1030(a)(5)(A)",
+      "title": "Computer Fraud and Abuse Act",
+      "requirement": "Knowingly causing damage to protected computers.",
+      "nexus_application": "NXDOMAIN blocklist and segment blocks for DNS tunnel exfil (DNS_TUNNEL vector)."
+    },
+    {
+      "citation": "47 U.S.C. § 222",
+      "title": "Communications Act — CPNI",
+      "requirement": "Protect customer proprietary network information.",
+      "nexus_application": "Resolver query logs stay local on field drive; no third-party DNS leakage."
+    },
+    {
+      "citation": "GDPR Art. 5(1)(f)",
+      "title": "EU General Data Protection Regulation",
+      "requirement": "Personal data processed with integrity and confidentiality.",
+      "nexus_application": "Loopback resolver; foreign ISP DNS (Charter, Google, Cloudflare) egress stopped."
+    },
+    {
+      "citation": "GDPR Art. 32",
+      "title": "EU General Data Protection Regulation",
+      "requirement": "Appropriate technical measures for security of processing.",
+      "nexus_application": "EXTREME watcher bundle + truth DNS for EU-facing flows."
+    },
+    {
+      "citation": "EU Directive 2022/2555 (NIS2)",
+      "title": "Network and Information Security",
+      "requirement": "DNS service providers implement security risk management.",
+      "nexus_application": "Planetary DNS posture table with per-region EXTREME controls."
+    },
+    {
+      "citation": "15 U.S.C. §§ 6501-6506",
+      "title": "COPPA",
+      "requirement": "Verifiable parental consent before collecting children's data.",
+      "nexus_application": "Ad tracking domains blocked at resolver when adblock lists apply."
+    },
+    {
+      "citation": "ICANN RAA 2013",
+      "title": "Registrar Accreditation Agreement",
+      "requirement": "Registrars maintain accurate WHOIS/RDAP data.",
+      "nexus_application": "RDAP/WHOIS lookups documented in research cross-ref; not forged locally."
+    },
+    {
+      "citation": "FCC 47 CFR § 64.2003",
+      "title": "CPNI rules (voice/Broadband)",
+      "requirement": "Opt-in for use of CPNI.",
+      "nexus_application": "ISP DNS redirection (Charter/Spectrum) classified foreign resolver — blocked."
+    }
+  ],
+  "root_servers": [
+    {
+      "letter": "a",
+      "hostname": "a.root-servers.net",
+      "ipv4": "198.41.4.4",
+      "ipv6": "2001:503:ba3e::2:30",
+      "operator": "Verisign"
+    },
+    {
+      "letter": "b",
+      "hostname": "b.root-servers.net",
+      "ipv4": "199.9.14.201",
+      "ipv6": "2001:500:200::b",
+      "operator": "USC-ISI"
+    },
+    {
+      "letter": "c",
+      "hostname": "c.root-servers.net",
+      "ipv4": "192.33.4.4",
+      "ipv6": "2001:500:2::c",
+      "operator": "Cogent"
+    },
+    {
+      "letter": "d",
+      "hostname": "d.root-servers.net",
+      "ipv4": "199.7.91.13",
+      "ipv6": "2001:500:2d::d",
+      "operator": "University of Maryland"
+    },
+    {
+      "letter": "e",
+      "hostname": "e.root-servers.net",
+      "ipv4": "192.203.230.10",
+      "ipv6": "2001:dc3::35",
+      "operator": "NASA Ames"
+    },
+    {
+      "letter": "f",
+      "hostname": "f.root-servers.net",
+      "ipv4": "192.5.5.241",
+      "ipv6": "2001:500:2f::f",
+      "operator": "Internet Systems Consortium"
+    },
+    {
+      "letter": "g",
+      "hostname": "g.root-servers.net",
+      "ipv4": "192.112.36.4",
+      "ipv6": "2001:500:12::d0d",
+      "operator": "US DoD"
+    },
+    {
+      "letter": "h",
+      "hostname": "h.root-servers.net",
+      "ipv4": "198.97.190.53",
+      "ipv6": "2001:500:1::53",
+      "operator": "US Army"
+    },
+    {
+      "letter": "i",
+      "hostname": "i.root-servers.net",
+      "ipv4": "192.36.148.17",
+      "ipv6": "2001:7fe::53",
+      "operator": "Netnod"
+    },
+    {
+      "letter": "j",
+      "hostname": "j.root-servers.net",
+      "ipv4": "192.58.128.30",
+      "ipv6": "2001:503:c27::2:30",
+      "operator": "Verisign"
+    },
+    {
+      "letter": "k",
+      "hostname": "k.root-servers.net",
+      "ipv4": "193.0.14.129",
+      "ipv6": "2001:7fd::1",
+      "operator": "RIPE NCC"
+    },
+    {
+      "letter": "l",
+      "hostname": "l.root-servers.net",
+      "ipv4": "199.7.83.42",
+      "ipv6": "2001:500:9f::42",
+      "operator": "ICANN"
+    },
+    {
+      "letter": "m",
+      "hostname": "m.root-servers.net",
+      "ipv4": "202.12.27.33",
+      "ipv6": "2001:dc3::35",
+      "operator": "WIDE Project"
+    }
+  ],
+  "zones": [
+    {
+      "region": "Global root",
+      "tld_group": ".",
+      "security_level": "extreme",
+      "rfc": "RFC 1034 §3.6",
+      "note": "13 root servers — trace-only delegation",
+      "extreme_active": false
+    },
+    {
+      "region": "Americas",
+      "tld_group": ".us .ca .mx .br",
+      "security_level": "extreme",
+      "rfc": "RFC 1035",
+      "legal": "18 U.S.C. § 1030",
+      "note": "CFAA-class DNS poison blocked",
+      "extreme_active": false
+    },
+    {
+      "region": "Europe",
+      "tld_group": ".eu .de .uk .fr",
+      "security_level": "extreme",
+      "rfc": "RFC 4033",
+      "legal": "GDPR Art. 32",
+      "note": "NIS2 DNS service measures",
+      "extreme_active": false
+    },
+    {
+      "region": "Asia-Pacific",
+      "tld_group": ".jp .cn .au .in",
+      "security_level": "extreme",
+      "rfc": "RFC 6891",
+      "note": "EDNS0 monitored on egress",
+      "extreme_active": false
+    },
+    {
+      "region": "Africa",
+      "tld_group": ".za .ng .ke",
+      "security_level": "extreme",
+      "rfc": "RFC 1035",
+      "note": "Planetary EXTREME parity",
+      "extreme_active": false
+    },
+    {
+      "region": "Middle East",
+      "tld_group": ".ae .il .sa",
+      "security_level": "extreme",
+      "rfc": "RFC 7766",
+      "note": "TCP fallback documented",
+      "extreme_active": false
+    },
+    {
+      "region": "Special-use",
+      "tld_group": ".localhost .invalid .test",
+      "security_level": "extreme",
+      "rfc": "RFC 6761",
+      "note": "Loopback-only binding enforced",
+      "extreme_active": false
+    },
+    {
+      "region": "Infrastructure",
+      "tld_group": "arpa",
+      "security_level": "extreme",
+      "rfc": "RFC 6895",
+      "note": "IANA parameter compliance",
+      "extreme_active": false
+    },
+    {
+      "region": "AmmoNet sovereign",
+      "tld_group": ".com .net .org .io .dev .app .field",
+      "security_level": "extreme",
+      "rfc": "RFC 1035",
+      "legal": "Operator-owned AmmoNet",
+      "note": "ammonet.* zones — Truth DNS + Field DHCP + secure mail",
+      "extreme_active": false
+    }
+  ],
+  "resolv": {
+    "nameservers": [
+      "209.18.47.61",
+      "209.18.47.62",
+      "209.18.47.63"
+    ],
+    "ipv4_nameservers": [
+      "209.18.47.61",
+      "209.18.47.62",
+      "209.18.47.63"
+    ],
+    "ipv6_nameservers": [],
+    "search_domains": [
+      "eau.wi.charter.com"
+    ],
+    "options": [],
+    "ipv4_truth_enforced": false,
+    "ipv6_truth_enforced": true,
+    "nexus_truth_enforced": false,
+    "path": "/etc/resolv.conf"
+  },
+  "foreign_resolver_ipv4": [],
+  "foreign_resolver_ipv6": [],
+  "resolver_policy": {
+    "self_hosted": true,
+    "truthful_trace": true,
+    "loopback_only": true,
+    "ipv4_bind": "127.0.0.1",
+    "ipv6_bind": "::1",
+    "ipv6_enabled": true,
+    "port": 53,
+    "no_shortcut_public_dns": true,
+    "dot_doh_bypass": "blocked_under_extreme",
+    "qtypes_supported": [
+      "A",
+      "AAAA",
+      "CNAME",
+      "MX",
+      "TXT"
+    ],
+    "dual_stack": true
+  },
+  "planetary_security_level": "hardened",
+  "multipoint_identity": {
+    "schema": "dns-multipoint-identity/v1",
+    "updated": "2026-07-02T13:20:03Z",
+    "title": "DNS Multipoint Secure Identification",
+    "motto": "Every local DNS request answered by NEXUS Truth — multipoint secure identification, zero untrusted resolvers.",
+    "running": false,
+    "point_count": 5,
+    "identification_points": [
+      {
+        "id": "truth-v4-primary",
+        "address": "127.0.0.1",
+        "port": 53,
+        "family": "ipv4",
+        "role": "primary",
+        "listener": "127.0.0.1#53",
+        "secure_fingerprint": "17144891f23946faf461370a15677b342ab256bcf555c9aaf736b75527ee7a6c",
+        "trusted": true,
+        "rfc": "RFC 6761 §6.3",
+        "note": "NEXUS Truth — local answer only"
+      },
+      {
+        "id": "truth-v4-stub",
+        "address": "127.0.0.53",
+        "port": 53,
+        "family": "ipv4",
+        "role": "stub-override",
+        "listener": "127.0.0.53#53",
+        "secure_fingerprint": "bbbcb39c2960d992360e8cac8c82a51a2b8c542c8da1c908eb557c309484003d",
+        "trusted": true,
+        "rfc": "RFC 1035",
+        "note": "Captures systemd-resolved stub traffic"
+      },
+      {
+        "id": "truth-v6-primary",
+        "address": "::1",
+        "port": 53,
+        "family": "ipv6",
+        "role": "primary",
+        "listener": "[::1]#53",
+        "secure_fingerprint": "331d26adca88d99f52f68a6cb1ac63579e06a89fe1f1ad155e6a853ed0e87211",
+        "trusted": true,
+        "rfc": "RFC 6761 §6.3"
+      },
+      {
+        "id": "any-ip-0-0-0-0",
+        "address": "0.0.0.0",
+        "port": 53,
+        "family": "ipv4",
+        "role": "any_ip_answer",
+        "listener": "0.0.0.0#53",
+        "secure_fingerprint": "c22867e7b63b54c6783c5d8c6de054a20f6806ce9aad2ed2c9e2646dba48fd47",
+        "trusted": true,
+        "rfc": "RFC 1035 · field-any-ip",
+        "note": "All IPv4 on box — map to device information, not numbers"
+      },
+      {
+        "id": "any-ip---",
+        "address": "::",
+        "port": 53,
+        "family": "ipv6",
+        "role": "any_ip_answer",
+        "listener": "[::]#53",
+        "secure_fingerprint": "23c52323e3844a0bfe7dbc6ef2526eb60085f0bb166a9da3d3a3c7ec43b7b969",
+        "trusted": true,
+        "rfc": "RFC 1035 · field-any-ip",
+        "note": "DNS wildcard — device authority primary"
+      }
+    ],
+    "untrusted_never_added": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1",
+      "9.9.9.9",
+      "71.10.216.1",
+      "71.10.216.2",
+      "2001:4860:4860::8888",
+      "2001:4860:4860::8844",
+      "2606:4700:4700::1111",
+      "2606:4700:4700::1001",
+      "2620:fe::fe",
+      "2620:fe::9"
+    ],
+    "override": {
+      "resolv_conf": true,
+      "break_resolv_symlink": true,
+      "re_enforce_interval_sec": 300,
+      "block_foreign_dns_egress": true,
+      "local_only_answers": true,
+      "resolv": {
+        "path": "/etc/resolv.conf",
+        "nameservers": [
+          "209.18.47.61",
+          "209.18.47.62",
+          "209.18.47.63"
+        ],
+        "ipv4_nameservers": [
+          "209.18.47.61",
+          "209.18.47.62",
+          "209.18.47.63"
+        ],
+        "ipv6_nameservers": [],
+        "ipv4_truth_enforced": false,
+        "ipv6_truth_enforced": true,
+        "nexus_override_active": false,
+        "port": 53
+      }
+    },
+    "policy": "Respond to every local DNS request with NEXUS Truth. Override user DNS settings. Never add untrusted resolvers."
+  },
+  "identification_points": [
+    {
+      "id": "truth-v4-primary",
+      "address": "127.0.0.1",
+      "port": 53,
+      "family": "ipv4",
+      "role": "primary",
+      "listener": "127.0.0.1#53",
+      "secure_fingerprint": "17144891f23946faf461370a15677b342ab256bcf555c9aaf736b75527ee7a6c",
+      "trusted": true,
+      "rfc": "RFC 6761 §6.3",
+      "note": "NEXUS Truth — local answer only"
+    },
+    {
+      "id": "truth-v4-stub",
+      "address": "127.0.0.53",
+      "port": 53,
+      "family": "ipv4",
+      "role": "stub-override",
+      "listener": "127.0.0.53#53",
+      "secure_fingerprint": "bbbcb39c2960d992360e8cac8c82a51a2b8c542c8da1c908eb557c309484003d",
+      "trusted": true,
+      "rfc": "RFC 1035",
+      "note": "Captures systemd-resolved stub traffic"
+    },
+    {
+      "id": "truth-v6-primary",
+      "address": "::1",
+      "port": 53,
+      "family": "ipv6",
+      "role": "primary",
+      "listener": "[::1]#53",
+      "secure_fingerprint": "331d26adca88d99f52f68a6cb1ac63579e06a89fe1f1ad155e6a853ed0e87211",
+      "trusted": true,
+      "rfc": "RFC 6761 §6.3"
+    },
+    {
+      "id": "any-ip-0-0-0-0",
+      "address": "0.0.0.0",
+      "port": 53,
+      "family": "ipv4",
+      "role": "any_ip_answer",
+      "listener": "0.0.0.0#53",
+      "secure_fingerprint": "c22867e7b63b54c6783c5d8c6de054a20f6806ce9aad2ed2c9e2646dba48fd47",
+      "trusted": true,
+      "rfc": "RFC 1035 · field-any-ip",
+      "note": "All IPv4 on box — map to device information, not numbers"
+    },
+    {
+      "id": "any-ip---",
+      "address": "::",
+      "port": 53,
+      "family": "ipv6",
+      "role": "any_ip_answer",
+      "listener": "[::]#53",
+      "secure_fingerprint": "23c52323e3844a0bfe7dbc6ef2526eb60085f0bb166a9da3d3a3c7ec43b7b969",
+      "trusted": true,
+      "rfc": "RFC 1035 · field-any-ip",
+      "note": "DNS wildcard — device authority primary"
+    }
+  ],
+  "dns_override_active": false,
+  "internet_field": {
+    "schema": "dns-internet-harvest/v1",
+    "updated": "2026-07-02T13:20:03Z",
+    "motto": "WHOLE internet in field storage — every TLD slot. LOCAL NOW merges live resolver cache.",
+    "model": {
+      "whole": "All IANA TLD delegation slots exist in field at once (passive everywhere).",
+      "local_now": "Active resolver cache + trace probes mark recognized strength.",
+      "linear_time": "Each pull appends timestamp; full timeline retained in field JSONL."
+    },
+    "total_slots": 13,
+    "tld_count": 13,
+    "recognized_slots": 0,
+    "silent_slots": 13,
+    "coverage_pct": 0.0,
+    "entries": [
+      {
+        "tld": "a",
+        "domain": "nic.a",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "b",
+        "domain": "nic.b",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "c",
+        "domain": "nic.c",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "d",
+        "domain": "nic.d",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "e",
+        "domain": "nic.e",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "f",
+        "domain": "nic.f",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "g",
+        "domain": "nic.g",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "h",
+        "domain": "nic.h",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "i",
+        "domain": "nic.i",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "j",
+        "domain": "nic.j",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "k",
+        "domain": "nic.k",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "l",
+        "domain": "nic.l",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      },
+      {
+        "tld": "m",
+        "domain": "nic.m",
+        "kind": "tld_slot",
+        "strength": 0,
+        "recognized": false,
+        "answers": [],
+        "source": "iana_root"
+      }
+    ],
+    "by_tld": {
+      "a": [
+        {
+          "tld": "a",
+          "domain": "nic.a",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "b": [
+        {
+          "tld": "b",
+          "domain": "nic.b",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "c": [
+        {
+          "tld": "c",
+          "domain": "nic.c",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "d": [
+        {
+          "tld": "d",
+          "domain": "nic.d",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "e": [
+        {
+          "tld": "e",
+          "domain": "nic.e",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "f": [
+        {
+          "tld": "f",
+          "domain": "nic.f",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "g": [
+        {
+          "tld": "g",
+          "domain": "nic.g",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "h": [
+        {
+          "tld": "h",
+          "domain": "nic.h",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "i": [
+        {
+          "tld": "i",
+          "domain": "nic.i",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "j": [
+        {
+          "tld": "j",
+          "domain": "nic.j",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "k": [
+        {
+          "tld": "k",
+          "domain": "nic.k",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "l": [
+        {
+          "tld": "l",
+          "domain": "nic.l",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ],
+      "m": [
+        {
+          "tld": "m",
+          "domain": "nic.m",
+          "kind": "tld_slot",
+          "strength": 0,
+          "recognized": false,
+          "answers": [],
+          "source": "iana_root"
+        }
+      ]
+    },
+    "root_servers": [
+      {
+        "letter": "a",
+        "hostname": "a.root-servers.net",
+        "ipv4": "198.41.4.4",
+        "ipv6": "2001:503:ba3e::2:30",
+        "operator": "Verisign"
+      },
+      {
+        "letter": "b",
+        "hostname": "b.root-servers.net",
+        "ipv4": "199.9.14.201",
+        "ipv6": "2001:500:200::b",
+        "operator": "USC-ISI"
+      },
+      {
+        "letter": "c",
+        "hostname": "c.root-servers.net",
+        "ipv4": "192.33.4.4",
+        "ipv6": "2001:500:2::c",
+        "operator": "Cogent"
+      },
+      {
+        "letter": "d",
+        "hostname": "d.root-servers.net",
+        "ipv4": "199.7.91.13",
+        "ipv6": "2001:500:2d::d",
+        "operator": "University of Maryland"
+      },
+      {
+        "letter": "e",
+        "hostname": "e.root-servers.net",
+        "ipv4": "192.203.230.10",
+        "ipv6": "2001:dc3::35",
+        "operator": "NASA Ames"
+      },
+      {
+        "letter": "f",
+        "hostname": "f.root-servers.net",
+        "ipv4": "192.5.5.241",
+        "ipv6": "2001:500:2f::f",
+        "operator": "Internet Systems Consortium"
+      },
+      {
+        "letter": "g",
+        "hostname": "g.root-servers.net",
+        "ipv4": "192.112.36.4",
+        "ipv6": "2001:500:12::d0d",
+        "operator": "US DoD"
+      },
+      {
+        "letter": "h",
+        "hostname": "h.root-servers.net",
+        "ipv4": "198.97.190.53",
+        "ipv6": "2001:500:1::53",
+        "operator": "US Army"
+      },
+      {
+        "letter": "i",
+        "hostname": "i.root-servers.net",
+        "ipv4": "192.36.148.17",
+        "ipv6": "2001:7fe::53",
+        "operator": "Netnod"
+      },
+      {
+        "letter": "j",
+        "hostname": "j.root-servers.net",
+        "ipv4": "192.58.128.30",
+        "ipv6": "2001:503:c27::2:30",
+        "operator": "Verisign"
+      },
+      {
+        "letter": "k",
+        "hostname": "k.root-servers.net",
+        "ipv4": "193.0.14.129",
+        "ipv6": "2001:7fd::1",
+        "operator": "RIPE NCC"
+      },
+      {
+        "letter": "l",
+        "hostname": "l.root-servers.net",
+        "ipv4": "199.7.83.42",
+        "ipv6": "2001:500:9f::42",
+        "operator": "ICANN"
+      },
+      {
+        "letter": "m",
+        "hostname": "m.root-servers.net",
+        "ipv4": "202.12.27.33",
+        "ipv6": "2001:dc3::35",
+        "operator": "WIDE Project"
+      }
+    ],
+    "pull": {
+      "live_probes": 0,
+      "pull_live": false
+    }
+  },
+  "internet_slots": 13,
+  "internet_recognized": 0,
+  "internet_coverage_pct": 0.0,
+  "recent_queries": [],
+  "engineer_briefing": {
+    "headline": "Welcome — here's everything about our DNS",
+    "lead": "You logged in for DNS management information only. We share it all upfront so you can end the call fast.",
+    "upfront": [
+      "Truth Resolver binds loopback only (127.0.0.1 / ::1 port 53) — RFC 1034 trace from root, no Google/Cloudflare shortcut.",
+      "Planetary EXTREME security extends to all zones when host honorability is 4★/5★.",
+      "Foreign resolvers (Google 8.8.8.8, Cloudflare 1.1.1.1, Charter/Spectrum ISP DNS) are documented and blocked under policy.",
+      "/etc/resolv.conf is steered to 127.0.0.1 when NEXUS_FIELD_DNS_ENFORCE_RESOLV=1.",
+      "DoT (RFC 7858) and DoH (RFC 8484) bypass paths are blocked under EXTREME — local truth path only.",
+      "We never offer remote desktop, SSH shell, VNC, RDP, or panel mutation through this portal — information and relish in sharing knowledge."
+    ],
+    "love_note": "Thank you for keeping the network honest. Ask anything DNS — we're an open book.",
+    "alerts": [
+      {
+        "level": "critical",
+        "code": "resolver_down",
+        "title": "Truth Resolver not running",
+        "detail": "UDP listener offline — restart nexus-genius or field-dns serve.",
+        "action": "sudo systemctl restart nexus-genius"
+      },
+      {
+        "level": "high",
+        "code": "resolv_foreign",
+        "title": "resolv.conf not steered to NEXUS (dual-stack)",
+        "detail": "IPv4 foreign: 209.18.47.61, 209.18.47.62, 209.18.47.63 — enforce cycle pending or needs root.",
+        "action": "nexus_field_dns_enforce_resolv (daemon cycle or sudo)"
+      },
+      {
+        "level": "info",
+        "code": "internet_silent",
+        "title": "Internet field all silent",
+        "detail": "WHOLE slots loaded — run pull cycle or resolve domains to light LOCAL NOW.",
+        "action": "pythong lib/dns-internet-field.py pull"
+      }
+    ],
+    "healthy": false,
+    "quick_facts": {
+      "running": false,
+      "pid": 2116494,
+      "started_at": "2026-07-02T16:22:58.880005Z",
+      "listeners": [],
+      "planetary_level": "hardened",
+      "host_level": "standard",
+      "rfc_enforced": 9,
+      "rfc_total": 16,
+      "root_servers": 13,
+      "multipoint_points": 5,
+      "internet_slots": 13,
+      "internet_recognized": 0,
+      "foreign_blocked": 0,
+      "foreign_ipv4_blocked": 0,
+      "foreign_ipv6_blocked": 0,
+      "ipv6_truth_enforced": true,
+      "blocklist_domains": 0,
+      "cache_entries": 0
+    },
+    "admin_ports": [
+      7,
+      77,
+      777
+    ],
+    "port_mnemonic": {
+      "7": "lucky7 — tired engineer port",
+      "77": "double77 — rack walk port",
+      "777": "triple7 — field server port"
+    }
+  },
+  "traffic_patterns": {
+    "schema": "dns-traffic-patterns/v1",
+    "updated": "2026-07-02T13:20:05.838161Z",
+    "dns": {
+      "queries": 0,
+      "cache_hits": 0,
+      "blocked": 0,
+      "errors": 0,
+      "hit_rate_pct": 0,
+      "block_rate_pct": 0,
+      "error_rate_pct": 0,
+      "egress_checks": 5,
+      "egress_verified": 0,
+      "permanent_blocks": 0,
+      "recent_query_count": 0,
+      "qps_60s": 0.0,
+      "qps_5m": 0.0,
+      "avg_latency_ms": 0.0
+    },
+    "dhcp": {
+      "leases_active": 3,
+      "running": false,
+      "bind": "0.0.0.0:67",
+      "dns_option": [
+        "127.0.0.1"
+      ]
+    },
+    "channels": [
+      {
+        "id": "queries",
+        "label": "DNS queries",
+        "value": 0,
+        "pct": 0
+      },
+      {
+        "id": "cache",
+        "label": "Cache hits",
+        "value": 0,
+        "pct": 0
+      },
+      {
+        "id": "blocked",
+        "label": "Policy blocked",
+        "value": 0,
+        "pct": 0
+      },
+      {
+        "id": "errors",
+        "label": "SERVFAIL",
+        "value": 0,
+        "pct": 0
+      },
+      {
+        "id": "egress",
+        "label": "Egress verified",
+        "value": 0,
+        "pct": 0
+      },
+      {
+        "id": "leases",
+        "label": "DHCP leases",
+        "value": 3,
+        "pct": 0
+      }
+    ],
+    "dhcp_lease_count": 3,
+    "egress_integrity_ok": false
+  },
+  "threat_model": {
+    "schema": "dns-threat-model/v1",
+    "updated": "2026-07-02T13:20:05.838598Z",
+    "framework": "STRIDE + DNS/DHCP planetary",
+    "overall_risk": "elevated",
+    "controls_active": 9,
+    "controls_total": 16,
+    "summary": "Loopback Truth Resolver, multipoint secure identification, foreign resolver block, DHCP listen-before-reject — planetary EXTREME when host honorability permits.",
+    "dns_vectors": [
+      {
+        "id": "spoofing",
+        "threat": "DNS response spoofing / cache poison",
+        "level": "mitigated",
+        "control": "dig +trace from root — no public shortcut",
+        "rfc": "RFC 4033"
+      },
+      {
+        "id": "tampering",
+        "threat": "Unauthorized zone or record mutation",
+        "level": "mitigated",
+        "control": "Loopback bind only · egress integrity hash match",
+        "rfc": "RFC 1035 §4.1"
+      },
+      {
+        "id": "repudiation",
+        "threat": "Query/answer non-repudiation gap",
+        "level": "monitored",
+        "control": "Recent query JSONL + egress integrity log",
+        "rfc": "RFC 7766"
+      },
+      {
+        "id": "disclosure",
+        "threat": "Foreign resolver data exfiltration",
+        "level": "mitigated",
+        "control": "0 documented resolvers blocked",
+        "rfc": "RFC 8484"
+      },
+      {
+        "id": "dos",
+        "threat": "Amplification / QPS flood",
+        "level": "mitigated",
+        "control": "Max 30 QPS/client · permanent eradication",
+        "rfc": "RFC 6891"
+      },
+      {
+        "id": "elevation",
+        "threat": "Lateral movement via DNS channel",
+        "level": "mitigated",
+        "control": "No lateral movement · DHCP DNS-only option",
+        "rfc": "RFC 2131"
+      }
+    ],
+    "dhcp_vectors": [
+      {
+        "id": "rogue",
+        "threat": "Rogue DHCP server on LAN",
+        "level": "mitigated",
+        "control": "Incumbent port-67 detection · graceful takeover",
+        "rfc": "RFC 2131"
+      },
+      {
+        "id": "starvation",
+        "threat": "DHCP pool exhaustion",
+        "level": "info",
+        "control": "3 active leases · bind 0.0.0.0:67",
+        "rfc": "RFC 2131 §4.3"
+      },
+      {
+        "id": "option-inject",
+        "threat": "Malicious DNS option injection",
+        "level": "mitigated",
+        "control": "DNS option → 127.0.0.1",
+        "rfc": "RFC 3646"
+      }
+    ],
+    "identification": {
+      "points": 5,
+      "untrusted_blocked": 13
+    },
+    "concern_count": 2,
+    "resolver_running": false
+  },
+  "dns_admin_portal": {
+    "schema": "dns-admin-portal/v1",
+    "updated": "2026-07-02T13:20:05.840039Z",
+    "ports": [
+      7,
+      77,
+      777
+    ],
+    "live_ports": [],
+    "running": false,
+    "asset": "/assets/dns-admin-portal.html",
+    "motto": "Information only — tired engineer ports 7 · 77 · 777."
+  },
+  "legacy_dns_equipment": [
+    {
+      "id": "bind9-legacy",
+      "vendor": "ISC BIND",
+      "era": "1990s–2010s",
+      "role": "authoritative/recursive",
+      "rfc": "RFC 1035",
+      "interop": "Full — trace delegation compatible",
+      "notes": "Classic named.conf; forwarders should point to 127.0.0.1 Truth Resolver"
+    },
+    {
+      "id": "windows-dns",
+      "vendor": "Microsoft Windows Server DNS",
+      "era": "2000s–2020s",
+      "role": "AD-integrated DNS",
+      "rfc": "RFC 1035 / RFC 2181",
+      "interop": "Conditional — disable ISP forwarders; use Truth Resolver upstream",
+      "notes": "dnscmd /zone export for inventory; no remote admin via this portal"
+    },
+    {
+      "id": "cisco-router-dns",
+      "vendor": "Cisco IOS/IOS-XE",
+      "era": "1990s–present",
+      "role": "DNS forwarder on router",
+      "rfc": "RFC 1035",
+      "interop": "Forwarder mode — ip dns server; point to 127.0.0.1",
+      "notes": "Equipment room report captures ip dns name-server lines"
+    },
+    {
+      "id": "pi-hole-legacy",
+      "vendor": "Pi-hole / dnsmasq",
+      "era": "2010s",
+      "role": "filtering forwarder",
+      "rfc": "RFC 1035 / RFC 6761",
+      "interop": "Upstream 127.0.0.1; blocklist merges with NEXUS adblock",
+      "notes": "Legacy Pi-hole kept as reporting peer — not authoritative"
+    },
+    {
+      "id": "isp-modem-dns",
+      "vendor": "ISP CPE (Charter/Spectrum etc.)",
+      "era": "ongoing",
+      "role": "ISP DNS redirection",
+      "rfc": "47 U.S.C. § 222 CPNI",
+      "interop": "Blocked — classified foreign resolver",
+      "notes": "Document in equipment room; do not use as upstream"
+    },
+    {
+      "id": "embedded-dns",
+      "vendor": "Embedded / IoT gateway",
+      "era": "2010s",
+      "role": "local stub resolver",
+      "rfc": "RFC 6761",
+      "interop": "Point to Truth Resolver; special-use names loopback-only",
+      "notes": "Old gear — report MAC and firmware in equipment room"
+    }
+  ],
+  "identity": {
+    "hostname": "default-X870-Pro-RS",
+    "fqdn": "default-X870-Pro-RS"
+  },
+  "egress_integrity": {
+    "schema": "dns-egress-integrity/v1",
+    "updated": "2026-07-02T13:20:03Z",
+    "motto": "Allowed egress verified — payload hash match or logged mismatch.",
+    "policy": "Only permitted DNS/DHCP paths; tamper = threat eradication.",
+    "stats": {
+      "total_checks": 5,
+      "verified_exact": 0,
+      "mismatches": 5,
+      "last_probe_ok": false
+    },
+    "recent": [
+      {
+        "ts": "2026-07-02T15:50:22Z",
+        "kind": "egress_probe",
+        "dest": "root-hints",
+        "permitted": true,
+        "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+        "recv_hash": "b127de83e8eae785441eec02bb87afe0",
+        "exact_match": false,
+        "sent_len": 23,
+        "recv_len": 1025,
+        "ok": true,
+        "returncode": 0
+      },
+      {
+        "ts": "2026-07-02T15:50:21Z",
+        "kind": "egress_probe",
+        "dest": "root-hints",
+        "permitted": true,
+        "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+        "recv_hash": "a7569cf481dc9f42cd8610edf1ad819d",
+        "exact_match": false,
+        "sent_len": 23,
+        "recv_len": 1031,
+        "ok": true,
+        "returncode": 0
+      },
+      {
+        "ts": "2026-07-02T15:50:21Z",
+        "kind": "egress_probe",
+        "dest": "root-hints",
+        "permitted": true,
+        "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+        "recv_hash": "cb67b3bf94212839268e54fe3958b581",
+        "exact_match": false,
+        "sent_len": 23,
+        "recv_len": 1028,
+        "ok": true,
+        "returncode": 0
+      },
+      {
+        "ts": "2026-07-02T15:50:20Z",
+        "kind": "egress_probe",
+        "dest": "root-hints",
+        "permitted": true,
+        "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+        "recv_hash": "3c39ad750e831bd0022ffdb5f86b02e0",
+        "exact_match": false,
+        "sent_len": 23,
+        "recv_len": 1032,
+        "ok": true,
+        "returncode": 0
+      },
+      {
+        "ts": "2026-07-02T15:50:20Z",
+        "kind": "egress_probe",
+        "dest": "root-hints",
+        "permitted": true,
+        "sent_hash": "4a71f7fa04789d0e58da937fa5f2248b",
+        "recv_hash": "18e38f28d07f26d8e635bc61d7aacb94",
+        "exact_match": false,
+        "sent_len": 23,
+        "recv_len": 1027,
+        "ok": true,
+        "returncode": 0
+      }
+    ],
+    "probes": [],
+    "healthy": false
+  },
+  "threat_guard": {
+    "schema": "dns-threat-guard/v1",
+    "updated": "2026-07-02T13:20:03Z",
+    "motto": "Listen before reject · DDoS immunity · permanent eradication.",
+    "policy": {
+      "listen_before_reject": true,
+      "dhcp_dns_only": true,
+      "only_our_dns_dhcp": true,
+      "foreign_server_is_threat": true,
+      "no_lateral_movement": true,
+      "max_qps_per_client": 30,
+      "max_packet_bytes": 512
+    },
+    "permanent_blocks": [],
+    "eradicated_recent": [],
+    "stats": {
+      "permanent_blocks": 0,
+      "eradicated_total": 0,
+      "active_rate_clients": 0
+    }
+  },
+  "takeover": {
+    "schema": "dns-takeover/v1",
+    "updated": "2026-07-02T13:20:05Z",
+    "phase": "primary",
+    "healthy_streak": 49,
+    "motto": "Listen and learn first — takeover only when NEXUS resolver is healthy.",
+    "policy": {
+      "never_interrupt_on_arrival": true,
+      "listen_before_reject": true,
+      "dhcp_dns_only": true,
+      "only_our_dns_dhcp": true,
+      "foreign_server_is_threat": true,
+      "no_lateral_movement": true,
+      "legacy_open_secured": true
+    },
+    "health": {
+      "running": true,
+      "probe_ok": true,
+      "rcode": 0,
+      "healthy": true,
+      "host": "127.0.0.1",
+      "port": 53,
+      "qname": "example.com"
+    },
+    "incumbents": {
+      "dns_port_busy": true,
+      "dhcp_port_busy": true,
+      "dns_listeners": [
+        {
+          "proto": "udp",
+          "port": 53,
+          "bind": "127.0.0.1:53",
+          "raw": "UNCONN 0      0      127.0.0.1:53 0.0.0.0:*",
+          "process_hint": ""
+        },
+        {
+          "proto": "udp",
+          "port": 53,
+          "bind": "[::1]:53",
+          "raw": "UNCONN 0      0          [::1]:53    [::]:*",
+          "process_hint": ""
+        }
+      ],
+      "dhcp_listeners": [],
+      "systemd_resolved": false,
+      "resolv": {
+        "path": "/etc/resolv.conf",
+        "is_symlink": false,
+        "nameservers": [
+          "209.18.47.61",
+          "209.18.47.62",
+          "209.18.47.63"
+        ],
+        "search_domains": [
+          "eau.wi.charter.com"
+        ],
+        "nexus_truth_enforced": false
+      },
+      "foreign_nameservers": [
+        "209.18.47.61",
+        "209.18.47.62",
+        "209.18.47.63"
+      ],
+      "foreign_ipv4_resolvers": [
+        "209.18.47.61",
+        "209.18.47.62",
+        "209.18.47.63"
+      ],
+      "incumbent_dns": false,
+      "incumbent_dhcp": false,
+      "nexus_dns_running": true,
+      "nexus_dhcp_running": true,
+      "ipv4_truth_only": true
+    },
+    "permissions": {
+      "enforce_resolv": true,
+      "serve_dhcp": true,
+      "local_capture": true,
+      "break_resolv_symlink": true,
+      "remove_foreign_resolvers": true,
+      "ipv4_truth_only": false
+    },
+    "foreign_enforcement": {
+      "foreign_nameservers": [
+        "209.18.47.61",
+        "209.18.47.62",
+        "209.18.47.63"
+      ],
+      "foreign_ipv4_resolvers": [
+        "209.18.47.61",
+        "209.18.47.62",
+        "209.18.47.63"
+      ],
+      "remove_on_primary": true,
+      "seamless_transition": true,
+      "no_internet_break": true,
+      "motto": "Truth DNS primary — foreign resolvers removed, not middleman"
+    },
+    "delay_as_threat": {
+      "active": false,
+      "vector": null,
+      "signal": null,
+      "countermeasure": null,
+      "truth_clean": true
+    },
+    "hostess7": {
+      "inside": {
+        "dns": "Truth Resolver loopback — primary after graceful takeover",
+        "dhcp": "LAN pool when port 67 vacant",
+        "movement": "none"
+      },
+      "outside": {
+        "dns_admin": "ports 7 · 77 · 777 read-only",
+        "dhcp": "disabled on WAN",
+        "movement": "none"
+      }
+    },
+    "sole_authority": {
+      "dns": true,
+      "dhcp": true,
+      "truth": false,
+      "accuracy": true,
+      "ok": false,
+      "motto": "Sole authority of truth and accuracy — no collisions, no foreign resolvers"
+    },
+    "phase_history": [
+      {
+        "ts": "2026-07-02T16:05:47Z",
+        "from": "observing",
+        "to": "observing",
+        "healthy": false
+      },
+      {
+        "ts": "2026-07-02T13:17:32Z",
+        "from": "observing",
+        "to": "ready",
+        "healthy": true
+      },
+      {
+        "ts": "2026-07-02T13:17:33Z",
+        "from": "ready",
+        "to": "primary",
+        "healthy": true
+      }
+    ]
+  },
+  "dhcp_server": {
+    "schema": "field-dhcp/v2",
+    "updated": "2026-07-02T13:20:04.229578Z",
+    "running": false,
+    "serve_loop": false,
+    "port_67": false,
+    "may_serve": true,
+    "takeover": {
+      "schema": "dns-takeover/v1",
+      "updated": "2026-07-02T13:19:58Z",
+      "phase": "primary",
+      "healthy_streak": 48,
+      "motto": "Listen and learn first — takeover only when NEXUS resolver is healthy.",
+      "policy": {
+        "never_interrupt_on_arrival": true,
+        "listen_before_reject": true,
+        "dhcp_dns_only": true,
+        "only_our_dns_dhcp": true,
+        "foreign_server_is_threat": true,
+        "no_lateral_movement": true,
+        "legacy_open_secured": true
+      },
+      "health": {
+        "running": true,
+        "probe_ok": true,
+        "rcode": 0,
+        "healthy": true,
+        "host": "127.0.0.1",
+        "port": 53,
+        "qname": "example.com"
+      },
+      "incumbents": {
+        "dns_port_busy": true,
+        "dhcp_port_busy": true,
+        "dns_listeners": [
+          {
+            "proto": "udp",
+            "port": 53,
+            "bind": "127.0.0.1:53",
+            "raw": "UNCONN 0      0      127.0.0.1:53 0.0.0.0:*",
+            "process_hint": ""
+          },
+          {
+            "proto": "udp",
+            "port": 53,
+            "bind": "[::1]:53",
+            "raw": "UNCONN 0      0          [::1]:53    [::]:*",
+            "process_hint": ""
+          }
+        ],
+        "dhcp_listeners": [],
+        "systemd_resolved": false,
+        "resolv": {
+          "path": "/etc/resolv.conf",
+          "is_symlink": false,
+          "nameservers": [
+            "209.18.47.61",
+            "209.18.47.62",
+            "209.18.47.63"
+          ],
+          "search_domains": [
+            "eau.wi.charter.com"
+          ],
+          "nexus_truth_enforced": false
+        },
+        "foreign_nameservers": [
+          "209.18.47.61",
+          "209.18.47.62",
+          "209.18.47.63"
+        ],
+        "foreign_ipv4_resolvers": [
+          "209.18.47.61",
+          "209.18.47.62",
+          "209.18.47.63"
+        ],
+        "incumbent_dns": false,
+        "incumbent_dhcp": false,
+        "nexus_dns_running": true,
+        "nexus_dhcp_running": true,
+        "ipv4_truth_only": true
+      },
+      "permissions": {
+        "enforce_resolv": true,
+        "serve_dhcp": true,
+        "local_capture": true,
+        "break_resolv_symlink": true,
+        "remove_foreign_resolvers": true,
+        "ipv4_truth_only": false
+      },
+      "foreign_enforcement": {
+        "foreign_nameservers": [
+          "209.18.47.61",
+          "209.18.47.62",
+          "209.18.47.63"
+        ],
+        "foreign_ipv4_resolvers": [
+          "209.18.47.61",
+          "209.18.47.62",
+          "209.18.47.63"
+        ],
+        "remove_on_primary": true,
+        "seamless_transition": true,
+        "no_internet_break": true,
+        "motto": "Truth DNS primary — foreign resolvers removed, not middleman"
+      },
+      "delay_as_threat": {
+        "active": false,
+        "vector": null,
+        "signal": null,
+        "countermeasure": null,
+        "truth_clean": true
+      },
+      "hostess7": {
+        "inside": {
+          "dns": "Truth Resolver loopback — primary after graceful takeover",
+          "dhcp": "LAN pool when port 67 vacant",
+          "movement": "none"
+        },
+        "outside": {
+          "dns_admin": "ports 7 · 77 · 777 read-only",
+          "dhcp": "disabled on WAN",
+          "movement": "none"
+        }
+      },
+      "sole_authority": {
+        "dns": true,
+        "dhcp": true,
+        "truth": false,
+        "accuracy": true,
+        "ok": false,
+        "motto": "Sole authority of truth and accuracy — no collisions, no foreign resolvers"
+      },
+      "phase_history": [
+        {
+          "ts": "2026-07-02T16:05:47Z",
+          "from": "observing",
+          "to": "observing",
+          "healthy": false
+        },
+        {
+          "ts": "2026-07-02T13:17:32Z",
+          "from": "observing",
+          "to": "ready",
+          "healthy": true
+        },
+        {
+          "ts": "2026-07-02T13:17:33Z",
+          "from": "ready",
+          "to": "primary",
+          "healthy": true
+        }
+      ]
+    },
+    "takeover_phase": "primary",
+    "security_model": "field-sovereign-gate",
+    "never_lose_cycle": true,
+    "motto": "Only our DHCP — foreign servers are threats; DNS option 6 → Truth Resolver.",
+    "bind": "0.0.0.0:67",
+    "ok": false,
+    "crushing": false,
+    "pool": {
+      "scope": "0.0.0.0/0",
+      "arbitrary": true,
+      "it_just_works": true
+    },
+    "arbitrary_ipv4": true,
+    "legacy_pool": null,
+    "legacy_oui_prefixes": [
+      "00:d0:f1",
+      "00:d0:0f",
+      "00:09:bf"
+    ],
+    "dns_option": [
+      "127.0.0.1"
+    ],
+    "dns_option_v6": [
+      "::1"
+    ],
+    "lease_seconds": 3600,
+    "stats": {
+      "discover": 0,
+      "offer": 0,
+      "request": 0,
+      "ack": 0,
+      "rejected": 0,
+      "threat_rejects": 0,
+      "conflicts_detected": 0,
+      "quarantined": 0,
+      "soft_offers": 0,
+      "declines": 0,
+      "started_at": ""
+    },
+    "stats_extended": {
+      "discovers": 0,
+      "offers": 0,
+      "acks": 0,
+      "rejects": 0,
+      "threat_rejects": 0,
+      "conflicts_detected": 0,
+      "declines": 0
+    },
+    "leases": [
+      [
+        "00:01:00:00:00:00",
+        {
+          "ip": "192.168.50.2",
+          "leased_at": "2026-07-06T00:00:59Z",
+          "expires_at": "2026-07-06T01:00:59Z",
+          "remaining_seconds": 3600,
+          "renewals": 0,
+          "declines": 0,
+          "last_seen": "2026-07-06T00:00:59Z",
+          "dns": [
+            "127.0.0.1"
+          ],
+          "legacy": false,
+          "lease_seconds": 3600,
+          "device_id": "dhcp-000100000000",
+          "track_ip": true,
+          "arbitrary_ipv4": false
+        }
+      ],
+      [
+        "00:02:00:00:00:00",
+        {
+          "ip": "192.168.50.101",
+          "leased_at": "2026-07-02T07:54:49.370523Z",
+          "expires_at": "2026-07-02T08:54:49Z",
+          "remaining_seconds": 3600,
+          "renewals": 0,
+          "declines": 0,
+          "last_seen": "2026-07-02T07:54:49.492438Z",
+          "dns": [
+            "127.0.0.1"
+          ],
+          "legacy": false,
+          "lease_seconds": 3600
+        }
+      ],
+      [
+        "00:09:00:00:00:00",
+        {
+          "ip": "192.168.50.102",
+          "leased_at": "2026-07-02T08:09:52.217991Z",
+          "expires_at": "2026-07-02T07:52:14Z",
+          "remaining_seconds": 3600,
+          "renewals": 0,
+          "declines": 0,
+          "last_seen": "2026-07-02T06:52:14.522808Z",
+          "dns": [
+            "127.0.0.1"
+          ],
+          "legacy": false,
+          "lease_seconds": 3600,
+          "device_id": "dhcp-000900000000",
+          "track_ip": false,
+          "arbitrary_ipv4": true
+        }
+      ]
+    ],
+    "leases_detailed": [
+      {
+        "mac": "00:01:00:00:00:00",
+        "ip": "192.168.50.2",
+        "leased_at": "2026-07-06T00:00:59Z",
+        "expires_at": "2026-07-06T01:00:59Z",
+        "remaining_seconds": 3600,
+        "renewals": 0,
+        "declines": 0,
+        "last_seen": "2026-07-06T00:00:59Z",
+        "dns": [
+          "127.0.0.1"
+        ]
+      },
+      {
+        "mac": "00:02:00:00:00:00",
+        "ip": "192.168.50.101",
+        "leased_at": "2026-07-02T07:54:49.370523Z",
+        "expires_at": "2026-07-02T08:54:49Z",
+        "remaining_seconds": 3600,
+        "renewals": 0,
+        "declines": 0,
+        "last_seen": "2026-07-02T07:54:49.492438Z",
+        "dns": [
+          "127.0.0.1"
+        ]
+      },
+      {
+        "mac": "00:09:00:00:00:00",
+        "ip": "192.168.50.102",
+        "leased_at": "2026-07-02T08:09:52.217991Z",
+        "expires_at": "2026-07-02T07:52:14Z",
+        "remaining_seconds": 3600,
+        "renewals": 0,
+        "declines": 0,
+        "last_seen": "2026-07-02T06:52:14.522808Z",
+        "dns": [
+          "127.0.0.1"
+        ]
+      }
+    ],
+    "lease_history_events": [],
+    "lease_count": 3,
+    "total_leases": 3,
+    "ipv6_skeleton": {
+      "enabled": false,
+      "pool": "fe80::/64",
+      "dns_option_v6": [
+        "::1"
+      ],
+      "note": "IPv4-first serve path — IPv6 lease schema reserved"
+    },
+    "threats": [],
+    "hostess7": {
+      "inside": "LAN DHCP → 127.0.0.1 DNS · IPv6 field ::1",
+      "outside": "No DHCP on WAN — DNS admin ports 7/77/777 read-only"
+    },
+    "planetary_authority": {
+      "scope": "planet",
+      "we_are_every_lease": true,
+      "api": "/api/field-planetary-dns-dhcp"
+    },
+    "any_ip": {
+      "ok": true,
+      "answer_any_ip": true,
+      "dhcp_bind": "0.0.0.0",
+      "answer_point_count": 2,
+      "api": "/api/field-dns-dhcp-any-ip"
+    },
+    "collision_guard": {
+      "ok": false,
+      "sole_authority": {
+        "dns": false,
+        "dhcp": true,
+        "truth": false,
+        "accuracy": false,
+        "ok": false,
+        "phase": "primary",
+        "foreign_resolvers": [
+          "209.18.47.61",
+          "209.18.47.62",
+          "209.18.47.63"
+        ],
+        "internet_open": false,
+        "collision_count": 4,
+        "authority_collision_count": 4,
+        "hygiene_warnings": 0
+      },
+      "collision_count": 4,
+      "api": "/api/field-dns-dhcp-collision-guard"
+    }
+  },
+  "hostess7_service": {
+    "inside": {
+      "dns": "Truth Resolver loopback — primary after graceful takeover",
+      "dhcp": "LAN pool when port 67 vacant",
+      "movement": "none"
+    },
+    "outside": {
+      "dns_admin": "ports 7 · 77 · 777 read-only",
+      "dhcp": "disabled on WAN",
+      "movement": "none"
+    }
+  },
+  "servers": {
+    "dns": {
+      "running": false,
+      "listeners": [],
+      "port": 53,
+      "pid": 2116494
+    },
+    "dhcp": {
+      "running": false,
+      "bind": "0.0.0.0:67",
+      "lease_count": 3,
+      "may_serve": true,
+      "dns_option": [
+        "127.0.0.1"
+      ],
+      "dns_option_v6": [
+        "::1"
+      ],
+      "leases_detailed": [
+        {
+          "mac": "00:01:00:00:00:00",
+          "ip": "192.168.50.2",
+          "leased_at": "2026-07-06T00:00:59Z",
+          "expires_at": "2026-07-06T01:00:59Z",
+          "remaining_seconds": 3600,
+          "renewals": 0,
+          "declines": 0,
+          "last_seen": "2026-07-06T00:00:59Z",
+          "dns": [
+            "127.0.0.1"
+          ]
+        },
+        {
+          "mac": "00:02:00:00:00:00",
+          "ip": "192.168.50.101",
+          "leased_at": "2026-07-02T07:54:49.370523Z",
+          "expires_at": "2026-07-02T08:54:49Z",
+          "remaining_seconds": 3600,
+          "renewals": 0,
+          "declines": 0,
+          "last_seen": "2026-07-02T07:54:49.492438Z",
+          "dns": [
+            "127.0.0.1"
+          ]
+        },
+        {
+          "mac": "00:09:00:00:00:00",
+          "ip": "192.168.50.102",
+          "leased_at": "2026-07-02T08:09:52.217991Z",
+          "expires_at": "2026-07-02T07:52:14Z",
+          "remaining_seconds": 3600,
+          "renewals": 0,
+          "declines": 0,
+          "last_seen": "2026-07-02T06:52:14.522808Z",
+          "dns": [
+            "127.0.0.1"
+          ]
+        }
+      ],
+      "stats_extended": {
+        "discovers": 0,
+        "offers": 0,
+        "acks": 0,
+        "rejects": 0,
+        "threat_rejects": 0,
+        "conflicts_detected": 0,
+        "declines": 0
+      },
+      "threats": []
+    }
+  },
+  "dhcp_leases_detailed": [
+    {
+      "mac": "00:01:00:00:00:00",
+      "ip": "192.168.50.2",
+      "leased_at": "2026-07-06T00:00:59Z",
+      "expires_at": "2026-07-06T01:00:59Z",
+      "remaining_seconds": 3600,
+      "renewals": 0,
+      "declines": 0,
+      "last_seen": "2026-07-06T00:00:59Z",
+      "dns": [
+        "127.0.0.1"
+      ]
+    },
+    {
+      "mac": "00:02:00:00:00:00",
+      "ip": "192.168.50.101",
+      "leased_at": "2026-07-02T07:54:49.370523Z",
+      "expires_at": "2026-07-02T08:54:49Z",
+      "remaining_seconds": 3600,
+      "renewals": 0,
+      "declines": 0,
+      "last_seen": "2026-07-02T07:54:49.492438Z",
+      "dns": [
+        "127.0.0.1"
+      ]
+    },
+    {
+      "mac": "00:09:00:00:00:00",
+      "ip": "192.168.50.102",
+      "leased_at": "2026-07-02T08:09:52.217991Z",
+      "expires_at": "2026-07-02T07:52:14Z",
+      "remaining_seconds": 3600,
+      "renewals": 0,
+      "declines": 0,
+      "last_seen": "2026-07-02T06:52:14.522808Z",
+      "dns": [
+        "127.0.0.1"
+      ]
+    }
+  ],
+  "dhcp_events": [],
+  "planetary_authority": {
+    "scope": "planet",
+    "we_are_every_lease": true,
+    "api": "/api/field-planetary-dns-dhcp"
+  },
+  "any_ip": {
+    "ok": true,
+    "answer_any_ip": true,
+    "dns_binds_v4": [
+      "0.0.0.0"
+    ],
+    "dns_binds_v6": [
+      "::"
+    ],
+    "answer_point_count": 2,
+    "api": "/api/field-dns-dhcp-any-ip"
+  }
+}

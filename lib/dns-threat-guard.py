@@ -114,7 +114,8 @@ def eradicate_threat(
 
 
 def is_permanently_blocked(client_key: str) -> bool:
-    if os.environ.get("NEXUS_FIELD_DHCP_SOFT_INGRESS", "1") == "1":
+    env = os.environ.get("NEXUS_FIELD_DHCP_SOFT_INGRESS", os.environ.get("NEXUS_FIELD_COLLISION_SOFT_INGRESS", ""))
+    if env.strip().lower() in ("1", "true", "yes", "on"):
         return False
     blocks = _permanent_blocks().get("blocks") or []
     return any(b.get("client") == client_key and not b.get("undone") for b in blocks)

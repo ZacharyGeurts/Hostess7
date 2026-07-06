@@ -24,8 +24,8 @@ Or from release asset:
 
 ```bash
 curl -LO …/ammoos-2.0.0-beta5-source.h7e
-bash scripts/field-h7e-extract.sh ammooos-2.0.0-beta5-source.h7e
-cd ammooos-2.0.0-beta5
+bash scripts/field-h7e-extract.sh ammoos-2.0.0-beta5-source.h7e
+cd ammoos-2.0.0-beta5
 sudo ./install-all.sh
 ```
 

@@ -2,16 +2,16 @@
  * Field screen layers — F1..F12 = sovereign stack top → bottom.
  *
  * ═══════════════════════════════════════════════════════════════════════════
- * IRONCLAD — F-KEY STACK (DO NOT REMOVE)
- *   F12 → Hostess 7 (∞) · panels only
- *   F11 → Layer 3 · cycles all layers ≥ 3 (dev, game room, steam, arcade…)
- *   F10 → Layer 2 · ZNetwork
- *   F9  → Layer 1 · AmmoNet
+ * IRONCLAD — F-KEY STACK · EVERYTHING IN NEXUS C2 (:9477 host)
+ *   F12 → Userland L2+ · cycle layers ≥ 3
+ *   F11 → Layer 1 · Queen Browser (shell window inside C2)
+ *   F10 → Layer −2 · DNS · KILROY lane
+ *   F9  → Layer −3 · NEXUS C2 command deck
  *   F8  → Layer 0.5 · CHIPS presume path
  *   F7  → Layer 0 · Hardware · EOL Code
- *   F6  → Layer −1 · Field One · AmmoOS
- *   F5  → Layer −2 · Botnet · DNS
- *   F4  → Layer −3 · NEXUS C2
+ *   F6  → Layer −1 · Field One · AmmoOS desktop (boot home · inside C2)
+ *   F5  → Layer −2 · Botnet · DNS (alias F10)
+ *   F4  → Layer −3 · NEXUS C2 (alias F9)
  *   F3  → CHIPS iron plate
  *   F2  → CHIPS presume path direct
  *   F1  → Ironclad CHIPS truth
@@ -26,15 +26,15 @@
   const USERLAND_MIN = 2;
 
   const STACK_FKEYS = {
-    F12: { z: "infinity", id: "hostess7", label: "Hostess 7", panel: true, path: "/brain.html" },
-    F11: { z: 3, id: "layer3_cycle", label: "Layer 3+", cycle: true },
-    F10: { z: 2, id: "znetwork", label: "ZNetwork", panel: true, path: "/api/znetwork" },
-    F9: { z: 1, id: "ammonet", label: "AmmoNet", panel: true, path: "/api/ammonet" },
+    F12: { z: 3, id: "userland_cycle", label: "Userland L2+", cycle: true },
+    F11: { z: 1, id: "queen_browser", label: "Queen Browser", browser: true },
+    F10: { z: -2, id: "dns_lane", label: "DNS · KILROY", stack: true, component: "field-botnet-dns-dhcp" },
+    F9: { z: -3, id: "nexus_c2", label: "NEXUS C2", stack: true, component: "nexus-c2-command" },
     F8: { z: 0.5, id: "presume_path", label: "Presume path", panel: true, path: "/api/chips/presume-path" },
     F7: { z: 0, id: "hardware", label: "Hardware · EOL", panel: true, path: "/eol-code" },
     F6: { z: -1, id: "field_one", label: "Field One · AmmoOS", desktop: true },
     F5: { z: -2, id: "botnet", label: "Botnet · DNS", stack: true, component: "field-botnet-dns-dhcp" },
-    F4: { z: -3, id: "nexus_c2", label: "NEXUS C2", stack: true, component: "queen-nexus-c2" },
+    F4: { z: -3, id: "nexus_c2_alt", label: "NEXUS C2", stack: true, component: "nexus-c2-command" },
     F3: { z: 0, id: "iron_plate", label: "Iron plate", panel: true, path: "/api/chips/plate-stack" },
     F2: { z: 0.5, id: "presume_direct", label: "Presume direct", panel: true, path: "/api/chips/presume-path" },
     F1: { z: 0, id: "ironclad_chips", label: "Ironclad CHIPS", queen: true, path: "/queen-chips-cores.html" },
@@ -51,16 +51,16 @@
   ];
 
   const LAYER_META = {
-    "-3": { label: "NEXUS C2", fkey: "F4", component: "queen-nexus-c2" },
-    "-2": { label: "Botnet · DNS · DHCP", fkey: null, component: "field-botnet-dns-dhcp" },
-    "-1": { label: "Field One · AmmoOS", fkey: "F6", component: "field-desktop" },
-    "0": { label: "OS Software · Hardware", fkey: "F7", inside_os: true },
-    "1": { label: "Queen Browser", fkey: null, queen_browser: true },
-    warehouse: { label: "Archival Warehouse", fkey: null, official: true, component: "ammoos-warehouse" },
+    "-3": { label: "NEXUS C2", fkey: "F9", component: "nexus-c2-command", inside_c2: true },
+    "-2": { label: "DNS · KILROY lane", fkey: "F10", component: "field-botnet-dns-dhcp", inside_c2: true },
+    "-1": { label: "Field One · AmmoOS", fkey: "F6", component: "field-desktop", inside_c2: true },
+    "0": { label: "OS Software · Hardware", fkey: "F7", inside_os: true, inside_c2: true },
+    "1": { label: "Queen Browser", fkey: "F11", queen_browser: true, inside_c2: true },
+    warehouse: { label: "Archival Warehouse", fkey: null, official: true, component: "ammoos-warehouse", inside_c2: true },
   };
 
   const STACK_LAYERS = [-3, -2];
-  const FKEY_TO_LAYER = { F4: -3, F5: -2 };
+  const FKEY_TO_LAYER = { F9: -3, F10: -2, F6: -1, F11: 1, F4: -3, F5: -2 };
 
   const state = {
     active: -1,
@@ -89,16 +89,17 @@
 
   function queenPagesBase() {
     if (pagesRuntime()) return (global.HOSTESS7_PAGES_BASE || "/Hostess7") + "/queen";
-    return "http://127.0.0.1:9481/world";
+    return "/Hostess7/queen/world";
   }
 
   function layerUrl(layer) {
     const q = queenPagesBase();
     const p = panelBase();
-    if (layer === -3) return q + "/queen-nexus-c2.html";
-    if (layer === -2) return p + "/command/?embed=1#dns";
+    if (layer === -3) return p + "/command?embed=1";
+    if (layer === -2) return p + "/command?embed=1#dns";
     if (layer === -1) return pagesRuntime() ? p + "/desktop/" : p + "/field";
     if (layer === "warehouse") return p + "/ammoos-warehouse/";
+    if (layer === 1) return queenBrowserUrl();
     return null;
   }
 
@@ -116,6 +117,8 @@
     state.sovereignLayer = z;
     document.documentElement.dataset.fieldLayer = String(z);
     document.documentElement.dataset.fieldScreenLayer = String(z);
+    document.documentElement.dataset.nexusC2 = "1";
+    document.documentElement.dataset.nexusC2Stack = "ironclad";
     if (z >= LAYER_3_MIN) {
       document.documentElement.dataset.fieldLayerSovereign = "exclusive";
     } else {
@@ -203,7 +206,14 @@
   }
 
   function openHostess7() {
-    launchSurface(STACK_FKEYS.F12, "F12");
+    launchSurface({
+      z: "infinity",
+      id: "hostess7",
+      label: "Hostess 7",
+      panel: true,
+      path: "/brain.html",
+      sovereignLayer: 3,
+    }, "H7");
   }
 
   function cycleLayer3Plus() {
@@ -228,6 +238,10 @@
     if (!spec) return;
     if (spec.cycle) {
       cycleLayer3Plus();
+      return;
+    }
+    if (spec.browser) {
+      openQueen();
       return;
     }
     if (spec.z === "infinity") {
@@ -258,7 +272,7 @@
     panel.className = "fsl-fast-switch";
     panel.setAttribute("aria-label", "F1–F12 sovereign stack");
     panel.setAttribute("data-ironclad", "f1-f12-stack");
-    ["F12", "F11", "F10", "F9", "F8", "F7", "F6", "F5", "F4"].forEach(function (fk) {
+    ["F12", "F11", "F10", "F9", "F8", "F7", "F6"].forEach(function (fk) {
       const spec = STACK_FKEYS[fk];
       if (!spec) return;
       const btn = document.createElement("button");
@@ -345,7 +359,7 @@
     setDesktopVisible(true);
     updateHud(layer);
     updateFastSwitch(layer);
-    toast("Layer " + layer + " · Field One");
+    toast("Layer " + layer + " · AmmoOS · NEXUS C2");
   }
 
   function showStackLayer(layer) {
@@ -377,7 +391,11 @@
       showDesktopLayer(0);
       return;
     }
-    if (layer === -1 || layer === -2 || layer === -3) {
+    if (layer === -1) {
+      showDesktopLayer(-1);
+      return;
+    }
+    if (layer === -2 || layer === -3) {
       showStackLayer(layer);
       return;
     }
@@ -418,6 +436,13 @@
     if (state.active === 0 || state.sovereignLayer >= LAYER_3_MIN) switchTo(-1);
   }
 
+  function queenBrowserUrl() {
+    if (pagesRuntime()) {
+      return (global.HOSTESS7_PAGES_BASE || "/Hostess7") + "/queen/browser.html";
+    }
+    return queenPagesBase() + "/browser.html";
+  }
+
   function openQueen() {
     const url = queenBrowserUrl();
     const assets = pagesRuntime()
@@ -432,10 +457,6 @@
         icon_url: assets + "/queen-prog-browser.png",
       });
       focusQueenBrowser();
-      return;
-    }
-    if (global.NexusFieldShell?.launchView) {
-      global.NexusFieldShell.launchView("command");
       return;
     }
     window.open(url, "_blank", "noopener");

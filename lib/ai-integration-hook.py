@@ -178,6 +178,39 @@ def _run_py(script: Path, mode: str, body: dict[str, Any] | None = None, timeout
     return out
 
 
+def _ai_root_guard(
+    *,
+    peer: str,
+    path: str = "/api/ai-integration",
+    method: str = "POST",
+    body: dict[str, Any] | None = None,
+    headers: dict[str, str] | None = None,
+) -> dict[str, Any] | None:
+    guard_py = INSTALL / "lib" / "field-ai-root-api-guard.py"
+    if not guard_py.is_file():
+        return None
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("field_ai_root_guard", guard_py)
+        if not spec or not spec.loader:
+            return None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if not hasattr(mod, "gate_access"):
+            return None
+        return mod.gate_access(
+            system_id="ai_integration_hook",
+            peer=peer,
+            path=path,
+            method=method,
+            channel="ai",
+            body=body,
+            headers=headers,
+        )
+    except Exception:
+        return None
+
+
 def integrate(
     body: dict[str, Any],
     *,
@@ -189,6 +222,16 @@ def integrate(
         doc = read_hook()
         doc["ok"] = True
         return doc
+
+    guard_verdict = _ai_root_guard(peer=peer, body=body, headers=headers)
+    if guard_verdict and not guard_verdict.get("ok"):
+        return {
+            "ok": False,
+            "error": guard_verdict.get("error") or "ai_root_guard_blocked",
+            "guard": guard_verdict,
+            "policy": "ai_work_only_cannot_break_system",
+            "updated": _now(),
+        }
 
     if action in HUMAN_FORBIDDEN_ACTIONS:
         return human_forbidden("human_action_blocked", detail=action)

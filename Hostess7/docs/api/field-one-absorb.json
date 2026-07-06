@@ -1,9 +1,9 @@
 {
   "ok": true,
   "schema": "field-one-absorb/v1",
-  "updated": "2026-07-05T00:45:43Z",
+  "updated": "2026-07-06T00:04:25Z",
   "title": "Field 1 \u2014 everything on one field, even outside our network",
-  "motto": "Anything and everything comes to Field 1 \u2014 LAN, WAN, planetary, outside network. Quarantine never kill.",
+  "motto": "Anything and everything comes to Field 1 \u2014 LAN, WAN, planetary, outside network. Quarantine never kill. We never go down \u2014 every server instantiates; we are always Field 1.",
   "field_one": true,
   "universal_ingress": true,
   "outside_network_absorbed": true,
@@ -25,9 +25,9 @@
     "wildcard": "0.0.0.0/0",
     "pages": "https://zacharygeurts.github.io/Hostess7/"
   },
-  "connected_devices": 351,
-  "registry_devices": 351,
-  "outside_absorbed": 351,
+  "connected_devices": 2848,
+  "registry_devices": 2848,
+  "outside_absorbed": 346,
   "wan_edges": 256,
   "total_edges": 320,
   "sole_authority": {
@@ -53,7 +53,7 @@
       "step": "clear_fakes",
       "ok": true,
       "dhcp_leases_real": 3,
-      "registry_devices": 351,
+      "registry_devices": 2848,
       "fakes_removed": true,
       "threat_soft_unblocked": 0,
       "policy": {
@@ -63,8 +63,8 @@
         "lan_stale_after_seconds": 7200,
         "min_corroboration_sources": 0,
         "existence_floor": 1,
-        "dhcp_lease_is_real": true,
         "never_evict_dhcp_sourced": true,
+        "dhcp_lease_is_real": true,
         "field_one_sink": true,
         "outside_network_absorbed": true
       }
@@ -4273,7 +4273,7 @@
       "step": "any_ip_wildcard",
       "ok": true,
       "schema": "field-dns-dhcp-any-ip/v1",
-      "updated": "2026-07-05T00:45:21Z",
+      "updated": "2026-07-06T00:04:25Z",
       "title": "Answer DNS and DHCP on any IP \u2014 every possible local address",
       "motto": "Anyone picks any IPv4 anywhere \u2014 even outside our network, everything answers at Field 1.",
       "any_ip": true,
@@ -4303,7 +4303,7 @@
         "0.0.0.0",
         "127.0.0.1",
         "97.95.64.87",
-        "71.86.186.171",
+        "71.86.186.130",
         "192.168.47.1"
       ],
       "local_ipv6": [],
@@ -4360,8 +4360,8 @@
     {
       "step": "absorb_outside_devices",
       "ok": true,
-      "absorbed": 351,
-      "registry_devices": 351,
+      "absorbed": 346,
+      "registry_devices": 2848,
       "outside_network": true,
       "field_one_sink": true,
       "hub": {
@@ -4395,7 +4395,7 @@
     {
       "step": "collision_detect",
       "schema": "field-dns-dhcp-collision-guard/v1",
-      "updated": "2026-07-05T00:45:38Z",
+      "updated": "2026-07-06T00:04:25Z",
       "motto": "Sole IPv4 DHCP/DNS \u2014 ZNetwork sole internet pipe. Live leases quarantined never killed.",
       "collisions": [
         {
@@ -4497,7 +4497,7 @@
         "nft_block_foreign_offers": true,
         "internet_open": false,
         "preserve_lease_connections": true,
-        "quarantine_not_kill": true,
+        "quarantine_not_kill": false,
         "accuracy": "device_mapped_not_numbers"
       },
       "ok": true
@@ -4505,9 +4505,9 @@
     {
       "step": "dns_takeover",
       "schema": "dns-takeover/v1",
-      "updated": "2026-07-01T22:15:51Z",
+      "updated": "2026-07-06T00:04:24Z",
       "phase": "primary",
-      "healthy_streak": 32,
+      "healthy_streak": 23,
       "motto": "Listen and learn first \u2014 takeover only when NEXUS resolver is healthy.",
       "policy": {
         "never_interrupt_on_arrival": true,
@@ -4534,15 +4534,15 @@
           {
             "proto": "udp",
             "port": 53,
-            "bind": "0.0.0.0:53",
-            "raw": "UNCONN 0      0      0.0.0.0:53 0.0.0.0:*",
+            "bind": "127.0.0.1:53",
+            "raw": "UNCONN 0      0      127.0.0.1:53 0.0.0.0:*",
             "process_hint": ""
           },
           {
             "proto": "udp",
             "port": 53,
-            "bind": "[::]:53",
-            "raw": "UNCONN 0      0         [::]:53    [::]:*",
+            "bind": "[::1]:53",
+            "raw": "UNCONN 0      0          [::1]:53    [::]:*",
             "process_hint": ""
           }
         ],
@@ -4630,73 +4630,73 @@
       },
       "phase_history": [
         {
-          "ts": "2026-07-01T15:53:45Z",
+          "ts": "2026-07-02T16:56:32Z",
           "from": "primary",
           "to": "ready",
           "healthy": false
         },
         {
-          "ts": "2026-07-01T15:53:51Z",
+          "ts": "2026-07-02T16:56:40Z",
           "from": "ready",
           "to": "observing",
           "healthy": false
         },
         {
-          "ts": "2026-07-01T15:53:56Z",
+          "ts": "2026-07-02T03:43:35Z",
           "from": "observing",
           "to": "ready",
           "healthy": true
         },
         {
-          "ts": "2026-07-01T15:53:59Z",
+          "ts": "2026-07-02T03:43:55Z",
           "from": "ready",
           "to": "primary",
           "healthy": true
         },
         {
-          "ts": "2026-07-01T16:08:55Z",
+          "ts": "2026-07-02T03:24:28Z",
           "from": "primary",
           "to": "ready",
           "healthy": false
         },
         {
-          "ts": "2026-07-01T16:09:03Z",
-          "from": "ready",
-          "to": "primary",
-          "healthy": true
-        },
-        {
-          "ts": "2026-07-01T16:16:54Z",
-          "from": "primary",
-          "to": "ready",
-          "healthy": false
-        },
-        {
-          "ts": "2026-07-01T16:17:01Z",
-          "from": "ready",
-          "to": "primary",
-          "healthy": true
-        },
-        {
-          "ts": "2026-07-01T18:50:09Z",
-          "from": "primary",
-          "to": "ready",
-          "healthy": false
-        },
-        {
-          "ts": "2026-07-01T19:11:33Z",
+          "ts": "2026-07-02T03:24:35Z",
           "from": "ready",
           "to": "observing",
           "healthy": false
         },
         {
-          "ts": "2026-07-01T21:50:48Z",
+          "ts": "2026-07-02T03:27:03Z",
           "from": "observing",
           "to": "ready",
           "healthy": true
         },
         {
-          "ts": "2026-07-01T21:50:53Z",
+          "ts": "2026-07-02T03:27:07Z",
+          "from": "ready",
+          "to": "primary",
+          "healthy": true
+        },
+        {
+          "ts": "2026-07-02T03:38:50Z",
+          "from": "primary",
+          "to": "ready",
+          "healthy": false
+        },
+        {
+          "ts": "2026-07-02T03:39:01Z",
+          "from": "ready",
+          "to": "observing",
+          "healthy": false
+        },
+        {
+          "ts": "2026-07-06T00:00:47Z",
+          "from": "observing",
+          "to": "ready",
+          "healthy": true
+        },
+        {
+          "ts": "2026-07-06T00:00:51Z",
           "from": "ready",
           "to": "primary",
           "healthy": true
@@ -4708,7 +4708,7 @@
       "step": "ammonet_dns",
       "ok": true,
       "schema": "ammonet-dns-zones-panel/v1",
-      "updated": "2026-07-05T00:45:42Z",
+      "updated": "2026-07-06T00:04:25Z",
       "product": "AmmoNet",
       "motto": "ammonet.com \u00b7 ammonet.net \u00b7 ammonet.org \u00b7 all of them \u2014 Truth DNS + Field DHCP \u00b7 sole authority",
       "dhcp_domain": "ammonet.net",
@@ -5027,5 +5027,5 @@
   "api": "/api/field-one",
   "pages": true,
   "lane": "github-mirror",
-  "exported": "2026-07-05T00:52:25Z"
+  "exported": "2026-07-06T00:10:22Z"
 }

@@ -22,6 +22,9 @@ PRECISION_PANEL = STATE / "precision-field-panel.json"
 DISABLE_LOG = STATE / "hell-kit-disable-log.jsonl"
 
 SEVER_DURATION_SEC = 86400
+LASER_SEVER_DURATION_SEC = 259200
+CUBE_KILL_INCHES = 6
+LASER_SLICE_PASSES = 6
 REGIONAL_MAX_IPS = 48
 HUMAN_THREAT_MAX_IPS = 32
 
@@ -565,8 +568,50 @@ def field_die_roll(ip: str | None = None) -> dict[str, Any]:
     return out
 
 
-def laser_corridor(ip: str, vector: str = "LASER_CORRIDOR", severity: str = "critical") -> dict[str, Any]:
-    """Undodgeable laser corridor — sever wire then forever kill. Heaven-protected only dodge."""
+def _cube_kill_volume(ip: str) -> dict[str, Any]:
+    edge_mm = round(CUBE_KILL_INCHES * 25.4, 2)
+    return {
+        "cube_inches": CUBE_KILL_INCHES,
+        "cube_mm": edge_mm,
+        "volume_cuin": CUBE_KILL_INCHES ** 3,
+        "undodgeable": True,
+        "anchor_ip": ip,
+        "enu_half_edge_nm": int(edge_mm * 1_000_000 / 2),
+    }
+
+
+def _laser_grid_sever(
+    ip: str,
+    vector: str,
+    severity: str,
+    *,
+    passes: int = LASER_SLICE_PASSES,
+    prefix: str = "laser_corridor",
+) -> list[dict[str, Any]]:
+    """Raster sever passes through the 6″ kill cube — each plane undodgeable."""
+    rows: list[dict[str, Any]] = []
+    phases = ("horizontal", "vertical", "diagonal")
+    for i in range(max(1, passes)):
+        phase = phases[i % len(phases)]
+        rows.append(
+            sever_target(
+                ip,
+                vector,
+                severity,
+                f"{prefix}:{phase}_slice_pass_{i + 1}_of_{passes}",
+            )
+        )
+    return rows
+
+
+def laser_corridor(
+    ip: str,
+    vector: str = "LASER_CORRIDOR",
+    severity: str = "critical",
+    *,
+    slice_passes: int = LASER_SLICE_PASSES,
+) -> dict[str, Any]:
+    """Undodgeable 6″ cube laser corridor — multi-pass slice then forever kill."""
     ip = str(ip or "").strip()
     if not ip:
         return {"ok": False, "error": "missing_ip", "mode": "laser_corridor"}
@@ -581,33 +626,97 @@ def laser_corridor(ip: str, vector: str = "LASER_CORRIDOR", severity: str = "cri
             "undodgeable": False,
             "friendly_refused": True,
             "reason": guard_reason,
+            "cube": _cube_kill_volume(ip),
             "motto": "Heaven dodged the grid — laser passes.",
         }
 
-    sever = sever_target(ip, vector, severity, "laser_corridor:grid_sweep")
+    cube = _cube_kill_volume(ip)
+    severs = _laser_grid_sever(ip, vector, severity, passes=slice_passes, prefix="laser_corridor")
+    sever = severs[-1] if severs else {"ok": False}
     kit = _mod("field_attack_kit", "field-attack-kit.py")
     kill = kit.kill_target(
         ip,
         vector,
         severity,
         "laser_corridor:undodgeable_slice",
-        extra={"toolkit": "laser_corridor", "undodgeable": True},
+        extra={
+            "toolkit": "laser_corridor",
+            "undodgeable": True,
+            "cube_inches": CUBE_KILL_INCHES,
+            "slice_passes": slice_passes,
+        },
     )
 
     out = {
-        "ok": bool(sever.get("ok") or kill.get("ok") or kill.get("killed")),
+        "ok": bool(any(s.get("ok") for s in severs) or kill.get("ok") or kill.get("killed")),
         "ip": ip,
         "mode": "laser_corridor",
         "undodgeable": True,
         "vector": vector,
         "severity": severity,
-        "grid_phases": ["horizontal", "vertical", "diagonal"],
+        "cube": cube,
+        "slice_passes": slice_passes,
+        "grid_phases": ["horizontal", "vertical", "diagonal"] * max(1, slice_passes // 3 + 1),
+        "severs": severs,
         "sever": sever,
         "kill": kill,
         "killed": bool(kill.get("killed") or kill.get("ok")),
-        "motto": "Undodgeable laser corridor — wire sliced. Hell goes to Hell. lulz.",
+        "sever_duration_sec": LASER_SEVER_DURATION_SEC,
+        "motto": f"Undodgeable {CUBE_KILL_INCHES}″ cube — {slice_passes}-pass slice. Hell goes to Hell.",
     }
-    _log_disable({"mode": "laser_corridor", "ip": ip, "killed": out["killed"]})
+    _log_disable({"mode": "laser_corridor", "ip": ip, "killed": out["killed"], "passes": slice_passes})
+    return out
+
+
+def slice_and_dice(
+    ip: str,
+    vector: str = "SLICE_AND_DICE",
+    severity: str = "critical",
+) -> dict[str, Any]:
+    """Slice (6-pass laser cube) + Dice (d20 ≤6 doubles kill pressure). Undodgeable."""
+    ip = str(ip or "").strip()
+    if not ip:
+        return {"ok": False, "error": "missing_ip", "mode": "slice_and_dice"}
+
+    roll = random.randint(1, 20)
+    signal = roll <= FIELD_DIE_SIGNAL_THRESHOLD
+    laser = laser_corridor(ip, vector="LASER_CORRIDOR", severity=severity, slice_passes=LASER_SLICE_PASSES)
+
+    bonus_kill: dict[str, Any] | None = None
+    bonus_severs: list[dict[str, Any]] = []
+    if signal and laser.get("ok") and not laser.get("friendly_refused"):
+        kit = _mod("field_attack_kit", "field-attack-kit.py")
+        bonus_kill = kit.kill_target(
+            ip,
+            vector,
+            severity,
+            f"slice_and_dice:d20={roll}",
+            extra={"toolkit": "slice_and_dice", "dice_signal": True, "cube_inches": CUBE_KILL_INCHES},
+        )
+        bonus_severs = _laser_grid_sever(
+            ip, vector, severity, passes=2, prefix=f"slice_and_dice:d20={roll}"
+        )
+
+    killed = bool(
+        laser.get("killed")
+        or (bonus_kill or {}).get("killed")
+        or (bonus_kill or {}).get("ok")
+    )
+    out = {
+        **laser,
+        "mode": "slice_and_dice",
+        "vector": vector,
+        "dice": {"roll": roll, "d20": roll, "signal": signal, "threshold": FIELD_DIE_SIGNAL_THRESHOLD},
+        "bonus_kill": bonus_kill,
+        "bonus_severs": bonus_severs,
+        "killed": killed,
+        "motto": (
+            f"Slice & Dice SIGNAL — {CUBE_KILL_INCHES}″ cube, d20={roll}, double kill pass."
+            if signal
+            else f"Slice & Dice — {CUBE_KILL_INCHES}″ cube raster. d20={roll} noise floor; laser still undodgeable."
+        ),
+    }
+    _log_disable({"mode": "slice_and_dice", "ip": ip, "roll": roll, "signal": signal, "killed": killed})
     return out
 
 
@@ -640,12 +749,18 @@ def execute_disablement(body: dict[str, Any]) -> dict[str, Any]:
             str(body.get("vector") or "LASER_CORRIDOR"),
             str(body.get("severity") or "critical"),
         )
+    if mode in ("slice_and_dice", "slice-and-dice", "slice_dice"):
+        return slice_and_dice(
+            str(body.get("ip") or ""),
+            str(body.get("vector") or "SLICE_AND_DICE"),
+            str(body.get("severity") or "critical"),
+        )
     if body.get("ip"):
         return sever_target(str(body["ip"]))
     return {
         "ok": False,
         "error": "unknown_mode",
-        "modes": ["sever", "regional", "human_threat", "hell_rip", "field_die", "laser_corridor"],
+        "modes": ["sever", "regional", "human_threat", "hell_rip", "field_die", "laser_corridor", "slice_and_dice"],
     }
 
 
@@ -717,6 +832,9 @@ def main() -> int:
         return 0
     if cmd == "laser-corridor" and len(sys.argv) >= 3:
         print(json.dumps(laser_corridor(sys.argv[2]), ensure_ascii=False))
+        return 0
+    if cmd in ("slice-and-dice", "slice_and_dice") and len(sys.argv) >= 3:
+        print(json.dumps(slice_and_dice(sys.argv[2]), ensure_ascii=False))
         return 0
     if cmd == "disable" and len(sys.argv) >= 2:
         body = json.loads(sys.argv[2] if sys.argv[2] != "-" else sys.stdin.read())

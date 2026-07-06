@@ -183,6 +183,25 @@ GENIUSEOF
   fi
 fi
 
+echo "=== Boot seal — globe DNS/DHCP · X.com host · no root PIDs · stack fused ==="
+if command -v python3 >/dev/null 2>&1; then
+  NEXUS_INSTALL_ROOT="${ROOT}" NEXUS_STATE_DIR="${NEXUS_STATE_DIR}" AML_BUILD=0 \
+    HOSTESS7_SUDO_PW="${HOSTESS7_SUDO_PW:-mememe}" \
+    python3 "${ROOT}/lib/field-boot-seal.py" seal 2>/dev/null | python3 -c "
+import json,sys
+d=json.load(sys.stdin)
+print('  DNS:', 'up' if d.get('dns_healthy') else 'down', '| DHCP:', 'up' if d.get('dhcp_up') else 'down')
+x=d.get('xcom') or {}
+print('  X.com new host:', x.get('we_are_new_host'), '—', (x.get('verdict') or '')[:72])
+r=d.get('root_audit') or {}
+print('  Root field PIDs:', r.get('root_field_pids_remaining', '?'))
+s=d.get('stack') or {}
+print('  Stack sealed:', s.get('sealed'), '| C2:', s.get('nexus_c2_port_up'))
+" 2>/dev/null || echo "  WARN: boot seal incomplete — python3 ${ROOT}/lib/field-boot-seal.py seal" >&2
+else
+  echo "  WARN: python3 missing — skip boot seal" >&2
+fi
+
 echo "=== Ready ==="
 echo "  Reboot → GRUB/Mint/Windows unchanged; early layer loads before login desktop"
 echo "  Boot order: KILROY → unified field (drives/RAM/board/voltage/FCC) → ZNetwork → C2 → guest OS"

@@ -17,7 +17,7 @@ fi
 unset -f _aml_find_root 2>/dev/null || true
 
 #!/usr/bin/env bash
-# Private GitHub MCP for ZacharyGeurts — local binary + gh token, no Copilot OAuth.
+# Private GitHub MCP for ZacharyGeurts — local binary + gh token, no OAuth.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BIN="${HOME}/.local/bin/github-mcp-server"

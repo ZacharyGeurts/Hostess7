@@ -241,6 +241,77 @@ def _save_json(path: Path, data: Any) -> None:
     tmp.replace(path)
 
 
+def _lease_source_paths() -> list[Path]:
+    """All known lease stores — merged dynamically; restarts never drop real people."""
+    ordered: list[Path] = []
+    seen: set[str] = set()
+
+    def _add(path: Path) -> None:
+        key = str(path)
+        if key in seen:
+            return
+        seen.add(key)
+        ordered.append(path)
+
+    _add(LEASE_FILE)
+    host = os.environ.get("NEXUS_HOST_STATE_DIR", "").strip()
+    if host:
+        _add(Path(host) / "field-dhcp-leases.json")
+    _add(INSTALL / ".nexus-state" / "field-dhcp-leases.json")
+    _add(INSTALL / ".nexus-field-drive" / "nexus-field" / "state" / "field-dhcp-leases.json")
+    _add(Path("/var/lib/nexus-shield") / "field-dhcp-leases.json")
+    return ordered
+
+
+def _lease_entry_ts(entry: dict[str, Any]) -> float:
+    for key in ("last_seen", "leased_at", "expires_at"):
+        raw = str(entry.get(key) or "").strip()
+        if not raw:
+            continue
+        try:
+            dt = datetime.strptime(raw[:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc)
+            return dt.timestamp()
+        except (ValueError, TypeError):
+            continue
+    return 0.0
+
+
+def ensure_lease_persistence() -> dict[str, Any]:
+    """Union leases across state roots — dynamic, never cleared on panel/DHCP restart."""
+    merged: dict[str, dict[str, Any]] = {}
+    sources: list[str] = []
+    for path in _lease_source_paths():
+        if not path.is_file():
+            continue
+        doc = _load_json(path, {"leases": {}})
+        pool = doc.get("leases") or {}
+        if not isinstance(pool, dict):
+            continue
+        sources.append(str(path))
+        for mac, entry in pool.items():
+            if not isinstance(entry, dict):
+                continue
+            key = str(mac).lower()
+            row = dict(entry)
+            prev = merged.get(key)
+            if not prev or _lease_entry_ts(row) >= _lease_entry_ts(prev):
+                merged[key] = row
+    before = len((_load_json(LEASE_FILE, {"leases": {}}).get("leases") or {}))
+    if merged:
+        LEASE_FILE.parent.mkdir(parents=True, exist_ok=True)
+        _save_json(LEASE_FILE, {"leases": merged, "merged_at": _now(), "dynamic": True})
+    after = len(merged)
+    return {
+        "ok": True,
+        "schema": "field-dhcp-lease-persist/v1",
+        "lease_file": str(LEASE_FILE),
+        "sources": sources,
+        "before": before,
+        "after": after,
+        "merged": after > before or (after and before != after),
+    }
+
+
 def _ip_to_int(ip: str) -> int:
     return struct.unpack("!I", socket.inet_aton(ip))[0]
 
@@ -838,6 +909,21 @@ def _acquire_serve_lock() -> bool:
 
 
 def serve() -> int:
+    try:
+        import importlib.util
+        sg = importlib.util.spec_from_file_location(
+            "field_pid_spawn_guard",
+            INSTALL / "lib" / "field-pid-spawn-guard.py",
+        )
+        if sg and sg.loader:
+            mod = importlib.util.module_from_spec(sg)
+            sg.loader.exec_module(mod)
+            mod.authorize_spawn_or_exit(service="dhcp", action="serve")
+    except SystemExit:
+        raise
+    except Exception:
+        pass
+    ensure_lease_persistence()
     if not _may_serve_dhcp():
         build_panel()
         from nexus_await import await_seconds
@@ -896,6 +982,7 @@ def _leases_detailed(raw: dict[str, Any], limit: int = 200) -> list[dict[str, An
 
 
 def build_panel() -> dict[str, Any]:
+    ensure_lease_persistence()
     leases = _load_json(LEASE_FILE, {"leases": {}})
     takeover: dict[str, Any] = {}
     try:

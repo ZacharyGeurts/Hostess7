@@ -130,6 +130,31 @@ def resolve_a_list(host: str) -> list[str]:
     return list(resolve_a(host).get("ips") or [])
 
 
+def _recover_hung_dns() -> dict[str, Any] | None:
+    if os.environ.get("NEXUS_DNS_FIX_ACTIVE", "").strip() == "1":
+        return None
+    fix_py = INSTALL / "lib" / "field-dns-dhcp-fix.py"
+    if not fix_py.is_file():
+        return None
+    py = os.environ.get("PYTHON", "python3")
+    env = {**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)}
+    try:
+        proc = subprocess.run(
+            [py, str(fix_py), "dns"],
+            capture_output=True,
+            text=True,
+            timeout=90,
+            check=False,
+            env=env,
+        )
+        raw = (proc.stdout or "").strip()
+        if raw.startswith("{"):
+            return json.loads(raw)
+    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+        pass
+    return None
+
+
 def ensure_truth_dns() -> dict[str, Any]:
     """Publish Truth DNS panels and start serve loop if resolver is down."""
     applied: list[str] = []
@@ -137,6 +162,20 @@ def ensure_truth_dns() -> dict[str, Any]:
     takeover_py = INSTALL / "lib" / "dns-service-takeover.py"
     py = os.environ.get("PYTHON", "python3")
     env = {**os.environ, "NEXUS_INSTALL_ROOT": str(INSTALL), "NEXUS_STATE_DIR": str(STATE)}
+
+    if not truth_resolver_up():
+        recovered = _recover_hung_dns()
+        if recovered:
+            applied.append("field-dns-dhcp-fix.dns")
+            if recovered.get("healthy"):
+                return {
+                    "schema": "field-dns-resolve/v1",
+                    "truth_up": True,
+                    "resolver": f"{TRUTH_HOST}:{TRUTH_PORT}",
+                    "applied": applied,
+                    "ok": True,
+                    "recovered": recovered,
+                }
 
     if dns_py.is_file():
         try:
