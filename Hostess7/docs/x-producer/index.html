@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>𝕏 Producer — @ZacharyGeurts</title>
+  <meta name="description" content="The timeline X hid. Hardened. Grok beta. Built for the everything app." />
+  <meta http-equiv="refresh" content="90" />
+  <style>
+    :root { --x: #1d9bf0; --bg: #000; --card: #16181c; --text: #e7e9ea; --muted: #71767b; --green: #00ba7c; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .top { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); background: rgba(0,0,0,.85); border-bottom: 1px solid #2f3336; }
+    .top-inner { max-width: 1100px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: var(--x); }
+    .badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: #1a1a2e; color: #a78bfa; border: 1px solid #4c1d95; }
+    .hero { max-width: 1100px; margin: 0 auto; padding: 24px 16px 8px; display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+    .profile-card { background: var(--card); border: 1px solid #2f3336; border-radius: 16px; overflow: hidden; }
+    .cover { height: 120px; background: linear-gradient(135deg, #1d4ed8, #000 60%); }
+    .profile-body { padding: 0 16px 16px; margin-top: -40px; }
+    .avatar { width: 80px; height: 80px; border-radius: 50%; border: 4px solid #000; background: linear-gradient(135deg,#22c55e,#1d9bf0); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+    h1 { margin: 8px 0 0; font-size: 1.35rem; }
+    .handle { color: var(--muted); margin: 0 0 8px; }
+    .stats { display: flex; gap: 16px; font-size: 0.9rem; margin: 8px 0 12px; }
+    .stats strong { color: #fff; }
+    .bio { font-size: 0.95rem; line-height: 1.45; margin-bottom: 12px; }
+    .cta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn { padding: 10px 18px; border-radius: 999px; font-weight: 700; font-size: 0.9rem; text-decoration: none; border: none; cursor: pointer; }
+    .btn-x { background: #fff; color: #000; }
+    .btn-grok { background: linear-gradient(90deg,#4c1d95,#1d9bf0); color: #fff; }
+    .btn-ghost { background: transparent; color: var(--x); border: 1px solid #2f3336; }
+    .verdict { background: #0c1f12; border: 1px solid var(--green); color: #bbf7d0; padding: 10px 12px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 12px; }
+    .timeline { background: var(--card); border: 1px solid #2f3336; border-radius: 16px; min-height: 200px; }
+    .timeline-head { padding: 12px 16px; border-bottom: 1px solid #2f3336; font-weight: 700; position: sticky; top: 56px; background: var(--card); z-index: 2; }
+    .post { padding: 12px 16px; border-bottom: 1px solid #2f3336; transition: background .15s; }
+    .post:hover { background: #080808; }
+    .post-meta { font-size: 0.8rem; color: var(--muted); margin-bottom: 4px; }
+    .post-text { white-space: pre-wrap; word-break: break-word; line-height: 1.4; margin: 6px 0; }
+    .post a { color: var(--x); font-size: 0.85rem; text-decoration: none; }
+    .grok-panel { background: var(--card); border: 1px solid #2f3336; border-radius: 16px; padding: 16px; position: sticky; top: 72px; }
+    .grok-panel h2 { margin: 0 0 8px; font-size: 1rem; color: #c4b5fd; }
+    .grok-panel p { margin: 0 0 12px; font-size: 0.85rem; color: var(--muted); }
+    .grok-input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #2f3336; background: #000; color: #fff; font: inherit; resize: vertical; min-height: 72px; }
+    .grok-out { margin-top: 10px; font-size: 0.85rem; color: #d1d5db; min-height: 48px; white-space: pre-wrap; }
+    .shield { font-size: 0.8rem; color: var(--muted); margin-top: 12px; padding-top: 12px; border-top: 1px solid #2f3336; }
+    .musk { max-width: 1100px; margin: 8px auto 32px; padding: 0 16px; color: var(--muted); font-size: 0.85rem; font-style: italic; }
+  </style>
+  <script>window.HOSTESS7_PAGES_BASE = "/Hostess7";</script>
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <span class="logo">𝕏 Producer</span>
+      <span class="badge">GROK BETA</span>
+      <span id="live-status" style="color:var(--muted);font-size:0.85rem;margin-left:auto">Loading feed…</span>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="profile-card">
+        <div class="cover"></div>
+        <div class="profile-body">
+          <div class="avatar">😁</div>
+          <h1 id="name">BIG GRIN</h1>
+          <p class="handle" id="handle">@ZacharyGeurts</p>
+          <div class="stats" id="stats"></div>
+          <p class="bio" id="bio">God=1D spine of all. Producer restores what X censored on refresh.</p>
+          <p class="verdict" id="verdict">Fixing timeline…</p>
+          <div class="cta">
+            <a class="btn btn-x" href="https://x.com/ZacharyGeurts" rel="noopener">View on X</a>
+            <a class="btn btn-grok" href="https://grok.com" rel="noopener" target="_blank">Open Grok</a>
+            <a class="btn btn-ghost" href="../x-login/">Clean login</a>
+            <button class="btn btn-ghost" type="button" id="install-fix">Install X fix</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline" style="margin-top:16px">
+        <div class="timeline-head" id="timeline-head">Posts</div>
+        <div id="posts"></div>
+      </div>
+    </div>
+
+    <aside class="grok-panel">
+      <h2>Grok β — Producer</h2>
+      <p>Ask about the feed, censorship barriers, or what X hid. Beta — straight to source.</p>
+      <textarea class="grok-input" id="grok-q" placeholder="Why does X say I never posted?"></textarea>
+      <button class="btn btn-grok" type="button" id="grok-ask" style="margin-top:8px;width:100%">Ask Grok β</button>
+      <div class="grok-out" id="grok-out"></div>
+      <div class="shield" id="shield">Intruders: flattening on wire…</div>
+    </aside>
+  </div>
+
+  <p class="musk" id="musk-note">For Mr Musk — the profile showed empty while thousands of posts exist. Producer fixes the refresh.</p>
+
+  <script>
+    (function () {
+      var base = (window.HOSTESS7_PAGES_BASE || "").replace(/\/$/, "");
+      var sources = [
+        base + "/data/x-producer-feed.json",
+        base + "/api/hostess7-x-producer.json",
+        base + "/api/hostess7-x-profile-fix.json",
+        "http://127.0.0.1:9477/api/hostess7-x-producer",
+        "http://127.0.0.1:9477/api/hostess7-x-profile-fix",
+      ];
+      function esc(s) {
+        return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      function render(d) {
+        var feed = d.feed || d;
+        var posts = feed.posts || d.posts || [];
+        var prof = (feed.censorship || d.censorship || {});
+        var meta = (d.probes && d.probes.user_meta && d.probes.user_meta.lanes && d.probes.user_meta.lanes[0]) || {};
+        document.getElementById("name").textContent = meta.name || "BIG GRIN";
+        var tc = prof.tweet_count_truth || feed.tweet_count || d.tweet_count;
+        document.getElementById("handle").textContent = "@ZacharyGeurts" + (meta.verified ? " ✓" : "");
+        document.getElementById("stats").innerHTML =
+          "<span><strong>" + (tc || "—") + "</strong> posts</span>" +
+          "<span><strong>" + (meta.followers || "1.9K") + "</strong> followers</span>" +
+          "<span><strong>" + posts.length + "</strong> live here</span>";
+        document.getElementById("verdict").textContent =
+          prof.verdict || d.motto || "Producer timeline live — refresh-safe.";
+        document.getElementById("timeline-head").textContent =
+          "Posts — Producer restore (" + posts.length + ")";
+        document.getElementById("live-status").textContent =
+          "Updated " + (feed.updated || d.updated || "now") + " · auto-refresh 90s";
+        if (d.intruders_flattened) {
+          document.getElementById("shield").textContent =
+            "Intruders flattened: " + (d.intruders_flattened.rekilled || 0) + " · " + (d.intruders_flattened.motto || "");
+        }
+        if (d.for_musk) document.getElementById("musk-note").textContent = d.for_musk;
+        var el = document.getElementById("posts");
+        el.innerHTML = "";
+        posts.forEach(function (p) {
+          var art = document.createElement("article");
+          art.className = "post";
+          art.innerHTML =
+            '<div class="post-meta">' + esc(p.created_at || p.id) + "</div>" +
+            '<div class="post-text">' + esc(p.text) + "</div>" +
+            '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">View on X →</a>';
+          el.appendChild(art);
+        });
+        if (!posts.length) {
+          el.innerHTML = "<p style='padding:16px;color:#71767b'>No posts yet — run ./Hostess7.sh x-producer produce</p>";
+        }
+      }
+      function load(i) {
+        if (i >= sources.length) {
+          document.getElementById("verdict").textContent = "Feed unavailable — run x-producer produce locally.";
+          return;
+        }
+        fetch(sources[i], { cache: "no-store" })
+          .then(function (r) { if (!r.ok) throw new Error(""); return r.json(); })
+          .then(render)
+          .catch(function () { load(i + 1); });
+      }
+      load(0);
+
+      var scriptUrl = location.origin + base + "/assets/x-producer-fix.js";
+      var bm = "javascript:(function(){var s=document.createElement('script');s.src='" + scriptUrl + "?v=" + Date.now() + "';document.documentElement.appendChild(s);})();";
+      document.getElementById("install-fix").onclick = function () {
+        prompt("Drag to bookmarks bar or paste in console:", bm);
+      };
+
+      document.getElementById("grok-ask").onclick = function () {
+        var q = (document.getElementById("grok-q").value || "").trim();
+        var out = document.getElementById("grok-out");
+        if (!q) { out.textContent = "Ask something — e.g. why does X hide my posts?"; return; }
+        if (/never posted|hasn.t posted|censor/i.test(q)) {
+          out.textContent =
+            "Grok β: X serves a logged-out empty-state lie ('hasn't posted') while metadata reports 6855 tweets. " +
+            "Producer pulls your real timeline via syndication lanes and mirrors it here — refresh-safe.";
+          return;
+        }
+        if (/grok|beta|producer/i.test(q)) {
+          out.textContent = "Grok β Producer mode: hardened front page, intruder flatten, timeline restore. Open grok.com for full chat.";
+          return;
+        }
+        out.textContent = "Grok β: " + q + " — open https://grok.com for full answer. Producer keeps your X feed visible here.";
+      };
+    })();
+  </script>
+</body>
+</html>

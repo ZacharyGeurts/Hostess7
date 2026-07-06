@@ -113,6 +113,7 @@ def _kill_pids(pids: list[int]) -> int:
             proc = subprocess.run(
                 ["sudo", "-S", "kill", "-9", *[str(p) for p in need]],
                 input=f"{pw}\n",
+                text=True,
                 capture_output=True,
                 timeout=8,
                 check=False,

@@ -4562,6 +4562,49 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in (
+            "/api/hostess7/x-profile-fix",
+            "/api/hostess7-x-profile-fix",
+            "/api/x-profile-fix",
+            "/api/x-hasnt-posted",
+        ):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            prof_py = INSTALL_ROOT / "lib" / "hostess7-x-profile-fix.py"
+            payload = None
+            if not refresh:
+                panel_path = STATE_DIR / "hostess7-x-profile-fix-panel.json"
+                if panel_path.is_file():
+                    try:
+                        payload = json.loads(panel_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError):
+                        payload = None
+            if payload is None or refresh:
+                args = ["repair"] if refresh else ["json"]
+                payload = _nexus_py_json(prof_py, args, timeout=90 if refresh else 20)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
+            "/api/hostess7/x-producer",
+            "/api/hostess7-x-producer",
+            "/api/x-producer",
+        ):
+            refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
+            prod_py = INSTALL_ROOT / "lib" / "hostess7-x-producer.py"
+            payload = None
+            if not refresh:
+                panel_path = STATE_DIR / "hostess7-x-producer-panel.json"
+                if panel_path.is_file():
+                    try:
+                        payload = json.loads(panel_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError):
+                        payload = None
+            if payload is None or refresh:
+                args = ["produce"] if refresh else ["json"]
+                payload = _nexus_py_json(prod_py, args, timeout=120 if refresh else 25)
+            self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
             "/api/hostess7/x-straight-shot",
             "/api/hostess7-x-straight-shot",
             "/api/x-straight-shot",

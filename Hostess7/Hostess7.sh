@@ -1189,6 +1189,14 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-sso-fix.py" "${1:-repair}" "${@:2}"
             ;;
+        x-profile-fix|fix-x-profile|profile-censorship|kill-profile-lie|x-hasnt-posted|zacharygeurts-posts)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-profile-fix.py" "${1:-repair}" "${@:2}"
+            ;;
+        x-producer|producer|x-producer-fix|musk-x-fix|fix-x-producer)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-producer.py" "${1:-produce}" "${@:2}"
+            ;;
         x-straight-shot|straight-shot|rip-barriers|free-x-info|x-no-middlemen)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-x-straight-shot.py" "${1:-rip}" "${@:2}"

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="refresh" content="0;url=../x-producer/" />
+  <title>BIG GRIN @ZacharyGeurts — redirect to X Producer</title>
+  <style>
+    :root { --green: #22c55e; --bg: #0a0a0a; --text: #e5e5e5; --muted: #888; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    h1 { font-size: 1.5rem; margin: 0 0 0.25rem; color: #fff; }
+    .meta { color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem; }
+    .verdict { background: #14532d; border: 1px solid var(--green); padding: 12px 14px; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .post { border-bottom: 1px solid #222; padding: 14px 0; }
+    .post a { color: var(--green); text-decoration: none; font-weight: 600; }
+    .post .text { margin: 6px 0; white-space: pre-wrap; word-break: break-word; }
+    .post .stats { color: var(--muted); font-size: 0.8rem; }
+    .links a { color: var(--green); margin-right: 12px; }
+  </style>
+  <script>window.HOSTESS7_PAGES_BASE = "/Hostess7";</script>
+</head>
+<body>
+  <div class="wrap">
+    <h1 id="name">BIG GRIN</h1>
+    <p class="meta" id="handle">@ZacharyGeurts</p>
+    <p class="verdict" id="verdict">Loading sovereign mirror…</p>
+    <p class="links">
+      <a href="https://x.com/ZacharyGeurts" rel="noopener">X profile (censored)</a>
+      <a href="../x-profile-fix/">Fix bookmarklet</a>
+      <a href="../api/hostess7-x-profile-fix.json">API</a>
+    </p>
+    <div id="posts"></div>
+  </div>
+  <script>
+    (function () {
+      var base = (window.HOSTESS7_PAGES_BASE || "").replace(/\/$/, "");
+      function esc(s) {
+        return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      fetch(base + "/api/hostess7-x-profile-fix.json", { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var prof = (d.probes && d.probes.user_meta && d.probes.user_meta.lanes && d.probes.user_meta.lanes[0]) || {};
+          document.getElementById("name").textContent = prof.name || "BIG GRIN";
+          document.getElementById("handle").textContent =
+            "@" + (d.operator || "ZacharyGeurts") +
+            (d.censorship && d.censorship.tweet_count_truth
+              ? " · " + d.censorship.tweet_count_truth + " posts (X truth count)"
+              : "") +
+            " · " + (d.post_count || 0) + " mirrored here";
+          document.getElementById("verdict").textContent =
+            (d.censorship && d.censorship.verdict) || d.motto || "Sovereign mirror";
+          var el = document.getElementById("posts");
+          (d.posts || []).forEach(function (p) {
+            var div = document.createElement("article");
+            div.className = "post";
+            div.innerHTML =
+              '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.created_at || p.id) + "</a>" +
+              '<div class="text">' + esc(p.text) + "</div>" +
+              '<div class="stats">' +
+              [p.views && p.views + " views", p.likes != null && p.likes + " likes", p.replies != null && p.replies + " replies"]
+                .filter(Boolean).join(" · ") +
+              "</div>";
+            el.appendChild(div);
+          });
+          if (!(d.posts || []).length) {
+            el.innerHTML = "<p>No posts in cache — run <code>hostess7-x-profile-fix.py repair</code></p>";
+          }
+        })
+        .catch(function () {
+          document.getElementById("verdict").textContent = "Mirror API unavailable — run repair locally.";
+        });
+    })();
+  </script>
+</body>
+</html>

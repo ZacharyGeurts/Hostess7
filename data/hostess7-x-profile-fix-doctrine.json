@@ -1,0 +1,39 @@
+{
+  "schema": "hostess7-x-profile-fix-doctrine/v1",
+  "title": "X profile timeline — kill 'hasn't posted' lie",
+  "motto": "6855 posts exist. X shows zero. We syndicate from the top — both sides — sovereign mirror wins.",
+  "operator": "ZacharyGeurts",
+  "profile_url": "https://x.com/ZacharyGeurts",
+  "censorship_pattern": {
+    "lie_text": "hasn't posted",
+    "symptoms": [
+      "Profile shows @ZacharyGeurts hasn't posted",
+      "tweet_count metadata shows thousands of posts",
+      "Zero status IDs in logged-out profile HTML",
+      "syndication.twitter.com timeline-profile rate-limited (429)"
+    ],
+    "barrier": "logged_out_profile_timeline_empty",
+    "actor": "X Corp (platform)",
+    "severity": "high"
+  },
+  "timeline_lanes": [
+    {"id": "nitter_rss", "url": "https://nitter.net/{handle}/rss", "tier": 1, "note": "RSS mirror — 20 recent posts when live"},
+    {"id": "fxtwitter_status", "url": "https://api.fxtwitter.com/{handle}/status/{id}", "tier": 1, "note": "Per-tweet syndication after RSS seed"},
+    {"id": "vxtwitter_user", "url": "https://api.vxtwitter.com/{handle}", "tier": 1, "note": "Profile metadata — tweet_count truth"},
+    {"id": "syndication_profile", "url": "https://syndication.twitter.com/srv/timeline-profile/screen-name/{handle}", "tier": 2, "note": "Official embed timeline — often 429"},
+    {"id": "x_profile_html", "url": "https://x.com/{handle}", "tier": 2, "note": "Detect lie vs tweet_count in RSC payload"}
+  ],
+  "fix": {
+    "strategy": "syndicate_rss_then_fx_parallel",
+    "max_timeline_posts": 40,
+    "mirror_page": "https://zacharygeurts.github.io/Hostess7/x-profile/",
+    "client_banner": true,
+    "merge_into_operator_x_comments": true
+  },
+  "hosted": {
+    "mirror": "https://zacharygeurts.github.io/Hostess7/x-profile/",
+    "fix": "https://zacharygeurts.github.io/Hostess7/x-profile-fix/",
+    "api": "/api/hostess7-x-profile-fix"
+  },
+  "api": "/api/hostess7-x-profile-fix"
+}

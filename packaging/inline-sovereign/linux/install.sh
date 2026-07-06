@@ -20,8 +20,8 @@ log "inline sovereign — all tasks in-process; just the user on screen"
 chmod +x "${ROOT}/lib/field-inline-sovereign.py"
 
 UNIT_BODY="$(sed \
-  -e "s|NEXUS_INSTALL_ROOT|${ROOT}|g" \
-  -e "s|NEXUS_STATE_DIR|${STATE_DIR}|g" \
+  -e "s|@NEXUS_INSTALL_ROOT@|${ROOT}|g" \
+  -e "s|@NEXUS_STATE_DIR@|${STATE_DIR}|g" \
   "${ROOT}/packaging/inline-sovereign/linux/field-inline-sovereign.service")"
 
 echo "$UNIT_BODY" | sudo tee "$UNIT_DST" >/dev/null

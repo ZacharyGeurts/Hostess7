@@ -378,6 +378,8 @@ def _export_operator_x() -> None:
         ("hostess7-x-comments.py", ["open"], "operator-x-comments.json"),
         ("hostess7-x-straight-shot.py", ["rip"], "hostess7-x-straight-shot.json"),
         ("hostess7-x-sso-fix.py", ["repair"], "hostess7-x-sso-fix.json"),
+        ("hostess7-x-profile-fix.py", ["repair"], "hostess7-x-profile-fix.json"),
+        ("hostess7-x-producer.py", ["produce"], "hostess7-x-producer.json"),
         ("hostess7-field-status-update.py", ["build"], "hostess7-field-status-update.json"),
         ("hostess7-google-youtube-open.py", ["open"], "operator-google-youtube-open.json"),
         ("hostess7-google-youtube-open.py", ["open"], "operator-youtube-comments.json"),
