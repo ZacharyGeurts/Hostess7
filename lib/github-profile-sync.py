@@ -74,18 +74,17 @@ REPO_LOCAL_ROOT: dict[str, str] = {
 
 def repo_local_dir(repo: str) -> Path:
     rel = REPO_LOCAL_ROOT.get(repo, repo)
-    base = ROOT if rel.startswith("NewLatest") else SG
-    rel_path = rel.removeprefix("NewLatest/") if rel.startswith("NewLatest") else rel
-    target = (base / rel_path) if rel.startswith("NewLatest") else (SG / rel)
+    if rel == "NewLatest":
+        return ROOT
+    if rel.startswith("NewLatest/"):
+        target = ROOT / rel.split("/", 1)[1]
+    else:
+        target = SG / rel
     try:
-        target.resolve(strict=False)
+        if target.is_symlink():
+            target.resolve(strict=True)
     except (OSError, RuntimeError):
         return ROOT / "docs" / "repo-hubs" / repo
-    if target.is_symlink():
-        try:
-            target.resolve(strict=True)
-        except (OSError, RuntimeError):
-            return ROOT / "docs" / "repo-hubs" / repo
     return target
 
 
