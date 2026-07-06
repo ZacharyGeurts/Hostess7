@@ -1,0 +1,20 @@
+{
+  "schema": "zachub-h7-quota/v2",
+  "gb_per_rack": 91,
+  "operational_ceilings_gb": {
+    "dns": 12.0,
+    "dhcp": 12.0,
+    "edge": 16.0,
+    "github_mirror_witness": 8.0
+  },
+  "roles": [
+    "dns",
+    "edge",
+    "dns_relay",
+    "dhcp_relay",
+    "truth_mirror"
+  ],
+  "field_id": "qemu-rack-5",
+  "redundant_from_dns_dhcp_remainder": true,
+  "internet_isolated": true
+}

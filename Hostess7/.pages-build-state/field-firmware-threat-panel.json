@@ -1,0 +1,175 @@
+{
+  "schema": "field-firmware-threat/v1",
+  "ts": "2026-07-02T14:50:37Z",
+  "updated": "2026-07-02T14:50:37Z",
+  "host": "default-X870-Pro-RS",
+  "scan": {
+    "schema": "field-firmware-threat-scan/v1",
+    "ts": "2026-07-02T14:50:37Z",
+    "firmware_witness": {
+      "uefi": true,
+      "efi_vars": true,
+      "acpi": true,
+      "tpm": true,
+      "iommu": true,
+      "nx": true,
+      "vendor": "American Megatrends International, LLC.",
+      "version": "3.50",
+      "date": "09/18/2025",
+      "board": "X870 Pro RS",
+      "product": "X870 Pro RS",
+      "secure_boot": false,
+      "acpi_tables": [
+        "APIC",
+        "DSDT",
+        "FACP",
+        "FACS",
+        "FIDT",
+        "FPDT",
+        "HPET",
+        "IVRS",
+        "MCFG",
+        "SSDT1",
+        "SSDT10",
+        "SSDT11",
+        "SSDT12",
+        "SSDT13",
+        "SSDT14",
+        "SSDT15",
+        "SSDT16",
+        "SSDT2",
+        "SSDT3",
+        "SSDT4",
+        "SSDT5",
+        "SSDT6",
+        "SSDT7",
+        "SSDT8",
+        "SSDT9",
+        "TPM2",
+        "VFCT",
+        "WPBT",
+        "WSMT"
+      ]
+    },
+    "grok_audit": {
+      "major": [],
+      "minor": [],
+      "major_count": 0,
+      "minor_count": 0,
+      "ok": true
+    },
+    "threat_count": 3,
+    "removable_count": 1,
+    "bios_manual_count": 1,
+    "threats": [
+      {
+        "id": "kernel_module",
+        "severity": "high",
+        "module": "msr",
+        "loaded": true,
+        "removable": true
+      },
+      {
+        "id": "dmi_anomaly",
+        "severity": "low",
+        "detail": "bios_vendor:suspicious_chars"
+      },
+      {
+        "id": "secure_boot_off",
+        "severity": "major",
+        "bios_manual": true
+      }
+    ],
+    "removable": [
+      {
+        "id": "kernel_module",
+        "severity": "high",
+        "module": "msr",
+        "loaded": true,
+        "removable": true
+      }
+    ],
+    "bios_manual": [
+      {
+        "id": "secure_boot_off",
+        "severity": "major",
+        "bios_manual": true
+      }
+    ],
+    "verdict": "BIOS_REQUIRED",
+    "flash_chip": false,
+    "policy": {
+      "flash_spi_rom": false,
+      "remove_userspace_threats": true,
+      "remove_kernel_module_threats": true,
+      "block_dev_mem_access": true,
+      "apply_sysctl_hardening": true,
+      "run_grok_audit": true,
+      "fail_closed_on_major_bios": false,
+      "bios_manual_only": [
+        "secure_boot",
+        "tpm2",
+        "iommu",
+        "nx_bit",
+        "csm_disabled",
+        "firmware_password"
+      ]
+    }
+  },
+  "removal": {
+    "schema": "field-firmware-threat-removal/v1",
+    "ts": "2026-07-02T14:50:37Z",
+    "removed_actions": [
+      {
+        "action": "modprobe_blacklist",
+        "ok": true,
+        "modules": [
+          "msr",
+          "acpi_custom_method",
+          "cpuid"
+        ],
+        "state_copy": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/nexus-firmware-threat-modprobe.conf",
+        "system_installed": false
+      },
+      {
+        "action": "rmmod",
+        "module": "msr",
+        "removed": false,
+        "stderr": "sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper\nsudo: a password is required\n"
+      },
+      {
+        "action": "sysctl_harden",
+        "ok": false,
+        "applied": [
+          "fs.protected_symlinks",
+          "fs.protected_hardlinks"
+        ],
+        "failed": [
+          "kernel.kptr_restrict:have=1",
+          "kernel.dmesg_restrict:have=0",
+          "kernel.unprivileged_bpf_disabled:have=2",
+          "kernel.yama.ptrace_scope:have=1",
+          "kernel.perf_event_paranoid:have=4",
+          "sysctl_dropin_sudo"
+        ],
+        "state_dropin": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/99-nexus-firmware-threat.conf"
+      },
+      {
+        "action": "cpu_vulnerability_shield",
+        "ok": true,
+        "stdout": "{\"ok\": false, \"applied\": [], \"failed\": [\"kernel.unprivileged_bpf_disabled:have=2\", \"kernel.kptr_restrict:have=1\", \"kernel.yama.ptrace_scope:have=1\", \"kernel.dmesg_restrict:have=0\", \"kernel.perf_event_paranoid:have=4\", \"kernel.unprivileged_userns_clone:have=1\"], \"dropin\": \"/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/99-nexus-cpu-vuln.conf\"}\n"
+      }
+    ],
+    "removed_count": 2,
+    "bios_manual_remaining": 1,
+    "safe": true,
+    "flash_chip": false
+  },
+  "verdict": "BIOS_REQUIRED",
+  "threat_count": 3,
+  "removed_count": 2,
+  "bios_manual_count": 1,
+  "safe": true,
+  "flash_chip": false,
+  "motto": "Witness BIOS, strip firmware attack surface in software — flash_chip stays false."
+}

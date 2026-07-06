@@ -1,0 +1,29 @@
+{
+  "schema": "field-grok-cli-doctrine/v1",
+  "title": "Field Grok — secure operator CLI",
+  "motto": "Loopback ACP · system CA · socket cap · operator token · UI JSON dispatch",
+  "binary": "lib/bin/field-grok",
+  "backend": "lib/field-grok-cli.py",
+  "mandate": "data/grok-build-mandate.json",
+  "secure_channel": {
+    "required_env": [
+      "NEXUS_AI_SECURE_CHANNEL",
+      "QUEEN_AI_TELEMETRY_OK",
+      "QUEEN_GROK_BUILD",
+      "QUEEN_GROK_BUILD_SECURE"
+    ],
+    "operator_token_path": "~/.config/sg/field-grok-token",
+    "loopback_only_acp": true
+  },
+  "api": "/api/field-grok",
+  "cli": {
+    "json": "field-grok json",
+    "dispatch": "field-grok dispatch",
+    "launch": "field-grok launch"
+  },
+  "ui": {
+    "embed": "/field-gnu-terminal-embed.html",
+    "panel_port": 9477,
+    "acp_ws": "ws://127.0.0.1:2419"
+  }
+}

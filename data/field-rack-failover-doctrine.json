@@ -1,0 +1,55 @@
+{
+  "schema": "field-rack-failover-doctrine/v1",
+  "title": "Geographic primary mesh — all nodes Field 1, geography routes clients",
+  "motto": "Hold every rack and host as primary. Geography alone picks who serves whom. Host down → peers absorb load, never flip authority.",
+  "policy": {
+    "all_primary": true,
+    "geography_only_factor": true,
+    "host_heartbeat_sec": 90,
+    "slow_rollout_batch": 25,
+    "verify_each_node": true,
+    "halt_on_verify_fail": true,
+    "world_internet_gate": true,
+    "github_control_plane": true,
+    "perimeter_on_boot": true,
+    "friendly_everywhere": true,
+    "hostile_rekill_deploy": true
+  },
+  "geography": {
+    "metros_ref": "data/world-global-metros.json",
+    "regions_ref": "GrokLab/deploy/world-node-regions.json",
+    "operator_ref": "lib/operator-location.py",
+    "doctrine_ref": "data/hostess7-geography-doctrine.json"
+  },
+  "authority_lanes": {
+    "all_primary": ["truth_dns", "field_dhcp", "field_dns_serve", "botnet_keepalive", "dns_relay", "dhcp_relay", "truth_mirror", "github_sync", "edge", "kill_rekill"]
+  },
+  "boot_sequence": [
+    {"id": "dns_dhcp_immutable", "module": "lib/field-dns-dhcp-everywhere-immutable.py", "cmd": "seal"},
+    {"id": "perimeter", "module": "lib/field-perimeter-shield.py", "cmd": "board"},
+    {"id": "boot_rekill", "module": "lib/field-attack-kit.py", "cmd": "boot-rekill"},
+    {"id": "never_down", "module": "lib/field-never-down.py", "cmd": "instantiate"},
+    {"id": "fix_dns_dhcp", "module": "lib/field-dns-dhcp-fix.py", "cmd": "fix"},
+    {"id": "rack_provision", "module": "lib/field-zachub-qemu-racks.py", "cmd": "provision"},
+    {"id": "mesh_sync", "module": "lib/field-rack-failover.py", "cmd": "sync-mesh"},
+    {"id": "slow_rollout", "module": "lib/field-one-rollout.py", "cmd": "slow-rollout", "optional": true},
+    {"id": "botnet_keepalive", "module": "lib/field-botnet-dns-dhcp.py", "cmd": "keepalive"},
+    {"id": "botnet_rollout", "module": "lib/field-one-rollout.py", "cmd": "botnet", "optional": true}
+  ],
+  "vigil_cycle": [
+    {"id": "heartbeat", "module": "lib/field-rack-failover.py", "cmd": "heartbeat"},
+    {"id": "never_down_ensure", "module": "lib/field-never-down.py", "cmd": "ensure"},
+    {"id": "botnet_keepalive", "module": "lib/field-botnet-dns-dhcp.py", "cmd": "keepalive"},
+    {"id": "auto_rekill", "module": "lib/field-attack-kit.py", "cmd": "auto-rekill"},
+    {"id": "qemu_bot_rekill", "module": "lib/field-attack-kit.py", "cmd": "qemu-bot-rekill"},
+    {"id": "mesh_cycle", "module": "lib/field-rack-failover.py", "cmd": "cycle"}
+  ],
+  "friendly": {
+    "module": "lib/friendly-guard.py",
+    "perimeter": "lib/field-perimeter-shield.py",
+    "gatekeeper": "lib/connection-gatekeeper.py",
+    "yard_clear": "lib/home-protector.py"
+  },
+  "module": "lib/field-rack-failover.py",
+  "api": "/api/field-rack-failover"
+}
