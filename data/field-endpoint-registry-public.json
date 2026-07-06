@@ -5,7 +5,7 @@
   "motto": "No endpoint moves silently: DNS, IP, port, URL, Pages, loopback, API, module, file — from→to in public hash chain.",
   "owner": "ZacharyGeurts",
   "scope": "More than ICANN: sovereign truth for all routable identities the field stack owns or mirrors.",
-  "updated": "2026-07-06T03:55:23Z",
+  "updated": "2026-07-06T03:56:04Z",
   "layers": [
     {
       "id": "icann_dns",
@@ -95,13 +95,13 @@
   ],
   "verify": {
     "ok": true,
-    "count": 201,
+    "count": 203,
     "genesis": "0000000000000000000000000000000000000000000000000000000000000000",
-    "head": "34dcc4020a5f82c772a001ef469abbd0daa7f1fe24741ba2c31176bb32cdc9ec",
+    "head": "102ec76aa9fa06126c93219d472868308bdec924613258f7d1fda5a8d34ff3ab",
     "broken": []
   },
   "route_count": 127,
-  "movement_count": 201,
+  "movement_count": 203,
   "routes": {
     "pages:ZacharyGeurts/GNUEOLTerminal": {
       "layer": "pages",
@@ -807,7 +807,7 @@
       "layer": "pages",
       "id": "ZacharyGeurts/field",
       "canonical": "http://127.0.0.1:9477/field",
-      "updated": "2026-07-06T03:55:22Z"
+      "updated": "2026-07-06T03:56:04Z"
     },
     "pages:ZacharyGeurts/memes": {
       "layer": "pages",
@@ -871,36 +871,6 @@
     }
   },
   "recent_movements": [
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/AmmoOS:not_redirect_hub:2026-07-04T20:44:36Z",
-      "at": "2026-07-04T20:44:36Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/AmmoOS",
-      "from": "https://zacharygeurts.github.io/AmmoOS",
-      "to": "https://zacharygeurts.github.io/AmmoOS/index.html",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "82747d2a61ca3c070a7ca9a7e67468f200558fd82e6fd3e65a7426db379833ec",
-      "hash": "2334b66d58d051afbaf49fff973df3284e2696b6963c955cd0e5263abcf80afa"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/NEXUS-Shield:pages_missing:2026-07-04T20:44:36Z",
-      "at": "2026-07-04T20:44:36Z",
-      "layer": "pages",
-      "kind": "pages_missing",
-      "entity_id": "ZacharyGeurts/NEXUS-Shield",
-      "from": "https://zacharygeurts.github.io/NEXUS-Shield",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — pages_missing",
-      "meta": {},
-      "prev_hash": "2334b66d58d051afbaf49fff973df3284e2696b6963c955cd0e5263abcf80afa",
-      "hash": "856198c7eaa2d99fe0363b11c5ce43adb80b32eaed5a3b0e3d03396d37a7ecb1"
-    },
     {
       "schema": "field-endpoint-movement/v1",
       "id": "pages:ZacharyGeurts/Poop:not_redirect_hub:2026-07-04T20:44:36Z",
@@ -1674,6 +1644,43 @@
       },
       "prev_hash": "677200a0c40756dd89b1e03655c8124db96a6ff7c4d98ac19c0c19cdeacc3dee",
       "hash": "34dcc4020a5f82c772a001ef469abbd0daa7f1fe24741ba2c31176bb32cdc9ec"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T03:56:04Z",
+      "at": "2026-07-06T03:56:04Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "http://127.0.0.1:9477/field",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
+      "meta": {},
+      "prev_hash": "34dcc4020a5f82c772a001ef469abbd0daa7f1fe24741ba2c31176bb32cdc9ec",
+      "hash": "df3ccf2f91dfad8a1985492cf9af74e8001ea019ab63120a895db6104e998c89"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-06T03:56:04Z",
+      "at": "2026-07-06T03:56:04Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-github-planet-sweep",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "df3ccf2f91dfad8a1985492cf9af74e8001ea019ab63120a895db6104e998c89",
+      "hash": "102ec76aa9fa06126c93219d472868308bdec924613258f7d1fda5a8d34ff3ab"
     }
   ],
   "public_surfaces": {

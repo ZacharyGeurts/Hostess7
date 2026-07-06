@@ -1,10 +1,10 @@
-# Final Mouth — AmmoOS 2.0.0-beta6 stack companion
+# NEXUS C2 Basement — AmmoOS 2.0.0-beta6 stack companion
 
 **Canonical code:** [ZacharyGeurts/AmmoOS](https://github.com/ZacharyGeurts/AmmoOS)  
 **AmmoOS release:** [v2.0.0-beta6](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta6)  
-**Manual:** [launch-surfaces.html](https://zacharygeurts.github.io/AmmoOS/launch-surfaces.html)
+**Manual:** [architecture.html](https://zacharygeurts.github.io/AmmoOS/architecture.html)
 
-Speech stack — launch surfaces in AmmoOS manual
+Secure basement layer — black · emerald · rose · real command deck for everyone
 
 This component ships inside the **AmmoOS** tree. Clone AmmoOS, wire siblings, install:
 
@@ -16,4 +16,4 @@ git checkout v2.0.0-beta6
 sudo ./install-all.sh
 ```
 
-Component repo: [Final_Mouth](https://github.com/ZacharyGeurts/Final_Mouth) · Pages hub redirects to the AmmoOS manual.
+Component repo: [command](https://github.com/ZacharyGeurts/command) · Pages hub redirects to the AmmoOS manual.

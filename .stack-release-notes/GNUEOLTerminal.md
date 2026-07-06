@@ -1,10 +1,10 @@
-# Final Mouth — AmmoOS 2.0.0-beta6 stack companion
+# GNU EOL Terminal — AmmoOS 2.0.0-beta6 stack companion
 
 **Canonical code:** [ZacharyGeurts/AmmoOS](https://github.com/ZacharyGeurts/AmmoOS)  
 **AmmoOS release:** [v2.0.0-beta6](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta6)  
-**Manual:** [launch-surfaces.html](https://zacharygeurts.github.io/AmmoOS/launch-surfaces.html)
+**Manual:** [queen-browser.html](https://zacharygeurts.github.io/AmmoOS/queen-browser.html)
 
-Speech stack — launch surfaces in AmmoOS manual
+Last terminal the world needs — Field Tech textbook + full GNU technical wiki · RTX panels · 3.0.7-beta5
 
 This component ships inside the **AmmoOS** tree. Clone AmmoOS, wire siblings, install:
 
@@ -16,4 +16,4 @@ git checkout v2.0.0-beta6
 sudo ./install-all.sh
 ```
 
-Component repo: [Final_Mouth](https://github.com/ZacharyGeurts/Final_Mouth) · Pages hub redirects to the AmmoOS manual.
+Component repo: [GNUEOLTerminal](https://zacharygeurts.github.io/GNUEOLTerminal/) · Pages hub redirects to the AmmoOS manual.

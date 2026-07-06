@@ -1,10 +1,10 @@
-# Final Mouth — AmmoOS 2.0.0-beta6 stack companion
+# AIA — AI Accelerator — AmmoOS 2.0.0-beta6 stack companion
 
 **Canonical code:** [ZacharyGeurts/AmmoOS](https://github.com/ZacharyGeurts/AmmoOS)  
 **AmmoOS release:** [v2.0.0-beta6](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta6)  
-**Manual:** [launch-surfaces.html](https://zacharygeurts.github.io/AmmoOS/launch-surfaces.html)
+**Manual:** [combinatronic.html](https://zacharygeurts.github.io/AmmoOS/combinatronic.html)
 
-Speech stack — launch surfaces in AmmoOS manual
+FIELD_QUBES build cache · G16/CHIPS accelerator bundle — staged by Hostess 7 for GitHub upload
 
 This component ships inside the **AmmoOS** tree. Clone AmmoOS, wire siblings, install:
 
@@ -16,4 +16,4 @@ git checkout v2.0.0-beta6
 sudo ./install-all.sh
 ```
 
-Component repo: [Final_Mouth](https://github.com/ZacharyGeurts/Final_Mouth) · Pages hub redirects to the AmmoOS manual.
+Component repo: [AIA](https://github.com/ZacharyGeurts/AIA) · Pages hub redirects to the AmmoOS manual.

@@ -1,39 +1,9 @@
 {
   "ok": true,
   "schema": "field-endpoint-registry-ledger/v1",
-  "count": 200,
-  "head": "677200a0c40756dd89b1e03655c8124db96a6ff7c4d98ac19c0c19cdeacc3dee",
+  "count": 202,
+  "head": "df3ccf2f91dfad8a1985492cf9af74e8001ea019ab63120a895db6104e998c89",
   "entries": [
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/Final_Ear:canonical:2026-07-03T04:22:36Z",
-      "at": "2026-07-03T04:22:36Z",
-      "layer": "pages",
-      "kind": "canonical",
-      "entity_id": "ZacharyGeurts/Final_Ear",
-      "from": "https://github.com/ZacharyGeurts/Final_Ear",
-      "to": "https://zacharygeurts.github.io/Final_Ear",
-      "witness": "h7updater-stack-index",
-      "reason": "sense_audio",
-      "meta": {},
-      "prev_hash": "01e3386f73636a210f03a78905dfafc35bf60167d7fd06cfe35aa28eaf5d9a63",
-      "hash": "7d3eb4bf68c4b5921b230d101596ee52f7ba33f1e441e9560d54813cef11f161"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/Final_Eye:canonical:2026-07-03T04:22:36Z",
-      "at": "2026-07-03T04:22:36Z",
-      "layer": "pages",
-      "kind": "canonical",
-      "entity_id": "ZacharyGeurts/Final_Eye",
-      "from": "https://github.com/ZacharyGeurts/Final_Eye",
-      "to": "https://zacharygeurts.github.io/Final_Eye",
-      "witness": "h7updater-stack-index",
-      "reason": "sense_vision",
-      "meta": {},
-      "prev_hash": "7d3eb4bf68c4b5921b230d101596ee52f7ba33f1e441e9560d54813cef11f161",
-      "hash": "7b5644420500e968c0b718c4b532249e8579d5a0934f9e6e6a475c0199ad1de4"
-    },
     {
       "schema": "field-endpoint-movement/v1",
       "id": "pages:ZacharyGeurts/Final_Mouth:canonical:2026-07-03T04:22:36Z",
@@ -1576,10 +1546,47 @@
       },
       "prev_hash": "d4ae85e63b2c07373227fc3c9544385af8ae54c0bbd5de16f08f0b5f50e36b2a",
       "hash": "677200a0c40756dd89b1e03655c8124db96a6ff7c4d98ac19c0c19cdeacc3dee"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-06T03:55:23Z",
+      "at": "2026-07-06T03:55:23Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "sweep-github-planet.sh",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "677200a0c40756dd89b1e03655c8124db96a6ff7c4d98ac19c0c19cdeacc3dee",
+      "hash": "34dcc4020a5f82c772a001ef469abbd0daa7f1fe24741ba2c31176bb32cdc9ec"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T03:56:04Z",
+      "at": "2026-07-06T03:56:04Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "http://127.0.0.1:9477/field",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
+      "meta": {},
+      "prev_hash": "34dcc4020a5f82c772a001ef469abbd0daa7f1fe24741ba2c31176bb32cdc9ec",
+      "hash": "df3ccf2f91dfad8a1985492cf9af74e8001ea019ab63120a895db6104e998c89"
     }
   ],
   "pages": true,
   "pages_base": "/Hostess7",
   "instant": true,
-  "propagated_at": "2026-07-06T03:55:23Z"
+  "propagated_at": "2026-07-06T03:56:04Z"
 }
