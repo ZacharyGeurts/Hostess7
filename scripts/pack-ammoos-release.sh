@@ -58,6 +58,20 @@ else
   rsync -a \
   --exclude='.git' \
   --exclude='.pages-hub-*' \
+  --exclude='.pages-*-publish' \
+  --exclude='.pages-*-publish/**' \
+  --exclude='.wiki-*-publish' \
+  --exclude='.wiki-*-publish/**' \
+  --exclude='.senses-publish-*' \
+  --exclude='.senses-publish-*/**' \
+  --exclude='.hostess7-github-clone' \
+  --exclude='.hostess7-github-clone/**' \
+  --exclude='.gnueol-terminal-github-clone' \
+  --exclude='.gnueol-terminal-github-clone/**' \
+  --exclude='Hostess7/.pages-build-state' \
+  --exclude='Hostess7/.pages-build-state/**' \
+  --exclude='Hostess7/.pages-*-publish' \
+  --exclude='Hostess7/.pages-*-publish/**' \
   --exclude='data/combinatronic-visuals' \
   --exclude='data/combinatronic-visuals/**' \
   --exclude='panel/profile-*' \

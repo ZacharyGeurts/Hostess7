@@ -99,6 +99,24 @@ rsync -a --delete \
   --exclude='_archive' \
   --exclude='_archive/**' \
   --exclude='.pages-hub-*' \
+  --exclude='.pages-*-publish' \
+  --exclude='.pages-*-publish/**' \
+  --exclude='.wiki-*-publish' \
+  --exclude='.wiki-*-publish/**' \
+  --exclude='.senses-publish-*' \
+  --exclude='.senses-publish-*/**' \
+  --exclude='.hostess7-github-clone' \
+  --exclude='.hostess7-github-clone/**' \
+  --exclude='.gnueol-terminal-github-clone' \
+  --exclude='.gnueol-terminal-github-clone/**' \
+  --exclude='Hostess7/cache' \
+  --exclude='Hostess7/cache/**' \
+  --exclude='Hostess7/.pages-build-state' \
+  --exclude='Hostess7/.pages-build-state/**' \
+  --exclude='Hostess7/.pages-*-publish' \
+  --exclude='Hostess7/.pages-*-publish/**' \
+  --exclude='Queen/cache' \
+  --exclude='Queen/cache/**' \
   --exclude='data/combinatronic-visuals' \
   --exclude='data/combinatronic-visuals/**' \
   --exclude='panel/profile-*' \
@@ -119,6 +137,24 @@ done < <(find "$EXPORT" -type f -size +95M -print0 2>/dev/null || true)
 if [[ "$PUSH" -eq 0 ]]; then
   log "export staged at ${EXPORT} (pass --push for git publish + gh release)"
   exit 0
+fi
+
+AMMOOS_REMOTE="${AMMOOS_GITHUB_REMOTE:-https://github.com/ZacharyGeurts/AmmoOS.git}"
+AMMOOS_CLONE="${ROOT}/.ammoos-github-clone"
+log "git publish — fresh AmmoOS main from cache-cut export (drop stale clone)"
+rm -rf "$AMMOOS_CLONE"
+if gh repo clone ZacharyGeurts/AmmoOS "$AMMOOS_CLONE" -- --depth=1; then
+  rsync -a --delete --exclude='.git' "${EXPORT}/" "${AMMOOS_CLONE}/"
+  cd "$AMMOOS_CLONE"
+  git config user.email "${GIT_USER_EMAIL:-gzac5314@users.noreply.github.com}"
+  git config user.name "${GIT_USER_NAME:-ZacharyGeurts}"
+  git add -A
+  git commit -m "AmmoOS ${AMMOOS_VERSION} — CLASSIC_START (cache-cut export)" || true
+  git push origin main 2>/dev/null || git push -u origin main --force
+  cd "$ROOT"
+  log "AmmoOS main → ${AMMOOS_REMOTE} ($(du -sh "$EXPORT" | awk '{print $1}') export)"
+else
+  log "WARN AmmoOS clone failed — gh release/pages only"
 fi
 
 log "seal built executables"

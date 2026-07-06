@@ -271,6 +271,19 @@ except Exception:
     find "$cache_dir" -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true
     log "  cleared $(basename "$(dirname "$cache_dir")")/$(basename "$cache_dir")"
   done
+  for pages_pub in "$ROOT"/Hostess7/.pages-*-publish; do
+    [[ -d "$pages_pub" ]] || continue
+    rm -rf "$pages_pub"
+    log "  cut stale $(basename "$pages_pub")"
+  done
+  for stale_clone in \
+    "$ROOT/.hostess7-github-clone" \
+    "$ROOT/.ammoos-github-clone" \
+    "$ROOT/.gnueol-terminal-github-clone"; do
+    [[ -d "$stale_clone" ]] || continue
+    rm -rf "$stale_clone"
+    log "  cut stale publish clone $(basename "$stale_clone")"
+  done
   for tmp in "$ROOT"/.h7updater-publish/tmp "$ROOT"/.pages-hub-staging/tmp; do
     [[ -d "$tmp" ]] && rm -rf "$tmp"/* 2>/dev/null || true
   done
