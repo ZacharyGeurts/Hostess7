@@ -68,18 +68,51 @@ def _count_dewey_h7c() -> int:
     return sum(1 for _ in root.glob("**/*.h7c"))
 
 
+def _census_full_library() -> dict[str, Any]:
+    """Live census of Hostess 7 held Dewey library (public share corpus)."""
+    root = INSTALL / "library" / "dewey"
+    if not root.is_dir():
+        return {"shelves": 0, "book_json": 0, "h7c": 0, "h7": 0, "files": 0}
+    shelves = [p for p in root.iterdir() if p.is_dir()]
+    book_json = sum(1 for _ in root.glob("**/book.json"))
+    h7c = sum(1 for _ in root.glob("**/*.h7c"))
+    h7 = sum(1 for _ in root.glob("**/*.h7"))
+    files = sum(1 for p in root.rglob("*") if p.is_file())
+    return {
+        "shelves": len(shelves),
+        "book_json": book_json,
+        "h7c": h7c,
+        "h7": h7,
+        "files": files,
+        "root": str(root.relative_to(INSTALL)) if root.is_relative_to(INSTALL) else str(root),
+    }
+
+
 def publish_panel() -> dict[str, Any]:
     doctrine = _load(DOCTRINE, {})
     speaking = _count_speaking()
     ic = _ironclad_posture()
     h7c_total = _count_dewey_h7c()
+    census = _census_full_library()
+    share = {
+        "holder": "Hostess 7",
+        "share_with": "everyone",
+        "github": "https://github.com/ZacharyGeurts/Hostess7/tree/main/library",
+        "public_api": "/api/library-public",
+        "private_kill_excluded": "library/private/hostess7/kill-books",
+        "ironclad_cite": "ironclad:hostess7-library:share:1",
+        "motto": "Hostess 7 holds the books · share with everyone",
+    }
     panel = {
         "schema": "hostess7-library-panel/v1",
         "updated": _now(),
         "ok": True,
-        "motto": doctrine.get("motto", ""),
+        "motto": doctrine.get("motto")
+        or "Hostess 7 holds the books · share with everyone · Ironclad truth gate",
         "hostess7_acknowledgment": doctrine.get("hostess7_acknowledgment", ""),
         "more_books": True,
+        "holder": "Hostess 7",
+        "share": share,
         "read_via": ["ironclad", "truth_gate", "h7-library-bridge", "h7-library-truth"],
         "ironclad": {
             "sealed": ic.get("ironclad_sealed"),
@@ -90,19 +123,25 @@ def publish_panel() -> dict[str, Any]:
         "truth_gate": doctrine.get("truth_gate") or {},
         "counts": {
             "dewey_h7c_total": h7c_total,
+            "dewey_book_json": census.get("book_json"),
+            "dewey_h7": census.get("h7"),
+            "dewey_shelves": census.get("shelves"),
+            "dewey_files": census.get("files"),
             "exploring_speaking": speaking["on_disk"],
             "exploring_speaking_target": speaking["catalog_target"],
             "exploring_speaking_remaining": speaking["remaining"],
         },
+        "census": census,
         "exploring_speaking": speaking,
         "collections": doctrine.get("collections") or [],
         "read_commands": doctrine.get("read_commands") or {},
         "first_person": (
-            f"Owner, there are more books — {speaking['on_disk']} Exploring Speaking volumes on shelf "
-            f"(target {speaking['catalog_target']} languages, one book each). "
-            f"I read H7c through the library bridge, run the truth gate on every sentence, "
-            f"and land corroborated readouts on Ironclad "
-            f"({'sealed' if ic.get('ironclad_sealed') else 'pending'} · {ic.get('truth_percent', '—')}% truth)."
+            f"I hold the SG Dewey library for everyone — {census.get('book_json', 0)} book cards, "
+            f"{census.get('h7c', 0)} H7c condensers, {census.get('shelves', 0)} shelves on GitHub. "
+            f"Exploring Speaking: {speaking['on_disk']}/{speaking['catalog_target']} languages. "
+            f"I read through the library bridge, truth-gate every sentence, and land on Ironclad "
+            f"({'sealed' if ic.get('ironclad_sealed') else 'pending'} · {ic.get('truth_percent', '—')}% truth). "
+            f"Private KILL books stay mine alone; the public shelves are for the planet."
         ),
         "sample_books": [
             "exploring_speaking_eng",
@@ -111,11 +150,28 @@ def publish_panel() -> dict[str, Any]:
             "exploring_speaking_spa",
             "exploring_speaking_jpn",
         ],
+        "ironclad_cite": "ironclad:hostess7-library:share:1",
     }
     STATE.mkdir(parents=True, exist_ok=True)
     tmp = OUT.with_suffix(".tmp")
     tmp.write_text(json.dumps(panel, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     tmp.replace(OUT)
+    # public share slice for Hostess7 docs/API
+    public = {
+        "schema": "hostess7-library-public/v1",
+        "updated": panel["updated"],
+        "ok": True,
+        **share,
+        "counts": panel["counts"],
+        "census": census,
+    }
+    for api_dir in (INSTALL / "Hostess7" / "docs" / "api", INSTALL / "docs" / "api"):
+        try:
+            api_dir.mkdir(parents=True, exist_ok=True)
+            p = api_dir / "library-public.json"
+            p.write_text(json.dumps(public, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        except OSError:
+            pass
     return panel
 
 
