@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export secure bookmarks for every host browser — Firefox · Chrome · Brave · Edge · Chromium.
+"""Export secure bookmarks for every host browser — field gecko paths · Chrome · Brave · Edge · Chromium.
 
 Raw :9488 / :9477 / :9481 URLs fail when services are down — rewrite through
 bookmark-jump (panel ensure) or Queen ?launch= wrapper. Pages URLs work from
@@ -140,7 +140,7 @@ def _netscape_html(rows: list[dict[str, str]]) -> str:
     return "\n".join(lines)
 
 
-def _firefox_profiles() -> list[Path]:
+def _field_gecko_profiles() -> list[Path]:
     roots = [Path.home() / ".mozilla" / "firefox"]
     out: list[Path] = []
     for root in roots:
@@ -195,7 +195,7 @@ def _rev_host(url: str) -> str:
         return ""
 
 
-def _purge_orphan_firefox(profile: Path) -> dict[str, Any]:
+def _purge_orphan_field_gecko(profile: Path) -> dict[str, Any]:
     """Remove raw loopback bookmarks — HTTPS+Secure replaces them."""
     places = profile / "places.sqlite"
     if not places.is_file():
@@ -285,19 +285,19 @@ def _purge_orphan_chromium(profile: Path, *, browser_id: str) -> dict[str, Any]:
 
 
 def purge_orphan_bookmarks() -> dict[str, Any]:
-    firefox: list[dict[str, Any]] = []
+    field_gecko_rows: list[dict[str, Any]] = []
     chromium: list[dict[str, Any]] = []
-    for prof in _firefox_profiles():
-        firefox.append(_purge_orphan_firefox(prof))
+    for prof in _field_gecko_profiles():
+        field_gecko_rows.append(_purge_orphan_field_gecko(prof))
     for browser_id, prof in _chromium_profiles():
         chromium.append(_purge_orphan_chromium(prof, browser_id=browser_id))
-    total = sum(int(x.get("removed") or 0) for x in firefox + chromium)
+    total = sum(int(x.get("removed") or 0) for x in field_gecko_rows + chromium)
     return {
         "ok": True,
         "schema": "queen-host-bookmark-purge/v1",
         "updated": _now(),
         "removed": total,
-        "firefox": firefox,
+        "field_gecko": field_gecko_rows, "host_gecko": field_gecko_rows,
         "chromium": chromium,
         "notice": "Raw loopback bookmarks removed — HTTPS+Secure AmmoOS Field replaces them",
     }
@@ -441,11 +441,11 @@ def export_host_bookmarks(*, import_browsers: bool = True, purge_orphans: bool =
             })
     STATE.mkdir(parents=True, exist_ok=True)
     OUT_HTML.write_text(_netscape_html(rows), encoding="utf-8")
-    firefox: list[dict[str, Any]] = []
+    field_gecko_rows: list[dict[str, Any]] = []
     chromium: list[dict[str, Any]] = []
     if import_browsers:
-        for prof in _firefox_profiles():
-            firefox.append(_import_places(prof, rows))
+        for prof in _field_gecko_profiles():
+            field_gecko_rows.append(_import_places(prof, rows))
         for browser_id, prof in _chromium_profiles()[:8]:
             chromium.append(_import_chromium(prof, rows, browser_id=browser_id))
     doc = {
@@ -460,10 +460,10 @@ def export_host_bookmarks(*, import_browsers: bool = True, purge_orphans: bool =
         "html": str(OUT_HTML),
         "bookmarks": rows,
         "purge": purge_out,
-        "firefox": firefox,
+        "field_gecko": field_gecko_rows, "host_gecko": field_gecko_rows,
         "chromium": chromium,
-        "browsers_supported": ["firefox", "chrome", "chromium", "brave", "edge", "vivaldi", "opera", "ie_html"],
-        "notice": "All Rights Reserved — HTTPS+Secure jump URLs · Firefox toolbar AmmoOS Field",
+        "browsers_supported": ["field_gecko", "chrome", "chromium", "brave", "edge", "vivaldi", "opera", "ie_html"],
+        "notice": "All Rights Reserved — HTTPS+Secure jump URLs · Host toolbar AmmoOS Field",
     }
     MANIFEST.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
     return doc

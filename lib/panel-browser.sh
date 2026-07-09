@@ -17,7 +17,7 @@ fi
 unset -f _aml_find_root 2>/dev/null || true
 
 #!/bin/bash
-# Panel browser — Queen hardened shell only. NEXUS opens as a Queen tab, never Firefox/Chrome.
+# Panel browser — Queen Browser hardened shell only. NEXUS opens as a Queen Browser tab, never host browsers.
 
 nexus_panel_url() {
   local port="${NEXUS_THREAT_PANEL_PORT:-9477}"

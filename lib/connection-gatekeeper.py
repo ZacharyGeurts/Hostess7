@@ -24,7 +24,7 @@ INTEL_CACHE = STATE / "vector-intel-cache.json"
 
 BROWSER_PROCS = frozenset({
     "queen-browser", "queen-field-engine", "field-queen", "fieldfox",
-    "legacy_gecko",
+    "field_gecko", "legacy_gecko",
     "firefox", "chrome", "chromium", "brave", "brave-browser", "vivaldi", "opera",
     "msedge", "waterfox", "librewolf", "floorp", "thorium",
     "google-chrome", "google-chrome-stable",
@@ -491,9 +491,35 @@ def _ip_class_legacy(ip: str) -> str:
     return "classified_remote"
 
 
+def _process_display_name(proc: str) -> str:
+    """Operator-facing identity. We are Queen Browser — never Firefox/FieldFox product branding."""
+    p = (proc or "").strip().lower()
+    if p in (
+        "queen-browser",
+        "queen-field-engine",
+        "field-queen",
+        "fieldfox",
+        "field-gecko",
+        "field_gecko",
+        "queen",
+    ):
+        return "Queen Browser"
+    if p in ("firefox", "firefox-bin", "waterfox", "librewolf", "floorp"):
+        return "host browser"
+    if p in ("chrome", "chromium", "google-chrome", "google-chrome-stable", "brave", "brave-browser",
+             "vivaldi", "opera", "msedge", "microsoft-edge"):
+        return "host browser"
+    return proc or "background app"
+
+
 def _axis_user_browser(proc: str) -> tuple[int, str]:
-    if proc in BROWSER_PROCS:
-        return 9, f"browser:{proc}"
+    label = _process_display_name(proc)
+    if proc in BROWSER_PROCS or proc in (
+        "queen-browser", "queen-field-engine", "field-queen", "fieldfox", "field-gecko", "field_gecko",
+    ):
+        if label == "Queen Browser":
+            return 9, "browser:queen-browser"
+        return 9, "browser:host"
     if proc in EMAIL_PROCS:
         return 8, f"email:{proc}"
     if proc in MEDIA_PROCS:
@@ -644,13 +670,16 @@ def _build_suggestion(
 ) -> dict[str, Any]:
     friendly: list[str] = []
     unfriendly: list[str] = []
-    proc_name = proc or "background app"
+    proc_name = _process_display_name(proc)
 
     ub = int(scores.get("user_browser", 0))
     if proc in EMAIL_PROCS:
         friendly.append(f"{proc_name} is a mail or chat app — everyday email and messaging ({ub}/10).")
     elif ub >= 7:
-        friendly.append(f"{proc_name} looks like a browser or media app you opened ({ub}/10).")
+        if proc_name == "Queen Browser":
+            friendly.append(f"Queen Browser session — field web engine ({ub}/10).")
+        else:
+            friendly.append(f"{proc_name} looks like a browser or media app you opened ({ub}/10).")
     elif ub <= 3:
         unfriendly.append(
             f"{proc_name} is not a browser ({ub}/10) — background apps calling out deserve a closer look."

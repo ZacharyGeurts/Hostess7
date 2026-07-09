@@ -42,7 +42,7 @@
 
   const LAYER_3_PLUS_CYCLE = [
     { z: 3, id: "developer", label: "Developers L3", panel: true, path: "/api/field-steam-bridge", sovereignLayer: 3 },
-    { z: 4, id: "queen_gameroom", label: "Queen Game Room", queen: true, path: "/queen-game-room.html", sovereignLayer: 4, fullscreen: true },
+    { z: 4, id: "queen_gameroom", label: "Queen Room", queen: true, path: "/queen-game-room.html", sovereignLayer: 4, fullscreen: true },
     { z: 5, id: "ammoos", label: "AmmoOS panels", panel: true, path: "/field", sovereignLayer: 5 },
     { z: 3, id: "arcade_battalion", label: "Arcade Battalion", panel: true, path: "/api/field-arcade-battalion", sovereignLayer: 3 },
     { z: 4, id: "combinatorics_studio", label: "Combinatorics", panel: true, path: "/combinatorics-studio/", sovereignLayer: 4 },

@@ -259,13 +259,21 @@ def _sovereign_receipt(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _queen_lan_dns(doc: dict[str, Any] | None = None) -> str:
+def _field_lan_dns(doc: dict[str, Any] | None = None) -> str:
+    """Field LAN DNS (was queen_lan_dns — compat keys retained)."""
     shard = (doc or _doctrine()).get("dhcp_shard") or {}
     return str(
-        shard.get("queen_lan_dns")
+        shard.get("field_lan_dns")
+        or shard.get("queen_lan_dns")
+        or os.environ.get("NEXUS_FIELD_LAN_DNS")
         or os.environ.get("NEXUS_QUEEN_LAN_DNS")
         or "192.168.47.1"
     )
+
+
+def _queen_lan_dns(doc: dict[str, Any] | None = None) -> str:
+    """Compat alias for _field_lan_dns."""
+    return _field_lan_dns(doc)
 
 
 def _connection_mode(fields: dict[str, Any] | None) -> str:
@@ -285,8 +293,8 @@ def _dhcp_shard(member_id: str, *, fields: dict[str, Any] | None = None) -> dict
     mode = _connection_mode(fields)
     modes = doc.get("modes") or {}
     spec = modes.get(mode) or modes.get("world") or {}
-    queen = _queen_lan_dns(doc)
-    gateway = str(doc.get("queen_lan_gateway") or queen)
+    queen = _field_lan_dns(doc)
+    gateway = str(doc.get("field_lan_gateway") or doc.get("queen_lan_gateway") or queen)
     digest = hashlib.sha256(member_id.encode()).digest()
     start_h = int(spec.get("pool_start_host") or 2)
     end_h = int(spec.get("pool_end_host") or 250)
@@ -366,7 +374,8 @@ def _dns_slot(member_id: str, *, fields: dict[str, Any] | None = None) -> dict[s
         "slot_id": f"truth-{member_id}",
         "relay_id": f"dns-relay-{n % 10000:04d}",
         "upstream": upstream,
-        "queen_lan_dns": queen,
+        "field_lan_dns": queen,
+        "queen_lan_dns": queen,  # compat
         "connection_mode": mode,
         "multipoint_role": "dns_relay",
         "github_pages_fallback": "https://zacharygeurts.github.io/Hostess7/api/field-dns.json",
@@ -741,7 +750,8 @@ def reshard_members(*, write: bool = True) -> dict[str, Any]:
         "schema": "field-botnet-reshard/v1",
         "count": len(updated),
         "modes": modes,
-        "queen_lan_dns": _queen_lan_dns(),
+        "field_lan_dns": _field_lan_dns(),
+        "queen_lan_dns": _field_lan_dns(),  # compat
         "note": "World/robot shards use 100.64/10 — not 192.168 third-octet cap",
     }
 

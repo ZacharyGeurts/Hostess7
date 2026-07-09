@@ -6,7 +6,7 @@
 
 ## Loopback identity
 
-When **ZNetwork is running**, AmmoOS is **`127.0.0.1`** — the sovereign field OS on loopback, **not** Firefox/Chromium or “just a website.” Queen Browser is the system shell; ZNetwork owns 100% of the internet pipe. The startbar clock shows `127.0.0.1` when the pipe is live.
+When **ZNetwork is running**, AmmoOS is **`127.0.0.1`** — the sovereign field OS on loopback, **not** a host browser tab or “just a website.” Queen Browser is the system shell; ZNetwork owns 100% of the internet pipe. The startbar clock shows `127.0.0.1` when the pipe is live.
 
 ## Highlights
 

@@ -329,7 +329,7 @@ pythong lib/g16-combinatronic-rebalance.py optimal</code></pre>
             "Field I/O",
             f"""
   <h1>Field I/O</h1>
-  <p>Panel HTTP serves all browser surfaces on loopback <code>:9477</code>. Queen world on <code>:9481</code>.</p>
+  <p>Panel HTTP serves all browser surfaces on loopback <code>:9477</code>. Queen Browser on <code>:9481</code>.</p>
   <figure class="figure">
     <img src="images/io-architecture.svg" width="920" height="420" alt="AmmoOS architecture" />
     <figcaption>Panel ↔ daemon ↔ state ↔ Queen browser</figcaption>

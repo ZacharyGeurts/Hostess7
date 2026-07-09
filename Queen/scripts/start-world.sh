@@ -17,7 +17,7 @@ fi
 unset -f _aml_find_root 2>/dev/null || true
 
 #!/bin/bash
-# Queen World — sovereign browser space on one RTX card (loopback only).
+# Queen Browser — Field Gecko server on one RTX card (loopback only). Product: Browser + Room only.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"

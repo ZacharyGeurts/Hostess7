@@ -7,7 +7,7 @@
 
 ## Loopback identity
 
-When **ZNetwork is running**, AmmoOS is **`127.0.0.1`** — the sovereign field OS on loopback, **not** Firefox/Chromium or “just a website.” Queen Browser is the secured system shell; ZNetwork owns 100% of the internet pipe. The startbar clock shows `127.0.0.1` when the pipe is live.
+When **ZNetwork is running**, AmmoOS is **`127.0.0.1`** — the sovereign field OS on loopback, **not** a host browser tab or “just a website.” Queen Browser is the secured system shell; ZNetwork owns 100% of the internet pipe. The startbar clock shows `127.0.0.1` when the pipe is live.
 
 ## Stack layering
 
@@ -25,7 +25,7 @@ Doctrine: `data/field-stack-layer-doctrine.json` · API: `/api/field-stack-layer
 
 ## Highlights
 
-- **Queen rebrand** — Firefox/FieldFox UI removed; `queen-browser-guide.html`, crown glyph, field-gecko manifest
+- **Queen Browser** — sole product identity (Field Gecko); `queen-browser-guide.html`, crown glyph, field-gecko manifest
 - **View** — folder manager reborn from scratch (replaces Nemo / queen-files branding)
 - **Program-glyph icons** — OCR-shaped icons per app; portrait/Amouranth tray branding removed
 - **Enhanced Start button** — AmmoOS glyph + label, emerald secured chrome

@@ -2,7 +2,7 @@
 
 **[→ GitHub: ZacharyGeurts/AmmoOS](https://github.com/ZacharyGeurts/AmmoOS)** · [Manual](https://zacharygeurts.github.io/AmmoOS/) · [Stack hub](https://zacharygeurts.github.io/ZacharyGeurts/stack.html) · [Release v2.0.0-beta3](https://github.com/ZacharyGeurts/AmmoOS/releases/tag/v2.0.0-beta3)
 
-AmmoOS beta 3 ships the full **NewLatest** stack: KILROY-first Queen UX, AmmoLang sovereign build, secure GitHub MCP, and tied Pages + wikis across ZacharyGeurts repos.
+AmmoOS beta 3 ships the full **NewLatest** stack: KILROY-first Queen Browser UX, AmmoLang sovereign build, secure GitHub MCP, and tied Pages + wikis across ZacharyGeurts repos.
 
 ## Stack (top → bottom)
 
@@ -10,9 +10,9 @@ AmmoOS beta 3 ships the full **NewLatest** stack: KILROY-first Queen UX, AmmoLan
 Hardware
   → NEXUS C2 (:9477)
   → ZNetwork (sole internet pipe)
-  → Queen CANVAS
+  → Field CANVAS
   → Queen Browser (:9481)
-  → AmmoOS inside Queen
+  → AmmoOS inside Queen Browser
 ```
 
 ## Tied GitHub sites
@@ -20,7 +20,7 @@ Hardware
 | Component | Repo | Pages |
 |-----------|------|-------|
 | **AmmoOS** | [AmmoOS](https://github.com/ZacharyGeurts/AmmoOS) | [Manual](https://zacharygeurts.github.io/AmmoOS/) |
-| Queen | [Queen](https://github.com/ZacharyGeurts/Queen) | [Hub](https://zacharygeurts.github.io/Queen/) |
+| Queen Browser | [Queen](https://github.com/ZacharyGeurts/Queen) | [Hub](https://zacharygeurts.github.io/Queen/) |
 | Grok16 | [Grok16](https://github.com/ZacharyGeurts/Grok16) | [Manual](https://zacharygeurts.github.io/Grok16/) |
 | KILROY | [KILROY](https://github.com/ZacharyGeurts/KILROY) | [Manual](https://zacharygeurts.github.io/KILROY/) |
 | ZNetwork | [ZNetwork](https://github.com/ZacharyGeurts/ZNetwork) | [Manual](https://zacharygeurts.github.io/ZNetwork/) |

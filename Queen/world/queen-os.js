@@ -336,7 +336,7 @@
         `MSE/MP4 ${caps.mse_mp4 ? "mandatory" : "off"}`,
         `Files ${caps.file_browser ? "on" : "off"}`,
         `Gates ${doc.gates?.held ?? "—"}/${doc.gates?.total ?? "—"}`,
-        `Internal ${caps.internal_only ? "only" : "legacy"}`,
+        `Internal ${caps.internal_only ? "only" : "field"}`,
       ]
         .map((t) => `<span>${esc(t)}</span>`)
         .join("");
@@ -794,7 +794,7 @@
         : "",
       `<div class="qw-actions qw-actions--tight">`,
       `<button type="button" class="qw-btn qw-btn--primary" id="qw-chips-launch">Open CHIPS &amp; Cores</button>`,
-      `<button type="button" class="qw-btn" id="qw-chips-gameroom">Game Room</button>`,
+      `<button type="button" class="qw-btn" id="qw-chips-gameroom">Queen Room</button>`,
       `<button type="button" class="qw-btn" id="qw-chips-rebuild">Rebuild CHIPS</button>`,
       `</div>`,
     ].join("");

@@ -1,6 +1,7 @@
 #!/usr/bin/env pythong
-"""Queen — full surface, every gate held, IFF, Forever Watchguard Angel (Hostess 7).
+"""Queen Browser — full surface, every gate held, IFF, Forever Watchguard Angel (Hostess 7).
 
+Product identity: Queen Browser (Field Gecko). Never third-party browser branding.
 Civilian identified. Hostile interdicted without hesitation. Zero telemetry unless AI secure channel.
 """
 from __future__ import annotations
@@ -20,7 +21,7 @@ ANGEL_MANDATE = INSTALL / "data" / "queen-angel-mandate.json"
 PANEL = STATE / "field-queen-browser-panel.json"
 
 QUEEN_BROWSER_PROCS = frozenset({
-    "queen-browser", "queen-world", "field-queen",
+    "queen-browser", "field-queen", "field-gecko", "queen-field-engine",
 })
 BLOCKED_CAPTURE_PROCS = frozenset({
     "obs", "obs-studio", "obs-ffmpeg-mux", "wf-recorder", "gpu-screen-recorder",
@@ -41,7 +42,7 @@ TELEMETRY_HOST_MARKERS = (
     "firefox.com/phoenix", "ping-centre", "ads-twitter", "doubleclick.net",
 )
 IFF_DOCTRINE = {
-    "motto": "Queen forever watchguard. Civilian identified. Hostile interdicted. Zero hesitation.",
+    "motto": "Queen Browser forever watchguard. Civilian identified. Hostile interdicted. Zero hesitation.",
     "civilian": ("CIVILIAN", "AUTHORIZED"),
     "hostile": ("HOSTILE", "CONFIRMED"),
     "unknown": ("UNKNOWN", "CONTACT"),
@@ -395,7 +396,8 @@ def posture() -> dict[str, Any]:
         "connection_gatekeeper": os.environ.get("NEXUS_CONNECTION_GATEKEEPER", "1") == "1",
         "packet_field": os.environ.get("NEXUS_PACKET_FIELD", "1") == "1",
         "sovereign_time": os.environ.get("NEXUS_SOVEREIGN_TIME", "1") == "1",
-        "engine_ship": os.environ.get("NEXUS_FIELDFox_ENGINE", "queen-browser"),
+        "engine_ship": os.environ.get("NEXUS_FIELD_GECKO_ENGINE") or os.environ.get("NEXUS_FIELDFox_ENGINE") or "queen-browser",
+        "product": "Queen Browser",
         "sovereign": os.environ.get("NEXUS_QUEEN_SOVEREIGN", os.environ.get("QUEEN_SOVEREIGN", "1")) == "1",
         "no_os_browser_hook": os.environ.get("NEXUS_NO_OS_BROWSER_HOOK", "1") == "1",
         "no_screen_capture": os.environ.get("NEXUS_NO_SCREEN_CAPTURE", "1") == "1",
@@ -419,8 +421,9 @@ def build_panel() -> dict[str, Any]:
     doc = {
         "schema": "field-queen-browser/v1",
         "updated": _now(),
-        "edition": seed.get("edition") or "Queen 2026",
-        "motto": seed.get("motto") or "Nothing optional. Hold all gates.",
+        "edition": seed.get("edition") or "Queen Browser 2026",
+        "product": "Queen Browser",
+        "motto": seed.get("motto") or "Nothing optional. Hold all gates. Queen Browser only.",
         "doctrine": seed.get("doctrine") or {},
         "engines": seed.get("engines") or {},
         "gates": gate_manifest(seed),

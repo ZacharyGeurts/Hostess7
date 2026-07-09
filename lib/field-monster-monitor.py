@@ -28,7 +28,7 @@ _PROTECTED = (
 
 _FIELD_SERVICES = (
     {"id": "nexus_panel", "name": "NEXUS Panel", "port": 9477, "path": "/api/field-host-desktop"},
-    {"id": "queen_world", "name": "Queen World", "port": 9481, "path": "/api/queen-field-sanity"},
+    {"id": "queen_browser", "name": "Queen Browser", "port": 9481, "path": "/api/queen-field-sanity"},
     {"id": "final_eye", "name": "Final Eye", "port": 9479, "path": "/ops"},
     {"id": "ammocode", "name": "AmmoCode", "port": 9478, "path": "/"},
 )

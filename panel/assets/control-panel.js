@@ -200,10 +200,10 @@
       '<div class="cp-row"><label>C2 desktop theme</label><select id="at-c2">' +
       c2Opts +
       "</select></div>" +
-      '<div class="cp-row"><label>Queen Styles</label><select id="at-queen">' +
+      '<div class="cp-row"><label>Field Styles</label><select id="at-queen">' +
       queenOpts +
       "</select></div>" +
-      '<div class="cp-row"><label>Queen Code editor</label><select id="at-editor">' +
+      '<div class="cp-row"><label>Field Code editor</label><select id="at-editor">' +
       editorOpts +
       "</select></div>" +
       '<div class="cp-row"><label>Taskbar skin</label><select id="at-shell">' +
@@ -244,7 +244,7 @@
     const theme = (themeDoc.queen_styles?.themes || []).find(function (t) {
       return t.id === activeId;
     });
-    if (!theme) return '<p class="cp-lead">Select a Queen Styles preset first.</p>';
+    if (!theme) return '<p class="cp-lead">Select a Field Styles preset first.</p>';
     const editable = !theme.built_in;
     const ATeng = AT();
     return (
@@ -409,13 +409,13 @@
       "<h2>System</h2>" +
       '<p class="cp-lead">AmmoOS posture and field services.</p>' +
       '<div class="cp-card">' +
-      '<div class="cp-row"><label>Queen version</label><span>' +
+      '<div class="cp-row"><label>Queen Browser version</label><span>' +
       esc(shellDoc.version || "—") +
       "</span></div>" +
       '<div class="cp-row"><label>Active C2 theme</label><span>' +
       esc(themeDoc.active?.c2 || "—") +
       "</span></div>" +
-      '<div class="cp-row"><label>Queen Styles</label><span>' +
+      '<div class="cp-row"><label>Field Styles</label><span>' +
       esc(themeDoc.active?.queen_styles || "—") +
       "</span></div>" +
       '<div class="cp-row"><label>ZNetwork pipe</label><span>' +

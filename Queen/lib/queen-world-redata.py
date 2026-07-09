@@ -1,5 +1,5 @@
 #!/usr/bin/env pythong
-"""Queen World Redata bridge — secure forever World_Redata inside Queen capsule."""
+"""Queen Browser Redata bridge — secure forever World_Redata inside Queen Browser capsule."""
 from __future__ import annotations
 
 import importlib.util

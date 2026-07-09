@@ -1,5 +1,5 @@
 /**
- * Deprecated — controller setup lives in Queen Game Room arcade deck only.
+ * Deprecated — controller setup lives in Queen Room arcade deck only.
  * @see Queen/world/queen-controller-setup.js
  */
 (function (global) {

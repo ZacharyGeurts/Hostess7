@@ -14,7 +14,7 @@ Unauthorized reproduction, redistribution, reverse engineering, or deployment in
 
 ## Sibling licenses
 
-This repository may include references or integration points to separately licensed sibling projects (AmmoOS, Grok16, Queen, KILROY, AMOURANTHRTX, etc.). Each component remains subject to its own license where applicable.
+This repository may include references or integration points to separately licensed sibling projects (AmmoOS, Grok16, Queen Browser, KILROY, AMOURANTHRTX, etc.). Each component remains subject to its own license where applicable.
 
 ---
 

@@ -201,7 +201,7 @@ def _countermeasures(
         {
             "id": "legacy_cage",
             "ready": True,
-            "label": "Legacy secure cage — old JS isolated from OS/memory",
+            "label": "Field secure cage — old JS isolated from OS/memory",
         },
         {
             "id": "gatekeeper_segment",

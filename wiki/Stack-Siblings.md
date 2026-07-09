@@ -13,7 +13,8 @@ Hostess 7 ships as the **full wired tree** — not a slim SDK. One extract, one 
 | **Hostess 7** *(main)* | Brain · training · H7B · counsel | `./Hostess7.sh talk` |
 | **AmmoOS** *(old)* | Field OS · panel · NEXUS-Shield | http://127.0.0.1:9477/field |
 | **Grok16** *(old)* | Sovereign compiler @ gnu++26 | `g16` toolchain |
-| **Queen** *(old)* | RTX browser shell | http://127.0.0.1:9481/world/browser.html |
+| **Queen Browser** | Field Gecko browser shell | http://127.0.0.1:9481/world/browser.html |
+| **Queen Room** | Movies + emulator launch | http://127.0.0.1:9481/world/queen-game-room.html |
 | **KILROY** *(old)* | Field boot kernel | boot impl |
 | **ZNetwork** *(old)* | Smart relayer · field I/O | relayer |
 
@@ -39,7 +40,7 @@ Materializes sibling repos into the release tree. Canonical hub: **SG/Hostess7**
 | Final Eye / Ear / Mouth | https://zacharygeurts.github.io/Final_Eye/ · Ear · Mouth |
 | Stack index | https://zacharygeurts.github.io/ZacharyGeurts/stack.html |
 
-AmmoOS manual and wiki cover panel, Queen, Field I/O, and operator guides. This wiki covers **Hostess 7 brain, counsel, training, and truth doctrine**.
+AmmoOS manual and wiki cover panel, Queen Browser, Queen Room, Field I/O, and operator guides. This wiki covers **Hostess 7 brain, counsel, training, and truth doctrine**.
 
 ---
 

@@ -1,5 +1,5 @@
 /**
- * Queen Game Room arcade deck — controller setup (leave theater → 25% arcade).
+ * Queen Room arcade deck — controller setup (leave theater → 25% arcade).
  * Keyboard · mouse · gamepad · hand · stereo · peripherals · TV watch → Hostess 7.
  */
 (function (global) {

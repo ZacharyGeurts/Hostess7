@@ -9,7 +9,7 @@ Bootable **AmmoOS desktop** — Final Eye OCR brain, kill-list revalidation, RE-
 | **Grok AI Lab desktop** | http://127.0.0.1:9477/grok-lab |
 | **AmmoOS field desktop** | http://127.0.0.1:9477/field → **Grok AI Lab** icon |
 | **Final Eye** | http://127.0.0.1:9479/ops |
-| **Queen World** | http://127.0.0.1:9481/world/ |
+| **Queen Browser** | http://127.0.0.1:9481/world/ |
 
 Home is always **127.0.0.1** — sanctuary inside.
 

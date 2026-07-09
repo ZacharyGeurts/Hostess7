@@ -12,7 +12,7 @@ sudo ./install-all.sh
 ./Hostess7/Hostess7.sh on
 ```
 
-`wire-stack.sh` materializes stack siblings (AmmoOS, Grok16, Queen, KILROY, ZNetwork) into one tree.
+`wire-stack.sh` materializes stack siblings (AmmoOS, Grok16, Queen Browser, KILROY, ZNetwork) into one tree.
 
 ---
 
@@ -34,7 +34,8 @@ This starts Prime + twelve World Experts, opens the internet gate when mandated,
 | One-shot query | `./Hostess7/Hostess7.sh -q "your question"` |
 | Brain map | `./Hostess7/Hostess7.sh brain` |
 | Field desktop | http://127.0.0.1:9477/field |
-| Queen browser | http://127.0.0.1:9481/world/browser.html |
+| Queen Browser | http://127.0.0.1:9481/world/browser.html |
+| Queen Room | http://127.0.0.1:9481/world/queen-game-room.html |
 | Training | http://127.0.0.1:9477/command#training |
 
 ---

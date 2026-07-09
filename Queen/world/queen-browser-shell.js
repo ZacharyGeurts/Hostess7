@@ -293,7 +293,7 @@
     const pill = document.getElementById("qb-compat-pill");
     if (pill && tab) {
       pill.textContent = `${tab.compat_era || "es2026"} · ${tab.compat_mode || "auto"}`;
-      pill.title = "Web compat — auto secures legacy code";
+      pill.title = "Web compat — auto field secure";
     }
   }
 

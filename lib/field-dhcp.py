@@ -410,7 +410,10 @@ def _ping_soft() -> bool:
 
 
 def _ip_in_use(ip: str, timeout: float = 0.9) -> bool:
-    """Ping probe before OFFER — prevent lease/IP collisions on the LAN."""
+    """IP collision probe — DISABLED when any-IP / no-collision (IP is fake; device + transfer matter)."""
+    # Doctrine: we don't collide. Real work is data transfer + speed + security.
+    if os.environ.get("NEXUS_FIELD_NO_IP_COLLISION", "1").strip().lower() not in ("0", "false", "no", "off"):
+        return False
     if _arbitrary_ipv4():
         try:
             mod = _arbitrary_mod()
@@ -418,7 +421,13 @@ def _ip_in_use(ip: str, timeout: float = 0.9) -> bool:
                 return False
         except Exception:
             return False
-    if os.environ.get("NEXUS_FIELD_DHCP_PING_PROBE", "1") != "1":
+        try:
+            any_mod = _any_ip_mod()
+            if any_mod and hasattr(any_mod, "skip_ping_probe") and any_mod.skip_ping_probe():
+                return False
+        except Exception:
+            pass
+    if os.environ.get("NEXUS_FIELD_DHCP_PING_PROBE", "0") != "1":
         return False
     try:
         proc = subprocess.run(
@@ -457,7 +466,54 @@ def _resolve_lease_ip(
     return existing or pool_start
 
 
+def _never_reconnect_hit(mac: str, ip: str | None = None) -> dict[str, Any] | None:
+    """Terrorist-attack devices never reconnect — no lease, no renew. Ever."""
+    try:
+        doc = _load_json(STATE / "field-terrorist-never-reconnect.json", {})
+        if not doc:
+            # fall back to udp ban ips
+            hot = _load_json(STATE / "field-udp-ban-ips.json", {})
+            ips = hot.get("ips") if isinstance(hot.get("ips"), dict) else {}
+            if ip and ip in ips:
+                return {"subject": ip, "kind": "ip", "reason": "field_udp_ban", "never_reconnect": True}
+            return None
+        mac_n = (mac or "").lower().replace("-", ":")
+        macs = doc.get("macs") if isinstance(doc.get("macs"), dict) else {}
+        ips = doc.get("ips") if isinstance(doc.get("ips"), dict) else {}
+        if mac_n and mac_n in macs:
+            return {**(macs[mac_n] if isinstance(macs[mac_n], dict) else {}), "subject": mac_n, "kind": "mac"}
+        if ip and ip in ips:
+            return {**(ips[ip] if isinstance(ips[ip], dict) else {}), "subject": ip, "kind": "ip"}
+    except Exception:
+        return None
+    return None
+
+
 def _store_lease(mac: str, ip: str, *, renew: bool, lease_sec: int) -> None:
+    hit = _never_reconnect_hit(mac, ip)
+    if hit:
+        # Refuse — no device ever reconnects from terrorist attacks
+        try:
+            refuse_path = STATE / "field-dhcp-never-reconnect-refusals.jsonl"
+            with refuse_path.open("a", encoding="utf-8") as fh:
+                fh.write(
+                    json.dumps(
+                        {
+                            "ts": _now(),
+                            "mac": mac,
+                            "ip": ip,
+                            "refused": True,
+                            "never_reconnect": True,
+                            "hit": hit,
+                            "motto": "No device ever reconnects from terrorist attacks.",
+                        },
+                        ensure_ascii=False,
+                    )
+                    + "\n"
+                )
+        except OSError:
+            pass
+        return
     leases = _load_json(LEASE_FILE, {"leases": {}})
     pool = leases.setdefault("leases", {})
     now = _now()
@@ -482,6 +538,27 @@ def _store_lease(mac: str, ip: str, *, renew: bool, lease_sec: int) -> None:
     _save_json(LEASE_FILE, leases)
 
 
+def _never_collide_sink() -> str:
+    """Field truth sink — 7.7.7.7 when we cannot say yes without colliding."""
+    env = os.environ.get("NEXUS_FIELD_NEVER_COLLIDE_IP", "").strip()
+    if env:
+        return env
+    try:
+        mod_path = INSTALL / "lib" / "field-truth-answer-every-address.py"
+        if mod_path.is_file():
+            import importlib.util
+
+            spec = importlib.util.spec_from_file_location("field_truth_answer", mod_path)
+            if spec and spec.loader:
+                m = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(m)
+                if hasattr(m, "never_collide_ip"):
+                    return str(m.never_collide_ip())
+    except Exception:
+        pass
+    return "7.7.7.7"
+
+
 def _next_lease(
     mac: str,
     *,
@@ -490,13 +567,49 @@ def _next_lease(
     ciaddr: str | None = None,
     dest_ip: str | None = None,
 ) -> str:
+    # No device ever reconnects from terrorist attacks — refuse before any OFFER
+    hit = _never_reconnect_hit(mac, requested or ciaddr)
+    if hit:
+        _append_event(
+            "never_reconnect_refuse",
+            mac,
+            requested or ciaddr or "",
+            str(hit.get("reason") or "terrorist_never_reconnect"),
+        )
+        # No lease — sink with zero usefulness; caller may still emit NAK path
+        return ""
     leases = _load_json(LEASE_FILE, {"leases": {}})
     pool = leases.setdefault("leases", {})
     now = _now()
     pool_start, pool_end, lease_sec = _pool_for_mac(mac)
     existing = str(pool[mac].get("ip")) if mac in pool and pool[mac].get("ip") else None
+    # Existing lease for banned device: revoke reconnect
+    if existing and _never_reconnect_hit(mac, existing):
+        _append_event("never_reconnect_revoke", mac, existing, "terrorist_never_reconnect")
+        return ""
+    sink = _never_collide_sink()
+    used_ips = {str(v.get("ip")) for v in pool.values() if v.get("ip")}
+    no_collide = os.environ.get("NEXUS_FIELD_NO_IP_COLLISION", "1").strip().lower() not in (
+        "0", "false", "no", "off",
+    )
 
-    if _arbitrary_ipv4():
+    # Prefer client-requested / existing / ciaddr — YES always when no-collide (IP is optional)
+    for cand in (requested, existing, ciaddr):
+        c = (cand or "").strip()
+        if not c:
+            continue
+        if c == existing:
+            break
+        if no_collide or (c not in used_ips and not _ip_in_use(c)):
+            _store_lease(mac, c, renew=renew, lease_sec=lease_sec)
+            _stats["yes_offers"] = int(_stats.get("yes_offers") or 0) + 1
+            _append_event("yes_lease", mac, c, "any_ip_no_collide" if no_collide else "truth_yes_free")
+            return c
+        if c not in used_ips and _ip_in_use(c):
+            _stats["conflicts_detected"] = int(_stats.get("conflicts_detected") or 0) + 1
+            break
+
+    if _arbitrary_ipv4() or no_collide:
         ip = _resolve_lease_ip(
             mac,
             requested=requested,
@@ -504,9 +617,27 @@ def _next_lease(
             dest_ip=dest_ip,
             existing=existing,
         )
+        if not ip:
+            ip = existing or requested or pool_start
+        # No-collide: always grant — IP numbers are not identity
+        if no_collide:
+            _store_lease(mac, ip, renew=renew, lease_sec=lease_sec)
+            _stats["yes_offers"] = int(_stats.get("yes_offers") or 0) + 1
+            _append_event("yes_lease", mac, ip, "no_collide_device_authority")
+            return ip
         if not _pool_valid(ip, start=pool_start, end=pool_end):
-            ip = _resolve_lease_ip(mac, existing=existing)
+            if ip and ip not in used_ips and not _ip_in_use(ip):
+                _store_lease(mac, ip, renew=renew, lease_sec=lease_sec)
+                return ip
+            ip = sink
+        elif ip in used_ips and ip != existing:
+            ip = sink
+        elif _ip_in_use(ip) and ip != existing:
+            ip = sink
         _store_lease(mac, ip, renew=renew, lease_sec=lease_sec)
+        if ip == sink:
+            _stats["sink_offers"] = int(_stats.get("sink_offers") or 0) + 1
+            _append_event("sink_lease", mac, ip, "never_collide_7_7_7_7")
         return ip
 
     if mac in pool:
@@ -530,30 +661,16 @@ def _next_lease(
             if _ip_in_use(ip):
                 _stats["conflicts_detected"] = int(_stats.get("conflicts_detected") or 0) + 1
                 _append_event("pool_conflict", mac, ip, "ping_probe_in_use")
-                if _ping_soft():
-                    _stats["soft_offers"] = int(_stats.get("soft_offers") or 0) + 1
-                    _stats["quarantined"] = int(_stats.get("quarantined") or 0) + 1
-                    _append_event("quarantine", mac, ip, "ping_soft_offer")
-                    leases = _load_json(LEASE_FILE, {"leases": {}})
-                    pool = leases.setdefault("leases", {})
-                    pool[mac] = {
-                        **(pool.get(mac) or {}),
-                        "ip": ip,
-                        "quarantine": True,
-                        "ping_conflict_soft": True,
-                        "last_seen": _now(),
-                    }
-                    _save_json(LEASE_FILE, leases)
-                    return ip
+                # Never collide — skip busy, try next; if none, sink
                 continue
             _store_lease(mac, ip, renew=False, lease_sec=lease_sec)
+            _stats["yes_offers"] = int(_stats.get("yes_offers") or 0) + 1
             return ip
-    if _ping_soft() and pool_start:
-        _stats["soft_offers"] = int(_stats.get("soft_offers") or 0) + 1
-        _append_event("quarantine", mac, pool_start, "pool_exhausted_soft")
-        _store_lease(mac, pool_start, renew=False, lease_sec=lease_sec)
-        return pool_start
-    return pool_start
+    # Pool exhausted or all busy — truthful sink 7.7.7.7
+    _store_lease(mac, sink, renew=False, lease_sec=lease_sec)
+    _stats["sink_offers"] = int(_stats.get("sink_offers") or 0) + 1
+    _append_event("sink_lease", mac, sink, "pool_exhausted_never_collide")
+    return sink
 
 
 def _dhcp_options(data: bytes) -> dict[int, bytes]:
@@ -767,26 +884,51 @@ def _dhcp_probe_offer(host: str = "192.168.47.1", timeout: float = 1.5) -> bool:
         return False
 
 
-def _dhcp_serve_pgrep() -> bool:
-    for pattern in ("field-dhcp.py serve", "nexus_field_dhcp_serve_loop"):
-        try:
-            proc = subprocess.run(
-                ["pgrep", "-f", pattern],
-                capture_output=True,
-                text=True,
-                timeout=3,
-                errors="replace",
-            )
-            if proc.returncode == 0:
+def _dhcp_serve_running() -> bool:
+    """Field-proc-grep /proc — never host pgrep."""
+    try:
+        import importlib.util
+
+        path = INSTALL / "lib" / "field-proc-grep.py"
+        if path.is_file():
+            spec = importlib.util.spec_from_file_location("field_proc_grep_dhcp", path)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                for pattern in ("field-dhcp.py serve", "nexus_field_dhcp_serve_loop"):
+                    if mod.any_match(pattern):
+                        return True
+                return False
+    except Exception:
+        pass
+    self_pid = os.getpid()
+    try:
+        for ent in Path("/proc").iterdir():
+            if not ent.name.isdigit():
+                continue
+            try:
+                pid = int(ent.name)
+            except ValueError:
+                continue
+            if pid == self_pid:
+                continue
+            try:
+                raw = (ent / "cmdline").read_bytes()
+            except (OSError, PermissionError):
+                continue
+            if not raw:
+                continue
+            cmd = " ".join(p.decode("utf-8", errors="replace") for p in raw.split(b"\x00") if p)
+            if "field-dhcp.py serve" in cmd or "nexus_field_dhcp_serve_loop" in cmd:
                 return True
-        except (OSError, subprocess.SubprocessError):
-            continue
+    except OSError:
+        pass
     return False
 
 
 def _dhcp_running() -> bool:
     """True when our DHCP serve path is active — align with dns-service-takeover."""
-    if _dhcp_serve_pgrep():
+    if _dhcp_serve_running():
         return True
     if PID_FILE.is_file():
         try:
@@ -819,9 +961,16 @@ def _loop() -> None:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     try:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+    except (OSError, AttributeError):
+        pass
+    try:
         sock.setsockopt(socket.IPPROTO_IP, socket.IP_PKTINFO, 1)
     except (OSError, AttributeError):
         pass
+    # Any-IP: prefer 0.0.0.0 so DISCOVER to 255.255.255.255 reaches us
+    if os.environ.get("NEXUS_FIELD_DHCP_ANY_IP", "1").strip().lower() not in ("0", "false", "no", "off"):
+        bind = "0.0.0.0"
     sock.bind((bind, PORT))
     while True:
         try:
@@ -839,12 +988,22 @@ def _loop() -> None:
         if dest_ip:
             global _LAST_DHCP_DEST
             _LAST_DHCP_DEST = dest_ip
+        # Track broadcast discovery path
+        if dest_ip in ("255.255.255.255", "0.0.0.0") or (addr and addr[0] in ("0.0.0.0", "255.255.255.255")):
+            _stats["broadcast_discovers"] = int(_stats.get("broadcast_discovers") or 0) + 1
         resp = _handle(data, addr)
         if resp:
             try:
-                sock.sendto(resp, addr)
+                # Prefer unicast to client; if addr is 0.0.0.0, broadcast reply
+                if addr and addr[0] in ("0.0.0.0", "255.255.255.255"):
+                    sock.sendto(resp, ("255.255.255.255", addr[1] if len(addr) > 1 else 68))
+                else:
+                    sock.sendto(resp, addr)
             except OSError:
-                pass
+                try:
+                    sock.sendto(resp, ("255.255.255.255", 68))
+                except OSError:
+                    pass
 
 
 
@@ -958,7 +1117,9 @@ def _lease_history(limit: int = 100) -> list[dict[str, Any]]:
     return list(reversed(rows[-limit:]))
 
 
-def _leases_detailed(raw: dict[str, Any], limit: int = 200) -> list[dict[str, Any]]:
+def _leases_detailed(raw: dict[str, Any], limit: int | None = None) -> list[dict[str, Any]]:
+    if limit is None:
+        limit = int(os.environ.get("NEXUS_FIELD_DHCP_PANEL_LEASE_SAMPLE", "2000") or "2000")
     pool = raw.get("leases") or {}
     rows: list[dict[str, Any]] = []
     for mac, entry in pool.items():
@@ -976,9 +1137,15 @@ def _leases_detailed(raw: dict[str, Any], limit: int = 200) -> list[dict[str, An
             "declines": int(entry.get("declines") or 0),
             "last_seen": entry.get("last_seen"),
             "dns": entry.get("dns") or DNS_SERVERS,
+            "device_id": entry.get("device_id"),
+            "hostname": entry.get("hostname"),
+            "kind": entry.get("kind"),
+            "domain": entry.get("domain") or "ammonet.net",
+            "ammonet": bool(entry.get("ammonet", True)),
+            "seamless": bool(entry.get("seamless", True)),
         })
     rows.sort(key=lambda r: int(r.get("remaining_seconds") or 0))
-    return rows[:limit]
+    return rows[: max(1, limit)]
 
 
 def build_panel() -> dict[str, Any]:
@@ -990,13 +1157,16 @@ def build_panel() -> dict[str, Any]:
     except Exception:
         takeover = {}
     may_serve = _may_serve_dhcp()
-    serve_loop = _dhcp_serve_pgrep()
+    serve_loop = _dhcp_serve_running()
     port_67 = _port_in_use(PORT)
     running = _dhcp_running()
     bind = _bind_if()
-    detailed = _leases_detailed(leases, 200)
+    sample_n = int(os.environ.get("NEXUS_FIELD_DHCP_PANEL_LEASE_SAMPLE", "2000") or "2000")
+    detailed = _leases_detailed(leases, sample_n)
     events = _lease_history(100)
-    pool_count = len(leases.get("leases") or {})
+    pool = leases.get("leases") or {}
+    pool_count = len(pool)
+    ammonet_n = sum(1 for e in pool.values() if isinstance(e, dict) and e.get("ammonet"))
     doc = {
         "schema": "field-dhcp/v2",
         "updated": _now(),
@@ -1008,7 +1178,7 @@ def build_panel() -> dict[str, Any]:
         "takeover_phase": takeover.get("phase") or "observing",
         "security_model": "field-sovereign-gate",
         "never_lose_cycle": True,
-        "motto": "Only our DHCP — foreign servers are threats; DNS option 6 → Truth Resolver.",
+        "motto": "AmmoNet lease takeover — Field DHCP everywhere · seamless join · DNS option 6 → Truth.",
         "bind": f"{bind}:{PORT}",
         "ok": running and may_serve,
         "crushing": running,
@@ -1037,11 +1207,17 @@ def build_panel() -> dict[str, Any]:
             "conflicts_detected": int(_stats.get("conflicts_detected") or 0),
             "declines": int(_stats.get("declines") or 0),
         },
-        "leases": list(leases.get("leases", {}).items())[:200],
+        "leases": list(pool.items())[:sample_n],
         "leases_detailed": detailed,
+        "leases_sample_size": min(sample_n, pool_count),
+        "leases_sample_note": "Panel sample only — lease_count/total_leases is full AmmoNet pool",
         "lease_history_events": events,
         "lease_count": pool_count,
         "total_leases": pool_count,
+        "ammonet_leases": ammonet_n,
+        "ammonet_takeover": bool(leases.get("ammonet_takeover")) or ammonet_n > 0,
+        "seamless": True,
+        "domain": leases.get("domain") or "ammonet.net",
         "ipv6_skeleton": {
             "enabled": False,
             "pool": "fe80::/64",
@@ -1132,13 +1308,13 @@ def panel_json() -> dict[str, Any]:
 
 
 def crush_dhcp() -> dict[str, Any]:
-    """Promote takeover, refresh Queen LAN, prove DHCP OFFER, publish panel."""
+    """Promote takeover, refresh Field LAN, prove DHCP OFFER, publish panel."""
     root = INSTALL
-    queen_lan = root / "scripts" / "queen-lan-up.sh"
-    if queen_lan.is_file():
+    field_lan = root / "scripts" / "queen-lan-up.sh"  # script path retained
+    if field_lan.is_file():
         try:
             subprocess.run(
-                ["bash", str(queen_lan)],
+                ["bash", str(field_lan)],
                 timeout=12,
                 capture_output=True,
                 errors="replace",
@@ -1151,11 +1327,13 @@ def crush_dhcp() -> dict[str, Any]:
         pass
     panel = build_panel()
     panel["crush"] = {
-        "queen_lan": "192.168.47.1",
+        "field_lan": "192.168.47.1",
+        "queen_lan": "192.168.47.1",  # compat
+        "offer_field": _dhcp_probe_offer("192.168.47.1"),
         "offer_queen": _dhcp_probe_offer("192.168.47.1"),
         "offer_loopback": _dhcp_probe_offer("127.0.0.1"),
         "port_67": _port_in_use(PORT),
-        "motto": "We are every DHCP lease on the planet — Truth DNS option 6 · Queen LAN crushing leases",
+        "motto": "We are every DHCP lease on the planet — Truth DNS option 6 · Field LAN crushing leases",
     }
     _save_json(PANEL_CACHE, panel)
     return panel

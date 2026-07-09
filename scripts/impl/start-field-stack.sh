@@ -18,7 +18,7 @@ unset -f _aml_find_root 2>/dev/null || true
 
 #!/bin/bash
 
-# Unified field stack — NewLatest NEXUS + Queen World + Final_Eye 1.1
+# Unified field stack — NewLatest NEXUS + Queen Browser + Final_Eye 1.1
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -118,7 +118,7 @@ echo "=== NewLatest field stack (KILROY → AmmoOS → Queen) ==="
 echo "  KILROY core ZNetwork absorbed — ./scripts/kilroy-load-os.sh for desktop"
 echo "  NEXUS panel :${PANEL_PORT}"
 echo "  Final_Eye   :${EYE_PORT}"
-echo "  Queen World :${WORLD_PORT} (standalone browser)"
+echo "  Queen Browser :${WORLD_PORT} (standalone browser)"
 echo "  ZNEWOCR     ${ZNEWOCR:-retired — Final_Eye only}"
 echo "  World_Redata ${WORLD_REDATA}"
 echo "  Install     ${ROOT}"

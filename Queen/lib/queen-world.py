@@ -1,5 +1,5 @@
 #!/usr/bin/env pythong
-"""Queen World — sovereign RTX browser space on one card (loopback HTTP).
+"""Queen Browser HTTP server — sovereign Field Gecko surface on one card (loopback).
 
 Serves world/ SPA + gui/ build deck. APIs: world status, queen-build, queen-eyeball.
 Replaces external NEXUS :9477 for Queen sovereign mode.
@@ -637,7 +637,7 @@ def world_status_fast() -> dict[str, Any]:
     sc = _load_json(state_dir / "secure-channel-cache.json")
     cv = _load_json(state_dir / "external-wire" / "contact-vector.json")
     return {
-        "schema": "queen-world/v1",
+        "schema": "queen-browser-server/v1", "alias_schema": "queen-world/v1",
         "fast": True,
         "updated": _now(),
         "world_ready": True,
@@ -683,7 +683,7 @@ def world_status(*, full: bool = True) -> dict[str, Any]:
     sov = gates.get("sovereign") or {}
     env_phases = (rtx_doc.get("phases") or {}).get("now") or {}
     doc = {
-        "schema": "queen-world/v1",
+        "schema": "queen-browser-server/v1", "alias_schema": "queen-world/v1",
         "updated": _now(),
         "world_ready": True,
         "world_url": f"http://{HOST}:{PORT}/world/browser.html",
@@ -1360,10 +1360,10 @@ _SECURITY_HEADERS = (
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "QueenWorld/1"
+    server_version = "QueenBrowser/1"
 
     def log_message(self, fmt: str, *args) -> None:
-        sys.stderr.write(f"[queen-world] {self.address_string()} - {fmt % args}\n")
+        sys.stderr.write(f"[queen-browser] {self.address_string()} - {fmt % args}\n")
 
     def _apply_security_headers(self) -> None:
         for key, value in _SECURITY_HEADERS:
@@ -2067,7 +2067,7 @@ def port_open(host: str, port: int) -> bool:
 def main() -> int:
     import argparse
 
-    ap = argparse.ArgumentParser(description="Queen World HTTP server")
+    ap = argparse.ArgumentParser(description="Queen Browser HTTP server")
     ap.add_argument("--host", default=HOST)
     ap.add_argument("--port", type=int, default=PORT)
     ap.add_argument("--check", action="store_true", help="exit 0 if world port is listening")
@@ -2115,20 +2115,20 @@ def main() -> int:
     try:
         hook = _boot_hook()
         print(
-            f"[queen-world] boot hook boarded — boot_os={hook.get('boot_os')} network_metal=BIOS",
+            f"[queen-browser] boot hook boarded — boot_os={hook.get('boot_os')} network_metal=BIOS",
             flush=True,
         )
         boot = _secure_boot()
         print(
-            f"[queen-world] secure space sealed — Grok16 ready={boot.get('grok16', {}).get('ready')}",
+            f"[queen-browser] secure space sealed — Grok16 ready={boot.get('grok16', {}).get('ready')}",
             flush=True,
         )
     except Exception as exc:
-        print(f"[queen-world] secure boot warn: {exc}", flush=True)
+        print(f"[queen-browser] secure boot warn: {exc}", flush=True)
 
     httpd = ThreadingHTTPServer((args.host, args.port), Handler)
     url = f"http://{args.host}:{args.port}/world/browser.html"
-    print(f"Queen World → {url}", flush=True)
+    print(f"Queen Browser → {url}", flush=True)
     print(f"Build deck → http://{args.host}:{args.port}/gui/queen-build-deck.html", flush=True)
     try:
         httpd.serve_forever()

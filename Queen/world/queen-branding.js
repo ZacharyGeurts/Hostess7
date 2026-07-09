@@ -73,7 +73,7 @@
     );
     document.getElementById("qb-compat-pill")?.setAttribute(
       "title",
-      "Web compat — legacy sites auto-caged. AI-friendly without remote polyfill CDNs.",
+      "Web compat — field sites auto-caged. AI-friendly without remote polyfill CDNs.",
     );
     document.getElementById("qb-proxy")?.setAttribute(
       "title",

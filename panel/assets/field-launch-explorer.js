@@ -219,7 +219,7 @@
       { id: "run", label: "Run chamber" },
       { id: "explore", label: "Explore inside" },
       { id: "manifest", label: "View manifest" },
-      { id: "files", label: "Open in Queen Files" },
+      { id: "files", label: "Open in Field Files" },
       { id: "copy", label: "Copy path" },
     ];
     menu.innerHTML = actions

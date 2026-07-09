@@ -112,7 +112,7 @@ TCP/IP, DNS, TLS, nftables, DPI, OWASP, zero trust, incident response, and NEXUS
 
 **Pages vs local** — GitHub Pages is demo mode: HTTPS, sanitized chat, truth-filtered fetches. Full brain, NEXUS panel, and counsel live on loopback or Codespaces only.
 
-**I'm the hub** — SG/Hostess7 is canonical. AmmoOS panel `:9477`, Queen `:9481`, Grok16 compiler, KILROY boot — all wired from one tree.
+**I'm the hub** — SG/Hostess7 is canonical. AmmoOS panel `:9477`, Queen Browser `:9481`, Grok16 compiler, KILROY boot — all wired from one tree.
 
 **NEXUS imaging** — Combinatronic repair, format icons, Big Drive device grids. When assets break, we repair together.
 

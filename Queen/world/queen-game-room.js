@@ -1,5 +1,5 @@
 /**
- * Queen Game Room — Webbrowser theater, CHIPS systems, cinema, gamepad (no RTX comp shader).
+ * Queen Room — movies theater, CHIPS emulator launch, cinema, gamepad (no RTX comp shader).
  */
 (function () {
   "use strict";
@@ -205,7 +205,7 @@
     const ratio = state.aspect || sys?.ratio || "16/9";
     applyAspect(ratio);
     const title = $("gr-stage-title");
-    if (title) title.textContent = sys?.label || "Game Room";
+    if (title) title.textContent = sys?.label || "Queen Room";
     const mode = $("gr-mode-label");
     if (mode) {
       mode.textContent = sys?.movie

@@ -9,13 +9,13 @@
       label: "OS",
       hint: "Start menu · desktop · shell",
       programs: [
-        { id: "browser", label: "Queen Browser", hint: "Tabbed OS", url: "/world/browser.html" },
-        { id: "os-desktop", label: "Queen Desktop", hint: "Taskbar shell", url: "/world/queen-desktop.html" },
+        { id: "browser", label: "Queen Browser", hint: "Field Gecko shell", url: "/world/browser.html" },
+        { id: "os-desktop", label: "AmmoOS Desktop", hint: "Taskbar shell", url: "/world/queen-desktop.html" },
         { id: "files", label: "Files", hint: "Folder manager", url: "/world/queen-files.html" },
         { id: "terminal", label: "Terminal", hint: "GNU shell", url: "queen://terminal" },
         { id: "thermal-manager", label: "Thermal Manager", hint: "Landauer guard", url: "/world/queen-thermal-manager.html" },
-        { id: "code", label: "Queen Code", hint: "Editor", url: "/world/queen-code.html" },
-        { id: "gameroom", label: "Game Room", hint: "CHIPS theater", url: "queen://gameroom" },
+        { id: "code", label: "Field Code", hint: "Editor", url: "/world/queen-code.html" },
+        { id: "gameroom", label: "Queen Room", hint: "Movies · emulators", url: "queen://gameroom" },
       ],
     },
     {

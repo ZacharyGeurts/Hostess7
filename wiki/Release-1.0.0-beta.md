@@ -3,7 +3,7 @@
 **Tag:** [`v1.0.0-beta`](https://github.com/ZacharyGeurts/Hostess7/releases/tag/v1.0.0-beta)  
 **Repo:** [ZacharyGeurts/Hostess7](https://github.com/ZacharyGeurts/Hostess7)
 
-Complete field stack beta — Hostess 7 brain hub with AmmoOS, Grok16, Queen, KILROY, and stack siblings.
+Complete field stack beta — Hostess 7 brain hub with AmmoOS, Grok16, Queen Browser, KILROY, and stack siblings.
 
 ---
 
@@ -12,7 +12,8 @@ Complete field stack beta — Hostess 7 brain hub with AmmoOS, Grok16, Queen, KI
 - **Hostess 7 brain** — training campus, H7B storage, curiosity corpus, Fifth Amendment literacy, positional awareness
 - **AmmoOS field desktop** — panel `:9477`, threat panel, ironclad plate meld
 - **Grok16** — compiler toolchain @ 16.2.0
-- **Queen** — standalone RTX browser `:9481`
+- **Queen Browser** — Field Gecko standalone browser `:9481`
+- **Queen Room** — movies + CHIPS emulator launch
 - **Stack wire** — materialized siblings in one tree (`wire-stack.sh`)
 - **Historic truth corpus** — gate for all new information
 - **Train-before-update** — full curriculum before pack/push

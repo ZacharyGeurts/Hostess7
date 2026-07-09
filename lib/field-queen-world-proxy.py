@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Proxy Queen World :9481 APIs through AmmoOS :9477 — Game Room, SAP, NES library."""
+"""Proxy Queen Browser :9481 APIs through AmmoOS :9477 — Queen Room, SAP, NES library."""
 from __future__ import annotations
 
 import json
@@ -52,8 +52,8 @@ def proxy_request(
     except (urllib.error.URLError, TimeoutError, OSError) as exc:
         doc = {
             "ok": False,
-            "error": "queen_world_unreachable",
-            "hint": "Boot Queen World — ./nexus.sh or Queen on :9481",
+            "error": "queen_browser_unreachable",
+            "hint": "Boot Queen Browser — ./nexus.sh or Queen Browser on :9481",
             "queen_base": base,
             "detail": str(exc)[:200],
         }

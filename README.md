@@ -2,7 +2,7 @@
 
 God Bless.
 
-**The last computer for the world** — sovereign field stack: AmmoOS desktop, brain hub, GNUEOLTerminal, distributed botnet, Queen, KILROY, and wired siblings.
+**The last computer for the world** — sovereign field stack: AmmoOS desktop, brain hub, GNUEOLTerminal, distributed botnet, Queen Browser, KILROY, and wired siblings.
 
 **Version:** `3.0.7-beta5` · **Tag:** `v3.0.7-beta5` · **Release:** [RELEASE-3.0.7-beta5.md](Hostess7/RELEASE-3.0.7-beta5.md)
 
@@ -11,13 +11,13 @@ God Bless.
 | **Hostess7 Pages (start here)** | https://zacharygeurts.github.io/Hostess7/ |
 | **AmmoOS field desktop** | http://127.0.0.1:9477/field |
 | **GNU EOL Terminal + wiki** | https://zacharygeurts.github.io/GNUEOLTerminal/wiki/ |
-| **Queen browser** | http://127.0.0.1:9481/world/browser.html |
+| **Queen Browser** | http://127.0.0.1:9481/world/browser.html |
 
 ---
 
 ## What this is
 
-Hostess 7 is the **main project**. This repo ships the full wired tree — brain, panel, AmmoOS, Grok16, Queen, KILROY, ZNetwork, senses, and field programs. Clone once, wire siblings, boot on loopback.
+Hostess 7 is the **main project**. This repo ships the full wired tree — brain, panel, AmmoOS, Grok16, Queen Browser, KILROY, ZNetwork, senses, and field programs. Clone once, wire siblings, boot on loopback.
 
 | Component | Role |
 |-----------|------|
@@ -25,11 +25,12 @@ Hostess 7 is the **main project**. This repo ships the full wired tree — brain
 | **AmmoOS** | Field desktop · classic Start · `:9477` |
 | **GNUEOLTerminal** | GNU EOL Terminal · Field Tech textbook + wiki |
 | **Grok16** | Sovereign compiler @ gnu++26 |
-| **Queen** | RTX browser shell `:9481` |
+| **Queen Browser** | Field web engine shell `:9481` (Field Gecko) |
+| **Queen Room** | Movies + emulator launch (CHIPS) |
 | **KILROY** | Field boot kernel |
 | **ZNetwork** | Smart relayer · field I/O |
 
-AmmoOS, Grok16, Queen, and sibling repos are **Old Projects** — they live inside this tree and on Pages. See [docs/old-projects.html](docs/old-projects.html).
+AmmoOS, Grok16, Queen Browser, and sibling repos are **Old Projects** — they live inside this tree and on Pages. See [docs/old-projects.html](docs/old-projects.html).
 
 ---
 

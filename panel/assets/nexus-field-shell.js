@@ -952,7 +952,7 @@
       return;
     }
     if (msg.type === "queen:shell") {
-      if (msg.url) launch({ id: "queen-tab", name: "Queen", exec: msg.url });
+      if (msg.url) launch({ id: "queen-tab", name: "Queen Browser", exec: msg.url });
     }
   }
 

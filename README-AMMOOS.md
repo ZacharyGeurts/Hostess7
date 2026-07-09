@@ -6,7 +6,7 @@
 ![Queen](https://img.shields.io/badge/Queen-browser-purple)
 ![License](https://img.shields.io/badge/license-GPLv3-green)
 
-**AmmoOS** is the **2.0.0-beta3.1** field operating system on **`127.0.0.1`**. **KILROY** is the PC core (ZNetwork absorbed). AmmoOS desktop runs on **AMOURANTHRTX** display technology. **Queen** is a standalone secured browser on `:9481` — not an AmmoOS container. Stack: Hardware → NEXUS C2 → KILROY → AmmoOS → Queen. Load with `./scripts/kilroy-load-os.sh`.
+**AmmoOS** is the **2.0.0-beta3.1** field operating system on **`127.0.0.1`**. **KILROY** is the PC core (ZNetwork absorbed). AmmoOS desktop runs on **AMOURANTHRTX** display technology. **Queen Browser** is the standalone Field Gecko secured browser on `:9481` — not an AmmoOS container. **Queen Room** is movies + emulator launch. Stack: Hardware → NEXUS C2 → KILROY → AmmoOS → Queen Browser. Load with `./scripts/kilroy-load-os.sh`.
 
 ## Live surfaces (after install)
 

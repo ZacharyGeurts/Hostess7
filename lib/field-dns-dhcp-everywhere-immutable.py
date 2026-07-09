@@ -51,7 +51,8 @@ def field_one_hub() -> dict[str, Any]:
     hub.setdefault("dhcp", ["192.168.47.1", "0.0.0.0"])
     hub.setdefault("truth", "127.0.0.1")
     hub.setdefault("loopback", "127.0.0.1")
-    hub.setdefault("queen_lan", "192.168.47.1")
+    hub.setdefault("field_lan", hub.get("queen_lan") or "192.168.47.1")
+    hub.setdefault("queen_lan", hub["field_lan"])  # compat
     return hub
 
 
@@ -127,6 +128,7 @@ def seal(*, write: bool = True) -> dict[str, Any]:
         "title": doc.get("title"),
         "motto": doc.get("motto"),
         "immutable_everywhere": True,
+        "unchangeable_internet": True,
         "always_field_one": True,
         "field_one": True,
         "field_one_hub": hub,
@@ -135,6 +137,11 @@ def seal(*, write: bool = True) -> dict[str, Any]:
         "dhcp_always_on": bool(policy.get("dhcp_always_on", True)),
         "route_all_dns_to_field_one": bool(policy.get("route_all_dns_to_field_one", True)),
         "route_all_dhcp_to_field_one": bool(policy.get("route_all_dhcp_to_field_one", True)),
+        "distributed": True,
+        "redundant": True,
+        "protocol_extensible": True,
+        "future_protocols_reserved": True,
+        "protocol_note": "Old fabric sealed on field-h7r / field-h7s-fs; new protocols develop later without unsealing DNS/DHCP.",
         "env_applied": applied,
         "field_one_absorb": {
             "ok": bool(field_one_absorb.get("ok")),

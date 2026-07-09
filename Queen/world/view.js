@@ -1097,7 +1097,7 @@
     }
 
     if (!isDir && action === "open_code") {
-      items.push({ id: "code", label: "Open in Queen Code", action: () => navigateUrl(codeViewerUrl(entry.path)) });
+      items.push({ id: "code", label: "Open in Field Code", action: () => navigateUrl(codeViewerUrl(entry.path)) });
     }
     if (!isDir && bigDriveEligible(entry)) {
       items.push({

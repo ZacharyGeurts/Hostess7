@@ -135,7 +135,7 @@ if [[ "${KIOSK}" == "1" ]]; then
   QUEEN_ARGS+=(--kiosk)
 fi
 
-# Queen Field Engine — faster, safer, stronger than stock Firefox (always on).
+# Queen Browser Field Engine — Field Gecko (always on).
 QUEEN_FIELD_PREFS=(
   --setpref=gfx.webrender.all=true
   --setpref=layers.acceleration.force-enabled=true

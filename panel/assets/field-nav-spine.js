@@ -49,7 +49,7 @@
       "</span>" +
       '<a class="fns-queen" href="' +
       QUEEN_HOME +
-      '" title="Queen Browser">Queen</a>';
+      '" title="Queen Browser">Queen Browser</a>';
     document.body.insertBefore(bar, document.body.firstChild);
     document.body.classList.add("fns-pad-top");
   }

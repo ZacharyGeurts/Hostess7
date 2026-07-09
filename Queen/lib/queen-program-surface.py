@@ -261,7 +261,7 @@ def properties_menu(program_id: str) -> dict[str, Any]:
                 _field("World port", os.environ.get("QUEEN_WORLD_PORT", "9481")),
                 _field("Panel port", os.environ.get("NEXUS_THREAT_PANEL_PORT", "9477")),
                 _field("Icon", prog.get("icon")),
-                _field("Legacy ID", prog.get("legacy_id")),
+                _field("Field ID", prog.get("legacy_id") or prog.get("field_id")),
                 _field("Schema", "queen-program-surface/v1"),
             ],
         },

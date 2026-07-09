@@ -90,6 +90,11 @@ def _http_json(method: str, url: str, body: dict[str, Any] | None = None, *, tim
 
 
 def ensure_queen_world() -> dict[str, Any]:
+    """Compat alias — product is Queen Browser."""
+    return ensure_queen_browser()
+
+
+def ensure_queen_browser() -> dict[str, Any]:
     st = _http_json("GET", f"{_world_base()}/api/status?fast=1", timeout=2.0)
     if st.get("ok") is not False and (st.get("schema") or st.get("port") or st.get("queen_verdict")):
         return {"ok": True, "already": True, "world": _world_base()}
@@ -111,7 +116,7 @@ def ensure_queen_world() -> dict[str, Any]:
         st = _http_json("GET", f"{_world_base()}/api/status?fast=1", timeout=2.0)
         if st.get("ok") is not False and (st.get("schema") or st.get("port") or st.get("queen_verdict")):
             return {"ok": True, "spawned": True, "world": _world_base()}
-    return {"ok": False, "error": "queen_world_unavailable", "world": _world_base()}
+    return {"ok": False, "error": "queen_browser_unavailable", "world": _world_base()}
 
 
 def _resolve_tab_url(spec: dict[str, Any]) -> str:
@@ -162,7 +167,7 @@ def _seed_profile_branding() -> dict[str, Any]:
 
 def seed_startup_tabs() -> dict[str, Any]:
     branding = _seed_profile_branding()
-    world = ensure_queen_world()
+    world = ensure_queen_browser()
     if not world.get("ok"):
         return world
     opened: list[dict[str, Any]] = []
@@ -209,7 +214,7 @@ def launch_integrated_display() -> dict[str, Any]:
             "error": "os_browser_disabled",
             "hint": "Set QUEEN_NO_OS_BROWSER=1 — Queen integrated shell only",
         }
-    world = ensure_queen_world()
+    world = ensure_queen_browser()
     seed = seed_startup_tabs()
     shell = _shell_url()
     if not LAUNCH_SH.is_file():
@@ -280,7 +285,7 @@ def close_integrated(*, stop_world: bool = False) -> dict[str, Any]:
     patterns = (
         f"queen-browser.*{profile}",
         f"queen-field-engine.*{profile}",
-        f"legacy_gecko.*{profile}",
+        f"field_gecko.*{profile}",
         "AmmoOS",
         "QueenFieldBrowser",
         "QueenBrowser",
@@ -326,7 +331,7 @@ def main() -> int:
     elif cmd in ("close", "close-os", "quit", "exit"):
         out = close_integrated(stop_world=os.environ.get("AMMOOS_CLOSE_STOP_WORLD", "0") in ("1", "true", "yes"))
     elif cmd == "ensure":
-        out = ensure_queen_world()
+        out = ensure_queen_browser()
     else:
         print(json.dumps({
             "error": "usage: queen-integrated-browser.py [open|seed|close|ensure]",

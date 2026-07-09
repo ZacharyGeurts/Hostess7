@@ -162,7 +162,7 @@ def software_fixes() -> dict[str, Any]:
     fixes: list[dict[str, Any]] = []
     services = [
         ("nexus_panel", "NEXUS Panel", 9477, "/api/status", "stack_restart"),
-        ("queen_world", "Queen World", 9481, "/api/queen-field-sanity", "queen_start"),
+        ("queen_browser", "Queen Browser", 9481, "/api/queen-field-sanity", "queen_start"),
         ("final_eye", "Final Eye", 9479, "/ops", "final_eye_start"),
         ("ammocode", "AmmoCode", 9478, "/", "ammocode_start"),
     ]

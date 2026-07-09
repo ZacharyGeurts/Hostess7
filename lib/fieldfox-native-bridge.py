@@ -1,5 +1,5 @@
 #!/usr/bin/env pythong
-"""FieldFox native messaging bridge — tab egress receipts to NEXUS gatekeeper."""
+"""Queen Browser native messaging bridge — tab egress receipts to NEXUS gatekeeper."""
 from __future__ import annotations
 
 import json
@@ -32,7 +32,7 @@ def _send_message(msg: dict[str, Any]) -> None:
 def handle(msg: dict[str, Any]) -> dict[str, Any]:
     action = (msg.get("action") or "ping").strip()
     if action == "ping":
-        return {"ok": True, "bridge": "fieldfox-native/v1", "queen": True, "hold_all_gates": True}
+        return {"ok": True, "bridge": "queen-browser-native/v1", "product": "Queen Browser", "queen": True, "hold_all_gates": True, "alias": "fieldfox-native/v1"}
     if action == "gate_check":
         import importlib.util
 

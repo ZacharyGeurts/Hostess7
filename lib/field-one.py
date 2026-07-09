@@ -273,7 +273,8 @@ def field_one_hub() -> dict[str, Any]:
     hub.setdefault("dhcp", ["192.168.47.1", "0.0.0.0"])
     hub.setdefault("truth", "127.0.0.1")
     hub.setdefault("loopback", "127.0.0.1")
-    hub.setdefault("queen_lan", "192.168.47.1")
+    hub.setdefault("field_lan", (hub.get("field_lan") or hub.get("queen_lan")) or "192.168.47.1")
+    hub.setdefault("queen_lan", hub["field_lan"])  # compat alias
     hub.setdefault("wildcard", "0.0.0.0/0")
     return hub
 

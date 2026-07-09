@@ -69,7 +69,7 @@ EOF
   chmod 640 "${NEXUS_STATE_DIR}/queen-layer.last" 2>/dev/null || true
 }
 
-nexus_queen_world_ensure() {
+nexus_queen_browser_ensure() {
   [[ "${NEXUS_QUEEN_WORLD_BOOT:-1}" == "1" ]] || return 0
   local queen_root py pythong_bin host port log
   queen_root="$(nexus_queen_root)"
@@ -147,7 +147,7 @@ nexus_queen_icon_refresh() {
 }
 
 nexus_queen_layer_refresh() {
-  nexus_queen_world_ensure || true
+  nexus_queen_browser_ensure || true
   nexus_queen_host_desktop_refresh || true
   nexus_queen_icon_refresh || true
   nexus_queen_layer_record
@@ -172,7 +172,7 @@ nexus_queen_layer_install_autostart() {
   cat >"$desktop" <<EOF
 [Desktop Entry]
 Type=Application
-Name=Queen World Layer
+Name=Queen Browser Layer
 Comment=Queen browser shell on :9481 — field layer persists across reboot
 Icon=queen-browser
 Exec=env NEXUS_INSTALL_ROOT=${root} NEXUS_FIELD_STANDALONE=1 DISPLAY=:0 bash -c 'source ${root}/lib/nexus-common.sh; nexus_init_runtime_paths; source ${root}/lib/queen-layer-boot.sh; nexus_queen_layer_refresh'
@@ -185,3 +185,5 @@ EOF
   chmod 644 "$desktop" 2>/dev/null || true
   nexus_log "INFO" "queen-layer" "AUTOSTART installed ${desktop} state=${state_dir}"
 }
+# compat alias — product is Queen Browser
+nexus_queen_world_ensure() { nexus_queen_browser_ensure "$@"; }

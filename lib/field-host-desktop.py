@@ -618,10 +618,10 @@ def _running_programs() -> list[dict[str, Any]]:
     names = {
         "nexus-genius": "NEXUS Daemon",
         "threat-panel-http": "AmmoOS Panel",
-        "queen-world": "Queen World",
+        "queen-world": "Queen Browser", "queen-browser": "Queen Browser",
         "queen-browser": "Queen Browser",
         "queen-field-engine": "Queen Browser",
-        "legacy_gecko": "Queen Browser (legacy engine)",
+        "legacy_gecko": "Queen Browser (Field Gecko)", "field_gecko": "Queen Browser (Field Gecko)",
         "chromium": "Queen Browser (blocked — use Queen)",
         "google-chrome": "Queen Browser (blocked — use Queen)",
         "code": "AmmoCode",

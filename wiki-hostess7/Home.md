@@ -2,9 +2,9 @@
 
 **[→ GitHub: ZacharyGeurts/Hostess7](https://github.com/ZacharyGeurts/Hostess7)** · [Pages hub](https://zacharygeurts.github.io/Hostess7/) · **v2.0.7**
 
-**Hostess 7 is the main project.** AmmoOS, Grok16, Queen, and the rest are **Old Projects** — wired inside the tree, not the canonical hub.
+**Hostess 7 is the main project.** AmmoOS, Grok16, Queen Browser, and the rest are **Old Projects** — wired inside the tree, not the canonical hub.
 
-**Hostess 7 `2.0.7`** — main project. Sovereign brain and operator package. AmmoOS, Grok16, Queen, and the rest are **Old Projects**.
+**Hostess 7 `2.0.7`** — main project. Sovereign brain and operator package. AmmoOS, Grok16, Queen Browser, and the rest are **Old Projects**.
 
 > **TL;DR:** `git clone` → `pip install -r requirements.txt` → `./Hostess7.sh boot`
 
@@ -19,7 +19,7 @@ Hostess 7 is not a chatbot bolt-on. She is the **supreme authority anchor** for 
 | Counsel (talk UI) | `./Hostess7/Hostess7.sh talk` |
 | One-shot answer | `./Hostess7/Hostess7.sh -q "…"` |
 | AmmoOS field desktop | http://127.0.0.1:9477/field |
-| Queen browser | http://127.0.0.1:9481/world/browser.html |
+| Queen Browser | http://127.0.0.1:9481/world/browser.html |
 | Training panel | http://127.0.0.1:9477/command#training |
 | H7 Updater (Layer 0) | https://zacharygeurts.github.io/H7updater/ |
 | Archival Warehouse | Hostess7 Pages `/h7updater/` or `/ammoos-warehouse` |
@@ -33,7 +33,8 @@ Hostess 7 is not a chatbot bolt-on. She is the **supreme authority anchor** for 
 | **Hostess 7** | Brain · training campus · H7B · library · counsel |
 | **AmmoOS** | Field desktop · panel `:9477` · NEXUS-Shield |
 | **Grok16** | Sovereign compiler @ gnu++26 |
-| **Queen** | RTX browser shell `:9481` |
+| **Queen Browser** | Field Gecko browser shell `:9481` |
+| **Queen Room** | Movies + CHIPS emulator launch |
 | **KILROY** | Field boot kernel |
 | **ZNetwork** | Smart relayer · field I/O |
 

@@ -1,5 +1,5 @@
 /**
- * Sweet Anita Protocol (SAP) — Queen Game Room multiplayer client over HTTP tunnel.
+ * Sweet Anita Protocol (SAP) — Queen Room multiplayer client over HTTP tunnel.
  * Lockstep input sync v1 — gamepad → sap_input → sync_frame.
  */
 (function (global) {

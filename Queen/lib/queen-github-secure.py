@@ -194,7 +194,7 @@ def panel_json() -> dict[str, Any]:
         "doctrine": doctrine,
         "policy": "Pinned GitHub DNS + SSH keys — no MITM, redirect, or credential hooks",
         "browser": "Queen",
-        "legacy_engine_label": "legacy_gecko",
+        "field_engine_label": "field_gecko", "legacy_engine_label": "field_gecko",
     }
 
 

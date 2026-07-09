@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Bootstrap stripped Queen Field Engine from upstream gecko source (MPL 2.0).
-# Does not download unless --fetch is passed. Documents g16 build lane.
+# Queen Browser · Field Gecko bootstrap (product is Field Gecko — not third-party browser branding).
+# Upstream ESR pin is a build input only. Does not download unless --fetch is passed.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -8,6 +8,7 @@ QUEEN="$(cd "${ROOT}/.." && pwd)"
 SG="$(cd "${QUEEN}/../.." && pwd)"
 GROK16="${GROK16_ROOT:-${SG}/Grok16}"
 TAG="${1:-QUEEN_GECKO_ESR_128}"
+# Build pin name may still match vendor tree; product surface is Field Gecko / Queen Browser only.
 UPSTREAM_TAG="${QUEEN_GECKO_UPSTREAM_TAG:-FIREFOX_ESR_128_BASE}"
 FETCH=0
 if [[ "${1:-}" == "--fetch" ]]; then

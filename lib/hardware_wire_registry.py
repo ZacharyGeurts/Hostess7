@@ -21,7 +21,7 @@ WIRE_ALLOWED = frozenset({
     "ibus-daemon", "ibus-engine", "ibus-extension", "ibus-extension-", "ibus-x11", "ibus-wayland",
     "fcitx", "fcitx5",
     "threat-panel-http", "pythong", "python3", "python", "nexus-daemon", "nexus.sh",
-    "nexus", "queen-browser", "queen-field-engine", "fieldfox", "legacy_gecko", "cursor",
+    "nexus", "queen-browser", "queen-field-engine", "fieldfox", "field_gecko", "legacy_gecko", "cursor",
     "firefox", "chrome", "chromium",
     "google-chrome", "google-chrome-stable", "brave", "brave-browser", "firefox-bin",
     "WebExtensions", "Isolated Web Co", "Socket Process", "RDD Process",
@@ -34,7 +34,7 @@ WIRE_ALLOWED = frozenset({
     "tcpdump", "nexus-packet",
 })
 
-NEXUS_BLOB_MARKERS = ("nexus", "queen", "fieldfox", "field-wave", "hostess7", "amouranthrtx")
+NEXUS_BLOB_MARKERS = ("nexus", "queen", "queen-browser", "field-gecko", "fieldfox", "field-wave", "hostess7", "amouranthrtx")
 
 INPUT_MIDDLEMAN = frozenset({
     "keylogger", "logkeys", "lkl", "kidlogger", "xinput", "showkey", "evtest",

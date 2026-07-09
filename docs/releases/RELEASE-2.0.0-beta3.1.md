@@ -4,7 +4,7 @@
 
 ## Fixes
 
-- **Queen browser routing** — removed `xdg-open` / Firefox fallback when Field Engine binary is missing; opens Queen web shell via `field-queen-browser-open.py` instead
+- **Queen browser routing** — removed `xdg-open` / host-browser fallback when Field Engine binary is missing; opens Queen web shell via `field-queen-browser-open.py` instead
 - **Release typos** — `ammooos` → `ammoos` in pack scripts, manual, and update apply paths
 - **Hub Pages publish** — `rsync --delete` no longer wipes `.git`; detects `main/docs` vs `gh-pages` per repo
 - **Wiki publish** — bootstraps GitHub wiki via API when `.wiki` git remote is not yet provisioned

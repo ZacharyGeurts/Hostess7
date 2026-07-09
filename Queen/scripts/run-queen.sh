@@ -145,7 +145,7 @@ if [[ "${SG_FIELD_VIRUS_GUARD:-1}" == "1" && -f "${ROOT}/lib/queen-field-virus.p
   fi
 fi
 
-# NEXUS field panel (:9477) — Start tab + field C2; queen-world alone is not enough.
+# NEXUS field panel (:9477) — Start tab + field C2; Queen Browser shell alone is not enough.
 export NEXUS_FIELD_STANDALONE=1
 export NEXUS_THREAT_PANEL_PORT="${NEXUS_THREAT_PANEL_PORT:-9477}"
 
@@ -216,7 +216,7 @@ launch_integrated_browser() {
   if [[ -x "${launcher}" ]]; then
     exec bash "${launcher}" "$@"
   fi
-  echo "Queen World serving on :${QUEEN_WORLD_PORT} — field-gecko launcher missing"
+  echo "Queen Browser serving on :${QUEEN_WORLD_PORT} — field-gecko launcher missing"
   exec pythong "${ROOT}/lib/queen-world.py" --host 127.0.0.1 --port "${QUEEN_WORLD_PORT}"
 }
 

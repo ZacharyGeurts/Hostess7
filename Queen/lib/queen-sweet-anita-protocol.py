@@ -80,7 +80,7 @@ def doctrine() -> dict[str, Any]:
 
 
 def sap_beacon() -> dict[str, Any]:
-    """Beacon advertised only by Queen World — peers must match before tunnel."""
+    """Beacon advertised only by Queen Browser — peers must match before tunnel."""
     return {
         "sap": True,
         "sap_version": 1,
@@ -264,7 +264,7 @@ def host_session(
 def tunnel_connect(remote: str) -> dict[str, Any]:
     parsed = _parse_remote(remote)
     if not parsed:
-        return {"ok": False, "error": "invalid_remote", "hint": "Use host:port of remote Queen World"}
+        return {"ok": False, "error": "invalid_remote", "hint": "Use host:port of remote Queen Browser"}
     host, port = parsed
     beacon = _fetch_remote_beacon(host, port)
     ok, reason = _validate_peer(beacon)

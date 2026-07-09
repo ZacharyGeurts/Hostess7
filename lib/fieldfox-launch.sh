@@ -17,7 +17,7 @@ fi
 unset -f _aml_find_root 2>/dev/null || true
 
 #!/bin/bash
-# Queen integrated field browser launcher — Field Gecko profile, Webbrowser shell (no OS browser).
+# Queen Browser launcher — Field Gecko profile, Queen Browser shell (no host-browser branding).
 set -euo pipefail
 
 ROOT="${NEXUS_INSTALL_ROOT:-/usr/local/lib/nexus-shield}"
@@ -26,7 +26,7 @@ URL="${1:-about:blank}"
 QUEEN="${QUEEN_ROOT:-${ROOT}/Queen}"
 PY="${NEXUS_PYTHONG:-pythong}"
 
-nexus_fieldfox_launch() {
+nexus_queen_browser_launch() {
   local url="${1:-about:blank}"
   local route=""
   if [[ "$url" == *"#"* ]]; then
@@ -53,6 +53,8 @@ nexus_fieldfox_launch() {
   return 1
 }
 
+nexus_fieldfox_launch() { nexus_queen_browser_launch "$@"; }  # compat alias — product is Queen Browser
+
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-  nexus_fieldfox_launch "${URL}"
+  nexus_queen_browser_launch "${URL}"
 fi

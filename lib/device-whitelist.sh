@@ -38,7 +38,8 @@ NEXUS_DEVICE_WHITELIST_COMM=(
   kwin_wayland
   sway
   hyprland
-  firefox
+  queen-browser
+  field-gecko
   chrome
   chromium
   google-chrome

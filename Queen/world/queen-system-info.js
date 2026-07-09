@@ -1,5 +1,5 @@
 /**
- * Queen emulator system info — device visual + CHIPS catalog stack for one Game Room system.
+ * Queen emulator system info — device visual + CHIPS catalog stack for one Queen Room system.
  */
 (function () {
   "use strict";
@@ -148,7 +148,7 @@
 
     const actions = [
       urls.game_room
-        ? `<a href="${esc(urls.game_room)}">Game Room</a>`
+        ? `<a href="${esc(urls.game_room)}">Queen Room</a>`
         : "",
       urls.catalog_stack
         ? `<a href="${esc(urls.catalog_stack)}">Platform stack catalog</a>`

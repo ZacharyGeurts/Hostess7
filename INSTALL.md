@@ -23,7 +23,7 @@ Run the dependency check first (always through AML):
 | git | 2.x | Clone path only |
 | rsync | any | Wire-stack, publish |
 | optional sudo | — | System install to `/usr/local/lib/nexus-shield` |
-| optional cmake/gcc | — | Queen RTX build, Grok16, KILROY kernel |
+| optional cmake/gcc | — | Queen Browser RTX build, Grok16, KILROY kernel |
 
 ---
 
@@ -73,7 +73,8 @@ SG/
 |---------|-----|
 | AmmoOS field desktop | http://127.0.0.1:9477/field |
 | Command deck | http://127.0.0.1:9477/command |
-| Queen browser | http://127.0.0.1:9481/world/browser.html |
+| Queen Browser | http://127.0.0.1:9481/world/browser.html |
+| Queen Room | http://127.0.0.1:9481/world/queen-game-room.html |
 | Training viewer | http://127.0.0.1:9488/ |
 | Hostess7 counsel | `./Hostess7/Hostess7.sh talk` |
 

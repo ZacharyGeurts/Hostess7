@@ -1,7 +1,7 @@
 #!/usr/bin/env pythong
 """Queen Web Compat — full HTML/JS/CSS spectrum, pre-1.0 through future drafts.
 
-Auto modes secure legacy code: isolate old JS from OS/memory while preserving surface behavior.
+Auto modes field-secure code: isolate old JS from OS/memory while preserving surface behavior.
 Engine targets (Queen Browser, Ladybird, Servo) honor these profiles at render time.
 """
 from __future__ import annotations
@@ -95,7 +95,7 @@ ERAS: list[dict[str, Any]] = [
 
 MODES: dict[str, dict[str, Any]] = {
     "auto": {
-        "label": "Auto — detect era, secure legacy",
+        "label": "Auto — detect era, field secure",
         "detect": True,
         "default_era": "es2026",
     },
@@ -106,7 +106,7 @@ MODES: dict[str, dict[str, Any]] = {
         "legacy_isolate": False,
     },
     "legacy_secure": {
-        "label": "Legacy secure — quirks + WASM surrogates, OS isolated",
+        "label": "Field secure — quirks + WASM surrogates, OS isolated",
         "era": "html4",
         "sandbox": "allow-scripts allow-same-origin allow-forms allow-popups",
         "legacy_isolate": True,
@@ -115,7 +115,7 @@ MODES: dict[str, dict[str, Any]] = {
         "no_shared_array_buffer": True,
     },
     "archaeology": {
-        "label": "Archaeology — pre-HTML5, maximum compat cage",
+        "label": "Field archaeology — pre-HTML5, maximum compat cage",
         "era": "html2",
         "sandbox": "allow-scripts allow-same-origin allow-forms",
         "legacy_isolate": True,

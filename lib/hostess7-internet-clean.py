@@ -46,7 +46,7 @@ def _append_log(row: dict[str, Any]) -> None:
 
 
 def internet_clean(*, force: bool = False) -> dict[str, Any]:
-    """Sweep host browsers, scrub telemetry, export secure bookmarks to Firefox + Chromium family."""
+    """Sweep host browsers, scrub telemetry, export secure bookmarks into Queen Browser field import."""
     doctrine = {}
     try:
         doctrine = json.loads(DOCTRINE.read_text(encoding="utf-8"))
@@ -78,7 +78,7 @@ def internet_clean(*, force: bool = False) -> dict[str, Any]:
 
     quarantined = int((import_out or {}).get("quarantined") or 0)
     dropped = int((import_out or {}).get("dropped") or 0)
-    ff_ok = sum(1 for x in (export_out.get("firefox") or []) if x.get("ok"))
+    ff_ok = sum(1 for x in (export_out.get("field_gecko") or export_out.get("host_gecko") or []) if x.get("ok"))
     cr_ok = sum(1 for x in (export_out.get("chromium") or []) if x.get("ok"))
 
     out = {
@@ -95,7 +95,7 @@ def internet_clean(*, force: bool = False) -> dict[str, Any]:
             "bookmarks_secured": int((export_out or {}).get("count") or 0),
             "telemetry_quarantined": quarantined,
             "telemetry_dropped": dropped,
-            "firefox_profiles": ff_ok,
+            "field_gecko_profiles": ff_ok,
             "chromium_profiles": cr_ok,
             "pages_base": os.environ.get("HOSTESS7_PAGES_BASE"),
         },

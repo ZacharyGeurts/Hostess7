@@ -52,7 +52,7 @@ _HARM_RE = re.compile(
 )
 
 BROWSER_SOURCES: list[dict[str, Any]] = [
-    {"id": "legacy_gecko", "label": "Legacy gecko profile (pre-Queen)", "roots": ["~/.mozilla/firefox"], "engine": "gecko"},
+    {"id": "field_gecko", "label": "Field import · host gecko profile", "roots": ["~/.mozilla/firefox"], "engine": "gecko", "alias_id": "legacy_gecko"},
     {"id": "librewolf", "label": "LibreWolf", "roots": ["~/.librewolf"], "engine": "gecko"},
     {"id": "floorp", "label": "Floorp", "roots": ["~/.floorp"], "engine": "gecko"},
     {"id": "waterfox", "label": "Waterfox", "roots": ["~/.waterfox"], "engine": "gecko"},
@@ -65,6 +65,15 @@ BROWSER_SOURCES: list[dict[str, Any]] = [
     {"id": "opera-gx", "label": "Opera GX", "roots": ["~/.config/opera-gx"], "engine": "chromium"},
     {"id": "ungoogled", "label": "Ungoogled Chromium", "roots": ["~/.config/chromium"], "engine": "chromium"},
 ]
+
+def _source_ids(src: dict[str, Any]) -> set[str]:
+    ids = {str(src.get("id") or "")}
+    if src.get("alias_id"):
+        ids.add(str(src["alias_id"]))
+    return {i for i in ids if i}
+
+
+
 
 
 def _now() -> str:
@@ -926,3 +935,7 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+def _extract_gecko_tree(profile, *, source: str = "field_gecko"):
+    """Compat alias for field bookmark tree extract."""
+    return _extract_gecko(profile, source=source)
