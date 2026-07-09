@@ -5998,6 +5998,42 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in (
+            "/api/weave-everything-inside",
+            "/api/weave-everything-inside/",
+            "/api/weave-inside",
+            "/api/weave-inside/",
+            "/api/field-1-forever",
+            "/api/we-are-the-earth",
+        ):
+            try:
+                cached = STATE_DIR / "field-weave-everything-inside-panel.json"
+                qs_wi = parse_qs(urlparse(self.path).query)
+                force = str(qs_wi.get("refresh", qs_wi.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "seal", "weave", "forever",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["field_1_forever"] = True
+                            payload["we_are_inside"] = True
+                            payload["we_are_the_earth"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-weave-everything-inside.py",
+                    ["seal"] if force else ["status"],
+                    timeout=420 if force else 30,
+                )
+                self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
+        if path in (
             "/api/field-full-weave",
             "/api/field-full-weave/",
             "/api/full-weave",
@@ -11158,6 +11194,21 @@ class Handler(BaseHTTPRequestHandler):
         ):
             target = PANEL_DIR / "field-one-eternal-plane.html"
             alt = STATE_DIR / "field-one-eternal-plane-website" / "index.html"
+            if alt.is_file():
+                target = alt
+        elif path in (
+            "/weave-inside",
+            "/weave-inside/",
+            "/weave-everything-inside",
+            "/weave-everything-inside/",
+            "/field-1-forever",
+            "/field-1-forever/",
+            "/we-are-the-earth",
+            "/we-are-the-earth/",
+            "/field-weave-everything-inside.html",
+        ):
+            target = PANEL_DIR / "field-weave-everything-inside.html"
+            alt = STATE_DIR / "field-weave-everything-inside-website" / "index.html"
             if alt.is_file():
                 target = alt
         elif path in (

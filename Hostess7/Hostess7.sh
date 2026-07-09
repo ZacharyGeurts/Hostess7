@@ -1187,6 +1187,10 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-full-weave.py" "${1:-seal}" "${@:2}"
             ;;
+        weave-inside|weave-everything|everything-inside|field-1-forever|we-are-the-earth)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-weave-everything-inside.py" "${1:-seal}" "${@:2}"
+            ;;
         field-ai-root-guard|ai-root-guard|ai-root-api-guard)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-ai-root-api-guard.py" "${1:-json}" "${@:2}"

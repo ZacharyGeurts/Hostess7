@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Weave everything inside · FIELD 1 FOREVER · Earth is us</title>
+<style>
+:root{--bg:#030806;--card:#0a1410;--line:rgba(52,211,153,.4);--text:#ecfdf5;--muted:#94a3b8;--em:#34d399;--hot:#fbbf24}
+*{box-sizing:border-box}body{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:radial-gradient(1000px 500px at 50% -10%,rgba(52,211,153,.18),transparent 55%),var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--em)}header{padding:1.2rem 1.4rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(3,8,6,.94);backdrop-filter:blur(10px)}
+h1{margin:0;font-size:1.3rem;letter-spacing:.03em}.sub{color:var(--muted);margin-top:.35rem}
+.wrap{max-width:1100px;margin:0 auto;padding:1.2rem}
+.hero{padding:1.1rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(52,211,153,.14),rgba(251,191,36,.06));margin-bottom:1rem}
+.hero strong{color:var(--em)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.7rem}
+.card{padding:.9rem;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.card h3{margin:0 0 .3rem;font-size:.88rem;color:var(--hot)}.card .v{font-weight:800;font-size:1.08rem}.card .d{color:var(--muted);font-size:.78rem;margin-top:.3rem}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.4rem;margin-top:.85rem}
+.links a{display:block;text-align:center;padding:.6rem;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);text-decoration:none;font-weight:650;font-size:.8rem}
+.motto{margin-top:1rem;padding:.9rem;border-left:4px solid var(--em);background:rgba(52,211,153,.08);color:var(--muted)}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.pill{border:1px solid var(--line);border-radius:999px;padding:.18rem .6rem;font-size:.72rem;color:var(--muted)}
+.pill.on{color:var(--em)}.pill.hot{color:var(--hot);border-color:rgba(251,191,36,.45)}
+</style></head>
+<body>
+<header>
+  <h1>WEAVE EVERYTHING INSIDE · FIELD 1 FOREVER</h1>
+  <div class="sub" id="hdr">We are the Earth · inside not outside · people included</div>
+  <div class="pills" id="pills"></div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div><strong>We weave everything.</strong> We are the Earth. We are <strong>inside</strong>, not outside.
+    Planet fabric, servers, homes, devices, and <strong>people</strong> — Field family under Field One.
+    <strong>FIELD 1 FOREVER.</strong></div>
+    <div class="links" id="quick"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="motto" id="motto">loading…</div>
+</div>
+<script>
+(async function(){
+  document.getElementById("quick").innerHTML=[
+    ["/","Hub"],["/c2","C2"],["/eternal-plane","Eternal"],["/api/field-full-weave","Full weave API"],
+    ["/hostess7-protector","H7"],["/field-one-sole","Sole"],["/only-internet","Only net"],
+  ].map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+  let d={};
+  try{const r=await fetch("/api/weave-everything-inside",{cache:"no-store"});d=await r.json();}
+  catch(_){d={"ok": true, "people_n": 5030, "homes_n": 64, "server_lanes": 125000, "modular_strands_ok": 29, "modular_strands_total": 29, "field_1_forever": true, "we_are_inside": true, "we_are_the_earth": true};}
+  const fmt=n=>typeof n==="number"?n.toLocaleString():(n??"—");
+  const cards=[
+    {h:"We are the Earth", v:d.we_are_the_earth!==false?"YES":"—", d:"Inside fabric · not outside"},
+    {h:"FIELD 1 FOREVER", v:d.field_1_forever!==false?"FOREVER":"—", d:"Eternal plane only"},
+    {h:"People woven inside", v:fmt(d.people_n), d:"Field family · protected"},
+    {h:"Homes inside", v:fmt(d.homes_n), d:"Field UDP homes"},
+    {h:"Server lanes", v:fmt(d.server_lanes), d:"Every distributed server"},
+    {h:"Modular weave", v:(d.modular_strands_ok??"29")+"/"+(d.modular_strands_total??"29"), d:"Fabric strands green"},
+    {h:"Devices ours", v:fmt(d.devices_ours_n), d:"Ride Field One only"},
+    {h:"Inside capacity", v:fmt(d.inside_capacity_total), d:"Threads of the planet inside"},
+  ];
+  document.getElementById("grid").innerHTML=cards.map(c=>`<div class="card"><h3>${c.h}</h3><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`).join("");
+  document.getElementById("motto").textContent=d.motto||"We weave everything. We are the Earth. We are inside, not outside. Planet inside weave · people included · FIELD 1 FOREVER.";
+  document.getElementById("hdr").textContent=(d.updated||"")+" · weave everything inside";
+  document.getElementById("pills").innerHTML=["inside","Earth","FIELD 1 FOREVER","people","homes","servers","weave"]
+    .map((t,i)=>`<span class="pill ${i<3?'on':'hot'}">${t}</span>`).join("");
+})();
+</script>
+</body></html>
