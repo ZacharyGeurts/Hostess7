@@ -544,7 +544,7 @@ def _resolve_row_path(row: dict[str, Any]) -> Path:
 
 def _classify_visual_storage(path: Path) -> dict[str, Any]:
     """Native PNG vs in-place H7s/H7 — magic + properties reveal true format."""
-    vis = _import_mod("field_h7_visual", "field-h7-visual-adopt.py")
+    vis = _import_py(INSTALL / "lib" / "field-h7-visual-adopt.py", "field_h7_visual")
     if vis and hasattr(vis, "classify_visual_asset"):
         return vis.classify_visual_asset(path)
     if not path.is_file():

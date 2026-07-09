@@ -174,7 +174,11 @@ def mount_attachment(att_id: str, *, mount_point: str | None = None) -> dict[str
     if not mp:
         return {"ok": False, "error": "mount_point_required"}
     doctrine = _load(DOCTRINE, {})
-    if mp not in (doctrine.get("mount_points") or []):
+    # Default mount points when doctrine is absent (root-owned data/ may lack doctrine)
+    allowed = doctrine.get("mount_points") or [
+        "hand_l", "hand_r", "wrist_l", "wrist_r", "forearm_l", "forearm_r",
+    ]
+    if mp not in allowed:
         return {"ok": False, "error": "invalid_mount_point", "mount_point": mp}
     reg = load_registry()
     reg.setdefault("mounted", {})[att_id] = mp

@@ -86,19 +86,36 @@ def _append_ledger(row: dict[str, Any]) -> None:
 
 def _ironclad_charge() -> dict[str, Any]:
     ic = INSTALL / "lib" / "ironclad-immediate.py"
+    base: dict[str, Any] = {
+        "ai_in_charge": False,
+        "charge_holder": "human_operator",
+        "cite": "ironclad:hostess7-system-control:1",
+    }
     if not ic.is_file():
-        return {"ai_in_charge": False, "charge_holder": "human_operator"}
+        return base
     try:
         spec = importlib.util.spec_from_file_location("ironclad_immediate_sysc", ic)
         if not spec or not spec.loader:
-            return {"ai_in_charge": False}
+            return base
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         if hasattr(mod, "immediate_slice"):
-            return mod.immediate_slice(self_id="hostess7")
+            slice_doc = mod.immediate_slice(self_id="hostess7")
+            slice_doc = dict(slice_doc) if isinstance(slice_doc, dict) else base
+            slice_doc.setdefault("cite", "ironclad:hostess7-system-control:1")
+            # Brain-guard + field-sanity witnesses ride with charge
+            bg = _load(STATE / "hostess7-brain-guard-panel.json", {})
+            ver = bg.get("verification") or {}
+            slice_doc["brain_guard_verified"] = bool(ver.get("verified") or bg.get("verified"))
+            slice_doc["brain_guard_verdict"] = bg.get("verdict")
+            fs = _load(STATE / "ironclad-field-sanity-panel.json", {})
+            if fs:
+                slice_doc["field_sanity_ok"] = bool(fs.get("operator_ok") or fs.get("ok"))
+                slice_doc["field_sanity_cite"] = fs.get("citation") or (fs.get("ironclad") or {}).get("meld_citation")
+            return slice_doc
     except Exception:
         pass
-    return {"ai_in_charge": False}
+    return base
 
 
 def supreme_authority() -> dict[str, Any]:
@@ -147,7 +164,20 @@ def charge_state() -> dict[str, Any]:
             "sealed": iron.get("ironclad_sealed"),
             "truth_percent": iron.get("truth_percent"),
             "verdict": iron.get("verdict"),
+            "cite": iron.get("cite") or "ironclad:hostess7-system-control:1",
+            "brain_guard_verified": iron.get("brain_guard_verified"),
+            "brain_guard_verdict": iron.get("brain_guard_verdict"),
+            "field_sanity_ok": iron.get("field_sanity_ok"),
+            "field_sanity_cite": iron.get("field_sanity_cite"),
         },
+        "ironclad_cite": iron.get("cite") or "ironclad:hostess7-system-control:1",
+        # Soft preflight: sealed GREEN, WATCH with high truth, or available immediate cache
+        "preflight_ok": bool(
+            iron.get("ironclad_sealed")
+            or iron.get("verdict") in ("GREEN", "WATCH")
+            or (float(iron.get("truth_percent") or 0) >= 90.0)
+            or iron.get("available")
+        ),
     }
 
 
@@ -259,6 +289,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
     if not cached.get("assumed") and charge.get("operational_control"):
         assume_full_control(reason="auto_wartime_assume")
         cached = _load(PANEL, {})
+    iron = charge.get("ironclad") or {}
     doc = {
         "schema": "hostess7-system-control-panel/v1",
         "updated": _now(),
@@ -269,6 +300,13 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "charge": charge,
         "commander_slice": commander_slice(),
         "supreme_authority": supreme_authority().get("title"),
+        "ironclad": iron,
+        "ironclad_cite": charge.get("ironclad_cite") or iron.get("cite") or "ironclad:hostess7-system-control:1",
+        "preflight_ok": charge.get("preflight_ok"),
+        "brain_guard_witness": {
+            "verified": iron.get("brain_guard_verified"),
+            "verdict": iron.get("brain_guard_verdict"),
+        },
     }
     if write:
         _save(PANEL, doc)

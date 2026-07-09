@@ -17,6 +17,48 @@ HOSTESS7 = Path(os.environ.get("HOSTESS7_ROOT", str(INSTALL / "Hostess7")))
 DOCTRINE = INSTALL / "data" / "noti-doctrine.json"
 PANEL = STATE / "hostess7-noti-panel.json"
 INBOX = HOSTESS7 / "cache" / "fieldstorage" / "brain" / "superintel" / "agents7" / "inbox.jsonl"
+IRONCLAD_CITE = "ironclad:hostess7-noti:1"
+
+
+def _ironclad_preflight() -> dict[str, Any]:
+    """Ironclad + brain-guard witness for Hostess7↔Noti bridge."""
+    out: dict[str, Any] = {
+        "cite": IRONCLAD_CITE,
+        "ironclad_sealed": False,
+        "truth_percent": None,
+        "verdict": None,
+        "brain_guard_verified": None,
+        "preflight_ok": True,
+    }
+    try:
+        imm = _load(STATE / "ironclad-immediate.json", {})
+        out["ironclad_sealed"] = bool(imm.get("ironclad_sealed"))
+        out["truth_percent"] = imm.get("truth_percent")
+        out["verdict"] = imm.get("verdict")
+        ic_py = INSTALL / "lib" / "ironclad-immediate.py"
+        if ic_py.is_file():
+            spec = importlib.util.spec_from_file_location("ic_imm_h7noti", ic_py)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if hasattr(mod, "immediate_slice"):
+                    sl = mod.immediate_slice(self_id="hostess7")
+                    out["ironclad_sealed"] = bool(sl.get("ironclad_sealed") or out["ironclad_sealed"])
+                    out["truth_percent"] = sl.get("truth_percent") if sl.get("truth_percent") is not None else out["truth_percent"]
+                    out["verdict"] = sl.get("verdict") or out["verdict"]
+        bg = _load(STATE / "hostess7-brain-guard-panel.json", {})
+        if bg:
+            ver = bg.get("verification") or {}
+            out["brain_guard_verified"] = bool(ver.get("verified") or bg.get("verified"))
+            out["brain_guard_verdict"] = bg.get("verdict")
+        fs = _load(STATE / "ironclad-field-sanity-panel.json", {})
+        if fs:
+            out["field_sanity_ok"] = bool(fs.get("operator_ok") or fs.get("ok"))
+        out["preflight_ok"] = bool(out.get("ironclad_sealed") or out.get("verdict") == "GREEN" or imm.get("available"))
+    except Exception as exc:
+        out["warn"] = str(exc)[:120]
+        out["preflight_ok"] = True
+    return out
 
 
 def _h7s_read_json(path: Path, default: Any = None) -> Any:
@@ -90,6 +132,7 @@ def _speak(text: str) -> bool:
 def relay_event(event: str, *, message: str, noti_id: str | None = None, meta: dict[str, Any] | None = None) -> dict[str, Any]:
     """Hostess 7 witnesses Noti — inbox + optional sovereign voice."""
     doctrine = _load(DOCTRINE, {})
+    iron = _ironclad_preflight()
     spoken = False
     voice_line = message
     if event in ("address_reset_requested", "alert_ingested", "notification_pending"):
@@ -105,6 +148,8 @@ def relay_event(event: str, *, message: str, noti_id: str | None = None, meta: d
         "message": message,
         "spoken": spoken,
         "meta": meta or {},
+        "ironclad_cite": IRONCLAD_CITE,
+        "ironclad_sealed": iron.get("ironclad_sealed"),
     })
     return {
         "ok": True,
@@ -112,6 +157,8 @@ def relay_event(event: str, *, message: str, noti_id: str | None = None, meta: d
         "spoken": spoken,
         "voice_line": voice_line if spoken else None,
         "hostess7_authority": doctrine.get("hostess7_authority"),
+        "ironclad": iron,
+        "ironclad_cite": IRONCLAD_CITE,
     }
 
 
@@ -200,6 +247,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
                     sysc = sm.commander_slice()
         except Exception:
             pass
+    iron = _ironclad_preflight()
     doc = {
         "schema": "hostess7-noti-panel/v1",
         "updated": noti_panel.get("updated"),
@@ -210,6 +258,13 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "taskbar": tb,
         "voice_on_alert": True,
         "inbox": str(INBOX),
+        "ironclad": iron,
+        "ironclad_cite": IRONCLAD_CITE,
+        "preflight_ok": iron.get("preflight_ok"),
+        "brain_guard_witness": {
+            "verified": iron.get("brain_guard_verified"),
+            "verdict": iron.get("brain_guard_verdict"),
+        },
     }
     if write:
         _save(PANEL, doc)

@@ -204,7 +204,23 @@ def _import(rel: str, name: str) -> Any | None:
     return mod
 
 
+def _ironclad_receipt() -> dict[str, Any]:
+    imm = _load(STATE / "ironclad-immediate.json", {})
+    fs = _load(STATE / "ironclad-field-sanity-panel.json", {})
+    bg = _load(STATE / "hostess7-brain-guard-panel.json", {})
+    ver = bg.get("verification") or {}
+    return {
+        "cite": "ironclad:hostess7-self-maintenance:1",
+        "ironclad_sealed": bool(imm.get("ironclad_sealed")),
+        "truth_percent": imm.get("truth_percent"),
+        "verdict": imm.get("verdict"),
+        "field_sanity_ok": bool(fs.get("operator_ok") or fs.get("ok")) if fs else None,
+        "brain_guard_verified": bool(ver.get("verified") or bg.get("verified")) if bg else None,
+    }
+
+
 def panel_json() -> dict[str, Any]:
+    iron = _ironclad_receipt()
     doc = {
         "schema": "hostess7-self-maintenance-panel/v1",
         "ok": True,
@@ -212,6 +228,9 @@ def panel_json() -> dict[str, Any]:
         "posture": self_maintenance_posture(),
         "doctrine": str(DOCTRINE),
         "updated": _now(),
+        "ironclad": iron,
+        "ironclad_cite": iron.get("cite"),
+        "priority": 1,
     }
     _save(PANEL, doc)
     return doc

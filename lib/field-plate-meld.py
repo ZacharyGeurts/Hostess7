@@ -17,14 +17,32 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", "/usr/local/lib/nexus-shield"))
-STATE = Path(os.environ.get("NEXUS_STATE_DIR", "/var/lib/nexus-shield"))
+_HERE = Path(__file__).resolve().parents[1]
+INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", str(_HERE)))
+STATE = Path(os.environ.get("NEXUS_STATE_DIR", str(INSTALL / ".nexus-state")))
 DOCTRINE = INSTALL / "data" / "field-plate-meld-doctrine.json"
 MELD = STATE / "field-plate-meld.json"
 MELD_RUNTIME = STATE / "field-plate-meld-runtime.json"
 LEDGER = STATE / "field-plate-meld-ledger.jsonl"
-LOCK = STATE / "field-plate-meld.lock"
+# Prefer local state lock; fall back if env forced an unwritable path
+def _resolve_lock() -> Path:
+    preferred = STATE / "field-plate-meld.lock"
+    try:
+        preferred.parent.mkdir(parents=True, exist_ok=True)
+        # probe write
+        with preferred.open("a", encoding="utf-8"):
+            pass
+        return preferred
+    except OSError:
+        alt = INSTALL / ".nexus-state" / "field-plate-meld.lock"
+        alt.parent.mkdir(parents=True, exist_ok=True)
+        return alt
+
+
+LOCK = _resolve_lock()
 REDUNDANT = STATE / "plate-meld-redundant"
+if not os.access(str(REDUNDANT.parent), os.W_OK):
+    REDUNDANT = INSTALL / ".nexus-state" / "plate-meld-redundant"
 
 PLATE_SOURCES: tuple[tuple[str, str], ...] = (
     ("iron_plate", "field-operator-iron-plate.json"),
@@ -95,6 +113,22 @@ PLATE_SOURCES: tuple[tuple[str, str], ...] = (
     ("sovereign_stack", "field-sovereign-stack-meld-panel.json"),
     ("code_bugfinder", "field-code-bugfinder-panel.json"),
     ("url_heuristics_steel", "field-url-heuristics-steel-plate.json"),
+    ("truth_dns_steel", "field-truth-dns-steel-plate.json"),
+    # Secured planet: binaries · dossiers · heuristics · BSP DNS/DHCP
+    ("g16_untouchable", "field-g16-untouchable-steel-plate.json"),
+    ("never_reconnect", "field-never-reconnect-table-panel.json"),
+    ("ironclad_bsp_dns", "field-ironclad-bsp-dns-panel.json"),
+    ("botnet_threat_heuristics", "field-botnet-threat-heuristics-panel.json"),
+    ("secure_bot_rollout", "field-secure-bot-rollout-panel.json"),
+    ("full_dns_dhcp_authority", "field-botnet-full-dns-dhcp-authority-panel.json"),
+    ("dns_dhcp_raid", "field-dns-dhcp-raid-truth.json"),
+    ("combinatorics_studio", "field-combinatorics-studio-panel.json"),
+    ("autonet", "field-autonet-panel.json"),
+    ("home_internet", "field-home-internet-panel.json"),
+    ("home_security", "field-home-security-panel.json"),
+    # Serving security — everyone served · dual-stack Field talk · no port hangups
+    ("everyone_served_no_hangups", "field-everyone-served-no-hangups-panel.json"),
+    ("serving_truth", "field-serving-truth-panel.json"),
 )
 
 _GEN = 0
@@ -895,6 +929,18 @@ def _refresh_code_bugfinder() -> None:
     _import_call(INSTALL / "lib" / "field-code-bugfinder.py", "field_code_bugfinder", "build_panel")
 
 
+def _refresh_truth_dns_steel() -> None:
+    """Light steel plate only — no clean-all / whole-internet / dig storm."""
+    if os.environ.get("NEXUS_TRUTH_DNS_STEEL", "1").strip().lower() in ("0", "false", "no", "off"):
+        return
+    _import_call(
+        INSTALL / "lib" / "field-truth-dns-steel-plate.py",
+        "field_truth_dns_steel_plate",
+        "steel_plate",
+        refresh_light=False,  # fuse path: seal witnesses only, never pulse storm
+    )
+
+
 def _refresh_compatibility_layers() -> None:
     if os.environ.get("NEXUS_COMPATIBILITY_LAYERS", "1").strip().lower() in ("0", "false", "no", "off"):
         return
@@ -1161,6 +1207,30 @@ def _refresh_ironclad_field_sanity() -> None:
     )
 
 
+def _refresh_everyone_served_no_hangups() -> None:
+    """Seal everyone-served + critical port hang scan under plate flock."""
+    if os.environ.get("NEXUS_EVERYONE_SERVED", "1").strip().lower() in ("0", "false", "no", "off"):
+        return
+    _import_call(
+        INSTALL / "lib" / "field-everyone-served-no-hangups.py",
+        "field_everyone_served_no_hangups",
+        "enforce",
+        write=True,
+    )
+
+
+def _refresh_serving_truth() -> None:
+    """Dual-stack Field DNS/DHCP serving truth plate."""
+    if os.environ.get("NEXUS_SERVING_TRUTH", "1").strip().lower() in ("0", "false", "no", "off"):
+        return
+    _import_call(
+        INSTALL / "lib" / "field-serving-truth.py",
+        "field_serving_truth",
+        "verify",
+        write=True,
+    )
+
+
 def _refresh_eye_ear_plate() -> None:
     if os.environ.get("NEXUS_EYE_EAR_PLATE", "1") != "1":
         return
@@ -1234,6 +1304,8 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
             _refresh_if_allowed("eye_ear_plate", _refresh_eye_ear_plate)
             _refresh_if_allowed("ironclad_field_sanity", _refresh_ironclad_field_sanity)
             _refresh_if_allowed("ironclad_reality_field", _refresh_ironclad_reality_field)
+            _refresh_if_allowed("everyone_served_no_hangups", _refresh_everyone_served_no_hangups)
+            _refresh_if_allowed("serving_truth", _refresh_serving_truth)
             _refresh_if_allowed("iron_plate", _refresh_iron_plate)
             _refresh_if_allowed("gatekeeper", _refresh_gatekeeper)
             _refresh_if_allowed("logic_gate", _refresh_logic_gate)
@@ -1288,6 +1360,7 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
             _refresh_if_allowed("field_broadcaster", _refresh_field_broadcaster)
             _refresh_if_allowed("field_lock", _refresh_field_lock)
             _refresh_if_allowed("code_bugfinder", _refresh_code_bugfinder)
+            _refresh_if_allowed("truth_dns_steel", _refresh_truth_dns_steel)
             _refresh_if_allowed("field_combinatorics", _refresh_field_combinatorics)
             _refresh_if_allowed("combinatorics_bridge", _refresh_combinatorics_bridge)
             _refresh_if_allowed("compatibility_layers", _refresh_compatibility_layers)
@@ -1336,6 +1409,8 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
         ironclad_rf = plates.get("ironclad_reality_field") or {}
         ironclad_plate = plates.get("ironclad") or {}
         ironclad_fs = plates.get("ironclad_field_sanity") or {}
+        everyone_served = plates.get("everyone_served_no_hangups") or {}
+        serving_truth = plates.get("serving_truth") or {}
         eye_ear = plates.get("eye_ear_plate") or {}
         plate_compiler = plates.get("plate_compiler") or {}
         g16_stack = plates.get("g16_stack") or {}
@@ -1480,6 +1555,14 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
                 "field_sanity_citation": ironclad_fs.get("citation"),
                 "field_sanity_heat_avoided": (ironclad_fs.get("queen") or {}).get("heat_avoided"),
                 "field_sanity_layers_out": (ironclad_fs.get("queen") or {}).get("layers_out"),
+                "everyone_served": everyone_served.get("everyone_served") or everyone_served.get("ok"),
+                "no_port_hangups": everyone_served.get("no_port_hangups"),
+                "everyone_served_cite": everyone_served.get("ironclad_cite"),
+                "serving_truth_ok": serving_truth.get("ok") or serving_truth.get("honest"),
+                "serving_dual_stack": serving_truth.get("dual_stack"),
+                "serving_ipv4_talk": serving_truth.get("ipv4_talk"),
+                "serving_ipv6_talk": serving_truth.get("ipv6_talk"),
+                "serving_truth_cite": serving_truth.get("ironclad_cite"),
                 "eye_ear_plate_ok": eye_ear.get("plated") or eye_ear.get("ok"),
                 "eye_ear_plate_verdict": eye_ear.get("verdict"),
                 "eye_ear_chain_hash": eye_ear.get("chain_hash"),
@@ -1544,6 +1627,16 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
                 "c2_bsp_hit": (c2_taskbar.get("bsp") or {}).get("bsp_hit"),
                 "c2_taskbar_condensed": comb_bridge.get("c2_taskbar_condensed"),
                 "field_lock_ok": field_lock_plate.get("ok"),
+                # Field Truth DNS steel plate — combinatorics · no terrorist injections
+                "truth_dns_steel_ok": (plates.get("truth_dns_steel") or {}).get("ok")
+                or (plates.get("truth_dns_steel") or {}).get("steel_plated"),
+                "truth_dns_joint_truth": (plates.get("truth_dns_steel") or {}).get("joint_truth"),
+                "truth_dns_geo_mean": (plates.get("truth_dns_steel") or {}).get("geometric_mean"),
+                "truth_dns_critical_ok": (plates.get("truth_dns_steel") or {}).get("critical_ok"),
+                "truth_dns_ban_ips": ((plates.get("truth_dns_steel") or {}).get("counts") or {}).get("ban_ips"),
+                "truth_dns_ban_domains": ((plates.get("truth_dns_steel") or {}).get("counts") or {}).get("ban_domains"),
+                "truth_dns_no_terrorist_injection": (plates.get("truth_dns_steel") or {}).get("no_terrorist_injection"),
+                "truth_dns_chain_hash": (plates.get("truth_dns_steel") or {}).get("chain_hash"),
             },
             "snapshots": plates,
         }

@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -63,13 +64,29 @@ def _import_mod(name: str, path: Path) -> Any | None:
     return mod
 
 
+def _pythong_bin() -> str:
+    """Prefer Field pythong (Queen capsule / PythonG) over host python3."""
+    candidates = [
+        os.environ.get("PYTHONG"),
+        shutil.which("pythong"),
+        str(INSTALL / "Queen" / "scripts" / "pythong"),
+        str(INSTALL / "PythonG" / "bin" / "pythong"),
+        str(Path(os.environ.get("SG_ROOT", INSTALL.parent)) / "PythonG" / "bin" / "pythong"),
+    ]
+    for c in candidates:
+        if c and Path(c).is_file() and os.access(c, os.X_OK):
+            return str(c)
+    return sys.executable
+
+
 def _py_json(script: Path, argv: list[str], *, timeout: int = 120) -> dict[str, Any]:
     env = os.environ.copy()
     env["NEXUS_INSTALL_ROOT"] = str(INSTALL)
     env["NEXUS_STATE_DIR"] = str(STATE)
+    py = _pythong_bin()
     try:
         proc = subprocess.run(
-            [sys.executable, str(script), *argv],
+            [py, str(script), *argv],
             capture_output=True,
             text=True,
             timeout=timeout,
@@ -77,7 +94,7 @@ def _py_json(script: Path, argv: list[str], *, timeout: int = 120) -> dict[str, 
         )
         return json.loads(proc.stdout.strip() or "{}")
     except (subprocess.TimeoutExpired, json.JSONDecodeError, OSError):
-        return {"ok": False, "error": "script_failed", "script": str(script)}
+        return {"ok": False, "error": "script_failed", "script": str(script), "runner": py}
 
 
 def teach_skills(*, force: bool = False) -> dict[str, Any]:
@@ -230,6 +247,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
     doctrine = _load(DOCTRINE, {})
     queue = work_queue()
     teach_doc = teach_skills()
+    iron = _load(STATE / "ironclad-immediate.json", {})
     panel = {
         "schema": "hostess7-imaging-panel/v1",
         "ts": _now(),
@@ -240,6 +258,9 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "work_queue": queue,
         "nexus_teach": teach_doc,
         "imagine_corpus": str(HOSTESS7 / "cache" / "fieldstorage" / "brain" / "imagine" / "corpus.json"),
+        "pythong": _pythong_bin(),
+        "ironclad_cite": "ironclad:hostess7-imaging:1",
+        "ironclad_sealed": bool(iron.get("ironclad_sealed")),
         "commands": {
             "teach": "./Hostess7.sh imagine-nexus-teach",
             "work": "./Hostess7.sh imaging-work",

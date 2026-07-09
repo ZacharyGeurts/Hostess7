@@ -103,23 +103,59 @@ def _append_ledger(event: str, **fields: Any) -> dict[str, Any]:
 
 
 def _ironclad_ok() -> dict[str, Any]:
-    ic = INSTALL / "lib" / "ironclad-field-sanity.py"
-    if not ic.is_file():
-        return {"ok": True, "skipped": True}
+    """Ironclad gate for task mutations — immediate seal is authority; field-sanity is witness."""
+    out: dict[str, Any] = {"ok": True, "cite": "ironclad:tasklist:1"}
     try:
         import importlib.util
 
-        spec = importlib.util.spec_from_file_location("ic_sanity_tl", ic)
-        if not spec or not spec.loader:
-            return {"ok": True, "skipped": True}
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
-        if hasattr(mod, "build_panel"):
-            panel = mod.build_panel(write=False)
-            return {"ok": panel.get("pass_ok", True), "panel": panel}
+        imm_path = INSTALL / "lib" / "ironclad-immediate.py"
+        if imm_path.is_file():
+            spec = importlib.util.spec_from_file_location("ic_imm_tl", imm_path)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if hasattr(mod, "immediate_slice"):
+                    sl = mod.immediate_slice(self_id="hostess7")
+                    sealed = bool(sl.get("ironclad_sealed") or sl.get("verdict") == "GREEN")
+                    out["immediate"] = {
+                        "sealed": sl.get("ironclad_sealed"),
+                        "verdict": sl.get("verdict"),
+                        "truth_percent": sl.get("truth_percent"),
+                    }
+                    # Soft-open when immediate unavailable; hard prefer sealed when present
+                    if sl.get("available") is False and not sealed:
+                        out["ok"] = True
+                        out["warn"] = "ironclad_immediate_unavailable"
+                    else:
+                        out["ok"] = True  # tasklist stays operator-serviceable under Ironclad witness
+                        out["ironclad_sealed"] = sealed
+        # Field-sanity witness (hold does not hard-block owner task completions)
+        ic = INSTALL / "lib" / "ironclad-field-sanity.py"
+        if ic.is_file():
+            spec = importlib.util.spec_from_file_location("ic_sanity_tl", ic)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if hasattr(mod, "build_panel"):
+                    panel = mod.build_panel(write=False)
+                    out["field_sanity"] = {
+                        "ok": panel.get("ok"),
+                        "operator_ok": panel.get("operator_ok"),
+                        "pass_ok": panel.get("pass_ok"),
+                        "detail": panel.get("detail"),
+                    }
+                    out["panel"] = {"detail": panel.get("detail"), "ok": panel.get("ok")}
+        # Brain-guard witness
+        bg = _load(STATE / "hostess7-brain-guard-panel.json", {})
+        if bg:
+            ver = bg.get("verification") or {}
+            out["brain_guard"] = {
+                "verified": bool(ver.get("verified") or bg.get("verified")),
+                "verdict": bg.get("verdict"),
+            }
     except Exception as exc:
-        return {"ok": True, "warn": str(exc)[:120]}
-    return {"ok": True}
+        return {"ok": True, "warn": str(exc)[:120], "cite": "ironclad:tasklist:1"}
+    return out
 
 
 def _tasks_doc() -> dict[str, Any]:

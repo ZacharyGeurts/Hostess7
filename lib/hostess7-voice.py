@@ -20,6 +20,60 @@ PANEL = STATE / "hostess7-voice-panel.json"
 SAMPLES = INSTALL / "data" / "hostess7-voice-samples"
 
 ENABLED = os.environ.get("NEXUS_HOSTESS7_VOICE", os.environ.get("HOSTESS7_VOICE", "1")) not in ("0", "false", "no")
+IRONCLAD_CITE = "ironclad:hostess7-voice:1"
+
+
+def _ironclad_preflight() -> dict[str, Any]:
+    """Ironclad immediate + field-sanity + brain-guard witness for voice lane."""
+    out: dict[str, Any] = {
+        "cite": IRONCLAD_CITE,
+        "ironclad_sealed": False,
+        "truth_percent": None,
+        "verdict": None,
+        "field_sanity_ok": None,
+        "brain_guard_verified": None,
+        "preflight_ok": True,
+    }
+    try:
+        import importlib.util
+
+        imm = INSTALL / "lib" / "ironclad-immediate.py"
+        if imm.is_file():
+            spec = importlib.util.spec_from_file_location("ic_imm_voice", imm)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if hasattr(mod, "immediate_slice"):
+                    slice_doc = mod.immediate_slice(self_id="hostess7")
+                    out["ironclad_sealed"] = bool(slice_doc.get("ironclad_sealed"))
+                    out["truth_percent"] = slice_doc.get("truth_percent")
+                    out["verdict"] = slice_doc.get("verdict")
+                    out["ai_in_charge"] = slice_doc.get("ai_in_charge")
+                elif hasattr(mod, "publish"):
+                    pub = mod.publish()
+                    out["ironclad_sealed"] = bool(pub.get("ironclad_sealed"))
+                    out["truth_percent"] = pub.get("truth_percent")
+                    out["verdict"] = pub.get("verdict")
+        cached = _load(STATE / "ironclad-immediate.json", {})
+        if cached.get("ironclad_sealed") is not None and out.get("ironclad_sealed") is False:
+            out["ironclad_sealed"] = bool(cached.get("ironclad_sealed"))
+            out["truth_percent"] = out.get("truth_percent") or cached.get("truth_percent")
+            out["verdict"] = out.get("verdict") or cached.get("verdict")
+        fs = _load(STATE / "ironclad-field-sanity-panel.json", {})
+        if fs:
+            out["field_sanity_ok"] = bool(fs.get("operator_ok") or fs.get("ok"))
+            out["field_sanity_cite"] = fs.get("citation") or (fs.get("ironclad") or {}).get("meld_citation")
+        bg = _load(STATE / "hostess7-brain-guard-panel.json", {})
+        if bg:
+            ver = bg.get("verification") or {}
+            out["brain_guard_verified"] = bool(ver.get("verified") or bg.get("verified"))
+            out["brain_guard_verdict"] = bg.get("verdict")
+        # Voice never hard-blocks on field_sanity hold; Ironclad sealed is the truth gate
+        out["preflight_ok"] = bool(out.get("ironclad_sealed") or out.get("verdict") == "GREEN" or cached.get("available"))
+    except Exception as exc:
+        out["warn"] = str(exc)[:120]
+        out["preflight_ok"] = True  # soft-open on probe failure
+    return out
 
 
 def _h7s_read_json(path: Path, default: Any = None) -> Any:
@@ -197,6 +251,7 @@ def speak(text: str, *, save_sample: bool = True) -> dict[str, Any]:
     """Speak through polish → mouth field neural → her one chosen voice."""
     if not ENABLED:
         return {"ok": False, "error": "voice_disabled"}
+    iron = _ironclad_preflight()
     doctrine = _load(DOCTRINE, {})
     choice = _load_choice()
     polished = _polish_thought(_clean_speech_text(text))
@@ -268,6 +323,8 @@ def speak(text: str, *, save_sample: bool = True) -> dict[str, Any]:
             "top_label": neural.get("top_label"),
             "deception_possible": neural.get("deception_possible", True),
         },
+        "ironclad": iron,
+        "ironclad_cite": IRONCLAD_CITE,
     }
     _save(PANEL, {
         "schema": "hostess7-voice/v2",
@@ -278,6 +335,8 @@ def speak(text: str, *, save_sample: bool = True) -> dict[str, Any]:
         "last_spoken_chunks": spoken,
         "fluency_claim": doctrine.get("fluency_claim"),
         "motto": doctrine.get("motto"),
+        "ironclad": iron,
+        "ironclad_cite": IRONCLAD_CITE,
     })
     return out
 
@@ -287,6 +346,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
     panel = _load(PANEL, {})
     field_neural = doctrine.get("field_neural") or {}
     choice = _load_choice()
+    iron = _ironclad_preflight()
     doc = {
         "schema": "hostess7-voice/v2",
         "enabled": ENABLED,
@@ -309,6 +369,9 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
             "thought_voice_alignment": "not_guaranteed",
             "mouth_neural_engine": field_neural.get("mouth_neural_engine"),
         },
+        "ironclad": iron,
+        "ironclad_cite": IRONCLAD_CITE,
+        "preflight_ok": iron.get("preflight_ok"),
     }
     if write:
         _save(PANEL, doc)

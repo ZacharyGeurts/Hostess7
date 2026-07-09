@@ -20,8 +20,25 @@ ROOMS = STATE / "noti-rooms.json"
 PENDING = STATE / "noti-pending.json"
 LEDGER = STATE / "noti-ledger.jsonl"
 ADDRESS_STATE = STATE / "noti-address-state.json"
+IRONCLAD_CITE = "ironclad:noti:1"
 
 _SOVEREIGN_CLOCK_MOD = None
+
+
+def _ironclad_receipt() -> dict[str, Any]:
+    """Surface Ironclad seal + brain-guard on Noti panels and ledgers."""
+    imm = _load(STATE / "ironclad-immediate.json", {})
+    bg = _load(STATE / "hostess7-brain-guard-panel.json", {})
+    ver = bg.get("verification") or {}
+    sealed = bool(imm.get("ironclad_sealed"))
+    return {
+        "cite": IRONCLAD_CITE,
+        "ironclad_sealed": sealed,
+        "truth_percent": imm.get("truth_percent"),
+        "verdict": imm.get("verdict"),
+        "brain_guard_verified": bool(ver.get("verified") or bg.get("verified")),
+        "preflight_ok": sealed or imm.get("available") is True or imm.get("verdict") == "GREEN",
+    }
 
 
 def _now() -> str:
@@ -444,6 +461,7 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         it for it in (pending.get("items") or [])
         if it.get("status") in ("pending_accept", "pending")
     ]
+    iron = _ironclad_receipt()
     doc = {
         "schema": "noti-panel/v1",
         "updated": _now(),
@@ -460,6 +478,9 @@ def build_panel(*, write: bool = True) -> dict[str, Any]:
         "rooms": list_rooms().get("rooms") or [],
         "ledger_path": str(LEDGER),
         "policy": doctrine.get("policy"),
+        "ironclad": iron,
+        "ironclad_cite": IRONCLAD_CITE,
+        "preflight_ok": iron.get("preflight_ok"),
     }
     if write:
         _save(PANEL, doc)
