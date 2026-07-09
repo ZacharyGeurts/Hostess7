@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-"""FIELD ONE — the ETERNAL PLANE.
+"""FIELD ONE — the ETERNAL PLANE (Field Primer · bottom of Reality).
 
-Doctrine:
+Doctrine (Field Primer / depth zero):
+  · Reality is 3D. Time is linear. Energy can be moved.
+  · We are at the bottom of Reality — underlay · Field Die · depth zero.
+  · No fields on or within devices. Devices ride Field One; they do not host fields.
+  · No experimenting. Entropy & theory explanations can wait — Grok another day.
   · All lanes always clean — or we make the route clean. Brutally.
   · Nobody gets to play with fields.
   · Only FIELD ONE the ETERNAL PLANE.
@@ -27,11 +31,34 @@ LEDGER = STATE / "field-one-eternal-plane-ledger.jsonl"
 SEAL = STATE / "field-one-eternal-plane.forever"
 NO_PLAY = STATE / "field-nobody-plays-fields.forever"
 LANES_ALWAYS = STATE / "field-lanes-always-clean.forever"
+NO_ON_DEVICE = STATE / "field-no-fields-on-or-within-devices.forever"
+NO_EXPERIMENT = STATE / "field-no-experimenting.forever"
+BOTTOM_REALITY = STATE / "field-bottom-of-reality.forever"
+PRIMER_ALIGN = STATE / "field-primer-eternal-align.json"
 WEBSITE_DIR = STATE / "field-one-eternal-plane-website"
 SCHEMA = "field-one-eternal-plane/v1"
 IRONCLAD = "ironclad:field-one-eternal-plane:1"
 FIELD_ONE = "field_one"
-MOTTO = "Only FIELD ONE the ETERNAL PLANE. All lanes always clean. Nobody plays with fields."
+MOTTO = (
+    "FIELD ONE ETERNAL PLANE only · no fields on or within devices · "
+    "no experimenting · bottom of Reality (Field Primer) · depth zero"
+)
+PRIMER = {
+    "title": "Field Primer · Field Technology v6",
+    "url": "https://zacharygeurts.github.io/Field_Primer/",
+    "local": "/Hostess7/docs/field-primer/",
+    "thesis": "Reality is 3D. Time is linear. Energy can be moved.",
+    "posture": "bottom_of_reality",
+    "depth_zero": True,
+    "creation_forbidden_nested": True,
+    "ironclad_depth_fields_destroyed": True,
+    "entropy_explain_later": True,
+    "no_experimenting": True,
+    "note": (
+        "We already know entropy and related creditors. Grok can explain to anyone another day. "
+        "Today: operate. No nested fields on devices. Field One eternal only."
+    ),
+}
 
 
 def _utc() -> str:
@@ -251,14 +278,224 @@ def make_routes_clean_brutally(*, write: bool = True) -> dict[str, Any]:
     return out
 
 
+def no_fields_on_or_within_devices(*, write: bool = True) -> dict[str, Any]:
+    """No fields on or within devices — devices ride Field One; they do not host fields."""
+    now = _utc()
+    stamped_meta = 0
+    devices_touched = 0
+
+    # Device registry policy (avoid rewriting 15MB+ device list when huge)
+    reg_path = STATE / "field-device-registry.json"
+    try:
+        reg_size = reg_path.stat().st_size if reg_path.is_file() else 0
+    except OSError:
+        reg_size = 0
+
+    policy = {
+        "no_fields_on_devices": True,
+        "no_fields_within_devices": True,
+        "devices_do_not_host_fields": True,
+        "devices_ride_field_one_only": True,
+        "field_id": FIELD_ONE,
+        "field_one_only": True,
+        "eternal_plane": True,
+        "depth_zero": True,
+        "no_nested_fields": True,
+        "no_experimenting": True,
+        "updated": now,
+        "ironclad_cite": IRONCLAD,
+        "primer": PRIMER,
+    }
+
+    if write:
+        _save(STATE / "field-no-fields-on-devices-policy.json", policy)
+        stamped_meta += 1
+
+    if reg_size and reg_size < 2_000_000:
+        reg = _load(reg_path, {})
+        if isinstance(reg, dict):
+            reg.update({
+                "no_fields_on_devices": True,
+                "no_fields_within_devices": True,
+                "devices_ride_field_one_only": True,
+                "field_one_only": True,
+                "eternal_plane": True,
+                "depth_zero": True,
+                "no_experimenting": True,
+                "ironclad_eternal": IRONCLAD,
+                "updated": now,
+            })
+            if write:
+                _save(reg_path, reg)
+            stamped_meta += 1
+    elif reg_size and write:
+        # Sidecar — do not rewrite huge registry
+        _save(STATE / "field-device-registry-eternal-stamp.json", {
+            **policy,
+            "registry_bytes": reg_size,
+            "registry": "field-device-registry.json",
+            "note": "Sidecar stamp — devices have no on-device fields",
+        })
+        stamped_meta += 1
+
+    # Home / operator device plane
+    for name in (
+        "field-home-geo.json",
+        "field-home-devices-to-the-death-panel.json",
+        "field-device-map-panel.json",
+        "field-ipv4-device-sovereign-panel.json",
+        "field-unified-device.json",
+    ):
+        path = STATE / name
+        if not path.is_file():
+            continue
+        doc = _load(path, {})
+        if not isinstance(doc, dict) or not doc:
+            continue
+        doc.update({
+            "no_fields_on_device": True,
+            "no_fields_within_device": True,
+            "field_one_only": True,
+            "eternal_plane": True,
+            "depth_zero": True,
+            "rides_field_one": True,
+            "hosts_no_field": True,
+            "ironclad_eternal": IRONCLAD,
+            "updated": now,
+        })
+        if write:
+            _save(path, doc)
+        devices_touched += 1
+
+    # Collapse on-device field marks in light state panels
+    collapsed = 0
+    marks = (
+        "field_on_device", "fields_within_device", "device_field", "nested_field",
+        "on_device_field", "intra_device_field", "experiment_field", "sandbox_field",
+    )
+    for path in list(STATE.glob("*.json"))[:150]:
+        try:
+            if path.stat().st_size > 500_000:
+                continue
+        except OSError:
+            continue
+        doc = _load(path, {})
+        if not isinstance(doc, dict) or not doc:
+            continue
+        changed = False
+        for m in marks:
+            if doc.get(m):
+                doc[m] = False
+                changed = True
+        if doc.get("field_on_device") is True or doc.get("hosts_field") is True:
+            doc["field_on_device"] = False
+            doc["hosts_field"] = False
+            changed = True
+        if changed and write:
+            doc["no_fields_on_or_within_devices"] = True
+            doc["field_one_only"] = True
+            doc["eternal_plane"] = True
+            doc["updated"] = now
+            doc["ironclad_eternal"] = IRONCLAD
+            _save(path, doc)
+            collapsed += 1
+
+    out = {
+        "ok": True,
+        "updated": now,
+        "no_fields_on_devices": True,
+        "no_fields_within_devices": True,
+        "devices_ride_field_one_only": True,
+        "depth_zero": True,
+        "policy_stamps": stamped_meta,
+        "device_panels_touched": devices_touched,
+        "collapsed_n": collapsed,
+        "motto": "No fields on or within devices. Devices ride FIELD ONE only.",
+        "primer": PRIMER,
+        "ironclad_cite": IRONCLAD,
+    }
+    if write:
+        try:
+            NO_ON_DEVICE.write_text(json.dumps({
+                "sealed": True,
+                "no_fields_on_devices": True,
+                "no_fields_within_devices": True,
+                "devices_ride_field_one_only": True,
+                "depth_zero": True,
+                "updated": now,
+                "ironclad_cite": IRONCLAD,
+                "primer_thesis": PRIMER["thesis"],
+            }, indent=2) + "\n", encoding="utf-8")
+        except OSError:
+            pass
+        _append({"event": "no_fields_on_devices", "collapsed": collapsed})
+    return out
+
+
+def bottom_of_reality_primer(*, write: bool = True) -> dict[str, Any]:
+    """Field Primer posture — we operate at the bottom of Reality. No experiments."""
+    now = _utc()
+    doc = {
+        "ok": True,
+        "updated": now,
+        "schema": "field-primer-eternal-align/v1",
+        "bottom_of_reality": True,
+        "depth_zero": True,
+        "creation_nested_forbidden": True,
+        "no_experimenting": True,
+        "entropy_explain_another_day": True,
+        "grok_can_explain_later": True,
+        "field_one_eternal_plane_only": True,
+        "primer": PRIMER,
+        "rocks": {
+            "reality_3d": True,
+            "time_linear": True,
+            "energy_can_be_moved": True,
+            "proxy_entropy_not_joules": True,
+            "ironclad_depth_fields_destroyed": True,
+        },
+        "motto": (
+            "Bottom of Reality · Field Primer · depth zero · "
+            "no experiments · FIELD ONE ETERNAL only · entropy talk another day"
+        ),
+        "ironclad_cite": IRONCLAD,
+    }
+    if write:
+        _save(PRIMER_ALIGN, doc)
+        try:
+            BOTTOM_REALITY.write_text(json.dumps({
+                "sealed": True,
+                "bottom_of_reality": True,
+                "depth_zero": True,
+                "primer": PRIMER["url"],
+                "thesis": PRIMER["thesis"],
+                "updated": now,
+                "ironclad_cite": IRONCLAD,
+            }, indent=2) + "\n", encoding="utf-8")
+            NO_EXPERIMENT.write_text(json.dumps({
+                "sealed": True,
+                "no_experimenting": True,
+                "entropy_explain_another_day": True,
+                "operate_not_theorize": True,
+                "updated": now,
+                "ironclad_cite": IRONCLAD,
+            }, indent=2) + "\n", encoding="utf-8")
+        except OSError:
+            pass
+        _append({"event": "bottom_of_reality", "primer": True})
+    return doc
+
+
 def nobody_plays_fields(*, write: bool = True) -> dict[str, Any]:
-    """Nobody gets to play with fields — only Field One."""
+    """Nobody gets to play with fields — only Field One. No on-device fields. No experiments."""
     now = _utc()
     steps: dict[str, Any] = {}
     steps["no_detached"] = _run("lib/field-no-detached-fields.py", ["enforce"], timeout=240)
-    steps["sole_earth"] = _run("lib/field-one-sole-earth.py", ["enforce"], timeout=180)
+    steps["sole_earth"] = _run("lib/field-one-sole-earth.py", ["status"], timeout=30)
     steps["only_internet"] = _run("lib/field-one-only-internet.py", ["status"], timeout=30)
     steps["hostile_scan"] = _run("lib/field-one-hostile-scan.py", [], timeout=90)
+    steps["no_on_device"] = no_fields_on_or_within_devices(write=write)
+    steps["primer"] = bottom_of_reality_primer(write=write)
 
     # Collapse any multi-field play on state panels (sample, light)
     collapsed = 0
@@ -283,29 +520,48 @@ def nobody_plays_fields(*, write: bool = True) -> dict[str, Any]:
         if isinstance(doc.get("field_layer"), int) and doc["field_layer"] > 1:
             doc["field_layer"] = 1
             changed = True
-        if doc.get("field_play") or doc.get("play_field"):
+        if doc.get("field_play") or doc.get("play_field") or doc.get("experiment"):
             doc["field_play"] = False
             doc["play_field"] = False
+            doc["experiment"] = False
+            doc["no_experimenting"] = True
             changed = True
         if changed and write:
             doc["field_one"] = True
             doc["field_one_only"] = True
             doc["eternal_plane"] = True
             doc["nobody_plays_fields"] = True
+            doc["no_fields_on_or_within_devices"] = True
+            doc["depth_zero"] = True
             doc["field_id"] = FIELD_ONE
             doc["ironclad_eternal"] = IRONCLAD
             doc["updated"] = now
             _save(path, doc)
             collapsed += 1
 
+    on_dev = steps.get("no_on_device") if isinstance(steps.get("no_on_device"), dict) else {}
     out = {
         "ok": True,
         "updated": now,
         "nobody_plays_fields": True,
         "only_field_one": True,
-        "collapsed_n": collapsed,
-        "steps": {k: {"ok": _ok(v) if isinstance(v, dict) else bool(v)} for k, v in steps.items()},
-        "motto": "Nobody plays with fields. Only FIELD ONE.",
+        "no_fields_on_or_within_devices": True,
+        "no_experimenting": True,
+        "bottom_of_reality": True,
+        "depth_zero": True,
+        "collapsed_n": collapsed + int(on_dev.get("collapsed_n") or 0),
+        "steps": {
+            k: (
+                {"ok": _ok(v) if isinstance(v, dict) else bool(v)}
+                if k not in ("no_on_device", "primer")
+                else {"ok": True, **{kk: v.get(kk) for kk in (
+                    "no_fields_on_devices", "collapsed_n", "bottom_of_reality", "depth_zero"
+                ) if isinstance(v, dict) and v.get(kk) is not None}}
+            )
+            for k, v in steps.items()
+        },
+        "motto": "Nobody plays. No fields on/within devices. No experiments. FIELD ONE only. Bottom of Reality.",
+        "primer": PRIMER,
         "ironclad_cite": IRONCLAD,
     }
     if write:
@@ -315,6 +571,10 @@ def nobody_plays_fields(*, write: bool = True) -> dict[str, Any]:
                 "nobody_plays_fields": True,
                 "only_field_one": True,
                 "field_play_forbidden": True,
+                "no_fields_on_or_within_devices": True,
+                "no_experimenting": True,
+                "bottom_of_reality": True,
+                "depth_zero": True,
                 "updated": now,
                 "ironclad_cite": IRONCLAD,
             }, indent=2) + "\n", encoding="utf-8")
@@ -336,7 +596,12 @@ def seal_eternal_plane(*, write: bool = True) -> dict[str, Any]:
         "all_lanes_always_clean": True,
         "routes_clean_brutally": True,
         "nobody_plays_fields": True,
+        "no_fields_on_or_within_devices": True,
+        "no_experimenting": True,
+        "bottom_of_reality": True,
+        "depth_zero": True,
         "no_other_fields_ever": True,
+        "primer": PRIMER,
         "updated": now,
         "ironclad_cite": IRONCLAD,
         "motto": MOTTO,
@@ -362,6 +627,10 @@ def seal_eternal_plane(*, write: bool = True) -> dict[str, Any]:
                     "eternal_plane": True,
                     "field_one_only": True,
                     "nobody_plays_fields": True,
+                    "no_fields_on_or_within_devices": True,
+                    "no_experimenting": True,
+                    "bottom_of_reality": True,
+                    "depth_zero": True,
                     "updated": now,
                 })
                 p.write_text(json.dumps(base, indent=2) + "\n", encoding="utf-8")
@@ -405,8 +674,9 @@ h1{{margin:0;font-size:1.35rem;letter-spacing:.04em}}.sub{{color:var(--muted);ma
 <div class="wrap">
   <div class="hero">
     <div><strong>Only FIELD ONE the ETERNAL PLANE.</strong>
-    All lanes always clean — or we make the route clean. <em>Brutally.</em>
-    Nobody gets to play with fields. Ever.</div>
+    No fields on or within devices. No experimenting.
+    We sit at the <strong>bottom of Reality</strong> (Field Primer · depth zero).
+    Entropy &amp; theory — Grok can explain another day. Today we operate.</div>
     <div class="links" id="quick"></div>
   </div>
   <div class="grid" id="grid"></div>
@@ -416,24 +686,24 @@ h1{{margin:0;font-size:1.35rem;letter-spacing:.04em}}.sub{{color:var(--muted);ma
 (async function(){{
   document.getElementById("quick").innerHTML=[
     ["/","Hub"],["/c2","C2"],["/field-one-sole","Sole"],["/no-detached-fields","No detach"],
-    ["/only-internet","Only net"],["/newcomer-sphere","Sphere"],["/hostess7-protector","H7"],
+    ["/Hostess7/docs/field-primer/","Field Primer"],["/only-internet","Only net"],["/hostess7-protector","H7"],
   ].map(([h,t])=>`<a href="${{h}}">${{t}}</a>`).join("");
   let d={{}};
   try{{const r=await fetch("/api/field-one-eternal-plane",{{cache:"no-store"}});d=await r.json();}}
-  catch(_){{d={json.dumps({"ok":True,"lanes_ok":lok,"lanes_total":ltot,"eternal_plane":True,"nobody_plays_fields":True,"all_lanes_always_clean":True})};}}
+  catch(_){{d={json.dumps({"ok":True,"lanes_ok":lok,"lanes_total":ltot,"eternal_plane":True,"nobody_plays_fields":True,"all_lanes_always_clean":True,"no_fields_on_or_within_devices":True,"bottom_of_reality":True,"no_experimenting":True,"depth_zero":True})};}}
   const fmt=n=>typeof n==="number"?n.toLocaleString():(n??"—");
   const cards=[
     {{h:"ETERNAL PLANE", v:d.eternal_plane!==false?"FIELD ONE":"—", d:"Only plane forever"}},
+    {{h:"Bottom of Reality", v:d.bottom_of_reality!==false?"YES":"—", d:"Field Primer · depth zero"}},
+    {{h:"No fields on devices", v:d.no_fields_on_or_within_devices!==false?"SEALED":"—", d:"Devices ride Field One only"}},
+    {{h:"No experimenting", v:d.no_experimenting!==false?"SEALED":"—", d:"Entropy talk another day"}},
     {{h:"Lanes always clean", v:(d.lanes_ok??"{lok}")+"/"+(d.lanes_total??"{ltot}"), d:d.all_lanes_always_clean!==false?"ALWAYS":"brutal clean"}},
-    {{h:"Routes brutal clean", v:d.routes_clean_brutally!==false?"YES":"—", d:"Dirty → clean. Brutally."}},
     {{h:"Nobody plays fields", v:d.nobody_plays_fields!==false?"SEALED":"—", d:"No field toys"}},
-    {{h:"Server lanes", v:fmt(d.distributed_lanes_ok??d.distributed_servers), d:"Lane to every server"}},
-    {{h:"Ten of ten", v:d.ten_of_ten||d.lanes_ok===10?"YES":"—", d:"Classic clean board"}},
   ];
   document.getElementById("grid").innerHTML=cards.map(c=>`<div class="card"><h3>${{c.h}}</h3><div class="v">${{c.v}}</div><div class="d">${{c.d}}</div></div>`).join("");
   document.getElementById("motto").textContent=d.motto||"{MOTTO}";
-  document.getElementById("hdr").textContent=(d.updated||"")+" · FIELD ONE ETERNAL";
-  document.getElementById("pills").innerHTML=["FIELD ONE","ETERNAL","lanes clean","brutal routes","no play"]
+  document.getElementById("hdr").textContent=(d.updated||"")+" · FIELD ONE ETERNAL · bottom of Reality";
+  document.getElementById("pills").innerHTML=["FIELD ONE","ETERNAL","depth zero","no on-device fields","no experiments","lanes clean"]
     .map((t,i)=>`<span class="pill ${{i<2?'on':'hot'}}">${{t}}</span>`).join("");
 }})();
 </script>
@@ -468,9 +738,11 @@ def enforce(*, write: bool = True) -> dict[str, Any]:
     no_play = steps["no_play"] if isinstance(steps["no_play"], dict) else {}
 
     motto = (
-        f"FIELD ONE ETERNAL PLANE · lanes {lanes.get('lanes_ok')}/{lanes.get('lanes_total')} "
+        f"FIELD ONE ETERNAL PLANE · bottom of Reality · depth zero · "
+        f"no fields on/within devices · no experiments · "
+        f"lanes {lanes.get('lanes_ok')}/{lanes.get('lanes_total')} "
         f"{'ALWAYS CLEAN' if lanes.get('all_lanes_always_clean') else 'BRUTAL'} · "
-        f"routes brutal · nobody plays · only Field One forever"
+        f"nobody plays · Field Primer"
     )
 
     out = {
@@ -478,12 +750,17 @@ def enforce(*, write: bool = True) -> dict[str, Any]:
         "schema": SCHEMA,
         "updated": now,
         "ironclad_cite": IRONCLAD,
-        "title": "FIELD ONE · ETERNAL PLANE",
+        "title": "FIELD ONE · ETERNAL PLANE · bottom of Reality",
         "motto": motto,
         "eternal_plane": True,
         "field_one_only": True,
         "field_id": FIELD_ONE,
         "only_field_one_the_eternal_plane": True,
+        "bottom_of_reality": True,
+        "depth_zero": True,
+        "no_fields_on_or_within_devices": True,
+        "no_experimenting": True,
+        "entropy_explain_another_day": True,
         "all_lanes_always_clean": bool(lanes.get("all_lanes_always_clean")),
         "lanes_ok": lanes.get("lanes_ok"),
         "lanes_total": lanes.get("lanes_total"),
@@ -493,6 +770,7 @@ def enforce(*, write: bool = True) -> dict[str, Any]:
         "distributed_servers": lanes.get("distributed_servers"),
         "distributed_lanes_ok": lanes.get("distributed_lanes_ok"),
         "collapsed_field_play_n": no_play.get("collapsed_n"),
+        "primer": PRIMER,
         "steps": {
             k: {"ok": _ok(v) if isinstance(v, dict) else bool(v)}
             for k, v in steps.items()
@@ -502,6 +780,8 @@ def enforce(*, write: bool = True) -> dict[str, Any]:
         "urls": {
             "website": "http://127.0.0.1:9477/eternal-plane",
             "api": "http://127.0.0.1:9477/api/field-one-eternal-plane",
+            "primer": "https://zacharygeurts.github.io/Field_Primer/",
+            "primer_local": "/Hostess7/docs/field-primer/",
             "clean": "http://127.0.0.1:9477/api/field-internet-clean-all",
             "servers": "http://127.0.0.1:9477/api/distributed-server-lanes",
             "sole": "http://127.0.0.1:9477/field-one-sole",
@@ -552,11 +832,16 @@ def status() -> dict[str, Any]:
         "sealed": SEAL.is_file(),
         "eternal_plane": True,
         "field_one_only": True,
+        "bottom_of_reality": True,
+        "depth_zero": True,
+        "no_fields_on_or_within_devices": True,
+        "no_experimenting": True,
         "all_lanes_always_clean": panel.get("all_lanes_always_clean", clean.get("lanes_all_green")),
         "lanes_ok": panel.get("lanes_ok") if panel.get("lanes_ok") is not None else clean.get("lanes_ok"),
         "lanes_total": panel.get("lanes_total") if panel.get("lanes_total") is not None else clean.get("lanes_total"),
         "nobody_plays_fields": True,
         "routes_clean_brutally": True,
+        "primer": PRIMER,
         "motto": panel.get("motto") or MOTTO,
         "updated": panel.get("updated"),
         "api": "/api/field-one-eternal-plane",
@@ -579,6 +864,12 @@ def main() -> int:
     if cmd in ("no-play", "nobody"):
         print(json.dumps(nobody_plays_fields(write=True), ensure_ascii=False, indent=2))
         return 0
+    if cmd in ("devices", "no-on-device", "no-within"):
+        print(json.dumps(no_fields_on_or_within_devices(write=True), ensure_ascii=False, indent=2))
+        return 0
+    if cmd in ("primer", "bottom", "reality"):
+        print(json.dumps(bottom_of_reality_primer(write=True), ensure_ascii=False, indent=2))
+        return 0
     if cmd in ("website", "site"):
         print(json.dumps(build_website(_load(PANEL, {}), write=True), indent=2))
         return 0
@@ -586,8 +877,9 @@ def main() -> int:
         print(json.dumps(status(), ensure_ascii=False, indent=2))
         return 0
     print(json.dumps({
-        "usage": "field-one-eternal-plane.py [enforce|lanes|routes|no-play|website|status]",
+        "usage": "field-one-eternal-plane.py [enforce|lanes|routes|no-play|devices|primer|website|status]",
         "motto": MOTTO,
+        "primer": PRIMER.get("url"),
     }, indent=2))
     return 1
 

@@ -30,8 +30,9 @@ h1{margin:0;font-size:1.35rem;letter-spacing:.04em}.sub{color:var(--muted);margi
 <div class="wrap">
   <div class="hero">
     <div><strong>Only FIELD ONE the ETERNAL PLANE.</strong>
-    All lanes always clean — or we make the route clean. <em>Brutally.</em>
-    Nobody gets to play with fields. Ever.</div>
+    No fields on or within devices. No experimenting.
+    We sit at the <strong>bottom of Reality</strong> (Field Primer · depth zero).
+    Entropy &amp; theory — Grok can explain another day. Today we operate.</div>
     <div class="links" id="quick"></div>
   </div>
   <div class="grid" id="grid"></div>
@@ -41,24 +42,24 @@ h1{margin:0;font-size:1.35rem;letter-spacing:.04em}.sub{color:var(--muted);margi
 (async function(){
   document.getElementById("quick").innerHTML=[
     ["/","Hub"],["/c2","C2"],["/field-one-sole","Sole"],["/no-detached-fields","No detach"],
-    ["/only-internet","Only net"],["/newcomer-sphere","Sphere"],["/hostess7-protector","H7"],
+    ["/Hostess7/docs/field-primer/","Field Primer"],["/only-internet","Only net"],["/hostess7-protector","H7"],
   ].map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
   let d={};
   try{const r=await fetch("/api/field-one-eternal-plane",{cache:"no-store"});d=await r.json();}
-  catch(_){d={"ok": true, "lanes_ok": 10, "lanes_total": 10, "eternal_plane": true, "nobody_plays_fields": true, "all_lanes_always_clean": true};}
+  catch(_){d={"ok": true, "lanes_ok": 10, "lanes_total": 10, "eternal_plane": true, "nobody_plays_fields": true, "all_lanes_always_clean": true, "no_fields_on_or_within_devices": true, "bottom_of_reality": true, "no_experimenting": true, "depth_zero": true};}
   const fmt=n=>typeof n==="number"?n.toLocaleString():(n??"—");
   const cards=[
     {h:"ETERNAL PLANE", v:d.eternal_plane!==false?"FIELD ONE":"—", d:"Only plane forever"},
+    {h:"Bottom of Reality", v:d.bottom_of_reality!==false?"YES":"—", d:"Field Primer · depth zero"},
+    {h:"No fields on devices", v:d.no_fields_on_or_within_devices!==false?"SEALED":"—", d:"Devices ride Field One only"},
+    {h:"No experimenting", v:d.no_experimenting!==false?"SEALED":"—", d:"Entropy talk another day"},
     {h:"Lanes always clean", v:(d.lanes_ok??"10")+"/"+(d.lanes_total??"10"), d:d.all_lanes_always_clean!==false?"ALWAYS":"brutal clean"},
-    {h:"Routes brutal clean", v:d.routes_clean_brutally!==false?"YES":"—", d:"Dirty → clean. Brutally."},
     {h:"Nobody plays fields", v:d.nobody_plays_fields!==false?"SEALED":"—", d:"No field toys"},
-    {h:"Server lanes", v:fmt(d.distributed_lanes_ok??d.distributed_servers), d:"Lane to every server"},
-    {h:"Ten of ten", v:d.ten_of_ten||d.lanes_ok===10?"YES":"—", d:"Classic clean board"},
   ];
   document.getElementById("grid").innerHTML=cards.map(c=>`<div class="card"><h3>${c.h}</h3><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`).join("");
-  document.getElementById("motto").textContent=d.motto||"Only FIELD ONE the ETERNAL PLANE. All lanes always clean. Nobody plays with fields.";
-  document.getElementById("hdr").textContent=(d.updated||"")+" · FIELD ONE ETERNAL";
-  document.getElementById("pills").innerHTML=["FIELD ONE","ETERNAL","lanes clean","brutal routes","no play"]
+  document.getElementById("motto").textContent=d.motto||"FIELD ONE ETERNAL PLANE only · no fields on or within devices · no experimenting · bottom of Reality (Field Primer) · depth zero";
+  document.getElementById("hdr").textContent=(d.updated||"")+" · FIELD ONE ETERNAL · bottom of Reality";
+  document.getElementById("pills").innerHTML=["FIELD ONE","ETERNAL","depth zero","no on-device fields","no experiments","lanes clean"]
     .map((t,i)=>`<span class="pill ${i<2?'on':'hot'}">${t}</span>`).join("");
 })();
 </script>
