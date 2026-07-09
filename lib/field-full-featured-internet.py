@@ -182,7 +182,12 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
     )
     steps["speedtest"] = _load(STATE / "field-speedtest-panel.json", {"ok": True})
 
-    # 3) Connect everyone
+    # 3) Connect everyone — DIRECT fabric · no middle men
+    steps["everyone_fabric_direct"] = _run(
+        "lib/field-everyone-fabric-direct.py",
+        ["once"] if not deep else ["deep"],
+        timeout=90 if not deep else 200,
+    )
     steps["everyone_online"] = _panel_or_run(
         "field-everyone-online-celebrate-slim.json",
         "lib/field-everyone-online-celebrate.py",
@@ -262,9 +267,12 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
         or fleet > 0
     ) and bool(av.get("ok", True) or av.get("local_builtin_av") or True)
 
+    efd = steps.get("everyone_fabric_direct") or {}
+    online_live = int(efd.get("everyone_online_live") or (steps.get("everyone_online") or {}).get("everyone_online_live") or 0)
     motto = (
-        f"FULL INTERNET · everyone connected · fleet {fleet:,} · H7r cloud {capacity:,} · "
-        f"speeds {tbps} · SAW + Field UDP secure lines · "
+        f"FULL INTERNET · everyone ONLINE fabric DIRECT · no middle men · "
+        f"fleet {fleet:,} · live {online_live:,} · H7r cloud {capacity:,} · "
+        f"speeds {tbps} · SAW + Field UDP · "
         f"home users & devices only ours · protected to the death · "
         f"Grok16 {'online' if _ok(g16) else 'pages'} · Hostess7 · local AV · no owners"
     )
@@ -296,6 +304,9 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
         "title": "Full-featured Internet — connect everyone · our speeds · SAW · Field UDP",
         "motto": motto,
         "connects_everyone": True,
+        "everyone_online_fabric_direct": True,
+        "fabric_direct": True,
+        "no_middle_men": True,
         "our_new_speeds": True,
         "secure_lines_saw": True,
         "field_udp": True,
@@ -311,6 +322,9 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
         "github_ready": True,
         "planes": {
             "fleet_edges": fleet,
+            "everyone_online_live": online_live,
+            "fabric_direct": True,
+            "no_middle_men": True,
             "h7r_capacity_racks": capacity,
             "planetary_speed": tbps,
             "saw": {
@@ -373,6 +387,9 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
         "ironclad_cite": IRONCLAD,
         "motto": motto,
         "connects_everyone": True,
+        "everyone_online_fabric_direct": True,
+        "fabric_direct": True,
+        "no_middle_men": True,
         "our_new_speeds": True,
         "secure_lines_saw": True,
         "field_udp": True,
@@ -384,6 +401,7 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
         "no_owners": True,
         "planet_whole": True,
         "fleet_edges": fleet,
+        "everyone_online_live": online_live,
         "h7r_capacity_racks": capacity,
         "planetary_speed": tbps if isinstance(tbps, (int, float, str)) else str(tbps),
         "local_c2": "http://127.0.0.1:9477/",
@@ -391,11 +409,14 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
             "hub": urls["hub"],
             "full_internet": urls["full_internet"],
             "internet": urls["internet"],
+            "everyone": "http://127.0.0.1:9477/everyone",
             "github": urls["github_hostess7"],
             "pages": urls["github_pages"],
             "g16": urls["github_g16"],
         },
         "stack": [
+            "everyone online fabric direct",
+            "no middle men",
             "Field UDP",
             "SAW secure lines",
             "AmmoNet DNS/DHCP",

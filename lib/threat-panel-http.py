@@ -3122,6 +3122,36 @@ class Handler(BaseHTTPRequestHandler):
             except Exception as exc:
                 self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
             return
+        if path in (
+            "/api/field-everyone-fabric-direct",
+            "/api/field-everyone-fabric-direct/",
+            "/api/everyone-fabric-direct",
+            "/api/fabric-direct",
+            "/api/no-middle-men",
+        ):
+            try:
+                cached = STATE_DIR / "field-everyone-fabric-direct-panel.json"
+                qs_ed = parse_qs(urlparse(self.path).query)
+                force = str(qs_ed.get("refresh", qs_ed.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-everyone-fabric-direct.py",
+                    ["once"] if force else ["status"],
+                    timeout=90 if force else 40,
+                )
+                self._send(200, json.dumps(payload if isinstance(payload, dict) else {"ok": False}, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Autonet status API (display only)
         if path in ("/api/field-autonet", "/api/field-autonet/"):
             try:

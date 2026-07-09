@@ -76,6 +76,9 @@
   const p = d.planes || {};
   const cards = [
     {h:"Fleet edges", v: p.fleet_edges ?? d.fleet_edges ?? "—", d:"Everyone connected plane"},
+    {h:"Live online", v: p.everyone_online_live ?? d.everyone_online_live ?? "—", d:"Online plane on fabric"},
+    {h:"Fabric path", v: (d.fabric_direct||p.fabric_direct)?"DIRECT":"—", d:"No middle men · Field only"},
+    {h:"Middle men", v: (d.no_middle_men||p.no_middle_men)?"NONE":"—", d:"MITM/proxy shredded · SAW"},
     {h:"H7r cloud", v: p.h7r_capacity_racks ?? "—", d:"Distributed cloud center racks"},
     {h:"Planetary speed", v: p.planetary_speed ?? d.planetary_speed ?? "—", d:"Our new Field speeds"},
     {h:"SAW secure lines", v: (p.saw&&p.saw.ok)?"ON":"—", d: (p.saw&&p.saw.motto)||"Always full · never dry"},
@@ -92,14 +95,16 @@
   document.getElementById("motto").textContent = d.motto || "Full Internet plane loading…";
   document.getElementById("hdr").textContent = (d.updated||"") + " · " + (d.title||"Full-featured Internet");
   document.getElementById("pills").innerHTML = [
-    d.connects_everyone&&"everyone connected",
+    d.connects_everyone&&"everyone online",
+    (d.fabric_direct||d.everyone_online_fabric_direct)&&"fabric DIRECT",
+    d.no_middle_men&&"no middle men",
     d.our_new_speeds&&"our speeds",
     d.secure_lines_saw&&"SAW",
     d.field_udp&&"Field UDP",
     d.only_ours_now&&"only ours",
     d.protected_to_the_death&&"to the death",
     d.github_ready&&"github ready",
-  ].filter(Boolean).map((t,i)=>`<span class="pill ${i<2?'on':(t==='to the death'?'rose':'hot')}">${t}</span>`).join("");
+  ].filter(Boolean).map((t,i)=>`<span class="pill ${i<3?'on':(t==='to the death'?'rose':'hot')}">${t}</span>`).join("");
   document.getElementById("foot").textContent =
     "API " + (d.api||"/api/field-full-featured-internet") + " · " + BASE + "/full-internet";
 })();

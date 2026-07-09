@@ -68,6 +68,7 @@ Historic truth corpus gates every new claim. See **[Historic Truth Corpus](Histo
 
 ## Read next
 
+- **[Everyone Fabric Direct](Everyone-Fabric-Direct)** — no middle men · fabric DIRECT
 - **[Full-Featured Internet](Full-Featured-Internet)** — everyone · speeds · SAW · to the death
 - **[Internet Stack](Internet-Stack)** — AmmoNet is the Internet · two birds · 125k
 - **[Field UDP Rewrite](Field-UDP-Rewrite)** — SAW · outlet cook · secure lines

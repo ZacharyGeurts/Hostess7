@@ -11,6 +11,7 @@
 - [Historic Truth Corpus](Historic-Truth-Corpus)
 
 ### Internet plane
+- [Everyone Fabric Direct](Everyone-Fabric-Direct)
 - [Full-Featured Internet](Full-Featured-Internet)
 - [Internet Stack](Internet-Stack)
 - [Field UDP Rewrite](Field-UDP-Rewrite)
