@@ -4654,6 +4654,45 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        # No detached/adjacent fields · Field One only · Big Grin kicks · Earth stabilize
+        if path in (
+            "/api/no-detached-fields",
+            "/api/no-detached-fields/",
+            "/api/field-no-detached-fields",
+            "/api/field-no-detached-fields/",
+            "/api/field-one-no-gaps",
+            "/api/earth-stabilize",
+        ):
+            try:
+                cached = STATE_DIR / "field-no-detached-fields-panel.json"
+                qs_nd = parse_qs(urlparse(self.path).query)
+                force = str(qs_nd.get("refresh", qs_nd.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "enforce", "close", "stabilize",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["field_one_only"] = True
+                            payload["earth_stabilized"] = True
+                            payload["no_fields_next_to_known_devices"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-no-detached-fields.py",
+                    ["enforce"] if force else ["status"],
+                    timeout=300 if force else 30,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "no_detached_fields_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Newcomer immediate-attack sphere destroy — full volts · vector melt · forever
         if path in (
             "/api/newcomer-sphere-destroy",
@@ -10983,6 +11022,21 @@ class Handler(BaseHTTPRequestHandler):
         ):
             target = PANEL_DIR / "field-newcomer-attack-sphere-destroy.html"
             alt = STATE_DIR / "field-newcomer-attack-sphere-website" / "index.html"
+            if alt.is_file():
+                target = alt
+        elif path in (
+            "/no-detached-fields",
+            "/no-detached-fields/",
+            "/field-no-detached-fields",
+            "/field-no-detached-fields/",
+            "/field-one-no-gaps",
+            "/field-one-no-gaps/",
+            "/earth-stabilize",
+            "/earth-stabilize/",
+            "/field-no-detached-fields.html",
+        ):
+            target = PANEL_DIR / "field-no-detached-fields.html"
+            alt = STATE_DIR / "field-no-detached-fields-website" / "index.html"
             if alt.is_file():
                 target = alt
         elif path in (

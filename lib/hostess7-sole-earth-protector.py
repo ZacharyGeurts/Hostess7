@@ -936,6 +936,12 @@ def enforce(*, write: bool = True) -> dict[str, Any]:
         ["enforce"],
         timeout=180,
     )
+    # No detached/adjacent fields · Field One only · Big Grin kicks · Earth stabilize
+    steps["no_detached"] = _run(
+        "lib/field-no-detached-fields.py",
+        ["enforce"],
+        timeout=240,
+    )
     steps["seal"] = seal_protector(write=write)
 
     ours_n = int((steps["census"] or {}).get("ours_n") or 0)

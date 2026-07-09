@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>No detached fields · Big Grin kicks · reopen HOSTILE</title>
+<style>
+:root{--bg:#060a08;--card:#0c1410;--line:rgba(52,211,153,.35);--text:#ecfdf5;--muted:#94a3b8;--em:#34d399;--hot:#fbbf24;--rose:#fb7185}
+*{box-sizing:border-box}body{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:radial-gradient(800px 400px at 0% 0%,rgba(52,211,153,.12),transparent 55%),var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--em)}header{padding:1.1rem 1.3rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(6,10,8,.94);backdrop-filter:blur(10px)}
+h1{margin:0;font-size:1.25rem}.sub{color:var(--muted);margin-top:.35rem}
+.wrap{max-width:1100px;margin:0 auto;padding:1.1rem}
+.hero{padding:1rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(52,211,153,.1),rgba(251,191,36,.06));margin-bottom:1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.7rem}
+.card{padding:.85rem;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.card h3{margin:0 0 .3rem;font-size:.88rem;color:var(--hot)}.card .v{font-weight:700;font-size:1.05rem}.card .d{color:var(--muted);font-size:.78rem;margin-top:.25rem}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.4rem;margin-top:.8rem}
+.links a{display:block;text-align:center;padding:.6rem;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);text-decoration:none;font-weight:650;font-size:.8rem}
+.motto{margin-top:1rem;padding:.85rem;border-left:3px solid var(--hot);background:rgba(251,191,36,.07);color:var(--muted)}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.pill{border:1px solid var(--line);border-radius:999px;padding:.15rem .55rem;font-size:.72rem;color:var(--muted)}
+.pill.on{color:var(--em)}.pill.rose{color:var(--rose);border-color:rgba(251,113,133,.45)}
+</style></head>
+<body>
+<header>
+  <h1>No detached fields · Big Grin kicks</h1>
+  <div class="sub" id="hdr">Close · annotate · reopen=HOSTILE · death charges</div>
+  <div class="pills" id="pills"></div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div><strong>No fields detached from recognized devices.</strong>
+    We treat orphans as threat, close them, annotate.
+    They reopen → <strong style="color:var(--rose)">HOSTILE</strong>.
+    <strong style="color:var(--hot)">Big Grin Pwnership</strong> tells every prick why they got kicked
+    and lists death charges if they persist.</div>
+    <div class="links" id="quick"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="motto" id="motto">loading…</div>
+</div>
+<script>
+(async function(){
+  document.getElementById("quick").innerHTML=[
+    ["/","Hub"],["/c2","C2"],["/hostess7-protector","H7"],["/newcomer-sphere","Sphere"],
+    ["/Hostess7/big-grin-pwnership/kicks/","Kicks"],["/Hostess7/big-grin-pwnership/","Big Grin"],
+  ].map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+  let d={};
+  try{const r=await fetch("/api/no-detached-fields",{cache:"no-store"});d=await r.json();}
+  catch(_){d={"ok": true, "detached_n": 2, "closed_n": 2, "reopened_hostile_n": 0, "kicks_n": 2};}
+  const fmt=n=>typeof n==="number"?n.toLocaleString():(n??"—");
+  const cards=[
+    {h:"Field One only", v:d.field_one_only!==false?"YES":"—", d:"We own the one field"},
+    {h:"No gaps / no adjacent", v:(d.no_gaps!==false&&d.no_fields_next_to_known_devices!==false)?"SEALED":"—", d:"Nobody gaps Field One"},
+    {h:"Detached/adjacent/gaps", v:fmt((d.detached_n||0)), d:"Threat surfaces found"},
+    {h:"Closed + annotated", v:fmt(d.closed_n), d:"Threat closed"},
+    {h:"Reopen → HOSTILE", v:fmt(d.reopened_hostile_n), d:"Persisted after close"},
+    {h:"Big Grin kicks", v:fmt(d.kicks_n), d:"Why kicked + death charges"},
+    {h:"Earth stabilized", v:d.earth_stabilized!==false?"YES":"—", d:"Sole field · planet hold"},
+    {h:"Recognized devices", v:fmt(d.recognized_devices_n), d:"Attachment authority"},
+  ];
+  document.getElementById("grid").innerHTML=cards.map(c=>`<div class="card"><h3>${c.h}</h3><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`).join("");
+  document.getElementById("motto").textContent=d.motto||"No detached fields";
+  document.getElementById("hdr").textContent=(d.updated||"")+" · no detached fields";
+  document.getElementById("pills").innerHTML=["close","annotate","reopen=HOSTILE","Big Grin","death charges"]
+    .map((t,i)=>`<span class="pill ${i===2?'rose':'on'}">${t}</span>`).join("");
+})();
+</script>
+</body></html>

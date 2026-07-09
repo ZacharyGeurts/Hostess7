@@ -1175,6 +1175,10 @@ print('OK warfare-expand')
             shift
             exec env NEXUS_VECTOR_IMMENSE=1 pythong "${NEXUS_INSTALL_ROOT}/lib/field-newcomer-attack-sphere-destroy.py" "${1:-enforce}" "${@:2}"
             ;;
+        no-detached-fields|no-detach|field-one-no-gaps|earth-stabilize|stabilize-earth|big-grin-kicks)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-no-detached-fields.py" "${1:-enforce}" "${@:2}"
+            ;;
         field-ai-root-guard|ai-root-guard|ai-root-api-guard)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-ai-root-api-guard.py" "${1:-json}" "${@:2}"
