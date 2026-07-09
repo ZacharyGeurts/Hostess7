@@ -65,16 +65,30 @@ def internet_clean(*, force: bool = False) -> dict[str, Any]:
 
     qbi = _load_mod("qbi", "Queen/lib/queen-browser-import.py")
     if qbi is not None:
-        if force or getattr(qbi, "should_auto_sweep", lambda: True)():
-            import_out = qbi.sweep_all(apply=True)
-        elif hasattr(qbi, "auto_sweep_if_needed"):
-            import_out = qbi.auto_sweep_if_needed() or {"ok": True, "skipped": True}
-        if hasattr(qbi, "organize_scrub"):
-            scrub_out = qbi.organize_scrub(import_out if isinstance(import_out, dict) else {})
+        try:
+            if force or getattr(qbi, "should_auto_sweep", lambda: True)():
+                import_out = qbi.sweep_all(apply=True)
+            elif hasattr(qbi, "auto_sweep_if_needed"):
+                import_out = qbi.auto_sweep_if_needed() or {"ok": True, "skipped": True}
+            if hasattr(qbi, "organize_scrub"):
+                scrub_out = qbi.organize_scrub(import_out if isinstance(import_out, dict) else {})
+        except (OSError, PermissionError) as exc:
+            # Root-owned scrub dirs must not fail the whole clean lane
+            scrub_out = {
+                "ok": True,
+                "skipped": True,
+                "permission_soft_fail": True,
+                "error": str(exc)[:160],
+            }
+            if not isinstance(import_out, dict):
+                import_out = {"ok": True, "skipped": True, "permission_soft_fail": True}
 
     export_mod = _load_mod("qhbm", "Queen/lib/queen-host-bookmark-export.py")
     if export_mod is not None and hasattr(export_mod, "export_host_bookmarks"):
-        export_out = export_mod.export_host_bookmarks(import_browsers=True)
+        try:
+            export_out = export_mod.export_host_bookmarks(import_browsers=True)
+        except (OSError, PermissionError) as exc:
+            export_out = {"ok": True, "skipped": True, "permission_soft_fail": True, "error": str(exc)[:160]}
 
     quarantined = int((import_out or {}).get("quarantined") or 0)
     dropped = int((import_out or {}).get("dropped") or 0)

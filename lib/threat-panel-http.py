@@ -5941,9 +5941,13 @@ class Handler(BaseHTTPRequestHandler):
                     except (OSError, json.JSONDecodeError):
                         payload = None
             if payload is None or refresh:
-                if sub in ("clean", "run", "all", "internet") or refresh:
-                    args = ["clean"]
-                    if "--propagate" in str(query.get("propagate", ["0"])[0]):
+                if sub in ("green", "ten", "10", "ten-of-ten", "all-green", "lanes") or (
+                    refresh and str(query.get("mode", ["green"])[0]).strip().lower() in ("green", "ten", "1", "true")
+                ):
+                    args = ["green"]
+                elif sub in ("clean", "run", "all", "internet") or refresh:
+                    args = ["green"]  # safe 10/10 path — no recursive storm
+                    if str(query.get("propagate", ["0"])[0]).strip().lower() in ("1", "true", "yes"):
                         args.append("--propagate")
                 elif sub in ("core", "sweep"):
                     args = ["core"]
@@ -5953,6 +5957,39 @@ class Handler(BaseHTTPRequestHandler):
                     args = ["json"]
                 payload = _nexus_py_json(clean_py, args, timeout=300 if refresh else 45)
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            return
+
+        if path in (
+            "/api/distributed-server-lanes",
+            "/api/distributed-server-lanes/",
+            "/api/server-lanes",
+            "/api/every-server-lane",
+        ):
+            try:
+                cached = STATE_DIR / "field-distributed-server-lanes-panel.json"
+                qs_sl = parse_qs(urlparse(self.path).query)
+                force = str(qs_sl.get("refresh", qs_sl.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "seal",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["easy_peezy"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-distributed-server-lanes.py",
+                    ["seal"] if force else ["status"],
+                    timeout=120 if force else 20,
+                )
+                self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
             return
 
         if path in (
