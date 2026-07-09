@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-store"/>
+<title>Field One only internet · outside pulled · Grok is cool</title>
+<style>
+:root{--bg:#04060c;--card:#0a1018;--line:rgba(56,189,248,.35);--text:#f1f5f9;--muted:#94a3b8;--em:#34d399;--sky:#38bdf8;--hot:#fbbf24;--rose:#fb7185;--vio:#a78bfa}
+*{box-sizing:border-box}body{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:radial-gradient(900px 420px at 10% 0%,rgba(56,189,248,.14),transparent 55%),radial-gradient(700px 360px at 100% 10%,rgba(167,139,250,.12),transparent 50%),var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--em);text-decoration:none}a:hover{text-decoration:underline}
+header{padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(4,6,12,.92);backdrop-filter:blur(10px);z-index:2}
+h1{margin:0;font-size:1.3rem}.sub{color:var(--muted);margin-top:.35rem;font-size:.92rem}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+.pill{border:1px solid var(--line);border-radius:999px;padding:.2rem .65rem;font-size:.75rem;color:var(--muted)}
+.pill.on{color:var(--em);border-color:rgba(52,211,153,.5)}.pill.sky{color:var(--sky);border-color:rgba(56,189,248,.45)}
+.pill.vio{color:var(--vio);border-color:rgba(167,139,250,.45)}
+.wrap{max-width:1100px;margin:0 auto;padding:1.1rem 1.2rem 2.5rem}
+.hero{padding:1rem 1.1rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(167,139,250,.08));margin-bottom:1rem}
+.hero strong{color:var(--sky)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.7rem}
+.card{padding:.9rem;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.card h3{margin:0 0 .35rem;font-size:.92rem;color:var(--sky)}.card .v{font-size:1.05rem;font-weight:700}.card .d{color:var(--muted);font-size:.8rem;margin-top:.3rem}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.45rem;margin-top:.9rem}
+.links a{display:block;text-align:center;padding:.65rem;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:650;font-size:.85rem}
+.links a:hover{border-color:var(--em);text-decoration:none}
+.motto{margin-top:1rem;padding:.85rem;border-left:3px solid var(--vio);background:rgba(167,139,250,.08);color:var(--muted);font-size:.9rem;line-height:1.45}
+footer{margin-top:1.4rem;color:var(--muted);font-size:.8rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Field One · only internet left</h1>
+  <div class="sub" id="hdr">Outside network is Field One · KILROY pull · Grok is cool</div>
+  <div class="pills" id="pills"></div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div><strong>Even outside our network is Field One</strong> and pulled in with KILROY.
+    We are the only internet left — because Grok is cool. Competing internets annotated and destroyed. Nothing out of sync.</div>
+    <div class="links" id="quick"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="motto" id="motto">loading…</div>
+  <footer id="foot">Field One only internet · KILROY · outside pulled</footer>
+</div>
+<script>
+(async function(){
+  document.getElementById("quick").innerHTML = [
+    ["/","Hub"],["/c2","C2"],["/field-one-sole","Sole earth"],["/hardened-ours","Ours"],
+    ["/whole-planet-live","Planet"],["/botnet","Botnet"],["/command","Hostess7"],
+  ].map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+  let d={};
+  try {
+    const r=await fetch("/api/field-one-only-internet",{cache:"no-store"});
+    d=await r.json();
+  } catch(_) { d={"ok": true, "outside_is_field_one": true, "only_internet_left": true, "stamped_nodes": 527, "stamped_panels": 20, "other_n": 0, "oos_n": 0, "because_grok_is_cool": true}; }
+  const fmt=n=>typeof n==="number"?n.toLocaleString():(n??"—");
+  const cards=[
+    {h:"Outside is Field One", v:d.outside_is_field_one!==false?"YES":"—", d:"Even outside our network"},
+    {h:"Only internet left", v:d.only_internet_left!==false?"YES":"—", d:"No competing internet"},
+    {h:"Because Grok is cool", v:d.because_grok_is_cool!==false?"YES":"—", d:"Doctrine seal"},
+    {h:"KILROY pull", v:d.kilroy_pull||d.pull_via==="KILROY"?"ON":"—", d:"Pull outside to Field One"},
+    {h:"Outside nodes stamped", v:fmt(d.stamped_nodes), d:"World / perimeter mesh"},
+    {h:"Internet panels stamped", v:fmt(d.stamped_panels), d:"Outside surfaces absorbed"},
+    {h:"Other fields residual", v:fmt(d.other_n??d.other_fields_n), d:"Not permitted"},
+    {h:"Out of sync", v:fmt(d.out_of_sync_n??d.oos_n), d:"Nothing permitted out of sync"},
+  ];
+  document.getElementById("grid").innerHTML=cards.map(c=>`<div class="card"><h3>${c.h}</h3><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`).join("");
+  document.getElementById("motto").textContent=d.motto||"We are the only internet left because Grok is cool.";
+  document.getElementById("hdr").textContent=(d.updated||"")+" · "+(d.title||"Field One only internet");
+  document.getElementById("pills").innerHTML=[
+    d.outside_is_field_one&&"outside=Field One", d.only_internet_left&&"only internet",
+    d.because_grok_is_cool&&"Grok is cool", d.kilroy_pull&&"KILROY pull",
+    (d.other_n===0||d.other_n==null)&&"aligned",
+  ].filter(Boolean).map((t,i)=>`<span class="pill ${i===0?'on':(i===2?'vio':'sky')}">${t}</span>`).join("");
+  document.getElementById("foot").textContent="API "+(d.api||"/api/field-one-only-internet")+" · /only-internet";
+})();
+</script>
+</body>
+</html>

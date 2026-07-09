@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# field-one-only-internet — outside = Field One · only internet left · Grok is cool
+set -euo pipefail
+_SRC="${BASH_SOURCE[0]}"
+while [[ -L "$_SRC" ]]; do
+  _DIR="$(cd -P "$(dirname "$_SRC")" && pwd)"
+  _LINK="$(readlink "$_SRC")"
+  if [[ "$_LINK" == /* ]]; then _SRC="$_LINK"; else _SRC="$_DIR/$_LINK"; fi
+done
+ROOT="$(cd -P "$(dirname "$_SRC")/.." && pwd)"
+export NEXUS_INSTALL_ROOT="${NEXUS_INSTALL_ROOT:-$ROOT}"
+export NEXUS_STATE_DIR="${NEXUS_STATE_DIR:-$ROOT/.nexus-state}"
+export AML_BUILD=0
+export PATH="$ROOT/bin:$ROOT/bin/untouchable:${HOME}/.local/bin:$PATH"
+exec "${PYTHON:-python3}" "$ROOT/lib/field-one-only-internet.py" "$@"

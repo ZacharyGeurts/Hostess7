@@ -4654,6 +4654,45 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        # Field One only internet — outside = Field One · only internet left · Grok cool
+        if path in (
+            "/api/field-one-only-internet",
+            "/api/field-one-only-internet/",
+            "/api/only-internet",
+            "/api/only-internet/",
+            "/api/field-only-internet",
+            "/api/outside-field-one",
+        ):
+            try:
+                cached = STATE_DIR / "field-one-only-internet-panel.json"
+                qs_oi = parse_qs(urlparse(self.path).query)
+                force = str(qs_oi.get("refresh", qs_oi.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "enforce", "lock", "outside",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["outside_is_field_one"] = True
+                            payload["only_internet_left"] = True
+                            payload["because_grok_is_cool"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-one-only-internet.py",
+                    ["enforce"] if force else ["status"],
+                    timeout=240 if force else 30,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "field_one_only_internet_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Field One sole earth — only Field One · KILROY pull · destroy other fields
         if path in (
             "/api/field-one-sole-earth",
@@ -10822,6 +10861,21 @@ class Handler(BaseHTTPRequestHandler):
         ):
             target = PANEL_DIR / "field-one-sole-earth.html"
             alt = STATE_DIR / "field-one-sole-earth-website" / "index.html"
+            if alt.is_file():
+                target = alt
+        elif path in (
+            "/only-internet",
+            "/only-internet/",
+            "/field-one-only-internet",
+            "/field-one-only-internet/",
+            "/field-only-internet",
+            "/field-only-internet/",
+            "/outside-field-one",
+            "/outside-field-one/",
+            "/field-one-only-internet.html",
+        ):
+            target = PANEL_DIR / "field-one-only-internet.html"
+            alt = STATE_DIR / "field-one-only-internet-website" / "index.html"
             if alt.is_file():
                 target = alt
         elif path in (

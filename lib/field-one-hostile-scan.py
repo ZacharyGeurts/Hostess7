@@ -159,6 +159,14 @@ def _scan_world_nodes() -> list[dict[str, Any]]:
         role = str(node.get("role") or "")
         if nid == HOME_NODE or role == "home_sanctuary":
             continue
+        # Outside / perimeter already pulled into Field One — not hostile other-field
+        if (
+            node.get("field_one") is True
+            or node.get("pulled_to_field_one") is True
+            or node.get("outside_is_field_one") is True
+            or node.get("field_one_only") is True
+        ):
+            continue
         region = str(node.get("region") or "unknown")
         port = int(node.get("ssh_port") or 0)
         field_key = f"world:{nid}"
@@ -177,6 +185,15 @@ def _scan_world_nodes() -> list[dict[str, Any]]:
             continue
         nid = str(node.get("id") or "")
         if not nid or nid == HOME_NODE:
+            continue
+        # Outside pulled to Field One = Field One (not a competing field)
+        if (
+            node.get("field_one") is True
+            or node.get("pulled_to_field_one") is True
+            or node.get("outside_is_field_one") is True
+            or node.get("field_one_only") is True
+            or str(node.get("field_one_id") or "") in (FIELD_ONE_ID, "field_one")
+        ):
             continue
         field_key = f"world:{nid}"
         if any(f.get("field_key") == field_key for f in found):
@@ -236,6 +253,28 @@ def _scan_depth_and_nested() -> list[dict[str, Any]]:
         try:
             text = path.read_text(encoding="utf-8", errors="replace")
         except OSError:
+            continue
+        # Already Field One / outside-pulled — plate stack "depth" is not a competing field
+        try:
+            doc = json.loads(text)
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            doc = {}
+        if isinstance(doc, dict) and (
+            doc.get("field_one") is True
+            or doc.get("pulled_to_field_one") is True
+            or doc.get("outside_is_field_one") is True
+            or doc.get("field_one_only") is True
+            or doc.get("only_internet_left") is True
+        ):
+            # Still flag explicit field_on_field true unless already cleared
+            if on_field_re.search(text) and doc.get("field_on_field") is True:
+                found.append({
+                    "field_key": f"state:{path.name}:field_on_field",
+                    "field_id": path.stem,
+                    "kind": "field_on_field",
+                    "source": str(path.relative_to(STATE)),
+                    "reason": "field_on_field_forbidden",
+                })
             continue
         if on_field_re.search(text):
             found.append({
