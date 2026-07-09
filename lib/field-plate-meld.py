@@ -131,6 +131,7 @@ PLATE_SOURCES: tuple[tuple[str, str], ...] = (
     ("serving_truth", "field-serving-truth-panel.json"),
     # Hostess 7 Job endstate — distributed everywhere / everything
     ("hostess7_distributed_everywhere", "hostess7-distributed-everywhere-panel.json"),
+    ("field_native", "field-native-panel.json"),
 )
 
 _GEN = 0
@@ -1233,6 +1234,18 @@ def _refresh_serving_truth() -> None:
     )
 
 
+
+def _refresh_field_native() -> None:
+    """Field-native secure · zero-cost engines seal."""
+    if os.environ.get("NEXUS_FIELD_NATIVE", "1").strip().lower() in ("0", "false", "no", "off"):
+        return
+    _import_call(
+        INSTALL / "lib" / "field-native.py",
+        "field_native",
+        "seal",
+        write=True,
+    )
+
 def _refresh_hostess7_distributed_everywhere() -> None:
     """Hostess 7 Job endstate — distributed everywhere and everything."""
     if os.environ.get("NEXUS_HOSTESS7_DISTRIBUTED", "1").strip().lower() in ("0", "false", "no", "off"):
@@ -1321,6 +1334,7 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
             _refresh_if_allowed("everyone_served_no_hangups", _refresh_everyone_served_no_hangups)
             _refresh_if_allowed("serving_truth", _refresh_serving_truth)
             _refresh_if_allowed("hostess7_distributed_everywhere", _refresh_hostess7_distributed_everywhere)
+            _refresh_if_allowed("field_native", _refresh_field_native)
             _refresh_if_allowed("iron_plate", _refresh_iron_plate)
             _refresh_if_allowed("gatekeeper", _refresh_gatekeeper)
             _refresh_if_allowed("logic_gate", _refresh_logic_gate)
@@ -1583,6 +1597,10 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
                 "hostess7_everything": (plates.get("hostess7_distributed_everywhere") or {}).get("everything"),
                 "hostess7_job_endstate": (plates.get("hostess7_distributed_everywhere") or {}).get("job_endstate"),
                 "hostess7_distributed_cite": (plates.get("hostess7_distributed_everywhere") or {}).get("ironclad_cite"),
+                "field_native_ok": (plates.get("field_native") or {}).get("field_native") or (plates.get("field_native") or {}).get("ok"),
+                "field_native_zero_cost": ((plates.get("field_native") or {}).get("zero_cost") or {}).get("ok"),
+                "field_native_secure": ((plates.get("field_native") or {}).get("secure") or {}).get("ok"),
+                "field_native_cite": (plates.get("field_native") or {}).get("ironclad_cite"),
                 "eye_ear_plate_ok": eye_ear.get("plated") or eye_ear.get("ok"),
                 "eye_ear_plate_verdict": eye_ear.get("verdict"),
                 "eye_ear_chain_hash": eye_ear.get("chain_hash"),

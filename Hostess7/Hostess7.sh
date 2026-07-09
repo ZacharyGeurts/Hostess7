@@ -142,6 +142,7 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh library-read <id>     Hostess 7 reads full .H7 book (line range optional)
   ./Hostess7.sh library-search "…"    Search H7 library by title/subject
   ./Hostess7.sh distributed-everywhere  Job endstate — distributed everywhere/everything
+  ./Hostess7.sh field-native             Field-native · secure · zero-cost engines
   ./Hostess7.sh code-ingest seed        ISA opcodes + all programming languages
   ./Hostess7.sh code "6502 LDA"         Assembly / language query
   ./Hostess7.sh updates               Self-update advisory (truth-filtered)
@@ -319,6 +320,11 @@ main() {
     [[ -f "$BRAIN" ]] || { echo "BLOCKER: brain missing" >&2; exit 1; }
     case "${1:-}" in
         -h|--help|help) usage ;;
+
+        field-native|field_native|zero-cost|secure-native)
+            # Field-native · secure · zero-cost engines
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-native.py" "${1:-seal}" "${@:2}"
+            ;;
         on|start|power-on)
             pythong "$AGENTS" on
             python3 "${NEXUS_INSTALL_ROOT}/lib/hostess7-internet-clean.py" json 2>/dev/null || true

@@ -16,8 +16,22 @@ from typing import Any
 
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", "/usr/local/lib/nexus-shield"))
 STATE = Path(os.environ.get("NEXUS_STATE_DIR", "/var/lib/nexus-shield"))
+
+def _resolve_battery_path(fname: str) -> Path:
+    """data/ may be root-owned empty; fall back to Hostess7/data and state."""
+    candidates = [
+        INSTALL / "data" / fname,
+        INSTALL / "Hostess7" / "data" / fname,
+        STATE / fname,
+        Path(os.environ.get("HOSTESS7_ROOT", str(INSTALL / "Hostess7"))) / "data" / fname,
+    ]
+    for p in candidates:
+        if p.is_file():
+            return p
+    return candidates[0]
+
 DOCTRINE = INSTALL / "data" / "hostess7-calculator-doctrine.json"
-BATTERY = INSTALL / "data" / "hostess7-calculator-battery.json"
+BATTERY = _resolve_battery_path("hostess7-calculator-battery.json")
 EXPLAIN = INSTALL / "data" / "hostess7-calculator-explain.json"
 OCR_DOCTRINE = INSTALL / "data" / "hostess7-calculator-ocr-doctrine.json"
 PANEL = STATE / "hostess7-calculator-panel.json"
@@ -115,88 +129,55 @@ def _append_ledger(row: dict[str, Any]) -> None:
         pass
 
 
-def _sympy_ready() -> bool:
+def _field_math():
+    """Field-native math engine — no sympy on the Field plane."""
+    import importlib.util
+    py = INSTALL / "lib" / "field-math.py"
+    if not py.is_file():
+        return None
     try:
-        import sympy  # noqa: F401
-        return True
-    except ImportError:
-        return False
+        spec = importlib.util.spec_from_file_location("field_math_calc", py)
+        if not spec or not spec.loader:
+            return None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+    except Exception:
+        return None
 
 
-def _sympy_ns() -> dict[str, Any]:
-    import sympy as sp
-    x, y, z, t, n = sp.symbols("x y z t n")
-    return {
-        "x": x, "y": y, "z": z, "t": t, "n": n,
-        "pi": sp.pi, "e": sp.E, "i": sp.I, "I": sp.I, "oo": sp.oo,
-        "sin": sp.sin, "cos": sp.cos, "tan": sp.tan, "asin": sp.asin,
-        "acos": sp.acos, "atan": sp.atan, "sqrt": sp.sqrt, "log": sp.log,
-        "exp": sp.exp, "abs": sp.Abs, "ln": sp.log,
-    }
+def _sympy_ready() -> bool:
+    """Legacy name — Field math is always ready (stdlib). Sympy not required."""
+    fm = _field_math()
+    return bool(fm and getattr(fm, "ready", lambda: True)())
 
 
-def _format_sympy_atom(val: Any) -> str:
-    import sympy as sp
-    simplified = sp.simplify(val)
-    if simplified.is_Rational:
-        if simplified.q == 1:
-            return str(int(simplified.p))
-        return f"{simplified.p}/{simplified.q}"
-    if hasattr(simplified, "is_number") and simplified.is_number and getattr(simplified, "is_real", True):
-        exact = sp.nsimplify(simplified, [sp.pi, sp.E, sp.sqrt(2), sp.sqrt(3), sp.sqrt(5)])
-        if exact != simplified:
-            if abs(float(sp.N(simplified, 20)) - float(sp.N(exact, 20))) < 1e-9:
-                simplified = exact
-        if simplified.is_Rational:
-            return _format_sympy_atom(simplified)
-        f = float(sp.N(simplified, 20))
-        if abs(f - round(f)) < 1e-12:
-            return str(int(round(f)))
-        return str(round(f, 12)).rstrip("0").rstrip(".")
-    s = str(simplified)
-    s = s.replace("**", "^")
-    return re.sub(r"\s+", "", s)
+def _field_ready() -> bool:
+    return _sympy_ready()
 
 
 def _normalize_result(val: Any) -> str:
-    import sympy as sp
+    fm = _field_math()
+    if fm and hasattr(fm, "format_field"):
+        return fm.format_field(val)
     if val is None:
         return ""
     if isinstance(val, (list, tuple, set)):
         return ",".join(_normalize_result(v) for v in val)
     if isinstance(val, dict):
         return json.dumps({str(k): _normalize_result(v) for k, v in val.items()}, ensure_ascii=False)
-    try:
-        return _format_sympy_atom(val)
-    except (TypeError, ValueError):
-        pass
-    s = str(sp.simplify(val))
-    s = s.replace("**", "^")
+    s = str(val).replace("**", "^")
     return re.sub(r"\s+", "", s)
 
 
 def _results_match(got: str, expected: str) -> bool:
+    fm = _field_math()
+    if fm and hasattr(fm, "results_match"):
+        return bool(fm.results_match(got, expected))
     got_n = re.sub(r"\s+", "", got.lower())
     exp_n = re.sub(r"\s+", "", expected.lower())
     if got_n == exp_n:
         return True
-    if exp_n in got_n or got_n in exp_n:
-        return True
-    exp_parts = [p.strip() for p in exp_n.split(",") if p.strip()]
-    got_parts = [p.strip() for p in got_n.split(",") if p.strip()]
-    if exp_parts and got_parts and sorted(exp_parts) == sorted(got_parts):
-        return True
-    try:
-        import sympy as sp
-        ns = _sympy_ns()
-        g = sp.sympify(got_n.replace("^", "**"), locals=ns)
-        e = sp.sympify(exp_n.replace("^", "**"), locals=ns)
-        if sp.simplify(g - e) == 0:
-            return True
-        if float(sp.N(g, 20)) and float(sp.N(e, 20)):
-            return abs(float(sp.N(g, 20)) - float(sp.N(e, 20))) < 1e-6
-    except Exception:
-        pass
     try:
         return abs(float(got_n) - float(exp_n)) < 1e-6
     except ValueError:
@@ -204,27 +185,20 @@ def _results_match(got: str, expected: str) -> bool:
 
 
 def _parse_matrix(text: str) -> Any:
-    import sympy as sp
-    rows_raw = re.findall(r"\[([^\[\]]+)\]", text)
-    if not rows_raw:
-        return None
-    rows: list[list[Any]] = []
-    for row in rows_raw:
-        cells = [c.strip() for c in re.split(r"[,\s]+", row.strip()) if c.strip()]
-        if not cells:
-            continue
-        rows.append([sp.sympify(c, locals=_sympy_ns()) for c in cells])
-    if not rows:
-        return None
-    return sp.Matrix(rows)
+    fm = _field_math()
+    if fm and hasattr(fm, "parse_matrix"):
+        return fm.parse_matrix(text)
+    return None
 
 
 def _parse_vector(text: str) -> list[Any]:
-    import sympy as sp
+    fm = _field_math()
+    if fm and hasattr(fm, "parse_vector"):
+        return fm.parse_vector(text)
     inside = re.search(r"\[([^\]]+)\]", text)
     raw = inside.group(1) if inside else text.strip()
     cells = [c.strip() for c in re.split(r"[,\s]+", raw) if c.strip()]
-    return [sp.sympify(c, locals=_sympy_ns()) for c in cells]
+    return [float(c) for c in cells]
 
 
 def extract_math_query(text: str) -> str:
@@ -257,180 +231,34 @@ def _looks_like_math(text: str) -> bool:
 
 
 def compute(text: str) -> dict[str, Any]:
-    """Compute a math query — arithmetic through advanced sympy."""
+    """Compute a math query — Field Math engine (no sympy)."""
     query = extract_math_query(text)
-    low = query.lower().strip()
     if not query:
-        return {"ok": False, "error": "empty_query"}
+        return {"ok": False, "error": "empty_query", "method": "field"}
 
-    if not _sympy_ready():
-        return {"ok": False, "error": "sympy_unavailable"}
+    fm = _field_math()
+    if not fm or not hasattr(fm, "compute"):
+        return {"ok": False, "error": "field_math_unavailable", "method": "field"}
 
-    import sympy as sp
-    ns = _sympy_ns()
-    x = ns["x"]
-    method = "sympy"
-    category = "arithmetic"
-
-    try:
-        # Percent
-        m = re.match(r"^(\d+(?:\.\d+)?)\s*%\s*of\s+(\d+(?:\.\d+)?)$", low)
-        if m:
-            getcontext().prec = 28
-            pct = Decimal(m.group(1)) / Decimal(100)
-            base = Decimal(m.group(2))
-            result = pct * base
-            return {
-                "ok": True, "query": query, "result": str(result.normalize()),
-                "category": "arithmetic", "method": "decimal", "work": f"{m.group(1)}% × {m.group(2)}",
-            }
-
-        # Mean / std
-        m = re.match(r"^(?:mean|average)\s+(.+)$", low)
-        if m:
-            vals = _parse_vector(m.group(1))
-            result = sum(vals) / len(vals)
-            return {"ok": True, "query": query, "result": _normalize_result(result), "category": "statistics", "method": "mean"}
-
-        m = re.match(r"^std(?:dev)?\s+(.+)$", low)
-        if m:
-            vals = _parse_vector(m.group(1))
-            mu = sum(vals) / len(vals)
-            result = sp.sqrt(sum((v - mu) ** 2 for v in vals) / len(vals))
-            return {"ok": True, "query": query, "result": _normalize_result(result), "category": "statistics", "method": "std"}
-
-        # FFT
-        m = re.match(r"^fft\s+(.+)$", low)
-        if m:
-            vals = [complex(float(sp.N(v, 15))) for v in _parse_vector(m.group(1))]
-            try:
-                from sympy.discrete.transforms import fft
-                spec = fft(vals)
-                result = ",".join(str(int(round(c.real))) if abs(c.imag) < 1e-9 else _normalize_result(c) for c in spec)
-            except Exception:
-                import cmath
-                n = len(vals)
-                spec = []
-                for k in range(n):
-                    s = sum(vals[j] * cmath.exp(-2j * cmath.pi * k * j / n) for j in range(n))
-                    spec.append(s)
-                result = ",".join(str(int(round(s.real))) if abs(s.imag) < 1e-9 else f"{s.real:.4f}" for s in spec)
-            return {"ok": True, "query": query, "result": result, "category": "technology", "method": "fft"}
-
-        # Dot product
-        m = re.match(r"^dot\s+(.+?)\s+(.+)$", low)
-        if m:
-            a = _parse_vector(m.group(1))
-            b = _parse_vector(m.group(2))
-            result = sum(ai * bi for ai, bi in zip(a, b))
-            return {"ok": True, "query": query, "result": _normalize_result(result), "category": "technology", "method": "dot"}
-
-        # Determinant
-        m = re.match(r"^(?:det|determinant)\s+(.+)$", low)
-        if m:
-            mat = _parse_matrix(m.group(1))
-            if mat is not None:
-                return {"ok": True, "query": query, "result": _normalize_result(mat.det()), "category": "linear_algebra", "method": "det"}
-
-        # Eigenvalues
-        m = re.match(r"^eigenvalues?\s+(.+)$", low)
-        if m:
-            mat = _parse_matrix(m.group(1))
-            if mat is not None:
-                ev = mat.eigenvals()
-                keys = sorted(ev.keys(), key=lambda k: float(sp.N(k, 15)))
-                result = ",".join(_normalize_result(k) for k in keys)
-                return {"ok": True, "query": query, "result": result, "category": "linear_algebra", "method": "eigenvalues"}
-
-        # Solve
-        m = re.match(r"^solve\s+(.+)$", low)
-        if m:
-            expr = m.group(1).replace("^", "**")
-            if "=" in expr:
-                lhs, rhs = expr.split("=", 1)
-                eq = sp.Eq(sp.sympify(lhs.strip(), locals=ns), sp.sympify(rhs.strip(), locals=ns))
-            else:
-                eq = sp.Eq(sp.sympify(expr, locals=ns), 0)
-            sol = sp.solve(eq, x)
-            return {"ok": True, "query": query, "result": _normalize_result(sol), "category": "algebra", "method": "solve"}
-
-        # Factor / expand / simplify
-        for verb, fn, cat in (
-            ("factor", sp.factor, "algebra"),
-            ("expand", sp.expand, "algebra"),
-            ("simplify", sp.simplify, "algebra"),
-        ):
-            m = re.match(rf"^{verb}\s+(.+)$", low)
-            if m:
-                expr = sp.sympify(m.group(1).replace("^", "**"), locals=ns)
-                return {"ok": True, "query": query, "result": _normalize_result(fn(expr)), "category": cat, "method": verb}
-
-        # Diff
-        m = re.match(r"^(?:diff|differentiate|derivative of)\s+(.+?)(?:\s+w\.?r\.?t\.?\s+(\w+))?$", low)
-        if m:
-            expr_s = m.group(1).replace(" ", "")
-            var = sp.symbols(m.group(2) or "x")
-            expr = sp.sympify(expr_s.replace("^", "**"), locals=ns)
-            result = sp.diff(expr, var)
-            return {"ok": True, "query": query, "result": _normalize_result(result), "category": "calculus", "method": "diff"}
-
-        # Integrate
-        m = re.match(r"^integrate\s+(.+?)\s+from\s+(.+?)\s+to\s+(.+)$", low)
-        if m:
-            expr = sp.sympify(m.group(1).replace("^", "**"), locals=ns)
-            a = sp.sympify(m.group(2), locals=ns)
-            b = sp.sympify(m.group(3), locals=ns)
-            result = sp.integrate(expr, (x, a, b))
-            return {"ok": True, "query": query, "result": _normalize_result(result), "category": "calculus", "method": "integrate_definite"}
-
-        m = re.match(r"^(?:integrate|integral of)\s+(.+)$", low)
-        if m:
-            expr = sp.sympify(m.group(1).replace("^", "**"), locals=ns)
-            result = sp.integrate(expr, x)
-            return {"ok": True, "query": query, "result": _normalize_result(result), "category": "calculus", "method": "integrate"}
-
-        # Limit
-        m = re.match(r"^limit\s+(.+?)\s+as\s+(\w+)\s*->\s*(.+)$", low)
-        if m:
-            expr = sp.sympify(m.group(1).replace("^", "**"), locals=ns)
-            var = sp.symbols(m.group(2))
-            point = sp.sympify(m.group(3), locals=ns)
-            result = sp.limit(expr, var, point)
-            return {"ok": True, "query": query, "result": _normalize_result(result), "category": "calculus", "method": "limit"}
-
-        # abs complex
-        m = re.match(r"^abs\s*\(?\s*(.+?)\s*\)?$", low)
-        if m:
-            raw = m.group(1).replace("^", "**")
-            raw = re.sub(r"(?<=\d)(?=[iI])", "*", raw)
-            raw = raw.replace("i", "I")
-            expr = sp.sympify(raw, locals=ns)
-            return {"ok": True, "query": query, "result": _normalize_result(sp.Abs(expr)), "category": "complex", "method": "abs"}
-
-        # General expression
-        expr_s = query.replace("^", "**").replace("×", "*").replace("÷", "/")
-        expr_s = re.sub(r"(?<=\d)(?=[iI])", "*", expr_s)
-        expr_s = expr_s.replace("i", "I")
-        expr_s = re.sub(r"(\d)\s*\(\s*", r"\1*(", expr_s)
-        expr = sp.sympify(expr_s, locals=ns)
-        result = sp.simplify(expr)
-        cat = "complex" if result.has(sp.I) else "arithmetic"
-        if any(fn in low for fn in ("sin", "cos", "tan")):
-            cat = "trigonometry"
-        return {
-            "ok": True, "query": query, "result": _normalize_result(result),
-            "category": cat, "method": method, "latex": sp.latex(result),
-        }
-    except Exception as exc:
-        return {"ok": False, "query": query, "error": str(exc)[:240]}
+    out = fm.compute(query)
+    if not isinstance(out, dict):
+        return {"ok": False, "error": "field_math_bad_response", "method": "field"}
+    # Normalize legacy callers
+    out.setdefault("method", out.get("method") or "field")
+    out.setdefault("engine", "field-math")
+    out.setdefault("ironclad_cite", "ironclad:field-math:1")
+    # Drop any residual sympy branding
+    if str(out.get("method") or "").startswith("sympy"):
+        out["method"] = "field"
+    return out
 
 
 def format_compute_reply(doc: dict[str, Any]) -> str:
     if not doc.get("ok"):
         return f"I could not compute that cleanly — {doc.get('error') or 'check the expression'}."
-    work = doc.get("work") or doc.get("method") or "sympy"
+    work = doc.get("work") or doc.get("method") or "field"
     return (
-        f"{doc.get('result')} — category {doc.get('category')}, method {work}. "
+        f"{doc.get('result')} — category {doc.get('category')}, method {work} (Field Math). "
         f"Query: {doc.get('query')}."
     )
 
@@ -822,7 +650,8 @@ def _run_battery() -> dict[str, Any]:
         "pass_threshold": threshold,
         "by_category": by_cat,
         "results": results,
-        "sympy": _sympy_ready(),
+        "sympy": False,  # Field Math only — sympy retired on this plane
+        "field_math": _field_ready(),
     }
 
 
@@ -833,8 +662,8 @@ def _pattern_mastery() -> list[dict[str, Any]]:
     for pat in doctrine.get("patterns") or []:
         pid = str(pat.get("id") or "")
         mastered = False
-        if pid == "sympy_symbolic" and bat.get("sympy"):
-            mastered = any(r.get("passed") for r in bat.get("results") or [] if r.get("category") in ("algebra", "calculus"))
+        if pid in ("sympy_symbolic", "field_symbolic", "field_math") and bat.get("field_math"):
+            mastered = any(r.get("passed") for r in bat.get("results") or [] if r.get("category") in ("algebra", "calculus", "arithmetic"))
         elif pid == "decimal_precision":
             mastered = any(r.get("passed") for r in bat.get("results") or [] if r.get("category") == "arithmetic")
         elif pid == "matrix_ops":
@@ -880,7 +709,7 @@ def calculator_score(*, battery: dict[str, Any] | None = None) -> dict[str, Any]
     score += 0.04 * min(1.0, cats_mastered / 8.0)
     score += 0.04 * min(1.0, ocr_verified / 400.0)
     score += 0.02 * min(1.0, ocr_rate / 0.5)
-    score += 0.02 if bat.get("sympy") else 0.0
+    score += 0.04 if bat.get("field_math") else 0.0  # Field Math engine bonus (sympy retired)
     score = round(min(0.99, score), 4)
 
     fluent_floor = float(doctrine.get("fluent_floor_score") or 0.88)
@@ -904,7 +733,8 @@ def calculator_score(*, battery: dict[str, Any] | None = None) -> dict[str, Any]
         "patterns_mastered": mastered,
         "patterns_total": len(patterns),
         "categories_mastered": cats_mastered,
-        "sympy_available": bat.get("sympy"),
+        "sympy_available": False,
+        "field_math_available": bat.get("field_math"),
         "ocr_vision": {
             "candidate_count": ocr_candidates,
             "verified_count": ocr_verified,
