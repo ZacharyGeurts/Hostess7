@@ -4654,6 +4654,42 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        # Field One sole earth — only Field One · KILROY pull · destroy other fields
+        if path in (
+            "/api/field-one-sole-earth",
+            "/api/field-one-sole-earth/",
+            "/api/field-one-sole",
+            "/api/field-one-sole/",
+            "/api/no-other-fields",
+        ):
+            try:
+                cached = STATE_DIR / "field-one-sole-earth-panel.json"
+                qs_f1 = parse_qs(urlparse(self.path).query)
+                force = str(qs_f1.get("refresh", qs_f1.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "enforce", "lock",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["field_one_only"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-one-sole-earth.py",
+                    ["enforce"] if force else ["status"],
+                    timeout=180 if force else 30,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "field_one_sole_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Hardened OURS plane — GitHub heuristics · plate+meld · read-only autopilot · local site
         if path in (
             "/api/field-hardened-ours-plane",
@@ -10771,6 +10807,21 @@ class Handler(BaseHTTPRequestHandler):
             target = PANEL_DIR / "field-hardened-ours.html"
             # Prefer freshly written website if present
             alt = STATE_DIR / "field-hardened-ours-website" / "index.html"
+            if alt.is_file():
+                target = alt
+        elif path in (
+            "/field-one-sole",
+            "/field-one-sole/",
+            "/field-one-sole-earth",
+            "/field-one-sole-earth/",
+            "/no-other-fields",
+            "/no-other-fields/",
+            "/sole-field",
+            "/sole-field/",
+            "/field-one-sole-earth.html",
+        ):
+            target = PANEL_DIR / "field-one-sole-earth.html"
+            alt = STATE_DIR / "field-one-sole-earth-website" / "index.html"
             if alt.is_file():
                 target = alt
         elif path in (
