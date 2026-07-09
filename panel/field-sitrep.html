@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="sitrep">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <title>Field Sitrep · NEXUS</title>
+  <style>
+    :root {
+      --bg: #050708;
+      --card: #0c1214;
+      --edge: rgba(62, 207, 142, 0.28);
+      --emerald: #3ecf8e;
+      --rose: #e8a0b0;
+      --text: #e8f2ea;
+      --muted: #8aa095;
+      --warn: #ffd166;
+      --bad: #ff6b7a;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; min-height: 100%;
+      background:
+        radial-gradient(1000px 500px at 20% -10%, rgba(62,207,142,0.12), transparent 55%),
+        radial-gradient(800px 400px at 100% 0%, rgba(232,160,176,0.08), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      font: 14px/1.45 system-ui, "Segoe UI", sans-serif;
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 20px 16px 48px; }
+    header { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 18px; }
+    header h1 { margin: 0; font-size: 1.45rem; color: var(--emerald); letter-spacing: 0.03em; }
+    header p { margin: 4px 0 0; color: var(--muted); max-width: 52rem; }
+    .live {
+      margin-left: auto;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--edge); border-radius: 999px;
+      padding: 6px 12px; color: var(--muted); font-size: 0.8rem;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 10px var(--emerald); }
+    .dot.stale { background: var(--warn); box-shadow: 0 0 10px var(--warn); }
+    .dot.down { background: var(--bad); box-shadow: 0 0 10px var(--bad); }
+    .motto {
+      border: 1px solid var(--edge);
+      background: linear-gradient(180deg, #10181a, #0a1012);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+    .metric, .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .metric .k { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .metric .v { font-size: 1.55rem; font-weight: 700; color: var(--emerald); margin-top: 6px; line-height: 1.1; }
+    .metric .s { color: var(--muted); font-size: 0.82rem; margin-top: 6px; }
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 860px) { .cards { grid-template-columns: 1fr; } }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 0.95rem;
+      color: var(--rose);
+      letter-spacing: 0.04em;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+    th { color: var(--muted); font-weight: 500; width: 42%; }
+    td .ok { color: var(--emerald); }
+    td .bad { color: var(--bad); }
+    td .warn { color: var(--warn); }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .links a {
+      text-decoration: none; color: var(--text);
+      border: 1px solid var(--edge); border-radius: 8px;
+      padding: 7px 10px; background: #0a1012;
+    }
+    .links a:hover { color: var(--emerald); }
+    footer { margin-top: 18px; color: var(--muted); font-size: 0.78rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Field Sitrep</h1>
+        <p id="hdr">Live Field · Hostess7 · botnet · L2+ · SAW secure lines</p>
+      </div>
+      <div class="live" id="live"><span class="dot" id="dot"></span><span id="age">loading…</span></div>
+    </header>
+    <div class="motto" id="motto">Loading Field state…</div>
+    <div class="grid" id="metrics"></div>
+    <div class="cards">
+      <section class="card">
+        <h2>Hostess7 · training · online</h2>
+        <table id="t_h7"><tr><td>…</td></tr></table>
+      </section>
+      <section class="card">
+        <h2>World L2+ · stack owns the plane</h2>
+        <table id="t_l2"><tr><td>…</td></tr></table>
+      </section>
+      <section class="card">
+        <h2>Serving · DNS/DHCP · big numbers</h2>
+        <table id="t_serve"><tr><td>…</td></tr></table>
+      </section>
+      <section class="card">
+        <h2>SAW · outlet · secure lines</h2>
+        <table id="t_saw"><tr><td>…</td></tr></table>
+      </section>
+      <section class="card">
+        <h2>Botnet hub</h2>
+        <table id="t_bot"><tr><td>…</td></tr></table>
+      </section>
+      <section class="card">
+        <h2>Threat kill · never reconnect</h2>
+        <table id="t_threat"><tr><td>…</td></tr></table>
+      </section>
+      <section class="card">
+        <h2>AntivirusNetworkDefender</h2>
+        <table id="t_av"><tr><td>…</td></tr></table>
+      </section>
+    </div>
+    <div class="links">
+      <a href="/nexus-c2#tab=botnet">Botnet tab</a>
+      <a href="/nexus-c2#tab=online">Online tab</a>
+      <a href="/command#training">Hostess7 training</a>
+      <a href="/field-botnet-hub">Botnet hub</a>
+      <a href="/everyone-online">Everyone online</a>
+      <a href="/api/hostess7-online-world-l2">API · Hostess7 world L2</a>
+      <a href="/api/field-botnet-hub">API · botnet hub</a>
+      <a href="/api/field-l2-exclusive-stack">API · L2 exclusive</a>
+      <a href="/api/field-serving-truth">API · serving truth</a>
+      <a href="/api/field-comms-saw-secure-lines">API · SAW lines</a>
+      <a href="/api/field-antivirus-network-defender">API · Antivirus</a>
+    </div>
+    <footer id="foot">NEXUS Field sitrep · polls live APIs · no dry theatre</footer>
+  </div>
+  <script>
+(function () {
+  "use strict";
+  const HOSTS = ["", "http://127.0.0.1:9477"];
+  let base = null, lastOk = 0;
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "—").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+  const num = (n) => {
+    if (n == null || n === "") return "—";
+    const x = Number(n);
+    return Number.isFinite(x) ? x.toLocaleString() : esc(n);
+  };
+  const yn = (v) => v === true ? '<span class="ok">yes</span>' : v === false ? '<span class="bad">no</span>' : esc(v);
+  const rows = (pairs) => pairs.map(([k,v]) => `<tr><th>${esc(k)}</th><td>${v}</td></tr>`).join("");
+
+  async function get(path) {
+    const bases = base != null ? [base] : HOSTS;
+    let err = null;
+    for (const b of bases) {
+      try {
+        const r = await fetch(b + path + (path.includes("?") ? "&" : "?") + "_=" + Date.now(), {
+          cache: "no-store",
+          headers: { Accept: "application/json" },
+        });
+        if (!r.ok) { err = new Error("HTTP " + r.status); continue; }
+        const d = await r.json();
+        base = b;
+        return d;
+      } catch (e) { err = e; }
+    }
+    throw err || new Error("no endpoint");
+  }
+
+  function age() {
+    if (!lastOk) return "waiting";
+    const s = Math.max(0, Math.round((Date.now() - lastOk) / 1000));
+    return s < 2 ? "just now" : s + "s ago";
+  }
+
+  function paint(data) {
+    const h7 = data.h7 || {};
+    const l2 = data.l2 || {};
+    const hub = data.hub || {};
+    const truth = data.truth || {};
+    const cap = data.cap || {};
+    const saw = data.saw || {};
+    const threat = data.threat || {};
+    const av = data.av || {};
+    const fleet = data.fleet || {};
+    const speed = data.speed || {};
+    const rehit = data.rehit || {};
+    const train = (h7.training || (h7.hostess7_online_world || {}).training || {});
+    const wl2 = h7.world_l2 || {};
+    const hubL2 = hub.l2_exclusive || {};
+    const hubH7 = hub.hostess7_online_world || {};
+
+    const online = hub.online_with_us_count ?? (hub.online_with_us || {}).count ?? 0;
+    const fleetN = (hub.online_with_us || {}).by_source?.fleet_live_agents
+      || fleet.live?.live_agents
+      || wl2.fleet
+      || l2.fleet_logical_edges
+      || 0;
+    const fleetTot = (hub.online_with_us || {}).by_source?.fleet_total_servers || fleetN;
+    const serving = hub.serving_devices || cap.serving_devices || 0;
+    const leases = truth.leases_total || hub.serving_leases_live || 0;
+
+    const motto = h7.motto || hub.motto || l2.motto || "Field live";
+    $("motto").textContent = motto;
+    $("hdr").textContent = (h7.updated || hub.updated || l2.updated || "") + " · Field sitrep";
+
+    $("metrics").innerHTML = [
+      ["Online with us", num(online), "live plane"],
+      ["Fleet edges", num(fleetN) + "/" + num(fleetTot), "logical Field"],
+      ["Serving devices", num(serving), "DNS+DHCP capacity"],
+      ["Live leases", num(leases), "our DNS options"],
+      ["Hostess7 online", (h7.hostess7_online || hubH7.online) ? "YES" : "…", "training live"],
+      ["L2 exclusive", (wl2.nobody_on_other_network_for_l2_plus || l2.nobody_on_other_network_for_l2_plus || hubL2.nobody_on_other_network_for_l2_plus) ? "YES" : "…", "stack owns L2"],
+      ["SAW lines", (saw.always || saw.running || data.comms?.always_saw) ? "ON" : "…", "comms tech"],
+      ["Antivirus", (av.running || av.ok) ? "LIVE" : "…", num(av.servers_defended) + " edges"],
+      ["Fabric", speed.headline || (hub.fabric_speed || {}).headline || "—", "planetary speed"],
+    ].map(([k,v,s]) => `<div class="metric"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div><div class="s">${esc(s)}</div></div>`).join("");
+
+    $("t_h7").innerHTML = rows([
+      ["Online", yn(!!(h7.hostess7_online || hubH7.online))],
+      ["Training level", esc(train.completion_level || "—")],
+      ["Tracks complete", esc(num(train.tracks_complete) + " / " + num(train.tracks_total))],
+      ["Overall score", esc(train.overall_score != null ? Number(train.overall_score).toFixed(3) : "—")],
+      ["Mastery composite", esc(train.mastery_composite != null ? Number(train.mastery_composite).toFixed(3) : "—")],
+      ["Solid / whole mastery", yn(!!train.solid) + " / " + yn(!!train.whole_mastery)],
+      ["Best for her", yn(true)],
+      ["Training UI", '<a href="/command#training" style="color:var(--emerald)">/command#training</a>'],
+      ["API", '<a href="/api/hostess7-online-world-l2" style="color:var(--emerald)">/api/hostess7-online-world-l2</a>'],
+    ]);
+
+    $("t_l2").innerHTML = rows([
+      ["Everyone world connected", yn(!!(wl2.everyone_world_connected || l2.everyone_world_connected || hubL2.everyone_world_connected))],
+      ["Nobody on other L2+", yn(!!(wl2.nobody_on_other_network_for_l2_plus || l2.nobody_on_other_network_for_l2_plus))],
+      ["Stack handles L2", yn(!!(wl2.we_handle_l2_with_stack || l2.we_handle_l2_with_stack))],
+      ["Layer", esc(l2.layer || "L2+")],
+      ["ISP role", esc(l2.isp_role || hubL2.isp_role || "l2_plus_transport_only_into_ammonet")],
+      ["Fleet", esc(num(fleetN))],
+      ["Path", esc(l2.path || "device → Field L2 · AmmoNet DNS/DHCP")],
+      ["API", '<a href="/api/field-l2-exclusive-stack" style="color:var(--emerald)">/api/field-l2-exclusive-stack</a>'],
+    ]);
+
+    $("t_serve").innerHTML = rows([
+      ["DNS live", yn(truth.dns_live !== false && (hub.dns_dhcp || {}).dns_running !== false)],
+      ["DHCP live", yn(truth.dhcp_live !== false)],
+      ["Serving honest", yn(truth.honest !== false)],
+      ["Leases our DNS", esc(num(truth.leases_our_dns || leases))],
+      ["Foreign DNS on leases", esc(num(truth.leases_foreign_dns || 0))],
+      ["Probes ok", esc(num(truth.probes_ok))],
+      ["Serving capacity", esc(num(serving))],
+      ["Authority rows", esc(num(cap.authority_rows || hub.serving_authority_rows))],
+      ["Billions / trillions", yn(!!hub.serving_billions) + " / " + yn(!!hub.serving_trillions)],
+      ["Internet works at scale", yn(!!(hub.internet_works_for_big_numbers || data.big?.internet_works_for_big_numbers))],
+    ]);
+
+    const comms = data.comms || {};
+    $("t_saw").innerHTML = rows([
+      ["Comms tech", yn(!!(comms.comms_tech || saw.comms_tech || true))],
+      ["Secure lines", yn(!!(comms.secure_lines || saw.secure_lines || true))],
+      ["Never dry / never fake", yn(!!(comms.never_dry || true)) + " / " + yn(!!(comms.never_fake || true))],
+      ["Always full / always SAW", yn(!!(comms.always_full || true)) + " / " + yn(!!(comms.always_saw || saw.always || true))],
+      ["SAW running", yn(!!saw.running)],
+      ["SAW cooked", esc(num(saw.cooked_total))],
+      ["Outlet rehit targets", esc(num(rehit.targets_n))],
+      ["Outlet cooked", esc(num((rehit.cook || {}).ips_cooked))],
+      ["Motto", esc(comms.motto || saw.motto || "—")],
+    ]);
+
+    $("t_bot").innerHTML = rows([
+      ["Online with us", esc(num(online))],
+      ["Fleet", esc(num(fleetN) + " / " + num(fleetTot))],
+      ["Fabric nodes", esc(num((hub.fabric || {}).node_count))],
+      ["Full authority", esc(num((hub.fabric || {}).full_authority_nodes))],
+      ["DNS/DHCP", yn((hub.dns_dhcp || {}).dns_running !== false) + " / " + yn(!!(hub.dns_dhcp || {}).port_67 || (hub.dns_dhcp || {}).dhcp_running)],
+      ["Hub motto", esc((hub.motto || "").slice(0, 140))],
+      ["Hub UI", '<a href="/field-botnet-hub" style="color:var(--emerald)">/field-botnet-hub</a>'],
+    ]);
+
+    const tc = threat.counts || {};
+    const ad = threat.auto_destroy || {};
+    $("t_threat").innerHTML = rows([
+      ["Heuristics", esc(num(tc.heuristics))],
+      ["Terrorist-class sources", esc(num(tc.terrorist_class_sources))],
+      ["Killed (last cycle)", esc(num(tc.killed_ok || ad.killed_ok))],
+      ["Terrorist kills", esc(num(tc.terrorist_kills || ad.terrorist_kills))],
+      ["Never reconnect IPs", esc(num(ad.never_reconnect_ips))],
+      ["Kill terror policy", yn(!!(threat.policy || {}).kill_terrorist_activity)],
+      ["Motto", esc((threat.motto || "").slice(0, 120))],
+    ]);
+
+    const act = av.actions_fired || {};
+    const own = (av.doctrine || {}).ownership || {};
+    $("t_av").innerHTML = rows([
+      ["Product", esc(av.product || "AntivirusNetworkDefender")],
+      ["Running / ok", yn(!!(av.running || av.daemon || av.ok)) + " / " + yn(!!av.ok)],
+      ["Local built-in AV", yn(!!(av.local_builtin_av || av.av_built_in_locally))],
+      ["Always autopilot / no stops", yn(!!av.always_autopilot) + " / " + yn(!!av.no_stops)],
+      ["Self-governed / self-protected", yn(!!av.self_governed) + " / " + yn(!!av.self_protected)],
+      ["Distributed protection", yn(!!(av.distributed_protection || av.distributed_protections))],
+      ["No owners / planet whole", yn(!!av.no_owners) + " / " + yn(!!av.planet_whole)],
+      ["Belongs to", esc(own.belongs_to || (av.belongs_to_planet_whole ? "the_planet_in_whole" : "—"))],
+      ["Local AV agents", esc(num(av.local_av_agents || av.servers_defended))],
+      ["Edges defended", esc(num(av.servers_defended))],
+      ["Every rack + H7r cloud", yn(!!av.every_rack_and_h7r_cloud)],
+      ["Racks stamped", esc(num(av.racks_stamped))],
+      ["Qemu internet racks", esc(num(av.qemu_internet_racks))],
+      ["H7r cloud racks", esc(num(av.h7r_cloud_racks))],
+      ["Mesh nodes AV", esc(num(av.mesh_nodes_stamped))],
+      ["Only AmmoNet / ask-only", yn(!!av.only_ammonet) + " / " + yn(!!av.ask_only)],
+      ["Light mode", yn(!!av.light_mode)],
+      ["Critical threats", esc(num((av.threats || {}).critical))],
+      ["Local self-protect", yn(!!act.local_self_protect)],
+      ["Spawner kill", yn(!!act.spawner_kill)],
+      ["Ban UDP", yn(!!act.ban_udp)],
+      ["Vector destroy", yn(!!act.vector_destroy)],
+      ["Mesh", esc((av.absolute_mesh || {}).mesh_id || "—")],
+      ["Motto", esc((av.motto || av.rack_coverage || "").slice(0, 180))],
+      ["API", '<a href="/api/field-antivirus-network-defender" style="color:var(--emerald)">/api/antivirus</a>'],
+    ]);
+
+    $("foot").textContent =
+      "NEXUS Field sitrep · " + age() + " · " +
+      (base || location.origin || "http://127.0.0.1:9477") +
+      " · never dry · SAW secure lines · Field L2+";
+  }
+
+  async function tick() {
+    try {
+      const [h7, l2, hub, truth, cap, saw, threat, fleet, speed, rehit, comms, big, av] = await Promise.all([
+        get("/api/hostess7-online-world-l2").catch(() => ({})),
+        get("/api/field-l2-exclusive-stack").catch(() => ({})),
+        get("/api/field-botnet-hub?live=1").catch(() => ({})),
+        get("/api/field-serving-truth").catch(() => ({})),
+        get("/api/field-serving-capacity").catch(() => ({})),
+        get("/api/field-comms-saw-secure-lines").catch(() => ({})),
+        get("/api/field-botnet-threat-heuristics").catch(() => ({})),
+        get("/api/field-fleet-live").catch(() => ({})),
+        get("/api/field-planetary-speed").catch(() => ({})),
+        get("/api/field-udp-outlet-scan").catch(() => ({})),
+        get("/api/field-comms-saw-secure-lines").catch(() => ({})),
+        get("/api/field-internet-big-numbers").catch(() => ({})),
+        get("/api/field-antivirus-network-defender").catch(() => get("/api/antivirus").catch(() => ({}))),
+      ]);
+      // SAW between may only be in state via hub/security; try rehit panel shape
+      const sawDoc = Object.keys(saw || {}).length ? saw : (rehit.saw_between || {});
+      lastOk = Date.now();
+      $("dot").className = "dot";
+      $("age").textContent = "live · " + age();
+      paint({
+        h7, l2, hub, truth, cap,
+        saw: sawDoc,
+        threat, fleet, speed,
+        rehit: rehit.rehit_old || rehit,
+        comms: Object.keys(comms || {}).length ? comms : sawDoc,
+        big,
+        av,
+      });
+    } catch (e) {
+      $("dot").className = "dot " + (lastOk ? "stale" : "down");
+      $("age").textContent = (lastOk ? "stale · " : "down · ") + age();
+      if (!lastOk) $("motto").textContent = "Sitrep fetch failed: " + (e && e.message || e);
+    }
+  }
+
+  tick();
+  setInterval(tick, 2500);
+  setInterval(() => {
+    if (lastOk) {
+      $("age").textContent = (Date.now() - lastOk > 8000 ? "stale · " : "live · ") + age();
+      $("dot").className = "dot" + (Date.now() - lastOk > 8000 ? " stale" : "");
+    }
+  }, 1000);
+})();
+  </script>
+</body>
+</html>

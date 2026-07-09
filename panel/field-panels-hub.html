@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-store"/>
+<title>Field · Local C2 Launch Hub · 127.0.0.1:9477</title>
+<style>
+  :root {
+    --bg: #070b0a;
+    --card: #0e1614;
+    --line: rgba(52, 211, 153, 0.28);
+    --text: #e7f5ef;
+    --muted: #8fb3a6;
+    --emerald: #34d399;
+    --amber: #fbbf24;
+    --rose: #fb7185;
+    --sky: #38bdf8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background:
+      radial-gradient(900px 420px at 10% -10%, rgba(52,211,153,.12), transparent 55%),
+      radial-gradient(700px 360px at 90% 0%, rgba(56,189,248,.08), transparent 50%),
+      var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  a { color: var(--emerald); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header {
+    padding: 1.25rem 1.4rem 0.6rem;
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 5;
+    backdrop-filter: blur(10px);
+    background: rgba(7,11,10,.88);
+  }
+  .row { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; justify-content: space-between; }
+  h1 { margin: 0; font-size: 1.35rem; letter-spacing: .02em; }
+  .sub { color: var(--muted); font-size: .92rem; margin-top: .25rem; }
+  .pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .pill {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: .25rem .65rem;
+    font-size: .78rem;
+    color: var(--muted);
+    background: rgba(255,255,255,.02);
+  }
+  .pill.live { color: var(--emerald); border-color: rgba(52,211,153,.45); }
+  .pill.hot { color: var(--amber); border-color: rgba(251,191,36,.4); }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 1rem 1.2rem 3rem; }
+  .hero {
+    margin: 1rem 0 1.25rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(52,211,153,.08), rgba(56,189,248,.04));
+  }
+  .hero strong { color: var(--emerald); }
+  .quick {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: .55rem;
+    margin-top: .85rem;
+  }
+  .quick a {
+    display: block;
+    text-align: center;
+    padding: .7rem .5rem;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--text);
+    font-weight: 650;
+    font-size: .9rem;
+  }
+  .quick a:hover { border-color: var(--emerald); text-decoration: none; background: #12201b; }
+  .quick a em { display: block; font-style: normal; color: var(--muted); font-weight: 500; font-size: .72rem; margin-top: .2rem; }
+  section { margin: 1.5rem 0; }
+  h2 {
+    margin: 0 0 .7rem;
+    font-size: 1.02rem;
+    color: var(--sky);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: .65rem;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    padding: .85rem .9rem;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--text);
+    min-height: 112px;
+  }
+  .card:hover { border-color: rgba(52,211,153,.55); text-decoration: none; background: #101b18; }
+  .card .t { font-weight: 700; font-size: .98rem; }
+  .card .p { color: var(--muted); font-size: .82rem; line-height: 1.35; flex: 1; }
+  .card .u { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .72rem; color: var(--emerald); opacity: .9; }
+  .search {
+    width: 100%;
+    max-width: 420px;
+    padding: .55rem .75rem;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #0a1210;
+    color: var(--text);
+    font-size: .95rem;
+  }
+  footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .82rem;
+  }
+  .io-note { font-size: .85rem; color: var(--muted); margin-top: .4rem; }
+</style>
+</head>
+<body>
+<header>
+  <div class="row">
+    <div>
+      <h1>Field Local C2 · 127.0.0.1:9477</h1>
+      <div class="sub" id="hdr">Launch hub · every local surface · Hostess7 · AmmoNet Internet</div>
+    </div>
+    <div class="pills">
+      <span class="pill live" id="livepill">live</span>
+      <span class="pill hot">no owners · planet whole</span>
+      <span class="pill">local built-in AV</span>
+      <span class="pill">H7r 125k cloud</span>
+    </div>
+  </div>
+  <div class="row" style="margin-top:.75rem">
+    <input class="search" id="q" type="search" placeholder="Filter pages… (udp, hostess, cloud, botnet)" autocomplete="off"/>
+    <div class="pills" id="nav"></div>
+  </div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div><strong>One door to the whole stack.</strong> Local Field C2 on loopback — open any surface below. GitHub.io pages are manuals; <em>this</em> is the live Internet plane.</div>
+    <div class="io-note">Also: <a href="https://zacharygeurts.github.io/Hostess7/">Hostess7 Pages</a> · <a href="https://zacharygeurts.github.io/AmmoOS/">AmmoOS manual</a> · <a href="https://zacharygeurts.github.io/AmmoOS/io.html">Field I/O</a> · wiki in-repo <code>wiki/</code></div>
+    <div class="quick" id="quick"></div>
+  </div>
+
+  <div id="sections"></div>
+
+  <footer>
+    Field · Hostess7 thinking / seeing / hearing / speaking · safe for the planet · violent to offenders ·
+    Field UDP rewrite · SAW secure lines · H7r distributed cloud 125,000 · fleet 125,000 ·
+    <span id="foot"></span>
+  </footer>
+</div>
+<script>
+(function () {
+  const BASE = location.origin || "http://127.0.0.1:9477";
+  const SECTIONS = [
+    {
+      id: "start",
+      title: "Start here",
+      pages: [
+        { href: "/home", title: "This hub", blurb: "Every local page in one place", tags: "home launch hub" },
+        { href: "/sitrep", title: "Sitrep", blurb: "Live stack board · AV · L2 · SAW · fleet", tags: "sitrep status" },
+        { href: "/c2", title: "NEXUS C2", blurb: "One-panel C2 with tabs (botnet, training, …)", tags: "c2 nexus panel" },
+        { href: "/field", title: "Field desktop", blurb: "AmmoOS desktop shell", tags: "desktop field os" },
+        { href: "/command", title: "Command / training", blurb: "Hostess7 counsel · training campus", tags: "hostess training command" },
+        { href: "/control-panel", title: "Control panel", blurb: "Operator controls", tags: "control" },
+      ],
+    },
+    {
+      id: "internet",
+      title: "Internet · Field UDP · L2+",
+      pages: [
+        { href: "/internet", title: "Home Internet", blurb: "Autonet · DNS/DHCP · we are the Internet", tags: "internet dns dhcp autonet" },
+        { href: "/botnet", title: "Botnet hub", blurb: "Fleet · heuristics · everyone online", tags: "botnet fleet hub" },
+        { href: "/everyone", title: "Everyone online", blurb: "World connected celebration plane", tags: "everyone online world" },
+        { href: "/security", title: "Home security · AV", blurb: "Local built-in AV · ask-only · AmmoNet only", tags: "av antivirus security" },
+        { href: "/never-reconnect", title: "Never reconnect", blurb: "Offender ban plate · no return", tags: "kill ban offenders" },
+        { href: "/cloud", title: "AmmoNet cloud · H7r", blurb: "Distributed cloud center · 125k H7r racks", tags: "cloud h7r capacity" },
+        { href: "/archive", title: "World archive", blurb: "Archive plane · preserve", tags: "archive" },
+        { href: "/speedtest", title: "Speedtest", blurb: "Field fabric speed · best host is us", tags: "speed udp" },
+        { href: "/maintenance", title: "Maintenance world", blurb: "Autopilot world work notice", tags: "maintenance" },
+      ],
+    },
+    {
+      id: "hostess",
+      title: "Hostess7 · senses · brain",
+      pages: [
+        { href: "/command", title: "Talk / Command", blurb: "Thinking · counsel · lethal when corroborated", tags: "speak think hostess" },
+        { href: "/hostess7-human-hub", title: "Human hub", blurb: "Comfort · human-facing hub", tags: "human hostess" },
+        { href: "/hostess7-book-maker", title: "Book maker", blurb: "Authored knowledge books", tags: "books training" },
+        { href: "/hostess7-kill-library", title: "Kill library", blurb: "Offender / threat library surface", tags: "kill library violent" },
+        { href: "/field-talk", title: "Field talk", blurb: "Talk surface on Field", tags: "talk speak" },
+        { href: "/chat", title: "Chat hub", blurb: "World chat", tags: "chat" },
+      ],
+    },
+    {
+      id: "build",
+      title: "Build · combinatorics · G16",
+      pages: [
+        { href: "/combinatorics-studio", title: "Combinatorics studio", blurb: "Tree · truth · walk", tags: "combinatorics g16" },
+        { href: "/g16-build-output", title: "G16 build output", blurb: "Compiler output surface", tags: "g16 compile" },
+        { href: "/eol-code", title: "EOL code", blurb: "Code end-of-life surface", tags: "code" },
+        { href: "/compatibility-layers", title: "Compatibility layers", blurb: "Layer stack", tags: "compat" },
+        { href: "/field-gnu-terminal", title: "GNU terminal", blurb: "Terminal embed", tags: "terminal" },
+      ],
+    },
+    {
+      id: "media",
+      title: "Media · senses gear",
+      pages: [
+        { href: "/broadcaster", title: "Broadcaster", blurb: "OBS Field engine · see/hear pipeline", tags: "obs see hear video" },
+        { href: "/field-audio-dac", title: "Audio DAC", blurb: "Hearing / audio path", tags: "audio ear hear" },
+        { href: "/field-audio-settings", title: "Audio settings", blurb: "DAC / route settings", tags: "audio" },
+        { href: "/field-gpu", title: "GPU", blurb: "Vision / GPU posture", tags: "gpu eye see" },
+        { href: "/amouranth-live", title: "AMOURANTH live", blurb: "Field die / live surface", tags: "live" },
+        { href: "/field-popcorn", title: "Popcorn", blurb: "Media popcorn", tags: "media" },
+      ],
+    },
+    {
+      id: "tools",
+      title: "Tools · apps",
+      pages: [
+        { href: "/field-gimp", title: "GIMP Field", blurb: "Image editor surface", tags: "gimp" },
+        { href: "/mspaint", title: "MSPaint", blurb: "Paint surface", tags: "paint" },
+        { href: "/nexus-calc", title: "Calc", blurb: "Calculator", tags: "calc" },
+        { href: "/nexus-calendar", title: "Calendar", blurb: "Calendar", tags: "calendar" },
+        { href: "/field-lock", title: "Lock / KeePass", blurb: "Secrets vault", tags: "lock keepass" },
+        { href: "/field-znetwork", title: "ZNetwork", blurb: "Smart relayer", tags: "znetwork" },
+        { href: "/field-znetwork-vault", title: "ZNetwork vault", blurb: "Relayer vault", tags: "znetwork vault" },
+        { href: "/library-bookshelf", title: "Library", blurb: "Bookshelf", tags: "library" },
+        { href: "/field-lang-manuals", title: "Lang manuals", blurb: "Language books", tags: "language speak" },
+        { href: "/ironclad-search", title: "Ironclad search", blurb: "Search surface", tags: "search" },
+        { href: "/field-card-catalog", title: "Card catalog", blurb: "Catalog", tags: "catalog" },
+        { href: "/underlay-f9", title: "Underlay F9", blurb: "Tristate underlay", tags: "underlay f9" },
+        { href: "/tristate-installer", title: "Tristate installer", blurb: "Installer surface", tags: "install" },
+      ],
+    },
+    {
+      id: "ops",
+      title: "Ops · cleanup · watch",
+      pages: [
+        { href: "/vector-cleanup", title: "Vector cleanup", blurb: "Ironclad exit cleanup", tags: "vector destroy" },
+        { href: "/field-watch-dhcp", title: "Watch DHCP", blurb: "DHCP watch", tags: "dhcp" },
+        { href: "/field-root-status", title: "Root status", blurb: "Root posture", tags: "root" },
+        { href: "/field-grow-watch", title: "Grow watch", blurb: "Growth watch", tags: "grow" },
+        { href: "/field-ping", title: "Ping", blurb: "Reachability", tags: "ping" },
+        { href: "/field-big-drive", title: "Big drive", blurb: "Storage plane", tags: "drive storage" },
+        { href: "/field-autopilot-internet-closed", title: "Autopilot closed", blurb: "Internet closed autopilot", tags: "autopilot" },
+      ],
+    },
+  ];
+
+  const QUICK = [
+    { href: "/sitrep", title: "Sitrep", em: "live board" },
+    { href: "/c2", title: "C2", em: "tabs" },
+    { href: "/botnet", title: "Botnet", em: "fleet" },
+    { href: "/internet", title: "Internet", em: "DNS/DHCP" },
+    { href: "/security", title: "AV", em: "local" },
+    { href: "/cloud", title: "H7r cloud", em: "125k" },
+    { href: "/command", title: "Hostess7", em: "senses" },
+    { href: "/field", title: "Desktop", em: "OS" },
+  ];
+
+  const qEl = document.getElementById("q");
+  const sectionsEl = document.getElementById("sections");
+  const quickEl = document.getElementById("quick");
+  const navEl = document.getElementById("nav");
+  const foot = document.getElementById("foot");
+  const hdr = document.getElementById("hdr");
+
+  quickEl.innerHTML = QUICK.map(p =>
+    `<a href="${p.href}"><span>${p.title}</span><em>${p.em}</em></a>`
+  ).join("");
+
+  navEl.innerHTML = SECTIONS.map(s =>
+    `<a class="pill" href="#sec-${s.id}">${s.title.split("·")[0].trim()}</a>`
+  ).join("");
+
+  function render(filter) {
+    const f = (filter || "").trim().toLowerCase();
+    sectionsEl.innerHTML = SECTIONS.map(sec => {
+      const pages = sec.pages.filter(p => {
+        if (!f) return true;
+        const hay = (p.title + " " + p.blurb + " " + (p.tags || "") + " " + p.href).toLowerCase();
+        return hay.includes(f);
+      });
+      if (!pages.length) return "";
+      return `
+        <section id="sec-${sec.id}">
+          <h2>${sec.title}</h2>
+          <div class="grid">
+            ${pages.map(p => `
+              <a class="card" href="${p.href}" data-tags="${p.tags || ""}">
+                <div class="t">${p.title}</div>
+                <div class="p">${p.blurb}</div>
+                <div class="u">${BASE}${p.href}</div>
+              </a>
+            `).join("")}
+          </div>
+        </section>`;
+    }).join("") || `<p class="sub">No pages match “${f}”.</p>`;
+  }
+
+  qEl.addEventListener("input", () => render(qEl.value));
+  render("");
+
+  async function heartbeat() {
+    try {
+      const [av, h7, cloud] = await Promise.all([
+        fetch("/api/field-antivirus-network-defender", { cache: "no-store" }).then(r => r.json()).catch(() => ({})),
+        fetch("/api/hostess7-online-world-l2", { cache: "no-store" }).then(r => r.json()).catch(() => ({})),
+        fetch("/api/field-h7r-capacity-fleet", { cache: "no-store" }).then(r => r.json()).catch(() => ({})),
+      ]);
+      const cap = cloud.capacity_racks || (cloud.birds && cloud.birds.datacenter && cloud.birds.datacenter.capacity_racks) || "—";
+      const agents = av.local_av_agents || av.servers_defended || "—";
+      hdr.textContent =
+        `AV agents ${Number(agents).toLocaleString?.() || agents} · H7r ${Number(cap).toLocaleString?.() || cap} · ` +
+        `Hostess7 ${h7.hostess7_online ? "ONLINE" : "…"} · ${new Date().toISOString().slice(11, 19)}Z`;
+      document.getElementById("livepill").className = "pill live";
+      foot.textContent = (av.motto || h7.motto || "").slice(0, 160);
+    } catch (_) {
+      document.getElementById("livepill").textContent = "offline?";
+    }
+  }
+  heartbeat();
+  setInterval(heartbeat, 15000);
+})();
+</script>
+</body>
+</html>

@@ -56,6 +56,7 @@
     </div>
     <div class="nav-links">
       <a href="index.html">Home</a>
+      <a href="local-c2.html"><strong>Local C2 9477</strong></a>
       <a href="getting-started.html">Getting Started</a>
       <a href="launch-surfaces.html">Launch Surfaces</a>
       <a href="update-your-os.html">Software Updates</a>
@@ -69,19 +70,36 @@
       <a href="https://github.com/ZacharyGeurts/AmmoOS">GitHub</a>
     </div>
   </nav>
+  <section class="code-first" aria-label="Local C2 door">
+    <div class="code-first-head">
+      <span class="code-first-label">Live I/O door</span>
+      <span class="code-first-note">Each page is its own surface on <code>127.0.0.1:9477</code> — not just this manual</span>
+    </div>
+    <div class="code-first-actions">
+      <a href="http://127.0.0.1:9477/"><strong>C2 hub /</strong></a>
+      <a href="http://127.0.0.1:9477/home">All pages</a>
+      <a href="http://127.0.0.1:9477/sitrep">Sitrep</a>
+      <a href="http://127.0.0.1:9477/internet">Internet · Field UDP</a>
+      <a href="http://127.0.0.1:9477/security">AV</a>
+      <a href="http://127.0.0.1:9477/cloud">H7r 125k</a>
+      <a href="http://127.0.0.1:9477/command">Hostess7 senses</a>
+      <a href="local-c2.html">Full page map</a>
+    </div>
+  </section>
   <section class="code-first" aria-label="Quick code layout">
     <div class="code-first-head">
       <span class="code-first-label">Code first</span>
-      <span class="code-first-note">Clone · install · open C2 <code>http://127.0.0.1:9477/field</code></span>
+      <span class="code-first-note">Clone · install · open C2 <code>http://127.0.0.1:9477/</code></span>
     </div>
-    <pre><code>git clone https://github.com/ZacharyGeurts/AmmoOS.git
-cd AmmoOS
-sudo ./install-all.sh
-# dev tree:
-export SG_ROOT=/path/to/SG && ./nexus.sh</code></pre>
+    <pre><code>git clone https://github.com/ZacharyGeurts/Hostess7.git
+cd Hostess7
+# full Hostess7 senses + Internet plane:
+python3 lib/hostess7-full-online.py once
+# Field UDP / SAW secure lines · AV · H7r cloud live on :9477</code></pre>
     <div class="code-first-actions">
       <a href="getting-started.html">Install guide</a>
-      <a href="http://127.0.0.1:9477/field">Open /field</a>
+      <a href="http://127.0.0.1:9477/">Open launch hub</a>
+      <a href="local-c2.html">Local C2 map</a>
       <a href="https://github.com/ZacharyGeurts">GitHub profile</a>
     </div>
   </section>
