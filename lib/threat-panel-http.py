@@ -4654,6 +4654,44 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        # FIELD ONE ETERNAL PLANE — all lanes always clean · nobody plays fields
+        if path in (
+            "/api/field-one-eternal-plane",
+            "/api/field-one-eternal-plane/",
+            "/api/eternal-plane",
+            "/api/eternal-plane/",
+            "/api/field-one-eternal",
+        ):
+            try:
+                cached = STATE_DIR / "field-one-eternal-plane-panel.json"
+                qs_ep = parse_qs(urlparse(self.path).query)
+                force = str(qs_ep.get("refresh", qs_ep.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "enforce", "eternal", "brutal",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["eternal_plane"] = True
+                            payload["field_one_only"] = True
+                            payload["nobody_plays_fields"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-one-eternal-plane.py",
+                    ["enforce"] if force else ["status"],
+                    timeout=420 if force else 30,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "eternal_plane_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # No detached/adjacent fields · Field One only · Big Grin kicks · Earth stabilize
         if path in (
             "/api/no-detached-fields",
@@ -11074,6 +11112,19 @@ class Handler(BaseHTTPRequestHandler):
         ):
             target = PANEL_DIR / "field-no-detached-fields.html"
             alt = STATE_DIR / "field-no-detached-fields-website" / "index.html"
+            if alt.is_file():
+                target = alt
+        elif path in (
+            "/eternal-plane",
+            "/eternal-plane/",
+            "/field-one-eternal",
+            "/field-one-eternal/",
+            "/field-one-eternal-plane",
+            "/field-one-eternal-plane/",
+            "/field-one-eternal-plane.html",
+        ):
+            target = PANEL_DIR / "field-one-eternal-plane.html"
+            alt = STATE_DIR / "field-one-eternal-plane-website" / "index.html"
             if alt.is_file():
                 target = alt
         elif path in (
