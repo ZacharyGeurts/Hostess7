@@ -11291,6 +11291,31 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Location", "/queen-game-room.html")
             self.end_headers()
             return
+        elif path.startswith("/Hostess7/") or path in ("/Hostess7", "/Hostess7/"):
+            # Serve Hostess7 docs (Big Grin kicks, desktop, API HTML mirrors)
+            rel = unquote(path[len("/Hostess7/") :] if path.startswith("/Hostess7/") else "")
+            if ".." in rel:
+                self._send(404, "not found", "text/plain")
+                return
+            h7_docs = (INSTALL_ROOT / "Hostess7" / "docs").resolve()
+            try:
+                if not rel or rel.endswith("/"):
+                    candidate = (h7_docs / rel / "index.html").resolve()
+                else:
+                    candidate = (h7_docs / rel).resolve()
+                    if candidate.is_dir():
+                        candidate = (candidate / "index.html").resolve()
+            except OSError:
+                candidate = None
+            if (
+                candidate
+                and candidate.is_file()
+                and (h7_docs == candidate or h7_docs in candidate.parents)
+            ):
+                self._send(200, candidate.read_bytes(), _panel_static_mime(candidate))
+                return
+            self._send(404, "not found", "text/plain")
+            return
         elif path in ("/mspaint", "/mspaint/"):
             target = PANEL_DIR / "mspaint.html"
         elif path in ("/field-ping", "/field-ping/"):
