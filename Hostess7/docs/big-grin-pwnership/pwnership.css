@@ -78,3 +78,25 @@ body {
 .bgp-kill-table th { text-align: left; color: var(--bgp-rose); padding: 8px 10px; border-bottom: 1px solid rgba(26,155,110,0.25); }
 .bgp-kill-table td { padding: 8px 10px; border-bottom: 1px solid rgba(26,155,110,0.12); color: #a8bdb0; vertical-align: top; }
 .bgp-kill-table code { font-size: 0.78rem; color: var(--bgp-witness); }
+.bgp-uni-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.bgp-uni-card {
+  border: 1px solid rgba(26,155,110,0.28); border-radius: 12px; overflow: hidden;
+  background: rgba(0,0,0,0.4);
+}
+.bgp-uni-card img { width: 100%; display: block; aspect-ratio: 16/10; object-fit: cover; background: #0a0f0c; }
+.bgp-uni-card .cap { padding: 10px 12px; font-size: 0.82rem; color: #a8bdb0; }
+.bgp-uni-card .cap strong { display: block; color: var(--bgp-rose); margin-bottom: 4px; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.bgp-lang {
+  border: 1px solid rgba(26,155,110,0.2); border-radius: 10px; padding: 12px 14px;
+  margin-bottom: 10px; background: rgba(0,0,0,0.28);
+}
+.bgp-lang h3 { margin: 0 0 4px; font-size: 0.95rem; color: #fff; }
+.bgp-lang .meta { font-size: 0.72rem; color: var(--bgp-witness); margin-bottom: 8px; }
+.bgp-lang .body { white-space: pre-wrap; color: #b8cfc2; font-size: 0.9rem; margin: 0; line-height: 1.5; }
+.bgp-lang .persist { margin-top: 8px; color: #f0a0a0; font-size: 0.85rem; border-top: 1px solid rgba(139,46,46,0.3); padding-top: 8px; }
+.bgp-lang[dir="rtl"] .body { text-align: right; }
+.bgp-banner {
+  border-radius: 12px; overflow: hidden; border: 1px solid rgba(26,155,110,0.3);
+  margin: 16px 0 22px;
+}
+.bgp-banner img { width: 100%; display: block; max-height: 360px; object-fit: cover; }

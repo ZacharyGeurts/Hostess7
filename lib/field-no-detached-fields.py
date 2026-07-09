@@ -715,7 +715,7 @@ def big_grin_kick_notices(
 <link rel="stylesheet" href="{css_href}"/>
 <style>
 body{{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:#070b08;color:#e8f5e9}}
-.wrap{{max-width:820px;margin:0 auto;padding:1.5rem}}
+.wrap{{max-width:860px;margin:0 auto;padding:1.5rem}}
 .badge{{display:inline-block;padding:.25rem .7rem;border-radius:999px;border:1px solid #34d399;color:#34d399;font-size:.8rem}}
 .badge.hostile{{border-color:#fb7185;color:#fb7185}}
 h1{{color:#fbbf24;font-size:1.45rem}}
@@ -723,19 +723,29 @@ h1{{color:#fbbf24;font-size:1.45rem}}
 .charges{{background:#0d1510;border:1px solid rgba(251,113,133,.35);border-radius:12px;padding:1rem}}
 .charges li{{margin:.65rem 0}}
 .persist{{margin-top:1rem;padding:.85rem;background:rgba(251,113,133,.12);border-left:4px solid #fb7185}}
+.pics{{display:grid;gap:.75rem;margin:1rem 0}}
+.pics img{{width:100%;border-radius:12px;border:1px solid rgba(52,211,153,.3);display:block}}
 a{{color:#34d399}}
 </style></head><body>
 <div class="wrap">
   <p><a href="/Hostess7/big-grin-pwnership/">← Big Grin Pwnership</a> ·
-     <a href="/Hostess7/big-grin-pwnership/kicks/">All kicks</a></p>
+     <a href="/Hostess7/big-grin-pwnership/kicks/">All kicks</a> ·
+     <a href="/Hostess7/big-grin-pwnership/every-language.html">Every language + images</a></p>
   <span class="badge {'hostile' if n.get('HOSTILE') else ''}">{escape(status)}</span>
   <h1>😀 Big Grin Pwnership — you got kicked</h1>
+  <p style="color:#8fa898">Universal pictograms (no language required) · then words in your tongue</p>
+  <div class="pics">
+    <img src="/Hostess7/assets/big-grin-pwnership/universal-field-one-only.jpg" alt="Field One only pictogram"/>
+    <img src="/Hostess7/assets/big-grin-pwnership/universal-attack-sphere-sequence.jpg" alt="Attack then sphere sequence"/>
+    <img src="/Hostess7/assets/big-grin-pwnership/universal-death-charges.jpg" alt="Death charges pictogram card"/>
+  </div>
   <p><strong>Field:</strong> <code>{escape(str(n.get('field_key')))}</code>
      · <strong>IP:</strong> {escape(str(n.get('ip') or '—'))}
      · <strong>MAC:</strong> {escape(str(n.get('mac') or '—'))}</p>
   <div class="why">
     <h2 style="margin-top:0;color:#fbbf24;font-size:1.05rem">Why you got kicked</h2>
     <p>{escape(str(n.get('why_kicked')))}</p>
+    <p style="margin-top:.75rem">😀🚫📡→✅1️⃣ · 🏠🔗 only · 🌍🛡️ · ⚠️💀 if reopen · ⚡🔵💥 sphere · 🔒∞ forever</p>
   </div>
   <div class="charges">
     <h2 style="margin-top:0;color:#fb7185;font-size:1.05rem">Death charges if you persist</h2>
@@ -743,8 +753,9 @@ a{{color:#34d399}}
   </div>
   <div class="persist"><strong>If you persist:</strong> {escape(str(n.get('if_persist')))}</div>
   <p style="color:#8fa898;margin-top:1.5rem;font-size:.85rem">
-    Doctrine: no fields detached from recognized devices · reopen = HOSTILE ·
-    Ironclad {escape(IRONCLAD)} · served {escape(now)}
+    Doctrine: Field One only · no detached/adjacent · reopen = HOSTILE ·
+    Ironclad {escape(IRONCLAD)} · served {escape(now)} ·
+    Full pack: <a href="/Hostess7/big-grin-pwnership/every-language.html">every language + universal images</a>
   </p>
 </div></body></html>
 """

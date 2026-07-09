@@ -6,7 +6,7 @@
   <script src="/Hostess7/api-shim.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Windows Server AD DNS — Big Grin Pwnership</title>
+  <title>Microsoft Windows Server DNS — AD-integrated DNS — Big Grin Pwnership</title>
   <link rel="stylesheet" href="/Hostess7/big-grin-pwnership/pwnership.css" />
   
 </head>
@@ -17,26 +17,26 @@
     <img class="bgp-badge" src="/Hostess7/assets/big-grin-pwnership/look-pwnership-badge.jpg" alt="Look Pwnership" width="72" height="72" />
     <div>
       <p class="bgp-look-label">Look Pwnership witness</p>
-      <h1 class="bgp-title" style="font-size:1.5rem">Windows Server AD DNS</h1>
+      <h1 class="bgp-title" style="font-size:1.5rem">Microsoft Windows Server DNS — AD-integrated DNS</h1>
       <span class="bgp-status bgp-status--retired">retired</span>
     </div>
   </div>
   <section class="bgp-section bgp-detail">
     <h2>Why we did</h2>
     <div class="bgp-why">
-      <h3>Legacy DNS forwarders retired to documentation</h3>
-      <p>BIND, Windows AD DNS, Pi-hole, and ISP CPE forwarders are inventory-only. Truth Resolver on loopback is primary — legacy gear went down as authority, not as history.</p>
-      <p class="bgp-why-sources">Sources: dns-admin-seed.json, equipment-room-field.py</p>
+      <h3></h3>
+      <p></p>
+      <p class="bgp-why-sources">Sources: hostess7-big-grin-pwnership-doctrine.json</p>
     </div>
   </section>
   <section class="bgp-section">
     <h2>Equipment record</h2>
     <dl class="bgp-meta">
-      <dt>Vendor</dt><dd>Microsoft</dd>
+      <dt>Vendor</dt><dd>Microsoft Windows Server DNS</dd>
       <dt>Role</dt><dd>AD-integrated DNS</dd>
       <dt>Path</dt><dd><code>—</code></dd>
-      <dt>Replacement</dt><dd>Truth Resolver upstream — disable ISP forwarders</dd>
-      
+      <dt>Replacement</dt><dd>NEXUS Truth Resolver — 127.0.0.1:53</dd>
+      <dt>Notes</dt><dd>dnscmd /zone export for inventory; no remote admin via this portal</dd>
     </dl>
   </section>
 </div>

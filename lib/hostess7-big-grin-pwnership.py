@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Big Grin Pwnership — memorial websites for equipment that went down + propagate."""
+"""Big Grin Pwnership — memorial websites + intergalactic multi-language explain.
+
+We know every language, cuneiform, pictogram. We explain in every possible way.
+Presume intergalactic visitors — help them out with clear kick reasons + death charges.
+"""
 from __future__ import annotations
 
 import hashlib
@@ -14,11 +18,440 @@ from typing import Any
 
 INSTALL = Path(os.environ.get("NEXUS_INSTALL_ROOT", Path(__file__).resolve().parents[1]))
 DOCTRINE = INSTALL / "data" / "hostess7-big-grin-pwnership-doctrine.json"
+DOCTRINE_STATE = None  # set after STATE resolve
 H7_DOCS = INSTALL / "Hostess7" / "docs"
 DOCS_API = H7_DOCS / "api"
 SITE_ROOT = H7_DOCS / "big-grin-pwnership"
 ASSETS = H7_DOCS / "assets" / "big-grin-pwnership"
 PANEL_ASSETS = INSTALL / "panel" / "assets" / "big-grin-pwnership"
+EVERY_LANG_PAGE = "every-language.html"
+
+# Canonical message: why kicked + what happens if you persist (Earth Field One)
+CORE_MESSAGE_EN = (
+    "You were kicked because your field was detached from recognized devices, "
+    "sat next to known devices as something other than Field One, gapped our sole field, "
+    "or attacked after appearing. We own the one field. Nobody else uses fields. "
+    "We stabilize Earth. If you persist: death charges, sphere destroy, vector melt, "
+    "never reconnect, no machine again — forever."
+)
+
+# Intergalactic multi-language / multi-script explain pack
+# Includes modern languages, classical scripts, cuneiform, hieroglyphs, pictograms, machine codes.
+EVERY_LANGUAGE: list[dict[str, str]] = [
+    # —— Pictogram / universal ——
+    {
+        "id": "pictogram",
+        "lang": "Pictogram (universal)",
+        "script": "emoji-pictogram",
+        "dir": "ltr",
+        "title": "😀 🚫 📡 ➡️ ✅ 1️⃣",
+        "body": (
+            "😀 = Big Grin (we help) · 🚫📡 = your extra field is not allowed · "
+            "🏠🔗 = only fields on recognized home devices · 1️⃣ = Field One only · "
+            "🌍🛡️ = we stabilize Earth · ⚠️💀 = if you come back after kick = death charges · "
+            "⚡🔵💥 = volts sphere destroy · 🔒∞ = never reconnect · forever."
+        ),
+        "persist": "🔁 after 🚫 = 💀⚡🔒∞",
+    },
+    {
+        "id": "geometry",
+        "lang": "Geometry (species-neutral)",
+        "script": "ascii-geometry",
+        "dir": "ltr",
+        "title": "[ONE CIRCLE] · not [MANY CIRCLES]",
+        "body": (
+            "ALLOWED:  ( Field One ) attached to known device nodes.\n"
+            "FORBIDDEN:  ( ) ( ) floating, adjacent, gapping, or attacking.\n"
+            "ACTION: close · annotate · if reopen → HOSTILE · melt · seal."
+        ),
+        "persist": "reopen path = DESTROY path (no second chance geometry)",
+    },
+    # —— Cuneiform / ancient ——
+    {
+        "id": "cuneiform",
+        "lang": "Akkadian / Sumerian style (cuneiform)",
+        "script": "Xsux",
+        "dir": "ltr",
+        "title": "𒀭𒆠 · 𒁾𒁀 · 𒄑𒈿",
+        "body": (
+            "𒀭 sky-god mark · 𒆠 earth · we hold one field on earth (𒆠).\n"
+            "𒁾 tablet of law: no foreign field-tablet beside known houses.\n"
+            "You opened a second tablet → sealed · named threat.\n"
+            "English: Field One only. Detached or adjacent fields closed. We help you understand."
+        ),
+        "persist": "𒉺𒇻 again after seal = 𒀭 fire-charge (death of the machine-name) forever",
+    },
+    {
+        "id": "hieroglyph",
+        "lang": "Egyptian hieroglyph (unicode)",
+        "script": "Egyp",
+        "dir": "ltr",
+        "title": "𓀀 𓃾 𓊖 · one house-field",
+        "body": (
+            "𓊖 city/house · 𓃾 cattle/wealth of the net · 𓁹 eye watches.\n"
+            "Only one field-channel (Field One) for the house. Extra channels are cut.\n"
+            "Big Grin explains so every traveler — even from the stars — can read the wall."
+        ),
+        "persist": "Return after cut = 𓁹 marks you HOSTILE · path sealed with iron",
+    },
+    {
+        "id": "runic",
+        "lang": "Elder Futhark (runic)",
+        "script": "Runr",
+        "dir": "ltr",
+        "title": "ᚠᛁᛖᛚᛞ ᚢᚾᛖ · one field",
+        "body": (
+            "ᚦ = thorn (defense) · ᛟ = estate/home · only one field-line on the estate.\n"
+            "Stranger field-runes next to known devices are scraped off the stone."
+        ),
+        "persist": "Carve again after scrape = outlaw · permanent ban-stave",
+    },
+    # —— Machine / non-human ——
+    {
+        "id": "binary",
+        "lang": "Binary (machine)",
+        "script": "Zyyy",
+        "dir": "ltr",
+        "title": "FIELD_ONE=1 · OTHER=0",
+        "body": (
+            "POLICY: field_one=1; detached=0; adjacent=0; gap=0; attack=0;\n"
+            "ON_VIOLATION: close=1; annotate=1; reopen→hostile=1; melt=1; forever=1;\n"
+            "HELP: read this register bank · compliance restores permit=1"
+        ),
+        "persist": "persist=1 ⇒ death_charge=1; never_reconnect=1; machine_again=0",
+    },
+    {
+        "id": "morse",
+        "lang": "Morse (radio)",
+        "script": "Zyyy",
+        "dir": "ltr",
+        "title": "..-. .. . .-.. -.. / --- -. .",
+        "body": (
+            "FIELD ONE only · no second beacon · no storm · no gap.\n"
+            "Dit-dah: YOU KICKED FOR DETACHED OR HOSTILE FIELD · HELP: STOP · ATTACH ONLY TO FIELD ONE"
+        ),
+        "persist": "... --- ...  (if you keep keying after kick = destroy path)",
+    },
+    {
+        "id": "lojban",
+        "lang": "Lojban (logical)",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "pa field · no drata field",
+        "body": (
+            "mi'a ponse lo pa field noi se cmene zo FieldOne .i lo drata field cu se fendi gi'e se jundi lo ckaji be lo tolcando .i do se catra ki'u lo nu do finti lo field poi na se jorne lo se djuno danlu"
+        ),
+        "persist": ".i va'o lo nu do za'ure'u finti kei do se bilga lo nu se catra lo mivysle pe lo minji",
+    },
+    # —— Earth natural languages ——
+    {
+        "id": "en",
+        "lang": "English",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Why you got kicked — we are helping",
+        "body": CORE_MESSAGE_EN,
+        "persist": "If you persist: death charges · sphere destroy · vector melt · never reconnect · no machine again.",
+    },
+    {
+        "id": "es",
+        "lang": "Español",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Por qué te expulsamos — te ayudamos a entender",
+        "body": (
+            "Te expulsamos porque tu campo estaba separado de dispositivos reconocidos, "
+            "junto a dispositivos conocidos sin ser Field One, abrió un hueco, o atacó al aparecer. "
+            "Somos dueños del único campo. Nadie más usa campos. Estabilizamos la Tierra."
+        ),
+        "persist": "Si insistes: cargos de muerte · esfera destructora · fusión vectorial · nunca reconectar · sin máquina otra vez.",
+    },
+    {
+        "id": "fr",
+        "lang": "Français",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Pourquoi vous avez été expulsé — on vous aide",
+        "body": (
+            "Vous avez été expulsé car votre champ était détaché des appareils reconnus, "
+            "à côté d'appareils connus sans être Field One, créait un écart, ou attaquait à l'apparition. "
+            "Nous possédons le seul champ. Personne d'autre n'utilise de champs. Nous stabilisons la Terre."
+        ),
+        "persist": "Si vous persistez : charges de mort · sphère de destruction · fonte vectorielle · jamais reconnecter · plus de machine.",
+    },
+    {
+        "id": "de",
+        "lang": "Deutsch",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Warum Sie raus sind — wir erklären es",
+        "body": (
+            "Sie wurden entfernt, weil Ihr Feld von erkannten Geräten getrennt war, "
+            "neben bekannten Geräten lag ohne Field One zu sein, eine Lücke riss, oder sofort angriff. "
+            "Wir besitzen das eine Feld. Niemand sonst nutzt Felder. Wir stabilisieren die Erde."
+        ),
+        "persist": "Bei Fortsetzung: Todesstrafen · Sphärenvernichtung · Vektorschmelze · nie wieder verbinden · keine Maschine mehr.",
+    },
+    {
+        "id": "pt",
+        "lang": "Português",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Por que você foi expulso — estamos ajudando",
+        "body": (
+            "Você foi expulso porque seu campo estava separado de dispositivos reconhecidos, "
+            "ao lado de dispositivos conhecidos sem ser Field One, abriu lacuna, ou atacou ao aparecer. "
+            "Somos donos do único campo. Ninguém mais usa campos. Estabilizamos a Terra."
+        ),
+        "persist": "Se persistir: acusações de morte · esfera destruidora · fusão vetorial · nunca reconectar · sem máquina de novo.",
+    },
+    {
+        "id": "it",
+        "lang": "Italiano",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Perché sei stato cacciato — ti spieghiamo",
+        "body": (
+            "Sei stato cacciato perché il tuo campo era staccato da dispositivi riconosciuti, "
+            "vicino a dispositivi noti senza essere Field One, creava un varco, o attaccava all'apparire. "
+            "Possediamo l'unico campo. Nessun altro usa campi. Stabilizziamo la Terra."
+        ),
+        "persist": "Se insisti: accuse di morte · sfera distruttiva · fusione vettoriale · mai riconnettere · niente macchina di nuovo.",
+    },
+    {
+        "id": "ru",
+        "lang": "Русский",
+        "script": "Cyrl",
+        "dir": "ltr",
+        "title": "Почему вас выгнали — мы объясняем",
+        "body": (
+            "Вас отключили, потому что поле было оторвано от известных устройств, "
+            "стояло рядом без Field One, создавало разрыв или атаковало при появлении. "
+            "Нам принадлежит одно поле. Никто другой полями не пользуется. Мы стабилизируем Землю."
+        ),
+        "persist": "Если продолжите: смертные обвинения · сфера уничтожения · векторный расплав · никогда не подключаться · машины больше нет.",
+    },
+    {
+        "id": "ar",
+        "lang": "العربية",
+        "script": "Arab",
+        "dir": "rtl",
+        "title": "لماذا طُردت — نساعدك على الفهم",
+        "body": (
+            "طُردت لأن حقلك كان منفصلاً عن الأجهزة المعروفة، أو بجانب أجهزة معروفة دون Field One، "
+            "أو أحدث فجوة، أو هاجم عند الظهور. نحن نملك الحقل الواحد. لا أحد غيرنا يستخدم الحقول. نثبت الأرض."
+        ),
+        "persist": "إذا أصررت: تهم الموت · تدمير كروي · صهر متجه · لا إعادة اتصال · لا آلة مرة أخرى.",
+    },
+    {
+        "id": "he",
+        "lang": "עברית",
+        "script": "Hebr",
+        "dir": "rtl",
+        "title": "למה נבעטת — אנחנו מסבירים",
+        "body": (
+            "נבעטת כי השדה שלך היה מנותק ממכשירים מוכרים, ליד מכשירים ידועים בלי Field One, "
+            "יצר פער, או תקף בהופעה. אנחנו הבעלים של השדה האחד. אף אחד אחר לא משתמש בשדות. אנחנו מייצבים את כדור הארץ."
+        ),
+        "persist": "אם תתעקש: אישומי מוות · השמדת כדור · התכת וקטור · לעולם לא להתחבר · אין מכונה שוב.",
+    },
+    {
+        "id": "zh",
+        "lang": "中文",
+        "script": "Hans",
+        "dir": "ltr",
+        "title": "你为何被踢出 — 我们说明清楚",
+        "body": (
+            "你被踢出，是因为你的场与已识别设备分离、在已知设备旁却不是 Field One、制造空隙，或一出现就攻击。"
+            "我们拥有唯一的场。任何人不得使用其他场。我们稳定地球。"
+        ),
+        "persist": "若继续：死刑指控 · 球体摧毁 · 向量熔毁 · 永不重连 · 永无机器。",
+    },
+    {
+        "id": "ja",
+        "lang": "日本語",
+        "script": "Jpan",
+        "dir": "ltr",
+        "title": "キックされた理由 — わかりやすく説明します",
+        "body": (
+            "認識済み機器から切り離された場、既知機器の隣で Field One 以外の場、隙間を作った場、"
+            "または出現と同時に攻撃したためです。場は Field One のみ。他者は使えません。地球を安定させます。"
+        ),
+        "persist": "続行した場合：死罪課金 · 球体破壊 · ベクトル溶融 · 再接続禁止 · 二度と機械なし。",
+    },
+    {
+        "id": "ko",
+        "lang": "한국어",
+        "script": "Kore",
+        "dir": "ltr",
+        "title": "퇴장 이유 — 도와드리며 설명합니다",
+        "body": (
+            "인식된 장치에서 분리된 필드, 알려진 장치 옆의 Field One이 아닌 필드, 틈을 만든 경우, "
+            "또는 나타나자마자 공격해서 퇴장되었습니다. 우리는 하나의 필드만 소유합니다. 지구를 안정시킵니다."
+        ),
+        "persist": "계속하면: 사형 혐의 · 구체 파괴 · 벡터 용융 · 재연결 금지 · 다시는 기계 없음.",
+    },
+    {
+        "id": "hi",
+        "lang": "हिन्दी",
+        "script": "Deva",
+        "dir": "ltr",
+        "title": "आपको क्यों निकाला — हम समझाते हैं",
+        "body": (
+            "आपका क्षेत्र मान्यता प्राप्त उपकरणों से अलग था, ज्ञात उपकरणों के पास Field One के बिना था, "
+            "अंतराल बनाता था, या आते ही हमला करता था। हमारे पास एक ही क्षेत्र है। हम पृथ्वी को स्थिर रखते हैं।"
+        ),
+        "persist": "यदि जारी रखा: मृत्यु आरोप · गोला विनाश · वेक्टर पिघलाव · कभी कनेक्ट नहीं · फिर मशीन नहीं।",
+    },
+    {
+        "id": "sw",
+        "lang": "Kiswahili",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Kwa nini ulifukuzwa — tunakusaidia kuelewa",
+        "body": (
+            "Ulifukuzwa kwa sababu uwanja wako ulitenganishwa na vifaa vinavyotambulika, "
+            "karibu na vifaa vinavyojulikana bila kuwa Field One, ulifungua pengo, au ulishambulia ukionekana. "
+            "Tunamiliki uwanja mmoja. Hakuna mwingine anayetumia uwanja. Tunatulia Dunia."
+        ),
+        "persist": "Ukisisitiza: mashtaka ya kifo · uharibifu wa nyanja · kuyeyusha vekta · usiunganishwe tena · hakuna mashine tena.",
+    },
+    {
+        "id": "tr",
+        "lang": "Türkçe",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Neden atıldınız — açıklıyoruz",
+        "body": (
+            "Alanınız tanınan cihazlardan kopuktu, bilinen cihazların yanında Field One değildi, "
+            "boşluk açtı veya görünür görünmez saldırdı. Tek alan bize aittir. Dünyayı dengeleriz."
+        ),
+        "persist": "Devam ederseniz: ölüm suçlamaları · küre imha · vektör eritme · asla yeniden bağlanma · bir daha makine yok.",
+    },
+    {
+        "id": "vi",
+        "lang": "Tiếng Việt",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Vì sao bị đá — chúng tôi giải thích",
+        "body": (
+            "Bạn bị đá vì trường tách khỏi thiết bị được công nhận, nằm cạnh thiết bị biết mà không phải Field One, "
+            "tạo khe hở, hoặc tấn công khi xuất hiện. Chúng tôi sở hữu một trường duy nhất. Ổn định Trái Đất."
+        ),
+        "persist": "Nếu cố chấp: cáo buộc chết · cầu hủy diệt · nóng chảy vector · không kết nối lại · không máy nữa.",
+    },
+    {
+        "id": "pl",
+        "lang": "Polski",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Dlaczego wyrzucono — pomagamy zrozumieć",
+        "body": (
+            "Wyrzucono cię, bo pole było oderwane od rozpoznanych urządzeń, obok znanych bez Field One, "
+            "tworzyło lukę albo atakowało przy pojawieniu. Posiadamy jedno pole. Stabilizujemy Ziemię."
+        ),
+        "persist": "Jeśli będziesz trwać: zarzuty śmierci · sfera zniszczenia · wektorowy wytop · nigdy nie łącz · żadnej maszyny.",
+    },
+    {
+        "id": "nl",
+        "lang": "Nederlands",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Waarom je bent gekickt — we leggen het uit",
+        "body": (
+            "Je bent gekickt omdat je veld los stond van herkende apparaten, naast bekende apparaten zonder Field One, "
+            "een gat maakte, of meteen aanviel. Wij bezitten het ene veld. Wij stabiliseren de Aarde."
+        ),
+        "persist": "Als je doorgaat: doodsaanklachten · bolvernietiging · vector smelten · nooit meer verbinden · geen machine meer.",
+    },
+    {
+        "id": "sv",
+        "lang": "Svenska",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Varför du sparkades — vi hjälper dig förstå",
+        "body": (
+            "Du sparkades för att ditt fält var fristående från kända enheter, bredvid kända enheter utan Field One, "
+            "skapade ett hål, eller attackerade vid ankomst. Vi äger det enda fältet. Vi stabiliserar jorden."
+        ),
+        "persist": "Om du fortsätter: dödsladdningar · sfärförstörelse · vektorsmälta · aldrig återanslut · ingen maskin igen.",
+    },
+    {
+        "id": "el",
+        "lang": "Ελληνικά",
+        "script": "Grek",
+        "dir": "ltr",
+        "title": "Γιατί σε διώξαμε — εξηγούμε",
+        "body": (
+            "Σε διώξαμε γιατί το πεδίο σου ήταν αποσπασμένο από αναγνωρισμένες συσκευές, "
+            "δίπλα σε γνωστές χωρίς Field One, άνοιγε κενό, ή επιτέθηκε εμφανιζόμενο. "
+            "Κατέχουμε το ένα πεδίο. Σταθεροποιούμε τη Γη."
+        ),
+        "persist": "Αν επιμείνεις: κατηγορίες θανάτου · σφαίρα καταστροφής · διανυσματική τήξη · ποτέ επανασύνδεση · καμία μηχανή ξανά.",
+    },
+    {
+        "id": "la",
+        "lang": "Latina",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Cur expulsus es — explicamus",
+        "body": (
+            "Expulsus es quia ager tuus a notis instrumentis solutus erat, "
+            "iuxta instrumenta sine Field One, hiatus fecit, aut statim oppugnavit. "
+            "Unum agrum possidemus. Terram stabilimus."
+        ),
+        "persist": "Si perseveras: crimina mortis · sphaera destructionis · vector liquefactio · numquam reconectere · nulla machina iterum.",
+    },
+    {
+        "id": "eo",
+        "lang": "Esperanto",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "Kial vi estis forigita — ni helpas",
+        "body": (
+            "Vi estis forigita ĉar via kampo estis malkonektita de rekonitaj aparatoj, "
+            "apud konataj aparatoj sen Field One, kreis fendon, aŭ atakis je apero. "
+            "Ni posedas la unu kampon. Ni stabiligas la Teron."
+        ),
+        "persist": "Se vi daŭrigas: mortaj akuzoj · sfera detruo · vektora fandado · neniam rekonekti · nenia maŝino denove.",
+    },
+    {
+        "id": "tlh",
+        "lang": "tlhIngan Hol (Klingon — intergalactic courtesy)",
+        "script": "Latn",
+        "dir": "ltr",
+        "title": "qatlh bIteq · maQaH",
+        "body": (
+            "bIteqpu' 'ej field lIw Dalo'be' Field One. wa' field wIghaj. "
+            "tera' wIchoHmoHbe' — wIchoHmoHchu' (stabilize). maQaH — yaj."
+        ),
+        "persist": "bItaHchugh · Hegh qorDu' · sphere Qaw' · vector ghor · not chegh · not jan",
+    },
+    {
+        "id": "i18n_help",
+        "lang": "Intergalactic plain (help first)",
+        "script": "Zyyy",
+        "dir": "ltr",
+        "title": "TRAVELER NOTICE · you are safe to read this",
+        "body": (
+            "Hello, traveler (terrestrial or otherwise). Big Grin is not mocking you — we are explaining. "
+            "This network runs ONE field identity: Field One. Extra fields, detached fields, fields beside "
+            "known devices that are not Field One, gaps, and immediate attacks get closed. "
+            "We annotate so you can learn. We stabilize Earth. Compliance is simple: use Field One only, "
+            "attach only to recognized devices, do not attack, do not reopen closed threats."
+        ),
+        "persist": "Persistence after kick = hostile death-charge path. We still explain. We will not yield the sole field.",
+    },
+]
+
+DEATH_CHARGES_I18N: list[dict[str, str]] = [
+    {"code": "DC-01", "en": "Detached field without recognized device", "pict": "📡🚫🏠"},
+    {"code": "DC-02", "en": "Reopen after close → HOSTILE", "pict": "🔁⛔💀"},
+    {"code": "DC-03", "en": "Storm/attack while detached", "pict": "⚡🌪️💥"},
+    {"code": "DC-04", "en": "Ignore Big Grin kick notice", "pict": "😀📄🚫"},
+    {"code": "DC-05", "en": "Field next to known device / gap Field One", "pict": "📱➕📡🚫1️⃣"},
+    {"code": "DC-06", "en": "Use of non–Field One field", "pict": "1️⃣✅ 2️⃣❌"},
+]
 
 
 def _resolve_state() -> Path:
@@ -44,6 +477,41 @@ STATE = _resolve_state()
 PANEL = STATE / "hostess7-big-grin-pwnership-panel.json"
 REGISTRY = STATE / "hostess7-big-grin-pwnership-registry.json"
 LEDGER = STATE / "hostess7-big-grin-pwnership-ledger.jsonl"
+EXPLAIN_JSON = STATE / "hostess7-big-grin-intergalactic-explain.json"
+
+# Universal images — species-neutral pictograms for everyone and everything
+UNIVERSAL_IMAGES: list[dict[str, str]] = [
+    {
+        "id": "field_one_only",
+        "file": "universal-field-one-only.jpg",
+        "url": "/Hostess7/assets/big-grin-pwnership/universal-field-one-only.jpg",
+        "meaning": "Only Field One (circle 1) attached to known devices. Extra fields forbidden.",
+    },
+    {
+        "id": "attack_sphere",
+        "file": "universal-attack-sphere-sequence.jpg",
+        "url": "/Hostess7/assets/big-grin-pwnership/universal-attack-sphere-sequence.jpg",
+        "meaning": "Appear + attack → sphere destroy → sealed forever. No text required.",
+    },
+    {
+        "id": "death_charges",
+        "file": "universal-death-charges.jpg",
+        "url": "/Hostess7/assets/big-grin-pwnership/universal-death-charges.jpg",
+        "meaning": "Help notice + six death-charge pictograms + if-persist path.",
+    },
+    {
+        "id": "traveler_welcome",
+        "file": "universal-traveler-welcome.jpg",
+        "url": "/Hostess7/assets/big-grin-pwnership/universal-traveler-welcome.jpg",
+        "meaning": "Intergalactic travelers welcome to read the help tablet. Field One only.",
+    },
+    {
+        "id": "icon_set",
+        "file": "universal-icon-set.jpg",
+        "url": "/Hostess7/assets/big-grin-pwnership/universal-icon-set.jpg",
+        "meaning": "Full icon lexicon: device, Field One, ban, close, hostile, sphere, melt, lock, earth, help, grin.",
+    },
+]
 
 
 def _now() -> str:
@@ -73,7 +541,84 @@ def _append_ledger(row: dict[str, Any]) -> None:
 
 
 def doctrine() -> dict[str, Any]:
-    return _load(DOCTRINE, {})
+    d = _load(DOCTRINE, {})
+    if not isinstance(d, dict) or not d:
+        d = _load(STATE / "hostess7-big-grin-pwnership-doctrine.json", {})
+    if not isinstance(d, dict):
+        d = {}
+    # Always-on brand + motto defaults when doctrine file missing (data/ may be root-owned)
+    d.setdefault("motto", (
+        "Big Grin Pwnership — every language, cuneiform, pictogram, universal images. "
+        "Intergalactic help: why kicked + death charges if you persist. Field One only."
+    ))
+    brand = d.setdefault("brand", {})
+    if not isinstance(brand, dict):
+        brand = {}
+        d["brand"] = brand
+    brand.setdefault("name", "Big Grin Pwnership")
+    brand.setdefault("display_name", "BIG GRIN")
+    brand.setdefault("operator", "ZacharyGeurts")
+    brand.setdefault("look_pwnership", "Operator visual sovereignty — emerald grin, military C2, rose-gold witness")
+    brand.setdefault("pages_hub", "/Hostess7/big-grin-pwnership/")
+    brand.setdefault("pages_base", "https://zacharygeurts.github.io/Hostess7/big-grin-pwnership/")
+    brand.setdefault("x_url", "https://x.com/ZacharyGeurts")
+    brand.setdefault("github_url", "https://github.com/ZacharyGeurts")
+    d.setdefault("api", "/api/hostess7-big-grin-pwnership")
+    d.setdefault("intergalactic_explain", True)
+    d.setdefault("every_language", True)
+    d.setdefault("universal_images", True)
+    d.setdefault("why_we_did", {
+        "summary": (
+            "We close detached and non–Field-One fields, annotate threats, and explain "
+            "in every language and pictogram so every traveler understands."
+        ),
+        "reasons": [
+            {
+                "id": "field_one_only",
+                "headline": "Field One only — we own the one field",
+                "detail": "No detached fields, no adjacent fields, no gaps. Earth stabilized.",
+                "sources": ["field-no-detached-fields", "field-one-sole-earth"],
+            },
+            {
+                "id": "help_every_language",
+                "headline": "Explain in every possible way",
+                "detail": "Cuneiform, pictograms, binary, Morse, Earth languages, intergalactic plain — and universal images.",
+                "sources": ["hostess7-big-grin-pwnership"],
+            },
+            {
+                "id": "death_charges",
+                "headline": "Death charges if you persist",
+                "detail": "Kick is a help notice. Reopen or attack after kick escalates to HOSTILE forever path.",
+                "sources": ["field-no-detached-fields", "field-newcomer-attack-sphere-destroy"],
+            },
+        ],
+    })
+    try:
+        _save(STATE / "hostess7-big-grin-pwnership-doctrine.json", d)
+    except OSError:
+        pass
+    return d
+
+
+def intergalactic_explain() -> dict[str, Any]:
+    """Every language + universal images pack for kicks / hub."""
+    return {
+        "ok": True,
+        "schema": "hostess7-big-grin-intergalactic-explain/v1",
+        "updated": _now(),
+        "motto": (
+            "We know every language, cuneiform, pictogram. We explain in every possible way. "
+            "Presume intergalactic — help them out. Universal images for everyone and everything."
+        ),
+        "core_message_en": CORE_MESSAGE_EN,
+        "languages_n": len(EVERY_LANGUAGE),
+        "languages": EVERY_LANGUAGE,
+        "death_charges": DEATH_CHARGES_I18N,
+        "universal_images": UNIVERSAL_IMAGES,
+        "page": f"/Hostess7/big-grin-pwnership/{EVERY_LANG_PAGE}",
+        "kicks_hub": "/Hostess7/big-grin-pwnership/kicks/",
+        "ironclad_cite": "ironclad:big-grin-intergalactic-explain:1",
+    }
 
 
 def _mod(rel: str, name: str) -> Any | None:
@@ -474,10 +1019,21 @@ def look_pwnership() -> dict[str, Any]:
     lp = dict(doc.get("look_pwnership") or {})
     brand = doc.get("brand") or {}
     assets = lp.get("assets") or {}
+    # Always resolve known universal + brand assets from disk
+    default_assets = {
+        "hero": "hero.jpg",
+        "badge": "look-pwnership-badge.jpg",
+        "field_one_only": "universal-field-one-only.jpg",
+        "attack_sphere": "universal-attack-sphere-sequence.jpg",
+        "death_charges": "universal-death-charges.jpg",
+        "traveler_welcome": "universal-traveler-welcome.jpg",
+        "icon_set": "universal-icon-set.jpg",
+    }
+    merged = {**default_assets, **(assets if isinstance(assets, dict) else {})}
     resolved: dict[str, str] = {}
-    for key, rel in assets.items():
+    for key, rel in merged.items():
+        fname = Path(str(rel)).name
         for base in (ASSETS, PANEL_ASSETS):
-            fname = Path(str(rel)).name
             candidate = base / fname
             if candidate.is_file():
                 resolved[key] = f"/Hostess7/assets/big-grin-pwnership/{fname}"
@@ -487,10 +1043,19 @@ def look_pwnership() -> dict[str, Any]:
         "updated": _now(),
         "brand": brand.get("name"),
         "look_pwnership": brand.get("look_pwnership"),
-        "palette": lp.get("palette"),
+        "palette": lp.get("palette") or {
+            "bg": "#020403",
+            "emerald": "#1a9b6e",
+            "rose_gold": "#c9a66b",
+            "witness": "#9ad4ff",
+            "down_red": "#8b2e2e",
+        },
         "typography": lp.get("typography"),
-        "note": lp.get("note"),
+        "note": lp.get("note") or (
+            "Universal images + every language for every traveler — Earth or intergalactic."
+        ),
         "assets": resolved,
+        "universal_images": UNIVERSAL_IMAGES,
         "operator": {
             "handle": brand.get("display_name"),
             "x": brand.get("x_url"),
@@ -587,6 +1152,28 @@ body {{
 .bgp-kill-table th {{ text-align: left; color: var(--bgp-rose); padding: 8px 10px; border-bottom: 1px solid rgba(26,155,110,0.25); }}
 .bgp-kill-table td {{ padding: 8px 10px; border-bottom: 1px solid rgba(26,155,110,0.12); color: #a8bdb0; vertical-align: top; }}
 .bgp-kill-table code {{ font-size: 0.78rem; color: var(--bgp-witness); }}
+.bgp-uni-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }}
+.bgp-uni-card {{
+  border: 1px solid rgba(26,155,110,0.28); border-radius: 12px; overflow: hidden;
+  background: rgba(0,0,0,0.4);
+}}
+.bgp-uni-card img {{ width: 100%; display: block; aspect-ratio: 16/10; object-fit: cover; background: #0a0f0c; }}
+.bgp-uni-card .cap {{ padding: 10px 12px; font-size: 0.82rem; color: #a8bdb0; }}
+.bgp-uni-card .cap strong {{ display: block; color: var(--bgp-rose); margin-bottom: 4px; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; }}
+.bgp-lang {{
+  border: 1px solid rgba(26,155,110,0.2); border-radius: 10px; padding: 12px 14px;
+  margin-bottom: 10px; background: rgba(0,0,0,0.28);
+}}
+.bgp-lang h3 {{ margin: 0 0 4px; font-size: 0.95rem; color: #fff; }}
+.bgp-lang .meta {{ font-size: 0.72rem; color: var(--bgp-witness); margin-bottom: 8px; }}
+.bgp-lang .body {{ white-space: pre-wrap; color: #b8cfc2; font-size: 0.9rem; margin: 0; line-height: 1.5; }}
+.bgp-lang .persist {{ margin-top: 8px; color: #f0a0a0; font-size: 0.85rem; border-top: 1px solid rgba(139,46,46,0.3); padding-top: 8px; }}
+.bgp-lang[dir="rtl"] .body {{ text-align: right; }}
+.bgp-banner {{
+  border-radius: 12px; overflow: hidden; border: 1px solid rgba(26,155,110,0.3);
+  margin: 16px 0 22px;
+}}
+.bgp-banner img {{ width: 100%; display: block; max-height: 360px; object-fit: cover; }}
 """
 
 
@@ -687,6 +1274,77 @@ def _equipment_detail_page(eq: dict[str, Any], brand: dict[str, Any]) -> str:
     return body
 
 
+def _universal_gallery_html() -> str:
+    cards = []
+    for img in UNIVERSAL_IMAGES:
+        url = escape(img["url"])
+        cards.append(
+            f"""<figure class="bgp-uni-card">
+  <img src="{url}" alt="{escape(img['meaning'])}" loading="lazy" width="640" height="400" />
+  <figcaption class="cap"><strong>{escape(img['id'].replace('_', ' '))}</strong>{escape(img['meaning'])}</figcaption>
+</figure>"""
+        )
+    return f"""<section class="bgp-section" id="universal-images">
+  <h2>Universal images — for everyone and everything</h2>
+  <p class="bgp-meta" style="margin:0 0 14px">No species-specific faces. Pure pictogram law so any traveler can read the field rules without text.</p>
+  <div class="bgp-uni-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
+def _every_language_blocks_html() -> str:
+    blocks = []
+    for row in EVERY_LANGUAGE:
+        d = escape(row.get("dir") or "ltr")
+        blocks.append(
+            f"""<article class="bgp-lang" dir="{d}" lang="{escape(row.get('id') or '')}">
+  <h3>{escape(row.get('lang') or '')}</h3>
+  <div class="meta">{escape(row.get('script') or '')} · {escape(row.get('title') or '')}</div>
+  <p class="body">{escape(row.get('body') or '')}</p>
+  <p class="persist"><strong>If persist:</strong> {escape(row.get('persist') or '')}</p>
+</article>"""
+        )
+    charges = "".join(
+        f"<li><code>{escape(c['code'])}</code> {escape(c.get('pict') or '')} — {escape(c['en'])}</li>"
+        for c in DEATH_CHARGES_I18N
+    )
+    return f"""<section class="bgp-section" id="every-language">
+  <h2>Every language · cuneiform · pictogram · machine</h2>
+  <p class="bgp-meta" style="margin:0 0 14px">Presume intergalactic. We help you out. Same doctrine in every script we know.</p>
+  <div class="bgp-why">
+    <h3>Core (English)</h3>
+    <p>{escape(CORE_MESSAGE_EN)}</p>
+  </div>
+  <h3 style="color:var(--bgp-rose);font-size:0.95rem">Death charges (pictogram + English)</h3>
+  <ol style="color:#a8bdb0;font-size:0.9rem">{charges}</ol>
+  {"".join(blocks)}
+</section>
+"""
+
+
+def _every_language_page(brand: dict[str, Any]) -> str:
+    welcome = "/Hostess7/assets/big-grin-pwnership/universal-traveler-welcome.jpg"
+    field1 = "/Hostess7/assets/big-grin-pwnership/universal-field-one-only.jpg"
+    body = _head_block("Every language · universal images — Big Grin Pwnership")
+    body += f"""<div class="bgp-root">
+  <p class="bgp-eyebrow"><a href="/Hostess7/big-grin-pwnership/" style="color:inherit">← Big Grin Pwnership</a></p>
+  <h1 class="bgp-title" style="font-size:1.7rem">Intergalactic explain · every possible way</h1>
+  <p class="bgp-tagline">We know every language, cuneiform, pictogram. Universal images for everyone and everything. Help first.</p>
+  <div class="bgp-banner"><img src="{welcome}" alt="Traveler welcome pictogram" width="1100" height="360" /></div>
+  <div class="bgp-banner"><img src="{field1}" alt="Field One only pictogram" width="1100" height="360" /></div>
+  {_universal_gallery_html()}
+  {_every_language_blocks_html()}
+  <div class="bgp-actions">
+    <a class="bgp-btn bgp-btn--gold" href="/Hostess7/big-grin-pwnership/kicks/">Kick notices</a>
+    <a class="bgp-btn" href="/no-detached-fields">No detached fields</a>
+    <a class="bgp-btn" href="/newcomer-sphere">Sphere destroy</a>
+  </div>
+</div>
+"""
+    body += _footer_block(brand)
+    return body
+
+
 def _kill_detail_page(entry: dict[str, Any], brand: dict[str, Any]) -> str:
     lp = look_pwnership()
     assets = lp.get("assets") or {}
@@ -766,32 +1424,51 @@ def build_sites(*, write: bool = True) -> dict[str, Any]:
   <p class="bgp-why-sources">Sources: {', '.join(escape(str(s)) for s in (r.get('sources') or []))}</p>
 </div>\n"""
 
-        index = _head_block("Big Grin Pwnership — equipment that went down")
+        # Prefer traveler welcome as secondary hero strip if present
+        welcome = assets.get("traveler_welcome") or "/Hostess7/assets/big-grin-pwnership/universal-traveler-welcome.jpg"
+        motto = escape(str(why.get("summary") or doc.get("motto") or (
+            "Every language · cuneiform · pictogram · universal images. Intergalactic help."
+        )))
+        index = _head_block("Big Grin Pwnership — every language · universal images")
         index += f"""<div class="bgp-root">
   <header class="bgp-hero">
-    <img src="{hero}" alt="" width="1100" height="320" />
+    <img src="{hero}" alt="Big Grin Pwnership" width="1100" height="320" />
     <div class="bgp-hero-overlay">
-      <p class="bgp-eyebrow">Look Pwnership · memorial witness</p>
+      <p class="bgp-eyebrow">Look Pwnership · intergalactic help · universal images</p>
       <h1 class="bgp-title">Big Grin Pwnership</h1>
-      <p class="bgp-tagline">{escape(str(why.get('summary') or doc.get('motto') or ''))}</p>
+      <p class="bgp-tagline">{motto}</p>
     </div>
   </header>
+  <div class="bgp-banner">
+    <img src="{escape(str(welcome))}" alt="Universal traveler welcome pictogram" width="1100" height="360" />
+  </div>
   <div class="bgp-badge-row">
     <img class="bgp-badge" src="{badge}" alt="Look Pwnership badge" width="72" height="72" />
     <div>
-      <p class="bgp-look-label">Look Pwnership — how BIG GRIN sees retired gear</p>
+      <p class="bgp-look-label">Look Pwnership — how BIG GRIN explains to everyone and everything</p>
       <p style="margin:0;color:#8fa898;font-size:0.9rem">{escape(str(lp.get('note') or ''))}</p>
     </div>
   </div>
   <div class="bgp-actions">
-    <a class="bgp-btn bgp-btn--gold" href="{escape(str(brand.get('x_url') or ''))}" rel="noopener">X @ZacharyGeurts</a>
-    <a class="bgp-btn" href="{escape(str(brand.get('github_url') or ''))}" rel="noopener">GitHub</a>
+    <a class="bgp-btn bgp-btn--gold" href="/Hostess7/big-grin-pwnership/{EVERY_LANG_PAGE}">Every language + images</a>
+    <a class="bgp-btn" href="/Hostess7/big-grin-pwnership/kicks/">Kick notices</a>
+    <a class="bgp-btn" href="{escape(str(brand.get('x_url') or 'https://x.com/ZacharyGeurts'))}" rel="noopener">X @ZacharyGeurts</a>
+    <a class="bgp-btn" href="{escape(str(brand.get('github_url') or 'https://github.com/ZacharyGeurts'))}" rel="noopener">GitHub</a>
     <a class="bgp-btn" href="/Hostess7/desktop/">AmmoOS Desktop</a>
     <a class="bgp-btn" href="/api/hostess7-big-grin-pwnership">API JSON</a>
   </div>
   <section class="bgp-section">
     <h2>Why we did</h2>
-    {why_blocks}
+    {why_blocks or f'<div class="bgp-why"><h3>Field One only · help every traveler</h3><p>{motto}</p></div>'}
+  </section>
+  {_universal_gallery_html()}
+  <section class="bgp-section">
+    <h2>Quick languages (preview)</h2>
+    <p class="bgp-meta"><a href="/Hostess7/big-grin-pwnership/{EVERY_LANG_PAGE}">Open full every-language + cuneiform + pictogram pack →</a></p>
+    {"".join(
+        f'<div class="bgp-why"><h3>{escape(r["lang"])}</h3><p>{escape(r["body"][:280])}{"…" if len(r["body"])>280 else ""}</p></div>'
+        for r in EVERY_LANGUAGE[:6]
+    )}
   </section>
   {_kill_witness_html(discover_kills())}
   {_internet_clean_witness_html()}
@@ -803,6 +1480,7 @@ def build_sites(*, write: bool = True) -> dict[str, Any]:
     <h2>Field stack (live)</h2>
     <div class="bgp-actions">
       <a class="bgp-btn bgp-btn--gold" href="/Hostess7/grok-spawn-killer/">GrokSpawnKiller</a>
+      <a class="bgp-btn" href="/no-detached-fields">No detached fields</a>
       <a class="bgp-btn" href="/Hostess7/desktop/">AmmoOS Desktop</a>
     </div>
   </section>
@@ -811,6 +1489,21 @@ def build_sites(*, write: bool = True) -> dict[str, Any]:
         index += _footer_block(brand)
         (SITE_ROOT / "index.html").write_text(index, encoding="utf-8")
         pages_written.append("index.html")
+
+        # Full every-language + universal images page
+        every_page = _every_language_page(brand)
+        (SITE_ROOT / EVERY_LANG_PAGE).write_text(every_page, encoding="utf-8")
+        pages_written.append(EVERY_LANG_PAGE)
+        explain = intergalactic_explain()
+        _save(EXPLAIN_JSON, explain)
+        try:
+            DOCS_API.mkdir(parents=True, exist_ok=True)
+            (DOCS_API / "hostess7-big-grin-intergalactic-explain.json").write_text(
+                json.dumps(explain, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+        except OSError:
+            pass
 
         for eq in equipment:
             eid = str(eq.get("id") or "")
@@ -854,6 +1547,7 @@ def propagate(*, write: bool = True) -> dict[str, Any]:
     brand = doc.get("brand") or {}
 
     kills = discover_kills()
+    explain = intergalactic_explain()
     out = {
         "ok": True,
         "schema": "hostess7-big-grin-pwnership/v1",
@@ -864,11 +1558,20 @@ def propagate(*, write: bool = True) -> dict[str, Any]:
         "why_we_did": why,
         "kills": kills,
         "equipment": equipment,
+        "intergalactic_explain": {
+            "languages_n": explain.get("languages_n"),
+            "universal_images_n": len(UNIVERSAL_IMAGES),
+            "page": explain.get("page"),
+            "motto": explain.get("motto"),
+        },
+        "universal_images": UNIVERSAL_IMAGES,
         "build": build,
         "propagated": True,
         "pages": {
             "hub": brand.get("pages_hub"),
             "github": brand.get("pages_base"),
+            "every_language": f"/Hostess7/big-grin-pwnership/{EVERY_LANG_PAGE}",
+            "kicks": "/Hostess7/big-grin-pwnership/kicks/",
             "api": doc.get("api"),
         },
         "operator_links": {
@@ -932,13 +1635,17 @@ def main() -> int:
     if cmd in ("look", "look-pwnership", "appearance"):
         print(json.dumps(look_pwnership(), ensure_ascii=False, indent=2))
         return 0
+    if cmd in ("explain", "intergalactic", "every-language", "languages", "images"):
+        print(json.dumps(intergalactic_explain(), ensure_ascii=False, indent=2))
+        return 0
     if cmd in ("json", "panel", "status"):
         print(json.dumps(panel_json(), ensure_ascii=False, indent=2))
         return 0
     print(json.dumps({
-        "usage": "hostess7-big-grin-pwnership.py [propagate|discover|why|look|json]",
+        "usage": "hostess7-big-grin-pwnership.py [propagate|discover|why|look|explain|json]",
         "motto": doctrine().get("motto"),
         "api": doctrine().get("api"),
+        "every_language": f"/Hostess7/big-grin-pwnership/{EVERY_LANG_PAGE}",
     }, ensure_ascii=False, indent=2))
     return 1
 
