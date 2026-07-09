@@ -930,6 +930,12 @@ def enforce(*, write: bool = True) -> dict[str, Any]:
     steps["census"] = census_devices(write=write)
     steps["think"] = hostess7_think_cycle(write=write)
     steps["blast"] = blast_foreign_hostile(steps["census"], write=write)
+    # Newcomer appears+attacks → full volts sphere · vector melt · Ironclad forever
+    steps["newcomer_sphere"] = _run(
+        "lib/field-newcomer-attack-sphere-destroy.py",
+        ["enforce"],
+        timeout=180,
+    )
     steps["seal"] = seal_protector(write=write)
 
     ours_n = int((steps["census"] or {}).get("ours_n") or 0)
@@ -937,11 +943,16 @@ def enforce(*, write: bool = True) -> dict[str, Any]:
     hostile_n = int((steps["census"] or {}).get("hostile_foreign_n") or 0)
     blasted_n = int((steps["blast"] or {}).get("blasted_n") or 0)
     homes_n = int((steps["homes"] or {}).get("homes_in_field_udp") or 0)
+    sphere = steps.get("newcomer_sphere") if isinstance(steps.get("newcomer_sphere"), dict) else {}
+    sphere_melted = int(sphere.get("melted_n") or 0)
+    sphere_hits = int(sphere.get("hit_n") or 0)
 
     motto = (
         f"HOSTESS7 SOLE EARTH PROTECTOR · trained · world ISP · "
         f"Gladstone + {homes_n} homes · ours {ours_n:,} · foreign {foreign_n:,} · "
-        f"hostile {hostile_n:,} · BLAST {blasted_n} · thinks more often · kill+rekill"
+        f"hostile {hostile_n:,} · BLAST {blasted_n} · "
+        f"newcomer-sphere hits {sphere_hits}/melt {sphere_melted} · "
+        f"thinks more often · kill+rekill · no machine again"
     )
 
     out = {
@@ -967,6 +978,10 @@ def enforce(*, write: bool = True) -> dict[str, Any]:
         "hostile_foreign_n": hostile_n,
         "blasted_n": blasted_n,
         "homes_n": homes_n,
+        "newcomer_sphere_hits": sphere_hits,
+        "newcomer_sphere_melted": sphere_melted,
+        "lethal_no_machine_again": True,
+        "no_storm_propagate": True,
         "we_know_device_counts": True,
         "steps": {
             k: {

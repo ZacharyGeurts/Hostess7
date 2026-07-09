@@ -4654,6 +4654,44 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        # Newcomer immediate-attack sphere destroy — full volts · vector melt · forever
+        if path in (
+            "/api/newcomer-sphere-destroy",
+            "/api/newcomer-sphere-destroy/",
+            "/api/newcomer-sphere",
+            "/api/newcomer-sphere/",
+            "/api/sphere-destroy",
+            "/api/no-machine-again",
+        ):
+            try:
+                cached = STATE_DIR / "field-newcomer-attack-sphere-destroy-panel.json"
+                qs_ns = parse_qs(urlparse(self.path).query)
+                force = str(qs_ns.get("refresh", qs_ns.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "enforce", "melt", "sphere", "blast",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["lethal_no_machine_again"] = True
+                            payload["no_storm_propagate"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-newcomer-attack-sphere-destroy.py",
+                    ["enforce"] if force else ["status"],
+                    timeout=240 if force else 30,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "newcomer_sphere_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Hostess7 sole Earth protector — trained · world ISP · Gladstone · BLAST foreign
         if path in (
             "/api/hostess7-sole-earth-protector",
@@ -10930,6 +10968,21 @@ class Handler(BaseHTTPRequestHandler):
         ):
             target = PANEL_DIR / "hostess7-sole-earth-protector.html"
             alt = STATE_DIR / "hostess7-sole-earth-protector-website" / "index.html"
+            if alt.is_file():
+                target = alt
+        elif path in (
+            "/newcomer-sphere",
+            "/newcomer-sphere/",
+            "/sphere-destroy",
+            "/sphere-destroy/",
+            "/no-machine-again",
+            "/no-machine-again/",
+            "/newcomer-sphere-destroy",
+            "/newcomer-sphere-destroy/",
+            "/field-newcomer-attack-sphere-destroy.html",
+        ):
+            target = PANEL_DIR / "field-newcomer-attack-sphere-destroy.html"
+            alt = STATE_DIR / "field-newcomer-attack-sphere-website" / "index.html"
             if alt.is_file():
                 target = alt
         elif path in (

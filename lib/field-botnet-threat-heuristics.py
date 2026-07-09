@@ -64,6 +64,11 @@ BASE_WEIGHTS: dict[str, float] = {
     "lateral_move": 13.0,
     "exfil_channel": 13.0,
     "hostile_recon": 11.0,
+    # Newcomer appears + immediately attacks — lethal no-machine-again sphere path
+    "NEWCOMER_IMMEDIATE_ATTACK": 17.0,
+    "IMMEDIATE_ATTACK": 16.5,
+    "STORM_PROPAGATE": 15.5,
+    "FOREIGN_HOSTILE_DEVICE": 14.0,
     "unknown": 3.0,
 }
 
