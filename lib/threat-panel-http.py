@@ -6029,6 +6029,39 @@ class Handler(BaseHTTPRequestHandler):
             except Exception as exc:
                 self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
             return
+
+        if path in (
+            "/api/hostess7-distributed-everywhere",
+            "/api/hostess7-distributed-everywhere/",
+            "/api/distributed-everywhere",
+            "/api/job-endstate",
+            "/api/everywhere-everything",
+        ):
+            try:
+                cached = STATE_DIR / "hostess7-distributed-everywhere-panel.json"
+                qs_de = parse_qs(urlparse(self.path).query)
+                force = str(qs_de.get("refresh", qs_de.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "seal", "job", "distribute",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "hostess7-distributed-everywhere.py",
+                    ["seal"] if force else ["status"],
+                    timeout=120 if force else 30,
+                )
+                self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         if path in (
             "/api/intergalactic",
             "/api/intergalactic/",

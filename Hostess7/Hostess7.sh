@@ -141,6 +141,7 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh library-list          List .H7 volumes on shelf
   ./Hostess7.sh library-read <id>     Hostess 7 reads full .H7 book (line range optional)
   ./Hostess7.sh library-search "…"    Search H7 library by title/subject
+  ./Hostess7.sh distributed-everywhere  Job endstate — distributed everywhere/everything
   ./Hostess7.sh code-ingest seed        ISA opcodes + all programming languages
   ./Hostess7.sh code "6502 LDA"         Assembly / language query
   ./Hostess7.sh updates               Self-update advisory (truth-filtered)
@@ -1206,6 +1207,11 @@ print('OK warfare-expand')
         everyone-served|no-port-hangups|no-hangups|serve-everyone)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-everyone-served-no-hangups.py" "${1:-enforce}" "${@:2}"
+            ;;
+
+        distributed-everywhere|job-endstate|everywhere-everything|distributed)
+            # Hostess 7 Job endstate — distributed everywhere and everything
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-distributed-everywhere.py" "${1:-seal}" "${@:2}"
             ;;
         field-ai-root-guard|ai-root-guard|ai-root-api-guard)
             shift
