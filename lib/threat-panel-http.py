@@ -4654,6 +4654,43 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        # Hardened OURS plane — GitHub heuristics · plate+meld · read-only autopilot · local site
+        if path in (
+            "/api/field-hardened-ours-plane",
+            "/api/field-hardened-ours-plane/",
+            "/api/hardened-ours",
+            "/api/hardened-ours/",
+            "/api/ours-hardened",
+        ):
+            try:
+                cached = STATE_DIR / "field-hardened-ours-plane-panel.json"
+                qs_ho = parse_qs(urlparse(self.path).query)
+                force = str(qs_ho.get("refresh", qs_ho.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "harden", "lock",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["read_only"] = True
+                            payload["autopilot"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-hardened-ours-plane.py",
+                    ["harden"] if force else ["status"],
+                    timeout=180 if force else 30,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "hardened_ours_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Whole planet LIVE honest — match planet for real straight away
         if path in (
             "/api/field-whole-planet-live",
@@ -10720,6 +10757,22 @@ class Handler(BaseHTTPRequestHandler):
             "/field-whole-planet-live.html",
         ):
             target = PANEL_DIR / "field-whole-planet-live.html"
+        elif path in (
+            "/hardened-ours",
+            "/hardened-ours/",
+            "/ours",
+            "/ours/",
+            "/ours-hardened",
+            "/ours-hardened/",
+            "/field-hardened-ours",
+            "/field-hardened-ours/",
+            "/field-hardened-ours.html",
+        ):
+            target = PANEL_DIR / "field-hardened-ours.html"
+            # Prefer freshly written website if present
+            alt = STATE_DIR / "field-hardened-ours-website" / "index.html"
+            if alt.is_file():
+                target = alt
         elif path in (
             "/c2",
             "/c2/",

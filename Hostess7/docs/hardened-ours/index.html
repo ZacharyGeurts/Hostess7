@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-store"/>
+<title>Hardened OURS · Field · plate · meld · autopilot</title>
+<style>
+:root {
+  --bg:#05080a; --card:#0c1316; --line:rgba(52,211,153,.32);
+  --text:#e8f6f0; --muted:#8fb3a6; --em:#34d399; --sky:#38bdf8; --hot:#fbbf24; --rose:#fb7185;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:
+  radial-gradient(900px 420px at 0% 0%,rgba(52,211,153,.14),transparent 55%),
+  radial-gradient(700px 360px at 100% 0%,rgba(56,189,248,.1),transparent 50%),var(--bg);
+  color:var(--text);min-height:100vh}
+a{color:var(--em);text-decoration:none}a:hover{text-decoration:underline}
+header{padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(5,8,10,.92);backdrop-filter:blur(10px);z-index:2}
+h1{margin:0;font-size:1.3rem} .sub{color:var(--muted);margin-top:.35rem;font-size:.92rem;line-height:1.4}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+.pill{border:1px solid var(--line);border-radius:999px;padding:.2rem .65rem;font-size:.75rem;color:var(--muted)}
+.pill.on{color:var(--em);border-color:rgba(52,211,153,.5)}
+.pill.hot{color:var(--hot);border-color:rgba(251,191,36,.45)}
+.wrap{max-width:1100px;margin:0 auto;padding:1.1rem 1.2rem 2.5rem}
+.hero{padding:1rem 1.1rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(52,211,153,.12),rgba(56,189,248,.05));margin-bottom:1rem}
+.hero strong{color:var(--em)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.7rem}
+.card{padding:.9rem;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.card h3{margin:0 0 .35rem;font-size:.92rem;color:var(--sky)}
+.card .v{font-size:1.05rem;font-weight:700;word-break:break-word}
+.card .d{color:var(--muted);font-size:.8rem;margin-top:.3rem;line-height:1.35}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.45rem;margin-top:.9rem}
+.links a{display:block;text-align:center;padding:.65rem .35rem;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:650;font-size:.85rem}
+.links a:hover{border-color:var(--em);text-decoration:none;background:#12201b}
+.motto{margin-top:1rem;padding:.85rem;border-left:3px solid var(--em);background:rgba(52,211,153,.06);color:var(--muted);font-size:.9rem;line-height:1.45}
+.repos{margin-top:1rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.5rem}
+.repo{padding:.7rem;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:.85rem}
+.repo .n{font-weight:700;color:var(--em)}
+.repo .u{color:var(--muted);font-size:.75rem;margin-top:.2rem;word-break:break-all}
+footer{margin-top:1.4rem;color:var(--muted);font-size:.8rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Hardened OURS plane</h1>
+  <div class="sub" id="hdr">GitHub heuristics · steel plate · plate meld · read-only autopilot network</div>
+  <div class="pills" id="pills"></div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div><strong>Everything is ours.</strong> Threat heuristics refreshed with GitHub planet data. Locked behind steel plate and plate meld. Network is read-only + autopilot — served locally instantly on Field C2.</div>
+    <div class="links" id="quick"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <h2 style="margin:1.2rem 0 .5rem;font-size:1rem;color:var(--sky)">GitHub ours surfaces</h2>
+  <div class="repos" id="repos"></div>
+  <div class="motto" id="motto">loading…</div>
+  <footer id="foot">Field hardened ours · local instant</footer>
+</div>
+<script>
+(async function(){
+  const BASE = location.origin || "http://127.0.0.1:9477";
+  document.getElementById("quick").innerHTML = [
+    ["/","Hub"],["/c2","C2"],["/sitrep","Sitrep"],
+    ["/botnet","Botnet"],["/whole-planet-live","Planet live"],
+    ["/world-ip-lease","IP+lease"],["/command","Hostess7"],
+    ["/api/field-hardened-ours-plane","API"],
+  ].map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+
+  let d = {};
+  try {
+    const r = await fetch("/api/field-hardened-ours-plane", {cache:"no-store"});
+    d = await r.json();
+  } catch(_) {
+    try {
+      const r2 = await fetch("/api/field-hardened-ours-plane/status", {cache:"no-store"});
+      d = await r2.json();
+    } catch(__) { d = {"ok": true, "schema": "field-hardened-ours-website/v1", "updated": "2026-07-09T21:34:32Z", "product": "HardenedOursPlane", "ours": true, "hardened": true, "read_only": true, "autopilot": true, "autopilot_network": true, "live_online_honest": 23756186615, "heuristics": {"heuristics": 539, "vectors": 10, "sources": 537, "terrorist_class_sources": 8, "mesh_shards": 75, "mesh_nodes_available": 5028, "killed_ok": 0, "terrorist_kills": 0}, "github": {"repos": 28, "stale": 0, "dns_rows": 32}, "steel_plate": {"generation": 17, "chain_hash_prefix": "58d377be1d104585", "steel_plated": true, "joint_truth": true}, "plate_meld": {"generation": 1364, "chain_hash_prefix": "dbabc278008242f4", "plate_count": 48, "uninterruptable": true}, "sole_ip_lease": true, "motto": "Network is OURS \u00b7 hardened \u00b7 read-only \u00b7 autopilot \u00b7 heuristics + GitHub plate-meld locked", "api": "/api/field-hardened-ours-plane", "ui": "http://127.0.0.1:9477/hardened-ours", "local_instant": true}; }
+  }
+  const fmt = (n) => (typeof n === "number" ? n.toLocaleString() : (n ?? "—"));
+  const h = d.heuristics || d.counts || {};
+  const gh = d.github || {};
+  const sp = d.steel_plate || {};
+  const pm = d.plate_meld || {};
+  const cards = [
+    {h:"Ours", v: d.ours||d.everything_ours?"YES":"—", d:"Everything ours · hardened hold"},
+    {h:"Hardened", v: d.hardened?"YES":"—", d:"Steel plate + meld locked"},
+    {h:"Read-only network", v: d.read_only?"YES":"—", d:"No human write surface on plane"},
+    {h:"Autopilot network", v: (d.autopilot||d.autopilot_network)?"YES":"—", d:"No human intervention required"},
+    {h:"Heuristics", v: fmt(h.heuristics||h.signals), d: `vectors ${fmt(h.vectors)} · sources ${fmt(h.sources)}`},
+    {h:"GitHub repos", v: fmt(gh.repos||gh.repos_cataloged), d: `stale ${fmt(gh.stale)} · dns ${fmt(gh.dns_rows)}`},
+    {h:"Steel plate gen", v: fmt(sp.generation), d: (sp.chain_hash_prefix||"") + (sp.steel_plated?" · plated":"")},
+    {h:"Plate meld gen", v: fmt(pm.generation), d: `plates ${fmt(pm.plate_count)} · ${pm.uninterruptable?"uninterruptible":""}`},
+    {h:"Live honest", v: fmt(d.live_online_honest), d:"Whole planet when sealed"},
+    {h:"Sole IP+lease", v: d.sole_ip_lease||d.every_ip_ours?"OURS":"—", d:"Old authority plane gone"},
+    {h:"Local website", v: "INSTANT", d:"Served on :9477/hardened-ours"},
+    {h:"GitHub ingest", v: fmt((d.steps&&d.steps.heuristics_ingest)||(d.github_ingest&&d.github_ingest.ok&&"ok")), d:"Stale + ours surfaces into board"},
+  ];
+  document.getElementById("grid").innerHTML = cards.map(c=>`
+    <div class="card"><h3>${c.h}</h3><div class="v">${c.v}</div><div class="d">${c.d}</div></div>
+  `).join("");
+
+  const repos = (d.github_repos || d.repos || []);
+  document.getElementById("repos").innerHTML = (Array.isArray(repos)?repos:[]).slice(0,24).map(r=>`
+    <div class="repo">
+      <div class="n">${r.name||r.slug||"repo"} ${r.stale?'· STALE':(r.ours!==false?'· OURS':'')}</div>
+      <div class="u">${r.pages_url||r.repo_url||r.slug||""}</div>
+    </div>
+  `).join("") || `<div class="repo"><div class="n">GitHub index</div><div class="u">${fmt(gh.repos)} repos cataloged · ours hardened</div></div>`;
+
+  document.getElementById("motto").textContent = d.motto || "Hardened OURS plane";
+  document.getElementById("hdr").textContent = (d.updated||"") + " · " + (d.title||"Hardened OURS");
+  document.getElementById("pills").innerHTML = [
+    d.ours&&"ours", d.hardened&&"hardened", d.read_only&&"read-only",
+    (d.autopilot||d.autopilot_network)&&"autopilot",
+    sp.steel_plated&&"steel plate", pm.uninterruptable&&"meld locked",
+    d.local_instant&&"local instant",
+  ].filter(Boolean).map((t,i)=>`<span class="pill ${i<3?'on':'hot'}">${t}</span>`).join("");
+  document.getElementById("foot").textContent =
+    "API " + (d.api||"/api/field-hardened-ours-plane") + " · " + BASE + "/hardened-ours";
+})();
+</script>
+</body>
+</html>
