@@ -1195,6 +1195,10 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-grab-all-devices-permanent-threat.py" "${1:-grab}" "${@:2}"
             ;;
+        trillions|kill-path|stands-in-way|kill-whoever)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-trillions-kill-path.py" "${1:-enforce}" "${@:2}"
+            ;;
         field-ai-root-guard|ai-root-guard|ai-root-api-guard)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-ai-root-api-guard.py" "${1:-json}" "${@:2}"

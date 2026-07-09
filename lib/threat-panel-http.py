@@ -5998,6 +5998,40 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in (
+            "/api/trillions",
+            "/api/trillions/",
+            "/api/field-trillions",
+            "/api/field-trillions/",
+            "/api/kill-whoever-stands-in-way",
+        ):
+            try:
+                cached = STATE_DIR / "field-trillions-kill-path-panel.json"
+                qs_t = parse_qs(urlparse(self.path).query)
+                force = str(qs_t.get("refresh", qs_t.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "enforce", "kill", "seal",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["trillions"] = True
+                            payload["kill_whoever_stands_in_way"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-trillions-kill-path.py",
+                    ["enforce"] if force else ["status"],
+                    timeout=240 if force else 30,
+                )
+                self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
+        if path in (
             "/api/grab-all-devices",
             "/api/grab-all-devices/",
             "/api/grab-devices",
