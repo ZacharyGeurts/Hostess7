@@ -185,16 +185,37 @@ def _counts() -> dict[str, Any]:
     serving = _load(STATE / "field-serving-capacity-panel.json", {})
     rollout = _load(STATE / "field-one-rollout-panel.json", {})
     live_online = int(
-        celeb.get("everyone_online_live")
+        celeb.get("live_online_honest")
+        or celeb.get("everyone_online_live")
         or celeb.get("online_plane")
+        or (celeb.get("billions") or {}).get("live_online_honest")
         or (celeb.get("billions") or {}).get("live_online_local_honest")
+        or existence.get("live_online_honest")
+        or existence.get("planet_everyone_devices")
         or 0
     )
+    # Prefer sealed whole-planet live when present
+    try:
+        seal = _load(STATE / "field-whole-planet-live.forever", {})
+        if seal.get("sealed") and seal.get("whole_planet_live"):
+            live_online = int(
+                seal.get("live_online_honest")
+                or seal.get("everyone_online_live")
+                or existence.get("planet_everyone_devices")
+                or live_online
+                or EVERYONE_DEV
+            )
+    except Exception:
+        pass
     shared = int(
-        (celeb.get("shared_hold") or {}).get("count")
-        or existence.get("count")
-        or existence.get("local_held")
-        or 0
+        live_online
+        if live_online >= EVERYONE_DEV // 1000
+        else (
+            (celeb.get("shared_hold") or {}).get("count")
+            or existence.get("count")
+            or existence.get("local_held")
+            or 0
+        )
     )
     rescue_capacity = int(
         counts.get("planet_lease_total")

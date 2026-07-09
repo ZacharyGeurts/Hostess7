@@ -4654,6 +4654,41 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        # Whole planet LIVE honest — match planet for real straight away
+        if path in (
+            "/api/field-whole-planet-live",
+            "/api/field-whole-planet-live/",
+            "/api/whole-planet-live",
+            "/api/whole-planet-live/",
+            "/api/live-honest-planet",
+        ):
+            try:
+                cached = STATE_DIR / "field-whole-planet-live-panel.json"
+                qs_wp = parse_qs(urlparse(self.path).query)
+                force = str(qs_wp.get("refresh", qs_wp.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "seal",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-whole-planet-live.py",
+                    ["seal"] if force else ["status"],
+                    timeout=60 if force else 20,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "whole_planet_live_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Planetary rescue — whole world · more waves
         if path in (
             "/api/field-planetary-rescue",
@@ -10673,6 +10708,18 @@ class Handler(BaseHTTPRequestHandler):
             "/field-planetary-rescue.html",
         ):
             target = PANEL_DIR / "field-planetary-rescue.html"
+        elif path in (
+            "/whole-planet-live",
+            "/whole-planet-live/",
+            "/live-honest",
+            "/live-honest/",
+            "/live-honest-planet",
+            "/live-honest-planet/",
+            "/field-whole-planet-live",
+            "/field-whole-planet-live/",
+            "/field-whole-planet-live.html",
+        ):
+            target = PANEL_DIR / "field-whole-planet-live.html"
         elif path in (
             "/c2",
             "/c2/",
