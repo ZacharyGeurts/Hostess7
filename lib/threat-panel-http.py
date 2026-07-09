@@ -5998,6 +5998,39 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in (
+            "/api/field-full-weave",
+            "/api/field-full-weave/",
+            "/api/full-weave",
+            "/api/full-weave/",
+            "/api/weave",
+        ):
+            try:
+                cached = STATE_DIR / "field-full-weave-panel.json"
+                qs_w = parse_qs(urlparse(self.path).query)
+                force = str(qs_w.get("refresh", qs_w.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "seal", "weave", "green",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["classic_is_subset"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-full-weave.py",
+                    ["seal"] if force else ["status"],
+                    timeout=360 if force else 30,
+                )
+                self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
+        if path in (
             "/api/distributed-server-lanes",
             "/api/distributed-server-lanes/",
             "/api/server-lanes",
