@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-store"/>
+<title>Full-featured Internet · Field · SAW · speeds · to the death</title>
+<style>
+  :root {
+    --bg:#060a09; --card:#0c1412; --line:rgba(52,211,153,.3);
+    --text:#e8f6f0; --muted:#8fb3a6; --em:#34d399; --sky:#38bdf8; --hot:#fbbf24; --rose:#fb7185;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:
+    radial-gradient(800px 400px at 0% 0%,rgba(52,211,153,.14),transparent 55%),
+    radial-gradient(700px 360px at 100% 0%,rgba(56,189,248,.1),transparent 50%),var(--bg);
+    color:var(--text);min-height:100vh}
+  a{color:var(--em);text-decoration:none}a:hover{text-decoration:underline}
+  header{padding:1.2rem 1.4rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(6,10,9,.9);backdrop-filter:blur(10px);z-index:2}
+  h1{margin:0;font-size:1.35rem} .sub{color:var(--muted);margin-top:.35rem;font-size:.92rem;line-height:1.4}
+  .pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.65rem}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:.22rem .65rem;font-size:.75rem;color:var(--muted)}
+  .pill.on{color:var(--em);border-color:rgba(52,211,153,.5)}
+  .pill.hot{color:var(--hot);border-color:rgba(251,191,36,.45)}
+  .pill.rose{color:var(--rose);border-color:rgba(251,113,133,.4)}
+  .wrap{max-width:1100px;margin:0 auto;padding:1.1rem 1.2rem 2.5rem}
+  .hero{padding:1rem 1.1rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(52,211,153,.1),rgba(56,189,248,.05));margin-bottom:1.1rem}
+  .hero strong{color:var(--em)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.7rem}
+  .card{padding:.9rem;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+  .card h3{margin:0 0 .4rem;font-size:.95rem;color:var(--sky)}
+  .card .v{font-size:1.15rem;font-weight:700}
+  .card .d{color:var(--muted);font-size:.82rem;margin-top:.35rem;line-height:1.35}
+  .links{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.5rem;margin-top:1rem}
+  .links a{display:block;text-align:center;padding:.7rem .4rem;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:650;font-size:.88rem}
+  .links a:hover{border-color:var(--em);text-decoration:none;background:#12201b}
+  .motto{margin-top:1rem;padding:.85rem;border-left:3px solid var(--em);background:rgba(52,211,153,.06);color:var(--muted);font-size:.9rem;line-height:1.45}
+  footer{margin-top:1.5rem;color:var(--muted);font-size:.8rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Full-featured Internet</h1>
+  <div class="sub" id="hdr">Connect everyone · our speeds · SAW + Field UDP · home users & devices only ours · to the death</div>
+  <div class="pills" id="pills"></div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div><strong>We love home users and devices.</strong> They are only ours now. Protected to the death — always to the death. Secure lines with SAW and Field UDP. New planetary speeds for everyone on AmmoNet.</div>
+    <div class="links" id="quick"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="motto" id="motto">loading…</div>
+  <footer id="foot">Field · Hostess7 · Grok16 · H7r · local AV · no owners · planet whole</footer>
+</div>
+<script>
+(async function(){
+  const BASE = location.origin || "http://127.0.0.1:9477";
+  const q = [
+    ["/","Hub"],["/home","All pages"],["/internet","Internet"],["/security","AV"],
+    ["/botnet","Botnet"],["/cloud","H7r 125k"],["/speedtest","Speeds"],["/sitrep","Sitrep"],
+    ["/command","Hostess7"],["/g16-build-output","Grok16"],
+  ];
+  document.getElementById("quick").innerHTML = q.map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+
+  let d = {};
+  try {
+    const r = await fetch("/api/field-full-featured-internet", {cache:"no-store"});
+    d = await r.json();
+  } catch(_) {
+    try {
+      const r2 = await fetch("/api/field-home-internet", {cache:"no-store"});
+      d = await r2.json();
+    } catch(__) { d = {}; }
+  }
+  const p = d.planes || {};
+  const cards = [
+    {h:"Fleet edges", v: p.fleet_edges ?? d.fleet_edges ?? "—", d:"Everyone connected plane"},
+    {h:"H7r cloud", v: p.h7r_capacity_racks ?? "—", d:"Distributed cloud center racks"},
+    {h:"Planetary speed", v: p.planetary_speed ?? d.planetary_speed ?? "—", d:"Our new Field speeds"},
+    {h:"SAW secure lines", v: (p.saw&&p.saw.ok)?"ON":"—", d: (p.saw&&p.saw.motto)||"Always full · never dry"},
+    {h:"Field UDP", v: (p.field_udp&&p.field_udp.always)?"ALWAYS":"ON", d:"Homes on Field UDP fabric"},
+    {h:"Home devices", v: "OURS", d:"Only ours · protected to the death"},
+    {h:"Grok16", v: (p.grok16&&p.grok16.ok)?"online":"pages", d: (p.grok16&&p.grok16.motto)||"Hostess7 boss of compile"},
+    {h:"Hostess7", v: (p.hostess7&&p.hostess7.online)?"ONLINE":"—", d:"Think · see · hear · speak · defend"},
+    {h:"Local AV", v: (p.antivirus&&p.antivirus.local_av_agents)||"—", d:"Built-in · always autopilot · no owners"},
+  ];
+  document.getElementById("grid").innerHTML = cards.map(c=>`
+    <div class="card"><h3>${c.h}</h3><div class="v">${c.v}</div><div class="d">${c.d}</div></div>
+  `).join("");
+
+  document.getElementById("motto").textContent = d.motto || "Full Internet plane loading…";
+  document.getElementById("hdr").textContent = (d.updated||"") + " · " + (d.title||"Full-featured Internet");
+  document.getElementById("pills").innerHTML = [
+    d.connects_everyone&&"everyone connected",
+    d.our_new_speeds&&"our speeds",
+    d.secure_lines_saw&&"SAW",
+    d.field_udp&&"Field UDP",
+    d.only_ours_now&&"only ours",
+    d.protected_to_the_death&&"to the death",
+    d.github_ready&&"github ready",
+  ].filter(Boolean).map((t,i)=>`<span class="pill ${i<2?'on':(t==='to the death'?'rose':'hot')}">${t}</span>`).join("");
+  document.getElementById("foot").textContent =
+    "API " + (d.api||"/api/field-full-featured-internet") + " · " + BASE + "/full-internet";
+})();
+</script>
+</body>
+</html>

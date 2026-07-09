@@ -3065,6 +3065,63 @@ class Handler(BaseHTTPRequestHandler):
             except Exception as exc:
                 self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
             return
+        # Full-featured Internet — everyone · speeds · SAW · Field UDP · to the death
+        if path in (
+            "/api/field-full-featured-internet",
+            "/api/field-full-featured-internet/",
+            "/api/full-internet",
+            "/api/full-internet/",
+        ):
+            try:
+                cached = STATE_DIR / "field-full-featured-internet-panel.json"
+                qs_fi = parse_qs(urlparse(self.path).query)
+                force = str(qs_fi.get("refresh", qs_fi.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-full-featured-internet.py",
+                    ["status"] if not force else ["once"],
+                    timeout=90 if force else 45,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "full_internet_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
+        if path in (
+            "/api/field-home-devices-to-the-death",
+            "/api/field-home-devices-to-the-death/",
+            "/api/home-devices-to-the-death",
+        ):
+            try:
+                cached = STATE_DIR / "field-home-devices-to-the-death-panel.json"
+                if cached.is_file():
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                        return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-home-devices-to-the-death.py",
+                    ["status"],
+                    timeout=30,
+                )
+                self._send(200, json.dumps(payload if isinstance(payload, dict) else {"ok": False}, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Autonet status API (display only)
         if path in ("/api/field-autonet", "/api/field-autonet/"):
             try:
@@ -10604,6 +10661,19 @@ class Handler(BaseHTTPRequestHandler):
             "/world-notice/",
         ):
             target = PANEL_DIR / "field-maintenance-world.html"
+        elif path in (
+            "/full-internet",
+            "/full-internet/",
+            "/full",
+            "/featured-internet",
+            "/featured-internet/",
+            "/field-full-featured-internet",
+            "/field-full-featured-internet/",
+            "/field-full-featured-internet.html",
+            "/our-internet",
+            "/our-internet/",
+        ):
+            target = PANEL_DIR / "field-full-featured-internet.html"
         elif path in (
             "/internet",
             "/internet/",

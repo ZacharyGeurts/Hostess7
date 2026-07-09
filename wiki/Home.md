@@ -19,6 +19,7 @@ She **thinks, sees, hears, speaks**, and runs the **whole Internet plane** — s
 | Surface | Address |
 |---------|---------|
 | **Local C2 launch hub (all pages)** | http://127.0.0.1:9477/ · http://127.0.0.1:9477/home |
+| **Full-featured Internet** | http://127.0.0.1:9477/full-internet |
 | Sitrep | http://127.0.0.1:9477/sitrep |
 | Counsel (talk UI) | `./Hostess7/Hostess7.sh talk` |
 | One-shot answer | `./Hostess7/Hostess7.sh -q "…"` |
@@ -67,6 +68,7 @@ Historic truth corpus gates every new claim. See **[Historic Truth Corpus](Histo
 
 ## Read next
 
+- **[Full-Featured Internet](Full-Featured-Internet)** — everyone · speeds · SAW · to the death
 - **[Internet Stack](Internet-Stack)** — AmmoNet is the Internet · two birds · 125k
 - **[Field UDP Rewrite](Field-UDP-Rewrite)** — SAW · outlet cook · secure lines
 - **[Distributed Cloud H7r](Distributed-Cloud-H7r)** — 125,000 capacity racks
