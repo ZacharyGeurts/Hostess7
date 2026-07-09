@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <title>NEXUS C2 · One Panel</title>
+  <style>
+    :root {
+      --bg: #050708;
+      --bar: #0a1012;
+      --edge: rgba(62, 207, 142, 0.28);
+      --rose: #e8a0b0;
+      --emerald: #3ecf8e;
+      --text: #e8f2ea;
+      --muted: #8aa095;
+      --tab: #121a1c;
+      --tab-on: #163028;
+      --danger: #ff6b7a;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.4 system-ui, "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+    .nx-shell {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      height: 100vh;
+      height: 100dvh;
+    }
+    .nx-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: linear-gradient(180deg, #0e1618, var(--bar));
+      border-bottom: 1px solid var(--edge);
+    }
+    .nx-brand {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .nx-brand strong {
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      color: var(--emerald);
+    }
+    .nx-brand span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .nx-actions {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nx-actions a, .nx-actions button {
+      appearance: none;
+      border: 1px solid var(--edge);
+      background: var(--tab);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nx-actions a:hover, .nx-actions button:hover {
+      border-color: var(--emerald);
+      color: var(--emerald);
+    }
+    .nx-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 8px 10px;
+      overflow-x: auto;
+      background: #070c0e;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      scrollbar-width: thin;
+    }
+    .nx-tab {
+      flex: 0 0 auto;
+      border: 1px solid transparent;
+      background: var(--tab);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .nx-tab:hover { color: var(--text); border-color: rgba(255,255,255,0.08); }
+    .nx-tab[aria-selected="true"] {
+      background: var(--tab-on);
+      color: var(--emerald);
+      border-color: var(--edge);
+      box-shadow: 0 0 0 1px rgba(62, 207, 142, 0.12) inset;
+    }
+    .nx-tab .nx-k {
+      opacity: 0.55;
+      font-size: 0.72rem;
+      margin-left: 6px;
+    }
+    .nx-stage {
+      position: relative;
+      min-height: 0;
+      background: #020405;
+    }
+    .nx-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #020405;
+      display: none;
+    }
+    .nx-frame.is-active { display: block; }
+    .nx-empty {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      color: var(--muted);
+      padding: 24px;
+      text-align: center;
+    }
+    .nx-empty.is-active { display: grid; }
+    .nx-status {
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding: 0 4px;
+    }
+    .nx-status strong { color: var(--rose); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="nx-shell">
+    <header class="nx-top">
+      <div class="nx-brand">
+        <strong>NEXUS C2</strong>
+        <span>Hostess7 · whole planet LIVE · sole IP+lease · Field UDP · SAW · world botnet</span>
+      </div>
+      <div class="nx-status" id="nx-status">Ready</div>
+      <div class="nx-actions">
+        <button type="button" id="nx-reload" title="Reload active tab">Reload</button>
+        <a href="/sitrep" target="_blank" rel="noopener">Sitrep ↗</a>
+        <a href="/whole-planet-live" target="_blank" rel="noopener">Planet live ↗</a>
+        <a href="/home" target="_blank" rel="noopener">Hub ↗</a>
+        <a href="http://127.0.0.1:9481/world/browser.html" target="_blank" rel="noopener">Queen Browser ↗</a>
+        <a href="http://127.0.0.1:9481/world/queen-game-room.html" target="_blank" rel="noopener">Queen Room ↗</a>
+      </div>
+    </header>
+    <nav class="nx-tabs" id="nx-tabs" role="tablist" aria-label="NEXUS surfaces"></nav>
+    <main class="nx-stage" id="nx-stage">
+      <div class="nx-empty is-active" id="nx-empty">Choose a tab</div>
+    </main>
+  </div>
+  <script>
+    (function () {
+      const TABS = [
+        { id: "sitrep", label: "Sitrep", path: "/sitrep?embed=1", key: "0" },
+        { id: "planet", label: "Planet live", path: "/whole-planet-live?embed=1", key: "p" },
+        { id: "online", label: "Online", path: "/everyone-online?embed=1", key: "5" },
+        { id: "botnet", label: "Botnet", path: "/field-botnet-hub?embed=1", key: "4" },
+        { id: "internet", label: "Full Internet", path: "/full-internet?embed=1", key: "i" },
+        { id: "iplease", label: "IP+lease", path: "/world-ip-lease?embed=1", key: "l" },
+        { id: "rescue", label: "Rescue", path: "/planetary-rescue?embed=1", key: "w" },
+        { id: "command", label: "Hostess7", path: "/command?embed=1", key: "2" },
+        { id: "field", label: "Field", path: "/field?embed=1", key: "1" },
+        { id: "threat", label: "Threat", path: "/threat-panel?embed=1", key: "3" },
+        { id: "security", label: "Security", path: "/field-home-security?embed=1", key: "s" },
+        { id: "home-net", label: "Home net", path: "/field-home-internet?embed=1", key: "h" },
+        { id: "gpu", label: "GPU", path: "/field-gpu?embed=1", key: "6" },
+        { id: "znet", label: "ZNetwork", path: "/field-znetwork?embed=1", key: "7" },
+        { id: "settings", label: "Settings", path: "/control-panel?embed=1", key: "8" },
+        { id: "compat", label: "Compat", path: "/compatibility-layers?embed=1", key: "9" },
+        { id: "browser", label: "Queen Browser", path: "http://127.0.0.1:9481/world/browser.html", key: "b" },
+        { id: "room", label: "Queen Room", path: "http://127.0.0.1:9481/world/queen-game-room.html", key: "r" },
+        { id: "chat", label: "Chat", path: "/field-chat-hub?embed=1", key: "c" },
+      ];
+
+      const tabsEl = document.getElementById("nx-tabs");
+      const stage = document.getElementById("nx-stage");
+      const empty = document.getElementById("nx-empty");
+      const status = document.getElementById("nx-status");
+      const frames = new Map();
+      let active = null;
+
+      function urlFor(tab) {
+        if (tab.path.startsWith("http")) return tab.path;
+        return tab.path;
+      }
+
+      function ensureFrame(tab) {
+        if (frames.has(tab.id)) return frames.get(tab.id);
+        const iframe = document.createElement("iframe");
+        iframe.className = "nx-frame";
+        iframe.title = tab.label;
+        iframe.loading = "lazy";
+        iframe.referrerPolicy = "no-referrer";
+        iframe.setAttribute("data-tab", tab.id);
+        stage.appendChild(iframe);
+        frames.set(tab.id, iframe);
+        return iframe;
+      }
+
+      function setStatus(msg) {
+        status.innerHTML = msg;
+      }
+
+      function activate(id) {
+        const tab = TABS.find((t) => t.id === id) || TABS[0];
+        active = tab.id;
+        empty.classList.remove("is-active");
+        for (const btn of tabsEl.querySelectorAll(".nx-tab")) {
+          btn.setAttribute("aria-selected", btn.dataset.id === tab.id ? "true" : "false");
+        }
+        for (const [fid, frame] of frames) {
+          frame.classList.toggle("is-active", fid === tab.id);
+        }
+        const frame = ensureFrame(tab);
+        frame.classList.add("is-active");
+        if (!frame.dataset.loaded) {
+          frame.src = urlFor(tab);
+          frame.dataset.loaded = "1";
+          setStatus("Loading <strong>" + tab.label + "</strong>…");
+          frame.addEventListener(
+            "load",
+            function () {
+              if (active === tab.id) setStatus("Open · <strong>" + tab.label + "</strong>");
+            },
+            { once: true }
+          );
+        } else {
+          setStatus("Open · <strong>" + tab.label + "</strong>");
+        }
+        try {
+          history.replaceState(null, "", "#tab=" + encodeURIComponent(tab.id));
+          localStorage.setItem("nexus-c2-tab", tab.id);
+        } catch (_) {}
+      }
+
+      function buildTabs() {
+        tabsEl.innerHTML = "";
+        for (const tab of TABS) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "nx-tab";
+          btn.dataset.id = tab.id;
+          btn.setAttribute("role", "tab");
+          btn.setAttribute("aria-selected", "false");
+          btn.innerHTML = tab.label + (tab.key ? '<span class="nx-k">' + tab.key + "</span>" : "");
+          btn.addEventListener("click", () => activate(tab.id));
+          tabsEl.appendChild(btn);
+        }
+      }
+
+      document.getElementById("nx-reload").addEventListener("click", () => {
+        if (!active || !frames.has(active)) return;
+        const frame = frames.get(active);
+        const tab = TABS.find((t) => t.id === active);
+        frame.src = urlFor(tab);
+        setStatus("Reloading <strong>" + tab.label + "</strong>…");
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+        if (e.altKey || e.ctrlKey || e.metaKey) return;
+        const hit = TABS.find((t) => t.key && t.key.toLowerCase() === e.key.toLowerCase());
+        if (hit) {
+          e.preventDefault();
+          activate(hit.id);
+        }
+      });
+
+      buildTabs();
+      let start = "sitrep";
+      try {
+        const hash = new URLSearchParams((location.hash || "").replace(/^#/, ""));
+        start = hash.get("tab") || localStorage.getItem("nexus-c2-tab") || "sitrep";
+      } catch (_) {}
+      if (!TABS.some((t) => t.id === start)) start = "sitrep";
+      activate(start);
+
+      // Live Hostess7 / planet strip in the status line
+      async function pulse() {
+        try {
+          const [planet, h7] = await Promise.all([
+            fetch("/api/field-whole-planet-live", { cache: "no-store" }).then((r) => r.json()).catch(() => ({})),
+            fetch("/api/hostess7-online-world-l2", { cache: "no-store" }).then((r) => r.json()).catch(() => ({})),
+          ]);
+          const live = planet.live_online_honest ?? planet.everyone_online_live;
+          const liveTxt = typeof live === "number" ? live.toLocaleString() : "—";
+          const h7on = h7.hostess7_online ? "ONLINE" : "…";
+          const brand = document.querySelector(".nx-brand span");
+          if (brand) {
+            brand.textContent =
+              "Hostess7 " + h7on + " · LIVE " + liveTxt + " · whole planet · sole IP+lease · SAW";
+          }
+          if (active) {
+            const tab = TABS.find((t) => t.id === active);
+            if (tab) {
+              setStatus(
+                "Open · <strong>" + tab.label + "</strong> · live " + liveTxt +
+                (planet.whole_planet_live ? " · planet sealed" : "")
+              );
+            }
+          }
+        } catch (_) {}
+      }
+      pulse();
+      setInterval(pulse, 12000);
+    })();
+  </script>
+</body>
+</html>

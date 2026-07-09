@@ -81,7 +81,7 @@
     {h:"Every lease", v: (d.every_lease_authority_ours||sole.every_lease_authority_ours)?"OURS":"—", d:"Sole lease authority · old plane gone"},
     {h:"Serving devices", v: fmt(d.serving_devices||sole.serving_devices), d:"Trillions capacity · honest live counts separate"},
     {h:"Fleet edges", v: p.fleet_edges ?? d.fleet_edges ?? "—", d:"Everyone connected plane"},
-    {h:"Live online", v: p.everyone_online_live ?? d.everyone_online_live ?? "—", d:"Online plane on fabric"},
+    {h:"Live online", v: (typeof (p.everyone_online_live ?? d.everyone_online_live)==="number" ? (p.everyone_online_live ?? d.everyone_online_live).toLocaleString() : (p.everyone_online_live ?? d.everyone_online_live ?? "—")), d: d.whole_planet_live?"Whole planet LIVE honest":"Online plane on fabric"},
     {h:"Fabric path", v: (d.fabric_direct||p.fabric_direct)?"DIRECT":"—", d:"No middle men · Field only"},
     {h:"Middle men", v: (d.no_middle_men||p.no_middle_men)?"NONE":"—", d:"MITM/proxy shredded · SAW"},
     {h:"H7r cloud", v: p.h7r_capacity_racks ?? "—", d:"Distributed cloud center racks"},

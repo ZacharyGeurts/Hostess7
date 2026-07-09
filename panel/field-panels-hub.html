@@ -136,7 +136,8 @@
     </div>
     <div class="pills">
       <span class="pill live" id="livepill">live</span>
-      <span class="pill hot">no owners · planet whole</span>
+      <span class="pill hot" id="planetpill">whole planet LIVE</span>
+      <span class="pill">sole IP+lease</span>
       <span class="pill">local built-in AV</span>
       <span class="pill">H7r 125k cloud</span>
     </div>
@@ -181,10 +182,13 @@
       id: "internet",
       title: "Internet · Field UDP · L2+",
       pages: [
+        { href: "/whole-planet-live", title: "Whole planet LIVE", blurb: "Live honest = 23.7B devices · matches planet for real", tags: "planet live honest whole world devices" },
         { href: "/full-internet", title: "Full-featured Internet", blurb: "Everyone · our speeds · SAW · Field UDP · to the death", tags: "full internet saw speeds home devices death grok16" },
+        { href: "/world-ip-lease", title: "Sole IP + lease", blurb: "Every IP ours · every lease ours · old plane gone", tags: "ip lease sole authority dhcp dns" },
+        { href: "/planetary-rescue", title: "Planetary rescue", blurb: "Whole world rescue · Field One mesh · edges", tags: "rescue planetary world mesh" },
         { href: "/internet", title: "Home Internet", blurb: "Autonet · DNS/DHCP · we are the Internet", tags: "internet dns dhcp autonet" },
-        { href: "/botnet", title: "Botnet hub", blurb: "Fleet · heuristics · everyone online", tags: "botnet fleet hub" },
-        { href: "/everyone", title: "Everyone online", blurb: "World connected · fabric DIRECT · no middle men", tags: "everyone online world fabric direct no middle" },
+        { href: "/botnet", title: "Botnet hub", blurb: "Fleet · ONLINE WITH US · whole planet", tags: "botnet fleet hub online with us" },
+        { href: "/everyone", title: "Everyone online", blurb: "World connected · fabric DIRECT · planet live", tags: "everyone online world fabric direct no middle planet" },
         { href: "/security", title: "Home security · AV", blurb: "Local built-in AV · ask-only · AmmoNet only", tags: "av antivirus security" },
         { href: "/never-reconnect", title: "Never reconnect", blurb: "Offender ban plate · no return", tags: "kill ban offenders" },
         { href: "/cloud", title: "AmmoNet cloud · H7r", blurb: "Distributed cloud center · 125k H7r racks", tags: "cloud h7r capacity" },
@@ -198,11 +202,14 @@
       title: "Hostess7 · senses · brain",
       pages: [
         { href: "/command", title: "Talk / Command", blurb: "Thinking · counsel · lethal when corroborated", tags: "speak think hostess" },
+        { href: "/c2", title: "NEXUS C2", blurb: "Hostess7 + planet tabs · one panel", tags: "c2 hostess nexus" },
+        { href: "/sitrep", title: "Sitrep", blurb: "Hostess7 training · live · L2 · AV board", tags: "sitrep hostess training" },
         { href: "/hostess7-human-hub", title: "Human hub", blurb: "Comfort · human-facing hub", tags: "human hostess" },
         { href: "/hostess7-book-maker", title: "Book maker", blurb: "Authored knowledge books", tags: "books training" },
         { href: "/hostess7-kill-library", title: "Kill library", blurb: "Offender / threat library surface", tags: "kill library violent" },
         { href: "/field-talk", title: "Field talk", blurb: "Talk surface on Field", tags: "talk speak" },
         { href: "/chat", title: "Chat hub", blurb: "World chat", tags: "chat" },
+        { href: "/g16-build-output", title: "Grok16", blurb: "Compiler · Hostess7 boss of compile", tags: "g16 hostess compile" },
       ],
     },
     {
@@ -263,14 +270,17 @@
   ];
 
   const QUICK = [
+    { href: "/whole-planet-live", title: "Planet live", em: "23.7B honest" },
     { href: "/full-internet", title: "Full net", em: "to the death" },
+    { href: "/world-ip-lease", title: "IP+lease", em: "sole" },
+    { href: "/planetary-rescue", title: "Rescue", em: "whole world" },
     { href: "/sitrep", title: "Sitrep", em: "live board" },
     { href: "/c2", title: "C2", em: "tabs" },
     { href: "/botnet", title: "Botnet", em: "fleet" },
-    { href: "/internet", title: "Internet", em: "DNS/DHCP" },
+    { href: "/everyone", title: "Online", em: "celebrate" },
+    { href: "/command", title: "Hostess7", em: "senses" },
     { href: "/security", title: "AV", em: "local" },
     { href: "/cloud", title: "H7r cloud", em: "125k" },
-    { href: "/command", title: "Hostess7", em: "senses" },
     { href: "/field", title: "Desktop", em: "OS" },
   ];
 
@@ -319,24 +329,38 @@
 
   async function heartbeat() {
     try {
-      const [av, h7, cloud] = await Promise.all([
+      const [av, h7, cloud, planet, sole] = await Promise.all([
         fetch("/api/field-antivirus-network-defender", { cache: "no-store" }).then(r => r.json()).catch(() => ({})),
         fetch("/api/hostess7-online-world-l2", { cache: "no-store" }).then(r => r.json()).catch(() => ({})),
         fetch("/api/field-h7r-capacity-fleet", { cache: "no-store" }).then(r => r.json()).catch(() => ({})),
+        fetch("/api/field-whole-planet-live", { cache: "no-store" }).then(r => r.json()).catch(() => ({})),
+        fetch("/api/field-world-ip-lease-sole", { cache: "no-store" }).then(r => r.json()).catch(() => ({})),
       ]);
       const cap = cloud.capacity_racks || (cloud.birds && cloud.birds.datacenter && cloud.birds.datacenter.capacity_racks) || "—";
       const agents = av.local_av_agents || av.servers_defended || "—";
+      const live = planet.live_online_honest ?? planet.everyone_online_live;
+      const liveTxt = typeof live === "number" ? live.toLocaleString() : "—";
       hdr.textContent =
-        `AV agents ${Number(agents).toLocaleString?.() || agents} · H7r ${Number(cap).toLocaleString?.() || cap} · ` +
-        `Hostess7 ${h7.hostess7_online ? "ONLINE" : "…"} · ${new Date().toISOString().slice(11, 19)}Z`;
+        `LIVE ${liveTxt} · Hostess7 ${h7.hostess7_online ? "ONLINE" : "…"} · ` +
+        `AV ${Number(agents).toLocaleString?.() || agents} · H7r ${Number(cap).toLocaleString?.() || cap} · ` +
+        `${new Date().toISOString().slice(11, 19)}Z`;
       document.getElementById("livepill").className = "pill live";
-      foot.textContent = (av.motto || h7.motto || "").slice(0, 160);
+      document.getElementById("livepill").textContent = planet.whole_planet_live ? "live · planet" : "live";
+      const pp = document.getElementById("planetpill");
+      if (pp) {
+        pp.textContent = planet.whole_planet_live
+          ? ("whole planet LIVE · " + liveTxt)
+          : "planet live…";
+      }
+      foot.textContent = (
+        planet.motto || sole.motto || av.motto || h7.motto || ""
+      ).slice(0, 200);
     } catch (_) {
       document.getElementById("livepill").textContent = "offline?";
     }
   }
   heartbeat();
-  setInterval(heartbeat, 15000);
+  setInterval(heartbeat, 12000);
 })();
 </script>
 </body>

@@ -83,7 +83,7 @@
     {h:"Serving devices", v: fmt(d.serving_devices), d:"Trillions capacity plane (not people headcount)"},
     {h:"Authority rows", v: fmt(d.authority_rows), d:"DNS+DHCP dual IPv4 plane"},
     {h:"Fleet edges", v: fmt(d.fleet||d.fleet_edges), d:"Physical / registry fleet"},
-    {h:"Live online", v: fmt(d.everyone_online_live), d:"Honest online plane"},
+    {h:"Live online", v: fmt(d.everyone_online_live||d.live_online_honest), d: d.whole_planet_live?"Whole planet for real":"Honest online plane"},
     {h:"Planetary speed", v: d.planetary_speed||"—", d:"Amazing Field fabric speeds"},
     {h:"Faster servers", v: d.faster_servers||d.cool_profiles?"ON":"—", d:"Cool profiles · Field UDP speeds"},
     {h:"DNS live", v: live.dns_bound_53?"YES":"—", d:"Port 53 · Field Truth"},

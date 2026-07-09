@@ -28,3 +28,8 @@
 **[Pages hub](https://zacharygeurts.github.io/Hostess7/)** · **[AmmoOS wiki](https://github.com/ZacharyGeurts/AmmoOS/wiki)** · **[Stack hub](https://zacharygeurts.github.io/ZacharyGeurts/stack.html)**
 
 **[→ GitHub: Hostess7](https://github.com/ZacharyGeurts/Hostess7)**
+**Planet plane**
+* [Whole planet LIVE](http://127.0.0.1:9477/whole-planet-live)
+* [Sole IP+lease](http://127.0.0.1:9477/world-ip-lease)
+* [Planetary rescue](http://127.0.0.1:9477/planetary-rescue)
+* [NEXUS C2](http://127.0.0.1:9477/c2)

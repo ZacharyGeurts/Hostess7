@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="everyone-online">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planetary Celebration · Shared Hold · Field</title>
+  <meta name="description" content="Shared hold on Field — we are the internet. No outside view." />
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="referrer" content="no-referrer" />
+  <!-- Field: no outside embed / view -->
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none'; default-src 'self' http://127.0.0.1:9477; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" />
+  <style>
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --muted: #9aa0a6;
+      --ok: #3dff9a;
+      --wait: #ffd166;
+      --line: #222;
+      --card: #0a0a0a;
+      --glow: rgba(61, 255, 154, 0.35);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg); color: var(--fg);
+      font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100%;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    /* Soft resist casual capture / print */
+    @media print {
+      body { display: none !important; }
+    }
+    body.field-away {
+      filter: blur(18px);
+      pointer-events: none;
+    }
+    body {
+      background:
+        radial-gradient(1200px 600px at 50% -10%, rgba(61,255,154,0.12), transparent 60%),
+        radial-gradient(800px 400px at 100% 100%, rgba(100,160,255,0.08), transparent 50%),
+        #000;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 64px; }
+    header { text-align: center; margin-bottom: 28px; }
+    .badge {
+      display: inline-block;
+      border: 1px solid var(--ok);
+      color: var(--ok);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: 0 0 24px var(--glow);
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      margin: 16px 0 8px;
+      letter-spacing: -0.02em;
+    }
+    .motto { color: var(--muted); max-width: 40rem; margin: 0 auto 8px; line-height: 1.5; }
+    .message {
+      margin-top: 18px;
+      font-size: 1.15rem;
+      line-height: 1.45;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #0d0d0d, #050505);
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    @media (max-width: 760px) { .hero { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .big {
+      font-size: clamp(2.6rem, 8vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--ok);
+      text-shadow: 0 0 30px var(--glow);
+    }
+    .label { color: var(--muted); font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+    .bar {
+      height: 12px; border-radius: 999px; background: #151515; overflow: hidden; margin-top: 14px;
+      border: 1px solid #222;
+    }
+    .bar > i {
+      display: block; height: 100%; width: 0%;
+      background: linear-gradient(90deg, #1bff8a, #7dffc0);
+      box-shadow: 0 0 16px var(--glow);
+      transition: width 0.6s ease;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .mile {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #070707;
+      min-height: 92px;
+    }
+    .mile.done { border-color: rgba(61,255,154,0.45); box-shadow: inset 0 0 0 1px rgba(61,255,154,0.12); }
+    .mile .st { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .mile.done .st { color: var(--ok); }
+    .mile.wait .st { color: var(--wait); }
+    .mile h3 { margin: 0 0 4px; font-size: 1rem; }
+    .mile p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #1a1a1a; }
+    th { color: var(--muted); font-weight: 500; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    footer {
+      margin-top: 28px; color: var(--muted); font-size: 0.85rem; text-align: center;
+    }
+    .pulse {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--ok); margin-right: 8px; box-shadow: 0 0 12px var(--glow);
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
+    }
+    .confetti {
+      pointer-events: none; position: fixed; inset: 0; overflow: hidden; z-index: 0;
+    }
+    .confetti span {
+      position: absolute; top: -10px; width: 6px; height: 10px; opacity: 0.85;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(540deg); opacity: 0.15; }
+    }
+    main { position: relative; z-index: 1; }
+    a { color: var(--ok); }
+  </style>
+</head>
+<body>
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <main class="wrap">
+    <header>
+      <div class="badge"><span class="pulse"></span>Planetary · Live on 127.0.0.1</div>
+      <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <span class="badge" style="border-color:var(--ok);color:var(--ok)">HONEST · NOT SIMULATION</span>
+        <span class="badge" style="border-color:#ffd166;color:#ffd166">PLANETARY · SHARED HOLD</span>
+        <span class="badge" style="border-color:#f66;color:#f88">NOT A MOBILE OPERATOR</span>
+        <span class="badge" id="badgeAutopilot" style="border-color:#64a0ff;color:#9ec5ff;box-shadow:none">AUTOPILOT · L2+</span>
+        <span class="badge" id="badgeRO" style="border-color:#666;color:#bbb;box-shadow:none">READ-ONLY · NO BUTTONS</span>
+      </div>
+      <h1>Planetary Celebration</h1>
+      <p class="motto" id="motto">RESCUE — Field DNS+DHCP for everyone. Want Netflix.com — already there. Wire/modem ISP physics only — not a mobile operator. AmmoNet L2+ is the internet.</p>
+      <p class="message" id="message">Loading planetary rescue census…</p>
+      <p style="margin-top:8px;font-size:0.85rem;color:var(--muted)">
+        Pages: <a href="https://zacharygeurts.github.io/Planetary_Celebration/" style="color:#7dffc0">zacharygeurts.github.io/Planetary_Celebration</a>
+        · <a href="https://github.com/ZacharyGeurts/Planetary_Celebration" style="color:#9ec5ff">GitHub</a>
+      </p>
+    </header>
+
+    <section class="hero">
+      <div class="card" style="border-color:rgba(61,255,154,0.45)">
+        <div class="label">Planetary rescue — DNS+DHCP authority (billions)</div>
+        <div class="big" id="rescueCount">—</div>
+        <div style="margin-top:10px;color:var(--ok)" id="rescueSeal">● Exclusive Field plane · not a mobile operator · wire/modem only</div>
+        <div style="margin-top:10px;color:var(--muted);line-height:1.5;font-size:0.9rem" id="rescueNote">IPv4 under Field DNS + DHCP · nice ISP = L2+ pipe into AmmoNet · no cellular carrier role</div>
+      </div>
+      <div class="card" style="border-color:rgba(100,160,255,0.35)">
+        <div class="label">Shared hold on Field — we are the internet</div>
+        <div class="big" id="existenceCount" style="color:#9ec5ff">—</div>
+        <div style="margin-top:10px;color:var(--ok)" id="holdSeal">● Shared hold · Field is the internet · no outside interference</div>
+        <div style="margin-top:10px;color:var(--muted);line-height:1.5;font-size:0.9rem" id="existenceKinds">…</div>
+        <div style="margin-top:8px;color:var(--muted);font-size:0.85rem" id="existenceNote">Shared plane · registry · leases · stamps · redundant mirror</div>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="card">
+        <div class="label">Local Field live score (not FI numbers)</div>
+        <div class="big" id="score" style="font-size:3rem">—</div>
+        <div style="margin-top:10px;color:var(--muted)" id="connectedYet">Checking…</div>
+        <div class="bar"><i id="bar"></i></div>
+        <div style="margin-top:8px;color:var(--muted);font-size:0.9rem" id="pctLabel">0% local live milestones</div>
+        <div style="margin-top:8px;color:var(--muted);font-size:0.8rem" id="scoreDef"></div>
+      </div>
+      <div class="card">
+        <div class="label">Local live online (devices + leases)</div>
+        <div class="big" id="everyone" style="font-size:3rem">—</div>
+        <div style="margin-top:12px;color:var(--muted);line-height:1.5" id="lanes">
+          real devices · real DHCP leases · local only
+        </div>
+        <div style="margin-top:14px;font-size:0.9rem;color:var(--muted)" id="hopLine">Final Internet: …</div>
+        <div style="margin-top:10px;font-size:0.9rem;color:var(--muted)" id="fiLine">FI checks: …</div>
+      </div>
+      <div class="card">
+        <div class="label">Secure hold posture</div>
+        <div id="secureHoldLine" style="color:var(--ok);font-size:1rem;line-height:1.55;margin-bottom:10px">…</div>
+        <div class="label">Fabric map (catalog — not people online)</div>
+        <div id="fabricLine" style="color:var(--muted);font-size:0.95rem;line-height:1.55;margin-bottom:8px">…</div>
+        <div class="label" style="margin-top:12px">Distributed secure · hail (observe)</div>
+        <div id="secureLine" style="color:var(--muted);font-size:0.95rem;line-height:1.55">…</div>
+        <div class="label" style="margin-top:12px">Composite / projection (not live headcount)</div>
+        <div id="compositeLine" style="color:var(--muted);font-size:0.9rem;line-height:1.5">…</div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-bottom:16px">
+      <div class="label">Live milestones (real systems)</div>
+      <div class="grid" id="miles"></div>
+    </section>
+
+    <section class="card" style="margin-bottom:16px">
+      <div class="label">Sharing · our devices &amp; tables</div>
+      <div id="shareLine" style="color:var(--muted);font-size:0.95rem;line-height:1.55;margin-bottom:8px">…</div>
+      <div id="falseProphetsLine" style="color:var(--muted);font-size:0.9rem;line-height:1.5">…</div>
+    </section>
+
+    <section class="card" style="margin-bottom:16px;border-color:rgba(61,255,154,0.25)">
+      <div class="label">Shared hold — every device on Field (we are the internet · no outside interference)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px;align-items:center">
+        <input id="existenceFilter" type="search" placeholder="Filter id / kind / ip / hold…"
+          style="flex:1;min-width:180px;background:#0a0a0a;color:#fff;border:1px solid #333;border-radius:8px;padding:8px 10px" />
+        <select id="existenceKind" style="background:#0a0a0a;color:#fff;border:1px solid #333;border-radius:8px;padding:8px 10px">
+          <option value="">all kinds</option>
+        </select>
+        <span id="existenceShown" style="color:var(--muted);font-size:0.85rem">—</span>
+      </div>
+      <div style="overflow:auto;max-height:min(70vh,720px)">
+        <table>
+          <thead>
+            <tr>
+              <th>ID / name</th><th>Kind</th><th>Hold</th><th>IP</th><th>MAC</th><th>DNS</th>
+              <th>Route</th><th>Secure</th><th>Seen</th>
+            </tr>
+          </thead>
+          <tbody id="existenceBody"><tr><td colspan="9" style="color:var(--muted)">Loading existence hold…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" style="margin-bottom:16px">
+      <div class="label">Live people devices (honest subset)</div>
+      <div style="overflow:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>ID / name</th><th>Kind</th><th>IP</th><th>MAC</th><th>DNS</th><th>Role</th><th>Seen</th>
+            </tr>
+          </thead>
+          <tbody id="devicesBody"><tr><td colspan="7" style="color:var(--muted)">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" style="margin-bottom:16px;border-color:rgba(100,160,255,0.3)">
+      <div class="label">AmmoNet DHCP leases (seamless Field join)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin:8px 0 10px">
+        <div class="big" id="leaseCount" style="font-size:2.2rem;margin:0">—</div>
+        <div style="color:var(--muted);font-size:0.9rem" id="leaseKinds">…</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;align-items:center">
+        <input id="leaseFilter" type="search" placeholder="Filter IP / MAC / device / kind…"
+          style="flex:1;min-width:180px;background:#0a0a0a;color:#fff;border:1px solid #333;border-radius:8px;padding:8px 10px" />
+        <select id="leaseKind" style="background:#0a0a0a;color:#fff;border:1px solid #333;border-radius:8px;padding:8px 10px">
+          <option value="">all kinds</option>
+        </select>
+        <span id="leaseShown" style="color:var(--muted);font-size:0.85rem">—</span>
+      </div>
+      <div style="overflow:auto;max-height:min(70vh,720px)">
+        <table>
+          <thead>
+            <tr>
+              <th>IP</th><th>MAC</th><th>DNS</th><th>Device</th>
+              <th>Kind</th><th>Domain</th><th>AmmoNet</th><th>Seen</th>
+            </tr>
+          </thead>
+          <tbody id="leases"><tr><td colspan="8" style="color:var(--muted)">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="card">
+        <div class="label">Field DNS answer points (shared table)</div>
+        <div style="overflow:auto">
+          <table>
+            <thead><tr><th>Address</th><th>Port</th><th>Role</th><th>Authority</th></tr></thead>
+            <tbody id="dnsBody"><tr><td colspan="4" style="color:var(--muted)">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div id="dnsPoints" style="font-family:ui-monospace,monospace;font-size:0.85rem;line-height:1.5;color:#9aa0a6;margin-top:10px"></div>
+      </div>
+      <div class="card">
+        <div class="label">Device map lattice (seeds labeled)</div>
+        <div style="overflow:auto;max-height:280px">
+          <table>
+            <thead><tr><th>ID</th><th>Label</th><th>Kind</th><th>Dist</th><th>Seed?</th></tr></thead>
+            <tbody id="mapBody"><tr><td colspan="5" style="color:var(--muted)">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div id="updated">—</div>
+      <div style="margin-top:6px">
+        Live API <a href="/api/everyone-online">/api/everyone-online</a> (slim)
+        · rows <a href="/api/everyone-online/existence">/existence</a>
+        · <a href="/api/everyone-online/leases">/leases</a>
+        · useful <a href="/api/field-secure-bot-rollout">rollout</a>
+        · <a href="/api/field-udp-fry">fry</a>
+        · <a href="/api/field-always-of-stuff">always</a>
+        · <a href="/api/field-redundant-mirror-truth">raid mirror</a>
+        · <a href="/api/field-network-always-true">always-true</a>
+        · autopilot <a href="/api/field-autopilot-internet-closed">closed</a>
+        · devices + tables shared · no fake headcount
+      </div>
+    </footer>
+  </main>
+  <script>
+    const API = "/api/everyone-online";
+    const API_EXISTENCE = "/api/everyone-online/existence";
+    const API_LEASES = "/api/everyone-online/leases";
+    let lastPct = -1;
+    let confettiArmed = false;
+    let existenceAll = [];
+    let existenceRenderToken = 0;
+    let leasesAll = [];
+    let leaseRenderToken = 0;
+
+    // No outside view / casual capture — Field surface only
+    (function fieldNoOutsideView() {
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+      document.addEventListener("dragstart", (e) => e.preventDefault());
+      document.addEventListener("keydown", (e) => {
+        const k = (e.key || "").toLowerCase();
+        if (k === "printscreen") {
+          e.preventDefault();
+          document.body.classList.add("field-away");
+          setTimeout(() => document.body.classList.remove("field-away"), 800);
+        }
+        if (e.ctrlKey && e.shiftKey && (k === "s" || k === "i" || k === "c")) {
+          e.preventDefault();
+        }
+        if (e.metaKey && e.shiftKey && (k === "3" || k === "4" || k === "5")) {
+          e.preventDefault();
+        }
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) document.body.classList.add("field-away");
+        else document.body.classList.remove("field-away");
+      });
+      window.addEventListener("blur", () => document.body.classList.add("field-away"));
+      window.addEventListener("focus", () => document.body.classList.remove("field-away"));
+      // Block embedding in outside frames
+      try {
+        if (window.top !== window.self) {
+          document.documentElement.innerHTML = "<body style='background:#000;color:#3dff9a;font-family:sans-serif;padding:2rem'>Field surface — no outside embed.</body>";
+        }
+      } catch (_) {
+        document.documentElement.innerHTML = "<body style='background:#000;color:#3dff9a'>Field surface — no outside view.</body>";
+      }
+    })();
+
+    function burst(n) {
+      const root = document.getElementById("confetti");
+      const colors = ["#3dff9a", "#7dffc0", "#ffffff", "#64a0ff", "#ffd166"];
+      for (let i = 0; i < n; i++) {
+        const s = document.createElement("span");
+        s.style.left = Math.random() * 100 + "%";
+        s.style.background = colors[i % colors.length];
+        s.style.animationDuration = (2.2 + Math.random() * 2.4) + "s";
+        s.style.animationDelay = (Math.random() * 0.4) + "s";
+        root.appendChild(s);
+        setTimeout(() => s.remove(), 5200);
+      }
+    }
+
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+    }
+
+    function renderExistence() {
+      const q = (document.getElementById("existenceFilter").value || "").trim().toLowerCase();
+      const kind = document.getElementById("existenceKind").value || "";
+      let rows = existenceAll;
+      if (kind) rows = rows.filter(x => String(x.kind || "") === kind);
+      if (q) {
+        rows = rows.filter(x => {
+          const blob = [
+            x.id, x.display_name, x.kind, x.hold_class, x.ip, x.mac,
+            x.dns_joined, x.route_to, x.hostname, x.node_id, x.repo_slug
+          ].map(v => String(v ?? "").toLowerCase()).join(" ");
+          return blob.includes(q);
+        });
+      }
+      document.getElementById("existenceShown").textContent =
+        "showing " + rows.length + " / " + existenceAll.length + " held";
+      const body = document.getElementById("existenceBody");
+      if (!rows.length) {
+        body.innerHTML = `<tr><td colspan="9" style="color:var(--muted)">No devices match filter</td></tr>`;
+        return;
+      }
+      // Chunked render so 5k+ rows stay responsive
+      const token = ++existenceRenderToken;
+      body.innerHTML = "";
+      const chunk = 250;
+      let i = 0;
+      function paint() {
+        if (token !== existenceRenderToken) return;
+        const end = Math.min(i + chunk, rows.length);
+        const frag = document.createDocumentFragment();
+        for (; i < end; i++) {
+          const x = rows[i];
+          const tr = document.createElement("tr");
+          const secure = x.held_securely !== false && x.outside_interference !== true;
+          tr.innerHTML =
+            `<td>${esc(x.display_name || x.id || "?")}${x.self ? " <span style='color:var(--ok)'>· self</span>" : ""}${x.real_live ? " <span style='color:var(--ok)'>· live</span>" : ""}</td>` +
+            `<td>${esc(x.kind || "—")}</td>` +
+            `<td>${esc(x.hold_class || "—")}</td>` +
+            `<td style="font-family:ui-monospace,monospace">${esc(x.ip || "—")}</td>` +
+            `<td style="font-family:ui-monospace,monospace">${esc(x.mac || "—")}</td>` +
+            `<td>${esc(x.dns_joined || (Array.isArray(x.dns) ? x.dns.join(", ") : "") || "—")}</td>` +
+            `<td>${esc(x.route_to || "field-1")}</td>` +
+            `<td>${secure ? "<span style='color:var(--ok)'>held</span>" : "<span style='color:var(--wait)'>risk</span>"}</td>` +
+            `<td>${esc(x.last_seen || "")}</td>`;
+          frag.appendChild(tr);
+        }
+        body.appendChild(frag);
+        if (i < rows.length) requestAnimationFrame(paint);
+      }
+      paint();
+    }
+
+    document.getElementById("existenceFilter").addEventListener("input", () => renderExistence());
+    document.getElementById("existenceKind").addEventListener("change", () => renderExistence());
+
+    function renderLeases() {
+      const q = (document.getElementById("leaseFilter").value || "").trim().toLowerCase();
+      const kind = document.getElementById("leaseKind").value || "";
+      let rows = leasesAll;
+      if (kind) rows = rows.filter(x => String(x.kind || "dhcp_lease") === kind);
+      if (q) {
+        rows = rows.filter(x => {
+          const blob = [
+            x.ip, x.mac, x.device_id, x.hostname, x.kind, x.domain,
+            x.dns_joined, Array.isArray(x.dns) ? x.dns.join(" ") : ""
+          ].map(v => String(v ?? "").toLowerCase()).join(" ");
+          return blob.includes(q);
+        });
+      }
+      document.getElementById("leaseShown").textContent =
+        "showing " + rows.length + " / " + leasesAll.length + " AmmoNet leases";
+      const body = document.getElementById("leases");
+      if (!rows.length) {
+        body.innerHTML = `<tr><td colspan="8" style="color:var(--muted)">No leases match filter — full AmmoNet pool still held</td></tr>`;
+        return;
+      }
+      const token = ++leaseRenderToken;
+      body.innerHTML = "";
+      const chunk = 250;
+      let i = 0;
+      function paint() {
+        if (token !== leaseRenderToken) return;
+        const end = Math.min(i + chunk, rows.length);
+        const frag = document.createDocumentFragment();
+        for (; i < end; i++) {
+          const x = rows[i];
+          const tr = document.createElement("tr");
+          const onAmmo = x.ammonet !== false;
+          tr.innerHTML =
+            `<td style="font-family:ui-monospace,monospace">${esc(x.ip || "—")}</td>` +
+            `<td style="font-family:ui-monospace,monospace">${esc(x.mac || "—")}</td>` +
+            `<td>${esc(x.dns_joined || (Array.isArray(x.dns) ? x.dns.join(", ") : "") || "—")}</td>` +
+            `<td>${esc(x.hostname || x.device_id || "—")}</td>` +
+            `<td>${esc(x.kind || "dhcp_lease")}</td>` +
+            `<td>${esc(x.domain || "ammonet.net")}</td>` +
+            `<td>${onAmmo ? "<span style='color:var(--ok)'>seamless</span>" : "—"}</td>` +
+            `<td>${esc(x.last_seen || "")}</td>`;
+          frag.appendChild(tr);
+        }
+        body.appendChild(frag);
+        if (i < rows.length) requestAnimationFrame(paint);
+      }
+      paint();
+    }
+
+    document.getElementById("leaseFilter").addEventListener("input", () => renderLeases());
+    document.getElementById("leaseKind").addEventListener("change", () => renderLeases());
+
+    async function tick() {
+      try {
+        // Slim dashboard JSON (fast). Full row tables load in parallel via side APIs.
+        const [r, rEx, rLease] = await Promise.all([
+          fetch(API, { cache: "no-store" }),
+          fetch(API_EXISTENCE, { cache: "no-store" }),
+          fetch(API_LEASES, { cache: "no-store" }),
+        ]);
+        const d = await r.json();
+        let exPayload = null;
+        let leasePayload = null;
+        try { exPayload = rEx.ok ? await rEx.json() : null; } catch (_) { exPayload = null; }
+        try { leasePayload = rLease.ok ? await rLease.json() : null; } catch (_) { leasePayload = null; }
+        const fmtN = (n) => {
+          if (n == null || n === "") return "—";
+          const x = Number(n);
+          return Number.isFinite(x) ? x.toLocaleString() : String(n);
+        };
+        document.getElementById("motto").textContent = d.motto || "";
+        document.getElementById("message").textContent = d.message || "";
+        document.getElementById("score").textContent = (d.progress && d.progress.connected_live_score) ?? "—";
+        const liveEveryone = d.live_online_honest ?? d.everyone_total ?? d.everyone_online_live ?? "—";
+        document.getElementById("everyone").textContent = fmtN(liveEveryone);
+        const pct = (d.progress && d.progress.pct) || 0;
+        document.getElementById("bar").style.width = pct + "%";
+        document.getElementById("pctLabel").textContent =
+          pct + "% live milestones · " + (d.progress?.milestones_done || 0) + "/" + (d.progress?.milestones_total || 0);
+        document.getElementById("scoreDef").textContent = d.progress?.score_definition || "";
+        const fiReady = !!(d.final_internet_numbers_ready || d.final_internet);
+        const planetLive = !!(d.whole_planet_live || (d.billions && d.billions.whole_planet_live));
+        document.getElementById("connectedYet").innerHTML = planetLive
+          ? "<span style='color:var(--ok)'>● WHOLE PLANET LIVE honest — devices on Field for real</span>"
+          : (d.field_live_ready || d.connected_yet
+          ? "<span style='color:var(--ok)'>● LOCAL Field live ready — not Final Internet numbers</span>"
+          : "<span style='color:var(--wait)'>● LOCAL wait — DNS/leases not ready</span>");
+        const L = d.live || {};
+        const shN = (d.shared_hold && d.shared_hold.count) ?? d.live_online_honest ?? (d.existence && d.existence.count) ?? "—";
+        const sampleN = (d.shared_hold && d.shared_hold.local_inventory_sample)
+          ?? (d.billions && d.billions.local_inventory_sample)
+          ?? "—";
+        document.getElementById("lanes").textContent =
+          "LIVE honest " + fmtN(liveEveryone) +
+          (planetLive ? " · whole planet" : "") +
+          " · shared hold " + fmtN(shN) +
+          " · sample inventory " + fmtN(sampleN) +
+          " · AmmoNet leases " + fmtN(L.dhcp_leases ?? (d.leases && d.leases.count) ?? "—") +
+          " · DNS points " + fmtN(L.dns_answer_points ?? "—") +
+          " · we are the internet" +
+          (d.slim ? " · slim API" : "");
+        document.getElementById("hopLine").textContent =
+          "Final Internet numbers: " + (fiReady ? "READY" : "NOT YET") +
+          " · posture: " + (d.final_internet_posture || d.hop?.final_internet_posture ? "yes" : "no") +
+          " · hop needed: " + (d.hop?.need_to_hop ? "yes" : "no") +
+          " · wire+modem = physics · simulation: " + (d.simulation ? "yes" : "no");
+        const FIP = d.final_internet_progress || {};
+        const checks = FIP.checks || {};
+        const checkBits = Object.keys(checks).map(k => k + "=" + (checks[k] ? "ok" : "no")).join(" · ");
+        document.getElementById("fiLine").textContent =
+          "FI checks " + (FIP.checks_done ?? "—") + "/" + (FIP.checks_total ?? "—") +
+          " (" + (FIP.pct ?? 0) + "%) · public AP " + ((FIP.public_answer_points || []).join(",") || "none") +
+          (checkBits ? " · " + checkBits : "");
+
+        // Planetary rescue billions (DNS+DHCP authority) + shared hold (we are the internet)
+        const rescue = d.planetary_rescue || d.projection || {};
+        const rescueN = rescue.count || rescue.rescue_count || d.rescue_count
+          || (d.billions && d.billions.count) || null;
+        const rescueEl = document.getElementById("rescueCount");
+        if (rescueEl && rescueN != null) {
+          rescueEl.textContent = Number(rescueN).toLocaleString();
+        }
+        const rescueNote = document.getElementById("rescueNote");
+        if (rescueNote) {
+          rescueNote.textContent = rescue.motto
+            || (d.billions && d.billions.note)
+            || "Field DNS+DHCP exclusive · we are the internet · rollouts 10 at a time";
+        }
+        // Shared hold — every device on the Field plane (not "local only")
+        const EX = d.existence || {};
+        const T = d.tables || {};
+        const SH = d.shared_hold || {};
+        // Prefer dedicated rows API; fall back to slim sample or embedded rows
+        const exRows = (exPayload && Array.isArray(exPayload.rows) && exPayload.rows.length
+            ? exPayload.rows
+            : null)
+          || (EX.rows && EX.rows.length ? EX.rows : null)
+          || (EX.sample && EX.sample.length ? EX.sample : null)
+          || (T.existence && T.existence.rows)
+          || (T.existence && T.existence.sample)
+          || (d.devices && d.devices.existence_rows)
+          || [];
+        const exCount = SH.count ?? EX.count ?? (exPayload && exPayload.count)
+          ?? (T.existence && T.existence.count) ?? exRows.length
+          ?? d.devices?.devices_in_existence ?? d.devices?.held_total ?? 0;
+        document.getElementById("existenceCount").textContent = Number(exCount).toLocaleString();
+        const holdSeal = document.getElementById("holdSeal");
+        if (holdSeal) {
+          holdSeal.textContent = "● Shared hold · we are the internet · no outside interference";
+        }
+        const exNote = document.getElementById("existenceNote");
+        if (exNote) {
+          exNote.textContent = SH.motto || EX.motto
+            || "Shared plane · registry · leases · stamps · redundant mirror";
+        }
+        const byKind = EX.by_kind || (T.existence && T.existence.by_kind) || d.devices?.by_kind || {};
+        const kindBits = Object.keys(byKind).sort().map(k => k + "=" + byKind[k]).join(" · ");
+        document.getElementById("existenceKinds").textContent = kindBits || "kinds settling…";
+        document.getElementById("existenceNote").textContent =
+          (EX.motto || "Full Field hold on celebrate") +
+          (EX.ammonet_mesh_id ? " · mesh " + EX.ammonet_mesh_id : "");
+        const sh = d.secure_hold || EX.secure_hold || T.secure_hold || {};
+        const holdOk = sh.held_securely !== false && sh.outside_interference !== true && d.outside_interference !== true;
+        document.getElementById("holdSeal").innerHTML = holdOk
+          ? "<span style='color:var(--ok)'>● Held securely · no outside interference · only Field/AmmoNet</span>"
+          : "<span style='color:var(--wait)'>● Hold posture incomplete</span>";
+        document.getElementById("secureHoldLine").textContent =
+          (sh.motto || "Every device in existence held securely") +
+          " · outside_authority=" + (sh.outside_authority ? "yes" : "no") +
+          " · foreign_control=" + (sh.no_foreign_control === false ? "risk" : "blocked") +
+          " · route_to field-1" +
+          (d.everyone_world_connected || d.nobody_on_other_network_for_l2_plus
+            ? " · WORLD on Field L2+ · stack handles L2 · no foreign L2+"
+            : "") +
+          (d.we_handle_l2_with_stack ? " · we_handle_l2=yes" : "") +
+          (d.l2_plus || d.layer === "L2+" ? " · layer L2+" : "");
+
+        // Kind filter options (preserve selection)
+        const kindSel = document.getElementById("existenceKind");
+        const prevKind = kindSel.value;
+        const kinds = Object.keys(byKind).sort();
+        kindSel.innerHTML = '<option value="">all kinds</option>' +
+          kinds.map(k => `<option value="${esc(k)}">${esc(k)} (${byKind[k]})</option>`).join("");
+        if (prevKind && kinds.includes(prevKind)) kindSel.value = prevKind;
+
+        // Only rebuild existence list when count/id signature changes (avoid thrash)
+        const sig = exCount + ":" + (exRows[0] && exRows[0].id) + ":" + (exRows[exRows.length - 1] && exRows[exRows.length - 1].id);
+        if (sig !== window.__exSig) {
+          window.__exSig = sig;
+          existenceAll = exRows;
+          renderExistence();
+        }
+
+        const fm = d.fabric_map || {};
+        document.getElementById("fabricLine").textContent =
+          "Mapped nodes " + (fm.node_count ?? "—") +
+          " · full-auth " + (fm.full_authority_nodes ?? "—") +
+          " · sovereign " + (fm.sovereign ?? "—") +
+          " · qemu_map " + (fm.qemu_world_mapped ?? "—") +
+          " · members " + (fm.botnet_members ?? "—") +
+          " — " + (fm.note || "catalog, not people online");
+
+        const ds = d.distributed_secure || {};
+        const ba = ds.botnet_autopilot || {};
+        document.getElementById("secureLine").textContent =
+          "Autopilot: " + (ba.ready || ba.ok ? "engaged" : "…") +
+          " · joint_truth " + ((ds.steel_plate && ds.steel_plate.joint_truth) ? "yes" : "no") +
+          " · double-guard " + ((ds.double_guard && ds.double_guard.ok) ? "ok" : "…") +
+          " · ironclad " + ((ds.ironclad && ds.ironclad.ok) ? "ok" : "…") +
+          " · hail " + ((ds.hail_distress && ds.hail_distress.ok) ? "ok" : "…");
+
+        const comp = d.composite || {};
+        const proj = d.projection || {};
+        const bil = d.billions || {};
+        document.getElementById("compositeLine").textContent =
+          "RESCUE " + Number(proj.rescue_count || proj.planet_total || bil.count || 0).toLocaleString() +
+          " under DNS+DHCP · shared hold " + Number(exCount).toLocaleString() +
+          " · we are the internet" +
+          " · Billions: " + (bil.true ? "TRUE (authority)" : "building") +
+          " · Netflix already there · traceroute: no foreign route";
+
+        const miles = document.getElementById("miles");
+        miles.innerHTML = (d.milestones || []).map(m => `
+          <div class="mile ${m.done ? "done" : "wait"}">
+            <div class="st">${m.done ? (m.tier === "fabric_map" ? "map" : "live") : "waiting"}</div>
+            <h3>${esc(m.label)}</h3>
+            <p>${esc(m.detail || "")}</p>
+          </div>`).join("");
+
+        const share = d.sharing || {};
+        document.getElementById("shareLine").textContent =
+          (share.motto || T.motto || "Sharing our devices and tables") +
+          " · existence " + (exCount ?? "—") +
+          " · live devices " + ((T.devices && T.devices.count) ?? (d.devices && d.devices.live_real) ?? "—") +
+          " · leases " + ((T.leases && T.leases.count) ?? (d.leases && d.leases.count) ?? "—") +
+          " · dns rows " + ((T.dns_answer_points && T.dns_answer_points.count) ?? "—") +
+          " · tables " + ((T.table_names || []).join(", ") || "…");
+
+        const fp = d.false_prophets || (T.false_prophets) || {};
+        const fpOk = fp.ok || (fp.destroyed_count != null);
+        document.getElementById("falseProphetsLine").innerHTML = fpOk
+          ? "<span style='color:var(--ok)'>● False prophets DESTROYED</span> · rounds " +
+            esc(fp.rounds ?? "—") + " · destroyed " + esc(fp.destroyed_count ?? "—") +
+            " · remaining " + esc(fp.remaining_count ?? fp.remaining ?? 0) +
+            (fp.message ? " — " + esc(fp.message) : "")
+          : "<span style='color:var(--wait)'>● False-prophet destroy panel settling…</span>";
+
+        // Live people subset
+        const devRows = (T.devices && T.devices.rows)
+          || (d.devices && (d.devices.rows || d.devices.recent_live || d.devices.recent))
+          || [];
+        document.getElementById("devicesBody").innerHTML = devRows.length
+          ? devRows.map(x => `<tr>
+              <td>${esc(x.display_name || x.id || "?")}${x.self ? " <span style='color:var(--ok)'>· self</span>" : ""}</td>
+              <td>${esc(x.kind || "—")}</td>
+              <td style="font-family:ui-monospace,monospace">${esc(x.ip || "—")}</td>
+              <td style="font-family:ui-monospace,monospace">${esc(x.mac || "—")}</td>
+              <td>${esc(x.dns_joined || (Array.isArray(x.dns) ? x.dns.join(", ") : "") || "—")}</td>
+              <td>${esc(x.role || "—")}</td>
+              <td>${esc(x.last_seen || "")}</td>
+            </tr>`).join("")
+          : `<tr><td colspan="7" style="color:var(--muted)">No live people devices yet · existence hold still lists fabric</td></tr>`;
+
+        const leaseBlock = T.leases || d.leases || {};
+        // Prefer dedicated /leases API rows; fall back to slim sample or embedded rows
+        const rows = (leasePayload && Array.isArray(leasePayload.rows) && leasePayload.rows.length
+            ? leasePayload.rows
+            : null)
+          || leaseBlock.rows
+          || leaseBlock.sample
+          || [];
+        const leaseCount = (leasePayload && leasePayload.count) ?? leaseBlock.count ?? rows.length;
+        document.getElementById("leaseCount").textContent = leaseCount;
+        const lByKind = leaseBlock.by_kind || {};
+        const lKindBits = Object.keys(lByKind).sort().map(k => k + "=" + lByKind[k]).join(" · ");
+        document.getElementById("leaseKinds").textContent =
+          (leaseBlock.motto || "AmmoNet seamless join") +
+          (lKindBits ? " · " + lKindBits : "") +
+          (leaseBlock.domain ? " · domain " + leaseBlock.domain : "");
+        const lKindSel = document.getElementById("leaseKind");
+        const prevLKind = lKindSel.value;
+        const lKinds = Object.keys(lByKind).sort();
+        lKindSel.innerHTML = '<option value="">all kinds</option>' +
+          lKinds.map(k => `<option value="${esc(k)}">${esc(k)} (${lByKind[k]})</option>`).join("");
+        if (prevLKind && lKinds.includes(prevLKind)) lKindSel.value = prevLKind;
+        const lSig = leaseCount + ":" + (rows[0] && rows[0].mac) + ":" + (rows[rows.length - 1] && rows[rows.length - 1].mac);
+        if (lSig !== window.__leaseSig) {
+          window.__leaseSig = lSig;
+          leasesAll = rows;
+          renderLeases();
+        }
+
+        const dnsRows = (T.dns_answer_points && T.dns_answer_points.rows) || [];
+        const points = (d.dns && d.dns.answer_points) || [];
+        document.getElementById("dnsBody").innerHTML = dnsRows.length
+          ? dnsRows.map(x => `<tr>
+              <td style="font-family:ui-monospace,monospace">${esc(x.address)}</td>
+              <td>${esc(x.port ?? 53)}</td>
+              <td>${esc(x.role || "—")}</td>
+              <td>${esc(x.authority || "field")}</td>
+            </tr>`).join("")
+          : (points.length
+            ? points.map(p => `<tr><td style="font-family:ui-monospace,monospace">${esc(p)}</td><td>53</td><td>truth_answer_point</td><td>field</td></tr>`).join("")
+            : `<tr><td colspan="4" style="color:var(--muted)">No concrete answer points published</td></tr>`);
+        document.getElementById("dnsPoints").textContent =
+          points.length
+            ? ("bound: " + points.join(" · ") + (d.dns?.never_collide_ip ? " · sink " + d.dns.never_collide_ip : ""))
+            : "";
+
+        const mapRows = (T.device_map && T.device_map.rows) || [];
+        document.getElementById("mapBody").innerHTML = mapRows.length
+          ? mapRows.map(x => `<tr>
+              <td>${esc(x.id)}</td>
+              <td>${esc(x.label)}</td>
+              <td>${esc(x.kind || "—")}</td>
+              <td>${esc(x.distance_label || "—")}${x.direction ? " " + esc(x.direction) : ""}</td>
+              <td>${x.seed ? "<span style='color:var(--wait)'>seed</span>" : (x.real_live ? "<span style='color:var(--ok)'>live</span>" : "map")}</td>
+            </tr>`).join("")
+          : `<tr><td colspan="5" style="color:var(--muted)">Device map empty or not published</td></tr>`;
+
+        document.getElementById("updated").textContent = "Updated " + (d.updated || "") +
+          " · existence " + exCount + " held securely";
+
+        if (pct >= 100 && lastPct < 100) burst(48);
+        else if (pct > lastPct && lastPct >= 0) burst(12);
+        if ((d.connected_yet || exCount > 0) && !confettiArmed) { confettiArmed = true; burst(48); }
+        lastPct = pct;
+      } catch (e) {
+        document.getElementById("message").textContent = "Waiting for celebration API… " + e;
+      }
+    }
+    tick();
+    setInterval(tick, 3000);
+  </script>
+</body>
+</html>

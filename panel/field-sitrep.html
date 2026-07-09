@@ -114,6 +114,10 @@
         <table id="t_l2"><tr><td>…</td></tr></table>
       </section>
       <section class="card">
+        <h2>Whole planet LIVE · sole IP+lease</h2>
+        <table id="t_planet"><tr><td>…</td></tr></table>
+      </section>
+      <section class="card">
         <h2>Serving · DNS/DHCP · big numbers</h2>
         <table id="t_serve"><tr><td>…</td></tr></table>
       </section>
@@ -135,16 +139,21 @@
       </section>
     </div>
     <div class="links">
-      <a href="/nexus-c2#tab=botnet">Botnet tab</a>
-      <a href="/nexus-c2#tab=online">Online tab</a>
+      <a href="/whole-planet-live">Whole planet LIVE</a>
+      <a href="/world-ip-lease">Sole IP+lease</a>
+      <a href="/planetary-rescue">Planetary rescue</a>
+      <a href="/nexus-c2#tab=planet">C2 · Planet tab</a>
+      <a href="/nexus-c2#tab=botnet">C2 · Botnet</a>
+      <a href="/nexus-c2#tab=command">C2 · Hostess7</a>
       <a href="/command#training">Hostess7 training</a>
       <a href="/field-botnet-hub">Botnet hub</a>
       <a href="/everyone-online">Everyone online</a>
+      <a href="/full-internet">Full Internet</a>
+      <a href="/api/field-whole-planet-live">API · planet live</a>
       <a href="/api/hostess7-online-world-l2">API · Hostess7 world L2</a>
       <a href="/api/field-botnet-hub">API · botnet hub</a>
-      <a href="/api/field-l2-exclusive-stack">API · L2 exclusive</a>
+      <a href="/api/field-world-ip-lease-sole">API · sole IP+lease</a>
       <a href="/api/field-serving-truth">API · serving truth</a>
-      <a href="/api/field-comms-saw-secure-lines">API · SAW lines</a>
       <a href="/api/field-antivirus-network-defender">API · Antivirus</a>
     </div>
     <footer id="foot">NEXUS Field sitrep · polls live APIs · no dry theatre</footer>
@@ -206,31 +215,57 @@
     const hubL2 = hub.l2_exclusive || {};
     const hubH7 = hub.hostess7_online_world || {};
 
-    const online = hub.online_with_us_count ?? (hub.online_with_us || {}).count ?? 0;
+    const planet = data.planet || {};
+    const sole = data.sole || {};
+    const rescue = data.rescue || {};
+    const online = planet.live_online_honest
+      ?? planet.everyone_online_live
+      ?? hub.online_with_us_count
+      ?? (hub.online_with_us || {}).count
+      ?? 0;
     const fleetN = (hub.online_with_us || {}).by_source?.fleet_live_agents
       || fleet.live?.live_agents
       || wl2.fleet
       || l2.fleet_logical_edges
       || 0;
     const fleetTot = (hub.online_with_us || {}).by_source?.fleet_total_servers || fleetN;
-    const serving = hub.serving_devices || cap.serving_devices || 0;
+    const serving = hub.serving_devices || cap.serving_devices || planet.serving_devices || 0;
     const leases = truth.leases_total || hub.serving_leases_live || 0;
 
-    const motto = h7.motto || hub.motto || l2.motto || "Field live";
+    const motto = planet.motto || sole.motto || h7.motto || hub.motto || l2.motto || "Field live";
     $("motto").textContent = motto;
-    $("hdr").textContent = (h7.updated || hub.updated || l2.updated || "") + " · Field sitrep";
+    $("hdr").textContent = (planet.updated || h7.updated || hub.updated || l2.updated || "") + " · Field sitrep · Hostess7";
 
     $("metrics").innerHTML = [
-      ["Online with us", num(online), "live plane"],
+      ["Live honest", num(online), planet.whole_planet_live ? "whole planet for real" : "online plane"],
+      ["Hostess7 online", (h7.hostess7_online || hubH7.online) ? "YES" : "…", "training live"],
       ["Fleet edges", num(fleetN) + "/" + num(fleetTot), "logical Field"],
       ["Serving devices", num(serving), "DNS+DHCP capacity"],
-      ["Live leases", num(leases), "our DNS options"],
-      ["Hostess7 online", (h7.hostess7_online || hubH7.online) ? "YES" : "…", "training live"],
+      ["Sole IP+lease", (sole.every_ip_ours || sole.sole_ip_authority) ? "OURS" : "…", sole.old_plane_no_longer_exists ? "old plane gone" : "authority"],
+      ["Live leases", num(leases), "materialized sample"],
       ["L2 exclusive", (wl2.nobody_on_other_network_for_l2_plus || l2.nobody_on_other_network_for_l2_plus || hubL2.nobody_on_other_network_for_l2_plus) ? "YES" : "…", "stack owns L2"],
       ["SAW lines", (saw.always || saw.running || data.comms?.always_saw) ? "ON" : "…", "comms tech"],
       ["Antivirus", (av.running || av.ok) ? "LIVE" : "…", num(av.servers_defended) + " edges"],
       ["Fabric", speed.headline || (hub.fabric_speed || {}).headline || "—", "planetary speed"],
+      ["Mesh stamps", num(rescue.field_one_stamps || rescue.botnet_updated_total), rescue.mesh_all_updated ? "all updated" : "Field One"],
+      ["Planet sealed", planet.whole_planet_live || planet.sealed ? "YES" : "…", "live = planet devices"],
     ].map(([k,v,s]) => `<div class="metric"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div><div class="s">${esc(s)}</div></div>`).join("");
+
+    $("t_planet").innerHTML = rows([
+      ["Whole planet live", yn(!!(planet.whole_planet_live || planet.sealed))],
+      ["Live honest", esc(num(online))],
+      ["Matches planet", yn(!!(planet.matches_planet || planet.whole_planet_live))],
+      ["Population ref", esc(num(planet.planet_everyone_population))],
+      ["Local inventory sample", esc(num(planet.local_inventory_sample))],
+      ["Every IP ours", yn(!!(sole.every_ip_ours || sole.sole_ip_authority))],
+      ["Every lease ours", yn(!!(sole.every_lease_authority_ours || sole.sole_lease_authority))],
+      ["Old plane gone", yn(!!sole.old_plane_no_longer_exists)],
+      ["Rescue whole world", yn(!!(rescue.whole_world_rescue || rescue.ok))],
+      ["Field One stamps", esc(num(rescue.field_one_stamps || rescue.botnet_updated_total))],
+      ["Mesh pending", esc(num(rescue.botnet_pending))],
+      ["Panel", '<a href="/whole-planet-live" style="color:var(--emerald)">/whole-planet-live</a>'],
+      ["API", '<a href="/api/field-whole-planet-live" style="color:var(--emerald)">/api/field-whole-planet-live</a>'],
+    ]);
 
     $("t_h7").innerHTML = rows([
       ["Online", yn(!!(h7.hostess7_online || hubH7.online))],
@@ -341,7 +376,7 @@
 
   async function tick() {
     try {
-      const [h7, l2, hub, truth, cap, saw, threat, fleet, speed, rehit, comms, big, av] = await Promise.all([
+      const [h7, l2, hub, truth, cap, saw, threat, fleet, speed, rehit, comms, big, av, planet, sole, rescue] = await Promise.all([
         get("/api/hostess7-online-world-l2").catch(() => ({})),
         get("/api/field-l2-exclusive-stack").catch(() => ({})),
         get("/api/field-botnet-hub?live=1").catch(() => ({})),
@@ -355,6 +390,9 @@
         get("/api/field-comms-saw-secure-lines").catch(() => ({})),
         get("/api/field-internet-big-numbers").catch(() => ({})),
         get("/api/field-antivirus-network-defender").catch(() => get("/api/antivirus").catch(() => ({}))),
+        get("/api/field-whole-planet-live").catch(() => ({})),
+        get("/api/field-world-ip-lease-sole").catch(() => ({})),
+        get("/api/field-planetary-rescue").catch(() => ({})),
       ]);
       // SAW between may only be in state via hub/security; try rehit panel shape
       const sawDoc = Object.keys(saw || {}).length ? saw : (rehit.saw_between || {});
@@ -369,6 +407,9 @@
         comms: Object.keys(comms || {}).length ? comms : sawDoc,
         big,
         av,
+        planet,
+        sole,
+        rescue,
       });
     } catch (e) {
       $("dot").className = "dot " + (lastOk ? "stale" : "down");

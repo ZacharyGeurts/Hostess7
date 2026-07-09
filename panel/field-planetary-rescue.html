@@ -72,8 +72,8 @@
     {h:"Whole world", v: d.whole_world_rescue?"YES":"—", d:"Rescue plane for the planet"},
     {h:"Mesh all updated", v: d.mesh_all_updated?"YES":"—", d:"Field One stamps on full botnet mesh"},
     {h:"Field One stamps", v: fmt(d.field_one_stamps||d.botnet_updated_total), d: `pending ${fmt(d.botnet_pending)} · nodes ${fmt(d.botnet_nodes)}`},
-    {h:"Live online (honest)", v: fmt(d.live_online_honest), d:"Real online inventory"},
-    {h:"Shared hold", v: fmt(d.shared_hold||d.local_held), d:"Held devices on Field"},
+    {h:"Live online (honest)", v: fmt(d.live_online_honest), d: d.whole_planet_live?"Whole planet for real":"Real online inventory"},
+    {h:"Shared hold", v: fmt(d.shared_hold||d.local_held), d: d.whole_planet_live?"Planet devices on Field":"Held devices on Field"},
     {h:"Rescue capacity leases", v: fmt(d.rescue_count||d.rescue_capacity_leases), d:"DNS+DHCP dual plane"},
     {h:"Everyone devices", v: fmt(d.everyone_devices), d:"Census devices on servers"},
     {h:"Serving devices", v: fmt(d.serving_devices), d:"Trillions capacity plane"},
@@ -91,7 +91,9 @@
   document.getElementById("hdr").textContent = (d.updated||"") + " · " + (d.title||"Planetary rescue");
   document.getElementById("pills").innerHTML = [
     d.whole_world_rescue&&"whole world",
+    d.whole_planet_live&&"planet LIVE",
     d.rescue_more&&"rescue more",
+    d.mesh_all_updated&&"mesh all updated",
     d.billions&&"billions capacity",
     d.trillions&&"trillions serve",
     d.every_ip_ours&&"every IP ours",
