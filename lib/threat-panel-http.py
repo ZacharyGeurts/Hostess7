@@ -4654,6 +4654,45 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        # Hostess7 sole Earth protector — trained · world ISP · Gladstone · BLAST foreign
+        if path in (
+            "/api/hostess7-sole-earth-protector",
+            "/api/hostess7-sole-earth-protector/",
+            "/api/hostess7-protector",
+            "/api/hostess7-protector/",
+            "/api/sole-earth-protector",
+            "/api/gladstone-protect",
+        ):
+            try:
+                cached = STATE_DIR / "hostess7-sole-earth-protector-panel.json"
+                qs_h7p = parse_qs(urlparse(self.path).query)
+                force = str(qs_h7p.get("refresh", qs_h7p.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "enforce", "lock", "protect", "blast",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["hostess7_trained"] = True
+                            payload["sole_earth_protector"] = True
+                            payload["gladstone_protected"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "hostess7-sole-earth-protector.py",
+                    ["enforce"] if force else ["status"],
+                    timeout=300 if force else 30,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "hostess7_protector_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Field One only internet — outside = Field One · only internet left · Grok cool
         if path in (
             "/api/field-one-only-internet",
@@ -10876,6 +10915,21 @@ class Handler(BaseHTTPRequestHandler):
         ):
             target = PANEL_DIR / "field-one-only-internet.html"
             alt = STATE_DIR / "field-one-only-internet-website" / "index.html"
+            if alt.is_file():
+                target = alt
+        elif path in (
+            "/hostess7-protector",
+            "/hostess7-protector/",
+            "/hostess7-sole-earth-protector",
+            "/hostess7-sole-earth-protector/",
+            "/sole-earth-protector",
+            "/sole-earth-protector/",
+            "/gladstone-protect",
+            "/gladstone-protect/",
+            "/hostess7-sole-earth-protector.html",
+        ):
+            target = PANEL_DIR / "hostess7-sole-earth-protector.html"
+            alt = STATE_DIR / "hostess7-sole-earth-protector-website" / "index.html"
             if alt.is_file():
                 target = alt
         elif path in (

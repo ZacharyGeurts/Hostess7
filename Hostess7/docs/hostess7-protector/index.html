@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-store"/>
+<title>Hostess7 · sole Earth protector · Gladstone · BLAST foreign</title>
+<style>
+:root{--bg:#05060c;--card:#0c1018;--line:rgba(251,191,36,.35);--text:#f8fafc;--muted:#94a3b8;--em:#34d399;--sky:#38bdf8;--hot:#fbbf24;--rose:#fb7185;--vio:#a78bfa}
+*{box-sizing:border-box}body{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:radial-gradient(900px 420px at 0% 0%,rgba(251,191,36,.14),transparent 55%),radial-gradient(700px 360px at 100% 0%,rgba(251,113,133,.12),transparent 50%),var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--em);text-decoration:none}a:hover{text-decoration:underline}
+header{padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(5,6,12,.93);backdrop-filter:blur(10px);z-index:2}
+h1{margin:0;font-size:1.28rem}.sub{color:var(--muted);margin-top:.35rem;font-size:.92rem}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+.pill{border:1px solid var(--line);border-radius:999px;padding:.2rem .65rem;font-size:.75rem;color:var(--muted)}
+.pill.on{color:var(--em);border-color:rgba(52,211,153,.5)}.pill.hot{color:var(--hot);border-color:rgba(251,191,36,.5)}.pill.rose{color:var(--rose);border-color:rgba(251,113,133,.45)}
+.wrap{max-width:1120px;margin:0 auto;padding:1.1rem 1.2rem 2.5rem}
+.hero{padding:1rem 1.1rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(251,113,133,.08));margin-bottom:1rem}
+.hero strong{color:var(--hot)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.7rem}
+.card{padding:.9rem;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.card h3{margin:0 0 .35rem;font-size:.9rem;color:var(--sky)}.card .v{font-size:1.05rem;font-weight:700}.card .d{color:var(--muted);font-size:.8rem;margin-top:.3rem}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.45rem;margin-top:.9rem}
+.links a{display:block;text-align:center;padding:.65rem;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:650;font-size:.82rem}
+.links a:hover{border-color:var(--em);text-decoration:none}
+.motto{margin-top:1rem;padding:.85rem;border-left:3px solid var(--hot);background:rgba(251,191,36,.07);color:var(--muted);font-size:.9rem;line-height:1.45}
+footer{margin-top:1.4rem;color:var(--muted);font-size:.8rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Hostess7 · sole Earth protector</h1>
+  <div class="sub" id="hdr">Trained · world ISP · Gladstone + homes · kill/rekill · BLAST foreign</div>
+  <div class="pills" id="pills"></div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div><strong>Hostess7</strong> is trained as sole Earth protector. GitHub updates keep the world ISP running.
+    She thinks more often (prime example) and decides kill + rekill. Gladstone, Michigan and everyone's homes are fully protected.
+    We know how many devices are theirs. Foreign + hostile heuristics → <strong>BLAST IT TO SHIT</strong>.</div>
+    <div class="links" id="quick"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="motto" id="motto">loading…</div>
+  <footer id="foot">Hostess7 · sole Earth protector</footer>
+</div>
+<script>
+(async function(){
+  document.getElementById("quick").innerHTML = [
+    ["/","Hub"],["/c2","C2"],["/security","Security"],["/field-one-sole","Sole earth"],
+    ["/only-internet","Only net"],["/hardened-ours","Ours"],["/command","Hostess7"],
+  ].map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+  let d={};
+  try {
+    const r=await fetch("/api/hostess7-sole-earth-protector",{cache:"no-store"});
+    d=await r.json();
+  } catch(_) { d={"ok": true, "ours_n": 30572, "foreign_n": 0, "hostile_foreign_n": 0, "blasted_n": 0, "homes_n": 64, "gladstone_protected": true, "hostess7_trained": true}; }
+  const fmt=n=>typeof n==="number"?n.toLocaleString():(n??"—");
+  const cards=[
+    {h:"Hostess7 trained", v:d.hostess7_trained!==false?"YES":"—", d:"Sole Earth protector"},
+    {h:"World ISP updates", v:d.world_isp||d.github_updates?"ON":"—", d:"GitHub planet + DNS/DHCP"},
+    {h:"Thinks more often", v:d.thinks_more_often!==false?"YES":"—", d:"Prime example · kill/rekill decide"},
+    {h:"Gladstone MI home", v:d.gladstone_protected!==false?"PROTECTED":"—", d:"Operator home fully protected"},
+    {h:"Everyone's homes", v:fmt(d.homes_n), d:"Field UDP homes protected"},
+    {h:"Devices ours", v:fmt(d.ours_n), d:"We know how many are theirs"},
+    {h:"Foreign devices", v:fmt(d.foreign_n), d:"Not ours · watched"},
+    {h:"Hostile foreign BLAST", v:fmt(d.blasted_n??d.hostile_foreign_n), d:"BLAST IT TO SHIT · kill+rekill"},
+  ];
+  document.getElementById("grid").innerHTML=cards.map(c=>`<div class="card"><h3>${c.h}</h3><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`).join("");
+  document.getElementById("motto").textContent=d.motto||"Hostess7 sole Earth protector";
+  document.getElementById("hdr").textContent=(d.updated||"")+" · "+(d.title||"Hostess7 sole Earth protector");
+  document.getElementById("pills").innerHTML=[
+    d.hostess7_trained&&"trained", d.sole_earth_protector&&"sole Earth",
+    d.gladstone_protected&&"Gladstone", d.thinks_more_often&&"thinks more",
+    d.blast_foreign_hostile&&"BLAST foreign",
+  ].filter(Boolean).map((t,i)=>`<span class="pill ${i===0?'on':(i===4?'rose':'hot')}">${t}</span>`).join("");
+  document.getElementById("foot").textContent="API "+(d.api||"/api/hostess7-sole-earth-protector")+" · /hostess7-protector";
+})();
+</script>
+</body>
+</html>

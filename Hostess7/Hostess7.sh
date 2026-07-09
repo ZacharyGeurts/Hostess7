@@ -209,6 +209,8 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh warfare-self-teach  Historic-first self-teach — measures/countermeasures/invincibility
   ./Hostess7.sh warfare-train [level]  Training sessions — beginner|intermediate|advanced|protect-friendlies
   ./Hostess7.sh war-realism [wargame|protect-friendlies|panel]  OODA + ROE wargaming (2.0.7e)
+  ./Hostess7.sh sole-earth-protector [enforce|train|isp|homes|census|blast|think|status]
+      Hostess7 sole Earth protector — Gladstone + homes · world ISP · BLAST foreign · kill+rekill
   ./Hostess7.sh military-security [status|audit|train|posture]  Perimeter, OPSEC, fusion scoring
   ./Hostess7.sh warfare-smarts-test Very difficult smarts exam (85%% pass bar)
   ./Hostess7.sh reality-familiarize   Register all domains · map whole of reality
@@ -1164,6 +1166,10 @@ print('OK warfare-expand')
         field-fleet-2500-protect|fleet-2500|fleet-protect|field-2500-protect)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-fleet-2500-protect.py" "${1:-protect}" "${@:2}"
+            ;;
+        sole-earth-protector|hostess7-protector|h7-protector|gladstone-protect|earth-protector)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-sole-earth-protector.py" "${1:-enforce}" "${@:2}"
             ;;
         field-ai-root-guard|ai-root-guard|ai-root-api-guard)
             shift
