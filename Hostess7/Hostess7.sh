@@ -1191,6 +1191,10 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-weave-everything-inside.py" "${1:-seal}" "${@:2}"
             ;;
+        grab-all-devices|grab-devices|devices-grab|permanent-grab-threat)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-grab-all-devices-permanent-threat.py" "${1:-grab}" "${@:2}"
+            ;;
         field-ai-root-guard|ai-root-guard|ai-root-api-guard)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-ai-root-api-guard.py" "${1:-json}" "${@:2}"

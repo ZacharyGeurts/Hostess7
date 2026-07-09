@@ -5998,6 +5998,39 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path in (
+            "/api/grab-all-devices",
+            "/api/grab-all-devices/",
+            "/api/grab-devices",
+            "/api/grab-devices/",
+            "/api/devices-grab-permanent-threat",
+        ):
+            try:
+                cached = STATE_DIR / "field-grab-all-devices-panel.json"
+                qs_g = parse_qs(urlparse(self.path).query)
+                force = str(qs_g.get("refresh", qs_g.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "grab", "seal",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            payload["reattempt_is_permanent_threat"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-grab-all-devices-permanent-threat.py",
+                    ["grab"] if force else ["status"],
+                    timeout=300 if force else 30,
+                )
+                self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
+        if path in (
             "/api/weave-everything-inside",
             "/api/weave-everything-inside/",
             "/api/weave-inside",
