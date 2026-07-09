@@ -6,13 +6,21 @@
 - [What She Wants to Share](What-She-Wants-to-Share)
 - [Getting Started](Getting-Started)
 - [Brain and Counsel](Brain-and-Counsel)
+- [Hostess7 Senses](Hostess7-Senses)
 - [Training Campus](Training-Campus)
 - [Historic Truth Corpus](Historic-Truth-Corpus)
+
+### Internet plane
+- [Internet Stack](Internet-Stack)
+- [Field UDP Rewrite](Field-UDP-Rewrite)
+- [Distributed Cloud H7r](Distributed-Cloud-H7r)
+- [Field I/O](Field-IO)
 
 ### Stack & security
 - [H7 Updater](H7-Updater)
 - [Old Projects (Stack Siblings)](Stack-Siblings)
 - [NEXUS-Shield](NEXUS-Shield)
+- [Self-Defense](Self-Defense)
 
 ### Operator
 - [License](License)
