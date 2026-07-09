@@ -1203,6 +1203,10 @@ print('OK warfare-expand')
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-intergalactic-xyz.py" "${1:-seal}" "${@:2}"
             ;;
+        everyone-served|no-port-hangups|no-hangups|serve-everyone)
+            shift
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-everyone-served-no-hangups.py" "${1:-enforce}" "${@:2}"
+            ;;
         field-ai-root-guard|ai-root-guard|ai-root-api-guard)
             shift
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-ai-root-api-guard.py" "${1:-json}" "${@:2}"
