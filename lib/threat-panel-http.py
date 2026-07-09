@@ -6063,6 +6063,42 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
             return
         
+        
+        if path in (
+            "/api/hostess7-enemy-heuristics",
+            "/api/hostess7-enemy-heuristics/",
+            "/api/enemy-heuristics",
+            "/api/proactive-defense",
+        ):
+            try:
+                cached = STATE_DIR / "hostess7-enemy-heuristics-learn-panel.json"
+                qs_eh = parse_qs(urlparse(self.path).query)
+                force = str(qs_eh.get("refresh", qs_eh.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "cycle", "learn", "proactive",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                cmd = "cycle"
+                if str(qs_eh.get("mode", [""])[0]).lower() in ("learn", "proactive"):
+                    cmd = str(qs_eh.get("mode", ["cycle"])[0]).lower()
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "hostess7-enemy-heuristics-learn.py",
+                    ["cycle" if force else "cycle"],
+                    timeout=240 if force else 120,
+                )
+                self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
+
         if path in (
             "/api/field-native",
             "/api/field-native/",

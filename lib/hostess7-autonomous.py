@@ -41,6 +41,8 @@ ANGEL_CYCLE_QUEUE = (
     "Forever Watchguard: IFF summary — civilian vs hostile on this host. What must be interdicted next?",
     "Forever Watchguard: correlate gatekeeper IFF, DPI warnings, globe hot targets. "
     "Strike readiness — zero friendly fire, zero hesitation on hostiles.",
+    "Enemy heuristics: what did you learn from the live threat board? Name top vectors and one proactive harden step.",
+    "Proactive defense: anticipate impostor NS / spawners / delay-as-threat before they peak — under Ironclad only.",
     "Forever Watchguard: GitHub ZacharyGeurts/NEXUS-Shield — harden, release, or hold? Cite field evidence.",
     "Forever Watchguard: teach one truth for the Owner — protect civilians, interdict hostiles, doctrine over speculation.",
     "Forever Watchguard: creativity and art — one field image or pixel insight for morale under watch.",

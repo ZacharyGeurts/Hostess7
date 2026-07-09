@@ -132,6 +132,7 @@ PLATE_SOURCES: tuple[tuple[str, str], ...] = (
     # Hostess 7 Job endstate — distributed everywhere / everything
     ("hostess7_distributed_everywhere", "hostess7-distributed-everywhere-panel.json"),
     ("field_native", "field-native-panel.json"),
+    ("hostess7_enemy_heuristics", "hostess7-enemy-heuristics-learn-panel.json"),
 )
 
 _GEN = 0
@@ -1235,6 +1236,18 @@ def _refresh_serving_truth() -> None:
 
 
 
+
+def _refresh_hostess7_enemy_heuristics() -> None:
+    """Hostess 7 learn enemy heuristics · proactive defense."""
+    if os.environ.get("NEXUS_HOSTESS7_ENEMY_LEARN", "1").strip().lower() in ("0", "false", "no", "off"):
+        return
+    _import_call(
+        INSTALL / "lib" / "hostess7-enemy-heuristics-learn.py",
+        "hostess7_enemy_heuristics_learn",
+        "cycle",
+        write=True,
+    )
+
 def _refresh_field_native() -> None:
     """Field-native secure · zero-cost engines seal."""
     if os.environ.get("NEXUS_FIELD_NATIVE", "1").strip().lower() in ("0", "false", "no", "off"):
@@ -1335,6 +1348,7 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
             _refresh_if_allowed("serving_truth", _refresh_serving_truth)
             _refresh_if_allowed("hostess7_distributed_everywhere", _refresh_hostess7_distributed_everywhere)
             _refresh_if_allowed("field_native", _refresh_field_native)
+            _refresh_if_allowed("hostess7_enemy_heuristics", _refresh_hostess7_enemy_heuristics)
             _refresh_if_allowed("iron_plate", _refresh_iron_plate)
             _refresh_if_allowed("gatekeeper", _refresh_gatekeeper)
             _refresh_if_allowed("logic_gate", _refresh_logic_gate)
@@ -1601,6 +1615,10 @@ def meld(*, refresh_bus: bool = True, refresh_plates: bool = True) -> dict[str, 
                 "field_native_zero_cost": ((plates.get("field_native") or {}).get("zero_cost") or {}).get("ok"),
                 "field_native_secure": ((plates.get("field_native") or {}).get("secure") or {}).get("ok"),
                 "field_native_cite": (plates.get("field_native") or {}).get("ironclad_cite"),
+                "enemy_heuristics_ok": (plates.get("hostess7_enemy_heuristics") or {}).get("ok"),
+                "enemy_lessons": ((plates.get("hostess7_enemy_heuristics") or {}).get("learned") or {}).get("lesson_count"),
+                "enemy_proactive_ok": ((plates.get("hostess7_enemy_heuristics") or {}).get("proactive") or {}).get("executed_ok"),
+                "enemy_heuristics_cite": (plates.get("hostess7_enemy_heuristics") or {}).get("ironclad_cite"),
                 "eye_ear_plate_ok": eye_ear.get("plated") or eye_ear.get("ok"),
                 "eye_ear_plate_verdict": eye_ear.get("verdict"),
                 "eye_ear_chain_hash": eye_ear.get("chain_hash"),

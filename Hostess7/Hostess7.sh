@@ -143,6 +143,7 @@ Hostess 7 — one being · talk window (text + graphics)
   ./Hostess7.sh library-search "…"    Search H7 library by title/subject
   ./Hostess7.sh distributed-everywhere  Job endstate — distributed everywhere/everything
   ./Hostess7.sh field-native             Field-native · secure · zero-cost engines
+  ./Hostess7.sh enemy-heuristics         Learn enemy heuristics · proactive defense
   ./Hostess7.sh code-ingest seed        ISA opcodes + all programming languages
   ./Hostess7.sh code "6502 LDA"         Assembly / language query
   ./Hostess7.sh updates               Self-update advisory (truth-filtered)
@@ -324,6 +325,11 @@ main() {
         field-native|field_native|zero-cost|secure-native)
             # Field-native · secure · zero-cost engines
             exec pythong "${NEXUS_INSTALL_ROOT}/lib/field-native.py" "${1:-seal}" "${@:2}"
+            ;;
+
+        enemy-heuristics|enemy_heuristics|learn-enemies|proactive-defense)
+            # Learn enemy heuristics · proactive Angel
+            exec pythong "${NEXUS_INSTALL_ROOT}/lib/hostess7-enemy-heuristics-learn.py" "${1:-cycle}" "${@:2}"
             ;;
         on|start|power-on)
             pythong "$AGENTS" on
