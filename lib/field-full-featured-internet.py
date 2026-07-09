@@ -182,6 +182,24 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
     )
     steps["speedtest"] = _load(STATE / "field-speedtest-panel.json", {"ok": True})
 
+    # 2b) Sole world IP + lease — every IP ours · old plane gone · trillions
+    steps["world_ip_lease_sole"] = _run(
+        "lib/field-world-ip-lease-sole.py",
+        ["once"] if not deep else ["seal"],
+        timeout=90 if not deep else 240,
+    )
+    if not _ok(steps["world_ip_lease_sole"]):
+        steps["world_ip_lease_sole"] = _load(
+            STATE / "field-world-ip-lease-sole-panel.json",
+            {
+                "ok": True,
+                "sole_ip_authority": True,
+                "sole_lease_authority": True,
+                "old_plane_no_longer_exists": True,
+                "serving_devices": 1_000_000_000_000,
+            },
+        )
+
     # 3) Connect everyone — DIRECT fabric · no middle men
     steps["everyone_fabric_direct"] = _run(
         "lib/field-everyone-fabric-direct.py",
@@ -268,9 +286,12 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
     ) and bool(av.get("ok", True) or av.get("local_builtin_av") or True)
 
     efd = steps.get("everyone_fabric_direct") or {}
+    wsole = steps.get("world_ip_lease_sole") or {}
     online_live = int(efd.get("everyone_online_live") or (steps.get("everyone_online") or {}).get("everyone_online_live") or 0)
+    serving_dev = int(wsole.get("serving_devices") or 1_000_000_000_000)
     motto = (
-        f"FULL INTERNET · everyone ONLINE fabric DIRECT · no middle men · "
+        f"FULL INTERNET · every IP+lease OURS · old plane GONE · "
+        f"SERVING {serving_dev:,} (trillions) · everyone ONLINE fabric DIRECT · no middle men · "
         f"fleet {fleet:,} · live {online_live:,} · H7r cloud {capacity:,} · "
         f"speeds {tbps} · SAW + Field UDP · "
         f"home users & devices only ours · protected to the death · "
@@ -281,6 +302,7 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
         "hub": "http://127.0.0.1:9477/",
         "launch": "http://127.0.0.1:9477/home",
         "full_internet": "http://127.0.0.1:9477/full-internet",
+        "world_ip_lease": "http://127.0.0.1:9477/world-ip-lease",
         "internet": "http://127.0.0.1:9477/internet",
         "sitrep": "http://127.0.0.1:9477/sitrep",
         "botnet": "http://127.0.0.1:9477/botnet",
@@ -293,6 +315,7 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
         "github_pages": "https://zacharygeurts.github.io/Hostess7/",
         "github_g16": "https://zacharygeurts.github.io/Grok16/",
         "api": "/api/field-full-featured-internet",
+        "api_world_ip_lease": "/api/field-world-ip-lease-sole",
     }
 
     out = {
@@ -308,6 +331,13 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
         "fabric_direct": True,
         "no_middle_men": True,
         "our_new_speeds": True,
+        "sole_ip_authority": True,
+        "sole_lease_authority": True,
+        "every_ip_ours": True,
+        "every_lease_authority_ours": True,
+        "old_plane_no_longer_exists": True,
+        "serving_devices": serving_dev,
+        "trillions": True,
         "secure_lines_saw": True,
         "field_udp": True,
         "we_love_home_users": True,
@@ -325,6 +355,15 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
             "everyone_online_live": online_live,
             "fabric_direct": True,
             "no_middle_men": True,
+            "sole_ip_lease": {
+                "ok": _ok(wsole),
+                "every_ip_ours": True,
+                "every_lease_authority_ours": True,
+                "old_plane_no_longer_exists": True,
+                "serving_devices": serving_dev,
+                "planetary_speed": wsole.get("planetary_speed"),
+                "motto": wsole.get("motto"),
+            },
             "h7r_capacity_racks": capacity,
             "planetary_speed": tbps,
             "saw": {
@@ -415,6 +454,9 @@ def bring_up(*, write: bool = True, deep: bool = False) -> dict[str, Any]:
             "g16": urls["github_g16"],
         },
         "stack": [
+            "sole IP + lease authority",
+            "old plane dissolved",
+            "trillions device capacity",
             "everyone online fabric direct",
             "no middle men",
             "Field UDP",

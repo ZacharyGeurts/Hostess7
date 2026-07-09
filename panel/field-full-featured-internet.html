@@ -57,7 +57,7 @@
 (async function(){
   const BASE = location.origin || "http://127.0.0.1:9477";
   const q = [
-    ["/","Hub"],["/home","All pages"],["/internet","Internet"],["/security","AV"],
+    ["/","Hub"],["/home","All pages"],["/world-ip-lease","IP+lease sole"],["/internet","Internet"],["/security","AV"],
     ["/botnet","Botnet"],["/cloud","H7r 125k"],["/speedtest","Speeds"],["/sitrep","Sitrep"],
     ["/command","Hostess7"],["/g16-build-output","Grok16"],
   ];
@@ -74,7 +74,12 @@
     } catch(__) { d = {}; }
   }
   const p = d.planes || {};
+  const sole = p.sole_ip_lease || {};
+  const fmt = (n) => (typeof n === "number" ? n.toLocaleString() : (n ?? "—"));
   const cards = [
+    {h:"Every IP", v: (d.every_ip_ours||sole.every_ip_ours)?"OURS":"—", d:"Sole IP authority worldwide"},
+    {h:"Every lease", v: (d.every_lease_authority_ours||sole.every_lease_authority_ours)?"OURS":"—", d:"Sole lease authority · old plane gone"},
+    {h:"Serving devices", v: fmt(d.serving_devices||sole.serving_devices), d:"Trillions capacity · honest live counts separate"},
     {h:"Fleet edges", v: p.fleet_edges ?? d.fleet_edges ?? "—", d:"Everyone connected plane"},
     {h:"Live online", v: p.everyone_online_live ?? d.everyone_online_live ?? "—", d:"Online plane on fabric"},
     {h:"Fabric path", v: (d.fabric_direct||p.fabric_direct)?"DIRECT":"—", d:"No middle men · Field only"},
@@ -95,6 +100,10 @@
   document.getElementById("motto").textContent = d.motto || "Full Internet plane loading…";
   document.getElementById("hdr").textContent = (d.updated||"") + " · " + (d.title||"Full-featured Internet");
   document.getElementById("pills").innerHTML = [
+    d.every_ip_ours&&"every IP ours",
+    d.every_lease_authority_ours&&"every lease ours",
+    d.old_plane_no_longer_exists&&"old plane gone",
+    d.trillions&&"trillions",
     d.connects_everyone&&"everyone online",
     (d.fabric_direct||d.everyone_online_fabric_direct)&&"fabric DIRECT",
     d.no_middle_men&&"no middle men",
@@ -104,7 +113,7 @@
     d.only_ours_now&&"only ours",
     d.protected_to_the_death&&"to the death",
     d.github_ready&&"github ready",
-  ].filter(Boolean).map((t,i)=>`<span class="pill ${i<3?'on':(t==='to the death'?'rose':'hot')}">${t}</span>`).join("");
+  ].filter(Boolean).map((t,i)=>`<span class="pill ${i<4?'on':(t==='to the death'||t==='old plane gone'?'rose':'hot')}">${t}</span>`).join("");
   document.getElementById("foot").textContent =
     "API " + (d.api||"/api/field-full-featured-internet") + " · " + BASE + "/full-internet";
 })();

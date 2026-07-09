@@ -3065,6 +3065,41 @@ class Handler(BaseHTTPRequestHandler):
             except Exception as exc:
                 self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
             return
+        # World sole IP + lease — every IP ours · old plane gone · trillions · speeds
+        if path in (
+            "/api/field-world-ip-lease-sole",
+            "/api/field-world-ip-lease-sole/",
+            "/api/world-ip-lease",
+            "/api/world-ip-lease/",
+            "/api/sole-ip-lease",
+        ):
+            try:
+                cached = STATE_DIR / "field-world-ip-lease-sole-panel.json"
+                qs_w = parse_qs(urlparse(self.path).query)
+                force = str(qs_w.get("refresh", qs_w.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "seal",
+                )
+                if cached.is_file() and not force:
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-world-ip-lease-sole.py",
+                    ["once"] if not force else ["seal"],
+                    timeout=90 if force else 45,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "world_ip_lease_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
         # Full-featured Internet — everyone · speeds · SAW · Field UDP · to the death
         if path in (
             "/api/field-full-featured-internet",
@@ -3628,6 +3663,7 @@ class Handler(BaseHTTPRequestHandler):
             "/api/field-internet-big-numbers",
             "/api/field-serving-capacity",
             "/api/field-authority-capacity",
+            "/api/field-world-ip-lease-sole",
             "/api/field-comms-saw-secure-lines",
             "/api/field-fleet-live",
             "/api/field-botnet-threat-heuristics",
@@ -3697,6 +3733,10 @@ class Handler(BaseHTTPRequestHandler):
                     INSTALL_ROOT / "lib" / "field-internet-big-numbers.py",
                     ["status"],
                 ),
+                "/api/field-world-ip-lease-sole": (
+                    INSTALL_ROOT / "lib" / "field-world-ip-lease-sole.py",
+                    ["status"],
+                ),
                 "/api/field-comms-saw-secure-lines": (
                     INSTALL_ROOT / "lib" / "field-udp-outlet-scan.py",
                     ["doctrine"],
@@ -3738,6 +3778,7 @@ class Handler(BaseHTTPRequestHandler):
                 "/api/field-internet-big-numbers": STATE_DIR / "field-internet-big-numbers-panel.json",
                 "/api/field-serving-capacity": STATE_DIR / "field-serving-capacity-panel.json",
                 "/api/field-authority-capacity": STATE_DIR / "field-authority-capacity-panel.json",
+                "/api/field-world-ip-lease-sole": STATE_DIR / "field-world-ip-lease-sole-panel.json",
                 "/api/field-comms-saw-secure-lines": STATE_DIR / "field-comms-saw-secure-lines-panel.json",
                 "/api/field-fleet-live": STATE_DIR / "field-fleet-live-panel.json",
                 "/api/field-botnet-threat-heuristics": STATE_DIR / "field-botnet-threat-heuristics-panel.json",
@@ -10704,6 +10745,18 @@ class Handler(BaseHTTPRequestHandler):
             "/our-internet/",
         ):
             target = PANEL_DIR / "field-full-featured-internet.html"
+        elif path in (
+            "/world-ip-lease",
+            "/world-ip-lease/",
+            "/sole-ip-lease",
+            "/sole-ip-lease/",
+            "/every-ip",
+            "/every-ip/",
+            "/field-world-ip-lease-sole",
+            "/field-world-ip-lease-sole/",
+            "/field-world-ip-lease-sole.html",
+        ):
+            target = PANEL_DIR / "field-world-ip-lease-sole.html"
         elif path in (
             "/internet",
             "/internet/",
