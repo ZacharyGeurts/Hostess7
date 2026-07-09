@@ -4654,6 +4654,47 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, json.dumps(payload or {"ok": False}, ensure_ascii=False), "application/json")
             return
 
+        # Planetary rescue — whole world · more waves
+        if path in (
+            "/api/field-planetary-rescue",
+            "/api/field-planetary-rescue/",
+            "/api/planetary-rescue",
+            "/api/planetary-rescue/",
+            "/api/world-rescue",
+            "/api/rescue-more",
+        ):
+            try:
+                cached = STATE_DIR / "field-planetary-rescue-panel.json"
+                qs_pr = parse_qs(urlparse(self.path).query)
+                force = str(qs_pr.get("refresh", qs_pr.get("force", ["0"]))[0]).strip().lower() in (
+                    "1", "true", "yes", "refresh", "more", "world",
+                )
+                mode = str(qs_pr.get("mode", ["status"])[0]).strip().lower()
+                if cached.is_file() and not force and mode in ("", "status", "panel", "json", "0"):
+                    try:
+                        payload = json.loads(cached.read_text(encoding="utf-8"))
+                        if isinstance(payload, dict):
+                            payload = dict(payload)
+                            payload["_operator_api"] = True
+                            self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+                            return
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                args = ["status"]
+                if force or mode in ("more", "world", "rescue", "run"):
+                    args = ["more"] if mode == "more" or path.endswith("rescue-more") else ["world"]
+                payload = _nexus_py_json(
+                    INSTALL_ROOT / "lib" / "field-planetary-rescue.py",
+                    args,
+                    timeout=180 if args[0] != "status" else 30,
+                )
+                if not isinstance(payload, dict):
+                    payload = {"ok": False, "error": "planetary_rescue_bad"}
+                self._send(200, json.dumps(payload, ensure_ascii=False), "application/json")
+            except Exception as exc:
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:160]}), "application/json")
+            return
+
         if path in ("/api/field-truth-keepalive", "/api/truth-keepalive"):
             tk_py = INSTALL_ROOT / "lib" / "field-truth-keepalive.py"
             refresh = str(query.get("refresh", ["0"])[0]).strip().lower() in ("1", "true", "yes")
@@ -10620,6 +10661,18 @@ class Handler(BaseHTTPRequestHandler):
             "/party/",
         ):
             target = PANEL_DIR / "field-everyone-online.html"
+        elif path in (
+            "/planetary-rescue",
+            "/planetary-rescue/",
+            "/world-rescue",
+            "/world-rescue/",
+            "/rescue-more",
+            "/rescue-more/",
+            "/field-planetary-rescue",
+            "/field-planetary-rescue/",
+            "/field-planetary-rescue.html",
+        ):
+            target = PANEL_DIR / "field-planetary-rescue.html"
         elif path in (
             "/c2",
             "/c2/",

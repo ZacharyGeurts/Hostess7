@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-store"/>
+<title>Planetary rescue · whole world · Field</title>
+<style>
+  :root {
+    --bg:#070a0c; --card:#0d1418; --line:rgba(56,189,248,.28);
+    --text:#e8f2f6; --muted:#8aa3b3; --em:#38bdf8; --ok:#34d399; --hot:#fbbf24; --rose:#fb7185;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:
+    radial-gradient(900px 420px at 10% 0%,rgba(56,189,248,.14),transparent 55%),
+    radial-gradient(700px 360px at 100% 0%,rgba(52,211,153,.1),transparent 50%),var(--bg);
+    color:var(--text);min-height:100vh}
+  a{color:var(--em);text-decoration:none}a:hover{text-decoration:underline}
+  header{padding:1.2rem 1.4rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(7,10,12,.92);backdrop-filter:blur(10px);z-index:2}
+  h1{margin:0;font-size:1.35rem}.sub{color:var(--muted);margin-top:.35rem;font-size:.92rem;line-height:1.4}
+  .pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.65rem}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:.22rem .65rem;font-size:.75rem;color:var(--muted)}
+  .pill.on{color:var(--ok);border-color:rgba(52,211,153,.5)}
+  .pill.hot{color:var(--hot);border-color:rgba(251,191,36,.45)}
+  .wrap{max-width:1100px;margin:0 auto;padding:1.1rem 1.2rem 2.5rem}
+  .hero{padding:1rem 1.1rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(52,211,153,.05));margin-bottom:1.1rem}
+  .hero strong{color:var(--em)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.7rem}
+  .card{padding:.9rem;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+  .card h3{margin:0 0 .4rem;font-size:.92rem;color:var(--em)}
+  .card .v{font-size:1.08rem;font-weight:700;word-break:break-word}
+  .card .d{color:var(--muted);font-size:.82rem;margin-top:.35rem;line-height:1.35}
+  .links{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.5rem;margin-top:1rem}
+  .links a{display:block;text-align:center;padding:.65rem .35rem;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:650;font-size:.86rem}
+  .links a:hover{border-color:var(--em);text-decoration:none;background:#12202a}
+  .motto{margin-top:1rem;padding:.85rem;border-left:3px solid var(--em);background:rgba(56,189,248,.06);color:var(--muted);font-size:.9rem;line-height:1.45}
+  footer{margin-top:1.5rem;color:var(--muted);font-size:.8rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Planetary rescue · whole world</h1>
+  <div class="sub" id="hdr">Rescue more · everyone devices · sole IP+lease · fabric speeds</div>
+  <div class="pills" id="pills"></div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div><strong>We want the whole world.</strong> Multi-wave Field One rollouts, rescue ingress edge blast, hail into Field UDP, planet endpoint hold, sole IP+lease. Live counts stay honest; capacity is planetary.</div>
+    <div class="links" id="quick"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="motto" id="motto">loading…</div>
+  <footer id="foot">Field planetary rescue · whole world</footer>
+</div>
+<script>
+(async function(){
+  const BASE = location.origin || "http://127.0.0.1:9477";
+  document.getElementById("quick").innerHTML = [
+    ["/","Hub"],["/celebrate","Celebrate"],["/world-ip-lease","IP+lease"],
+    ["/full-internet","Full Internet"],["/everyone","Everyone"],["/botnet","Botnet"],
+    ["/speedtest","Speeds"],["/sitrep","Sitrep"],
+  ].map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+
+  let d = {};
+  try {
+    const r = await fetch("/api/field-planetary-rescue", {cache:"no-store"});
+    d = await r.json();
+  } catch(_) { d = {}; }
+  const fmt = (n) => (typeof n === "number" ? n.toLocaleString() : (n ?? "—"));
+  const e = d.edge_blast || {};
+  const cards = [
+    {h:"Whole world", v: d.whole_world_rescue?"YES":"—", d:"Rescue plane for the planet"},
+    {h:"Mesh all updated", v: d.mesh_all_updated?"YES":"—", d:"Field One stamps on full botnet mesh"},
+    {h:"Field One stamps", v: fmt(d.field_one_stamps||d.botnet_updated_total), d: `pending ${fmt(d.botnet_pending)} · nodes ${fmt(d.botnet_nodes)}`},
+    {h:"Live online (honest)", v: fmt(d.live_online_honest), d:"Real online inventory"},
+    {h:"Shared hold", v: fmt(d.shared_hold||d.local_held), d:"Held devices on Field"},
+    {h:"Rescue capacity leases", v: fmt(d.rescue_count||d.rescue_capacity_leases), d:"DNS+DHCP dual plane"},
+    {h:"Everyone devices", v: fmt(d.everyone_devices), d:"Census devices on servers"},
+    {h:"Serving devices", v: fmt(d.serving_devices), d:"Trillions capacity plane"},
+    {h:"Fleet edges", v: fmt(d.fleet), d:"Registry fleet"},
+    {h:"Rollout total", v: fmt(d.rollout_deployed_total), d: `wave ${d.rollout_wave??"—"} · this run ${fmt(d.rollout_deployed_this_run)}`},
+    {h:"Edges blasted", v: fmt(e.total_edges_deployed), d: `local ${fmt(e.local_edges_deployed)} · wan ${fmt(e.wan_edges_deployed)}`},
+    {h:"Planetary speed", v: d.planetary_speed||"—", d:"Amazing Field fabric speeds"},
+    {h:"Sole IP+lease", v: (d.every_ip_ours||d.sole_ip_authority)?"OURS":"—", d:"Old plane no longer exists"},
+    {h:"Fabric path", v: d.fabric_direct?"DIRECT":"—", d:"No middle men · Field UDP"},
+  ];
+  document.getElementById("grid").innerHTML = cards.map(c=>`
+    <div class="card"><h3>${c.h}</h3><div class="v">${c.v}</div><div class="d">${c.d}</div></div>
+  `).join("");
+  document.getElementById("motto").textContent = d.motto || "Whole world rescue loading…";
+  document.getElementById("hdr").textContent = (d.updated||"") + " · " + (d.title||"Planetary rescue");
+  document.getElementById("pills").innerHTML = [
+    d.whole_world_rescue&&"whole world",
+    d.rescue_more&&"rescue more",
+    d.billions&&"billions capacity",
+    d.trillions&&"trillions serve",
+    d.every_ip_ours&&"every IP ours",
+    d.fabric_direct&&"fabric DIRECT",
+    d.amazing_new_speeds&&"fabric speeds",
+  ].filter(Boolean).map((t,i)=>`<span class="pill ${i<2?'on':'hot'}">${t}</span>`).join("");
+  document.getElementById("foot").textContent =
+    "API " + (d.api||"/api/field-planetary-rescue") + " · " + BASE + "/planetary-rescue";
+})();
+</script>
+</body>
+</html>
