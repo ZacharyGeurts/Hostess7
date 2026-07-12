@@ -475,13 +475,15 @@ int cmd_boot(Paths& p) {
   int plane = run_named(p, "field-plane-autopilot", "status", nullptr, 12);
   // AmmoOS classic desktop :9477/field — full stack OS surface
   int ammo = run_named(p, "field-ammoos", "online", nullptr, 45);
+  // Everyone totals · fleet 125k · AmmoNet · training (C++ only)
+  int ev = run_named(p, "field-everyone", "seal", nullptr, 20);
   cmd_hostiles(p);
   cmd_protect(p);
   write_brain_plate(p);
   int present = count_core_present(p);
   int ok_n = (e == 0) + (u == 0) + (d1 == 0) + (d2 == 0) +
              (m == 0 || m == 124) + (c2 == 0) + (h7r == 0 || h7r == 127) +
-             (plane == 0 || plane == 127) + (ammo == 0);
+             (plane == 0 || plane == 127) + (ammo == 0) + (ev == 0);
   write_package_plate(p, present, count_core_total(), ok_n);
 
   Plate pl;
@@ -501,6 +503,8 @@ int cmd_boot(Paths& p) {
   pl.line_i("h7r_rc", h7r);
   pl.line_i("plane_rc", plane);
   pl.line_i("ammoos_rc", ammo);
+  pl.line_i("everyone_rc", ev);
+  pl.line("everyone_total_wire", "fleet_125k_ammonet");
   pl.line_i("core_bins", present);
   pl.line_i("brain_nodes", kBrainNodes);
   pl.line_i("stripe_width", kBrainStripeWidth);
@@ -723,6 +727,14 @@ int main(int argc, char** argv) {
   if (!std::strcmp(cmd, "ammoos") || !std::strcmp(cmd, "desktop") ||
       !std::strcmp(cmd, "os"))
     return run_named(p, "field-ammoos", "online", nullptr, 45);
+  if (!std::strcmp(cmd, "everyone") || !std::strcmp(cmd, "fleet") ||
+      !std::strcmp(cmd, "125k") || !std::strcmp(cmd, "ammonet") ||
+      !std::strcmp(cmd, "train") || !std::strcmp(cmd, "training"))
+    return run_named(p, "field-everyone",
+                     (!std::strcmp(cmd, "train") || !std::strcmp(cmd, "training"))
+                         ? "train"
+                         : (!std::strcmp(cmd, "ammonet") ? "ammonet" : "seal"),
+                     nullptr, 20);
 
   usage();
   return 2;

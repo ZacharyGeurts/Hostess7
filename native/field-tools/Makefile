@@ -31,7 +31,7 @@ all: $(BIN)/field-echo $(BIN)/field-chmod $(BIN)/field-dig $(BIN)/field-world-dn
 	$(BIN)/field-x86-chip $(BIN)/field-init-chip $(BIN)/field-initramfs-chip \
 	$(BIN)/field-internet2-plane $(BIN)/field-grok-identity-seal \
 	$(BIN)/field-hostess7 $(BIN)/field-hostess7-stack-update \
-	$(BIN)/field-ammoos
+	$(BIN)/field-ammoos $(BIN)/field-hdmi-audio $(BIN)/field-everyone
 
 $(BIN):
 	mkdir -p $(BIN) $(BIN)/untouchable $(ROOT)/Grok16/bin
@@ -524,6 +524,31 @@ $(BIN)/field-ammoos: field_ammoos.cpp field_ammoos.hpp | $(BIN)
 
 ammoos: $(BIN)/field-ammoos
 field-ammoos: $(BIN)/field-ammoos
+
+# HDMI-only audio · open snd_hda_intel · stereo for Firefox/YouTube · NO nvidia.ko
+$(BIN)/field-hdmi-audio: field_hdmi_audio.cpp field_hdmi_audio.hpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_hdmi_audio.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-hdmi-audio 2>/dev/null || true
+	cp -f $@ $(ROOT)/Grok16/bin/field-hdmi-audio 2>/dev/null || true
+	chmod 0555 $(ROOT)/Grok16/bin/field-hdmi-audio 2>/dev/null || true
+	ln -sfn field-hdmi-audio $(BIN)/field-hdmi-audio-driver 2>/dev/null || true
+
+hdmi-audio: $(BIN)/field-hdmi-audio
+field-hdmi-audio: $(BIN)/field-hdmi-audio
+
+# Everyone totals · fleet 125k · AmmoNet · training — C++ only (no py)
+$(BIN)/field-everyone: field_everyone.cpp field_everyone.hpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_everyone.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-everyone 2>/dev/null || true
+	cp -f $@ $(ROOT)/Grok16/bin/field-everyone 2>/dev/null || true
+	chmod 0555 $(ROOT)/Grok16/bin/field-everyone 2>/dev/null || true
+	# retire python everyone-counter name
+	ln -sfn field-everyone $(BIN)/field-everyone-counter 2>/dev/null || true
+
+everyone: $(BIN)/field-everyone
+field-everyone: $(BIN)/field-everyone
 
 # KILROY iPXE Field stack · polkit HOSTILE · autoelevate
 $(BIN)/field-kilroy-ipxe-stack: field_kilroy_ipxe_stack.cpp | $(BIN)

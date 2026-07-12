@@ -66,6 +66,8 @@ inline constexpr const char* kCoreBins[] = {
     "field-ammonet-cloud",
     "field-compile-truth",
     "field-ammoos",
+    "field-everyone",
+    "field-hdmi-audio",
     nullptr,
 };
 
