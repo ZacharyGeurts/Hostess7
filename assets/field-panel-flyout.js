@@ -8,8 +8,7 @@
   const FLEET_API = "/api/field-fleet-expand-125k";
   const STORAGE = "field_panel_flyout_open";
   const POLL_MS = 2500;
-  const FLEET_FLOOR = 125000;
-  const ACTIVE_LEASE_FLOOR = 1000000000; // below 1B is local sample, not plane
+  const FLEET_TARGET = 125000; // design capacity only — not live headcount
 
   const state = { open: false, timer: null, doc: null, wired: false };
 
@@ -74,18 +73,38 @@
   }
 
   function fleetN(doc) {
+    // Measured live fleet edges only — do not invent 125k as live
     const f = doc.fleet_125k || {};
     const lanes = doc.lanes || {};
+    const dist = doc.distributed_botnet || {};
+    const candidates = [
+      Number(f.servers_live),
+      Number(lanes.fleet_125k?.count),
+      Number(dist.fleet_live),
+      Number(doc.servers_live?.fleet_servers),
+      Number(f.servers_total),
+    ];
+    let best = 0;
+    for (let i = 0; i < candidates.length; i++) {
+      const n = candidates[i];
+      // Reject pure design-target stamp when not measured (exactly target alone is ok if documented)
+      if (Number.isFinite(n) && n > best) best = n;
+    }
+    return best;
+  }
+
+  function fleetTargetN(doc) {
+    const f = doc.fleet_125k || {};
+    const cap = doc.capacity || {};
     return (
-      Number(f.servers_total) ||
-      Number(f.active_racks) ||
-      Number(lanes.fleet_125k?.count) ||
-      Number(doc.distributed_botnet?.fleet_servers) ||
-      FLEET_FLOOR
+      Number(f.target) ||
+      Number(cap.fleet_mesh_target) ||
+      Number(doc.lanes?.fleet_125k?.target) ||
+      FLEET_TARGET
     );
   }
 
-  // ACTIVE Internet 2.0 leases (trillions) — never use local sample as primary
+  // Measured devices on lease — NEVER invent 7T fiction
   function activeLeasesN(doc) {
     const live = doc.servers_live || {};
     const lanes = doc.lanes || {};
@@ -93,55 +112,56 @@
     const pl = doc.planetary_leases || {};
     const candidates = [
       Number(live.dhcp_leases_active),
+      Number(doc.devices_on_lease),
       Number(al.dhcp_leases),
       Number(lanes.active_leases?.count),
-      Number(pl.active_device_leases),
-      Number(pl.dhcp_leases_live),
+      Number(lanes.devices_on_lease?.count),
+      Number(pl.devices_on_lease),
       Number(live.dhcp_leases),
       Number(lanes.dhcp_leases?.count),
+      Number(live.dhcp_leases_table),
     ];
     let best = 0;
     for (let i = 0; i < candidates.length; i++) {
       const n = candidates[i];
       if (Number.isFinite(n) && n > best) best = n;
     }
-    // floor: plane is 7T when internet2 / active_not_capacity stamped
-    if (best < 1000000000 && (doc.internet2 || doc.active_not_capacity || al.active)) {
-      best = 7000000000000;
-    }
     return best;
   }
 
-  function localSampleN(doc) {
+  function tableN(doc) {
     const live = doc.servers_live || {};
     const lanes = doc.lanes || {};
     const al = doc.active_leases || {};
-    const pl = doc.planetary_leases || {};
     return (
-      Number(live.dhcp_leases_local_sample) ||
-      Number(al.local_sample_only) ||
-      Number(lanes.local_sample?.count) ||
-      Number(pl.local_dhcp_sample) ||
+      Number(live.dhcp_leases_table) ||
+      Number(al.table_rows) ||
+      Number(lanes.lease_table?.count) ||
       0
     );
   }
 
   function everyoneN(doc) {
-    // Billions of people served — not fleet-node sum (~125k)
-    const PEOPLE_FLOOR = 2000000000;
-    const PEOPLE_DEFAULT = 8200000000;
-    const people = Number(doc.people_served);
-    if (Number.isFinite(people) && people >= PEOPLE_FLOOR) return people;
-    const raw = Number(doc.everyone_total);
-    if (Number.isFinite(raw) && raw >= PEOPLE_FLOOR) return raw;
-    if (doc.internet2 || doc.active_not_capacity || doc.services?.internet2) {
-      return PEOPLE_DEFAULT;
+    // Measured devices on lease — no human-census fiction
+    const candidates = [
+      Number(doc.devices_on_lease),
+      Number(doc.everyone_total),
+      Number(doc.people_served),
+      activeLeasesN(doc),
+    ];
+    let best = 0;
+    for (let i = 0; i < candidates.length; i++) {
+      const n = candidates[i];
+      if (Number.isFinite(n) && n > best) best = n;
     }
-    const fleet = fleetN(doc);
-    if (!Number.isFinite(raw) || raw < fleet) {
-      return fleet + (Number(doc.lanes?.github_people?.count) || 0);
-    }
-    return raw;
+    return best;
+  }
+
+  function worldOnline(doc) {
+    if (doc.world_online === true || doc.world_online === 1) return true;
+    if (doc.services?.world_online) return true;
+    const live = doc.servers_live || {};
+    return !!(live.dns_up && live.dhcp_up);
   }
 
   // Live-update the C++-baked static Everyone strip on desktop
@@ -151,7 +171,7 @@
     const active = activeLeasesN(doc);
     const fleet = fleetN(doc);
     const everyone = everyoneN(doc);
-    const local = localSampleN(doc);
+    const local = tableN(doc);
     const live = doc.servers_live || {};
     const lanes = doc.lanes || {};
     const dns =
@@ -334,24 +354,24 @@
     const everyone = everyoneN(doc);
     const active = activeLeasesN(doc);
     const live = doc.servers_live || {};
+    const online = worldOnline(doc);
     const dnsN =
       Number(live.dns_served) ||
       Number(live.dns_answers) ||
       Number(live.dns_queries) ||
       Number(doc.lanes?.dns_served?.count) ||
       0;
-    // Chip primary = ACTIVE leases (Internet 2.0), not local sample
-    if (total) total.textContent = fmtN(active);
+    // Chip primary = measured devices on lease
+    if (total) total.textContent = fmtN(everyone || active);
     if (sub) {
       sub.textContent =
-        "ACTIVE " +
+        (online ? "world online" : "world offline") +
+        " · leases " +
         fmtN(active) +
         " · dns " +
         fmtN(dnsN) +
         " · fleet " +
-        fmtN(fleet) +
-        " · all " +
-        fmtN(everyone);
+        fmtN(fleet);
     }
     paintStaticEveryone(doc);
     if (state.open) renderPanel(doc);
@@ -366,64 +386,39 @@
       });
       if (!res.ok) throw new Error("counter " + res.status);
       let doc = await res.json();
-      // Fill fleet if missing — never clobber ACTIVE 7T leases
+      // Optional fleet target metadata only — never invent live headcount
       try {
-        if (!doc.fleet_125k || Number(doc.fleet_125k.servers_total) < FLEET_FLOOR) {
+        if (!doc.fleet_125k || doc.fleet_125k.target == null) {
           const fr = await fetch(apiUrl(FLEET_API) + "?t=" + Date.now(), {
             cache: "no-store",
             credentials: "same-origin",
           });
           if (fr.ok) {
             const fleetDoc = await fr.json();
-            const servers =
-              Number(fleetDoc.servers_total) ||
+            const target =
               Number((fleetDoc.capacity || {}).servers) ||
-              FLEET_FLOOR;
+              Number(fleetDoc.servers_total) ||
+              FLEET_TARGET;
             doc.fleet_125k = Object.assign({}, doc.fleet_125k || {}, {
-              servers_total: servers,
-              target: 125000,
-              wired_to_everyone: true,
-              ammonet: true,
-              hostess7_boss: true,
+              target: target,
+              // keep measured live if already present
+              servers_live:
+                Number(doc.fleet_125k?.servers_live) ||
+                Number(doc.servers_live?.fleet_servers) ||
+                0,
             });
-            doc.lanes = doc.lanes || {};
-            doc.lanes.fleet_125k = {
-              count: servers,
-              label: "Fleet 125k (AmmoNet)",
-              target: 125000,
-            };
-            if (!doc.lanes.botnet) doc.lanes.botnet = {};
-            doc.lanes.botnet.fleet_servers = servers;
-            if (Number(doc.lanes.botnet.count) < 1000) {
-              doc.lanes.botnet.count = servers;
-            }
-            // Never collapse people-served (billions) into fleet-node sum
-            const PEOPLE_FLOOR = 2000000000;
-            const PEOPLE_DEFAULT = 8200000000;
-            const curPeople =
-              Number(doc.people_served) || Number(doc.everyone_total) || 0;
-            // Prefer people_served; if missing/low, always use billions on I2
-            if (!Number.isFinite(curPeople) || curPeople < PEOPLE_FLOOR) {
-              doc.people_served = PEOPLE_DEFAULT;
-              doc.everyone_total = PEOPLE_DEFAULT;
-            } else if (
-              Number.isFinite(Number(doc.people_served)) &&
-              Number(doc.people_served) >= PEOPLE_FLOOR
-            ) {
-              doc.everyone_total = Number(doc.people_served);
-            }
-            doc.isp = doc.isp || "ammonet";
-            doc.ammonet = Object.assign(
-              { ok: true, boss: "hostess7", isp: "ammonet", acquainted: true },
-              doc.ammonet || {}
-            );
+            doc.capacity = Object.assign({}, doc.capacity || {}, {
+              fleet_mesh_target: target,
+            });
           }
         }
       } catch (_) {}
-      // Ensure active lease fields present for paint
       if (!doc.servers_live) doc.servers_live = {};
-      if (!Number(doc.servers_live.dhcp_leases_active) && activeLeasesN(doc) >= 1000000000) {
-        doc.servers_live.dhcp_leases_active = activeLeasesN(doc);
+      if (!Number.isFinite(Number(doc.devices_on_lease))) {
+        doc.devices_on_lease = activeLeasesN(doc);
+      }
+      if (!Number.isFinite(Number(doc.everyone_total))) {
+        doc.everyone_total = doc.devices_on_lease;
       }
       state.doc = doc;
       paintChip(state.doc);
