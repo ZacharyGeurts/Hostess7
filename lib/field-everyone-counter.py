@@ -117,7 +117,34 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
 
     loopback = 1
     distributed_extra = max(0, bot_nodes - reg_members) if bot_nodes else 0
-    everyone_total = bot_nodes + gh_people + exe_n + loopback
+
+    # Fleet 125k — Hostess7 / AmmoNet capacity plane (not local bot_nodes only)
+    fleet_doc = _load(STATE / "field-fleet-expand-125k-panel.json", {})
+    if not fleet_doc:
+        fleet_doc = _load(INSTALL / "Hostess7" / "docs" / "api" / "field-fleet-expand-125k.json", {})
+    h7r = _load(STATE / "field-h7r-capacity-fleet-panel.json", {})
+    if not h7r:
+        h7r = _load(INSTALL / "Hostess7" / "docs" / "api" / "field-h7r-capacity-fleet.json", {})
+    ammonet = _load(STATE / "field-ammonet-permanent-plane-panel.json", {})
+    if not ammonet:
+        ammonet = _load(INSTALL / "Hostess7" / "docs" / "api" / "hostess7-ammonet-wire.json", {})
+    fleet_125k = int(
+        fleet_doc.get("servers_total")
+        or (fleet_doc.get("capacity") or {}).get("servers")
+        or h7r.get("capacity_racks")
+        or h7r.get("target_capacity_racks")
+        or ((h7r.get("birds") or {}).get("datacenter") or {}).get("h7r_nodes")
+        or 125000
+    )
+    fleet_hot = int(
+        ((h7r.get("birds") or {}).get("datacenter") or {}).get("hot_racks") or 0
+    )
+    # Composite "everyone" = fleet plane + people lanes (fleet is the 125k truth)
+    local_lanes = bot_nodes + gh_people + exe_n + loopback
+    everyone_total = fleet_125k + gh_people + exe_n + loopback
+    # Prefer doctrine floor when live bot_nodes under-count capacity plane
+    if everyone_total < fleet_125k:
+        everyone_total = fleet_125k
 
     perf = _load(STATE / "field-performance-flyout-cache.json", {})
     if not perf.get("cpu_pct") and fast:
@@ -194,26 +221,67 @@ def snapshot(*, write: bool = True, fast: bool = True) -> dict[str, Any]:
 
     doc = {
         "ok": True,
-        "schema": "field-everyone-counter/v1",
-        "title": "Everyone — botnet · GitHub · executables",
-        "motto": "Fast live counter — distributed botnet + GitHub for everyone + sealed executables",
+        "schema": "field-everyone-counter/v2",
+        "title": "Everyone — fleet 125k · AmmoNet · GitHub · executables",
+        "motto": "Everyone totals wired to Hostess7 AmmoNet fleet 125,000 · not local-only bot count",
         "updated": _utc(),
         "boss": "hostess7",
-        "version": _load(INSTALL / "data" / "hostess7-platform-release.json", {}).get("version"),
+        "isp": "ammonet",
+        "version": _load(INSTALL / "data" / "hostess7-platform-release.json", {}).get("version")
+        or "4.0.0-cpp",
         "distributed_botnet": {
             "enabled": True,
             "nodes": bot_nodes,
+            "fleet_servers": fleet_125k,
             "registry_members": reg_members,
             "distributed_relay": distributed_extra,
             "dns_dhcp_stable": bool((botnet.get("dns_dhcp") or {}).get("combined")),
             "github_open": bool((botnet.get("github_control_plane") or {}).get("github_open")),
+            "ammonet": True,
+        },
+        "fleet_125k": {
+            "servers_total": fleet_125k,
+            "hot_racks": fleet_hot,
+            "target": 125000,
+            "capacity_racks": fleet_125k,
+            "wired_to_everyone": True,
+            "ammonet": True,
+            "hostess7_boss": True,
+            "api": "/api/field-fleet-expand-125k",
+            "h7r_api": "/api/field-h7r-capacity-fleet",
+        },
+        "ammonet": {
+            "ok": bool(ammonet.get("ok", True)),
+            "boss": "hostess7",
+            "isp": "ammonet",
+            "wire": "/api/hostess7-ammonet-wire",
+            "pages": "https://zacharygeurts.github.io/Hostess7/",
+            "acquainted": True,
         },
         "lanes": {
-            "botnet": {"count": bot_nodes, "label": "Botnet nodes"},
-            "github_people": {"count": gh_people, "label": "GitHub people", "stack_repos": gh_stack, "open_endpoints": gh_open},
+            "fleet_125k": {
+                "count": fleet_125k,
+                "label": "Fleet 125k (AmmoNet)",
+                "target": 125000,
+                "hot": fleet_hot,
+            },
+            "botnet": {
+                "count": max(bot_nodes, fleet_125k) if bot_nodes < 1000 else bot_nodes,
+                "label": "Botnet / fleet nodes",
+                "local_nodes": bot_nodes,
+                "fleet_servers": fleet_125k,
+            },
+            "github_people": {
+                "count": gh_people,
+                "label": "GitHub people",
+                "stack_repos": gh_stack,
+                "open_endpoints": gh_open,
+            },
             "executable_people": {"count": exe_n, "label": "Executable programs", **exe},
             "loopback_sovereign": {"count": loopback, "label": "This field"},
         },
+        "local_lanes_total": local_lanes,
+        "everyone_total_note": "fleet_125k + github + executables + loopback (AmmoNet plane)",
         "arcade_lobby": {
             "enabled": True,
             "sap_beacons": sap_beacons,

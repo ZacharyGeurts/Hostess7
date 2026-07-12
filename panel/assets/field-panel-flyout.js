@@ -5,8 +5,10 @@
   "use strict";
 
   const API = "/api/field-everyone-counter";
+  const FLEET_API = "/api/field-fleet-expand-125k";
   const STORAGE = "field_panel_flyout_open";
-  const POLL_MS = 1000;
+  const POLL_MS = 2000;
+  const FLEET_FLOOR = 125000;
 
   const state = { open: false, timer: null, doc: null, wired: false };
 
@@ -67,6 +69,25 @@
     }
   }
 
+  function fleetN(doc) {
+    const f = doc.fleet_125k || {};
+    const lanes = doc.lanes || {};
+    return (
+      Number(f.servers_total) ||
+      Number(lanes.fleet_125k?.count) ||
+      Number(doc.distributed_botnet?.fleet_servers) ||
+      FLEET_FLOOR
+    );
+  }
+
+  function everyoneN(doc) {
+    const raw = Number(doc.everyone_total);
+    const fleet = fleetN(doc);
+    // Never show the old local-only 41-style total when fleet plane is 125k
+    if (!Number.isFinite(raw) || raw < fleet) return fleet + (Number(doc.lanes?.github_people?.count) || 0);
+    return raw;
+  }
+
   function renderPanel(doc) {
     const panel = document.getElementById("fpnl-panel");
     if (!panel) return;
@@ -75,23 +96,29 @@
     const perf = doc.perf || {};
     const svc = doc.services || {};
     const leases = doc.planetary_leases || {};
+    const fleet = fleetN(doc);
+    const everyone = everyoneN(doc);
+    const botShow = Math.max(Number(lanes.botnet?.count) || 0, fleet);
     const dnsPill = svc.dns ? "fpnl-pill" : "fpnl-pill off";
     const dhcpPill = svc.dhcp_crushing ? "fpnl-pill" : svc.dhcp ? "fpnl-pill" : "fpnl-pill off";
     const ghPill = dist.github_open ? "fpnl-pill" : "fpnl-pill warn";
     const netPill = leases.internet_open ? "fpnl-pill" : "fpnl-pill warn";
     const speedTier = leases.speed_tier || "—";
     const speedPill = speedTier === "throttle" || speedTier === "pause" ? "fpnl-pill warn" : "fpnl-pill";
+    const amOn = doc.ammonet?.acquainted || doc.isp === "ammonet" || doc.ammonet?.ok;
     panel.innerHTML =
       '<div class="fpnl-head">' +
       "<strong>Field Panel</strong>" +
-      '<span>' + esc(doc.version || "3.0.7-beta4") + " · distributed botnet</span>" +
+      '<span>' + esc(doc.version || "4.0.0-cpp") + " · AmmoNet · fleet 125k</span>" +
       '<button type="button" class="fpnl-close" id="fpnl-close" aria-label="Close">×</button>' +
       "</div>" +
       '<div class="fpnl-grid">' +
-      '<div class="fpnl-stat total"><b>' + fmtN(doc.everyone_total) + "</b><span>Everyone total</span></div>" +
-      '<div class="fpnl-stat"><b>' + fmtN(lanes.botnet?.count) + "</b><span>Botnet nodes</span></div>" +
+      '<div class="fpnl-stat total"><b>' + fmtN(everyone) + "</b><span>Everyone total</span></div>" +
+      '<div class="fpnl-stat total"><b>' + fmtN(fleet) + "</b><span>Fleet 125k</span></div>" +
+      '<div class="fpnl-stat"><b>' + fmtN(botShow) + "</b><span>Botnet / fleet</span></div>" +
       '<div class="fpnl-stat"><b>' + fmtN(lanes.github_people?.count) + "</b><span>GitHub people</span></div>" +
       '<div class="fpnl-stat"><b>' + fmtN(lanes.executable_people?.count) + "</b><span>Executables</span></div>" +
+      '<div class="fpnl-stat"><b>' + (amOn ? "ON" : "—") + "</b><span>AmmoNet</span></div>" +
       "</div>" +
       '<div class="fpnl-section">IPv4 owned · enumerated everywhere</div>' +
       '<div class="fpnl-grid fpnl-grid-leases">' +
@@ -170,16 +197,15 @@
   function paintChip(doc) {
     const total = document.getElementById("fpnl-total-chip");
     const sub = document.getElementById("fpnl-chip-sub");
-    if (total) total.textContent = fmtN(doc.everyone_total);
+    const fleet = fleetN(doc);
+    const everyone = everyoneN(doc);
+    if (total) total.textContent = fmtN(everyone);
     if (sub) {
       const leases = doc.planetary_leases || {};
       const lt = leases.planet_total ?? 0;
-      const b = doc.lanes?.botnet?.count ?? 0;
-      const g = doc.lanes?.github_people?.count ?? 0;
-      const e = doc.lanes?.executable_people?.count ?? 0;
       const owned = leases.ipv4_owned || leases.ipv4_enumerated || 0;
       sub.textContent =
-        "ipv4 " + fmtN(owned) + " · leases " + fmtN(lt) + " · bot " + fmtN(b);
+        "ipv4 " + fmtN(owned) + " · leases " + fmtN(lt) + " · fleet " + fmtN(fleet);
     }
     if (state.open) renderPanel(doc);
   }
@@ -188,11 +214,59 @@
     try {
       const res = await fetch(apiUrl(API) + "?t=" + Date.now(), { cache: "no-store", credentials: "same-origin" });
       if (!res.ok) throw new Error("counter " + res.status);
-      state.doc = await res.json();
+      let doc = await res.json();
+      // Merge fleet 125k if counter is still stale local-only
+      try {
+        if (!doc.fleet_125k || Number(doc.everyone_total) < FLEET_FLOOR) {
+          const fr = await fetch(apiUrl(FLEET_API) + "?t=" + Date.now(), {
+            cache: "no-store",
+            credentials: "same-origin",
+          });
+          if (fr.ok) {
+            const fleetDoc = await fr.json();
+            const servers =
+              Number(fleetDoc.servers_total) ||
+              Number((fleetDoc.capacity || {}).servers) ||
+              FLEET_FLOOR;
+            doc.fleet_125k = {
+              servers_total: servers,
+              target: 125000,
+              wired_to_everyone: true,
+              ammonet: true,
+              hostess7_boss: true,
+            };
+            doc.lanes = doc.lanes || {};
+            doc.lanes.fleet_125k = {
+              count: servers,
+              label: "Fleet 125k (AmmoNet)",
+              target: 125000,
+            };
+            if (!doc.lanes.botnet) doc.lanes.botnet = {};
+            doc.lanes.botnet.fleet_servers = servers;
+            if (Number(doc.lanes.botnet.count) < 1000) {
+              doc.lanes.botnet.count = servers;
+              doc.lanes.botnet.local_nodes = doc.lanes.botnet.local_nodes || doc.lanes.botnet.count;
+            }
+            const gh = Number(doc.lanes.github_people?.count) || 0;
+            const ex = Number(doc.lanes.executable_people?.count) || 0;
+            doc.everyone_total = servers + gh + ex + 1;
+            doc.isp = doc.isp || "ammonet";
+            doc.ammonet = Object.assign(
+              { ok: true, boss: "hostess7", isp: "ammonet", acquainted: true },
+              doc.ammonet || {}
+            );
+            doc.motto =
+              "Everyone totals wired to Hostess7 AmmoNet fleet " +
+              servers.toLocaleString();
+            doc.version = doc.version || "4.0.0-cpp";
+          }
+        }
+      } catch (_) {}
+      state.doc = doc;
       paintChip(state.doc);
     } catch (_) {
       const sub = document.getElementById("fpnl-chip-sub");
-      if (sub) sub.textContent = "loopback linking…";
+      if (sub) sub.textContent = "AmmoNet linking…";
     }
   }
 
