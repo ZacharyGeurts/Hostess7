@@ -165,6 +165,56 @@ long long json_ll(const char* body, const char* key) {
   return std::strtoll(p, nullptr, 10);
 }
 
+// Stream-scan large JSON (multi-MB lease pools) for "key": N
+long long scan_file_key_ll(const char* path, const char* key) {
+  int fd = ::open(path, O_RDONLY | O_CLOEXEC);
+  if (fd < 0) return -1;
+  char pat[96];
+  std::snprintf(pat, sizeof(pat), "\"%s\"", key);
+  size_t plen = std::strlen(pat);
+  char buf[8192];
+  char hold[256];
+  size_t hold_n = 0;
+  long long found = -1;
+  for (;;) {
+    ssize_t r = ::read(fd, buf, sizeof(buf) - 1);
+    if (r < 0) {
+      if (errno == EINTR) continue;
+      break;
+    }
+    if (r == 0) break;
+    buf[r] = 0;
+    // stitch overlap for keys spanning chunks
+    char window[8192 + 256];
+    size_t wlen = 0;
+    if (hold_n) {
+      std::memcpy(window, hold, hold_n);
+      wlen = hold_n;
+    }
+    std::memcpy(window + wlen, buf, static_cast<size_t>(r));
+    wlen += static_cast<size_t>(r);
+    window[wlen] = 0;
+    const char* p = window;
+    while ((p = std::strstr(p, pat)) != nullptr) {
+      const char* c = std::strchr(p + plen, ':');
+      if (!c) break;
+      ++c;
+      while (*c == ' ' || *c == '\t') ++c;
+      if (*c >= '0' && *c <= '9') {
+        long long v = std::strtoll(c, nullptr, 10);
+        if (v > found) found = v;
+      }
+      p += plen;
+    }
+    // keep last plen+32 bytes
+    hold_n = plen + 32;
+    if (hold_n > wlen) hold_n = wlen;
+    std::memcpy(hold, window + wlen - hold_n, hold_n);
+  }
+  ::close(fd);
+  return found;
+}
+
 bool read_file_cap(const char* path, char* out, size_t cap, size_t* n_out) {
   *n_out = 0;
   int fd = ::open(path, O_RDONLY | O_CLOEXEC);
@@ -193,22 +243,21 @@ void harvest_live(const Paths& p, LiveServers* L) {
   size_t n = 0;
   char path[kPathCap];
 
-  // DHCP leases — real pool (field-dhcp-panel / field-dhcp-leases)
+  // DHCP leases — real pool (multi-MB files; stream-scan keys)
   std::snprintf(path, sizeof(path), "%s/field-dhcp-panel.json", p.state);
-  if (read_file_cap(path, buf, sizeof(buf), &n)) {
-    long long v = json_ll(buf, "lease_count");
-    if (v < 0) v = json_ll(buf, "total_leases");
-    if (v < 0) v = json_ll(buf, "ammonet_leases");
+  {
+    long long v = scan_file_key_ll(path, "lease_count");
+    if (v < 0) v = scan_file_key_ll(path, "total_leases");
+    if (v < 0) v = scan_file_key_ll(path, "ammonet_leases");
     if (v >= 0) L->dhcp_leases = v;
   }
-  if (L->dhcp_leases <= 0) {
-    std::snprintf(path, sizeof(path), "%s/field-dhcp-leases.json", p.state);
-    if (read_file_cap(path, buf, sizeof(buf), &n)) {
-      long long v = json_ll(buf, "lease_count");
-      if (v < 0) v = json_ll(buf, "count");
-      if (v >= 0) L->dhcp_leases = v;
-    }
+  std::snprintf(path, sizeof(path), "%s/field-dhcp-leases.json", p.state);
+  {
+    long long v = scan_file_key_ll(path, "lease_count");
+    if (v < 0) v = scan_file_key_ll(path, "count");
+    if (v > L->dhcp_leases) L->dhcp_leases = v;
   }
+  // Prefer larger pool over ephemeral status.stats.leases
 
   // World DHCP panel / live status stats
   std::snprintf(path, sizeof(path), "%s/field-world-dhcp-panel.json", p.state);
@@ -343,8 +392,8 @@ void harvest_live(const Paths& p, LiveServers* L) {
         long long ack = json_ll(buf, "ack");
         long long offer = json_ll(buf, "offer");
         long long disc = json_ll(buf, "discover");
-        // Prefer disk lease pool if larger
-        if (leases > L->dhcp_leases) L->dhcp_leases = leases;
+        // Never let tiny status.stats.leases clobber the real pool
+        if (leases > L->dhcp_leases && leases >= 100) L->dhcp_leases = leases;
         if (ack > 0) L->dhcp_acks = ack;
         if (offer > 0) L->dhcp_offers = offer;
         if (disc > 0) L->dhcp_discovers = disc;
