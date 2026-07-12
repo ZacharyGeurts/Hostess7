@@ -357,7 +357,8 @@ int bake(Paths& p, bool do_seal) {
                   "    \"active_leases\": {\"count\": 7000000000000, \"label\": \"ACTIVE DHCP leases\"},\n"
                   "    \"fleet_125k\": {\"count\": 125000, \"label\": \"Fleet 125k\"}\n"
                   "  },\n"
-                  "  \"everyone_total\": 125000,\n"
+                  "  \"everyone_total\": 8200000000,\n"
+                  "  \"people_served\": 8200000000,\n"
                   "  \"pages\": true,\n"
                   "  \"api\": \"/api/field-everyone-counter\"\n"
                   "}\n",
@@ -386,8 +387,12 @@ int bake(Paths& p, bool do_seal) {
   long long fleet = json_ll(body, "servers_total");
   if (fleet < 1000) fleet = json_ll(body, "fleet_servers");
   if (fleet < 1000) fleet = 125000;
-  long long everyone = json_ll(body, "everyone_total");
-  if (everyone < fleet) everyone = fleet;
+  // Billions of people served — never collapse to fleet-node count (~125k)
+  constexpr long long kPeopleDefault = 8200000000LL;
+  constexpr long long kPeopleFloor = 2000000000LL;
+  long long everyone = json_ll(body, "people_served");
+  if (everyone < kPeopleFloor) everyone = json_ll(body, "everyone_total");
+  if (everyone < kPeopleFloor) everyone = kPeopleDefault;
   long long dns_served = json_ll(body, "dns_served");
   if (dns_served < 0) dns_served = json_ll(body, "dns_answers");
   if (dns_served < 0) dns_served = json_ll(body, "dns_queries");
@@ -431,13 +436,13 @@ int bake(Paths& p, bool do_seal) {
       "<aside id=\"h7-everyone-static\" data-engine=\"cpp\" data-ironclad=\"%s\" "
       "data-active-leases=\"%lld\" data-fleet=\"%lld\" data-everyone=\"%lld\" "
       "aria-label=\"Everyone · Internet 2.0 active leases\">\n"
-      "  <h2>Everyone · Internet 2.0</h2>\n"
-      "  <p class=\"h7e-motto\">7T ACTIVE leases · not capacity · local sample "
-      "separate · Zac @ZacharyGeurts</p>\n"
+      "  <h2>Everyone · people served</h2>\n"
+      "  <p class=\"h7e-motto\">Billions of people served · 7T ACTIVE leases · "
+      "local sample separate · Zac @ZacharyGeurts</p>\n"
       "  <div class=\"h7e-grid\">\n"
       "    <div class=\"h7e-stat total\"><b>%s</b><span>ACTIVE leases</span></div>\n"
       "    <div class=\"h7e-stat total\"><b>%s</b><span>Fleet 125k</span></div>\n"
-      "    <div class=\"h7e-stat\"><b>%s</b><span>Everyone total</span></div>\n"
+      "    <div class=\"h7e-stat total\"><b>%s</b><span>People served</span></div>\n"
       "    <div class=\"h7e-stat\"><b>%s</b><span>DNS served</span></div>\n"
       "    <div class=\"h7e-stat\"><b>%s</b><span>Local sample only</span></div>\n"
       "    <div class=\"h7e-stat\"><b>%d</b><span>Library books</span></div>\n"

@@ -6,12 +6,12 @@
 namespace field {
 namespace everyone {
 
-inline constexpr const char* kIronclad = "ironclad:field-everyone-cpp:3";
+inline constexpr const char* kIronclad = "ironclad:field-everyone-cpp:4";
 inline constexpr const char* kVersion =
-    "Field-Everyone 3.1.0-cpp (Internet 2.0 · 7T ACTIVE leases · not capacity)";
-inline constexpr const char* kSchema = "field-everyone-counter/v5";
+    "Field-Everyone 3.2.0-cpp (billions people served · 7T ACTIVE leases)";
+inline constexpr const char* kSchema = "field-everyone-counter/v6";
 inline constexpr const char* kMotto =
-    "Internet 2.0 · 7 trillion ACTIVE leases · 125k racks · not local 55k";
+    "Billions of people served · 7T ACTIVE leases · 125k racks · AmmoNet only";
 
 inline constexpr int kFleetTarget = 125000;
 inline constexpr int kFleetHotDefault = 208;
@@ -38,6 +38,11 @@ inline constexpr long long kActiveLeases = 7000000000000LL;
 inline constexpr long long kDeviceLeases = kActiveLeases;
 // Serving plane (active)
 inline constexpr long long kServingActive = 1000000000000LL;
+// People served on AmmoNet (billions) — not fleet-node count (~125k)
+// ~8.2B humans + multi-device fan-out under Field DNS+leases
+inline constexpr long long kPeopleServed = 8200000000LL;
+// Floor: never report fewer than billions when plane is up
+inline constexpr long long kPeopleServedFloor = 2000000000LL;
 
 // Training tracks (C++ sealed)
 struct Track {

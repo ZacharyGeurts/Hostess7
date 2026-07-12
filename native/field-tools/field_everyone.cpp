@@ -39,6 +39,8 @@ using field::everyone::kSchema;
 using field::everyone::kActiveLeases;
 using field::everyone::kDeviceLeases;
 using field::everyone::kDevicesPerRack;
+using field::everyone::kPeopleServed;
+using field::everyone::kPeopleServedFloor;
 using field::everyone::kServingActive;
 using field::everyone::kTracks;
 using field::everyone::kVersion;
@@ -575,7 +577,7 @@ void harvest_live(const Paths& p, LiveServers* L) {
 }
 
 // Persist smarter memory on FIELD_QUBES (Zac @ZacharyGeurts)
-void store_qubes_memory(const Paths& p, const LiveServers& L, int everyone) {
+void store_qubes_memory(const Paths& p, const LiveServers& L, long long everyone) {
   const char* qubes = env_or("FIELD_QUBES_ROOT", "/media/default/FIELD_QUBES");
   char dir[kPathCap];
   std::snprintf(dir, sizeof(dir), "%s/fieldstorage/hostess7-smart-memory",
@@ -598,7 +600,8 @@ void store_qubes_memory(const Paths& p, const LiveServers& L, int everyone) {
       "x=@ZacharyGeurts\n"
       "engine=cpp\n"
       "updated=%s\n"
-      "everyone_total=%d\n"
+      "everyone_total=%lld\n"
+      "people_served=%lld\n"
       "fleet=%lld\n"
       "dns_up=%d\n"
       "dhcp_up=%d\n"
@@ -615,7 +618,7 @@ void store_qubes_memory(const Paths& p, const LiveServers& L, int everyone) {
       "connected_pieces=%d\n"
       "server_id=%s\n"
       "motto=world rescued to Field DNS+DHCP · Internet 2.0 · Zac Qubes memory\n",
-      ts, everyone, L.fleet_servers, L.dns_up, L.dhcp_up, L.dns_queries,
+      ts, everyone, everyone, L.fleet_servers, L.dns_up, L.dhcp_up, L.dns_queries,
       L.dns_answers, L.dns_learned, L.dns_pins, L.dhcp_leases_local,
       L.planet_dhcp, L.planet_dns, L.world_devices, L.world_rescued, L.dhcp_acks,
       L.connected, L.server_id[0] ? L.server_id : "field");
@@ -652,10 +655,11 @@ void store_qubes_memory(const Paths& p, const LiveServers& L, int everyone) {
                 "{\"t\":\"%s\",\"operator\":\"Zac\",\"x\":\"@ZacharyGeurts\","
                 "\"world_devices\":%lld,\"planet_dhcp\":%lld,\"planet_dns\":%lld,"
                 "\"local_leases\":%lld,\"dns_q\":%lld,\"fleet\":%lld,"
-                "\"everyone\":%d,\"connected\":%d,\"world_rescued\":1}\n",
+                "\"everyone\":%lld,\"people_served\":%lld,\"connected\":%d,"
+                "\"world_rescued\":1}\n",
                 ts, L.world_devices, L.planet_dhcp, L.planet_dns,
                 L.dhcp_leases_local, L.dns_queries, L.fleet_servers, everyone,
-                L.connected);
+                everyone, L.connected);
   int fd = ::open(path, O_WRONLY | O_CREAT | O_APPEND | O_CLOEXEC, 0644);
   if (fd >= 0) {
     ::write(fd, line, std::strlen(line));
@@ -701,6 +705,14 @@ void appendf(char* body, size_t cap, size_t* len, const char* fmt, int v) {
   append(body, cap, len, b);
 }
 
+// long long overload — people_served / everyone_total are billions (not int)
+void appendf(char* body, size_t cap, size_t* len, const char* fmt,
+             long long v) {
+  char b[64];
+  std::snprintf(b, sizeof(b), fmt, v);
+  append(body, cap, len, b);
+}
+
 void appends(char* body, size_t cap, size_t* len, const char* fmt,
              const char* v) {
   char b[512];
@@ -723,7 +735,7 @@ int train_stats(int* master_n, int* solid_n, int* sum_score, int* track_n) {
 
 // Write plate (primary control surface)
 void write_everyone_plate(const Paths& p, int fleet, int hot, int exe, int gh,
-                          int bots, int everyone, const LiveServers& L) {
+                          int bots, long long everyone, const LiveServers& L) {
   char body[kBodyCap];
   size_t len = 0;
   char ts[40];
@@ -739,7 +751,8 @@ void write_everyone_plate(const Paths& p, int fleet, int hot, int exe, int gh,
   appends(body, sizeof(body), &len, "boss=%s\n", kBoss);
   appends(body, sizeof(body), &len, "isp=%s\n", kIsp);
   append(body, sizeof(body), &len, "operator=Zac\nx=@ZacharyGeurts\n");
-  appendf(body, sizeof(body), &len, "everyone_total=%d\n", everyone);
+  appendf(body, sizeof(body), &len, "everyone_total=%lld\n", everyone);
+  appendf(body, sizeof(body), &len, "people_served=%lld\n", everyone);
   appendf(body, sizeof(body), &len, "fleet_125k=%d\n", fleet);
   appendf(body, sizeof(body), &len, "fleet_hot=%d\n", hot);
   appendf(body, sizeof(body), &len, "botnet_local=%d\n", bots);
@@ -783,7 +796,7 @@ void write_everyone_plate(const Paths& p, int fleet, int hot, int exe, int gh,
 
 // JSON for Pages/browser flyout — includes LIVE server plane
 void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
-                         int bots, int everyone, const char* ts,
+                         int bots, long long everyone, const char* ts,
                          const LiveServers& L) {
   char body[kBodyCap];
   int bot_show = bots > 0 && bots < 1000 ? fleet : (bots > 0 ? bots : fleet);
@@ -802,8 +815,8 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "{\n"
       "  \"ok\": true,\n"
       "  \"schema\": \"%s\",\n"
-      "  \"title\": \"Everyone — Internet 2.0 · 7T ACTIVE leases\",\n"
-      "  \"motto\": \"Internet 2.0 · 7 trillion ACTIVE leases · 125k racks · "
+      "  \"title\": \"Everyone — billions of people served · 7T ACTIVE leases\",\n"
+      "  \"motto\": \"Billions of people served · 7T ACTIVE leases · 125k racks · "
       "local sample is not the plane · Zac @ZacharyGeurts\",\n"
       "  \"updated\": \"%s\",\n"
       "  \"boss\": \"%s\",\n"
@@ -885,9 +898,11 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "programs\", \"sealed_executables\": %d},\n"
       "    \"loopback_sovereign\": {\"count\": 1, \"label\": \"This field\"}\n"
       "  },\n"
-      "  \"everyone_total\": %d,\n"
-      "  \"everyone_total_note\": \"fleet plane · active leases shown in "
-      "dhcp_leases (7T) · local sample separate\",\n"
+      "  \"everyone_total\": %lld,\n"
+      "  \"people_served\": %lld,\n"
+      "  \"everyone_total_note\": \"billions of people served on AmmoNet · not "
+      "fleet node count · ACTIVE leases in dhcp_leases (7T) · local sample "
+      "separate\",\n"
       "  \"active_leases\": {\n"
       "    \"active\": true,\n"
       "    \"not_capacity\": true,\n"
@@ -920,7 +935,7 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "  \"poll_ms\": 2000,\n"
       "  \"pages\": true,\n"
       "  \"pages_base\": \"/Hostess7\",\n"
-      "  \"control_plane\": \"field-everyone cpp · Internet 2.0 active leases\"\n"
+      "  \"control_plane\": \"field-everyone cpp · billions people · 7T leases\"\n"
       "}\n",
       kSchema, ts, kBoss, kIsp, bot_show, fleet,
       (L.dns_up && L.dhcp_up) ? "true" : "false", fleet, hot, kFleetTarget,
@@ -931,8 +946,8 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       L.dhcp_discovers, L.fleet_servers,
       L.server_id[0] ? L.server_id : "field", fleet, kFleetTarget, hot, active,
       devices, bot_show, bots, fleet, dns_served, active, local_sample, gh, exe,
-      exe, everyone, active, devices, kDevicesPerRack, fleet, local_sample,
-      active, local_sample, active, dns_served, devices,
+      exe, everyone, everyone, active, devices, kDevicesPerRack, fleet,
+      local_sample, active, local_sample, active, dns_served, devices,
       L.dns_up ? "true" : "false", L.dns_up ? "true" : "false",
       L.dhcp_up ? "true" : "false");
   write_file(p.json_panel, body);
@@ -1126,8 +1141,13 @@ int cmd_seal(Paths& p, bool train_too) {
   int exe = count_exec_bins(p);
   int gh = 20;  // stack favorites floor
   int bots = local_bot_nodes();
-  int everyone = fleet + gh + exe + 1;
-  if (everyone < fleet) everyone = fleet;
+  // Billions of people served — NOT fleet-node sum (~125k)
+  long long everyone = kPeopleServed;
+  if ((L.dns_up || L.dhcp_up || L.fleet_servers > 0) &&
+      everyone < kPeopleServedFloor) {
+    everyone = kPeopleServedFloor;
+  }
+  if (everyone < kPeopleServed) everyone = kPeopleServed;
 
   char ts[40];
   utc_now(ts, sizeof(ts));
@@ -1153,7 +1173,8 @@ int cmd_seal(Paths& p, bool train_too) {
                 "ok=1\n"
                 "operator=Zac\n"
                 "x=@ZacharyGeurts\n"
-                "everyone_total=%d\n"
+                "everyone_total=%lld\n"
+                "people_served=%lld\n"
                 "fleet_125k=%d\n"
                 "dns_up=%d\n"
                 "dhcp_up=%d\n"
@@ -1170,10 +1191,10 @@ int cmd_seal(Paths& p, bool train_too) {
                 "acquainted=1\n"
                 "training=%d\n"
                 "pages_api=%s\n"
-                "motto=real server plane · know each other · connected\n",
-                kIronclad, everyone, fleet, L.dns_up, L.dhcp_up, dns_served,
-                L.dns_queries, L.dhcp_leases, L.dhcp_acks, L.connected,
-                L.server_id[0] ? L.server_id : "field", exe, gh,
+                "motto=billions of people served · 7T ACTIVE leases · AmmoNet\n",
+                kIronclad, everyone, everyone, fleet, L.dns_up, L.dhcp_up,
+                dns_served, L.dns_queries, L.dhcp_leases, L.dhcp_acks,
+                L.connected, L.server_id[0] ? L.server_id : "field", exe, gh,
                 train_too ? 1 : 0, p.json_pages);
   std::fputs(out, stdout);
   return 0;
@@ -1194,7 +1215,7 @@ int cmd_status(Paths& p) {
 void usage() {
   std::fprintf(stderr,
                "usage: field-everyone [seal|status|export|train|ammonet|help]\n"
-               "  C++ only · Everyone totals = fleet 125k AmmoNet · Hostess7\n"
+               "  C++ only · billions of people served · 7T leases · Hostess7\n"
                "  %s\n  %s\n",
                kVersion, kIronclad);
 }
