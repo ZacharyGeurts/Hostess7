@@ -1,86 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <base href="/Hostess7/" />
-  <script src="/Hostess7/pages-base.js"></script>
-  <script src="/Hostess7/api-shim.js"></script>
-  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
-  <script src="/Hostess7/pages-license.js"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hostess 7 Library — Bookshelves for Everyone</title>
-  <meta name="description" content="Dewey shelves, card catalog, secure reader — whole library for humans and AI alike." />
-  <link rel="stylesheet" href="/Hostess7/assets/field-foundation.css" />
-  <link rel="stylesheet" href="/Hostess7/assets/field-nav-spine.css?v=1" />
-  <link rel="stylesheet" href="/Hostess7/assets/field-ironclad-taskbar.css?v=1" />
-  <link rel="stylesheet" href="/Hostess7/assets/field-library-bookshelf.css?v=2" />
-</head>
-<body data-pages-runtime="1" class="bsb-body" data-ironclad-taskbar="1">
-  <header class="bsb-header">
-    <div>
-      <p class="bsb-eyebrow">Final Eye · Ironclad truth · Librarian Corps</p>
-      <h1>Hostess 7 Library</h1>
-      <div class="bsb-sub">Whole catalog for <strong>humans and AI</strong> — browse Dewey shelves, pull a volume, read in peace.</div>
-    </div>
-    <nav class="bsb-nav" aria-label="Library surfaces">
-      <a href="/Hostess7/field-card-catalog/" class="bsb-nav-link">Card catalog</a>
-      <a href="https://zacharygeurts.github.io/command/?embed=1#library" class="bsb-nav-link">C2 library deck</a>
-      <a href="/Hostess7/ammonet/" class="bsb-nav-link">AmmoNet</a>
-    </nav>
-    <div class="bsb-toolbar">
-      <input type="search" id="bsb-search" placeholder="Search title, author, Dewey, topic…" aria-label="Search library" autocomplete="off" />
-      <button type="button" class="bsb-btn" id="bsb-browse-btn">All shelves</button>
-    </div>
-  </header>
-
-  <div class="bsb-ticker-wrap" id="bsb-ticker" aria-label="Featured volumes — running shelf copy"></div>
-
-  <div class="bsb-stats" id="bsb-stats">Loading library…</div>
-
-  <main class="bsb-main">
-    <section id="bsb-lobby" class="bsb-view" aria-label="Search and Dewey shelves">
-      <div class="bsb-search-hits" id="bsb-search-hits" hidden></div>
-      <div class="bsb-dewey-grid" id="bsb-dewey-grid"></div>
-      <div class="bsb-empty" id="bsb-lobby-empty" hidden>No books match your search — try a Dewey shelf or broader terms.</div>
-    </section>
-
-    <section id="bsb-shelf-view" class="bsb-view" hidden aria-label="Bookshelf">
-      <div class="bsb-breadcrumb" id="bsb-breadcrumb"></div>
-      <div class="bsb-shelf-nav">
-        <h2 id="bsb-shelf-title">Bookshelf</h2>
-        <div class="bsb-shelf-pager" id="bsb-shelf-pager"></div>
-      </div>
-      <div class="bsb-shelf-room">
-        <div class="bsb-bookcase" id="bsb-bookcase" role="list" aria-label="Books on shelf"></div>
-      </div>
-      <div class="bsb-pulled" id="bsb-pulled">
-        <div class="bsb-empty">Click a spine to pull a book from the shelf.</div>
-      </div>
-      <div class="bsb-dual" id="bsb-dual" hidden>
-        <div class="bsb-human-panel">
-          <h3>For readers</h3>
-          <p class="bsb-human-blurb" id="bsb-human-blurb" aria-live="polite"></p>
-        </div>
-        <div class="bsb-ai-panel">
-          <h3>For AI retrieval</h3>
-          <code class="bsb-ai-line" id="bsb-ai-line"></code>
-          <p class="bsb-ai-note">Grounded passages · truth gate on loopback · same books, two lenses.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script src="/Hostess7/assets/field-library-eye.js?v=2"></script>
-  <script src="/Hostess7/assets/h7-reader.js?v=2"></script>
-  <script src="/Hostess7/assets/field-library-bookshelf.js?v=3"></script>
-  <script src="/Hostess7/assets/ironclad-bus.js?v=1" defer></script>
-  <script src="/Hostess7/assets/field-ironclad-taskbar.js?v=1" defer></script>
-  <script src="/Hostess7/assets/field-nav-spine.js?v=1" defer></script>
-  <script src="/Hostess7/pages-field-boot.js"></script>
-  <script src="/Hostess7/pages-c2-wire.js"></script>
-  <script src="/Hostess7/pages-queen-rtx-bridge.js"></script>
-  <script src="/Hostess7/pages-ammonet-wire.js"></script>
-  <script src="/Hostess7/pages-github-brain-wire.js"></script>
-  <script src="/Hostess7/pages-hostess7-interaction-wire.js"></script>
-</body>
-</html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'"/>
+<title>Hostess7 Library · Dewey</title>
+<style>body{font:15px/1.45 system-ui,sans-serif;background:#12100e;color:#e8e0d4;margin:0;padding:24px}a{color:#c0a070}h1{color:#f0c070;font-size:1.25rem}.meta{color:#8a7a68;font-size:13px}.card{border:1px solid #3a3028;border-radius:8px;padding:12px 14px;margin:10px 0;background:#1a1612}</style>
+</head><body>
+<h1>Hostess7 Library</h1>
+<p class="meta">C++ bake · 2026-07-12T06:32:37Z · ironclad:field-desktop-pages-static:1</p>
+<div class="card"><b>9135</b> books in Dewey compact API · <b>1</b> docs shelves · <b>33</b> dewey source shelves</div>
+<p><a href="/Hostess7/api/dewey-books-compact.json">dewey-books-compact.json</a> · <a href="/Hostess7/api/dewey-index-facets.json">facets</a> · <a href="/Hostess7/desktop/">Desktop</a> · <a href="/Hostess7/api/field-everyone-counter.json">Everyone API</a></p>
+</body></html>

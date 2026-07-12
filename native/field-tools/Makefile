@@ -27,11 +27,18 @@ all: $(BIN)/field-echo $(BIN)/field-chmod $(BIN)/field-dig $(BIN)/field-world-dn
 	$(BIN)/field-dns-dhcp-h7-raid $(BIN)/field-antivirus $(BIN)/field-stack-hark \
 	$(BIN)/field-ironclad-bsp $(BIN)/field-shell $(BIN)/field-compile-truth \
 	$(BIN)/field-h7r-capacity-fleet $(BIN)/field-ammonet-cloud \
+	$(BIN)/field-ammonet-zero \
+	$(BIN)/field-discretionary-steel-plate-chip $(BIN)/field-h7d \
+	$(BIN)/field-script-ban $(BIN)/field-convert-ours $(BIN)/field-100-box-rollout \
+	$(BIN)/field-routes-ab-direct $(BIN)/field-angel-sealed \
+	$(BIN)/field-x-producer-static $(BIN)/field-desktop-pages-static \
 	$(BIN)/field-plane-chip $(BIN)/field-entry64-chip $(BIN)/field-all-chip \
 	$(BIN)/field-x86-chip $(BIN)/field-init-chip $(BIN)/field-initramfs-chip \
 	$(BIN)/field-internet2-plane $(BIN)/field-grok-identity-seal \
 	$(BIN)/field-hostess7 $(BIN)/field-hostess7-stack-update \
-	$(BIN)/field-ammoos $(BIN)/field-hdmi-audio $(BIN)/field-everyone
+	$(BIN)/field-ammoos $(BIN)/field-hdmi-audio $(BIN)/field-everyone \
+	$(BIN)/field-compaction-guard $(BIN)/field-grok-build-rack \
+	$(BIN)/field-eat-people-gps
 
 $(BIN):
 	mkdir -p $(BIN) $(BIN)/untouchable $(ROOT)/Grok16/bin
@@ -221,8 +228,8 @@ $(BIN)/field-dns-dhcp-h7-raid: field_dns_dhcp_h7_raid.cpp | $(BIN)
 	chmod 0555 $(BIN)/field-dns-internet-restore 2>/dev/null || true
 
 # field-antivirus — local builtin AV · heuristics · Big Grin Eats · 125k
-$(BIN)/field-antivirus: field_antivirus.cpp | $(BIN)
-	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -o $@ $< $(LDFLAGS)
+$(BIN)/field-antivirus: field_antivirus.cpp field_ammonet_zero_heuristics.hpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_antivirus.cpp $(LDFLAGS)
 	chmod 0555 $@
 	cp -f $@ $(BIN)/untouchable/field-antivirus
 	chmod 0555 $(BIN)/untouchable/field-antivirus
@@ -231,6 +238,148 @@ $(BIN)/field-antivirus: field_antivirus.cpp | $(BIN)
 	ln -sfn field-antivirus $(BIN)/field-antivirus-network-defender
 	ln -sfn field-antivirus $(BIN)/field-botnet-threat-heuristics
 	chmod 0555 $(BIN)/field-antivirus-network-defender $(BIN)/field-botnet-threat-heuristics 2>/dev/null || true
+
+# field-ammonet-zero — Always Zero corrective heuristics · ads≠terror · C++ only
+$(BIN)/field-ammonet-zero: field_ammonet_zero.cpp field_ammonet_zero_heuristics.hpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_ammonet_zero.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-ammonet-zero
+	chmod 0555 $(BIN)/untouchable/field-ammonet-zero
+	cp -f $@ $(ROOT)/Grok16/bin/field-ammonet-zero
+	chmod 0555 $(ROOT)/Grok16/bin/field-ammonet-zero
+	ln -sfn field-ammonet-zero $(BIN)/ammonet-zero 2>/dev/null || true
+	chmod 0555 $(BIN)/ammonet-zero 2>/dev/null || true
+
+ammonet-zero: $(BIN)/field-ammonet-zero
+
+# Discretionary Steel Plate CHIP — cap storms/DDoS · vector-eat · clean dirty
+$(BIN)/field-discretionary-steel-plate-chip: field_discretionary_steel_plate_chip.cpp \
+	field_discretionary_steel_plate_chip.hpp field_compaction_chip.hpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_discretionary_steel_plate_chip.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-discretionary-steel-plate-chip
+	chmod 0555 $(BIN)/untouchable/field-discretionary-steel-plate-chip
+	cp -f $@ $(ROOT)/Grok16/bin/field-discretionary-steel-plate-chip
+	chmod 0555 $(ROOT)/Grok16/bin/field-discretionary-steel-plate-chip
+	ln -sfn field-discretionary-steel-plate-chip $(BIN)/field-steel-plate-chip 2>/dev/null || true
+	ln -sfn field-discretionary-steel-plate-chip $(BIN)/field-cap-storm 2>/dev/null || true
+	chmod 0555 $(BIN)/field-steel-plate-chip $(BIN)/field-cap-storm 2>/dev/null || true
+
+steel-plate-chip: $(BIN)/field-discretionary-steel-plate-chip
+
+# H7d — dual DNS+DHCP protocol · transient secured redundant tables · speedy
+$(BIN)/field-h7d: field_h7d.cpp field_h7d.hpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_h7d.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-h7d
+	chmod 0555 $(BIN)/untouchable/field-h7d
+	cp -f $@ $(ROOT)/Grok16/bin/field-h7d
+	chmod 0555 $(ROOT)/Grok16/bin/field-h7d
+	ln -sfn field-h7d $(BIN)/h7d 2>/dev/null || true
+	chmod 0555 $(BIN)/h7d 2>/dev/null || true
+
+h7d: $(BIN)/field-h7d
+
+$(BIN)/field-script-ban: field_script_ban.cpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_script_ban.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-script-ban
+	chmod 0555 $(BIN)/untouchable/field-script-ban
+	cp -f $@ $(ROOT)/Grok16/bin/field-script-ban
+	chmod 0555 $(ROOT)/Grok16/bin/field-script-ban
+	ln -sfn field-script-ban $(BIN)/field-never-scripts-ban 2>/dev/null || true
+	ln -sfn field-script-ban $(BIN)/field-script-refused 2>/dev/null || true
+
+script-ban: $(BIN)/field-script-ban
+
+$(BIN)/field-convert-ours: field_convert_ours.cpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_convert_ours.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-convert-ours
+	chmod 0555 $(BIN)/untouchable/field-convert-ours
+	cp -f $@ $(ROOT)/Grok16/bin/field-convert-ours
+	chmod 0555 $(ROOT)/Grok16/bin/field-convert-ours
+	ln -sfn field-convert-ours $(BIN)/field-ours-cpp 2>/dev/null || true
+
+convert-ours: $(BIN)/field-convert-ours
+
+$(BIN)/field-100-box-rollout: field_100_box_rollout.cpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_100_box_rollout.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-100-box-rollout
+	chmod 0555 $(BIN)/untouchable/field-100-box-rollout
+	cp -f $@ $(ROOT)/Grok16/bin/field-100-box-rollout
+	chmod 0555 $(ROOT)/Grok16/bin/field-100-box-rollout
+	ln -sfn field-100-box-rollout $(BIN)/field-100box 2>/dev/null || true
+
+box100: $(BIN)/field-100-box-rollout
+
+$(BIN)/field-routes-ab-direct: field_routes_ab_direct.cpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_routes_ab_direct.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-routes-ab-direct
+	chmod 0555 $(BIN)/untouchable/field-routes-ab-direct
+	cp -f $@ $(ROOT)/Grok16/bin/field-routes-ab-direct
+	chmod 0555 $(ROOT)/Grok16/bin/field-routes-ab-direct
+
+routes-ab: $(BIN)/field-routes-ab-direct
+
+$(BIN)/field-angel-sealed: field_angel_sealed.cpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_angel_sealed.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-angel-sealed
+	chmod 0555 $(BIN)/untouchable/field-angel-sealed
+	cp -f $@ $(ROOT)/Grok16/bin/field-angel-sealed
+	chmod 0555 $(ROOT)/Grok16/bin/field-angel-sealed
+	ln -sfn field-angel-sealed $(BIN)/field-internet2-brick 2>/dev/null || true
+	ln -sfn field-angel-sealed $(BIN)/angel-sealed 2>/dev/null || true
+
+angel-sealed: $(BIN)/field-angel-sealed
+i2-brick: $(BIN)/field-angel-sealed
+
+$(BIN)/field-x-producer-static: field_x_producer_static.cpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_x_producer_static.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-x-producer-static
+	chmod 0555 $(BIN)/untouchable/field-x-producer-static
+	cp -f $@ $(ROOT)/Grok16/bin/field-x-producer-static
+	chmod 0555 $(ROOT)/Grok16/bin/field-x-producer-static
+
+x-producer-static: $(BIN)/field-x-producer-static
+
+# field-desktop-pages-static — Everyone panel + library + pages API (C++ only)
+$(BIN)/field-desktop-pages-static: field_desktop_pages_static.cpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_desktop_pages_static.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-desktop-pages-static
+	chmod 0555 $(BIN)/untouchable/field-desktop-pages-static
+	cp -f $@ $(ROOT)/Grok16/bin/field-desktop-pages-static
+	chmod 0555 $(ROOT)/Grok16/bin/field-desktop-pages-static
+	ln -sfn field-desktop-pages-static $(BIN)/field-desktop-everyone 2>/dev/null || true
+
+desktop-pages-static: $(BIN)/field-desktop-pages-static
+
+# field-compaction-guard — sleep/SIGKILL text-inject into Grok compaction DEAD
+$(BIN)/field-compaction-guard: field_compaction_guard.cpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -o $@ $< $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-compaction-guard
+	chmod 0555 $(BIN)/untouchable/field-compaction-guard
+	cp -f $@ $(ROOT)/Grok16/bin/field-compaction-guard
+	chmod 0555 $(ROOT)/Grok16/bin/field-compaction-guard
+	ln -sfn field-compaction-guard $(BIN)/field-compaction-seal 2>/dev/null || true
+	chmod 0555 $(BIN)/field-compaction-seal 2>/dev/null || true
+
+# field-grok-build-rack — Grok Build self-install · BSP map · Ironclad guard
+$(BIN)/field-grok-build-rack: field_grok_build_rack.cpp field_grok_build_rack.hpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -o $@ $< $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-grok-build-rack
+	chmod 0555 $(BIN)/untouchable/field-grok-build-rack
+	cp -f $@ $(ROOT)/Grok16/bin/field-grok-build-rack
+	chmod 0555 $(ROOT)/Grok16/bin/field-grok-build-rack
+	ln -sfn field-grok-build-rack $(BIN)/field-grok-install 2>/dev/null || true
+	chmod 0555 $(BIN)/field-grok-install 2>/dev/null || true
 
 # field-ironclad-bsp — CHIPs · plate · kernel meld · KILROY iPXE · forever truth
 $(BIN)/field-ironclad-bsp: field_ironclad_bsp.cpp | $(BIN)
@@ -251,7 +400,19 @@ $(BIN)/field-ironclad-bsp: field_ironclad_bsp.cpp | $(BIN)
 fleet-mesh: $(BIN)/field-fleet-mesh
 dns-raid: $(BIN)/field-dns-dhcp-h7-raid
 antivirus: $(BIN)/field-antivirus
+compaction-guard: $(BIN)/field-compaction-guard
+grok-build-rack: $(BIN)/field-grok-build-rack
+eat-people-gps: $(BIN)/field-eat-people-gps
 ironclad: $(BIN)/field-ironclad-bsp
+
+# field-eat-people-gps — C++ kill ledger · GPS · CSV · Big Grin pirate panel
+$(BIN)/field-eat-people-gps: field_eat_people_gps.cpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -o $@ $< $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-eat-people-gps
+	chmod 0555 $(BIN)/untouchable/field-eat-people-gps
+	cp -f $@ $(ROOT)/Grok16/bin/field-eat-people-gps
+	chmod 0555 $(ROOT)/Grok16/bin/field-eat-people-gps
 
 # field-compile-truth — We compile TRUTH · never scripts · Grok16 · old OS icon · FIELD_QUBES
 $(BIN)/field-compile-truth: field_compile_truth.cpp | $(BIN)
@@ -333,7 +494,7 @@ stack-iso: $(BIN)/field-stack-iso
 tools: $(BIN)/field-curl $(BIN)/field-reap $(BIN)/field-rollout \
 	$(BIN)/field-ammolang $(BIN)/field-nexus-c2-chip $(BIN)/field-fleet-mesh \
 	$(BIN)/field-dns-dhcp-h7-raid $(BIN)/field-antivirus $(BIN)/field-stack-hark \
-	$(BIN)/field-stack-iso
+	$(BIN)/field-stack-iso $(BIN)/field-compaction-guard
 
 clean:
 	rm -f $(BIN)/field-echo $(BIN)/field-chmod $(BIN)/field-dig $(BIN)/field-world-dns \

@@ -1,34 +1,29 @@
 {
   "ok": true,
   "pages": true,
-  "held": true,
+  "held": false,
   "posture": "war-ready",
   "schema": "pages-update-status/v1",
-  "current": "3.0.7-beta5",
-  "version": "3.0.7-beta5",
+  "current": "5.0.0-cpp",
+  "version": "5.0.0-cpp",
   "deploy_url": "https://zacharygeurts.github.io/Hostess7/",
-  "deployed_at": "2026-07-06T00:41:55Z",
+  "desktop_url": "https://zacharygeurts.github.io/Hostess7/desktop/",
+  "everyone_api": "/api/field-everyone-counter",
+  "deployed_at": "2026-07-12T06:32:37Z",
   "pages_base": "/Hostess7",
   "update_available": false,
   "update_in_progress": false,
-  "checked_at": "2026-07-06T00:41:55Z",
+  "checked_at": "2026-07-12T06:32:37Z",
   "middleman": false,
   "direct_for_everyone": true,
   "own_deployment": true,
   "bypass_middleman": true,
   "old_browsers_ok": true,
-  "dns_dhcp": "/api/field-botnet-dns-dhcp",
-  "deploy_steps": [
-    "python3 Hostess7/scripts/hostess7_pages_surfaces_build.py",
-    "git add Hostess7/docs/ && git commit -m 'pages: rebuild'",
-    "git push origin main"
-  ],
-  "delay_as_threat": false,
-  "truth_clean": true,
-  "delay_countermeasures": [
-    "everyone_manages_own_deploy",
-    "cancel_zombie_ci",
-    "pages_first_no_middleman"
-  ],
-  "message": "Everyone manages own deploy at https://zacharygeurts.github.io/Hostess7/ \u2014 delay is threat, truth cleaned, no middleman"
+  "engine": "cpp",
+  "python": 0,
+  "scripts": false,
+  "active_leases": 7000000000000,
+  "fleet_125k": 125000,
+  "library_books": 9135,
+  "ironclad_cite": "ironclad:field-desktop-pages-static:1"
 }
