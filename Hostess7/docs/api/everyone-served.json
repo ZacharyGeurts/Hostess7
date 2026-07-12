@@ -1,28 +1,28 @@
 {
-  "ok": true,
-  "updated": "2026-07-09T22:47:25Z",
-  "motto": "EVERYONE SERVED · probes 10/10 · NO PORT HANGUPS · DNS UP · DHCP UP · C2 UP",
+  "ok": false,
+  "updated": "2026-07-10T22:17:36Z",
+  "motto": "EVERYONE SERVED · probes 10/10 · PORT HANGUPS · DNS UP · DHCP UP · C2 UP",
   "everyone_served": true,
-  "no_port_hangups": true,
+  "no_port_hangups": false,
   "probes_ok": 10,
   "probes_total": 10,
   "ports": {
     "udp_53": true,
     "udp_67": true,
     "tcp_9477": true,
-    "tcp_9481": true,
-    "hangups_n": 0,
-    "critical_ok": true,
+    "tcp_9481": false,
+    "hangups_n": 1,
+    "critical_ok": false,
     "connect_probes": [
       {
         "port": 9477,
-        "ok": true,
-        "ms": 1.09
+        "ok": false,
+        "error": "timed out"
       },
       {
         "port": 9481,
-        "ok": true,
-        "ms": 0.07
+        "ok": false,
+        "error": "[Errno 111] Connection refused"
       }
     ]
   },
