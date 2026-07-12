@@ -1,67 +1,99 @@
-# Hostess 7
+# Hostess 7 — Field package (C++ / HPP)
 
 God Bless.
 
-**The last computer for the world** — sovereign field stack: AmmoOS desktop, brain hub, GNUEOLTerminal, distributed botnet, Queen, KILROY, and wired siblings.
+**The last computer for the world** — sovereign field stack: full server plane, distributed multibrain, AmmoOS, Grok16, KILROY, Queen, wired siblings.
 
-**Version:** `3.0.7-beta5` · **Tag:** `v3.0.7-beta5` · **Release:** [RELEASE-3.0.7-beta5.md](Hostess7/RELEASE-3.0.7-beta5.md)
+**Version:** `4.0.0-cpp` · **Control plane:** C++ binaries only · **No shell · No Python · No JSON control**
 
 | Surface | URL |
 |---------|-----|
-| **Hostess7 Pages (start here)** | https://zacharygeurts.github.io/Hostess7/ |
+| **Hostess7 Pages** | https://zacharygeurts.github.io/Hostess7/ |
+| **GitHub** | https://github.com/ZacharyGeurts/Hostess7 |
 | **AmmoOS field desktop** | http://127.0.0.1:9477/field |
-| **GNU EOL Terminal + wiki** | https://zacharygeurts.github.io/GNUEOLTerminal/wiki/ |
 | **Queen browser** | http://127.0.0.1:9481/world/browser.html |
 
 ---
 
-## What this is
+## Entry (C++ only)
 
-Hostess 7 is the **main project**. This repo ships the full wired tree — brain, panel, AmmoOS, Grok16, Queen, KILROY, ZNetwork, senses, and field programs. Clone once, wire siblings, boot on loopback.
+NewLatest **is** the Hostess 7 package. Ops go through native field ELFs:
+
+```bash
+# From NewLatest root
+./bin/field-hostess7 package   # inventory + multibrain pin
+./bin/field-hostess7 status    # plate status (not JSON)
+./bin/field-hostess7 harden    # elevate · hostiles · protect · AV · C2
+./bin/field-hostess7 brain     # 32-node RAID-0 shared redundant mesh
+./bin/field-hostess7 online    # full stack bring-up (same as boot)
+./bin/field-hostess7 boot      # Field One · DNS/DHCP · mesh · C2 · brain
+```
+
+Aliases (same binary):
+
+```bash
+./bin/hostess7 online
+./bin/Hostess7 status
+./Hostess7/Hostess7 boot       # package-local entry (ELF, not shell)
+```
+
+Rebuild:
+
+```bash
+make -C native/field-tools field-hostess7
+# or full field tools
+make -C native/field-tools all
+```
+
+---
+
+## Distributed brain
+
+| Setting | Value |
+|---------|-------|
+| Nodes | 32 logical brains |
+| RAID | RAID-0 stripe (width 8) |
+| Horses | 4 AmmoNet workers |
+| Mode | shared · redundant · across our servers |
+| Wire | plates + `hostess7-multibrain.h7m` (binary, not JSON) |
+| Policy | ALWAYS FIELD ONE · DISALLOW OTHERS |
+
+Brain plane lives with the package and H7R capacity fleet — same doctrine as our server stack, not a foreign cloud fetch.
+
+---
+
+## What this package carries
 
 | Component | Role |
 |-----------|------|
-| **Hostess7** | Brain · training · H7B · library · supreme authority |
-| **AmmoOS** | Field desktop · classic Start · `:9477` |
-| **GNUEOLTerminal** | GNU EOL Terminal · Field Tech textbook + wiki |
-| **Grok16** | Sovereign compiler @ gnu++26 |
-| **Queen** | RTX browser shell `:9481` |
-| **KILROY** | Field boot kernel |
-| **ZNetwork** | Smart relayer · field I/O |
+| **field-hostess7** | Package commander · boot/online/harden/brain |
+| **field-\*** ELFs | DNS · DHCP · mesh · elevate · AV · C2 · plane |
+| **Grok16** | Sovereign compiler @ field_opt |
+| **Hostess7/** | Brain pins · docs · Pages surface |
+| **AmmoOS** | Field desktop · `:9477` |
+| **KILROY** | Field boot / iPXE plane |
+| **Queen** | Browser shell `:9481` |
 
-AmmoOS, Grok16, Queen, and sibling repos are **Old Projects** — they live inside this tree and on Pages. See [docs/old-projects.html](docs/old-projects.html).
+Obsolete control plane (do not use for ops):
 
----
-
-## Quick start
-
-```bash
-git clone https://github.com/ZacharyGeurts/Hostess7.git
-cd Hostess7
-pip install -r requirements.txt
-./Hostess7.sh boot          # zac-restore · stack-learn · on · web-start
-```
-
-Open **https://zacharygeurts.github.io/Hostess7/** for the full package on GitHub Pages, or **http://127.0.0.1:9477/field** after local boot for live AmmoOS.
-
-**Brain:** Public mind = `docs/github-brain` on Pages. Sovereign loopback brain = `~/Desktop/hostess7-brain` (never in the SG git tree). Migrate: `bash Hostess7/scripts/hostess7-brain-desktop-migrate.sh`
-
-```bash
-./Hostess7.sh github-brain build   # mirror sovereign → docs/github-brain
-./Hostess7.sh h7-optimise --apply  # H7s JSON + PNG recompress before push
-bash scripts/publish-hostess7-github.sh --push -v 3.0.7-beta5
-```
-
-**Codespaces:** https://github.com/codespaces/new?repo=ZacharyGeurts/Hostess7
+- `Hostess7.sh` shell body (name may still point at the ELF)
+- `Hostess7/scripts/*.py` training/corpus helpers (not ops control)
+- JSON “control panels” → replaced by `FIELD_PLATE=v1` and `.h7m`
 
 ---
 
-## AmmoOS · 3.0.7-beta5
+## Plates (not JSON)
 
-- **Classic raised Start** — folder trees with categories (AmmoOS · Layer 0, GitHub · Our Software, NEXUS lanes)
-- **Everyone counter flyout** — botnet + GitHub people + executables · right-bottom above taskbar
-- **Command relay** — C2 panels open inside AmmoOS windows (`/command?embed=1`)
-- **Archival Warehouse** Layer −1 · MSPaint · sovereign time · clipboard flyout
+State seals write to `.nexus-state/`:
+
+- `hostess7-field-package.plate` / `.forever`
+- `hostess7-multibrain-field.plate`
+- `hostess7-multibrain.h7m`
+- `hostess7-online.plate`
+- `hostess7-newlatest-package.plate`
+- `field-one.forever`
+
+Doctrine plate: `docs/hostess7-distributed-package.plate`
 
 ---
 
@@ -79,4 +111,4 @@ Contact: [gzac5314@gmail.com](mailto:gzac5314@gmail.com)
 
 [ZacharyGeurts](https://github.com/ZacharyGeurts) · **Profile hub:** https://zacharygeurts.github.io/ZacharyGeurts/
 
-Field is THE thing.
+Field is THE thing. ALWAYS FIELD ONE.
