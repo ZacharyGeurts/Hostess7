@@ -28,9 +28,12 @@
   function fmtN(n) {
     const x = Number(n);
     if (!Number.isFinite(x)) return "—";
-    if (x >= 1000000000) return (x / 1000000000).toFixed(1) + "B";
-    if (x >= 1000000) return (x / 1000000).toFixed(1) + "M";
-    if (x >= 1000) return (x / 1000).toFixed(1) + "k";
+    const ax = Math.abs(x);
+    // 7777 → 7.8k · 55038 → 55.0k · billions as B
+    if (ax >= 1e12) return (x / 1e12).toFixed(2).replace(/\.?0+$/, "") + "T";
+    if (ax >= 1e9) return (x / 1e9).toFixed(2).replace(/\.?0+$/, "") + "B";
+    if (ax >= 1e6) return (x / 1e6).toFixed(2).replace(/\.?0+$/, "") + "M";
+    if (ax >= 1000) return (x / 1000).toFixed(1).replace(/\.0$/, "") + "k";
     return String(Math.round(x));
   }
 
@@ -106,11 +109,36 @@
     const speedTier = leases.speed_tier || "—";
     const speedPill = speedTier === "throttle" || speedTier === "pause" ? "fpnl-pill warn" : "fpnl-pill";
     const amOn = doc.ammonet?.acquainted || doc.isp === "ammonet" || doc.ammonet?.ok;
+    const live = doc.servers_live || {};
+    const dnsServed =
+      Number(live.dns_served) ||
+      Number(live.dns_answers) ||
+      Number(live.dns_queries) ||
+      Number(lanes.dns_served?.count) ||
+      Number(leases.dns_served_live) ||
+      0;
+    const dhcpLeases =
+      Number(live.dhcp_leases) ||
+      Number(lanes.dhcp_leases?.count) ||
+      Number(leases.dhcp_leases_live) ||
+      Number(leases.local_dhcp) ||
+      0;
+    const dnsUp = live.dns_up === true || live.dns_up === 1 || svc.dns;
+    const dhcpUp = live.dhcp_up === true || live.dhcp_up === 1 || svc.dhcp;
     panel.innerHTML =
       '<div class="fpnl-head">' +
       "<strong>Field Panel</strong>" +
-      '<span>' + esc(doc.version || "4.0.0-cpp") + " · AmmoNet · fleet 125k</span>" +
+      '<span>' + esc(doc.version || "4.0.0-cpp") + " · Zac · AmmoNet · live servers</span>" +
       '<button type="button" class="fpnl-close" id="fpnl-close" aria-label="Close">×</button>' +
+      "</div>" +
+      '<div class="fpnl-section">Our servers · connected · know each other</div>' +
+      '<div class="fpnl-grid fpnl-grid-leases">' +
+      '<div class="fpnl-stat lease total"><b>' + fmtN(dhcpLeases) + "</b><span>DHCP leases</span></div>" +
+      '<div class="fpnl-stat lease total"><b>' + fmtN(dnsServed) + "</b><span>DNS served</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(live.dns_queries || dnsServed) + "</b><span>DNS queries</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(live.dns_learned || live.dns_pins || 0) + "</b><span>DNS learned</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(live.dhcp_acks || 0) + "</b><span>DHCP ACKs</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(fleet) + "</b><span>Fleet servers</span></div>" +
       "</div>" +
       '<div class="fpnl-grid">' +
       '<div class="fpnl-stat total"><b>' + fmtN(everyone) + "</b><span>Everyone total</span></div>" +
@@ -120,18 +148,20 @@
       '<div class="fpnl-stat"><b>' + fmtN(lanes.executable_people?.count) + "</b><span>Executables</span></div>" +
       '<div class="fpnl-stat"><b>' + (amOn ? "ON" : "—") + "</b><span>AmmoNet</span></div>" +
       "</div>" +
-      '<div class="fpnl-section">IPv4 owned · enumerated everywhere</div>' +
+      '<div class="fpnl-section">Authority plane · IPv4 owned everywhere</div>' +
       '<div class="fpnl-grid fpnl-grid-leases">' +
       '<div class="fpnl-stat lease total"><b>' + fmtN(leases.ipv4_owned || leases.ipv4_enumerated) + "</b><span>IPv4 owned</span></div>" +
       '<div class="fpnl-stat lease"><b>' + fmtN(leases.planet_dhcp) + "</b><span>Planet DHCP</span></div>" +
       '<div class="fpnl-stat lease"><b>' + fmtN(leases.planet_dns) + "</b><span>Planet DNS</span></div>" +
       '<div class="fpnl-stat lease"><b>' + fmtN(leases.planet_total) + "</b><span>Lease total</span></div>" +
-      '<div class="fpnl-stat lease"><b>' + fmtN(leases.local_dhcp) + "</b><span>Local enumerated</span></div>" +
-      '<div class="fpnl-stat lease"><b>' + fmtN(leases.devices) + "</b><span>Devices</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(dhcpLeases || leases.local_dhcp) + "</b><span>Live leases</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(leases.devices || dhcpLeases) + "</b><span>Devices</span></div>" +
       "</div>" +
       '<div class="fpnl-row">' +
-      '<span class="' + dnsPill + '">DNS ' + (svc.dns ? "truth" : "down") + "</span>" +
-      '<span class="' + dhcpPill + '">DHCP ' + (svc.dhcp_crushing ? "crush" : svc.dhcp ? "serve" : "down") + "</span>" +
+      '<span class="' + (dnsUp ? "fpnl-pill" : "fpnl-pill off") + '">DNS ' + (dnsUp ? "live · " + fmtN(dnsServed) : "down") + "</span>" +
+      '<span class="' + (dhcpUp ? "fpnl-pill" : "fpnl-pill off") + '">DHCP ' + (dhcpUp ? "live · " + fmtN(dhcpLeases) : "down") + "</span>" +
+      '<span class="fpnl-pill">Fleet ' + fmtN(fleet) + "</span>" +
+      (live.server_id ? '<span class="fpnl-pill">ID ' + esc(live.server_id) + "</span>" : "") +
       '<span class="' + ghPill + '">GitHub ' + (dist.github_open ? "open" : "mirror") + "</span>" +
       '<span class="' + netPill + '">Net ' + (leases.internet_open ? "open" : "gated") + "</span>" +
       '<span class="' + speedPill + '">Speed ' + esc(speedTier) + "</span>" +
@@ -199,13 +229,28 @@
     const sub = document.getElementById("fpnl-chip-sub");
     const fleet = fleetN(doc);
     const everyone = everyoneN(doc);
+    const live = doc.servers_live || {};
+    const leasesN =
+      Number(live.dhcp_leases) ||
+      Number(doc.lanes?.dhcp_leases?.count) ||
+      Number(doc.planetary_leases?.dhcp_leases_live) ||
+      Number(doc.planetary_leases?.local_dhcp) ||
+      0;
+    const dnsN =
+      Number(live.dns_served) ||
+      Number(live.dns_answers) ||
+      Number(live.dns_queries) ||
+      Number(doc.lanes?.dns_served?.count) ||
+      0;
     if (total) total.textContent = fmtN(everyone);
     if (sub) {
-      const leases = doc.planetary_leases || {};
-      const lt = leases.planet_total ?? 0;
-      const owned = leases.ipv4_owned || leases.ipv4_enumerated || 0;
       sub.textContent =
-        "ipv4 " + fmtN(owned) + " · leases " + fmtN(lt) + " · fleet " + fmtN(fleet);
+        "leases " +
+        fmtN(leasesN) +
+        " · dns " +
+        fmtN(dnsN) +
+        " · fleet " +
+        fmtN(fleet);
     }
     if (state.open) renderPanel(doc);
   }

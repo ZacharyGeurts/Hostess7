@@ -16,7 +16,10 @@
 #include <cstring>
 #include <ctime>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 namespace {
@@ -129,6 +132,313 @@ void resolve(Paths* p) {
                 "%s/hostess7-ammonet-wire.plate", p->state);
 }
 
+// ── Live server plane (real DNS/DHCP numbers) ─────────────────────────────
+struct LiveServers {
+  long long dns_queries = 0;
+  long long dns_answers = 0;
+  long long dns_learned = 0;
+  long long dns_pins = 0;
+  long long dns_cache_hits = 0;
+  long long dhcp_leases = 0;       // real active leases
+  long long dhcp_acks = 0;
+  long long dhcp_offers = 0;
+  long long dhcp_discovers = 0;
+  long long fleet_servers = kFleetTarget;
+  int dns_up = 0;
+  int dhcp_up = 0;
+  int connected = 0;  // how many of our plane pieces are live
+  char server_id[64] = {};
+};
+
+// Extract "key": number  (int/long) from a blob
+long long json_ll(const char* body, const char* key) {
+  if (!body || !key) return -1;
+  char pat[96];
+  std::snprintf(pat, sizeof(pat), "\"%s\"", key);
+  const char* p = std::strstr(body, pat);
+  if (!p) return -1;
+  p = std::strchr(p + std::strlen(pat), ':');
+  if (!p) return -1;
+  ++p;
+  while (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r') ++p;
+  if (*p == '"') return -1;
+  return std::strtoll(p, nullptr, 10);
+}
+
+bool read_file_cap(const char* path, char* out, size_t cap, size_t* n_out) {
+  *n_out = 0;
+  int fd = ::open(path, O_RDONLY | O_CLOEXEC);
+  if (fd < 0) return false;
+  size_t off = 0;
+  while (off + 1 < cap) {
+    ssize_t r = ::read(fd, out + off, cap - 1 - off);
+    if (r < 0) {
+      if (errno == EINTR) continue;
+      ::close(fd);
+      return false;
+    }
+    if (r == 0) break;
+    off += static_cast<size_t>(r);
+  }
+  ::close(fd);
+  out[off] = 0;
+  *n_out = off;
+  return true;
+}
+
+void harvest_live(const Paths& p, LiveServers* L) {
+  *L = LiveServers{};
+  L->fleet_servers = kFleetTarget;
+  char buf[256000];
+  size_t n = 0;
+  char path[kPathCap];
+
+  // DHCP leases — real pool (field-dhcp-panel / field-dhcp-leases)
+  std::snprintf(path, sizeof(path), "%s/field-dhcp-panel.json", p.state);
+  if (read_file_cap(path, buf, sizeof(buf), &n)) {
+    long long v = json_ll(buf, "lease_count");
+    if (v < 0) v = json_ll(buf, "total_leases");
+    if (v < 0) v = json_ll(buf, "ammonet_leases");
+    if (v >= 0) L->dhcp_leases = v;
+  }
+  if (L->dhcp_leases <= 0) {
+    std::snprintf(path, sizeof(path), "%s/field-dhcp-leases.json", p.state);
+    if (read_file_cap(path, buf, sizeof(buf), &n)) {
+      long long v = json_ll(buf, "lease_count");
+      if (v < 0) v = json_ll(buf, "count");
+      if (v >= 0) L->dhcp_leases = v;
+    }
+  }
+
+  // World DHCP panel / live status stats
+  std::snprintf(path, sizeof(path), "%s/field-world-dhcp-panel.json", p.state);
+  if (read_file_cap(path, buf, sizeof(buf), &n)) {
+    if (std::strstr(buf, "\"listening\": true") ||
+        std::strstr(buf, "\"listening\":true") ||
+        std::strstr(buf, "\"we_are_dhcp\": true"))
+      L->dhcp_up = 1;
+    // server_id
+    const char* sid = std::strstr(buf, "\"server_id\"");
+    if (sid) {
+      const char* q1 = std::strchr(sid, ':');
+      if (q1) {
+        q1 = std::strchr(q1, '"');
+        if (q1) {
+          ++q1;
+          const char* q2 = std::strchr(q1, '"');
+          if (q2) {
+            size_t ln = static_cast<size_t>(q2 - q1);
+            if (ln > 63) ln = 63;
+            std::memcpy(L->server_id, q1, ln);
+            L->server_id[ln] = 0;
+          }
+        }
+      }
+    }
+  }
+
+  // DNS cumulative — prefer field-dns.json stats then world panel
+  std::snprintf(path, sizeof(path), "%s/field-dns.json", p.state);
+  if (read_file_cap(path, buf, sizeof(buf), &n)) {
+    long long q = json_ll(buf, "queries");
+    long long h = json_ll(buf, "cache_hits");
+    long long m = json_ll(buf, "cache_misses");
+    if (q >= 0) L->dns_queries = q;
+    if (h >= 0) L->dns_cache_hits = h;
+    if (q >= 0 && h >= 0) L->dns_answers = q;  // answers ~ queries when truth DNS
+    (void)m;
+  }
+  std::snprintf(path, sizeof(path), "%s/field-world-dns-panel.json", p.state);
+  if (read_file_cap(path, buf, sizeof(buf), &n)) {
+    if (std::strstr(buf, "\"listening\": true") ||
+        std::strstr(buf, "\"we_are_dns\": true") ||
+        std::strstr(buf, "\"probe_ok\": true"))
+      L->dns_up = 1;
+    long long q = json_ll(buf, "queries");
+    long long a = json_ll(buf, "answers_sent");
+    long long lr = json_ll(buf, "learned_records");
+    long long pin = json_ll(buf, "public_pin_count");
+    if (q > L->dns_queries) L->dns_queries = q;
+    if (a > L->dns_answers) L->dns_answers = a;
+    if (lr > L->dns_learned) L->dns_learned = lr;
+    if (pin > L->dns_pins) L->dns_pins = pin;
+  }
+
+  // Probe live status binaries (best-effort; may be short-lived counters)
+  {
+    // field-world-dns status → parse
+    int pipefd[2];
+    if (::pipe(pipefd) == 0) {
+      pid_t pid = ::fork();
+      if (pid == 0) {
+        ::close(pipefd[0]);
+        ::dup2(pipefd[1], 1);
+        ::dup2(pipefd[1], 2);
+        char bin[kPathCap];
+        std::snprintf(bin, sizeof(bin), "%s/bin/field-world-dns", p.root);
+        char* const av[] = {bin, const_cast<char*>("status"), nullptr};
+        ::execv(bin, av);
+        ::_exit(127);
+      }
+      if (pid > 0) {
+        ::close(pipefd[1]);
+        size_t off = 0;
+        for (int i = 0; i < 50; ++i) {
+          ssize_t r = ::read(pipefd[0], buf + off, sizeof(buf) - 1 - off);
+          if (r > 0) off += static_cast<size_t>(r);
+          else break;
+        }
+        buf[off] = 0;
+        ::close(pipefd[0]);
+        int st = 0;
+        ::waitpid(pid, &st, 0);
+        long long q = json_ll(buf, "queries");
+        long long a = json_ll(buf, "answers_sent");
+        long long lr = json_ll(buf, "learned_records");
+        long long pin = json_ll(buf, "public_pin_count");
+        long long learn = json_ll(buf, "learn_drained");
+        if (std::strstr(buf, "\"listening\": true") ||
+            std::strstr(buf, "\"we_are_dns\": true"))
+          L->dns_up = 1;
+        // Prefer larger cumulative values (daemon panel over ephemeral)
+        if (q > L->dns_queries) L->dns_queries = q;
+        if (a > L->dns_answers) L->dns_answers = a;
+        if (lr > L->dns_learned) L->dns_learned = lr;
+        if (pin > L->dns_pins) L->dns_pins = pin;
+        if (learn > L->dns_learned) L->dns_learned = learn;
+      }
+    }
+  }
+  {
+    int pipefd[2];
+    if (::pipe(pipefd) == 0) {
+      pid_t pid = ::fork();
+      if (pid == 0) {
+        ::close(pipefd[0]);
+        ::dup2(pipefd[1], 1);
+        ::dup2(pipefd[1], 2);
+        char bin[kPathCap];
+        std::snprintf(bin, sizeof(bin), "%s/bin/field-world-dhcp", p.root);
+        char* const av[] = {bin, const_cast<char*>("status"), nullptr};
+        ::execv(bin, av);
+        ::_exit(127);
+      }
+      if (pid > 0) {
+        ::close(pipefd[1]);
+        size_t off = 0;
+        for (int i = 0; i < 50; ++i) {
+          ssize_t r = ::read(pipefd[0], buf + off, sizeof(buf) - 1 - off);
+          if (r > 0) off += static_cast<size_t>(r);
+          else break;
+        }
+        buf[off] = 0;
+        ::close(pipefd[0]);
+        int st = 0;
+        ::waitpid(pid, &st, 0);
+        if (std::strstr(buf, "\"listening\": true") ||
+            std::strstr(buf, "\"we_are_dhcp\": true"))
+          L->dhcp_up = 1;
+        // nested stats.leases / stats.ack
+        long long leases = json_ll(buf, "leases");
+        long long ack = json_ll(buf, "ack");
+        long long offer = json_ll(buf, "offer");
+        long long disc = json_ll(buf, "discover");
+        // Prefer disk lease pool if larger
+        if (leases > L->dhcp_leases) L->dhcp_leases = leases;
+        if (ack > 0) L->dhcp_acks = ack;
+        if (offer > 0) L->dhcp_offers = offer;
+        if (disc > 0) L->dhcp_discovers = disc;
+        const char* sid = std::strstr(buf, "\"server_id\"");
+        if (sid && !L->server_id[0]) {
+          const char* q1 = std::strchr(sid, ':');
+          if (q1) {
+            q1 = std::strchr(q1, '"');
+            if (q1) {
+              ++q1;
+              const char* q2 = std::strchr(q1, '"');
+              if (q2) {
+                size_t ln = static_cast<size_t>(q2 - q1);
+                if (ln > 63) ln = 63;
+                std::memcpy(L->server_id, q1, ln);
+                L->server_id[ln] = 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Fleet mesh panel
+  std::snprintf(path, sizeof(path), "%s/field-fleet-mesh-panel.json", p.state);
+  if (read_file_cap(path, buf, sizeof(buf), &n)) {
+    long long f = json_ll(buf, "fleet");
+    if (f < 0) f = json_ll(buf, "logical_capacity");
+    if (f > L->fleet_servers) L->fleet_servers = f;
+  }
+
+  L->connected = (L->dns_up ? 1 : 0) + (L->dhcp_up ? 1 : 0) + 1;  // +fleet plane
+  if (L->dhcp_leases > 0) L->connected += 1;
+  if (L->dns_answers > 0 || L->dns_queries > 0) L->connected += 1;
+}
+
+// Persist smarter memory on FIELD_QUBES (Zac @ZacharyGeurts)
+void store_qubes_memory(const Paths& p, const LiveServers& L, int everyone) {
+  const char* qubes = env_or("FIELD_QUBES_ROOT", "/media/default/FIELD_QUBES");
+  char dir[kPathCap];
+  std::snprintf(dir, sizeof(dir), "%s/fieldstorage/hostess7-smart-memory",
+                qubes);
+  // mkdir -p chain
+  char acc[kPathCap];
+  std::snprintf(acc, sizeof(acc), "%s/fieldstorage", qubes);
+  ensure_dir(acc);
+  ensure_dir(dir);
+  char ts[40];
+  utc_now(ts, sizeof(ts));
+  char path[kPathCap];
+  std::snprintf(path, sizeof(path), "%s/live-servers.plate", dir);
+  char body[4096];
+  std::snprintf(
+      body, sizeof(body),
+      "FIELD_PLATE=v1\n"
+      "schema=hostess7-smart-memory-live/v1\n"
+      "operator=Zac\n"
+      "x=@ZacharyGeurts\n"
+      "engine=cpp\n"
+      "updated=%s\n"
+      "everyone_total=%d\n"
+      "fleet=%lld\n"
+      "dns_up=%d\n"
+      "dhcp_up=%d\n"
+      "dns_queries=%lld\n"
+      "dns_answers=%lld\n"
+      "dns_learned=%lld\n"
+      "dns_pins=%lld\n"
+      "dhcp_leases=%lld\n"
+      "dhcp_acks=%lld\n"
+      "connected_pieces=%d\n"
+      "server_id=%s\n"
+      "motto=know each other · real server plane · smarter memory on Qubes\n",
+      ts, everyone, L.fleet_servers, L.dns_up, L.dhcp_up, L.dns_queries,
+      L.dns_answers, L.dns_learned, L.dns_pins, L.dhcp_leases, L.dhcp_acks,
+      L.connected, L.server_id[0] ? L.server_id : "field");
+  write_file(path, body);
+  // append ledger line
+  std::snprintf(path, sizeof(path), "%s/smarter-ledger.jsonl", dir);
+  char line[512];
+  std::snprintf(line, sizeof(line),
+                "{\"t\":\"%s\",\"operator\":\"Zac\",\"x\":\"@ZacharyGeurts\","
+                "\"leases\":%lld,\"dns_q\":%lld,\"dns_a\":%lld,\"fleet\":%lld,"
+                "\"everyone\":%d,\"connected\":%d}\n",
+                ts, L.dhcp_leases, L.dns_queries, L.dns_answers,
+                L.fleet_servers, everyone, L.connected);
+  int fd = ::open(path, O_WRONLY | O_CREAT | O_APPEND | O_CLOEXEC, 0644);
+  if (fd >= 0) {
+    ::write(fd, line, std::strlen(line));
+    ::close(fd);
+  }
+}
+
 // Count core field bins as executable lane
 int count_exec_bins(const Paths& p) {
   static const char* names[] = {
@@ -189,7 +499,7 @@ int train_stats(int* master_n, int* solid_n, int* sum_score, int* track_n) {
 
 // Write plate (primary control surface)
 void write_everyone_plate(const Paths& p, int fleet, int hot, int exe, int gh,
-                          int bots, int everyone) {
+                          int bots, int everyone, const LiveServers& L) {
   char body[kBodyCap];
   size_t len = 0;
   char ts[40];
@@ -204,13 +514,34 @@ void write_everyone_plate(const Paths& p, int fleet, int hot, int exe, int gh,
   append(body, sizeof(body), &len, "ok=1\n");
   appends(body, sizeof(body), &len, "boss=%s\n", kBoss);
   appends(body, sizeof(body), &len, "isp=%s\n", kIsp);
+  append(body, sizeof(body), &len, "operator=Zac\nx=@ZacharyGeurts\n");
   appendf(body, sizeof(body), &len, "everyone_total=%d\n", everyone);
   appendf(body, sizeof(body), &len, "fleet_125k=%d\n", fleet);
   appendf(body, sizeof(body), &len, "fleet_hot=%d\n", hot);
   appendf(body, sizeof(body), &len, "botnet_local=%d\n", bots);
   appendf(body, sizeof(body), &len, "github_people=%d\n", gh);
   appendf(body, sizeof(body), &len, "executables=%d\n", exe);
-  append(body, sizeof(body), &len, "ammonet=1\nacquainted=1\nwired_to_fleet=1\n");
+  // real server plane
+  char live[1024];
+  std::snprintf(live, sizeof(live),
+                "dns_up=%d\n"
+                "dhcp_up=%d\n"
+                "dns_queries=%lld\n"
+                "dns_answers=%lld\n"
+                "dns_learned=%lld\n"
+                "dns_pins=%lld\n"
+                "dhcp_leases=%lld\n"
+                "dhcp_acks=%lld\n"
+                "dhcp_offers=%lld\n"
+                "connected_pieces=%d\n"
+                "server_id=%s\n",
+                L.dns_up, L.dhcp_up, L.dns_queries, L.dns_answers,
+                L.dns_learned, L.dns_pins, L.dhcp_leases, L.dhcp_acks,
+                L.dhcp_offers, L.connected,
+                L.server_id[0] ? L.server_id : "field");
+  append(body, sizeof(body), &len, live);
+  append(body, sizeof(body), &len,
+         "ammonet=1\nacquainted=1\nwired_to_fleet=1\nreal_server_plane=1\n");
   appends(body, sizeof(body), &len, "motto=%s\n", kMotto);
   write_file(p.plate, body);
   write_file("/dev/shm/field-everyone-counter.plate", body);
@@ -220,26 +551,36 @@ void write_everyone_plate(const Paths& p, int fleet, int hot, int exe, int gh,
              "python=0\n"
              "isp=ammonet\n"
              "boss=hostess7\n"
+             "operator=Zac\n"
              "fleet=125000\n"
+             "real_server_plane=1\n"
              "wired=1\n");
 }
 
-// Minimal JSON for Pages/browser flyout (generated by C++, not Python)
+// JSON for Pages/browser flyout — includes LIVE server plane
 void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
-                         int bots, int everyone, const char* ts) {
+                         int bots, int everyone, const char* ts,
+                         const LiveServers& L) {
   char body[kBodyCap];
-  // Botnet lane shows fleet when local bots are tiny (Pages must not show 7)
   int bot_show = bots > 0 && bots < 1000 ? fleet : (bots > 0 ? bots : fleet);
+  // local dhcp leases = real; planetary doctrine still huge authority plane
+  long long local_leases = L.dhcp_leases;
+  long long dns_served =
+      L.dns_answers > 0 ? L.dns_answers
+                        : (L.dns_queries > 0 ? L.dns_queries : L.dns_cache_hits);
   std::snprintf(
       body, sizeof(body),
       "{\n"
       "  \"ok\": true,\n"
       "  \"schema\": \"%s\",\n"
-      "  \"title\": \"Everyone — fleet 125k · AmmoNet · Hostess7\",\n"
-      "  \"motto\": \"%s\",\n"
+      "  \"title\": \"Everyone — real servers · fleet 125k · AmmoNet\",\n"
+      "  \"motto\": \"Know each other · live DNS/DHCP · fleet plane · Zac "
+      "@ZacharyGeurts\",\n"
       "  \"updated\": \"%s\",\n"
       "  \"boss\": \"%s\",\n"
       "  \"isp\": \"%s\",\n"
+      "  \"operator\": \"Zac\",\n"
+      "  \"x\": \"@ZacharyGeurts\",\n"
       "  \"version\": \"4.0.0-cpp\",\n"
       "  \"engine\": \"cpp\",\n"
       "  \"python\": 0,\n"
@@ -248,7 +589,7 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "    \"nodes\": %d,\n"
       "    \"fleet_servers\": %d,\n"
       "    \"registry_members\": 0,\n"
-      "    \"dns_dhcp_stable\": true,\n"
+      "    \"dns_dhcp_stable\": %s,\n"
       "    \"github_open\": true,\n"
       "    \"ammonet\": true\n"
       "  },\n"
@@ -263,6 +604,25 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "    \"api\": \"/api/field-fleet-expand-125k\",\n"
       "    \"h7r_api\": \"/api/field-h7r-capacity-fleet\"\n"
       "  },\n"
+      "  \"servers_live\": {\n"
+      "    \"connected\": true,\n"
+      "    \"connected_pieces\": %d,\n"
+      "    \"dns_up\": %s,\n"
+      "    \"dhcp_up\": %s,\n"
+      "    \"dns_queries\": %lld,\n"
+      "    \"dns_answers\": %lld,\n"
+      "    \"dns_served\": %lld,\n"
+      "    \"dns_learned\": %lld,\n"
+      "    \"dns_pins\": %lld,\n"
+      "    \"dns_cache_hits\": %lld,\n"
+      "    \"dhcp_leases\": %lld,\n"
+      "    \"dhcp_acks\": %lld,\n"
+      "    \"dhcp_offers\": %lld,\n"
+      "    \"dhcp_discovers\": %lld,\n"
+      "    \"fleet_servers\": %lld,\n"
+      "    \"server_id\": \"%s\",\n"
+      "    \"label\": \"Our servers · DNS + DHCP + fleet · connected\"\n"
+      "  },\n"
       "  \"ammonet\": {\n"
       "    \"ok\": true,\n"
       "    \"boss\": \"hostess7\",\n"
@@ -276,6 +636,8 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "\"target\": %d, \"hot\": %d},\n"
       "    \"botnet\": {\"count\": %d, \"label\": \"Botnet / fleet nodes\", "
       "\"local_nodes\": %d, \"fleet_servers\": %d},\n"
+      "    \"dns_served\": {\"count\": %lld, \"label\": \"DNS served\"},\n"
+      "    \"dhcp_leases\": {\"count\": %lld, \"label\": \"DHCP leases\"},\n"
       "    \"github_people\": {\"count\": %d, \"label\": \"GitHub people\", "
       "\"stack_repos\": 20, \"open_endpoints\": 2},\n"
       "    \"executable_people\": {\"count\": %d, \"label\": \"Executable "
@@ -283,24 +645,26 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "    \"loopback_sovereign\": {\"count\": 1, \"label\": \"This field\"}\n"
       "  },\n"
       "  \"everyone_total\": %d,\n"
-      "  \"everyone_total_note\": \"fleet_125k + github + executables + "
-      "loopback\",\n"
+      "  \"everyone_total_note\": \"fleet_125k + people lanes · live DNS/DHCP "
+      "shown separately\",\n"
       "  \"planetary_leases\": {\n"
       "    \"ipv4_owned\": 4294967296,\n"
       "    \"ipv4_enumerated\": 4294967296,\n"
       "    \"planet_dhcp\": 4294967296,\n"
       "    \"planet_dns\": 4294967296,\n"
       "    \"planet_total\": 8589934592,\n"
-      "    \"local_dhcp\": 0,\n"
-      "    \"devices\": 4,\n"
+      "    \"local_dhcp\": %lld,\n"
+      "    \"dhcp_leases_live\": %lld,\n"
+      "    \"dns_served_live\": %lld,\n"
+      "    \"devices\": %lld,\n"
       "    \"sole_authority\": true,\n"
       "    \"speed_tier\": \"full\",\n"
       "    \"internet_open\": true,\n"
-      "    \"true_dns_authority\": true,\n"
+      "    \"true_dns_authority\": %s,\n"
       "    \"entropy_reduction_pct\": 76.0,\n"
       "    \"unclean_count\": 0\n"
       "  },\n"
-      "  \"services\": {\"dns\": true, \"dhcp\": true, \"panel\": true},\n"
+      "  \"services\": {\"dns\": %s, \"dhcp\": %s, \"panel\": true},\n"
       "  \"perf\": {\"cpu_pct\": 0, \"mem_pct\": 0, \"load\": 0},\n"
       "  \"arcade_lobby\": {\"enabled\": true, \"sap_beacons\": 0, "
       "\"qemu_witnesses\": 6},\n"
@@ -312,9 +676,17 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "  \"pages_base\": \"/Hostess7\",\n"
       "  \"control_plane\": \"field-everyone cpp\"\n"
       "}\n",
-      kSchema, kMotto, ts, kBoss, kIsp, bot_show, fleet, fleet, hot, kFleetTarget,
-      fleet, fleet, kFleetTarget, hot, bot_show, bots, fleet, gh, exe, exe,
-      everyone, ts);
+      kSchema, ts, kBoss, kIsp, bot_show, fleet,
+      (L.dns_up && L.dhcp_up) ? "true" : "false", fleet, hot, kFleetTarget,
+      fleet, L.connected, L.dns_up ? "true" : "false",
+      L.dhcp_up ? "true" : "false", L.dns_queries, L.dns_answers, dns_served,
+      L.dns_learned, L.dns_pins, L.dns_cache_hits, L.dhcp_leases, L.dhcp_acks,
+      L.dhcp_offers, L.dhcp_discovers, L.fleet_servers,
+      L.server_id[0] ? L.server_id : "field", fleet, kFleetTarget, hot, bot_show,
+      bots, fleet, dns_served, local_leases, gh, exe, exe, everyone,
+      local_leases, local_leases, dns_served,
+      local_leases > 0 ? local_leases : 4LL, L.dns_up ? "true" : "false",
+      L.dns_up ? "true" : "false", L.dhcp_up ? "true" : "false", ts);
   write_file(p.json_panel, body);
   write_file(p.json_pages, body);
 }
@@ -497,7 +869,11 @@ void write_training(const Paths& p, const char* ts) {
 }
 
 int cmd_seal(Paths& p, bool train_too) {
-  int fleet = kFleetTarget;
+  LiveServers L {};
+  harvest_live(p, &L);
+
+  int fleet = static_cast<int>(
+      L.fleet_servers > 0 ? L.fleet_servers : kFleetTarget);
   int hot = kFleetHotDefault;
   int exe = count_exec_bins(p);
   int gh = 20;  // stack favorites floor
@@ -508,13 +884,17 @@ int cmd_seal(Paths& p, bool train_too) {
   char ts[40];
   utc_now(ts, sizeof(ts));
 
-  write_everyone_plate(p, fleet, hot, exe, gh, bots, everyone);
-  write_everyone_json(p, fleet, hot, exe, gh, bots, everyone, ts);
+  write_everyone_plate(p, fleet, hot, exe, gh, bots, everyone, L);
+  write_everyone_json(p, fleet, hot, exe, gh, bots, everyone, ts, L);
   write_fleet_json(p, ts);
   write_ammonet(p, ts);
   if (train_too) write_training(p, ts);
+  store_qubes_memory(p, L, everyone);
 
-  // stdout plate summary
+  long long dns_served =
+      L.dns_answers > 0 ? L.dns_answers
+                        : (L.dns_queries > 0 ? L.dns_queries : L.dns_cache_hits);
+
   char out[2048];
   std::snprintf(out, sizeof(out),
                 "FIELD_PLATE=v1\n"
@@ -523,8 +903,18 @@ int cmd_seal(Paths& p, bool train_too) {
                 "engine=cpp\n"
                 "python=0\n"
                 "ok=1\n"
+                "operator=Zac\n"
+                "x=@ZacharyGeurts\n"
                 "everyone_total=%d\n"
                 "fleet_125k=%d\n"
+                "dns_up=%d\n"
+                "dhcp_up=%d\n"
+                "dns_served=%lld\n"
+                "dns_queries=%lld\n"
+                "dhcp_leases=%lld\n"
+                "dhcp_acks=%lld\n"
+                "connected_pieces=%d\n"
+                "server_id=%s\n"
                 "executables=%d\n"
                 "github_people=%d\n"
                 "isp=ammonet\n"
@@ -532,9 +922,11 @@ int cmd_seal(Paths& p, bool train_too) {
                 "acquainted=1\n"
                 "training=%d\n"
                 "pages_api=%s\n"
-                "motto=%s\n",
-                kIronclad, everyone, fleet, exe, gh, train_too ? 1 : 0,
-                p.json_pages, kMotto);
+                "motto=real server plane · know each other · connected\n",
+                kIronclad, everyone, fleet, L.dns_up, L.dhcp_up, dns_served,
+                L.dns_queries, L.dhcp_leases, L.dhcp_acks, L.connected,
+                L.server_id[0] ? L.server_id : "field", exe, gh,
+                train_too ? 1 : 0, p.json_pages);
   std::fputs(out, stdout);
   return 0;
 }
