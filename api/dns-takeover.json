@@ -1,0 +1,224 @@
+{
+  "schema": "dns-takeover/v1",
+  "updated": "2026-07-10T21:59:46Z",
+  "phase": "primary",
+  "healthy_streak": 13,
+  "motto": "Listen and learn first — takeover only when NEXUS resolver is healthy.",
+  "policy": {
+    "never_interrupt_on_arrival": true,
+    "listen_before_reject": true,
+    "dhcp_dns_only": true,
+    "only_our_dns_dhcp": true,
+    "foreign_server_is_threat": true,
+    "no_lateral_movement": true,
+    "legacy_open_secured": false
+  },
+  "health": {
+    "running": true,
+    "probe_ok": true,
+    "rcode": 0,
+    "healthy": true,
+    "host": "127.0.0.1",
+    "port": 53,
+    "qname": "example.com"
+  },
+  "incumbents": {
+    "dns_port_busy": true,
+    "dhcp_port_busy": true,
+    "dns_listeners": [
+      {
+        "proto": "udp",
+        "port": 53,
+        "bind": "0.0.0.0:53",
+        "raw": "UNCONN 0      0           0.0.0.0:53 0.0.0.0:*",
+        "process_hint": ""
+      },
+      {
+        "proto": "udp",
+        "port": 53,
+        "bind": "71.86.188.33:53",
+        "raw": "UNCONN 0      0      71.86.188.33:53 0.0.0.0:*",
+        "process_hint": ""
+      },
+      {
+        "proto": "udp",
+        "port": 53,
+        "bind": "192.168.50.1:53",
+        "raw": "UNCONN 0      0      192.168.50.1:53 0.0.0.0:*",
+        "process_hint": ""
+      },
+      {
+        "proto": "udp",
+        "port": 53,
+        "bind": "192.168.47.1:53",
+        "raw": "UNCONN 0      0      192.168.47.1:53 0.0.0.0:*",
+        "process_hint": ""
+      },
+      {
+        "proto": "udp",
+        "port": 53,
+        "bind": "127.0.0.53:53",
+        "raw": "UNCONN 0      0        127.0.0.53:53 0.0.0.0:*",
+        "process_hint": ""
+      },
+      {
+        "proto": "udp",
+        "port": 53,
+        "bind": "127.0.0.1:53",
+        "raw": "UNCONN 0      0         127.0.0.1:53 0.0.0.0:*",
+        "process_hint": ""
+      },
+      {
+        "proto": "udp",
+        "port": 53,
+        "bind": "[::1]:53",
+        "raw": "UNCONN 0      0             [::1]:53    [::]:*",
+        "process_hint": ""
+      }
+    ],
+    "dhcp_listeners": [
+      {
+        "proto": "udp",
+        "port": 67,
+        "bind": "0.0.0.0:67",
+        "raw": "UNCONN 0      0      0.0.0.0:67 0.0.0.0:*",
+        "process_hint": ""
+      }
+    ],
+    "systemd_resolved": false,
+    "resolv": {
+      "path": "/etc/resolv.conf",
+      "is_symlink": false,
+      "nameservers": [
+        "127.0.0.1",
+        "::1"
+      ],
+      "search_domains": [],
+      "nexus_truth_enforced": true
+    },
+    "foreign_nameservers": [],
+    "foreign_ipv4_resolvers": [],
+    "incumbent_dns": false,
+    "incumbent_dhcp": false,
+    "nexus_dns_running": true,
+    "nexus_dhcp_running": true,
+    "ipv4_truth_only": true
+  },
+  "permissions": {
+    "enforce_resolv": true,
+    "serve_dhcp": true,
+    "local_capture": true,
+    "break_resolv_symlink": true,
+    "remove_foreign_resolvers": false,
+    "ipv4_truth_only": true
+  },
+  "foreign_enforcement": {
+    "foreign_nameservers": [],
+    "foreign_ipv4_resolvers": [],
+    "remove_on_primary": false,
+    "seamless_transition": true,
+    "no_internet_break": true,
+    "motto": "Truth DNS primary — foreign resolvers removed, not middleman"
+  },
+  "delay_as_threat": {
+    "active": false,
+    "vector": null,
+    "signal": null,
+    "countermeasure": null,
+    "truth_clean": true
+  },
+  "hostess7": {
+    "inside": {
+      "dns": "Truth Resolver loopback — primary after graceful takeover",
+      "dhcp": "LAN pool when port 67 vacant",
+      "movement": "none"
+    },
+    "outside": {
+      "dns_admin": "ports 7 · 77 · 777 read-only",
+      "dhcp": "disabled on WAN",
+      "movement": "none"
+    }
+  },
+  "sole_authority": {
+    "dns": true,
+    "dhcp": true,
+    "truth": true,
+    "accuracy": true,
+    "ok": true,
+    "motto": "Sole authority of truth and accuracy — no collisions, no foreign resolvers"
+  },
+  "phase_history": [
+    {
+      "ts": "2026-07-05T15:39:20Z",
+      "from": "ready",
+      "to": "observing",
+      "healthy": false
+    },
+    {
+      "ts": "2026-07-05T15:47:09Z",
+      "from": "observing",
+      "to": "ready",
+      "healthy": true
+    },
+    {
+      "ts": "2026-07-05T15:47:16Z",
+      "from": "ready",
+      "to": "primary",
+      "healthy": true
+    },
+    {
+      "ts": "2026-07-06T05:43:16Z",
+      "from": "primary",
+      "to": "ready",
+      "healthy": false
+    },
+    {
+      "ts": "2026-07-06T05:47:52Z",
+      "from": "ready",
+      "to": "primary",
+      "healthy": true
+    },
+    {
+      "ts": "2026-07-06T07:44:01Z",
+      "from": "primary",
+      "to": "ready",
+      "healthy": false
+    },
+    {
+      "ts": "2026-07-06T07:45:56Z",
+      "from": "ready",
+      "to": "observing",
+      "healthy": false
+    },
+    {
+      "ts": "2026-07-06T07:46:03Z",
+      "from": "observing",
+      "to": "ready",
+      "healthy": true
+    },
+    {
+      "ts": "2026-07-06T07:46:05Z",
+      "from": "ready",
+      "to": "primary",
+      "healthy": true
+    },
+    {
+      "ts": "2026-07-06T12:59:10Z",
+      "from": "primary",
+      "to": "ready",
+      "healthy": false
+    },
+    {
+      "ts": "2026-07-06T12:59:41Z",
+      "from": "ready",
+      "to": "observing",
+      "healthy": false
+    },
+    {
+      "ts": "2026-07-09T09:53:16Z",
+      "from": "observing",
+      "to": "primary",
+      "healthy": true
+    }
+  ]
+}

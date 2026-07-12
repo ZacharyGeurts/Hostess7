@@ -1,0 +1,90 @@
+{
+  "ok": true,
+  "schema": "field-destination-ab/v1",
+  "updated": "2026-07-10T07:36:17Z",
+  "title": "Always know A and B — destination only",
+  "motto": "We always know points A and B. User wants destination. That's it. Nobody else.",
+  "ironclad_cite": "ironclad:destination-ab:1",
+  "always_know_a_and_b": true,
+  "user_wants_destination": true,
+  "destination_only": true,
+  "nobody_else": true,
+  "no_third_parties": true,
+  "no_middlemen": true,
+  "no_foreign_hops": true,
+  "foreign_hops": 0,
+  "parties": 2,
+  "path_shape": [
+    "A",
+    "B"
+  ],
+  "always_field_1": true,
+  "field_1": true,
+  "plane": "field-1",
+  "A": {
+    "point": "A",
+    "role": "source_user",
+    "addr": "127.0.0.1",
+    "mac": null,
+    "hostname": "default-X870-Pro-RS",
+    "on_field": true,
+    "dns_running": true,
+    "note": "User on Field — we always know A"
+  },
+  "B": {
+    "point": "B",
+    "role": "destination",
+    "name": "netflix.com",
+    "ok": true,
+    "addrs": [
+      "7.7.7.7"
+    ],
+    "addr": "7.7.7.7",
+    "method": "field-dig",
+    "on_field": true,
+    "note": "User wants destination — that's it"
+  },
+  "path": [
+    {
+      "seq": 1,
+      "point": "A",
+      "addr": "127.0.0.1",
+      "role": "source_user",
+      "party": true
+    },
+    {
+      "seq": 2,
+      "point": "B",
+      "addr": "7.7.7.7",
+      "name": "netflix.com",
+      "role": "destination",
+      "party": true
+    }
+  ],
+  "hops": [
+    {
+      "seq": 1,
+      "point": "A",
+      "addr": "127.0.0.1",
+      "role": "source_user",
+      "party": true
+    },
+    {
+      "seq": 2,
+      "point": "B",
+      "addr": "7.7.7.7",
+      "name": "netflix.com",
+      "role": "destination",
+      "party": true
+    }
+  ],
+  "hop_count": 2,
+  "old_isp_role": "dumb_pipe_physics_only_not_a_party",
+  "route_to": "destination",
+  "api": "/api/field-destination-ab",
+  "doctrine": {
+    "always_know_a_and_b": true,
+    "destination_only": true,
+    "nobody_else": true
+  }
+}

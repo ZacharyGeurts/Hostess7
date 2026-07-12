@@ -1,9 +1,9 @@
 {
   "ok": true,
   "schema": "field-dns-dhcp-any-ip/v1",
-  "updated": "2026-07-06T00:41:52Z",
-  "title": "Answer DNS and DHCP on any IP \u2014 every possible local address",
-  "motto": "Anyone picks any IPv4 anywhere \u2014 even outside our network, everything answers at Field 1.",
+  "updated": "2026-07-08T19:53:21Z",
+  "title": "Answer DNS and DHCP on any IP — every possible local address",
+  "motto": "Anyone picks any IPv4 anywhere — even outside our network, everything answers at Field 1.",
   "any_ip": true,
   "answer_any_ip": true,
   "device_sovereign": true,
@@ -23,16 +23,14 @@
   },
   "dhcp": {
     "bind": "0.0.0.0",
-    "server_id": "192.168.47.1",
+    "server_id": "127.0.0.1",
     "port": 67,
     "wildcard": true
   },
   "local_ipv4": [
     "0.0.0.0",
     "127.0.0.1",
-    "97.95.64.87",
-    "71.86.186.130",
-    "192.168.47.1"
+    "97.95.64.87"
   ],
   "local_ipv6": [],
   "enumerate_addresses": true,
@@ -52,7 +50,7 @@
       "dhcp": true,
       "wildcard": true,
       "device_mapped": true,
-      "note": "All IPv4 on box \u2014 map to device information, not numbers"
+      "note": "All IPv4 on box — map to device information, not numbers"
     },
     {
       "address": "::",
@@ -61,7 +59,7 @@
       "dhcp": false,
       "wildcard": true,
       "device_mapped": true,
-      "note": "DNS wildcard \u2014 device authority primary"
+      "note": "DNS wildcard — device authority primary"
     }
   ],
   "answer_point_count": 2,
@@ -78,8 +76,5 @@
     "reply_on_dest_ip": true,
     "track_devices_not_numbers": true
   },
-  "api": "/api/field-dns-dhcp-any-ip",
-  "pages": true,
-  "lane": "pages-surfaces",
-  "exported": "2026-07-06T00:41:52Z"
+  "api": "/api/field-dns-dhcp-any-ip"
 }

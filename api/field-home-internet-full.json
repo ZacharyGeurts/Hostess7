@@ -1,0 +1,117 @@
+{
+  "ok": true,
+  "schema": "field-home-internet-panel/v1",
+  "updated": "2026-07-10T07:32:37Z",
+  "title": "Your Internet — Autonet on 127.0.0.1",
+  "motto": "This is your Internet now. Autonet. No distributed controls. Free DNS+DHCP. SAW between links. We always know our network.",
+  "ironclad_cite": "ironclad:home-internet-panel:1",
+  "simulation": false,
+  "home_view": true,
+  "loopback_url": "http://127.0.0.1:9477/internet",
+  "public_api": "https://zacharygeurts.github.io/Hostess7/api/field-home-internet.json",
+  "how_homes_see_this": {
+    "dns": "Field DHCP option 6 → 127.0.0.1 (and Field truth NS)",
+    "open": "http://127.0.0.1:9477/internet",
+    "also": [
+      "http://127.0.0.1:9477/maintenance",
+      "http://127.0.0.1:9477/chat",
+      "http://127.0.0.1:9477/botnet"
+    ],
+    "public_mirror": "https://zacharygeurts.github.io/Hostess7/",
+    "note": "Every home on AmmoNet plane resolves Truth DNS locally — 127 is the window."
+  },
+  "autonet": {
+    "ok": true,
+    "name": "autonet",
+    "distributed_controls": false,
+    "no_distributed_controls": true,
+    "human_intervention": false,
+    "autopilot": true,
+    "we_are_the_internet": true,
+    "api_keys_display_only": true
+  },
+  "saw": {
+    "between_them": true,
+    "between_connections": true,
+    "running": true,
+    "always": true,
+    "cooked_total": 0,
+    "updated": "2026-07-09T19:58:36Z",
+    "nobody_in_between": true
+  },
+  "network": {
+    "always_know_our_network": true,
+    "mesh_peer_count": 2500,
+    "mesh_digest": "322ce7a412a323d7580a3e9b44b094d2",
+    "knows_all": true,
+    "servers": 125000,
+    "secured_together": true
+  },
+  "rollout": {
+    "ten_in_control": true,
+    "wave0": [],
+    "deploy_ready": true,
+    "sensible_ok": true,
+    "last_verified": 2500,
+    "last_total": 2500,
+    "waves": 250,
+    "max_concurrent": 10
+  },
+  "plane": {
+    "dns_127": true,
+    "dns_field": true,
+    "dns_option": [
+      "127.0.0.1"
+    ],
+    "bsp_hold": true,
+    "foreign_in_resolv": false,
+    "raid_ok": true,
+    "ds1_count": 5028,
+    "lease_count": 55039,
+    "permanent_home_table": true,
+    "free_dns": true,
+    "free_dhcp": true,
+    "isp_role": "l2_plus_transport_only"
+  },
+  "security": {
+    "never_reconnect": true,
+    "never_reconnect_ips": 558,
+    "full_removal": true,
+    "wall_socket": true,
+    "no_storage_residual": true,
+    "no_light_bans": true,
+    "ban_count": 597,
+    "no_hooks": true,
+    "no_sniffers": true,
+    "hardened_forever": true
+  },
+  "batch_ten": {
+    "stable": true,
+    "package_digest": "a7fac022945e570922022f36",
+    "tools": [
+      "field-ironclad-bsp-dns",
+      "field-dns",
+      "field-dhcp",
+      "field-botnet-full-dns-dhcp-authority",
+      "field-botnet-dns-dhcp",
+      "field-botnet-threat-heuristics",
+      "field-url-heuristics-steel",
+      "field-truth-dns-steel-plate",
+      "field-ironclad-truth",
+      "field-secure-bot-rollout"
+    ]
+  },
+  "links": {
+    "internet": "/internet",
+    "maintenance": "/maintenance",
+    "chat": "/chat",
+    "botnet": "/botnet",
+    "never_reconnect": "/never-reconnect",
+    "hostess7": "https://zacharygeurts.github.io/Hostess7/",
+    "stack": "https://zacharygeurts.github.io/Hostess7/stack.html",
+    "public_api": "https://zacharygeurts.github.io/Hostess7/api/field-home-internet.json"
+  },
+  "api": "/api/field-home-internet",
+  "pages": true,
+  "lane": "github-mirror"
+}

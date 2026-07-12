@@ -1,0 +1,35 @@
+{
+  "schema": "hostess7-field-operational/v1",
+  "ok": true,
+  "commander": "Hostess 7",
+  "source": "NewLatest best",
+  "grok16": {
+    "version": "16.1.0-hard",
+    "github": "https://github.com/ZacharyGeurts/Grok16",
+    "tag": "v16.1.0-hard",
+    "pages": "https://zacharygeurts.github.io/Grok16/"
+  },
+  "ammocode": {
+    "version": "6.1.0",
+    "github": "https://github.com/ZacharyGeurts/AmmoCode",
+    "pages": "https://zacharygeurts.github.io/AmmoCode/"
+  },
+  "elevation": {
+    "path": "field-elevate autoelevate",
+    "polkit": "HOSTILE",
+    "ironclad": "ironclad:field-autoelevate-cpp:2"
+  },
+  "stack_update": {
+    "bin": "field-hostess7-stack-update",
+    "engine": "cpp",
+    "scripts": false,
+    "python": false
+  },
+  "plane": {
+    "dns": "field-world-dns",
+    "dhcp": "field-world-dhcp",
+    "mesh": "field-fleet-mesh",
+    "internet2": true
+  },
+  "motto": "Best of NewLatest · Grok16 hard · Hostess 7 operational · polkit HOSTILE"
+}

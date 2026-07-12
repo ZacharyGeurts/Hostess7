@@ -1,29 +1,60 @@
 {
   "schema": "nexus-c2-basement/v1",
-  "updated": "2026-07-04T22:19:03Z",
+  "updated": "2026-07-10T22:07:22Z",
   "layer": "nexus_c2",
   "role": "secure_basement",
-  "before": "kilroy",
-  "weaponized": true,
-  "war_posture": true,
-  "kiosk": false,
-  "command_deck": true,
-  "gates": {
-    "connection_gatekeeper": true,
-    "trust_strike": true,
-    "probe_guard": true,
-    "attack_kit": true,
-    "weapons_turnover": true
-  },
-  "panel_up": 1,
-  "loopback_authority": "127.0.0.1",
-  "install_root": "/home/default/Desktop/SG/NewLatest",
-  "steps": "gatekeeper:ok,trust_strike:ok,probe_guard:ok,weapons:ok",
-  "ok": true,
-  "pages": true,
-  "pages_url": "https://zacharygeurts.github.io/command/",
   "theme": "black_emerald_rose_2026",
-  "palette": "black \u00b7 emerald \u00b7 rose",
-  "shared": true,
-  "motto": "NEXUS C2 is the secure basement \u2014 not a kiosk. Shared with everyone."
+  "palette": "black · brown · emerald · rose",
+  "classes": [
+    "nexus-c2-basement",
+    "mil-c2",
+    "black_emerald_rose_2026"
+  ],
+  "assets": [
+    "/assets/nexus-c2-basement.css",
+    "/assets/field-military-c2.css",
+    "/assets/ammoos-c2-themes.css",
+    "/assets/nexus-military-v8.css",
+    "/assets/field-screen-layers.css",
+    "/assets/field-screen-layers.js"
+  ],
+  "fkeys": {
+    "F12": {
+      "z": 3,
+      "id": "userland_cycle",
+      "label": "Userland L2+ · top cycle"
+    },
+    "F11": {
+      "z": 1,
+      "id": "queen_browser",
+      "label": "Queen Browser"
+    },
+    "F10": {
+      "z": -2,
+      "id": "dns_lane",
+      "label": "DNS · KILROY · on C2"
+    },
+    "F9": {
+      "z": -3,
+      "id": "nexus_c2",
+      "label": "NEXUS C2 · THE bottom"
+    },
+    "F5": {
+      "z": -2,
+      "id": "botnet",
+      "label": "Botnet · DNS · on C2",
+      "path": "/botnet"
+    },
+    "F4": {
+      "z": -3,
+      "id": "nexus_c2_alt",
+      "label": "NEXUS C2 · THE bottom"
+    }
+  },
+  "bottom_layer": true,
+  "servers_stamped": 125000,
+  "kilroy_ipxe": true,
+  "ironclad_cite": "ironclad:kilroy-ipxe-nexus-c2:1",
+  "motto": "NEXUS C2 basement on every KILROY/iPXE/DNS edge — F9 C2 · F5 botnet · F10 DNS · F12 userland",
+  "ok": true
 }

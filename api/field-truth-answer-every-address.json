@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "schema": "field-truth-answer-every-address/v1",
+  "updated": "2026-07-08T22:47:53Z",
+  "title": "DNS + DHCP truth on every address — yes or 7.7.7.7",
+  "motto": "Answer DNS and DHCP truthfully on every address. Tell them yes, or give them 7.7.7.7 — we never collide.",
+  "truthful": true,
+  "answer_on_every_address": true,
+  "never_ip_collide": true,
+  "yes_or_sink": true,
+  "never_collide_sink": "7.7.7.7",
+  "dns": {
+    "bound": [
+      "127.0.0.1:53",
+      "127.0.0.53:53",
+      "192.168.47.1:53",
+      "192.168.50.1:53",
+      "97.95.64.87:53",
+      "0.0.0.0:53",
+      "::1:53"
+    ],
+    "running": true,
+    "multi_bind": true,
+    "field_zone_sink_a": "7.7.7.7",
+    "answer_any_ip": true
+  },
+  "dhcp": {
+    "running": true,
+    "fallback_yiaddr": "7.7.7.7",
+    "yes_to_free_request": true
+  },
+  "autopilot": true,
+  "api": "/api/field-truth-answer-every-address",
+  "ironclad_cite": "ironclad:truth-answer-every-address:1"
+}

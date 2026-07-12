@@ -1,107 +1,22 @@
 {
   "ok": true,
   "schema": "field-endpoint-registry-public/v1",
-  "title": "Sovereign endpoint registry — everything witnessed, beyond ICANN",
-  "motto": "No endpoint moves silently: DNS, IP, port, URL, Pages, loopback, API, module, file — from→to in public hash chain.",
-  "owner": "ZacharyGeurts",
-  "scope": "More than ICANN: sovereign truth for all routable identities the field stack owns or mirrors.",
-  "updated": "2026-07-06T04:27:03Z",
-  "layers": [
-    {
-      "id": "icann_dns",
-      "title": "ICANN DNS — domains, delegations, root hints",
-      "beyond_icann": false
-    },
-    {
-      "id": "ip",
-      "title": "IPv4/IPv6 host assignments",
-      "beyond_icann": true
-    },
-    {
-      "id": "cidr",
-      "title": "CIDR blocks — GitHub pins, botnet pools",
-      "beyond_icann": true
-    },
-    {
-      "id": "port",
-      "title": "Legal port reservations — IANA + field context",
-      "beyond_icann": true
-    },
-    {
-      "id": "url",
-      "title": "HTTP/HTTPS canonical URLs",
-      "beyond_icann": true
-    },
-    {
-      "id": "pages",
-      "title": "GitHub Pages canonical + mirrors",
-      "beyond_icann": true
-    },
-    {
-      "id": "loopback",
-      "title": "127.0.0.1 / ::1 services",
-      "beyond_icann": true
-    },
-    {
-      "id": "api",
-      "title": "Threat panel / Pages API routes",
-      "beyond_icann": true
-    },
-    {
-      "id": "module",
-      "title": "lib/*.py sovereign modules",
-      "beyond_icann": true
-    },
-    {
-      "id": "file",
-      "title": "data/ path relocations",
-      "beyond_icann": true
-    },
-    {
-      "id": "service",
-      "title": "Named stack services",
-      "beyond_icann": true
-    },
-    {
-      "id": "repo",
-      "title": "Git repositories",
-      "beyond_icann": true
-    },
-    {
-      "id": "mirror",
-      "title": "Fallback chains",
-      "beyond_icann": true
-    },
-    {
-      "id": "script",
-      "title": "Canonical script paths",
-      "beyond_icann": true
-    }
-  ],
-  "beyond_icann": [
-    "ip",
-    "cidr",
-    "port",
-    "url",
-    "pages",
-    "loopback",
-    "api",
-    "module",
-    "file",
-    "service",
-    "repo",
-    "mirror",
-    "script"
-  ],
+  "title": null,
+  "motto": null,
+  "owner": null,
+  "scope": null,
+  "updated": "2026-07-11T19:54:39Z",
+  "layers": [],
+  "beyond_icann": [],
   "verify": {
     "ok": true,
-    "count": 221,
+    "count": 822,
     "genesis": "0000000000000000000000000000000000000000000000000000000000000000",
-    "head": "3687dbe18820bc515b113d5276eadb1a3ecbe84a10ad11da96e19bea7decb14e",
+    "head": "28c1700a6505ed0e60af9d34a8f4174d429c9b33a89c462cb88fa0e7844818b2",
     "broken": []
   },
   "route_count": 127,
-  "movement_count": 221,
+  "movement_count": 822,
   "routes": {
     "service:field-dns": {
       "layer": "service",
@@ -873,29 +788,14 @@
   "recent_movements": [
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-04T20:47:46Z",
-      "at": "2026-07-04T20:47:46Z",
-      "layer": "pages",
-      "kind": "repo_fired",
-      "entity_id": "ZacharyGeurts/field",
-      "from": "https://zacharygeurts.github.io/field",
-      "to": "https://zacharygeurts.github.io/Hostess7/desktop",
-      "witness": "fire-field-repo",
-      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only",
-      "meta": {},
-      "prev_hash": "d2f8e72d1925bd8afb78fad35e15da038452db4dee2ae20f4b6dcd7ddc4863d3",
-      "hash": "61460383795532e8370e13cfc347c26945ba9de0680213b704a7bc4667184bfa"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-04T20:47:46Z",
-      "at": "2026-07-04T20:47:46Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:17:39Z",
+      "at": "2026-07-10T09:17:39Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "field-github-planet-sweep",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -905,19 +805,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "61460383795532e8370e13cfc347c26945ba9de0680213b704a7bc4667184bfa",
-      "hash": "bc30334285a86dba5304d78447cb00def7aa3536e8d4aa61b9a50ce581b2f304"
+      "prev_hash": "8eac372b0bccbf52c0f9ef88d80ff8e23bced8fe4ec956ff265ef4f946b226c0",
+      "hash": "bd4370ce358f442ae994eb1be96071d7a3bf1169ec176530d1ea95ad2f70ce39"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-04T21:13:25Z",
-      "at": "2026-07-04T21:13:25Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:17:48Z",
+      "at": "2026-07-10T09:17:48Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "re-fire",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -927,34 +827,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "bc30334285a86dba5304d78447cb00def7aa3536e8d4aa61b9a50ce581b2f304",
-      "hash": "794296d902145125fdd44947deb9966180b192eaac2344341b91fd47ce2b64e6"
+      "prev_hash": "bd4370ce358f442ae994eb1be96071d7a3bf1169ec176530d1ea95ad2f70ce39",
+      "hash": "65ed7d3477dee3fed28ff8a4cfbaccd9884fb51d0b9f08bfac1331e6c0b4133b"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-04T21:13:29Z",
-      "at": "2026-07-04T21:13:29Z",
-      "layer": "pages",
-      "kind": "repo_fired",
-      "entity_id": "ZacharyGeurts/field",
-      "from": "https://zacharygeurts.github.io/field",
-      "to": "https://zacharygeurts.github.io/Hostess7/desktop",
-      "witness": "fire-field-repo",
-      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only",
-      "meta": {},
-      "prev_hash": "794296d902145125fdd44947deb9966180b192eaac2344341b91fd47ce2b64e6",
-      "hash": "b38e3905140ee95c4f1eb985e44b47be61bda51fc5b3e4b01f0bc989cdb41370"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-04T21:13:30Z",
-      "at": "2026-07-04T21:13:30Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:17:56Z",
+      "at": "2026-07-10T09:17:56Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "field-github-planet-sweep",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -964,34 +849,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "b38e3905140ee95c4f1eb985e44b47be61bda51fc5b3e4b01f0bc989cdb41370",
-      "hash": "47c35dfd3885f3d1eea0e89209da027937156f1d3d11037f6309f9ebc07aa144"
+      "prev_hash": "65ed7d3477dee3fed28ff8a4cfbaccd9884fb51d0b9f08bfac1331e6c0b4133b",
+      "hash": "9c2892d384993e971e133494302d54153cab475e980645a375604d19b24d9cef"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "api:ammodrive-cloud:api_wire:2026-07-05T01:00:00Z",
-      "at": "2026-07-05T01:00:00Z",
-      "layer": "api",
-      "kind": "api_wire",
-      "entity_id": "ammodrive-cloud",
-      "from": null,
-      "to": "/api/ammodrive-cloud",
-      "witness": "threat-panel-http",
-      "reason": "AmmoDrive Cloud — the new cloud, H7r rackmount, open to everyone",
-      "meta": {},
-      "prev_hash": "1b42b3e35145a1373a967456d7d2d0e0d1dd799b9ea487bdcfb36dc74b25b090",
-      "hash": "ec9babd6444137ae8f9024ab0146572ea85250fe35e3c0b9f420ee76496fdcba"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-05T06:27:36Z",
-      "at": "2026-07-05T06:27:36Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:18:04Z",
+      "at": "2026-07-10T09:18:04Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "rebuild-internet-routes-secure.sh",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -1001,19 +871,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "6cc1a10dc31757233fb1410088995ea1063da836dff5589c408a3d0ae2fa0569",
-      "hash": "faa45e9cb958650fdd6b52ccdf327d7b8ec317e65831a9028bbde344491c6b99"
+      "prev_hash": "9c2892d384993e971e133494302d54153cab475e980645a375604d19b24d9cef",
+      "hash": "9618c89c65732e79189ededad333c6f364992f492ad415e95b0ef95e7f02f0bb"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-05T16:01:22Z",
-      "at": "2026-07-05T16:01:22Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:18:13Z",
+      "at": "2026-07-10T09:18:13Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "rebuild-internet-routes-secure.sh",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -1023,139 +893,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "faa45e9cb958650fdd6b52ccdf327d7b8ec317e65831a9028bbde344491c6b99",
-      "hash": "4f23e16222354a7c2e891ebff9d28bdfb7d30f4925c0b0a2c29cbec77f5a52b1"
+      "prev_hash": "9618c89c65732e79189ededad333c6f364992f492ad415e95b0ef95e7f02f0bb",
+      "hash": "8e993b47e00cc8a37cfa940ab3c0a28d9e14963c6ceea6368dfff62080d7f4ad"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/AmmoOS:not_redirect_hub:2026-07-06T00:42:39Z",
-      "at": "2026-07-06T00:42:39Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/AmmoOS",
-      "from": "https://zacharygeurts.github.io/AmmoOS",
-      "to": "https://zacharygeurts.github.io/AmmoOS/index.html",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "326dd8debc0be8beac854100c26d0f9135d71d1bee9bfe6f69cadd541faea730",
-      "hash": "4dd7e4aaad3ec4bd10c0441674bbde43e938c93d514ce027e246e45b3ae807ef"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/NEXUS-Shield:pages_missing:2026-07-06T00:42:39Z",
-      "at": "2026-07-06T00:42:39Z",
-      "layer": "pages",
-      "kind": "pages_missing",
-      "entity_id": "ZacharyGeurts/NEXUS-Shield",
-      "from": "https://zacharygeurts.github.io/NEXUS-Shield",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — pages_missing",
-      "meta": {},
-      "prev_hash": "4dd7e4aaad3ec4bd10c0441674bbde43e938c93d514ce027e246e45b3ae807ef",
-      "hash": "da81e2fb80ae639bce0def42945d61c8eba208717e7db19c0bf782260f8fb8a9"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/Poop:not_redirect_hub:2026-07-06T00:42:39Z",
-      "at": "2026-07-06T00:42:39Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/Poop",
-      "from": "https://github.com/ZacharyGeurts/Poop",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "da81e2fb80ae639bce0def42945d61c8eba208717e7db19c0bf782260f8fb8a9",
-      "hash": "b24b5cc2fbc5ec422d033f6513b4b5db33c529096d8a654b114de0ae6548de5d"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/VSYNC-Locker:pages_missing:2026-07-06T00:42:39Z",
-      "at": "2026-07-06T00:42:39Z",
-      "layer": "pages",
-      "kind": "pages_missing",
-      "entity_id": "ZacharyGeurts/VSYNC-Locker",
-      "from": "https://zacharygeurts.github.io/VSYNC-Locker",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — pages_missing",
-      "meta": {},
-      "prev_hash": "b24b5cc2fbc5ec422d033f6513b4b5db33c529096d8a654b114de0ae6548de5d",
-      "hash": "b91be5933a9f287b219fd6a131f4f80f69a9101209ffdf3119e2825da6e04725"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/ZacharyGeurts:not_redirect_hub:2026-07-06T00:42:39Z",
-      "at": "2026-07-06T00:42:39Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/ZacharyGeurts",
-      "from": "https://zacharygeurts.github.io/ZacharyGeurts",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "b91be5933a9f287b219fd6a131f4f80f69a9101209ffdf3119e2825da6e04725",
-      "hash": "f86b64fc263b710c3e651b75499349b9f6e2707d3dd777cdfab592d8ad44d1b4"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T00:42:39Z",
-      "at": "2026-07-06T00:42:39Z",
-      "layer": "pages",
-      "kind": "repo_fired",
-      "entity_id": "ZacharyGeurts/field",
-      "from": "https://zacharygeurts.github.io/field",
-      "to": "http://127.0.0.1:9477/field",
-      "witness": "fire-field-repo",
-      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
-      "meta": {},
-      "prev_hash": "f86b64fc263b710c3e651b75499349b9f6e2707d3dd777cdfab592d8ad44d1b4",
-      "hash": "7555aca548836588bd7ec7864738374dd6e3c63559890fcf7c7f254bc7746d9f"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/memes:not_redirect_hub:2026-07-06T00:42:39Z",
-      "at": "2026-07-06T00:42:39Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/memes",
-      "from": "https://github.com/ZacharyGeurts/memes",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "7555aca548836588bd7ec7864738374dd6e3c63559890fcf7c7f254bc7746d9f",
-      "hash": "35d8e07370954bb7950e728eb3a04e307adb4fd1de296f816106b7ea6402318d"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/retrotool:not_redirect_hub:2026-07-06T00:42:39Z",
-      "at": "2026-07-06T00:42:39Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/retrotool",
-      "from": "https://github.com/ZacharyGeurts/retrotool",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "35d8e07370954bb7950e728eb3a04e307adb4fd1de296f816106b7ea6402318d",
-      "hash": "c577a2a3d41a1e4007f0c97757ed24487a053f73409b9bcb160696443d87a183"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-06T00:42:39Z",
-      "at": "2026-07-06T00:42:39Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:18:21Z",
+      "at": "2026-07-10T09:18:21Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "field-github-planet-sweep",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -1165,34 +915,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "c577a2a3d41a1e4007f0c97757ed24487a053f73409b9bcb160696443d87a183",
-      "hash": "da08c08d35f763978f71bd9693bc02c5a5e8beb9c3e5136a870c0ea489dc9c96"
+      "prev_hash": "8e993b47e00cc8a37cfa940ab3c0a28d9e14963c6ceea6368dfff62080d7f4ad",
+      "hash": "cac4904524ce12b23c3996b403d14e0a7f82875e020c48b7ec482681e19523fb"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T03:55:12Z",
-      "at": "2026-07-06T03:55:12Z",
-      "layer": "pages",
-      "kind": "repo_fired",
-      "entity_id": "ZacharyGeurts/field",
-      "from": "https://zacharygeurts.github.io/field",
-      "to": "http://127.0.0.1:9477/field",
-      "witness": "fire-field-repo",
-      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
-      "meta": {},
-      "prev_hash": "4f23e16222354a7c2e891ebff9d28bdfb7d30f4925c0b0a2c29cbec77f5a52b1",
-      "hash": "bc661b3fe1b9bcdc8fecdd8e43d5df80901ed3b485cfb55c565c431c64e6747f"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-06T03:55:13Z",
-      "at": "2026-07-06T03:55:13Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:18:29Z",
+      "at": "2026-07-10T09:18:29Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "field-github-planet-sweep",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -1202,139 +937,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "bc661b3fe1b9bcdc8fecdd8e43d5df80901ed3b485cfb55c565c431c64e6747f",
-      "hash": "e043561e620dc16a219259260dcf56f2516c1a96ae410a174b243d1377517a8a"
+      "prev_hash": "cac4904524ce12b23c3996b403d14e0a7f82875e020c48b7ec482681e19523fb",
+      "hash": "fc5725a9b023e2e0ce038a38ea31c3d00025faebf321e6a237f3f6a7fd897acd"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/AmmoOS:not_redirect_hub:2026-07-06T03:55:21Z",
-      "at": "2026-07-06T03:55:21Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/AmmoOS",
-      "from": "https://zacharygeurts.github.io/AmmoOS",
-      "to": "https://zacharygeurts.github.io/AmmoOS/index.html",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "e043561e620dc16a219259260dcf56f2516c1a96ae410a174b243d1377517a8a",
-      "hash": "39a23836f41ad2de6e880469ce2e91c186719839c63c4492b1149edeb6fa5641"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/NEXUS-Shield:pages_missing:2026-07-06T03:55:21Z",
-      "at": "2026-07-06T03:55:21Z",
-      "layer": "pages",
-      "kind": "pages_missing",
-      "entity_id": "ZacharyGeurts/NEXUS-Shield",
-      "from": "https://zacharygeurts.github.io/NEXUS-Shield",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — pages_missing",
-      "meta": {},
-      "prev_hash": "39a23836f41ad2de6e880469ce2e91c186719839c63c4492b1149edeb6fa5641",
-      "hash": "a1f7dfe56816dd6adb12b08ce4bcdafc487077ba43bfd86677931e856c729921"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/Poop:not_redirect_hub:2026-07-06T03:55:21Z",
-      "at": "2026-07-06T03:55:21Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/Poop",
-      "from": "https://github.com/ZacharyGeurts/Poop",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "a1f7dfe56816dd6adb12b08ce4bcdafc487077ba43bfd86677931e856c729921",
-      "hash": "dcfc7955dc8b0520b0def4f9a5c3e7e6e506240b7c1357be758c3efb2c36e883"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/VSYNC-Locker:pages_missing:2026-07-06T03:55:22Z",
-      "at": "2026-07-06T03:55:22Z",
-      "layer": "pages",
-      "kind": "pages_missing",
-      "entity_id": "ZacharyGeurts/VSYNC-Locker",
-      "from": "https://zacharygeurts.github.io/VSYNC-Locker",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — pages_missing",
-      "meta": {},
-      "prev_hash": "dcfc7955dc8b0520b0def4f9a5c3e7e6e506240b7c1357be758c3efb2c36e883",
-      "hash": "d5b4c9cc311379da65c6deadbd980bdf2501a53a1848481ccb0d302f29fbdd2c"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/ZacharyGeurts:not_redirect_hub:2026-07-06T03:55:22Z",
-      "at": "2026-07-06T03:55:22Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/ZacharyGeurts",
-      "from": "https://zacharygeurts.github.io/ZacharyGeurts",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "d5b4c9cc311379da65c6deadbd980bdf2501a53a1848481ccb0d302f29fbdd2c",
-      "hash": "fa88c15214afef3e1adf596ef2a7d92ab23b77240828a8fe3dffe5cded44126d"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T03:55:22Z",
-      "at": "2026-07-06T03:55:22Z",
-      "layer": "pages",
-      "kind": "repo_fired",
-      "entity_id": "ZacharyGeurts/field",
-      "from": "https://zacharygeurts.github.io/field",
-      "to": "http://127.0.0.1:9477/field",
-      "witness": "fire-field-repo",
-      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
-      "meta": {},
-      "prev_hash": "fa88c15214afef3e1adf596ef2a7d92ab23b77240828a8fe3dffe5cded44126d",
-      "hash": "340c2e344a3198a96b765c2a1731aa7900ec30b303f559a25eafdd064ab20c82"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/memes:not_redirect_hub:2026-07-06T03:55:22Z",
-      "at": "2026-07-06T03:55:22Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/memes",
-      "from": "https://github.com/ZacharyGeurts/memes",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "340c2e344a3198a96b765c2a1731aa7900ec30b303f559a25eafdd064ab20c82",
-      "hash": "3f80849d6365816ac9bfc5ef14f62ae1a47f679a37b7ee483d5762af02281864"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/retrotool:not_redirect_hub:2026-07-06T03:55:22Z",
-      "at": "2026-07-06T03:55:22Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/retrotool",
-      "from": "https://github.com/ZacharyGeurts/retrotool",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "3f80849d6365816ac9bfc5ef14f62ae1a47f679a37b7ee483d5762af02281864",
-      "hash": "d4ae85e63b2c07373227fc3c9544385af8ae54c0bbd5de16f08f0b5f50e36b2a"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-06T03:55:23Z",
-      "at": "2026-07-06T03:55:23Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:18:37Z",
+      "at": "2026-07-10T09:18:37Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "field-github-planet-sweep",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -1344,34 +959,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "d4ae85e63b2c07373227fc3c9544385af8ae54c0bbd5de16f08f0b5f50e36b2a",
-      "hash": "677200a0c40756dd89b1e03655c8124db96a6ff7c4d98ac19c0c19cdeacc3dee"
+      "prev_hash": "fc5725a9b023e2e0ce038a38ea31c3d00025faebf321e6a237f3f6a7fd897acd",
+      "hash": "f3036eed9111c0cad362cd28bcefbd6d123935aa6ef5bb6c88cb071d2fa8fb09"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T03:56:04Z",
-      "at": "2026-07-06T03:56:04Z",
-      "layer": "pages",
-      "kind": "repo_fired",
-      "entity_id": "ZacharyGeurts/field",
-      "from": "https://zacharygeurts.github.io/field",
-      "to": "http://127.0.0.1:9477/field",
-      "witness": "fire-field-repo",
-      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
-      "meta": {},
-      "prev_hash": "34dcc4020a5f82c772a001ef469abbd0daa7f1fe24741ba2c31176bb32cdc9ec",
-      "hash": "df3ccf2f91dfad8a1985492cf9af74e8001ea019ab63120a895db6104e998c89"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-06T03:56:04Z",
-      "at": "2026-07-06T03:56:04Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:18:46Z",
+      "at": "2026-07-10T09:18:46Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "field-github-planet-sweep",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -1381,139 +981,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "df3ccf2f91dfad8a1985492cf9af74e8001ea019ab63120a895db6104e998c89",
-      "hash": "102ec76aa9fa06126c93219d472868308bdec924613258f7d1fda5a8d34ff3ab"
+      "prev_hash": "f3036eed9111c0cad362cd28bcefbd6d123935aa6ef5bb6c88cb071d2fa8fb09",
+      "hash": "27ee6392e913e8cb8905a442130aa61aa7b51f7494a0cce08a7ae771bcf8dc2b"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/AmmoOS:not_redirect_hub:2026-07-06T04:26:57Z",
-      "at": "2026-07-06T04:26:57Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/AmmoOS",
-      "from": "https://zacharygeurts.github.io/AmmoOS",
-      "to": "https://zacharygeurts.github.io/AmmoOS/index.html",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "102ec76aa9fa06126c93219d472868308bdec924613258f7d1fda5a8d34ff3ab",
-      "hash": "38a846fe035d2a3b32e860559b6689784869c66f9dc07f9976cfe796134be441"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/NEXUS-Shield:pages_missing:2026-07-06T04:26:57Z",
-      "at": "2026-07-06T04:26:57Z",
-      "layer": "pages",
-      "kind": "pages_missing",
-      "entity_id": "ZacharyGeurts/NEXUS-Shield",
-      "from": "https://zacharygeurts.github.io/NEXUS-Shield",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — pages_missing",
-      "meta": {},
-      "prev_hash": "38a846fe035d2a3b32e860559b6689784869c66f9dc07f9976cfe796134be441",
-      "hash": "22bebba04a294db09ecadf6db11c3d6950e0ad8524514f6aac4af1bc5d852905"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/Poop:not_redirect_hub:2026-07-06T04:26:57Z",
-      "at": "2026-07-06T04:26:57Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/Poop",
-      "from": "https://github.com/ZacharyGeurts/Poop",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "22bebba04a294db09ecadf6db11c3d6950e0ad8524514f6aac4af1bc5d852905",
-      "hash": "7ab50e133bd278d4d6edebf770eeae418a1571f3d3a7cf0fa928457da1d4207a"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/VSYNC-Locker:pages_missing:2026-07-06T04:26:57Z",
-      "at": "2026-07-06T04:26:57Z",
-      "layer": "pages",
-      "kind": "pages_missing",
-      "entity_id": "ZacharyGeurts/VSYNC-Locker",
-      "from": "https://zacharygeurts.github.io/VSYNC-Locker",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — pages_missing",
-      "meta": {},
-      "prev_hash": "7ab50e133bd278d4d6edebf770eeae418a1571f3d3a7cf0fa928457da1d4207a",
-      "hash": "e4ffd9cdba352113602be1639e563892b058089f6b7fa47d5ba1478d30b3cc40"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/ZacharyGeurts:not_redirect_hub:2026-07-06T04:26:57Z",
-      "at": "2026-07-06T04:26:57Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/ZacharyGeurts",
-      "from": "https://zacharygeurts.github.io/ZacharyGeurts",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "e4ffd9cdba352113602be1639e563892b058089f6b7fa47d5ba1478d30b3cc40",
-      "hash": "1c22fcd576c88be36881f0494ccf5f9513468f0fc7c26e36d3bc84aefa89d3ea"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T04:26:57Z",
-      "at": "2026-07-06T04:26:57Z",
-      "layer": "pages",
-      "kind": "repo_fired",
-      "entity_id": "ZacharyGeurts/field",
-      "from": "https://zacharygeurts.github.io/field",
-      "to": "http://127.0.0.1:9477/field",
-      "witness": "fire-field-repo",
-      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
-      "meta": {},
-      "prev_hash": "1c22fcd576c88be36881f0494ccf5f9513468f0fc7c26e36d3bc84aefa89d3ea",
-      "hash": "7c16a39d941eb45bbfd0aa040cfdbf3dbe92512bb202aa75b80e9df46222aae2"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/memes:not_redirect_hub:2026-07-06T04:26:57Z",
-      "at": "2026-07-06T04:26:57Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/memes",
-      "from": "https://github.com/ZacharyGeurts/memes",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "7c16a39d941eb45bbfd0aa040cfdbf3dbe92512bb202aa75b80e9df46222aae2",
-      "hash": "ee318aa6b803d03d7546a4554d6229034fe7a87203d5b93bffeafd761485a066"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/retrotool:not_redirect_hub:2026-07-06T04:26:57Z",
-      "at": "2026-07-06T04:26:57Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/retrotool",
-      "from": "https://github.com/ZacharyGeurts/retrotool",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "ee318aa6b803d03d7546a4554d6229034fe7a87203d5b93bffeafd761485a066",
-      "hash": "34b76077e6dc979d2aa8bcd3cf2aafc2e275e83e1bc3ee09ddb237a0c361c360"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-06T04:26:58Z",
-      "at": "2026-07-06T04:26:58Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:18:54Z",
+      "at": "2026-07-10T09:18:54Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "field-github-planet-sweep",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -1523,139 +1003,19 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "34b76077e6dc979d2aa8bcd3cf2aafc2e275e83e1bc3ee09ddb237a0c361c360",
-      "hash": "3d00fb1c168c8a14f5a7afd2d063da40aa41d695335ea78301fe6b24ce8b14a8"
+      "prev_hash": "27ee6392e913e8cb8905a442130aa61aa7b51f7494a0cce08a7ae771bcf8dc2b",
+      "hash": "96b9e32fac3264fc3d80f31bb71a12829764ba15357c50cc579f35d72c071951"
     },
     {
       "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/AmmoOS:not_redirect_hub:2026-07-06T04:27:03Z",
-      "at": "2026-07-06T04:27:03Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/AmmoOS",
-      "from": "https://zacharygeurts.github.io/AmmoOS",
-      "to": "https://zacharygeurts.github.io/AmmoOS/index.html",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "3d00fb1c168c8a14f5a7afd2d063da40aa41d695335ea78301fe6b24ce8b14a8",
-      "hash": "0b320fa0323c2723c30880337057d73f1e345ab65ebf9e820ab70f317f3fab49"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/NEXUS-Shield:pages_missing:2026-07-06T04:27:03Z",
-      "at": "2026-07-06T04:27:03Z",
-      "layer": "pages",
-      "kind": "pages_missing",
-      "entity_id": "ZacharyGeurts/NEXUS-Shield",
-      "from": "https://zacharygeurts.github.io/NEXUS-Shield",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — pages_missing",
-      "meta": {},
-      "prev_hash": "0b320fa0323c2723c30880337057d73f1e345ab65ebf9e820ab70f317f3fab49",
-      "hash": "5852e91071d10aa069d3c3a9f845466ab9775c663511e1b1eb2cb27411e5f49d"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/Poop:not_redirect_hub:2026-07-06T04:27:03Z",
-      "at": "2026-07-06T04:27:03Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/Poop",
-      "from": "https://github.com/ZacharyGeurts/Poop",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "5852e91071d10aa069d3c3a9f845466ab9775c663511e1b1eb2cb27411e5f49d",
-      "hash": "bd9be48a48068882df969066b70da24046bc29cb2b72e7ed20a858384fba846d"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/VSYNC-Locker:pages_missing:2026-07-06T04:27:03Z",
-      "at": "2026-07-06T04:27:03Z",
-      "layer": "pages",
-      "kind": "pages_missing",
-      "entity_id": "ZacharyGeurts/VSYNC-Locker",
-      "from": "https://zacharygeurts.github.io/VSYNC-Locker",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — pages_missing",
-      "meta": {},
-      "prev_hash": "bd9be48a48068882df969066b70da24046bc29cb2b72e7ed20a858384fba846d",
-      "hash": "dcc8a01c253180bcba5de074f1fc17c62c266e6dbc9535333fcc8bd5140ce2b9"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/ZacharyGeurts:not_redirect_hub:2026-07-06T04:27:03Z",
-      "at": "2026-07-06T04:27:03Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/ZacharyGeurts",
-      "from": "https://zacharygeurts.github.io/ZacharyGeurts",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "dcc8a01c253180bcba5de074f1fc17c62c266e6dbc9535333fcc8bd5140ce2b9",
-      "hash": "b6882cbcc859d6ae355475dbd71796f7e50a6f84ce227170b1ee34246567fff0"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T04:27:03Z",
-      "at": "2026-07-06T04:27:03Z",
-      "layer": "pages",
-      "kind": "repo_fired",
-      "entity_id": "ZacharyGeurts/field",
-      "from": "https://zacharygeurts.github.io/field",
-      "to": "http://127.0.0.1:9477/field",
-      "witness": "fire-field-repo",
-      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
-      "meta": {},
-      "prev_hash": "b6882cbcc859d6ae355475dbd71796f7e50a6f84ce227170b1ee34246567fff0",
-      "hash": "22c54414bb491951b1d86099963941964780995bc19cd6e0482b6261926fb449"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/memes:not_redirect_hub:2026-07-06T04:27:03Z",
-      "at": "2026-07-06T04:27:03Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/memes",
-      "from": "https://github.com/ZacharyGeurts/memes",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "22c54414bb491951b1d86099963941964780995bc19cd6e0482b6261926fb449",
-      "hash": "2b8a8f875b006dda66546fe4c0d45fb01f5b6a08a936cedb18f0f215ea69f262"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "pages:ZacharyGeurts/retrotool:not_redirect_hub:2026-07-06T04:27:03Z",
-      "at": "2026-07-06T04:27:03Z",
-      "layer": "pages",
-      "kind": "not_redirect_hub",
-      "entity_id": "ZacharyGeurts/retrotool",
-      "from": "https://github.com/ZacharyGeurts/retrotool",
-      "to": "https://zacharygeurts.github.io/AmmoOS",
-      "witness": "field-github-planet-sweep",
-      "reason": "planet sweep stale fix — not_redirect_hub",
-      "meta": {},
-      "prev_hash": "2b8a8f875b006dda66546fe4c0d45fb01f5b6a08a936cedb18f0f215ea69f262",
-      "hash": "0d86aae2c9f786fec76450bf1a360f3baa67cb41a42935cb034ef9569f86570c"
-    },
-    {
-      "schema": "field-endpoint-movement/v1",
-      "id": "api:pages_registry:propagate:2026-07-06T04:27:03Z",
-      "at": "2026-07-06T04:27:03Z",
+      "id": "api:pages_registry:propagate:2026-07-10T09:19:02Z",
+      "at": "2026-07-10T09:19:02Z",
       "layer": "api",
       "kind": "api_wire",
       "entity_id": "pages_registry",
       "from": null,
       "to": "/Hostess7/api/field-endpoint-registry.json",
-      "witness": "field-github-planet-sweep",
+      "witness": "field-dynamic-routes",
       "reason": "instant Pages registry propagation",
       "meta": {
         "files": [
@@ -1665,22 +1025,831 @@
           "field-endpoint-registry-ledger.json"
         ]
       },
-      "prev_hash": "0d86aae2c9f786fec76450bf1a360f3baa67cb41a42935cb034ef9569f86570c",
-      "hash": "3687dbe18820bc515b113d5276eadb1a3ecbe84a10ad11da96e19bea7decb14e"
+      "prev_hash": "96b9e32fac3264fc3d80f31bb71a12829764ba15357c50cc579f35d72c071951",
+      "hash": "a37c81b6ce4873fb6d1414a0533b21b694cecfc6bbbe21400fd7f43a6c76cdeb"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:19:10Z",
+      "at": "2026-07-10T09:19:10Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "a37c81b6ce4873fb6d1414a0533b21b694cecfc6bbbe21400fd7f43a6c76cdeb",
+      "hash": "9b89a7a422c9c0c39586257fa310b80c20edfa8e1c4d79f1bf5b2427e95ea615"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:19:18Z",
+      "at": "2026-07-10T09:19:18Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "9b89a7a422c9c0c39586257fa310b80c20edfa8e1c4d79f1bf5b2427e95ea615",
+      "hash": "bc03b25c3461c35a5cb6511b82378a1bd819742cb6d793d626ed7052c8b4e604"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:19:27Z",
+      "at": "2026-07-10T09:19:27Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "bc03b25c3461c35a5cb6511b82378a1bd819742cb6d793d626ed7052c8b4e604",
+      "hash": "3c25a3d11813dec3659312e007d810d575fe559bf98fff6aa7e58f1fcc17510c"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:19:35Z",
+      "at": "2026-07-10T09:19:35Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "3c25a3d11813dec3659312e007d810d575fe559bf98fff6aa7e58f1fcc17510c",
+      "hash": "65d28942c9333e69bd61b39a88b478e8c16150a7fa34ca65f478bc3be861a46d"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:19:43Z",
+      "at": "2026-07-10T09:19:43Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "65d28942c9333e69bd61b39a88b478e8c16150a7fa34ca65f478bc3be861a46d",
+      "hash": "e328f63ff93742dedef3c14f4ab676b06b2858ae985bba5ae96f428d341c23aa"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:19:51Z",
+      "at": "2026-07-10T09:19:51Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "e328f63ff93742dedef3c14f4ab676b06b2858ae985bba5ae96f428d341c23aa",
+      "hash": "90e93f404b33fa3c9cd79eea5b6e38c0aeebedbca25cfc2dadaa46f7c5d333e4"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:20:00Z",
+      "at": "2026-07-10T09:20:00Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "90e93f404b33fa3c9cd79eea5b6e38c0aeebedbca25cfc2dadaa46f7c5d333e4",
+      "hash": "95762c967b96e5196afb300c23d81e8371ba7a5f373dce02d26a262cabd0fbaf"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:20:08Z",
+      "at": "2026-07-10T09:20:08Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "95762c967b96e5196afb300c23d81e8371ba7a5f373dce02d26a262cabd0fbaf",
+      "hash": "04fa254dc57050276389f28fe13d1d3a3bedc11b1c659113498cf004ac46072e"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:20:16Z",
+      "at": "2026-07-10T09:20:16Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "04fa254dc57050276389f28fe13d1d3a3bedc11b1c659113498cf004ac46072e",
+      "hash": "e9119080f491a4ba5ed416090ba67527d4866774e02bac6a0a6c29d61329960f"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:20:22Z",
+      "at": "2026-07-10T09:20:22Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "e9119080f491a4ba5ed416090ba67527d4866774e02bac6a0a6c29d61329960f",
+      "hash": "f1e1bc5c1ad9c81fe3d464e9dcd19655da74c800bdb77a71b003c2101731b784"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:20:24Z",
+      "at": "2026-07-10T09:20:24Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "f1e1bc5c1ad9c81fe3d464e9dcd19655da74c800bdb77a71b003c2101731b784",
+      "hash": "6600b2db6592f880c2db56f6f178f6820859b0e9914d2a1b7cc507754af71876"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:20:34Z",
+      "at": "2026-07-10T09:20:34Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "6600b2db6592f880c2db56f6f178f6820859b0e9914d2a1b7cc507754af71876",
+      "hash": "f49b882d62c3c25fa09ec4aefeecf0e50abf5f8a1efba30ff2ca36593bdd1da1"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:20:42Z",
+      "at": "2026-07-10T09:20:42Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "f49b882d62c3c25fa09ec4aefeecf0e50abf5f8a1efba30ff2ca36593bdd1da1",
+      "hash": "fdca0b53ad3924998fe60aee7b3ce80ec0d9ff732f8892019d3748ddf829ac5e"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:20:51Z",
+      "at": "2026-07-10T09:20:51Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "fdca0b53ad3924998fe60aee7b3ce80ec0d9ff732f8892019d3748ddf829ac5e",
+      "hash": "78276959e7249a2e09ee2f871315cdd855de97cbbd4888a868b97a5e770afe64"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:20:59Z",
+      "at": "2026-07-10T09:20:59Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "78276959e7249a2e09ee2f871315cdd855de97cbbd4888a868b97a5e770afe64",
+      "hash": "765846b61789d616921305bd7259ff814df3aec588813a4d671e491394fbe521"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:21:07Z",
+      "at": "2026-07-10T09:21:07Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "765846b61789d616921305bd7259ff814df3aec588813a4d671e491394fbe521",
+      "hash": "cddfc933cb2f0884987cb44584f6f28082e9c6c726ee517245eb59405ddff1a3"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:21:17Z",
+      "at": "2026-07-10T09:21:17Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "cddfc933cb2f0884987cb44584f6f28082e9c6c726ee517245eb59405ddff1a3",
+      "hash": "cb2b2a5af2610dfc076569602e7345877b9c6b4d3c0f6e092325a5924ceef695"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:21:25Z",
+      "at": "2026-07-10T09:21:25Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "cb2b2a5af2610dfc076569602e7345877b9c6b4d3c0f6e092325a5924ceef695",
+      "hash": "bb7ead963d96ad0d1515c9a84e42156a14a63e075a28334741e41dce6b6e0a84"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:21:33Z",
+      "at": "2026-07-10T09:21:33Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "bb7ead963d96ad0d1515c9a84e42156a14a63e075a28334741e41dce6b6e0a84",
+      "hash": "5471200ab2730c0b0e582678a40d91b438070545dbf36402d6865627d226a048"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:21:42Z",
+      "at": "2026-07-10T09:21:42Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "5471200ab2730c0b0e582678a40d91b438070545dbf36402d6865627d226a048",
+      "hash": "5b3aafd0ccd8549f105186acc947f27b457dd5f3cb8abdba8f1259baf62cc7e1"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:21:50Z",
+      "at": "2026-07-10T09:21:50Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "5b3aafd0ccd8549f105186acc947f27b457dd5f3cb8abdba8f1259baf62cc7e1",
+      "hash": "ae3b1f6b0688c4a4f41f455672503ab9ab74dae4e4d601c4fdd59ea91d19aa76"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:22:01Z",
+      "at": "2026-07-10T09:22:01Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "ae3b1f6b0688c4a4f41f455672503ab9ab74dae4e4d601c4fdd59ea91d19aa76",
+      "hash": "030446323ace3e89b529174b75e10af825e0f4a4b6519f2607a462d3f68e76e4"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:22:09Z",
+      "at": "2026-07-10T09:22:09Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "030446323ace3e89b529174b75e10af825e0f4a4b6519f2607a462d3f68e76e4",
+      "hash": "bce44d96a252f6fba87281233dc3958223bef52d5319e9ee22d3e291a47338e6"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:22:17Z",
+      "at": "2026-07-10T09:22:17Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "bce44d96a252f6fba87281233dc3958223bef52d5319e9ee22d3e291a47338e6",
+      "hash": "6ac5fe6ac405305a1e80194488de7de944966accbabb57197ea5879590b81e7a"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:22:26Z",
+      "at": "2026-07-10T09:22:26Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "6ac5fe6ac405305a1e80194488de7de944966accbabb57197ea5879590b81e7a",
+      "hash": "83db99ad63501fa5e235d623b3f5dd410adc09d95d4d514c5480963ed014a6c3"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:22:34Z",
+      "at": "2026-07-10T09:22:34Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "83db99ad63501fa5e235d623b3f5dd410adc09d95d4d514c5480963ed014a6c3",
+      "hash": "d61bf058e0a9ca0b5b951240a130d62d25665461f16cfc1f45e37d8188fdd8a5"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:22:45Z",
+      "at": "2026-07-10T09:22:45Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "d61bf058e0a9ca0b5b951240a130d62d25665461f16cfc1f45e37d8188fdd8a5",
+      "hash": "22390ea25244ec9916d4cb06bc41bf4d02abc9d120dc5db28e48c77f9eea18e5"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:22:53Z",
+      "at": "2026-07-10T09:22:53Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "22390ea25244ec9916d4cb06bc41bf4d02abc9d120dc5db28e48c77f9eea18e5",
+      "hash": "bf9ed6edcb9140c152a0e71591be71fd74e6423ebb48cb906fee88ca0f9d8789"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:23:01Z",
+      "at": "2026-07-10T09:23:01Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "bf9ed6edcb9140c152a0e71591be71fd74e6423ebb48cb906fee88ca0f9d8789",
+      "hash": "77b062c8b2566d1383adc27be3312eeabf87f8c15a300439a567494c3f349a54"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:23:10Z",
+      "at": "2026-07-10T09:23:10Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "77b062c8b2566d1383adc27be3312eeabf87f8c15a300439a567494c3f349a54",
+      "hash": "a8277dff30869419a1507e02542875070a37a6790b43c2ed8291ba5c0d9d919d"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:23:18Z",
+      "at": "2026-07-10T09:23:18Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "a8277dff30869419a1507e02542875070a37a6790b43c2ed8291ba5c0d9d919d",
+      "hash": "3233e27a6def556e60a098f8ded4d798279ba4c08d1727623160ab872464395f"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:23:26Z",
+      "at": "2026-07-10T09:23:26Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "3233e27a6def556e60a098f8ded4d798279ba4c08d1727623160ab872464395f",
+      "hash": "9c0c5e1dc3c30fd6fe5712533ac1d9dbaca8260f83b001c9b7bd543ac3672bf1"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:23:34Z",
+      "at": "2026-07-10T09:23:34Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "9c0c5e1dc3c30fd6fe5712533ac1d9dbaca8260f83b001c9b7bd543ac3672bf1",
+      "hash": "139c9903bd27f45b9ff9a2b9044019ce23b0163127ddb47b8feb76c1f7a6357a"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:23:43Z",
+      "at": "2026-07-10T09:23:43Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "139c9903bd27f45b9ff9a2b9044019ce23b0163127ddb47b8feb76c1f7a6357a",
+      "hash": "05f8031e091960916134ceba67889e5b6861dc38381c9f19682dd352ae788b29"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:23:51Z",
+      "at": "2026-07-10T09:23:51Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "05f8031e091960916134ceba67889e5b6861dc38381c9f19682dd352ae788b29",
+      "hash": "a232242d4a5a2ddd6d067b8b408de13ae8b5f869ba72f79acb6cf15e01ce6a62"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:23:59Z",
+      "at": "2026-07-10T09:23:59Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "a232242d4a5a2ddd6d067b8b408de13ae8b5f869ba72f79acb6cf15e01ce6a62",
+      "hash": "4377cbb15a42ff52976d3781602334a12d15d004327b6928bc77be530472c73b"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-10T09:24:07Z",
+      "at": "2026-07-10T09:24:07Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-dynamic-routes",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "4377cbb15a42ff52976d3781602334a12d15d004327b6928bc77be530472c73b",
+      "hash": "69853dfa4c8659c029268f36fd396a086b5b4161a36eb7d9da2542bada308b51"
     }
   ],
-  "public_surfaces": {
-    "api_loopback": "/api/field-endpoint-registry",
-    "api_pages": "/api/field-endpoint-registry.json",
-    "ledger_pages": "/api/field-endpoint-registry-ledger.json",
-    "routes_pages": "/api/field-endpoint-registry-routes.json",
-    "pages_alias": "/api/field-pages-movement"
-  },
+  "public_surfaces": {},
   "api": "/api/field-endpoint-registry",
   "pages": true,
   "lane": "pages-surfaces",
-  "exported": "2026-07-06T00:42:43Z",
+  "exported": "2026-07-06T04:41:53Z",
   "pages_base": "/Hostess7",
+  "public_path": "/home/default/Desktop/SG/NewLatest/data/field-endpoint-registry-public.json",
   "instant": true,
-  "propagated_at": "2026-07-06T04:27:03Z"
+  "propagated_at": "2026-07-11T19:54:41Z"
 }

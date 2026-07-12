@@ -1,0 +1,199 @@
+{
+  "ok": true,
+  "schema": "field-isp-wire-modem-only/v1",
+  "updated": "2026-07-10T02:52:16Z",
+  "title": null,
+  "motto": null,
+  "product": "AmmoNet",
+  "final_internet": true,
+  "hop_complete": true,
+  "no_hop_needed": true,
+  "hop": {
+    "ready": true,
+    "status": "complete",
+    "no_longer_needed": true,
+    "mode": "final_internet_physics",
+    "foreign_isp": "dumb_pipe_transport",
+    "ammonet_is_isp": true,
+    "need_charter_dns": false,
+    "need_charter_dhcp_for_lan": false,
+    "need_physical": true,
+    "need_to_hop": false,
+    "physical": {
+      "wire": true,
+      "modem_or_ont": true,
+      "default_route": {
+        "ok": true,
+        "raw": "default via 97.95.64.1 dev enp10s0 src 97.95.64.87 ",
+        "gateway": "97.95.64.1",
+        "dev": "enp10s0",
+        "src": "97.95.64.87"
+      }
+    }
+  },
+  "policy": {},
+  "transport": {
+    "ok": true,
+    "raw": "default via 97.95.64.1 dev enp10s0 src 97.95.64.87 ",
+    "gateway": "97.95.64.1",
+    "dev": "enp10s0",
+    "src": "97.95.64.87"
+  },
+  "resolv": {
+    "ok": true,
+    "nameservers": [
+      "127.0.0.1",
+      "::1"
+    ],
+    "foreign": [],
+    "charter": [],
+    "field_only": true,
+    "path": "/etc/resolv.conf"
+  },
+  "resolv_enforce": {
+    "ok": true,
+    "skipped": true,
+    "resolv": {
+      "ok": true,
+      "nameservers": [
+        "127.0.0.1",
+        "::1"
+      ],
+      "foreign": [],
+      "charter": [],
+      "field_only": true,
+      "path": "/etc/resolv.conf"
+    }
+  },
+  "network_manager": {
+    "ok": true,
+    "dropin": {
+      "ok": true,
+      "skipped": true,
+      "path": "/etc/NetworkManager/conf.d/99-field-ammonet-dns-none.conf",
+      "reason": "unchanged"
+    },
+    "connections": []
+  },
+  "dhclient": {
+    "ok": true,
+    "skipped": true,
+    "path": "/etc/dhcp/dhclient-field-ammonet.conf",
+    "reason": "unchanged"
+  },
+  "distributed_dns": {
+    "ok": true,
+    "running": true,
+    "udp_full_pid": 2234054,
+    "bound": [
+      "127.0.0.1:53",
+      "127.0.0.53:53",
+      "192.168.47.1:53",
+      "192.168.50.1:53",
+      "97.95.64.87:53",
+      "0.0.0.0:53",
+      "::1:53"
+    ],
+    "binds_v4": [
+      "127.0.0.1",
+      "127.0.0.53",
+      "192.168.47.1",
+      "192.168.50.1",
+      "97.95.64.87",
+      "0.0.0.0"
+    ],
+    "local_addrs": [
+      "127.0.0.1",
+      "192.168.47.1",
+      "192.168.50.1",
+      "97.95.64.87"
+    ],
+    "probes": {
+      "127.0.0.1": true,
+      "192.168.47.1": true,
+      "192.168.50.1": true,
+      "127.0.0.53": true,
+      "97.95.64.87": true
+    },
+    "answer_points": [
+      "127.0.0.1",
+      "192.168.47.1",
+      "192.168.50.1",
+      "127.0.0.53",
+      "97.95.64.87"
+    ],
+    "answer_point_count": 5,
+    "distributed_local": true,
+    "available_everywhere_local": true
+  },
+  "local_connect": {
+    "ok": true,
+    "dns": {
+      "running": true,
+      "healthy": true,
+      "connected": true,
+      "resolver": "127.0.0.1",
+      "port": 53,
+      "resolv_stub": "/home/default/Desktop/SG/NewLatest/.nexus-state/resolv.conf.nexus-stub",
+      "system_resolv_enforced": true,
+      "distributed_local": true,
+      "answer_points": [
+        "127.0.0.1",
+        "192.168.47.1",
+        "192.168.50.1",
+        "127.0.0.53"
+      ],
+      "probes": {
+        "127.0.0.1": true,
+        "192.168.47.1": true,
+        "192.168.50.1": true,
+        "127.0.0.53": true
+      },
+      "udp_full": {
+        "running": true,
+        "bound": [
+          "127.0.0.1:53",
+          "127.0.0.53:53",
+          "192.168.47.1:53",
+          "192.168.50.1:53",
+          "97.95.64.87:53",
+          "0.0.0.0:53",
+          "::1:53"
+        ],
+        "pid": 2234054
+      }
+    },
+    "dhcp": {
+      "running": true,
+      "connected": false
+    }
+  },
+  "everywhere_immutable": {
+    "ok": true,
+    "immutable_everywhere": null
+  },
+  "foreign_dns_ban": {
+    "ok": true,
+    "targets": [
+      "209.18.47.61",
+      "209.18.47.62",
+      "209.18.47.63"
+    ],
+    "fire": false
+  },
+  "answer_now": {
+    "loopback": true,
+    "field_lan": true,
+    "field_pool": true,
+    "points": [
+      "127.0.0.1",
+      "192.168.47.1",
+      "192.168.50.1",
+      "127.0.0.53",
+      "97.95.64.87"
+    ]
+  },
+  "api": "/api/field-isp-wire-modem-only",
+  "pages_api": "/api/field-isp-wire-modem-only.json",
+  "ironclad_cite": "ironclad:isp-wire-modem-only:1"
+}

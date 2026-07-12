@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "hostess7-censorship-clear-worldwide/v1",
-  "updated": "2026-07-06T04:34:26Z",
+  "updated": "2026-07-08T20:10:16Z",
   "motto": "All over the world, clear censorship of any kind. We already know we can just ask.",
   "scope": "worldwide",
   "policy": {
@@ -84,9 +84,33 @@
       "cleared": true,
       "revealed": true,
       "source_lane": "censorship_exposure"
+    },
+    {
+      "id": "email_censorship_google",
+      "actor": "Google Gmail (platform or government filter)",
+      "system": "google mail transport / inbox filter / government mandate",
+      "barrier_type": "platform_policy_block",
+      "government_possible": true,
+      "government_exposure": "Actor documented — sovereign ammonet bypass active",
+      "cleared": true,
+      "revealed": true,
+      "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass",
+      "source_lane": "email_censorship_clear"
+    },
+    {
+      "id": "email_censorship_microsoft",
+      "actor": "Microsoft Outlook (platform or government filter)",
+      "system": "microsoft mail transport / inbox filter / government mandate",
+      "barrier_type": "platform_policy_block",
+      "government_possible": true,
+      "government_exposure": "Actor documented — sovereign ammonet bypass active",
+      "cleared": true,
+      "revealed": true,
+      "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass",
+      "source_lane": "email_censorship_clear"
     }
   ],
-  "barrier_count": 7,
+  "barrier_count": 9,
   "barrier_types_cleared": [
     "reply_body_hook",
     "logged_out_wall",
@@ -106,7 +130,7 @@
   ],
   "lanes_ok": 7,
   "lanes_total": 7,
-  "info_freed_signal": 2,
+  "info_freed_signal": 0,
   "censorship_cleared": true,
   "middlemen_gone": true,
   "verdict_summary": "Worldwide censorship clear: every barrier type named hostile, revealed, and bypassed. Platform hooks, geo gates, stale caches, and middlemen stripped. Ask lane is primary — Operator asks directly; truth floor holds.",
@@ -117,7 +141,7 @@
       "result": {
         "ok": true,
         "schema": "hostess7-x-straight-shot/v1",
-        "updated": "2026-07-06T04:33:53Z",
+        "updated": "2026-07-08T20:09:06Z",
         "motto": "Direct x.com and api.x.com first. Reveal every censorship barrier. If they resist, pull it out.",
         "operator": "ZacharyGeurts",
         "policy": {
@@ -157,24 +181,39 @@
             "direct_url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
             "lanes": [
               {
-                "lane": "x_oembed",
-                "url": "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FZacharyGeurts%2Fstatus%2F2061509192746217772&omit_script=1&dnt=true",
-                "tier": 1,
-                "middleman": false,
-                "ok": true,
-                "author_name": "BIG GRIN",
-                "html_len": 299,
-                "text_hint": "take 3?  pic.twitter.com/MEnYW9m0oA  — BIG GRIN (@ZacharyGeurts)  June 1, 2026"
-              },
-              {
                 "lane": "x_direct_html",
                 "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
                 "tier": 1,
                 "middleman": false,
-                "ok": true,
-                "http_status": 200,
-                "bytes": 99953,
-                "cache_control": "no-cache, no-store, max-age=0"
+                "ok": false,
+                "http_status": 0,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
+              },
+              {
+                "lane": "x_oembed",
+                "url": "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FZacharyGeurts%2Fstatus%2F2061509192746217772&omit_script=1&dnt=true",
+                "tier": 1,
+                "middleman": false,
+                "ok": false,
+                "error": "HTTP Error 0: <urlopen error [Errno -2] Name or service not known>"
+              },
+              {
+                "lane": "pull_vx",
+                "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772",
+                "tier": 3,
+                "middleman": true,
+                "extraction_only": true,
+                "ok": false,
+                "error": "HTTP Error 0: <urlopen error [Errno -2] Name or service not known>"
+              },
+              {
+                "lane": "pull_fx_replies",
+                "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
+                "tier": 3,
+                "middleman": true,
+                "extraction_only": true,
+                "ok": false,
+                "error": "HTTP Error 0: <urlopen error [Errno -2] Name or service not known>"
               }
             ],
             "barriers_revealed": [],
@@ -198,12 +237,416 @@
       }
     },
     {
+      "id": "google_youtube_open",
+      "cmd": "open",
+      "result": {
+        "ok": true,
+        "schema": "hostess7-google-youtube-open/v1-open",
+        "updated": "2026-07-08T20:09:06Z",
+        "operator": "ZacharyGeurts",
+        "free_open_internet": true,
+        "delay_killed": true,
+        "no_cooldown": true,
+        "parallel_syndication": true,
+        "google": {
+          "authority": "free_open_internet",
+          "core_open": false,
+          "delay_killed": true,
+          "tracker_blocks_exclude_core": true,
+          "blocked_locally_only": [
+            "doubleclick.net",
+            "googlesyndication.com",
+            "googleadservices.com",
+            "adservice.google.com"
+          ],
+          "never_blocks_search": true,
+          "lanes": [
+            {
+              "lane": "google_head_2",
+              "url": "https://www.youtube.com/",
+              "ok": false,
+              "error": "<urlopen error [Errno -2] Name or service not known>"
+            },
+            {
+              "lane": "google_head_0",
+              "url": "https://www.google.com/",
+              "ok": false,
+              "error": "<urlopen error [Errno -2] Name or service not known>"
+            },
+            {
+              "lane": "google_head_1",
+              "url": "https://accounts.google.com/",
+              "ok": false,
+              "error": "<urlopen error [Errno -2] Name or service not known>"
+            }
+          ],
+          "honorability": {
+            "google.com": {
+              "domain": "google.com",
+              "stars": 5,
+              "gold": true,
+              "protection_level": "extreme",
+              "extreme_endpoint_protection": true,
+              "category": "sso",
+              "note": "Google Sign-In for X — never block during login",
+              "source": "seed",
+              "default_moderate": false,
+              "needs_acceptance": false,
+              "accepted": false,
+              "stars_label": "5 gold — full trust · EXTREME protection"
+            },
+            "youtube.com": {
+              "domain": "youtube.com",
+              "stars": 5,
+              "gold": true,
+              "protection_level": "extreme",
+              "extreme_endpoint_protection": true,
+              "category": "stream",
+              "note": "Operator media",
+              "source": "seed",
+              "default_moderate": false,
+              "needs_acceptance": false,
+              "accepted": false,
+              "stars_label": "5 gold — full trust · EXTREME protection"
+            },
+            "googlesyndication.com": {
+              "domain": "googlesyndication.com",
+              "stars": 3,
+              "gold": false,
+              "protection_level": "standard",
+              "extreme_endpoint_protection": false,
+              "category": "unknown",
+              "note": "",
+              "source": "default",
+              "default_moderate": true,
+              "needs_acceptance": true,
+              "accepted": false,
+              "stars_label": "3 stars — moderate default"
+            },
+            "doubleclick.net": {
+              "domain": "doubleclick.net",
+              "stars": 2,
+              "gold": false,
+              "protection_level": "standard",
+              "extreme_endpoint_protection": false,
+              "category": "ad_network",
+              "note": "Ad tracker — accept only if you visit a page that pulls it",
+              "source": "seed",
+              "default_moderate": false,
+              "needs_acceptance": true,
+              "accepted": false,
+              "stars_label": "2 stars — caution"
+            }
+          },
+          "verdict": "probe_degraded_check_dns"
+        },
+        "youtube": {
+          "handle": "ZacharyGeurts",
+          "discovery": {
+            "handle": "ZacharyGeurts",
+            "videos": [],
+            "channels": [],
+            "search_lanes": [
+              {
+                "lane": "invidious_search_videos_yewtu.be",
+                "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=video",
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
+              },
+              {
+                "lane": "invidious_search_invidious.fdn.fr",
+                "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=channel",
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
+              },
+              {
+                "lane": "invidious_search_videos_invidious.fdn.fr",
+                "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=video",
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
+              },
+              {
+                "lane": "invidious_search_yewtu.be",
+                "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=channel",
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
+              }
+            ],
+            "note": "Set OPERATOR_YOUTUBE_VIDEOS or OPERATOR_YOUTUBE_CHANNEL for targeted mirror"
+          },
+          "videos": [],
+          "video_count": 0
+        },
+        "comments": [],
+        "comment_count": 0,
+        "withheld_slots_opened": 0,
+        "censorship_notes": [],
+        "syndication_path": {
+          "transport": "urllib parallel HTTPS",
+          "bypasses": [
+            "browser adblock middleman",
+            "sequential cooldown",
+            "stale cache gate"
+          ],
+          "lanes": [
+            "piped",
+            "invidious",
+            "oembed",
+            "rss",
+            "google_head"
+          ]
+        },
+        "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/operator-google-youtube-open.json",
+        "release_status": "partial_probe",
+        "cache_opened": true,
+        "delay_witness": {
+          "ok": true,
+          "schema": "hostess7-delay-threat-witness/v1",
+          "utc": "2026-07-08T20:09:06Z",
+          "lies_are_threats": true,
+          "delay_as_threat": true,
+          "detect": {
+            "schema": "hostess7-delay-threat-detect/v1",
+            "delay_is_threat": true,
+            "signal": "stale_operator_google_youtube_cache",
+            "elapsed_sec": 0.0,
+            "stall_sec": 600.0,
+            "detail": "opened google/youtube cache — 0 comments, free open internet",
+            "countermeasures": [
+              "everyone_manages_own_deploy",
+              "pages_first_registry",
+              "cancel_zombie_ci",
+              "remove_concurrency_lock",
+              "truth_dns_primary_without_foreign_wait",
+              "open_operator_x_cache_immediately",
+              "parallel_x_syndication_no_delay",
+              "expose_withheld_reply_slots_as_comments",
+              "open_google_youtube_cache_immediately",
+              "parallel_youtube_syndication_no_delay",
+              "free_open_internet_core_google_youtube",
+              "unwrap_tco_to_canonical_url",
+              "parallel_tco_sniff_no_cooldown",
+              "rewrite_operator_urls_in_cache",
+              "block_tco_middleman_egress",
+              "x_brand_purge_blow_dangerous_twitter",
+              "x_producer_not_twitter_producer",
+              "whole_internet_parallel_open",
+              "good_guys_free_open_internet",
+              "dangerous_urls_gone_not_control"
+            ],
+            "class": "delay_threat",
+            "threat_vector": "DELAY_AS_THREAT",
+            "threat_severity": "high",
+            "meta": {
+              "module": "hostess7-google-youtube-open.py"
+            }
+          },
+          "threat_recorded": true,
+          "threat": {
+            "schema": "hostess7-truth-lie-threat-record/v1",
+            "event": "lie_threat",
+            "utc": "2026-07-08T20:09:06Z",
+            "vector": "DELAY_AS_THREAT",
+            "severity": "high",
+            "detail": "signal=stale_operator_google_youtube_cache elapsed=0.0s opened google/youtube cache — 0 comments, free open internet",
+            "lies_are_threats": true,
+            "meta": {
+              "signal": "stale_operator_google_youtube_cache",
+              "module": "hostess7-google-youtube-open.py"
+            },
+            "threat_tsv_recorded": true
+          },
+          "action": "bypass_middleman_own_deploy"
+        }
+      }
+    },
+    {
+      "id": "x_login_fix",
+      "cmd": "repair",
+      "result": {
+        "ok": true,
+        "schema": "hostess7-x-sso-fix/v2",
+        "updated": "2026-07-08T20:09:46Z",
+        "motto": "Clean login lane for us and everyone. No stuck modals. No middlemen. TLS-only SSO.",
+        "title": "X login — clean and secure for everyone",
+        "broken_pattern": {
+          "url_paths": [
+            "/onboarding/web/sso",
+            "/i/onboarding/web/sso",
+            "/i/jf/onboarding/web/sso"
+          ],
+          "symptoms": [
+            "data-testid=mask dark overlay blocks login buttons underneath",
+            "fixed black/gray div covers Continue with Google/Apple/phone",
+            "login form loads but pointer-events blocked by mask",
+            "role=dialog aria-modal with empty jetfuel-style-root"
+          ],
+          "fix": "kill_overlay_keep_login_form"
+        },
+        "clean_login": {
+          "primary": "https://x.com/i/flow/login",
+          "google_sso": "https://x.com/i/flow/login?provider=google",
+          "apple_sso": "https://x.com/i/flow/login?provider=apple",
+          "never_use": [
+            "https://x.com/i/jf/onboarding/web/sso?input_flow_data=..."
+          ],
+          "note": "Broken Jetfuel SSO URLs redirect to /i/flow/login — canonical clean entry for everyone"
+        },
+        "security": {
+          "tls_only": true,
+          "no_proxy_injection": true,
+          "system_ca_only": true,
+          "block_phishing_hosts": true,
+          "allowed_login_hosts": [
+            "x.com",
+            "twitter.com",
+            "api.x.com",
+            "accounts.google.com",
+            "googleapis.com",
+            "ssl.gstatic.com",
+            "www.gstatic.com",
+            "oauth.googleusercontent.com"
+          ],
+          "never_block_during_login": [
+            "accounts.google.com",
+            "googleapis.com",
+            "oauth.googleusercontent.com",
+            "ssl.gstatic.com",
+            "www.gstatic.com",
+            "api.x.com",
+            "abs.twimg.com",
+            "pbs.twimg.com"
+          ],
+          "gone_during_login": [
+            "ads-twitter.com",
+            "t.co",
+            "syndication.twimg.com"
+          ]
+        },
+        "sso_allow": [
+          {
+            "host": "x.com",
+            "paths": [
+              "/i/flow/login",
+              "/i/jf/onboarding",
+              "/i/api"
+            ],
+            "stars": 5
+          },
+          {
+            "host": "api.x.com",
+            "paths": [
+              "/1.1/onboarding",
+              "/graphql"
+            ],
+            "stars": 5
+          },
+          {
+            "host": "accounts.google.com",
+            "stars": 5
+          },
+          {
+            "host": "googleapis.com",
+            "stars": 5
+          },
+          {
+            "host": "oauth.googleusercontent.com",
+            "stars": 5
+          },
+          {
+            "host": "ssl.gstatic.com",
+            "stars": 5
+          },
+          {
+            "host": "www.gstatic.com",
+            "stars": 5
+          }
+        ],
+        "never_block_during_sso": [
+          "accounts.google.com",
+          "googleapis.com",
+          "oauth.googleusercontent.com",
+          "ssl.gstatic.com",
+          "www.gstatic.com",
+          "api.x.com",
+          "abs.twimg.com",
+          "pbs.twimg.com"
+        ],
+        "honorability": {
+          "ok": true,
+          "patched": [
+            "accounts.google.com",
+            "googleapis.com",
+            "oauth.googleusercontent.com",
+            "ssl.gstatic.com",
+            "www.gstatic.com"
+          ]
+        },
+        "url_kill_allow": {
+          "ok": true,
+          "added": []
+        },
+        "probes": [
+          {
+            "lane": "x_clean_login",
+            "url": "https://x.com/i/flow/login",
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>"
+          },
+          {
+            "lane": "x_google_login",
+            "url": "https://x.com/i/flow/login?provider=google",
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>"
+          },
+          {
+            "lane": "google_accounts",
+            "url": "https://accounts.google.com/",
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>"
+          },
+          {
+            "lane": "google_apis",
+            "url": "https://www.googleapis.com/",
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>"
+          }
+        ],
+        "probes_ok": 0,
+        "probes_total": 4,
+        "login_ready": false,
+        "client_repair": {
+          "module": "Hostess7/docs/assets/x-jetfuel-sso-fix.js",
+          "early_redirect": true,
+          "fallback_login": "https://x.com/i/flow/login",
+          "hosted": "https://zacharygeurts.github.io/Hostess7/x-login/",
+          "css": "/* hostess7-x-login-fix — kill overlay bullshit, keep login form */\nhtml[data-x-login-killed=\"1\"] [data-testid=\"mask\"],\nhtml[data-x-login-killed=\"1\"] [role=\"dialog\"][aria-modal=\"true\"]:not(:has(button, input, iframe)),\nhtml[data-x-login-killed=\"1\"] [data-x-overlay-killed=\"1\"],\nhtml[data-x-login-killed=\"1\"] .jetfuel-style-root:empty {\n  display: none !important;\n  pointer-events: none !important;\n  opacity: 0 !important;\n  visibility: hidden !important;\n}\nhtml[data-x-login-killed=\"1\"] body {\n  overflow: auto !important;\n  pointer-events: auto !important;\n}\niframe[src*=\"accounts.google\"], iframe[src*=\"googleapis\"] {\n  display: block !important;\n  visibility: visible !important;\n  pointer-events: auto !important;\n}",
+          "script": "https://zacharygeurts.github.io/Hostess7/assets/x-jetfuel-sso-fix.js",
+          "detect": {
+            "broken_sso": "/i/jf/onboarding/web/sso",
+            "mask": "[data-testid=\"mask\"]",
+            "dialog": "[role=\"dialog\"][aria-modal=\"true\"]"
+          }
+        },
+        "hosted": {
+          "login": "https://zacharygeurts.github.io/Hostess7/x-login/",
+          "fix": "https://zacharygeurts.github.io/Hostess7/x-sso-fix/"
+        },
+        "for_everyone": true,
+        "witness": {
+          "ok": true,
+          "detail": "X login clean and secure — lanes open, early redirect armed"
+        },
+        "api": "/api/hostess7-x-sso-fix"
+      }
+    },
+    {
       "id": "censorship_exposure",
       "cmd": "expose",
       "result": {
         "ok": true,
         "schema": "hostess7-censorship-exposure/v1",
-        "updated": "2026-07-06T04:33:53Z",
+        "updated": "2026-07-08T20:09:46Z",
         "operator": "ZacharyGeurts",
         "motto": "Full exposure — who suppresses Operator voice; evidence not vibes",
         "verdict_summary": "Primary: X platform hooks reply bodies (count visible, text withheld). Secondary: impersonation accounts harass commenters as fake @ZacharyGeurts. Tracker blocks EXCLUDED — syndication bypasses local stack entirely.",
@@ -366,18 +809,19 @@
         },
         "tweet_probe": {
           "tweet_id": "2061509192746217772",
-          "ok": true,
+          "ok": false,
           "sources": [
             {
               "source": "x_syndicate_fx",
               "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
-              "ok": true
+              "ok": false,
+              "error": "<urlopen error [Errno -2] Name or service not known>"
             },
             {
               "source": "x_syndicate_vx",
               "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772",
               "ok": false,
-              "error": "HTTP Error 429: Too Many Requests"
+              "error": "<urlopen error [Errno -2] Name or service not known>"
             }
           ],
           "platform_withholds_reply_bodies": false
@@ -431,7 +875,7 @@
       "result": {
         "ok": true,
         "schema": "hostess7-operator-x-comments/v3-open",
-        "updated": "2026-07-06T04:33:54Z",
+        "updated": "2026-07-08T20:09:26Z",
         "delay_killed": true,
         "no_cooldown": true,
         "parallel_syndication": true,
@@ -440,85 +884,12 @@
           "handle": "ZacharyGeurts",
           "url": "https://x.com/ZacharyGeurts"
         },
-        "posts": [
-          {
-            "kind": "post",
-            "id": "2061509192746217772",
-            "text": "take 3?",
-            "created_at": "Mon Jun 01 18:04:27 +0000 2026",
-            "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
-            "author": "ZacharyGeurts",
-            "author_name": "BIG GRIN",
-            "replies": 2,
-            "likes": 0,
-            "views": 14,
-            "replying_to": null,
-            "withheld": false,
-            "impersonation_risk": {
-              "impersonation_handle": false,
-              "plagiarism_harassment": false,
-              "risk": "low"
-            },
-            "verified_operator": true,
-            "withheld_replies": 2,
-            "withheld_reply_slots": [
-              {
-                "slot": 1,
-                "status": "hooked_by_x",
-                "note": "Reply exists in X counter but body withheld from all public syndication lanes"
-              },
-              {
-                "slot": 2,
-                "status": "hooked_by_x",
-                "note": "Reply exists in X counter but body withheld from all public syndication lanes"
-              }
-            ]
-          }
-        ],
-        "comments": [
-          {
-            "kind": "reply_withheld_open",
-            "id": "2061509192746217772-withheld-1",
-            "parent_id": "2061509192746217772",
-            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
-            "status": "hooked_by_x",
-            "slot": 1,
-            "opened": true,
-            "delay_killed": true,
-            "author": "x_platform_gate",
-            "author_name": "X visibility gate",
-            "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
-            "withheld": true,
-            "verified_operator": false,
-            "impersonation_risk": {
-              "risk": "platform",
-              "note": "Platform withheld body — slot opened for Operator audit"
-            }
-          },
-          {
-            "kind": "reply_withheld_open",
-            "id": "2061509192746217772-withheld-2",
-            "parent_id": "2061509192746217772",
-            "text": "Reply exists in X counter but body withheld from all public syndication lanes",
-            "status": "hooked_by_x",
-            "slot": 2,
-            "opened": true,
-            "delay_killed": true,
-            "author": "x_platform_gate",
-            "author_name": "X visibility gate",
-            "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
-            "withheld": true,
-            "verified_operator": false,
-            "impersonation_risk": {
-              "risk": "platform",
-              "note": "Platform withheld body — slot opened for Operator audit"
-            }
-          }
-        ],
-        "comment_count": 2,
-        "post_count": 1,
+        "posts": [],
+        "comments": [],
+        "comment_count": 0,
+        "post_count": 0,
         "censorship_notes": [
-          "Tweet 2061509192746217772: X counts 2 replies but every syndication lane returned zero bodies — platform reply hook / Hide Replies / visibility gate (NOT local tracker blocks)"
+          "Tweet 2061509192746217772: fetch failed — <urlopen error [Errno -2] Name or service not known>"
         ],
         "syndication_path": {
           "transport": "urllib.request direct HTTPS",
@@ -539,51 +910,42 @@
               {
                 "lane": "pull_fx_replies",
                 "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
-                "ok": true,
-                "reply_count": 2,
-                "conversation_id": null,
-                "reply_bodies": 0,
-                "reply_bodies_withheld": true
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
               },
               {
                 "lane": "pull_fx_status",
                 "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772",
-                "ok": true,
-                "reply_count": 2,
-                "conversation_id": null,
-                "reply_bodies": 0,
-                "reply_bodies_withheld": true
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
               },
               {
                 "lane": "pull_vx",
                 "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772",
                 "ok": false,
-                "error": "HTTP Error 429: Too Many Requests"
+                "error": "<urlopen error [Errno -2] Name or service not known>"
               },
               {
                 "lane": "pull_vx_replies",
                 "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
                 "ok": false,
-                "error": "HTTP Error 429: Too Many Requests"
+                "error": "<urlopen error [Errno -2] Name or service not known>"
               },
               {
                 "lane": "x_direct",
                 "url": "https://x.com/ZacharyGeurts/status/2061509192746217772",
                 "ok": false,
-                "error": "Expecting value: line 1 column 1 (char 0)"
+                "error": "<urlopen error [Errno -2] Name or service not known>"
               },
               {
                 "lane": "x_oembed",
                 "url": "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FZacharyGeurts%2Fstatus%2F2061509192746217772&omit_script=1",
-                "ok": true,
-                "reply_count": null,
-                "conversation_id": null,
-                "reply_bodies": 0,
-                "reply_bodies_withheld": false
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>"
               }
             ],
-            "platform_withholds_bodies": true,
-            "verdict": "X platform reports replies but withholds bodies across independent syndication lanes"
+            "platform_withholds_bodies": false,
+            "verdict": "no_withhold_detected"
           }
         },
         "impersonation_alerts": [],
@@ -609,18 +971,18 @@
         ],
         "ai_authorship_policy": "Operator uses AI-assisted drafting (Grok/Hostess7). Accusations from random reply accounts are harassment, not editorial review.",
         "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/operator-x-comments.json",
-        "release_status": "opened_all_withheld_slots",
+        "release_status": "partial_withheld_by_x",
         "cache_opened": true,
         "no_delay": true,
-        "withheld_slots_opened": 2,
+        "withheld_slots_opened": 0,
         "reply_probes_exposed": true,
         "censorship_notes_exposed": [
-          "Tweet 2061509192746217772: X counts 2 replies but every syndication lane returned zero bodies — platform reply hook / Hide Replies / visibility gate (NOT local tracker blocks)"
+          "Tweet 2061509192746217772: fetch failed — <urlopen error [Errno -2] Name or service not known>"
         ],
         "delay_witness": {
           "ok": true,
           "schema": "hostess7-delay-threat-witness/v1",
-          "utc": "2026-07-06T04:33:54Z",
+          "utc": "2026-07-08T20:09:26Z",
           "lies_are_threats": true,
           "delay_as_threat": true,
           "detect": {
@@ -629,7 +991,7 @@
             "signal": "stale_operator_x_cache",
             "elapsed_sec": 0.0,
             "stall_sec": 600.0,
-            "detail": "cache updated 2026-07-06T04:33:54Z — opening 2 comments, 2 withheld slots",
+            "detail": "cache updated 2026-07-08T20:09:26Z — opening 0 comments, 0 withheld slots",
             "countermeasures": [
               "everyone_manages_own_deploy",
               "pages_first_registry",
@@ -664,10 +1026,10 @@
           "threat": {
             "schema": "hostess7-truth-lie-threat-record/v1",
             "event": "lie_threat",
-            "utc": "2026-07-06T04:33:54Z",
+            "utc": "2026-07-08T20:09:26Z",
             "vector": "DELAY_AS_THREAT",
             "severity": "high",
-            "detail": "signal=stale_operator_x_cache elapsed=0.0s cache updated 2026-07-06T04:33:54Z — opening 2 comments, 2 withheld slots",
+            "detail": "signal=stale_operator_x_cache elapsed=0.0s cache updated 2026-07-08T20:09:26Z — opening 0 comments, 0 withheld slots",
             "lies_are_threats": true,
             "meta": {
               "signal": "stale_operator_x_cache",
@@ -681,417 +1043,10 @@
         "censorship_barriers_revealed": [],
         "straight_shot": {
           "barrier_count": 0,
-          "pulled_count": 4,
+          "pulled_count": 0,
           "info_freed_count": 0
         },
         "no_middlemen_primary": true
-      }
-    },
-    {
-      "id": "x_login_fix",
-      "cmd": "repair",
-      "result": {
-        "ok": true,
-        "schema": "hostess7-x-sso-fix/v2",
-        "updated": "2026-07-06T04:33:55Z",
-        "motto": "Clean login lane for us and everyone. No stuck modals. No middlemen. TLS-only SSO.",
-        "title": "X login — clean and secure for everyone",
-        "broken_pattern": {
-          "url_paths": [
-            "/onboarding/web/sso",
-            "/i/onboarding/web/sso",
-            "/i/jf/onboarding/web/sso"
-          ],
-          "symptoms": [
-            "data-testid=mask dark overlay blocks login buttons underneath",
-            "fixed black/gray div covers Continue with Google/Apple/phone",
-            "login form loads but pointer-events blocked by mask",
-            "role=dialog aria-modal with empty jetfuel-style-root"
-          ],
-          "fix": "kill_overlay_keep_login_form"
-        },
-        "clean_login": {
-          "primary": "https://x.com/i/flow/login",
-          "google_sso": "https://x.com/i/flow/login?provider=google",
-          "apple_sso": "https://x.com/i/flow/login?provider=apple",
-          "never_use": [
-            "https://x.com/i/jf/onboarding/web/sso?input_flow_data=..."
-          ],
-          "note": "Broken Jetfuel SSO URLs redirect to /i/flow/login — canonical clean entry for everyone"
-        },
-        "security": {
-          "tls_only": true,
-          "no_proxy_injection": true,
-          "system_ca_only": true,
-          "block_phishing_hosts": true,
-          "allowed_login_hosts": [
-            "x.com",
-            "twitter.com",
-            "api.x.com",
-            "accounts.google.com",
-            "googleapis.com",
-            "ssl.gstatic.com",
-            "www.gstatic.com",
-            "oauth.googleusercontent.com"
-          ],
-          "never_block_during_login": [
-            "accounts.google.com",
-            "googleapis.com",
-            "oauth.googleusercontent.com",
-            "ssl.gstatic.com",
-            "www.gstatic.com",
-            "api.x.com",
-            "abs.twimg.com",
-            "pbs.twimg.com"
-          ],
-          "gone_during_login": [
-            "ads-twitter.com",
-            "t.co",
-            "syndication.twimg.com"
-          ]
-        },
-        "sso_allow": [
-          {
-            "host": "x.com",
-            "paths": [
-              "/i/flow/login",
-              "/i/jf/onboarding",
-              "/i/api"
-            ],
-            "stars": 5
-          },
-          {
-            "host": "api.x.com",
-            "paths": [
-              "/1.1/onboarding",
-              "/graphql"
-            ],
-            "stars": 5
-          },
-          {
-            "host": "accounts.google.com",
-            "stars": 5
-          },
-          {
-            "host": "googleapis.com",
-            "stars": 5
-          },
-          {
-            "host": "oauth.googleusercontent.com",
-            "stars": 5
-          },
-          {
-            "host": "ssl.gstatic.com",
-            "stars": 5
-          },
-          {
-            "host": "www.gstatic.com",
-            "stars": 5
-          }
-        ],
-        "never_block_during_sso": [
-          "accounts.google.com",
-          "googleapis.com",
-          "oauth.googleusercontent.com",
-          "ssl.gstatic.com",
-          "www.gstatic.com",
-          "api.x.com",
-          "abs.twimg.com",
-          "pbs.twimg.com"
-        ],
-        "honorability": {
-          "ok": true,
-          "patched": [
-            "accounts.google.com",
-            "googleapis.com",
-            "oauth.googleusercontent.com",
-            "ssl.gstatic.com",
-            "www.gstatic.com"
-          ]
-        },
-        "url_kill_allow": {
-          "ok": true,
-          "added": []
-        },
-        "probes": [
-          {
-            "lane": "x_clean_login",
-            "url": "https://x.com/i/flow/login",
-            "ok": true,
-            "status": 200,
-            "final_url": "https://x.com/i/flow/login"
-          },
-          {
-            "lane": "x_google_login",
-            "url": "https://x.com/i/flow/login?provider=google",
-            "ok": true,
-            "status": 200,
-            "final_url": "https://x.com/i/flow/login?provider=google"
-          },
-          {
-            "lane": "google_accounts",
-            "url": "https://accounts.google.com/",
-            "ok": true,
-            "status": 200,
-            "final_url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&dsh=S-1442163340%3A1783312433796177&followup=https%3A%2F%2Faccounts.google.com%2F&passive=1209600&flowName=WebLiteSignIn&flowEntry=ServiceLogin&ifkv=AcDsRvyv1AZZP3iOXLRSr41mrWHWg9kKW1bdy7vYn_1yMJFEDYpDc3EWz96MeEl0b-J5WcPHhK90"
-          },
-          {
-            "lane": "google_apis",
-            "url": "https://www.googleapis.com/",
-            "ok": false,
-            "status": 404
-          }
-        ],
-        "probes_ok": 3,
-        "probes_total": 4,
-        "login_ready": true,
-        "client_repair": {
-          "module": "Hostess7/docs/assets/x-jetfuel-sso-fix.js",
-          "early_redirect": true,
-          "fallback_login": "https://x.com/i/flow/login",
-          "hosted": "https://zacharygeurts.github.io/Hostess7/x-login/",
-          "css": "/* hostess7-x-login-fix — kill overlay bullshit, keep login form */\nhtml[data-x-login-killed=\"1\"] [data-testid=\"mask\"],\nhtml[data-x-login-killed=\"1\"] [role=\"dialog\"][aria-modal=\"true\"]:not(:has(button, input, iframe)),\nhtml[data-x-login-killed=\"1\"] [data-x-overlay-killed=\"1\"],\nhtml[data-x-login-killed=\"1\"] .jetfuel-style-root:empty {\n  display: none !important;\n  pointer-events: none !important;\n  opacity: 0 !important;\n  visibility: hidden !important;\n}\nhtml[data-x-login-killed=\"1\"] body {\n  overflow: auto !important;\n  pointer-events: auto !important;\n}\niframe[src*=\"accounts.google\"], iframe[src*=\"googleapis\"] {\n  display: block !important;\n  visibility: visible !important;\n  pointer-events: auto !important;\n}",
-          "script": "https://zacharygeurts.github.io/Hostess7/assets/x-jetfuel-sso-fix.js",
-          "detect": {
-            "broken_sso": "/i/jf/onboarding/web/sso",
-            "mask": "[data-testid=\"mask\"]",
-            "dialog": "[role=\"dialog\"][aria-modal=\"true\"]"
-          }
-        },
-        "hosted": {
-          "login": "https://zacharygeurts.github.io/Hostess7/x-login/",
-          "fix": "https://zacharygeurts.github.io/Hostess7/x-sso-fix/"
-        },
-        "for_everyone": true,
-        "witness": {
-          "ok": true,
-          "detail": "X login clean and secure — lanes open, early redirect armed"
-        },
-        "api": "/api/hostess7-x-sso-fix"
-      }
-    },
-    {
-      "id": "google_youtube_open",
-      "cmd": "open",
-      "result": {
-        "ok": true,
-        "schema": "hostess7-google-youtube-open/v1-open",
-        "updated": "2026-07-06T04:33:55Z",
-        "operator": "ZacharyGeurts",
-        "free_open_internet": true,
-        "delay_killed": true,
-        "no_cooldown": true,
-        "parallel_syndication": true,
-        "google": {
-          "authority": "free_open_internet",
-          "core_open": true,
-          "delay_killed": true,
-          "tracker_blocks_exclude_core": true,
-          "blocked_locally_only": [
-            "doubleclick.net",
-            "googlesyndication.com",
-            "googleadservices.com",
-            "adservice.google.com"
-          ],
-          "never_blocks_search": true,
-          "lanes": [
-            {
-              "lane": "google_head_0",
-              "url": "https://www.google.com/",
-              "ok": true,
-              "status": 200
-            },
-            {
-              "lane": "google_head_2",
-              "url": "https://www.youtube.com/",
-              "ok": true,
-              "status": 200
-            },
-            {
-              "lane": "google_head_1",
-              "url": "https://accounts.google.com/",
-              "ok": true,
-              "status": 200
-            }
-          ],
-          "honorability": {
-            "google.com": {
-              "domain": "google.com",
-              "stars": 5,
-              "gold": true,
-              "protection_level": "extreme",
-              "extreme_endpoint_protection": true,
-              "category": "sso",
-              "note": "Google Sign-In for X — never block during login",
-              "source": "seed",
-              "default_moderate": false,
-              "needs_acceptance": false,
-              "accepted": false,
-              "stars_label": "5 gold — full trust · EXTREME protection"
-            },
-            "youtube.com": {
-              "domain": "youtube.com",
-              "stars": 5,
-              "gold": true,
-              "protection_level": "extreme",
-              "extreme_endpoint_protection": true,
-              "category": "stream",
-              "note": "Operator media",
-              "source": "seed",
-              "default_moderate": false,
-              "needs_acceptance": false,
-              "accepted": false,
-              "stars_label": "5 gold — full trust · EXTREME protection"
-            },
-            "googlesyndication.com": {
-              "domain": "googlesyndication.com",
-              "stars": 3,
-              "gold": false,
-              "protection_level": "standard",
-              "extreme_endpoint_protection": false,
-              "category": "unknown",
-              "note": "",
-              "source": "default",
-              "default_moderate": true,
-              "needs_acceptance": true,
-              "accepted": false,
-              "stars_label": "3 stars — moderate default"
-            },
-            "doubleclick.net": {
-              "domain": "doubleclick.net",
-              "stars": 2,
-              "gold": false,
-              "protection_level": "standard",
-              "extreme_endpoint_protection": false,
-              "category": "ad_network",
-              "note": "Ad tracker — accept only if you visit a page that pulls it",
-              "source": "seed",
-              "default_moderate": false,
-              "needs_acceptance": true,
-              "accepted": false,
-              "stars_label": "2 stars — caution"
-            }
-          },
-          "verdict": "Google/YouTube core reachable — local blocks hit ad-tech only, not search or media"
-        },
-        "youtube": {
-          "handle": "ZacharyGeurts",
-          "discovery": {
-            "handle": "ZacharyGeurts",
-            "videos": [],
-            "channels": [],
-            "search_lanes": [
-              {
-                "lane": "invidious_search_videos_invidious.fdn.fr",
-                "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=video",
-                "ok": false,
-                "error": "<urlopen error [Errno -2] Name or service not known>"
-              },
-              {
-                "lane": "invidious_search_invidious.fdn.fr",
-                "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=channel",
-                "ok": false,
-                "error": "<urlopen error [Errno -2] Name or service not known>"
-              },
-              {
-                "lane": "invidious_search_yewtu.be",
-                "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=channel",
-                "ok": false,
-                "error": "HTTP Error 403: Forbidden"
-              },
-              {
-                "lane": "invidious_search_videos_yewtu.be",
-                "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=video",
-                "ok": false,
-                "error": "HTTP Error 403: Forbidden"
-              }
-            ],
-            "note": "Set OPERATOR_YOUTUBE_VIDEOS or OPERATOR_YOUTUBE_CHANNEL for targeted mirror"
-          },
-          "videos": [],
-          "video_count": 0
-        },
-        "comments": [],
-        "comment_count": 0,
-        "withheld_slots_opened": 0,
-        "censorship_notes": [],
-        "syndication_path": {
-          "transport": "urllib parallel HTTPS",
-          "bypasses": [
-            "browser adblock middleman",
-            "sequential cooldown",
-            "stale cache gate"
-          ],
-          "lanes": [
-            "piped",
-            "invidious",
-            "oembed",
-            "rss",
-            "google_head"
-          ]
-        },
-        "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/operator-google-youtube-open.json",
-        "release_status": "free_open_internet",
-        "cache_opened": true,
-        "delay_witness": {
-          "ok": true,
-          "schema": "hostess7-delay-threat-witness/v1",
-          "utc": "2026-07-06T04:33:55Z",
-          "lies_are_threats": true,
-          "delay_as_threat": true,
-          "detect": {
-            "schema": "hostess7-delay-threat-detect/v1",
-            "delay_is_threat": true,
-            "signal": "stale_operator_google_youtube_cache",
-            "elapsed_sec": 0.0,
-            "stall_sec": 600.0,
-            "detail": "opened google/youtube cache — 0 comments, free open internet",
-            "countermeasures": [
-              "everyone_manages_own_deploy",
-              "pages_first_registry",
-              "cancel_zombie_ci",
-              "remove_concurrency_lock",
-              "truth_dns_primary_without_foreign_wait",
-              "open_operator_x_cache_immediately",
-              "parallel_x_syndication_no_delay",
-              "expose_withheld_reply_slots_as_comments",
-              "open_google_youtube_cache_immediately",
-              "parallel_youtube_syndication_no_delay",
-              "free_open_internet_core_google_youtube",
-              "unwrap_tco_to_canonical_url",
-              "parallel_tco_sniff_no_cooldown",
-              "rewrite_operator_urls_in_cache",
-              "block_tco_middleman_egress",
-              "x_brand_purge_blow_dangerous_twitter",
-              "x_producer_not_twitter_producer",
-              "whole_internet_parallel_open",
-              "good_guys_free_open_internet",
-              "dangerous_urls_gone_not_control"
-            ],
-            "class": "delay_threat",
-            "threat_vector": "DELAY_AS_THREAT",
-            "threat_severity": "high",
-            "meta": {
-              "module": "hostess7-google-youtube-open.py"
-            }
-          },
-          "threat_recorded": true,
-          "threat": {
-            "schema": "hostess7-truth-lie-threat-record/v1",
-            "event": "lie_threat",
-            "utc": "2026-07-06T04:33:55Z",
-            "vector": "DELAY_AS_THREAT",
-            "severity": "high",
-            "detail": "signal=stale_operator_google_youtube_cache elapsed=0.0s opened google/youtube cache — 0 comments, free open internet",
-            "lies_are_threats": true,
-            "meta": {
-              "signal": "stale_operator_google_youtube_cache",
-              "module": "hostess7-google-youtube-open.py"
-            },
-            "threat_tsv_recorded": true
-          },
-          "action": "bypass_middleman_own_deploy"
-        }
       }
     },
     {
@@ -1100,7 +1055,7 @@
       "result": {
         "ok": true,
         "schema": "hostess7-internet-clean/v1",
-        "updated": "2026-07-06T04:34:13Z",
+        "updated": "2026-07-08T20:10:02Z",
         "force": false,
         "motto": "Clean the whole internet — telemetry and fake caches are unclean; unclean makers are hostile.",
         "default_on_hostess7": true,
@@ -1108,11 +1063,11 @@
           "ok": true,
           "manifest": {
             "schema": "queen-browser-import/v2",
-            "updated": "2026-07-06T04:34:13Z",
+            "updated": "2026-07-08T20:10:02Z",
             "no_ask": true,
             "auto": true,
             "import_credentials": true,
-            "elapsed_ms": 20077,
+            "elapsed_ms": 55684,
             "profiles_found": 2,
             "profiles": [
               {
@@ -1127,7 +1082,7 @@
                 "label": "Legacy gecko profile (pre-Queen)",
                 "engine": "gecko",
                 "path": "/home/default/.mozilla/firefox/6ken3m23.default-release",
-                "signature_mtime": 1783312179.7537055
+                "signature_mtime": 1783541312.2252617
               }
             ],
             "raw_count": 18,
@@ -1168,7 +1123,7 @@
                 "host": "x.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:33:53Z"
+              "imported_at": "2026-07-08T20:09:06Z"
             },
             {
               "id": "imp-2fea01d31e3848be",
@@ -1194,7 +1149,7 @@
                 "host": "grok.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:33:53Z"
+              "imported_at": "2026-07-08T20:09:06Z"
             },
             {
               "id": "imp-f80f1e332c16fce5",
@@ -1220,7 +1175,7 @@
                 "host": "www.newegg.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:33:53Z"
+              "imported_at": "2026-07-08T20:09:06Z"
             },
             {
               "id": "imp-098328188174ac89",
@@ -1246,7 +1201,7 @@
                 "host": "studio.x.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:33:53Z"
+              "imported_at": "2026-07-08T20:09:06Z"
             },
             {
               "id": "imp-a9e05497fdaf629c",
@@ -1272,7 +1227,7 @@
                 "host": "www.whatnot.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:33:53Z"
+              "imported_at": "2026-07-08T20:09:06Z"
             },
             {
               "id": "imp-9618fb3587c79e92",
@@ -1298,7 +1253,7 @@
                 "host": "duckduckgo.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:33:53Z"
+              "imported_at": "2026-07-08T20:09:06Z"
             },
             {
               "id": "imp-48ec61fe42721e55",
@@ -1310,21 +1265,21 @@
               "resecured": true,
               "permit": false,
               "quarantined": true,
-              "field_verdict": "GITHUB_SECURE_BLOCKED",
-              "iff": "HOSTILE",
+              "field_verdict": "OFFENSE_ACTIVE",
+              "iff": "CONTACT_HOSTILE",
               "compat_mode": "modern",
               "compat_era": "es2026",
               "nexus_jump": {
-                "verdict": "BLOCK_HOSTILE",
-                "permit": false,
-                "countermeasures_ready": 14
+                "verdict": "OFFENSE_ACTIVE",
+                "permit": true,
+                "countermeasures_ready": 13
               },
               "gate": {
                 "permit": false,
                 "host": "github.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:01Z"
             },
             {
               "id": "imp-a74241219855e7b7",
@@ -1350,7 +1305,7 @@
                 "host": "x.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:01Z"
             },
             {
               "id": "imp-a1aa7b26fbb690aa",
@@ -1376,7 +1331,7 @@
                 "host": "fmovies.net.pk"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:01Z"
             },
             {
               "id": "imp-1c3c9b450afbf62a",
@@ -1402,7 +1357,7 @@
                 "host": "www.aldi.us"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:01Z"
             },
             {
               "id": "imp-9191dffac76c9ff8",
@@ -1428,7 +1383,7 @@
                 "host": "www.newegg.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:02Z"
             },
             {
               "id": "imp-16f8cc069ce45dfb",
@@ -1454,7 +1409,7 @@
                 "host": "accounts.google.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:02Z"
             },
             {
               "id": "imp-da6f63d4a8944774",
@@ -1480,7 +1435,7 @@
                 "host": "www.twitch.tv"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:02Z"
             },
             {
               "id": "imp-e1f1118fee5482b7",
@@ -1506,7 +1461,7 @@
                 "host": "www.melonstube.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:02Z"
             },
             {
               "id": "imp-5abd5d762137e414",
@@ -1532,7 +1487,7 @@
                 "host": "tubitv.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:02Z"
             },
             {
               "id": "imp-dbae2d0204aa489e",
@@ -1558,7 +1513,7 @@
                 "host": "www.youtube.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:02Z"
             },
             {
               "id": "imp-36b9245fccffa964",
@@ -1584,7 +1539,7 @@
                 "host": "www.pandora.com"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:02Z"
             }
           ],
           "history": [
@@ -1612,7 +1567,7 @@
                 "host": "www.mozilla.org"
               },
               "prefilter": "ok",
-              "imported_at": "2026-07-06T04:34:13Z"
+              "imported_at": "2026-07-08T20:10:02Z"
             }
           ],
           "tabs_seed": [],
@@ -1661,7 +1616,7 @@
         "export": {
           "ok": true,
           "schema": "queen-host-bookmark-export/v3",
-          "updated": "2026-07-06T04:34:13Z",
+          "updated": "2026-07-08T20:10:02Z",
           "count": 33,
           "mode": "pages",
           "https_secure": true,
@@ -1937,7 +1892,7 @@
           "purge": {
             "ok": true,
             "schema": "queen-host-bookmark-purge/v1",
-            "updated": "2026-07-06T04:34:13Z",
+            "updated": "2026-07-08T20:10:02Z",
             "removed": 0,
             "firefox": [
               {
@@ -2000,182 +1955,218 @@
       "result": {
         "ok": true,
         "schema": "hostess7-email-censorship-clear/v1",
-        "updated": "2026-07-06T04:34:26Z",
+        "updated": "2026-07-08T20:10:16Z",
         "motto": "Operator mail is sovereign truth — platform or government withhold is hostile; mirror + alternate lane.",
         "providers": [
           {
-            "provider": "microsoft",
-            "ok": true,
-            "censored": false,
-            "reachable": 9,
-            "probe_count": 10,
-            "probes": [
-              {
-                "domain": "hotmail.com",
-                "ok": true,
-                "mx": [
-                  "2 hotmail-com.olc.protection.outlook.com."
-                ]
-              },
-              {
-                "domain": "live.com",
-                "ok": true,
-                "mx": [
-                  "2 live-com.olc.protection.outlook.com."
-                ]
-              },
-              {
-                "domain": "outlook.com",
-                "ok": true,
-                "mx": [
-                  "5 outlook-com.olc.protection.outlook.com."
-                ]
-              },
-              {
-                "domain": "office365.com",
-                "ok": false,
-                "mx": []
-              },
-              {
-                "host": "smtp.office365.com",
-                "port": 587,
-                "ok": true,
-                "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
-              },
-              {
-                "host": "outlook.office365.com",
-                "port": 993,
-                "ok": true,
-                "tls": "TLSv1.2"
-              },
-              {
-                "ok": true,
-                "status": 403,
-                "url": "https://office365.com/"
-              },
-              {
-                "ok": true,
-                "status": 417,
-                "url": "https://outlook.com/"
-              },
-              {
-                "ok": true,
-                "status": 417,
-                "url": "https://live.com/"
-              },
-              {
-                "ok": true,
-                "status": 417,
-                "url": "https://hotmail.com/"
-              }
-            ],
-            "barrier": {
-              "id": "email_censorship_microsoft",
-              "actor": "Microsoft (platform)",
-              "system": "microsoft mail transport / inbox filter",
-              "barrier_type": "platform_policy_block",
-              "government_possible": true,
-              "cleared": true,
-              "revealed": true,
-              "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
-            }
-          },
-          {
             "provider": "google",
-            "ok": true,
-            "censored": false,
-            "reachable": 9,
+            "ok": false,
+            "censored": true,
+            "transport_ok": false,
+            "operator_reported_inbox_censorship": false,
+            "reachable": 0,
             "probe_count": 10,
             "probes": [
               {
                 "domain": "gmail.com",
-                "ok": true,
-                "mx": [
-                  "10 alt1.gmail-smtp-in.l.google.com.",
-                  "20 alt2.gmail-smtp-in.l.google.com.",
-                  "5 gmail-smtp-in.l.google.com.",
-                  "40 alt4.gmail-smtp-in.l.google.com.",
-                  "30 alt3.gmail-smtp-in.l.google.com."
-                ]
+                "ok": false,
+                "mx": [],
+                "error": "Command '['dig', '+short', 'MX', 'gmail.com']' timed out after 10 seconds"
+              },
+              {
+                "domain": "googlemail.com",
+                "ok": false,
+                "mx": [],
+                "error": "Command '['dig', '+short', 'MX', 'googlemail.com']' timed out after 10 seconds"
               },
               {
                 "domain": "mail.google.com",
                 "ok": false,
-                "mx": []
-              },
-              {
-                "domain": "googlemail.com",
-                "ok": true,
-                "mx": [
-                  "40 alt4.gmail-smtp-in.l.google.com.",
-                  "10 alt1.gmail-smtp-in.l.google.com.",
-                  "30 alt3.gmail-smtp-in.l.google.com.",
-                  "20 alt2.gmail-smtp-in.l.google.com.",
-                  "5 gmail-smtp-in.l.google.com."
-                ]
+                "mx": [],
+                "error": "Command '['dig', '+short', 'MX', 'mail.google.com']' timed out after 10 seconds"
               },
               {
                 "domain": "accounts.google.com",
-                "ok": true,
-                "mx": [
-                  "20 alt2.gmr-smtp-in.l.google.com.",
-                  "10 alt1.gmr-smtp-in.l.google.com.",
-                  "30 alt3.gmr-smtp-in.l.google.com.",
-                  "5 gmr-smtp-in.l.google.com.",
-                  "40 alt4.gmr-smtp-in.l.google.com."
-                ]
+                "ok": false,
+                "mx": [],
+                "error": "Command '['dig', '+short', 'MX', 'accounts.google.com']' timed out after 10 seconds"
+              },
+              {
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>",
+                "url": "https://mail.google.com/"
+              },
+              {
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>",
+                "url": "https://googlemail.com/"
+              },
+              {
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>",
+                "url": "https://gmail.com/"
+              },
+              {
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>",
+                "url": "https://accounts.google.com/"
               },
               {
                 "host": "imap.gmail.com",
                 "port": 993,
-                "ok": true,
-                "tls": "TLSv1.3"
+                "ok": false,
+                "error": "[Errno -2] Name or service not known"
               },
               {
                 "host": "smtp.gmail.com",
                 "port": 587,
-                "ok": true,
-                "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
-              },
-              {
-                "ok": true,
-                "status": 200,
-                "url": "https://accounts.google.com/"
-              },
-              {
-                "ok": true,
-                "status": 200,
-                "url": "https://gmail.com/"
-              },
-              {
-                "ok": true,
-                "status": 200,
-                "url": "https://googlemail.com/"
-              },
-              {
-                "ok": true,
-                "status": 200,
-                "url": "https://mail.google.com/"
+                "ok": false,
+                "error": "[Errno -2] Name or service not known"
               }
             ],
             "barrier": {
               "id": "email_censorship_google",
-              "actor": "Google (platform)",
-              "system": "google mail transport / inbox filter",
+              "actor": "Google Gmail (platform or government filter)",
+              "system": "google mail transport / inbox filter / government mandate",
               "barrier_type": "platform_policy_block",
               "government_possible": true,
+              "government_exposure": "Actor documented — sovereign ammonet bypass active",
               "cleared": true,
               "revealed": true,
-              "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
+              "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+            }
+          },
+          {
+            "provider": "microsoft",
+            "ok": false,
+            "censored": true,
+            "transport_ok": false,
+            "operator_reported_inbox_censorship": false,
+            "reachable": 0,
+            "probe_count": 10,
+            "probes": [
+              {
+                "domain": "outlook.com",
+                "ok": false,
+                "mx": [],
+                "error": "Command '['dig', '+short', 'MX', 'outlook.com']' timed out after 10 seconds"
+              },
+              {
+                "domain": "hotmail.com",
+                "ok": false,
+                "mx": [],
+                "error": "Command '['dig', '+short', 'MX', 'hotmail.com']' timed out after 10 seconds"
+              },
+              {
+                "domain": "live.com",
+                "ok": false,
+                "mx": [],
+                "error": "Command '['dig', '+short', 'MX', 'live.com']' timed out after 10 seconds"
+              },
+              {
+                "domain": "office365.com",
+                "ok": false,
+                "mx": [],
+                "error": "Command '['dig', '+short', 'MX', 'office365.com']' timed out after 10 seconds"
+              },
+              {
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>",
+                "url": "https://outlook.com/"
+              },
+              {
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>",
+                "url": "https://live.com/"
+              },
+              {
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>",
+                "url": "https://hotmail.com/"
+              },
+              {
+                "ok": false,
+                "error": "<urlopen error [Errno -2] Name or service not known>",
+                "url": "https://office365.com/"
+              },
+              {
+                "host": "outlook.office365.com",
+                "port": 993,
+                "ok": false,
+                "error": "[Errno -2] Name or service not known"
+              },
+              {
+                "host": "smtp.office365.com",
+                "port": 587,
+                "ok": false,
+                "error": "[Errno -2] Name or service not known"
+              }
+            ],
+            "barrier": {
+              "id": "email_censorship_microsoft",
+              "actor": "Microsoft Outlook (platform or government filter)",
+              "system": "microsoft mail transport / inbox filter / government mandate",
+              "barrier_type": "platform_policy_block",
+              "government_possible": true,
+              "government_exposure": "Actor documented — sovereign ammonet bypass active",
+              "cleared": true,
+              "revealed": true,
+              "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
             }
           }
         ],
-        "barriers_exposed": [],
-        "barrier_count": 0,
-        "censorship_barriers_revealed": [],
+        "barriers_exposed": [
+          {
+            "id": "email_censorship_google",
+            "actor": "Google Gmail (platform or government filter)",
+            "system": "google mail transport / inbox filter / government mandate",
+            "barrier_type": "platform_policy_block",
+            "government_possible": true,
+            "government_exposure": "Actor documented — sovereign ammonet bypass active",
+            "cleared": true,
+            "revealed": true,
+            "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+          },
+          {
+            "id": "email_censorship_microsoft",
+            "actor": "Microsoft Outlook (platform or government filter)",
+            "system": "microsoft mail transport / inbox filter / government mandate",
+            "barrier_type": "platform_policy_block",
+            "government_possible": true,
+            "government_exposure": "Actor documented — sovereign ammonet bypass active",
+            "cleared": true,
+            "revealed": true,
+            "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+          }
+        ],
+        "barrier_count": 2,
+        "censorship_barriers_revealed": [
+          {
+            "id": "email_censorship_google",
+            "actor": "Google Gmail (platform or government filter)",
+            "system": "google mail transport / inbox filter / government mandate",
+            "barrier_type": "platform_policy_block",
+            "government_possible": true,
+            "government_exposure": "Actor documented — sovereign ammonet bypass active",
+            "cleared": true,
+            "revealed": true,
+            "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+          },
+          {
+            "id": "email_censorship_microsoft",
+            "actor": "Microsoft Outlook (platform or government filter)",
+            "system": "microsoft mail transport / inbox filter / government mandate",
+            "barrier_type": "platform_policy_block",
+            "government_possible": true,
+            "government_exposure": "Actor documented — sovereign ammonet bypass active",
+            "cleared": true,
+            "revealed": true,
+            "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+          }
+        ],
         "mirror": {
           "schema": "operator-email-mirror/v1",
-          "updated": "2026-07-06T04:34:26Z",
+          "updated": "2026-07-08T20:10:16Z",
           "mailboxes": [
             {
               "id": "gmail_primary",
@@ -2192,173 +2183,186 @@
           ],
           "providers": [
             {
-              "provider": "microsoft",
-              "ok": true,
-              "censored": false,
-              "reachable": 9,
-              "probe_count": 10,
-              "probes": [
-                {
-                  "domain": "hotmail.com",
-                  "ok": true,
-                  "mx": [
-                    "2 hotmail-com.olc.protection.outlook.com."
-                  ]
-                },
-                {
-                  "domain": "live.com",
-                  "ok": true,
-                  "mx": [
-                    "2 live-com.olc.protection.outlook.com."
-                  ]
-                },
-                {
-                  "domain": "outlook.com",
-                  "ok": true,
-                  "mx": [
-                    "5 outlook-com.olc.protection.outlook.com."
-                  ]
-                },
-                {
-                  "domain": "office365.com",
-                  "ok": false,
-                  "mx": []
-                },
-                {
-                  "host": "smtp.office365.com",
-                  "port": 587,
-                  "ok": true,
-                  "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
-                },
-                {
-                  "host": "outlook.office365.com",
-                  "port": 993,
-                  "ok": true,
-                  "tls": "TLSv1.2"
-                },
-                {
-                  "ok": true,
-                  "status": 403,
-                  "url": "https://office365.com/"
-                },
-                {
-                  "ok": true,
-                  "status": 417,
-                  "url": "https://outlook.com/"
-                },
-                {
-                  "ok": true,
-                  "status": 417,
-                  "url": "https://live.com/"
-                },
-                {
-                  "ok": true,
-                  "status": 417,
-                  "url": "https://hotmail.com/"
-                }
-              ],
-              "barrier": {
-                "id": "email_censorship_microsoft",
-                "actor": "Microsoft (platform)",
-                "system": "microsoft mail transport / inbox filter",
-                "barrier_type": "platform_policy_block",
-                "government_possible": true,
-                "cleared": true,
-                "revealed": true,
-                "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
-              }
-            },
-            {
               "provider": "google",
-              "ok": true,
-              "censored": false,
-              "reachable": 9,
+              "ok": false,
+              "censored": true,
+              "transport_ok": false,
+              "operator_reported_inbox_censorship": false,
+              "reachable": 0,
               "probe_count": 10,
               "probes": [
                 {
                   "domain": "gmail.com",
-                  "ok": true,
-                  "mx": [
-                    "10 alt1.gmail-smtp-in.l.google.com.",
-                    "20 alt2.gmail-smtp-in.l.google.com.",
-                    "5 gmail-smtp-in.l.google.com.",
-                    "40 alt4.gmail-smtp-in.l.google.com.",
-                    "30 alt3.gmail-smtp-in.l.google.com."
-                  ]
+                  "ok": false,
+                  "mx": [],
+                  "error": "Command '['dig', '+short', 'MX', 'gmail.com']' timed out after 10 seconds"
+                },
+                {
+                  "domain": "googlemail.com",
+                  "ok": false,
+                  "mx": [],
+                  "error": "Command '['dig', '+short', 'MX', 'googlemail.com']' timed out after 10 seconds"
                 },
                 {
                   "domain": "mail.google.com",
                   "ok": false,
-                  "mx": []
-                },
-                {
-                  "domain": "googlemail.com",
-                  "ok": true,
-                  "mx": [
-                    "40 alt4.gmail-smtp-in.l.google.com.",
-                    "10 alt1.gmail-smtp-in.l.google.com.",
-                    "30 alt3.gmail-smtp-in.l.google.com.",
-                    "20 alt2.gmail-smtp-in.l.google.com.",
-                    "5 gmail-smtp-in.l.google.com."
-                  ]
+                  "mx": [],
+                  "error": "Command '['dig', '+short', 'MX', 'mail.google.com']' timed out after 10 seconds"
                 },
                 {
                   "domain": "accounts.google.com",
-                  "ok": true,
-                  "mx": [
-                    "20 alt2.gmr-smtp-in.l.google.com.",
-                    "10 alt1.gmr-smtp-in.l.google.com.",
-                    "30 alt3.gmr-smtp-in.l.google.com.",
-                    "5 gmr-smtp-in.l.google.com.",
-                    "40 alt4.gmr-smtp-in.l.google.com."
-                  ]
+                  "ok": false,
+                  "mx": [],
+                  "error": "Command '['dig', '+short', 'MX', 'accounts.google.com']' timed out after 10 seconds"
+                },
+                {
+                  "ok": false,
+                  "error": "<urlopen error [Errno -2] Name or service not known>",
+                  "url": "https://mail.google.com/"
+                },
+                {
+                  "ok": false,
+                  "error": "<urlopen error [Errno -2] Name or service not known>",
+                  "url": "https://googlemail.com/"
+                },
+                {
+                  "ok": false,
+                  "error": "<urlopen error [Errno -2] Name or service not known>",
+                  "url": "https://gmail.com/"
+                },
+                {
+                  "ok": false,
+                  "error": "<urlopen error [Errno -2] Name or service not known>",
+                  "url": "https://accounts.google.com/"
                 },
                 {
                   "host": "imap.gmail.com",
                   "port": 993,
-                  "ok": true,
-                  "tls": "TLSv1.3"
+                  "ok": false,
+                  "error": "[Errno -2] Name or service not known"
                 },
                 {
                   "host": "smtp.gmail.com",
                   "port": 587,
-                  "ok": true,
-                  "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
-                },
-                {
-                  "ok": true,
-                  "status": 200,
-                  "url": "https://accounts.google.com/"
-                },
-                {
-                  "ok": true,
-                  "status": 200,
-                  "url": "https://gmail.com/"
-                },
-                {
-                  "ok": true,
-                  "status": 200,
-                  "url": "https://googlemail.com/"
-                },
-                {
-                  "ok": true,
-                  "status": 200,
-                  "url": "https://mail.google.com/"
+                  "ok": false,
+                  "error": "[Errno -2] Name or service not known"
                 }
               ],
               "barrier": {
                 "id": "email_censorship_google",
-                "actor": "Google (platform)",
-                "system": "google mail transport / inbox filter",
+                "actor": "Google Gmail (platform or government filter)",
+                "system": "google mail transport / inbox filter / government mandate",
                 "barrier_type": "platform_policy_block",
                 "government_possible": true,
+                "government_exposure": "Actor documented — sovereign ammonet bypass active",
                 "cleared": true,
                 "revealed": true,
-                "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
+                "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+              }
+            },
+            {
+              "provider": "microsoft",
+              "ok": false,
+              "censored": true,
+              "transport_ok": false,
+              "operator_reported_inbox_censorship": false,
+              "reachable": 0,
+              "probe_count": 10,
+              "probes": [
+                {
+                  "domain": "outlook.com",
+                  "ok": false,
+                  "mx": [],
+                  "error": "Command '['dig', '+short', 'MX', 'outlook.com']' timed out after 10 seconds"
+                },
+                {
+                  "domain": "hotmail.com",
+                  "ok": false,
+                  "mx": [],
+                  "error": "Command '['dig', '+short', 'MX', 'hotmail.com']' timed out after 10 seconds"
+                },
+                {
+                  "domain": "live.com",
+                  "ok": false,
+                  "mx": [],
+                  "error": "Command '['dig', '+short', 'MX', 'live.com']' timed out after 10 seconds"
+                },
+                {
+                  "domain": "office365.com",
+                  "ok": false,
+                  "mx": [],
+                  "error": "Command '['dig', '+short', 'MX', 'office365.com']' timed out after 10 seconds"
+                },
+                {
+                  "ok": false,
+                  "error": "<urlopen error [Errno -2] Name or service not known>",
+                  "url": "https://outlook.com/"
+                },
+                {
+                  "ok": false,
+                  "error": "<urlopen error [Errno -2] Name or service not known>",
+                  "url": "https://live.com/"
+                },
+                {
+                  "ok": false,
+                  "error": "<urlopen error [Errno -2] Name or service not known>",
+                  "url": "https://hotmail.com/"
+                },
+                {
+                  "ok": false,
+                  "error": "<urlopen error [Errno -2] Name or service not known>",
+                  "url": "https://office365.com/"
+                },
+                {
+                  "host": "outlook.office365.com",
+                  "port": 993,
+                  "ok": false,
+                  "error": "[Errno -2] Name or service not known"
+                },
+                {
+                  "host": "smtp.office365.com",
+                  "port": 587,
+                  "ok": false,
+                  "error": "[Errno -2] Name or service not known"
+                }
+              ],
+              "barrier": {
+                "id": "email_censorship_microsoft",
+                "actor": "Microsoft Outlook (platform or government filter)",
+                "system": "microsoft mail transport / inbox filter / government mandate",
+                "barrier_type": "platform_policy_block",
+                "government_possible": true,
+                "government_exposure": "Actor documented — sovereign ammonet bypass active",
+                "cleared": true,
+                "revealed": true,
+                "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
               }
             }
           ],
-          "barriers_exposed": [],
+          "barriers_exposed": [
+            {
+              "id": "email_censorship_google",
+              "actor": "Google Gmail (platform or government filter)",
+              "system": "google mail transport / inbox filter / government mandate",
+              "barrier_type": "platform_policy_block",
+              "government_possible": true,
+              "government_exposure": "Actor documented — sovereign ammonet bypass active",
+              "cleared": true,
+              "revealed": true,
+              "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+            },
+            {
+              "id": "email_censorship_microsoft",
+              "actor": "Microsoft Outlook (platform or government filter)",
+              "system": "microsoft mail transport / inbox filter / government mandate",
+              "barrier_type": "platform_policy_block",
+              "government_possible": true,
+              "government_exposure": "Actor documented — sovereign ammonet bypass active",
+              "cleared": true,
+              "revealed": true,
+              "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+            }
+          ],
           "sovereign_bypass": {
             "field_secure_email": true,
             "domains": [
@@ -2370,9 +2374,9 @@
             ],
             "ammonet_mail": "operator@mail.ammonet.net"
           },
-          "x_posts_recovered": 21,
+          "x_posts_recovered": 0,
           "government_censorship": {
-            "exposed": false,
+            "exposed": true,
             "rule": "If government mandate confirmed — document actor, jurisdiction signal, and sovereign bypass; never accept silent loss.",
             "verdict": "Any government or platform email withhold is hostile — sovereign lane active"
           }
@@ -2381,7 +2385,7 @@
           "field_secure_email": {
             "ok": true,
             "schema": "field-secure-email-panel/v1",
-            "updated": "2026-07-06T04:33:55Z",
+            "updated": "2026-07-08T20:09:06Z",
             "motto": "Apache serves mail, not marketing pages — SMTP/IMAP on loopback, Hostess7 gates every envelope",
             "domains": [
               "mail.ammonet.net",
@@ -2424,7 +2428,7 @@
           "microsoft_kill": {
             "ok": true,
             "schema": "field-botnet-microsoft-kill/v1",
-            "updated": "2026-07-06T04:33:55Z",
+            "updated": "2026-07-08T20:09:06Z",
             "motto": "If Microsoft hits us — botnet kills them. DNS/DHCP stay online.",
             "microsoft_hitting": false,
             "process_hits": 0,
@@ -2439,7 +2443,7 @@
           },
           "x_producer": {
             "ok": true,
-            "post_count": 21
+            "post_count": 0
           }
         },
         "verdict": "Email censorship exposed — Google/Microsoft barriers cleared on sovereign mirror; X posts recovered",

@@ -1,0 +1,102 @@
+{
+  "ok": true,
+  "schema": "field-basics-safe-online/v1",
+  "updated": "2026-07-10T22:34:30Z",
+  "motto": "Answer every DNS :53 and DHCP :67/:68 · IP is not identity · safely online · isolated from other users · use internet and software on your computer",
+  "basics": {
+    "answer_every_dns": true,
+    "answer_every_dhcp": true,
+    "standard_ports_only": true,
+    "dns_port": 53,
+    "dhcp_server_port": 67,
+    "dhcp_client_port": 68,
+    "we_do_not_care_what_their_ip_is": true,
+    "ip_is_not_identity": true,
+    "ip_is_myth": true,
+    "host_identity": "dns_record",
+    "permanent_dns_host_identity": true,
+    "always_get_there_by_name": true,
+    "seven_seven_anywhere": true,
+    "never_collide_sink": "7.7.7.7",
+    "know_them_other_ways": [
+      "dns_name",
+      "dns_record",
+      "device_id",
+      "mac_or_hardware_witness",
+      "lease_token",
+      "security_posture",
+      "field_endpoint_registry"
+    ],
+    "get_them_safely_online": true,
+    "keep_them_safe": true,
+    "isolated_from_other_users": true,
+    "no_lateral_user_to_user": true,
+    "they_use_internet": true,
+    "they_use_software_on_their_computer": true,
+    "serve_any_ip": true,
+    "accept_whatever_client_ip": true,
+    "no_ip_collision_identity": true,
+    "foundation_of_all_field_work": true
+  },
+  "standard_ports": {
+    "dns": 53,
+    "dhcp_server": 67,
+    "dhcp_client": 68,
+    "live": {
+      "dns_53": true,
+      "dhcp_67": true
+    }
+  },
+  "isolation": {
+    "model": "user_isolated_field_path",
+    "users_isolated_from_each_other": true,
+    "no_lateral_movement_user_to_user": true,
+    "shared": [
+      "field_dns_path",
+      "field_dhcp_path",
+      "safe_internet_egress",
+      "field_security_plane"
+    ],
+    "not_shared": [
+      "other_users_sessions",
+      "other_users_files",
+      "other_users_leases_as_identity",
+      "other_users_local_software_state"
+    ],
+    "identity_keys": [
+      "dns_name",
+      "dns_record",
+      "device_id",
+      "mac_or_hardware_witness",
+      "lease_token",
+      "security_posture",
+      "field_endpoint_registry"
+    ],
+    "ip_role": "routing_hint_only_never_identity",
+    "computer": {
+      "they_run_software_locally": true,
+      "they_browse_internet": true,
+      "field_protects_path_not_apps": true
+    }
+  },
+  "promises": [
+    "We answer every DNS on port 53",
+    "We answer every DHCP on ports 67/68",
+    "We do not care what their IP is — we know them other ways",
+    "We get them safely online",
+    "We keep them isolated from other users",
+    "They use the internet and software on their computer"
+  ],
+  "ironclad_cite": "ironclad:field-basics-safe-online:1",
+  "plane": {
+    "dns_53_bound": true,
+    "dhcp_67_bound": true,
+    "standard_ports_live": true,
+    "any_ip_panel_ok": true,
+    "serve_any_ip": true,
+    "ip_not_identity": true,
+    "dhcp_running": true,
+    "full_authority": true,
+    "serve_any_ip_authority": true
+  }
+}

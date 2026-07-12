@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "field-planetary-dns-authority/v1",
-  "updated": "2026-07-06T00:29:29Z",
+  "updated": "2026-07-08T19:53:18Z",
   "title": "True planetary DNS authority — generate, expand, remove foreign servers",
   "motto": "Generate true DNS authority across every IPv4 — expand planet-wide — remove foreign DHCP and DNS once complete.",
   "boss": "hostess7",
@@ -192,22 +192,18 @@
     "complete": false,
     "expanded": true,
     "ipv4_enumerated": true,
-    "takeover_phase": "primary",
+    "takeover_phase": "observing",
     "sole_authority": {
       "dns": false,
-      "dhcp": true,
+      "dhcp": false,
       "truth": false,
       "accuracy": false,
       "ok": false,
-      "phase": "primary",
-      "foreign_resolvers": [
-        "209.18.47.61",
-        "209.18.47.62",
-        "209.18.47.63"
-      ],
+      "phase": "observing",
+      "foreign_resolvers": [],
       "internet_open": false,
-      "collision_count": 4,
-      "authority_collision_count": 4,
+      "collision_count": 1,
+      "authority_collision_count": 1,
       "hygiene_warnings": 0
     },
     "zone_count": 19,

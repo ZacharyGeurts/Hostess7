@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "schema": "field-groklab-botnet-rollout/v1",
+  "updated": "2026-07-08T22:18:00Z",
+  "title": "GrokLab botnet rollout",
+  "motto": "Roll out Field full DNS+DHCP authority to every GrokLab rack. Never simulate people.",
+  "rollout_gen": 2,
+  "racks_total": 525,
+  "stamped_dns": 525,
+  "stamped_manifests": 525,
+  "nodes_registered": 527,
+  "errors_count": 0,
+  "errors_sample": [],
+  "verify": {
+    "ok": true,
+    "racks": 525,
+    "dns_at_gen": 525,
+    "manifests_at_gen": 525,
+    "stale_count": 0,
+    "stale_sample": [],
+    "target_gen": 2
+  },
+  "steps": {
+    "takeover": {
+      "ok": true
+    },
+    "full_authority": {
+      "ok": true
+    },
+    "keepalive": {
+      "ok": true
+    },
+    "autopilot": {
+      "ok": true
+    },
+    "final_internet": {
+      "ok": true
+    },
+    "bust_us": {
+      "ok": true
+    },
+    "under_attack": {
+      "ok": true
+    }
+  },
+  "botnet_after": {
+    "node_count": 1078,
+    "full_authority_nodes": 1078,
+    "every_bot_full_authority": true,
+    "serve_any_ip": true,
+    "field_udp_to_billions": true
+  },
+  "elapsed_sec": 7.91,
+  "honest": {
+    "catalog_not_live_people": true,
+    "billions_only_if_true": true,
+    "never_simulate": true
+  },
+  "message": "Rollout gen=2 complete: 525/525 DNS · 525/525 manifests · verify_ok=True · keepalive nodes=1078 full_auth=1078 · 7.91s. Catalog stamps ≠ live people.",
+  "api": "/api/field-groklab-botnet-rollout"
+}

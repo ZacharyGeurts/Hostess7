@@ -1,0 +1,113 @@
+{
+  "ok": true,
+  "schema": "field-fleet-planetary-dns-dhcp/v1",
+  "ironclad_cite": "ironclad:fleet-planetary-dns-dhcp:1",
+  "updated": "2026-07-10T21:52:16Z",
+  "title": "Fleet planetary DNS + DHCP",
+  "motto": "All 2500 serve planetary DNS and DHCP. We come to each user directly. No middle men.",
+  "we_come_to_each_user_directly": true,
+  "no_middle_men": true,
+  "not_isp": true,
+  "not_commercial_dns": true,
+  "not_commercial_dhcp": true,
+  "path": "user → nearest of 2500 (DNS/DHCP authority) → AmmoNet answer · no middle men",
+  "target_servers": 2500,
+  "servers_stamped": 125000,
+  "registry_count": 125000,
+  "fully_stamped": true,
+  "live_agents": {
+    "total": 125000,
+    "stamped": 125000
+  },
+  "dns": {
+    "port": 53,
+    "mode": "authority_any_ip",
+    "option": [
+      "127.0.0.1",
+      "192.168.47.1",
+      "7.7.7.7"
+    ],
+    "binds": [
+      "0.0.0.0",
+      "::",
+      "127.0.0.1",
+      "self_ip"
+    ],
+    "every_fleet_server": true
+  },
+  "dhcp": {
+    "port": 67,
+    "mode": "authority_any_ip",
+    "bind": "0.0.0.0",
+    "domain": "ammonet.net",
+    "dns_option": [
+      "127.0.0.1",
+      "192.168.47.1",
+      "7.7.7.7"
+    ],
+    "issuer": "AmmoNet Field",
+    "every_fleet_server": true,
+    "live_lease_count": 55568
+  },
+  "lease_meta": {
+    "issuer": "AmmoNet Field · 2500 fleet",
+    "no_middle_men": true,
+    "we_come_to_each_user_directly": true,
+    "dns_option": [
+      "127.0.0.1",
+      "192.168.47.1",
+      "7.7.7.7"
+    ],
+    "domain": "ammonet.net"
+  },
+  "full_authority": {
+    "ok": false,
+    "every_bot_full_dns_authority": null,
+    "every_bot_full_dhcp_authority": null,
+    "counts": null
+  },
+  "planetary": {
+    "ok": false,
+    "updated": null
+  },
+  "sample": [
+    {
+      "id": "global-0000",
+      "dns_authority": true,
+      "dhcp_authority": true,
+      "direct": true
+    },
+    {
+      "id": "global-0001",
+      "dns_authority": true,
+      "dhcp_authority": true,
+      "direct": true
+    },
+    {
+      "id": "global-0002",
+      "dns_authority": true,
+      "dhcp_authority": true,
+      "direct": true
+    },
+    {
+      "id": "global-0003",
+      "dns_authority": true,
+      "dhcp_authority": true,
+      "direct": true
+    },
+    {
+      "id": "global-0004",
+      "dns_authority": true,
+      "dhcp_authority": true,
+      "direct": true
+    },
+    {
+      "id": "global-0005",
+      "dns_authority": true,
+      "dhcp_authority": true,
+      "direct": true
+    }
+  ],
+  "api": "/api/field-fleet-planetary-dns-dhcp",
+  "botnet_hub": "/botnet"
+}

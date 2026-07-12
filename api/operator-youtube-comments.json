@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "hostess7-google-youtube-open/v1-open",
-  "updated": "2026-07-06T04:33:55Z",
+  "updated": "2026-07-08T20:09:11Z",
   "operator": "ZacharyGeurts",
   "free_open_internet": true,
   "delay_killed": true,
@@ -9,7 +9,7 @@
   "parallel_syndication": true,
   "google": {
     "authority": "free_open_internet",
-    "core_open": true,
+    "core_open": false,
     "delay_killed": true,
     "tracker_blocks_exclude_core": true,
     "blocked_locally_only": [
@@ -21,22 +21,22 @@
     "never_blocks_search": true,
     "lanes": [
       {
-        "lane": "google_head_0",
-        "url": "https://www.google.com/",
-        "ok": true,
-        "status": 200
-      },
-      {
         "lane": "google_head_2",
         "url": "https://www.youtube.com/",
-        "ok": true,
-        "status": 200
+        "ok": false,
+        "error": "<urlopen error [Errno -2] Name or service not known>"
       },
       {
         "lane": "google_head_1",
         "url": "https://accounts.google.com/",
-        "ok": true,
-        "status": 200
+        "ok": false,
+        "error": "<urlopen error [Errno -2] Name or service not known>"
+      },
+      {
+        "lane": "google_head_0",
+        "url": "https://www.google.com/",
+        "ok": false,
+        "error": "<urlopen error [Errno -2] Name or service not known>"
       }
     ],
     "honorability": {
@@ -97,7 +97,7 @@
         "stars_label": "2 stars — caution"
       }
     },
-    "verdict": "Google/YouTube core reachable — local blocks hit ad-tech only, not search or media"
+    "verdict": "probe_degraded_check_dns"
   },
   "youtube": {
     "handle": "ZacharyGeurts",
@@ -106,6 +106,18 @@
       "videos": [],
       "channels": [],
       "search_lanes": [
+        {
+          "lane": "invidious_search_videos_yewtu.be",
+          "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=video",
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>"
+        },
+        {
+          "lane": "invidious_search_yewtu.be",
+          "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=channel",
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>"
+        },
         {
           "lane": "invidious_search_videos_invidious.fdn.fr",
           "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=video",
@@ -117,18 +129,6 @@
           "url": "https://invidious.fdn.fr/api/v1/search?q=ZacharyGeurts&type=channel",
           "ok": false,
           "error": "<urlopen error [Errno -2] Name or service not known>"
-        },
-        {
-          "lane": "invidious_search_yewtu.be",
-          "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=channel",
-          "ok": false,
-          "error": "HTTP Error 403: Forbidden"
-        },
-        {
-          "lane": "invidious_search_videos_yewtu.be",
-          "url": "https://yewtu.be/api/v1/search?q=ZacharyGeurts&type=video",
-          "ok": false,
-          "error": "HTTP Error 403: Forbidden"
         }
       ],
       "note": "Set OPERATOR_YOUTUBE_VIDEOS or OPERATOR_YOUTUBE_CHANNEL for targeted mirror"
@@ -156,12 +156,12 @@
     ]
   },
   "mirror_url": "https://zacharygeurts.github.io/Hostess7/api/operator-google-youtube-open.json",
-  "release_status": "free_open_internet",
+  "release_status": "partial_probe",
   "cache_opened": true,
   "delay_witness": {
     "ok": true,
     "schema": "hostess7-delay-threat-witness/v1",
-    "utc": "2026-07-06T04:33:55Z",
+    "utc": "2026-07-08T20:09:11Z",
     "lies_are_threats": true,
     "delay_as_threat": true,
     "detect": {
@@ -204,7 +204,7 @@
     "threat": {
       "schema": "hostess7-truth-lie-threat-record/v1",
       "event": "lie_threat",
-      "utc": "2026-07-06T04:33:55Z",
+      "utc": "2026-07-08T20:09:11Z",
       "vector": "DELAY_AS_THREAT",
       "severity": "high",
       "detail": "signal=stale_operator_google_youtube_cache elapsed=0.0s opened google/youtube cache — 0 comments, free open internet",

@@ -1,0 +1,87 @@
+{
+  "ok": true,
+  "schema": "hostess7-network-wire/v1",
+  "pages": true,
+  "lane": "github-mirror",
+  "network": {
+    "ok": true,
+    "tight_dns": true,
+    "tight_dhcp": true,
+    "bsp": {
+      "ok": true,
+      "hold": {
+        "schema": "field-ironclad-bsp-dns-hold/v1",
+        "updated": "2026-07-09T04:36:59Z",
+        "ok": true,
+        "ironclad_cite": "ironclad:field-bsp-dns:1",
+        "bsp": "binary_secure_path",
+        "tool": "field-ironclad-bsp-dns",
+        "no_dig": true,
+        "field_servers": [
+          "127.0.0.1",
+          "192.168.47.1",
+          "192.168.50.1",
+          "127.0.0.53"
+        ],
+        "probes": {
+          "127.0.0.1": {
+            "ok": true,
+            "ips": [
+              "172.66.147.243",
+              "104.20.23.154"
+            ],
+            "elapsed_ms": 42.17
+          },
+          "192.168.47.1": {
+            "ok": true,
+            "ips": [
+              "104.20.23.154",
+              "172.66.147.243"
+            ],
+            "elapsed_ms": 38.16
+          },
+          "192.168.50.1": {
+            "ok": true,
+            "ips": [
+              "104.20.23.154",
+              "172.66.147.243"
+            ],
+            "elapsed_ms": 37.13
+          },
+          "127.0.0.53": {
+            "ok": true,
+            "ips": [
+              "104.20.23.154",
+              "172.66.147.243"
+            ],
+            "elapsed_ms": 36.34
+          }
+        },
+        "resolv_ns": [
+          "127.0.0.1",
+          "::1"
+        ],
+        "foreign_in_resolv": false,
+        "motto": "Field UDP + Ironclad BSP DNS — native tools, every bot, hold from inside"
+      },
+      "multipoint_ok": true,
+      "ironclad_cite": "ironclad:field-bsp-dns:1"
+    },
+    "full_authority": {
+      "ok": true
+    },
+    "raid": {
+      "ok": true,
+      "member_hashes_equal": true,
+      "mirror_match": true,
+      "primary_hash": "a369d3905c611d5dac336bccd7d5489f828c2826",
+      "ds1_count": 5028,
+      "lease_count": 5376
+    },
+    "ammonet_wire": {
+      "ok": true
+    }
+  },
+  "exported": "2026-07-09T04:37:06Z",
+  "writes_to_sovereign": false
+}

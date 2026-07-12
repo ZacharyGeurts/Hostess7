@@ -19,14 +19,17 @@
     strip.className = "h7-ammonet-strip";
     strip.setAttribute("role", "navigation");
     strip.innerHTML =
-      '<span class="h7-ammonet-strip__brand"><strong>AmmoNet</strong> v4.0.1 · Final Internet</span>' +
+      '<span class="h7-ammonet-strip__brand"><strong>AmmoNet</strong> v4.0.1 · Hostess 7 brain</span>' +
       '<a href="' + base() + '/ammonet/">ISP Hub</a>' +
       '<a href="' + base() + '/final-internet/">Safe Fields</a>' +
+      '<a href="' + base() + '/brain.html">Brain</a>' +
       '<a href="' + base() + '/command/">C2</a>' +
       '<a href="' + base() + '/desktop/">AmmoOS</a>' +
-      '<a href="' + base() + '/queen/browser.html">Queen</a>' +
+      '<a href="' + base() + '/ammocode/">AmmoCode</a>' +
+      '<a href="' + base() + '/threat-panel/">Borders</a>' +
       '<a href="' + base() + '/training-room/">Training</a>' +
       '<a href="' + base() + '/field-znetwork-vault/">Vault</a>' +
+      '<a href="' + base() + '/hub/">Hub</a>' +
       '<span class="h7-ammonet-strip__count" id="h7-ammonet-strip-count"></span>';
     const style = document.createElement("style");
     style.textContent =
@@ -80,6 +83,30 @@
       }
       const brand = document.querySelector("#h7-ammonet-strip .h7-ammonet-strip__brand");
       if (brand && doc.motto && !brand.title) brand.title = doc.motto;
+    } catch (_) {}
+    try {
+      const r = await fetch(base() + "/api/hostess7-ammonet-wire.json", { cache: "no-store" });
+      if (!r.ok) return;
+      const doc = await r.json();
+      const countEl = document.getElementById("h7-ammonet-strip-count");
+      const wired =
+        doc.wired_count != null
+          ? doc.wired_count
+          : (doc.stack && doc.stack.wired_count) != null
+            ? doc.stack.wired_count
+            : null;
+      const bordersOk =
+        doc.borders_ok != null
+          ? doc.borders_ok
+          : !!(doc.borders && doc.borders.ok);
+      if (countEl && wired != null) {
+        const border = bordersOk ? "borders sealed" : "borders open";
+        countEl.textContent =
+          (countEl.textContent ? countEl.textContent + " · " : "") +
+          wired +
+          " stack wired · " +
+          border;
+      }
     } catch (_) {}
   }
 

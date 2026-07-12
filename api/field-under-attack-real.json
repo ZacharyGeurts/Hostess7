@@ -1,0 +1,112 @@
+{
+  "ok": true,
+  "schema": "field-under-attack-real/v1",
+  "updated": "2026-07-08T22:21:32Z",
+  "title": "Under attack — real hits only",
+  "motto": "Hit the real things. Never simulate. Never fake billions. Field UDP holds.",
+  "under_attack": true,
+  "never_simulate": true,
+  "simulation": false,
+  "fake": false,
+  "no_clean_all": true,
+  "no_whole_internet": true,
+  "foreign_authority_dead": true,
+  "live": {
+    "dns_running": true,
+    "dns_bound": [
+      "127.0.0.53:53",
+      "192.168.50.1:53",
+      "192.168.47.1:53",
+      "127.0.0.1:53",
+      "97.95.64.87:53",
+      "0.0.0.0:53",
+      "::1:53"
+    ],
+    "never_collide_ip": "7.7.7.7",
+    "dhcp_leases": 4,
+    "live_devices": 5,
+    "live_online": 9,
+    "resolv_nameservers": [
+      "127.0.0.1",
+      "::1"
+    ],
+    "foreign_in_resolv": [],
+    "sole_authority_ok": true,
+    "foreign_resolvers": [],
+    "collision_count": 0,
+    "billions_true": false,
+    "billions_threshold": 1000000000,
+    "simulation": false
+  },
+  "billions": {
+    "only_if_true": true,
+    "true": false,
+    "live_online": 9,
+    "threshold": 1000000000,
+    "note": "Billions NOT claimed — live 9 (never simulate)"
+  },
+  "hits": {
+    "purge_simulated": {
+      "ok": true,
+      "error": null,
+      "slain": null,
+      "threats_killed": null
+    },
+    "spawner_instakill": {
+      "ok": true,
+      "error": null,
+      "slain": 0,
+      "threats_killed": null
+    },
+    "preserve_and_kill": {
+      "ok": true,
+      "error": null,
+      "slain": 0,
+      "threats_killed": true
+    },
+    "collision_enforce": {
+      "ok": true,
+      "error": null,
+      "slain": null,
+      "threats_killed": null
+    },
+    "vector_scan": {
+      "ok": true,
+      "error": null,
+      "slain": null,
+      "threats_killed": null
+    },
+    "ban_status": {
+      "ok": false,
+      "error": null,
+      "slain": null,
+      "threats_killed": null
+    },
+    "final_internet": {
+      "ok": true,
+      "error": null,
+      "slain": null,
+      "threats_killed": null
+    },
+    "hail": {
+      "ok": true,
+      "error": null,
+      "slain": null,
+      "threats_killed": null
+    },
+    "full_auth": {
+      "ok": true,
+      "error": null,
+      "slain": null,
+      "threats_killed": null
+    },
+    "bust_us": {
+      "ok": true,
+      "error": null,
+      "slain": null,
+      "threats_killed": null
+    }
+  },
+  "message": "REAL defense fired. Spawner kill · preserve/kill · vector scan · sole Field · Final Internet · hail/drag · us busted out. Simulated registry rows purged. Live online 9. Billions only if true.",
+  "api": "/api/field-under-attack-real"
+}

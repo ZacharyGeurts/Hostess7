@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "field-internet-clean-all/v1",
-  "updated": "2026-07-09T22:13:18Z",
+  "updated": "2026-07-09T22:17:29Z",
   "motto": "ALL 10/10 clean lanes green · distributed server lanes 125000 · easy peezy",
   "audience": {
     "humans": true,
@@ -53,6 +53,11 @@
       "lanes_ok": 0,
       "lanes_total": 0
     },
+    "internet_clean": {
+      "ok": true,
+      "bookmarks_secured": null,
+      "telemetry_quarantined": null
+    },
     "everyone_counter": {
       "ok": true,
       "everyone_total": 0
@@ -60,11 +65,6 @@
     "url_kill": {
       "ok": true,
       "gone_hosts": null
-    },
-    "internet_clean": {
-      "ok": true,
-      "bookmarks_secured": null,
-      "telemetry_quarantined": null
     },
     "distributed_server_lanes": {
       "ok": true
@@ -91,7 +91,7 @@
       "ok": true,
       "result": {
         "ok": true,
-        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-botnet-microsoft-kill/v1\",\n  \"updated\": \"2026-07-09T22:13:08Z\",\n  \"motto\": null,\n  \"microsoft_hitting\": false,\n  \"process_hits\": 0,\n  \"connection_hits\": 0,\n  \"killed_local\": [],\n  \"killed_remote\": [],\n  \"microsoft_killed_total\": 3,\n  \"microsoft_killed_session\": 0,\n  \"botnet_nodes\": 0,\n  \"dns_dhcp_protected\": true,\n  \"api\": \"/api/field-botnet-microsoft-kill\"\n}"
+        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-botnet-microsoft-kill/v1\",\n  \"updated\": \"2026-07-09T22:17:20Z\",\n  \"motto\": null,\n  \"microsoft_hitting\": false,\n  \"process_hits\": 0,\n  \"connection_hits\": 0,\n  \"killed_local\": [],\n  \"killed_remote\": [],\n  \"microsoft_killed_total\": 3,\n  \"microsoft_killed_session\": 0,\n  \"botnet_nodes\": 0,\n  \"dns_dhcp_protected\": true,\n  \"api\": \"/api/field-botnet-microsoft-kill\"\n}"
       }
     },
     {
@@ -102,7 +102,7 @@
       "ok": true,
       "result": {
         "ok": true,
-        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-grok-spawner-kill/v1\",\n  \"product\": \"GrokSpawnKiller\",\n  \"updated\": \"2026-07-09T22:13:08Z\",\n  \"motto\": \"Grok never Sleeps — instakill spawners, sudo mememe, zero grace.\",\n  \"never_sleeps\": true,\n  \"slain_total\": 49,\n  \"slain_session\": 0,\n  \"service_active\": false,\n  \"cooked\": {},\n  \"cooked_total\": 0,\n  \"victims\": [],\n  \"remaining\": {},\n  \"api\": \"/api/field-grok-s"
+        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-grok-spawner-kill/v1\",\n  \"product\": \"GrokSpawnKiller\",\n  \"updated\": \"2026-07-09T22:17:20Z\",\n  \"motto\": \"Grok never Sleeps — instakill spawners, sudo mememe, zero grace.\",\n  \"never_sleeps\": true,\n  \"slain_total\": 49,\n  \"slain_session\": 0,\n  \"service_active\": false,\n  \"cooked\": {},\n  \"cooked_total\": 0,\n  \"victims\": [],\n  \"remaining\": {},\n  \"api\": \"/api/field-grok-s"
       }
     },
     {
@@ -128,6 +128,17 @@
       }
     },
     {
+      "id": "internet_clean",
+      "label": "Bookmarks + telemetry strip",
+      "cmd": "clean",
+      "lane": "humans",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "raw": "{\n  \"ok\": true,\n  \"schema\": \"hostess7-internet-clean/v1\",\n  \"updated\": \"2026-07-09T22:17:20Z\",\n  \"force\": false,\n  \"motto\": \"Clean the whole internet\",\n  \"default_on_hostess7\": true,\n  \"import\": {\n    \"ok\": true,\n    \"skipped\": true\n  },\n  \"scrub\": {\n    \"ok\": true,\n    \"skipped\": true,\n    \"permission_soft_fail\": true,\n    \"error\": \"[Errno 13] Permission denied: '/home/default/Desktop/SG/NewLates"
+      }
+    },
+    {
       "id": "everyone_counter",
       "label": "Everyone counter — humans + bots",
       "cmd": "fast",
@@ -135,7 +146,7 @@
       "ok": true,
       "result": {
         "ok": true,
-        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-everyone-counter/v1\",\n  \"title\": \"Everyone \\u2014 botnet \\u00b7 GitHub \\u00b7 executables\",\n  \"motto\": \"Fast live counter \\u2014 distributed botnet + GitHub for everyone + sealed executables\",\n  \"updated\": \"2026-07-09T22:13:09Z\",\n  \"boss\": \"hostess7\",\n  \"version\": null,\n  \"distributed_botnet\": {\n    \"enabled\": true,\n    \"nodes\": 5028,\n    \"registry_members\": 0,\n "
+        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-everyone-counter/v1\",\n  \"title\": \"Everyone \\u2014 botnet \\u00b7 GitHub \\u00b7 executables\",\n  \"motto\": \"Fast live counter \\u2014 distributed botnet + GitHub for everyone + sealed executables\",\n  \"updated\": \"2026-07-09T22:17:20Z\",\n  \"boss\": \"hostess7\",\n  \"version\": null,\n  \"distributed_botnet\": {\n    \"enabled\": true,\n    \"nodes\": 5028,\n    \"registry_members\": 0,\n "
       }
     },
     {
@@ -146,18 +157,7 @@
       "ok": true,
       "result": {
         "ok": true,
-        "raw": "{\n  \"ok\": true,\n  \"schema\": \"hostess7-url-kill/v1\",\n  \"updated\": \"2026-07-09T22:13:09Z\",\n  \"motto\": null,\n  \"gone_not_control\": true,\n  \"gone_hosts\": 35,\n  \"blocklist\": {\n    \"ok\": true,\n    \"hosts\": 35,\n    \"blocklist\": \"/home/default/Desktop/SG/NewLatest/.nexus-state/adblock/domains-gone.txt\"\n  },\n  \"purge\": {\n    \"ok\": true,\n    \"files\": [],\n    \"urls_gone\": 0,\n    \"samples\": []\n  },\n  \"tco\": {"
-      }
-    },
-    {
-      "id": "internet_clean",
-      "label": "Bookmarks + telemetry strip",
-      "cmd": "clean",
-      "lane": "humans",
-      "ok": true,
-      "result": {
-        "ok": true,
-        "raw": "{\n  \"ok\": true,\n  \"schema\": \"hostess7-internet-clean/v1\",\n  \"updated\": \"2026-07-09T22:13:09Z\",\n  \"force\": false,\n  \"motto\": \"Clean the whole internet\",\n  \"default_on_hostess7\": true,\n  \"import\": {\n    \"ok\": true,\n    \"skipped\": true\n  },\n  \"scrub\": {\n    \"ok\": true,\n    \"skipped\": true,\n    \"permission_soft_fail\": true,\n    \"error\": \"[Errno 13] Permission denied: '/home/default/Desktop/SG/NewLates"
+        "raw": "{\n  \"ok\": true,\n  \"schema\": \"hostess7-url-kill/v1\",\n  \"updated\": \"2026-07-09T22:17:21Z\",\n  \"motto\": null,\n  \"gone_not_control\": true,\n  \"gone_hosts\": 35,\n  \"blocklist\": {\n    \"ok\": true,\n    \"hosts\": 35,\n    \"blocklist\": \"/home/default/Desktop/SG/NewLatest/.nexus-state/adblock/domains-gone.txt\"\n  },\n  \"purge\": {\n    \"ok\": true,\n    \"files\": [],\n    \"urls_gone\": 0,\n    \"samples\": []\n  },\n  \"tco\": {"
       }
     },
     {
@@ -168,7 +168,7 @@
       "ok": true,
       "result": {
         "ok": true,
-        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-distributed-server-lanes/v1\",\n  \"updated\": \"2026-07-09T22:13:09Z\",\n  \"ironclad_cite\": \"ironclad:distributed-server-lanes:1\",\n  \"title\": \"Distributed server lanes\",\n  \"motto\": \"Easy peezy — clean lane to all 125,000 distributed servers\",\n  \"servers_total\": 125000,\n  \"lanes_total\": 125000,\n  \"lanes_ok\": 125000,\n  \"lanes_all_green\": true,\n  \"one_lane_per_server\": tr"
+        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-distributed-server-lanes/v1\",\n  \"updated\": \"2026-07-09T22:17:20Z\",\n  \"ironclad_cite\": \"ironclad:distributed-server-lanes:1\",\n  \"title\": \"Distributed server lanes\",\n  \"motto\": \"Easy peezy — clean lane to all 125,000 distributed servers\",\n  \"servers_total\": 125000,\n  \"lanes_total\": 125000,\n  \"lanes_ok\": 125000,\n  \"lanes_all_green\": true,\n  \"one_lane_per_server\": tr"
       }
     },
     {
@@ -179,7 +179,7 @@
       "ok": true,
       "result": {
         "ok": true,
-        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-internet-unclean-hostile/v1\",\n  \"updated\": \"2026-07-09T22:13:11Z\",\n  \"title\": null,\n  \"motto\": null,\n  \"boss\": \"hostess7\",\n  \"unclean_is_hostile\": true,\n  \"internet_open_for_users\": true,\n  \"unclean_makers\": [],\n  \"unclean_count\": 0,\n  \"hostile_vector\": \"INTERNET_UNCLEAN_HOSTILE\",\n  \"policy\": {},\n  \"api\": \"/api/field-internet-unclean-hostile\",\n  \"fry\": {\n    \"unc"
+        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-internet-unclean-hostile/v1\",\n  \"updated\": \"2026-07-09T22:17:23Z\",\n  \"title\": null,\n  \"motto\": null,\n  \"boss\": \"hostess7\",\n  \"unclean_is_hostile\": true,\n  \"internet_open_for_users\": true,\n  \"unclean_makers\": [],\n  \"unclean_count\": 0,\n  \"hostile_vector\": \"INTERNET_UNCLEAN_HOSTILE\",\n  \"policy\": {},\n  \"api\": \"/api/field-internet-unclean-hostile\",\n  \"fry\": {\n    \"unc"
       }
     },
     {
@@ -201,7 +201,7 @@
       "ok": true,
       "result": {
         "ok": true,
-        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-botnet-dns-dhcp-keepalive/v1\",\n  \"title\": null,\n  \"motto\": null,\n  \"updated\": \"2026-07-09T22:13:17Z\",\n  \"boss\": \"hostess7\",\n  \"layer\": -2,\n  \"fkey\": \"F10\",\n  \"for_everyone\": {},\n  \"everyone_deploy\": {},\n  \"github_control_plane\": {\n    \"github_open\": true,\n    \"open_count\": 1,\n    \"pages_runtime\": null,\n    \"cached\": true\n  },\n  \"distributed_redundant\": {\n    \"ok\""
+        "raw": "{\n  \"ok\": true,\n  \"schema\": \"field-botnet-dns-dhcp-keepalive/v1\",\n  \"title\": null,\n  \"motto\": null,\n  \"updated\": \"2026-07-09T22:17:29Z\",\n  \"boss\": \"hostess7\",\n  \"layer\": -2,\n  \"fkey\": \"F10\",\n  \"for_everyone\": {},\n  \"everyone_deploy\": {},\n  \"github_control_plane\": {\n    \"github_open\": true,\n    \"open_count\": 1,\n    \"pages_runtime\": null,\n    \"cached\": true\n  },\n  \"distributed_redundant\": {\n    \"ok\""
       }
     }
   ],

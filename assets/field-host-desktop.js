@@ -51,6 +51,7 @@
   const DESKTOP_DEFAULT_IDS = [
     "view",
     "gnu-eol-terminal",
+    "field-irc-chat",
     "field-ping",
     "mspaint",
     "field-popcorn",
@@ -104,6 +105,13 @@
       return (window.HOSTESS7_PAGES_BASE || "/Hostess7") + "/field-gnu-terminal-embed.html";
     }
     return panelOrigin() + "/field-gnu-terminal-embed.html";
+  }
+
+  function ircChatExec() {
+    if (pagesRuntime()) {
+      return (window.HOSTESS7_PAGES_BASE || "/Hostess7") + "/field-irc-chat";
+    }
+    return panelOrigin() + "/field-irc-chat";
   }
 
   function inQueenFrame() {
@@ -361,6 +369,7 @@
   function openDesktopApp(app) {
     if (app.id === "queen-browser") openQueenBrowserClean();
     else if (app.id === "gnu-eol-terminal" || app.id === "queen-terminal") launchGnuTerminal(app);
+    else if (app.id === "field-irc-chat" || app.id === "field-irc" || app.id === "chat-terminal") launchIrcChat(app);
     else launchApp(app);
   }
 
@@ -461,6 +470,28 @@
       return;
     }
     launchApp(termApp);
+  }
+
+  function launchIrcChat(app) {
+    const exec = ircChatExec();
+    const chatApp = Object.assign({}, app || {}, {
+      id: "field-irc-chat",
+      exec: exec,
+      shell: true,
+      name: "Chat Terminal",
+      icon: "queen-prog-hostess",
+      os_layer: 0,
+      category: "GNU EOL Terminal",
+    });
+    if (shellLaunch(chatApp)) {
+      toast("Chat Terminal · Field IRC");
+      return;
+    }
+    if (pagesRuntime()) {
+      window.location.href = pageUrl(exec);
+      return;
+    }
+    launchApp(chatApp);
   }
 
   function openQueenBrowserClean() {

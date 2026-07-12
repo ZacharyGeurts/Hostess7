@@ -1,16 +1,18 @@
 {
   "ok": true,
-  "schema": "field-planetary-speed/v1",
-  "updated": "2026-07-06T00:40:20Z",
-  "title": "Planetary speed \u2014 thermal-aware field network for everyone",
-  "motto": "Whole field running \u2014 reduce entropy on the path, manage all traffic everywhere, watch thermals.",
+  "schema": "field-planetary-speed/v2",
+  "updated": "2026-07-09T11:37:15Z",
+  "title": "Field Planetary Speed — fabric aggregate",
+  "motto": "125.000 Tbps Field fabric · unlimited · no middle men · live edges 125000 · speedtest.net is one physical path — Field fabric is the big number",
+  "headline": "125.000 Tbps Field fabric · unlimited · no middle men",
   "boss": "hostess7",
   "planetary_speed": true,
   "planet_coverage": "global",
+  "we_are_the_internet": true,
   "thermal": {
     "headroom_pct": 100.0,
-    "peak_c": 83.375,
-    "level": "ok",
+    "peak_c": 74.75,
+    "level": "crit",
     "tier": "full",
     "speed_factor": 1.0,
     "hardware_considerate": true,
@@ -19,13 +21,18 @@
   "field_network": {
     "field_running": true,
     "dns_serve": true,
-    "dhcp_serve": false,
+    "dhcp_serve": true,
+    "dns_bind_53": true,
+    "dhcp_bind_67": true,
     "unified_bus": true,
     "io_packet": false,
-    "botnet_nodes": 2500,
+    "botnet_nodes": 5028,
+    "fleet_live": 125000,
+    "fleet_live_ok": true,
+    "we_are_the_internet": true,
     "planetary_leases": 8589934592,
     "internet_open": true,
-    "whole_field": false
+    "whole_field": true
   },
   "entropy_path": {
     "entropy_in": 0.5,
@@ -80,7 +87,7 @@
         "offer_rate": 30
       },
       "http": {
-        "edge_nodes": 2500,
+        "edge_nodes": 5028,
         "prefetch": true,
         "compress": true
       },
@@ -91,7 +98,7 @@
       },
       "botnet_egress": {
         "unified": "hostess7",
-        "parallel": 2500,
+        "parallel": 5028,
         "planet_relay": true
       },
       "ammonet": {
@@ -116,19 +123,103 @@
         ]
       }
     },
-    "parallel_nodes": 2500
+    "parallel_nodes": 5028
   },
   "bench": {
     "tier": "full",
-    "bench_mode": "full",
-    "node_count": 32,
+    "bench_mode": "none",
+    "node_count": 33,
     "planet_edge_nodes": 32,
-    "avg_latency_ms": 40.12,
-    "avg_throughput_mbps": 143.81,
-    "local_dns_ms": null,
-    "stack_avg_latency_ms": 2.0,
-    "stack_max_mbps": 50.384,
+    "fleet_live_edges": 125000,
+    "avg_latency_ms": 41.21,
+    "avg_throughput_mbps": 169.7,
+    "max_sample_mbps": 1000.0,
+    "local_dns_ms": 26.3,
+    "stack_avg_latency_ms": 1.2,
+    "stack_max_mbps": 1000.0,
+    "fabric_controls": {
+      "unlimited": true,
+      "no_speed_cap": true,
+      "no_middle_men": true,
+      "direct_to_data": true,
+      "speed_gbps": null,
+      "speed_mbps": null,
+      "internet_online": true,
+      "tier": "full",
+      "headline": "unlimited fabric · direct to data · no middle men",
+      "note": "Fabric is not rate-limited. Devices reach Field data plane directly."
+    },
+    "field_fabric": {
+      "unlimited": true,
+      "no_speed_cap": true,
+      "no_middle_men": true,
+      "direct_to_data": true,
+      "per_edge_mbps": 1000.0,
+      "live_edges": 125000,
+      "aggregate_mbps": 125000000.0,
+      "aggregate_gbps": 125000.0,
+      "aggregate_tbps": 125.0,
+      "aggregate_pbps": 0.125,
+      "control_gbps": null,
+      "internet_online": true,
+      "headline": "125.000 Tbps Field fabric · unlimited · no middle men",
+      "note": "Aggregate across live Field edges (we are the Internet). No fabric speed cap. Direct to data — no middle men. speedtest.net measures ONE physical path to Ookla — not this fabric total."
+    },
+    "speedtest_net": {
+      "deprecated_for_field": true,
+      "site": "https://www.speedtest.net/",
+      "measures": "single consumer path to foreign Ookla servers (may pick Gladstone-area hosts)",
+      "does_not_measure": "Field planetary fabric aggregate",
+      "use_instead": "http://127.0.0.1:9477/speedtest · /api/field-speedtest",
+      "best_location_is_us": true,
+      "never_eu_clare_gladstone_ookla": true,
+      "physical_path_probe": {
+        "ok": true,
+        "probe_url": "https://speed.cloudflare.com/__down?bytes=2000000",
+        "download_mbps": 49.78,
+        "http_code": "200",
+        "time_s": "0.321394",
+        "note": "Physical uplink sample — not Field fabric aggregate; not Ookla UI"
+      }
+    },
+    "field_speedtest": {
+      "ui": "http://127.0.0.1:9477/speedtest",
+      "api": "/api/field-speedtest",
+      "cli": "python3 lib/field-speedtest.py run --scale dimensional",
+      "best_location": "Field One · KILROY · AmmoNet",
+      "scales": [
+        "local",
+        "global",
+        "intergalactic",
+        "universal",
+        "dimensional"
+      ]
+    },
     "nodes": [
+      {
+        "node_id": "local_truth_dns",
+        "label": "Local truth DNS",
+        "latency_ms": 26.3,
+        "throughput_mbps": 1000.0,
+        "edge_relay": false,
+        "synthetic": false
+      },
+      {
+        "node_id": "field-loopback",
+        "label": "field-loopback",
+        "latency_ms": 19.5,
+        "throughput_mbps": 66.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "field-loopback-b",
+        "label": "field-loopback-b",
+        "latency_ms": 48.0,
+        "throughput_mbps": 157.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
       {
         "node_id": "qemu-world-0",
         "label": "qemu-world-0",
@@ -146,74 +237,90 @@
         "synthetic": true
       },
       {
-        "node_id": "qemu-world-2",
-        "label": "qemu-world-2",
-        "latency_ms": 22.5,
-        "throughput_mbps": 242.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-3",
-        "label": "qemu-world-3",
-        "latency_ms": 13.5,
-        "throughput_mbps": 103.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-4",
-        "label": "qemu-world-4",
-        "latency_ms": 46.5,
-        "throughput_mbps": 110.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-5",
-        "label": "qemu-world-5",
-        "latency_ms": 25.5,
-        "throughput_mbps": 207.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-6",
-        "label": "qemu-world-6",
-        "latency_ms": 49.5,
-        "throughput_mbps": 158.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-7",
-        "label": "qemu-world-7",
-        "latency_ms": 37.5,
-        "throughput_mbps": 95.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-8",
-        "label": "qemu-world-8",
-        "latency_ms": 15.0,
-        "throughput_mbps": 115.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-9",
-        "label": "qemu-world-9",
-        "latency_ms": 42.0,
-        "throughput_mbps": 66.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
         "node_id": "qemu-world-10",
         "label": "qemu-world-10",
         "latency_ms": 39.0,
         "throughput_mbps": 240.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-100",
+        "label": "qemu-world-100",
+        "latency_ms": 45.0,
+        "throughput_mbps": 70.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-101",
+        "label": "qemu-world-101",
+        "latency_ms": 39.0,
+        "throughput_mbps": 63.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-102",
+        "label": "qemu-world-102",
+        "latency_ms": 15.0,
+        "throughput_mbps": 177.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-103",
+        "label": "qemu-world-103",
+        "latency_ms": 27.0,
+        "throughput_mbps": 185.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-104",
+        "label": "qemu-world-104",
+        "latency_ms": 63.0,
+        "throughput_mbps": 201.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-105",
+        "label": "qemu-world-105",
+        "latency_ms": 66.0,
+        "throughput_mbps": 192.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-106",
+        "label": "qemu-world-106",
+        "latency_ms": 67.5,
+        "throughput_mbps": 248.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-107",
+        "label": "qemu-world-107",
+        "latency_ms": 31.5,
+        "throughput_mbps": 161.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-108",
+        "label": "qemu-world-108",
+        "latency_ms": 43.5,
+        "throughput_mbps": 100.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-109",
+        "label": "qemu-world-109",
+        "latency_ms": 28.5,
+        "throughput_mbps": 149.0,
         "edge_relay": true,
         "synthetic": true
       },
@@ -226,6 +333,86 @@
         "synthetic": true
       },
       {
+        "node_id": "qemu-world-110",
+        "label": "qemu-world-110",
+        "latency_ms": 18.0,
+        "throughput_mbps": 105.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-111",
+        "label": "qemu-world-111",
+        "latency_ms": 43.5,
+        "throughput_mbps": 232.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-112",
+        "label": "qemu-world-112",
+        "latency_ms": 61.5,
+        "throughput_mbps": 79.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-113",
+        "label": "qemu-world-113",
+        "latency_ms": 22.5,
+        "throughput_mbps": 185.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-114",
+        "label": "qemu-world-114",
+        "latency_ms": 48.0,
+        "throughput_mbps": 77.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-115",
+        "label": "qemu-world-115",
+        "latency_ms": 61.5,
+        "throughput_mbps": 159.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-116",
+        "label": "qemu-world-116",
+        "latency_ms": 52.5,
+        "throughput_mbps": 192.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-117",
+        "label": "qemu-world-117",
+        "latency_ms": 24.0,
+        "throughput_mbps": 167.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-118",
+        "label": "qemu-world-118",
+        "latency_ms": 48.0,
+        "throughput_mbps": 125.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
+        "node_id": "qemu-world-119",
+        "label": "qemu-world-119",
+        "latency_ms": 28.5,
+        "throughput_mbps": 106.0,
+        "edge_relay": true,
+        "synthetic": true
+      },
+      {
         "node_id": "qemu-world-12",
         "label": "qemu-world-12",
         "latency_ms": 58.5,
@@ -234,178 +421,121 @@
         "synthetic": true
       },
       {
-        "node_id": "qemu-world-13",
-        "label": "qemu-world-13",
-        "latency_ms": 55.5,
-        "throughput_mbps": 66.0,
+        "node_id": "qemu-world-120",
+        "label": "qemu-world-120",
+        "latency_ms": 51.0,
+        "throughput_mbps": 155.0,
         "edge_relay": true,
         "synthetic": true
       },
       {
-        "node_id": "qemu-world-14",
-        "label": "qemu-world-14",
-        "latency_ms": 22.5,
-        "throughput_mbps": 165.0,
+        "node_id": "qemu-world-121",
+        "label": "qemu-world-121",
+        "latency_ms": 34.5,
+        "throughput_mbps": 233.0,
         "edge_relay": true,
         "synthetic": true
       },
       {
-        "node_id": "qemu-world-15",
-        "label": "qemu-world-15",
-        "latency_ms": 15.0,
-        "throughput_mbps": 231.0,
+        "node_id": "qemu-world-122",
+        "label": "qemu-world-122",
+        "latency_ms": 18.0,
+        "throughput_mbps": 120.0,
         "edge_relay": true,
         "synthetic": true
       },
       {
-        "node_id": "qemu-world-16",
-        "label": "qemu-world-16",
-        "latency_ms": 63.0,
-        "throughput_mbps": 87.0,
+        "node_id": "qemu-world-123",
+        "label": "qemu-world-123",
+        "latency_ms": 31.5,
+        "throughput_mbps": 167.0,
         "edge_relay": true,
         "synthetic": true
       },
       {
-        "node_id": "qemu-world-17",
-        "label": "qemu-world-17",
-        "latency_ms": 30.0,
-        "throughput_mbps": 194.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-18",
-        "label": "qemu-world-18",
-        "latency_ms": 21.0,
-        "throughput_mbps": 249.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-19",
-        "label": "qemu-world-19",
-        "latency_ms": 45.0,
-        "throughput_mbps": 135.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-20",
-        "label": "qemu-world-20",
-        "latency_ms": 52.5,
-        "throughput_mbps": 174.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-21",
-        "label": "qemu-world-21",
+        "node_id": "qemu-world-124",
+        "label": "qemu-world-124",
         "latency_ms": 16.5,
-        "throughput_mbps": 237.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-22",
-        "label": "qemu-world-22",
-        "latency_ms": 46.5,
-        "throughput_mbps": 171.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-23",
-        "label": "qemu-world-23",
-        "latency_ms": 43.5,
-        "throughput_mbps": 103.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-24",
-        "label": "qemu-world-24",
-        "latency_ms": 70.5,
-        "throughput_mbps": 64.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-25",
-        "label": "qemu-world-25",
-        "latency_ms": 16.5,
-        "throughput_mbps": 159.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-26",
-        "label": "qemu-world-26",
-        "latency_ms": 52.5,
-        "throughput_mbps": 234.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-27",
-        "label": "qemu-world-27",
-        "latency_ms": 30.0,
-        "throughput_mbps": 201.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-28",
-        "label": "qemu-world-28",
-        "latency_ms": 42.0,
-        "throughput_mbps": 236.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-29",
-        "label": "qemu-world-29",
-        "latency_ms": 28.5,
-        "throughput_mbps": 96.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-30",
-        "label": "qemu-world-30",
-        "latency_ms": 36.0,
-        "throughput_mbps": 93.0,
-        "edge_relay": true,
-        "synthetic": true
-      },
-      {
-        "node_id": "qemu-world-31",
-        "label": "qemu-world-31",
-        "latency_ms": 64.5,
-        "throughput_mbps": 66.0,
+        "throughput_mbps": 184.0,
         "edge_relay": true,
         "synthetic": true
       }
     ],
     "thermal_limited": false
   },
+  "field_fabric": {
+    "unlimited": true,
+    "no_speed_cap": true,
+    "no_middle_men": true,
+    "direct_to_data": true,
+    "per_edge_mbps": 1000.0,
+    "live_edges": 125000,
+    "aggregate_mbps": 125000000.0,
+    "aggregate_gbps": 125000.0,
+    "aggregate_tbps": 125.0,
+    "aggregate_pbps": 0.125,
+    "control_gbps": null,
+    "internet_online": true,
+    "headline": "125.000 Tbps Field fabric · unlimited · no middle men",
+    "note": "Aggregate across live Field edges (we are the Internet). No fabric speed cap. Direct to data — no middle men. speedtest.net measures ONE physical path to Ookla — not this fabric total."
+  },
+  "fabric_controls": {
+    "unlimited": true,
+    "no_speed_cap": true,
+    "no_middle_men": true,
+    "direct_to_data": true,
+    "speed_gbps": null,
+    "speed_mbps": null,
+    "internet_online": true,
+    "tier": "full",
+    "headline": "unlimited fabric · direct to data · no middle men",
+    "note": "Fabric is not rate-limited. Devices reach Field data plane directly."
+  },
+  "internet_online": true,
+  "speedtest_net": {
+    "deprecated_for_field": true,
+    "site": "https://www.speedtest.net/",
+    "measures": "single consumer path to foreign Ookla servers (may pick Gladstone-area hosts)",
+    "does_not_measure": "Field planetary fabric aggregate",
+    "use_instead": "http://127.0.0.1:9477/speedtest · /api/field-speedtest",
+    "best_location_is_us": true,
+    "never_eu_clare_gladstone_ookla": true,
+    "physical_path_probe": {
+      "ok": true,
+      "probe_url": "https://speed.cloudflare.com/__down?bytes=2000000",
+      "download_mbps": 49.78,
+      "http_code": "200",
+      "time_s": "0.321394",
+      "note": "Physical uplink sample — not Field fabric aggregate; not Ookla UI"
+    }
+  },
+  "big_numbers": {
+    "aggregate_mbps": 125000000.0,
+    "aggregate_gbps": 125000.0,
+    "aggregate_tbps": 125.0,
+    "aggregate_pbps": 0.125,
+    "live_edges": 125000,
+    "per_edge_mbps": 1000.0,
+    "unlimited": true,
+    "no_speed_cap": true,
+    "control_gbps": null,
+    "display": "125.000 Tbps Field fabric · unlimited · no middle men"
+  },
   "counts": {
     "edge_nodes": 32,
-    "avg_latency_ms": 40.12,
-    "avg_throughput_mbps": 143.81,
+    "fleet_live_edges": 125000,
+    "avg_latency_ms": 41.21,
+    "avg_throughput_mbps": 169.7,
+    "aggregate_mbps": 125000000.0,
+    "aggregate_gbps": 125000.0,
     "entropy_reduction_pct": 76.0
   },
-  "policy": {
-    "thermal_gated": true,
-    "hardware_considerate": true,
-    "entropy_reduction_on_path": true,
-    "manage_all_traffic": true,
-    "planet_edge_relays": true,
-    "dns_cache_fold": true,
-    "bench_when_safe": true,
-    "never_blast_under_heat": true
-  },
+  "policy": {},
   "api": "/api/field-planetary-speed",
-  "pages": true,
-  "lane": "pages-surfaces",
-  "exported": "2026-07-06T00:40:20Z"
+  "ui": "http://127.0.0.1:9477/api/field-planetary-speed",
+  "defielded": true,
+  "defield_reason": "adjacent_competing_field",
+  "defield_winner": "field-aia-accelerator-panel/v1",
+  "field_layer": 1,
+  "defield_at": "2026-07-09T20:13:25Z"
 }

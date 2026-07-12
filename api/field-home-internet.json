@@ -1,0 +1,76 @@
+{
+  "ok": true,
+  "schema": "field-home-internet-public/v1",
+  "updated": "2026-07-10T07:32:37Z",
+  "title": "Your Internet — Autonet on 127.0.0.1",
+  "motto": "This is your Internet now. Autonet. No distributed controls. Free DNS+DHCP. SAW between links. We always know our network.",
+  "ironclad_cite": "ironclad:home-internet-panel:1",
+  "pages": true,
+  "lane": "github-mirror",
+  "writes_to_sovereign": false,
+  "loopback_url": "http://127.0.0.1:9477/internet",
+  "autonet": {
+    "ok": true,
+    "name": "autonet",
+    "distributed_controls": false,
+    "no_distributed_controls": true,
+    "human_intervention": false,
+    "autopilot": true,
+    "we_are_the_internet": true,
+    "api_keys_display_only": true
+  },
+  "saw": {
+    "between_them": true,
+    "running": true,
+    "always_know_our_network": true
+  },
+  "network": {
+    "mesh_peer_count": 2500,
+    "servers": 125000,
+    "knows_all": true
+  },
+  "rollout": {
+    "deploy_ready": true,
+    "max_concurrent": 10,
+    "last_verified": 2500,
+    "last_total": 2500
+  },
+  "plane": {
+    "free_dns": true,
+    "free_dhcp": true,
+    "dns_option_home": [
+      "127.0.0.1"
+    ],
+    "ds1_count": 5028,
+    "lease_count": 55039,
+    "permanent_homes": true
+  },
+  "security": {
+    "never_reconnect": true,
+    "no_light_bans": true,
+    "wall_socket_cook": true,
+    "no_hooks": true,
+    "hardened_forever": true
+  },
+  "how": {
+    "dns": "Field DHCP option 6 → 127.0.0.1 (and Field truth NS)",
+    "open": "http://127.0.0.1:9477/internet",
+    "also": [
+      "http://127.0.0.1:9477/maintenance",
+      "http://127.0.0.1:9477/chat",
+      "http://127.0.0.1:9477/botnet"
+    ],
+    "public_mirror": "https://zacharygeurts.github.io/Hostess7/",
+    "note": "Every home on AmmoNet plane resolves Truth DNS locally — 127 is the window."
+  },
+  "links": {
+    "internet": "/internet",
+    "maintenance": "/maintenance",
+    "chat": "/chat",
+    "botnet": "/botnet",
+    "never_reconnect": "/never-reconnect",
+    "hostess7": "https://zacharygeurts.github.io/Hostess7/",
+    "stack": "https://zacharygeurts.github.io/Hostess7/stack.html",
+    "public_api": "https://zacharygeurts.github.io/Hostess7/api/field-home-internet.json"
+  }
+}

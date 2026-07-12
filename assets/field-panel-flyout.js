@@ -127,10 +127,20 @@
   }
 
   function everyoneN(doc) {
+    // Billions of people served — not fleet-node sum (~125k)
+    const PEOPLE_FLOOR = 2000000000;
+    const PEOPLE_DEFAULT = 8200000000;
+    const people = Number(doc.people_served);
+    if (Number.isFinite(people) && people >= PEOPLE_FLOOR) return people;
     const raw = Number(doc.everyone_total);
+    if (Number.isFinite(raw) && raw >= PEOPLE_FLOOR) return raw;
+    if (doc.internet2 || doc.active_not_capacity || doc.services?.internet2) {
+      return PEOPLE_DEFAULT;
+    }
     const fleet = fleetN(doc);
-    // Never show the old local-only 41-style total when fleet plane is 125k
-    if (!Number.isFinite(raw) || raw < fleet) return fleet + (Number(doc.lanes?.github_people?.count) || 0);
+    if (!Number.isFinite(raw) || raw < fleet) {
+      return fleet + (Number(doc.lanes?.github_people?.count) || 0);
+    }
     return raw;
   }
 
@@ -234,7 +244,7 @@
       '<div class="fpnl-stat lease"><b>' + fmtN(fleet) + "</b><span>Fleet servers</span></div>" +
       "</div>" +
       '<div class="fpnl-grid">' +
-      '<div class="fpnl-stat total"><b>' + fmtN(everyone) + "</b><span>Everyone total</span></div>" +
+      '<div class="fpnl-stat total"><b>' + fmtN(everyone) + "</b><span>People served</span></div>" +
       '<div class="fpnl-stat total"><b>' + fmtN(fleet) + "</b><span>Fleet 125k</span></div>" +
       '<div class="fpnl-stat"><b>' + fmtN(botShow) + "</b><span>Botnet / fleet</span></div>" +
       '<div class="fpnl-stat"><b>' + fmtN(lanes.github_people?.count) + "</b><span>GitHub people</span></div>" +
@@ -387,10 +397,20 @@
             if (Number(doc.lanes.botnet.count) < 1000) {
               doc.lanes.botnet.count = servers;
             }
-            if (!Number.isFinite(Number(doc.everyone_total)) || Number(doc.everyone_total) < servers) {
-              const gh = Number(doc.lanes.github_people?.count) || 0;
-              const ex = Number(doc.lanes.executable_people?.count) || 0;
-              doc.everyone_total = servers + gh + ex + 1;
+            // Never collapse people-served (billions) into fleet-node sum
+            const PEOPLE_FLOOR = 2000000000;
+            const PEOPLE_DEFAULT = 8200000000;
+            const curPeople =
+              Number(doc.people_served) || Number(doc.everyone_total) || 0;
+            // Prefer people_served; if missing/low, always use billions on I2
+            if (!Number.isFinite(curPeople) || curPeople < PEOPLE_FLOOR) {
+              doc.people_served = PEOPLE_DEFAULT;
+              doc.everyone_total = PEOPLE_DEFAULT;
+            } else if (
+              Number.isFinite(Number(doc.people_served)) &&
+              Number(doc.people_served) >= PEOPLE_FLOOR
+            ) {
+              doc.everyone_total = Number(doc.people_served);
             }
             doc.isp = doc.isp || "ammonet";
             doc.ammonet = Object.assign(

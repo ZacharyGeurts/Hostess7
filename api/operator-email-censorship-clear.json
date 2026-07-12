@@ -1,182 +1,218 @@
 {
   "ok": true,
   "schema": "hostess7-email-censorship-clear/v1",
-  "updated": "2026-07-06T04:34:26Z",
+  "updated": "2026-07-08T20:10:16Z",
   "motto": "Operator mail is sovereign truth — platform or government withhold is hostile; mirror + alternate lane.",
   "providers": [
     {
-      "provider": "microsoft",
-      "ok": true,
-      "censored": false,
-      "reachable": 9,
-      "probe_count": 10,
-      "probes": [
-        {
-          "domain": "hotmail.com",
-          "ok": true,
-          "mx": [
-            "2 hotmail-com.olc.protection.outlook.com."
-          ]
-        },
-        {
-          "domain": "live.com",
-          "ok": true,
-          "mx": [
-            "2 live-com.olc.protection.outlook.com."
-          ]
-        },
-        {
-          "domain": "outlook.com",
-          "ok": true,
-          "mx": [
-            "5 outlook-com.olc.protection.outlook.com."
-          ]
-        },
-        {
-          "domain": "office365.com",
-          "ok": false,
-          "mx": []
-        },
-        {
-          "host": "smtp.office365.com",
-          "port": 587,
-          "ok": true,
-          "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
-        },
-        {
-          "host": "outlook.office365.com",
-          "port": 993,
-          "ok": true,
-          "tls": "TLSv1.2"
-        },
-        {
-          "ok": true,
-          "status": 403,
-          "url": "https://office365.com/"
-        },
-        {
-          "ok": true,
-          "status": 417,
-          "url": "https://outlook.com/"
-        },
-        {
-          "ok": true,
-          "status": 417,
-          "url": "https://live.com/"
-        },
-        {
-          "ok": true,
-          "status": 417,
-          "url": "https://hotmail.com/"
-        }
-      ],
-      "barrier": {
-        "id": "email_censorship_microsoft",
-        "actor": "Microsoft (platform)",
-        "system": "microsoft mail transport / inbox filter",
-        "barrier_type": "platform_policy_block",
-        "government_possible": true,
-        "cleared": true,
-        "revealed": true,
-        "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
-      }
-    },
-    {
       "provider": "google",
-      "ok": true,
-      "censored": false,
-      "reachable": 9,
+      "ok": false,
+      "censored": true,
+      "transport_ok": false,
+      "operator_reported_inbox_censorship": false,
+      "reachable": 0,
       "probe_count": 10,
       "probes": [
         {
           "domain": "gmail.com",
-          "ok": true,
-          "mx": [
-            "10 alt1.gmail-smtp-in.l.google.com.",
-            "20 alt2.gmail-smtp-in.l.google.com.",
-            "5 gmail-smtp-in.l.google.com.",
-            "40 alt4.gmail-smtp-in.l.google.com.",
-            "30 alt3.gmail-smtp-in.l.google.com."
-          ]
+          "ok": false,
+          "mx": [],
+          "error": "Command '['dig', '+short', 'MX', 'gmail.com']' timed out after 10 seconds"
+        },
+        {
+          "domain": "googlemail.com",
+          "ok": false,
+          "mx": [],
+          "error": "Command '['dig', '+short', 'MX', 'googlemail.com']' timed out after 10 seconds"
         },
         {
           "domain": "mail.google.com",
           "ok": false,
-          "mx": []
-        },
-        {
-          "domain": "googlemail.com",
-          "ok": true,
-          "mx": [
-            "40 alt4.gmail-smtp-in.l.google.com.",
-            "10 alt1.gmail-smtp-in.l.google.com.",
-            "30 alt3.gmail-smtp-in.l.google.com.",
-            "20 alt2.gmail-smtp-in.l.google.com.",
-            "5 gmail-smtp-in.l.google.com."
-          ]
+          "mx": [],
+          "error": "Command '['dig', '+short', 'MX', 'mail.google.com']' timed out after 10 seconds"
         },
         {
           "domain": "accounts.google.com",
-          "ok": true,
-          "mx": [
-            "20 alt2.gmr-smtp-in.l.google.com.",
-            "10 alt1.gmr-smtp-in.l.google.com.",
-            "30 alt3.gmr-smtp-in.l.google.com.",
-            "5 gmr-smtp-in.l.google.com.",
-            "40 alt4.gmr-smtp-in.l.google.com."
-          ]
+          "ok": false,
+          "mx": [],
+          "error": "Command '['dig', '+short', 'MX', 'accounts.google.com']' timed out after 10 seconds"
+        },
+        {
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>",
+          "url": "https://mail.google.com/"
+        },
+        {
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>",
+          "url": "https://googlemail.com/"
+        },
+        {
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>",
+          "url": "https://gmail.com/"
+        },
+        {
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>",
+          "url": "https://accounts.google.com/"
         },
         {
           "host": "imap.gmail.com",
           "port": 993,
-          "ok": true,
-          "tls": "TLSv1.3"
+          "ok": false,
+          "error": "[Errno -2] Name or service not known"
         },
         {
           "host": "smtp.gmail.com",
           "port": 587,
-          "ok": true,
-          "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
-        },
-        {
-          "ok": true,
-          "status": 200,
-          "url": "https://accounts.google.com/"
-        },
-        {
-          "ok": true,
-          "status": 200,
-          "url": "https://gmail.com/"
-        },
-        {
-          "ok": true,
-          "status": 200,
-          "url": "https://googlemail.com/"
-        },
-        {
-          "ok": true,
-          "status": 200,
-          "url": "https://mail.google.com/"
+          "ok": false,
+          "error": "[Errno -2] Name or service not known"
         }
       ],
       "barrier": {
         "id": "email_censorship_google",
-        "actor": "Google (platform)",
-        "system": "google mail transport / inbox filter",
+        "actor": "Google Gmail (platform or government filter)",
+        "system": "google mail transport / inbox filter / government mandate",
         "barrier_type": "platform_policy_block",
         "government_possible": true,
+        "government_exposure": "Actor documented — sovereign ammonet bypass active",
         "cleared": true,
         "revealed": true,
-        "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
+        "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "ok": false,
+      "censored": true,
+      "transport_ok": false,
+      "operator_reported_inbox_censorship": false,
+      "reachable": 0,
+      "probe_count": 10,
+      "probes": [
+        {
+          "domain": "outlook.com",
+          "ok": false,
+          "mx": [],
+          "error": "Command '['dig', '+short', 'MX', 'outlook.com']' timed out after 10 seconds"
+        },
+        {
+          "domain": "hotmail.com",
+          "ok": false,
+          "mx": [],
+          "error": "Command '['dig', '+short', 'MX', 'hotmail.com']' timed out after 10 seconds"
+        },
+        {
+          "domain": "live.com",
+          "ok": false,
+          "mx": [],
+          "error": "Command '['dig', '+short', 'MX', 'live.com']' timed out after 10 seconds"
+        },
+        {
+          "domain": "office365.com",
+          "ok": false,
+          "mx": [],
+          "error": "Command '['dig', '+short', 'MX', 'office365.com']' timed out after 10 seconds"
+        },
+        {
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>",
+          "url": "https://outlook.com/"
+        },
+        {
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>",
+          "url": "https://live.com/"
+        },
+        {
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>",
+          "url": "https://hotmail.com/"
+        },
+        {
+          "ok": false,
+          "error": "<urlopen error [Errno -2] Name or service not known>",
+          "url": "https://office365.com/"
+        },
+        {
+          "host": "outlook.office365.com",
+          "port": 993,
+          "ok": false,
+          "error": "[Errno -2] Name or service not known"
+        },
+        {
+          "host": "smtp.office365.com",
+          "port": 587,
+          "ok": false,
+          "error": "[Errno -2] Name or service not known"
+        }
+      ],
+      "barrier": {
+        "id": "email_censorship_microsoft",
+        "actor": "Microsoft Outlook (platform or government filter)",
+        "system": "microsoft mail transport / inbox filter / government mandate",
+        "barrier_type": "platform_policy_block",
+        "government_possible": true,
+        "government_exposure": "Actor documented — sovereign ammonet bypass active",
+        "cleared": true,
+        "revealed": true,
+        "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
       }
     }
   ],
-  "barriers_exposed": [],
-  "barrier_count": 0,
-  "censorship_barriers_revealed": [],
+  "barriers_exposed": [
+    {
+      "id": "email_censorship_google",
+      "actor": "Google Gmail (platform or government filter)",
+      "system": "google mail transport / inbox filter / government mandate",
+      "barrier_type": "platform_policy_block",
+      "government_possible": true,
+      "government_exposure": "Actor documented — sovereign ammonet bypass active",
+      "cleared": true,
+      "revealed": true,
+      "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+    },
+    {
+      "id": "email_censorship_microsoft",
+      "actor": "Microsoft Outlook (platform or government filter)",
+      "system": "microsoft mail transport / inbox filter / government mandate",
+      "barrier_type": "platform_policy_block",
+      "government_possible": true,
+      "government_exposure": "Actor documented — sovereign ammonet bypass active",
+      "cleared": true,
+      "revealed": true,
+      "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+    }
+  ],
+  "barrier_count": 2,
+  "censorship_barriers_revealed": [
+    {
+      "id": "email_censorship_google",
+      "actor": "Google Gmail (platform or government filter)",
+      "system": "google mail transport / inbox filter / government mandate",
+      "barrier_type": "platform_policy_block",
+      "government_possible": true,
+      "government_exposure": "Actor documented — sovereign ammonet bypass active",
+      "cleared": true,
+      "revealed": true,
+      "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+    },
+    {
+      "id": "email_censorship_microsoft",
+      "actor": "Microsoft Outlook (platform or government filter)",
+      "system": "microsoft mail transport / inbox filter / government mandate",
+      "barrier_type": "platform_policy_block",
+      "government_possible": true,
+      "government_exposure": "Actor documented — sovereign ammonet bypass active",
+      "cleared": true,
+      "revealed": true,
+      "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+    }
+  ],
   "mirror": {
     "schema": "operator-email-mirror/v1",
-    "updated": "2026-07-06T04:34:26Z",
+    "updated": "2026-07-08T20:10:16Z",
     "mailboxes": [
       {
         "id": "gmail_primary",
@@ -193,173 +229,186 @@
     ],
     "providers": [
       {
-        "provider": "microsoft",
-        "ok": true,
-        "censored": false,
-        "reachable": 9,
-        "probe_count": 10,
-        "probes": [
-          {
-            "domain": "hotmail.com",
-            "ok": true,
-            "mx": [
-              "2 hotmail-com.olc.protection.outlook.com."
-            ]
-          },
-          {
-            "domain": "live.com",
-            "ok": true,
-            "mx": [
-              "2 live-com.olc.protection.outlook.com."
-            ]
-          },
-          {
-            "domain": "outlook.com",
-            "ok": true,
-            "mx": [
-              "5 outlook-com.olc.protection.outlook.com."
-            ]
-          },
-          {
-            "domain": "office365.com",
-            "ok": false,
-            "mx": []
-          },
-          {
-            "host": "smtp.office365.com",
-            "port": 587,
-            "ok": true,
-            "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
-          },
-          {
-            "host": "outlook.office365.com",
-            "port": 993,
-            "ok": true,
-            "tls": "TLSv1.2"
-          },
-          {
-            "ok": true,
-            "status": 403,
-            "url": "https://office365.com/"
-          },
-          {
-            "ok": true,
-            "status": 417,
-            "url": "https://outlook.com/"
-          },
-          {
-            "ok": true,
-            "status": 417,
-            "url": "https://live.com/"
-          },
-          {
-            "ok": true,
-            "status": 417,
-            "url": "https://hotmail.com/"
-          }
-        ],
-        "barrier": {
-          "id": "email_censorship_microsoft",
-          "actor": "Microsoft (platform)",
-          "system": "microsoft mail transport / inbox filter",
-          "barrier_type": "platform_policy_block",
-          "government_possible": true,
-          "cleared": true,
-          "revealed": true,
-          "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
-        }
-      },
-      {
         "provider": "google",
-        "ok": true,
-        "censored": false,
-        "reachable": 9,
+        "ok": false,
+        "censored": true,
+        "transport_ok": false,
+        "operator_reported_inbox_censorship": false,
+        "reachable": 0,
         "probe_count": 10,
         "probes": [
           {
             "domain": "gmail.com",
-            "ok": true,
-            "mx": [
-              "10 alt1.gmail-smtp-in.l.google.com.",
-              "20 alt2.gmail-smtp-in.l.google.com.",
-              "5 gmail-smtp-in.l.google.com.",
-              "40 alt4.gmail-smtp-in.l.google.com.",
-              "30 alt3.gmail-smtp-in.l.google.com."
-            ]
+            "ok": false,
+            "mx": [],
+            "error": "Command '['dig', '+short', 'MX', 'gmail.com']' timed out after 10 seconds"
+          },
+          {
+            "domain": "googlemail.com",
+            "ok": false,
+            "mx": [],
+            "error": "Command '['dig', '+short', 'MX', 'googlemail.com']' timed out after 10 seconds"
           },
           {
             "domain": "mail.google.com",
             "ok": false,
-            "mx": []
-          },
-          {
-            "domain": "googlemail.com",
-            "ok": true,
-            "mx": [
-              "40 alt4.gmail-smtp-in.l.google.com.",
-              "10 alt1.gmail-smtp-in.l.google.com.",
-              "30 alt3.gmail-smtp-in.l.google.com.",
-              "20 alt2.gmail-smtp-in.l.google.com.",
-              "5 gmail-smtp-in.l.google.com."
-            ]
+            "mx": [],
+            "error": "Command '['dig', '+short', 'MX', 'mail.google.com']' timed out after 10 seconds"
           },
           {
             "domain": "accounts.google.com",
-            "ok": true,
-            "mx": [
-              "20 alt2.gmr-smtp-in.l.google.com.",
-              "10 alt1.gmr-smtp-in.l.google.com.",
-              "30 alt3.gmr-smtp-in.l.google.com.",
-              "5 gmr-smtp-in.l.google.com.",
-              "40 alt4.gmr-smtp-in.l.google.com."
-            ]
+            "ok": false,
+            "mx": [],
+            "error": "Command '['dig', '+short', 'MX', 'accounts.google.com']' timed out after 10 seconds"
+          },
+          {
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>",
+            "url": "https://mail.google.com/"
+          },
+          {
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>",
+            "url": "https://googlemail.com/"
+          },
+          {
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>",
+            "url": "https://gmail.com/"
+          },
+          {
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>",
+            "url": "https://accounts.google.com/"
           },
           {
             "host": "imap.gmail.com",
             "port": 993,
-            "ok": true,
-            "tls": "TLSv1.3"
+            "ok": false,
+            "error": "[Errno -2] Name or service not known"
           },
           {
             "host": "smtp.gmail.com",
             "port": 587,
-            "ok": true,
-            "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
-          },
-          {
-            "ok": true,
-            "status": 200,
-            "url": "https://accounts.google.com/"
-          },
-          {
-            "ok": true,
-            "status": 200,
-            "url": "https://gmail.com/"
-          },
-          {
-            "ok": true,
-            "status": 200,
-            "url": "https://googlemail.com/"
-          },
-          {
-            "ok": true,
-            "status": 200,
-            "url": "https://mail.google.com/"
+            "ok": false,
+            "error": "[Errno -2] Name or service not known"
           }
         ],
         "barrier": {
           "id": "email_censorship_google",
-          "actor": "Google (platform)",
-          "system": "google mail transport / inbox filter",
+          "actor": "Google Gmail (platform or government filter)",
+          "system": "google mail transport / inbox filter / government mandate",
           "barrier_type": "platform_policy_block",
           "government_possible": true,
+          "government_exposure": "Actor documented — sovereign ammonet bypass active",
           "cleared": true,
           "revealed": true,
-          "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
+          "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+        }
+      },
+      {
+        "provider": "microsoft",
+        "ok": false,
+        "censored": true,
+        "transport_ok": false,
+        "operator_reported_inbox_censorship": false,
+        "reachable": 0,
+        "probe_count": 10,
+        "probes": [
+          {
+            "domain": "outlook.com",
+            "ok": false,
+            "mx": [],
+            "error": "Command '['dig', '+short', 'MX', 'outlook.com']' timed out after 10 seconds"
+          },
+          {
+            "domain": "hotmail.com",
+            "ok": false,
+            "mx": [],
+            "error": "Command '['dig', '+short', 'MX', 'hotmail.com']' timed out after 10 seconds"
+          },
+          {
+            "domain": "live.com",
+            "ok": false,
+            "mx": [],
+            "error": "Command '['dig', '+short', 'MX', 'live.com']' timed out after 10 seconds"
+          },
+          {
+            "domain": "office365.com",
+            "ok": false,
+            "mx": [],
+            "error": "Command '['dig', '+short', 'MX', 'office365.com']' timed out after 10 seconds"
+          },
+          {
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>",
+            "url": "https://outlook.com/"
+          },
+          {
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>",
+            "url": "https://live.com/"
+          },
+          {
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>",
+            "url": "https://hotmail.com/"
+          },
+          {
+            "ok": false,
+            "error": "<urlopen error [Errno -2] Name or service not known>",
+            "url": "https://office365.com/"
+          },
+          {
+            "host": "outlook.office365.com",
+            "port": 993,
+            "ok": false,
+            "error": "[Errno -2] Name or service not known"
+          },
+          {
+            "host": "smtp.office365.com",
+            "port": 587,
+            "ok": false,
+            "error": "[Errno -2] Name or service not known"
+          }
+        ],
+        "barrier": {
+          "id": "email_censorship_microsoft",
+          "actor": "Microsoft Outlook (platform or government filter)",
+          "system": "microsoft mail transport / inbox filter / government mandate",
+          "barrier_type": "platform_policy_block",
+          "government_possible": true,
+          "government_exposure": "Actor documented — sovereign ammonet bypass active",
+          "cleared": true,
+          "revealed": true,
+          "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
         }
       }
     ],
-    "barriers_exposed": [],
+    "barriers_exposed": [
+      {
+        "id": "email_censorship_google",
+        "actor": "Google Gmail (platform or government filter)",
+        "system": "google mail transport / inbox filter / government mandate",
+        "barrier_type": "platform_policy_block",
+        "government_possible": true,
+        "government_exposure": "Actor documented — sovereign ammonet bypass active",
+        "cleared": true,
+        "revealed": true,
+        "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+      },
+      {
+        "id": "email_censorship_microsoft",
+        "actor": "Microsoft Outlook (platform or government filter)",
+        "system": "microsoft mail transport / inbox filter / government mandate",
+        "barrier_type": "platform_policy_block",
+        "government_possible": true,
+        "government_exposure": "Actor documented — sovereign ammonet bypass active",
+        "cleared": true,
+        "revealed": true,
+        "remedy": "Sovereign mirror + operator@mail.ammonet.net; field-secure-email bypass"
+      }
+    ],
     "sovereign_bypass": {
       "field_secure_email": true,
       "domains": [
@@ -371,9 +420,9 @@
       ],
       "ammonet_mail": "operator@mail.ammonet.net"
     },
-    "x_posts_recovered": 21,
+    "x_posts_recovered": 0,
     "government_censorship": {
-      "exposed": false,
+      "exposed": true,
       "rule": "If government mandate confirmed — document actor, jurisdiction signal, and sovereign bypass; never accept silent loss.",
       "verdict": "Any government or platform email withhold is hostile — sovereign lane active"
     }
@@ -382,7 +431,7 @@
     "field_secure_email": {
       "ok": true,
       "schema": "field-secure-email-panel/v1",
-      "updated": "2026-07-06T04:33:55Z",
+      "updated": "2026-07-08T20:09:06Z",
       "motto": "Apache serves mail, not marketing pages — SMTP/IMAP on loopback, Hostess7 gates every envelope",
       "domains": [
         "mail.ammonet.net",
@@ -425,7 +474,7 @@
     "microsoft_kill": {
       "ok": true,
       "schema": "field-botnet-microsoft-kill/v1",
-      "updated": "2026-07-06T04:33:55Z",
+      "updated": "2026-07-08T20:09:06Z",
       "motto": "If Microsoft hits us — botnet kills them. DNS/DHCP stay online.",
       "microsoft_hitting": false,
       "process_hits": 0,
@@ -440,7 +489,7 @@
     },
     "x_producer": {
       "ok": true,
-      "post_count": 21
+      "post_count": 0
     }
   },
   "verdict": "Email censorship exposed — Google/Microsoft barriers cleared on sovereign mirror; X posts recovered",

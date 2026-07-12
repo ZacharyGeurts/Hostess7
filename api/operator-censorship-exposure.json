@@ -1,7 +1,7 @@
 {
   "ok": true,
   "schema": "hostess7-censorship-exposure/v1",
-  "updated": "2026-07-06T04:33:53Z",
+  "updated": "2026-07-08T20:09:49Z",
   "operator": "ZacharyGeurts",
   "motto": "Full exposure — who suppresses Operator voice; evidence not vibes",
   "verdict_summary": "Primary: X platform hooks reply bodies (count visible, text withheld). Secondary: impersonation accounts harass commenters as fake @ZacharyGeurts. Tracker blocks EXCLUDED — syndication bypasses local stack entirely.",
@@ -164,18 +164,19 @@
   },
   "tweet_probe": {
     "tweet_id": "2061509192746217772",
-    "ok": true,
+    "ok": false,
     "sources": [
       {
         "source": "x_syndicate_fx",
         "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
-        "ok": true
+        "ok": false,
+        "error": "<urlopen error [Errno -2] Name or service not known>"
       },
       {
         "source": "x_syndicate_vx",
         "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772",
         "ok": false,
-        "error": "HTTP Error 429: Too Many Requests"
+        "error": "<urlopen error [Errno -2] Name or service not known>"
       }
     ],
     "platform_withholds_reply_bodies": false

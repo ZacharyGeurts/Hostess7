@@ -1,0 +1,147 @@
+{
+  "ok": true,
+  "schema": "field-registry-h7-bsp/v1",
+  "updated": "2026-07-09T11:26:05Z",
+  "ironclad_cite": "ironclad:registry-h7-bsp:1",
+  "protocol": "h7/1",
+  "title": "H7 manageable registry · Ironclad BSP",
+  "motto": "H7 registry 125,000 servers · 125 metro shards · slim 288→40 keys/row · 471MB→144MB · Ironclad BSP sealed · serving truth honest",
+  "before": {
+    "servers": 125000,
+    "registry_bytes": 494408019,
+    "avg_keys_per_server": 288
+  },
+  "after": {
+    "servers": 125000,
+    "registry_bytes": 151498698,
+    "h7_shard_bytes": 110883568,
+    "h7_shards": 125,
+    "avg_keys_per_server": 40,
+    "cool_profile": 125000,
+    "faster_server": 114583,
+    "field_udp_speeds": 125000,
+    "dns_from_us": 125000,
+    "dhcp_from_us": 125000,
+    "fat_backup_bytes": 494408019
+  },
+  "h7": {
+    "root": "/home/default/Desktop/SG/NewLatest/.nexus-state/field-registry-h7",
+    "index": "/home/default/Desktop/SG/NewLatest/.nexus-state/field-registry-h7/index.json",
+    "seal": "/home/default/Desktop/SG/NewLatest/.nexus-state/field-registry-h7/seal.json",
+    "shards_dir": "/home/default/Desktop/SG/NewLatest/.nexus-state/field-registry-h7/shards",
+    "protocol": "h7/1",
+    "manageable": true
+  },
+  "seal": {
+    "content_hash": "9515083a71e3efcdea0b13868ceefa788c7bb5ad4ad6d050a183aed9487b916d",
+    "bsp": "binary_secure_path",
+    "ironclad_cite": "ironclad:registry-h7-bsp:1"
+  },
+  "raid": {
+    "ok": true,
+    "members_ok": 5,
+    "primary_hash": "9280063605281918396d558b7bd1287aa6aa976f0e2cdacc41b79e3cc2d02d91"
+  },
+  "serving_truth": {
+    "honest": true,
+    "dns_live": true,
+    "dhcp_live": true,
+    "leases_total": 55038,
+    "leases_our_dns": 55038,
+    "leases_foreign_dns": 0,
+    "probes_ok": 8,
+    "binds": [
+      {
+        "ip": "0.0.0.0",
+        "port": 53,
+        "inode": "10076580",
+        "proto": "udp"
+      },
+      {
+        "ip": "97.95.64.87",
+        "port": 53,
+        "inode": "10076579",
+        "proto": "udp"
+      },
+      {
+        "ip": "192.168.50.1",
+        "port": 53,
+        "inode": "10076578",
+        "proto": "udp"
+      },
+      {
+        "ip": "192.168.47.1",
+        "port": 53,
+        "inode": "10079863",
+        "proto": "udp"
+      },
+      {
+        "ip": "127.0.0.53",
+        "port": 53,
+        "inode": "10075344",
+        "proto": "udp"
+      },
+      {
+        "ip": "127.0.0.1",
+        "port": 53,
+        "inode": "10053475",
+        "proto": "udp"
+      },
+      {
+        "ip": "0.0.0.0",
+        "port": 67,
+        "inode": "11833458",
+        "proto": "udp"
+      },
+      {
+        "ip": "::",
+        "port": 53,
+        "inode": "10076581",
+        "proto": "udp6",
+        "raw": "00000000000000000000000001000000:0035"
+      }
+    ],
+    "processes": [
+      {
+        "pid": 2234054,
+        "kind": "dns",
+        "cmd": "python3 /home/default/Desktop/SG/NewLatest/scripts/field-dns-udp-full.py"
+      },
+      {
+        "pid": 3020392,
+        "kind": "dns",
+        "cmd": "bash -c source \"/home/default/Desktop/SG/NewLatest/lib/field-dns.sh\" && nexus_field_dns_serve_loop"
+      },
+      {
+        "pid": 3020400,
+        "kind": "dns",
+        "cmd": "bash -c source \"/home/default/Desktop/SG/NewLatest/lib/field-dns.sh\" && nexus_field_local_connect_loop"
+      },
+      {
+        "pid": 3083108,
+        "kind": "dhcp",
+        "cmd": "/usr/bin/python3 /home/default/Desktop/SG/NewLatest/lib/field-dhcp.py serve"
+      },
+      {
+        "pid": 3303314,
+        "kind": "dns",
+        "cmd": "bash -c source \"/home/default/Desktop/SG/NewLatest/lib/field-dns.sh\" && nexus_field_dns_serve_loop"
+      }
+    ],
+    "note": "LIVE: DNS 7 binds · DHCP 1 binds · 55,038 leases with our DNS · probes 8/10 answered · FLEET stamps 125,000 logical edges (not processes) · WE SERVE · honest"
+  },
+  "policy": {
+    "h7_protocol": true,
+    "ironclad_bsp": true,
+    "slim_essential_only": true,
+    "metro_shards": true,
+    "no_fake_serving_stamps": true,
+    "serving_verified_separately": true,
+    "we_serve_dns_and_ips_ourselves": true
+  },
+  "memory": {
+    "start_mb": 54298,
+    "final_mb": 55558
+  },
+  "api": "/api/field-registry-h7-bsp"
+}

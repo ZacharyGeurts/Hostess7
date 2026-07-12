@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "schema": "field-physical-devices-dns-lease/v1",
+  "updated": "2026-07-12T07:40:44Z",
+  "ironclad_cite": "ironclad:field-physical-dns-lease:1",
+  "motto": "Physical devices need Field DNS+DHCP on their L2 · wire IP is DNS · DHCP listens · no third party",
+  "dns": {
+    "listening": true,
+    "wire_ip": "71.86.190.73",
+    "loopback": "127.0.0.1",
+    "query_wire_works": true,
+    "sole_authority": true
+  },
+  "dhcp": {
+    "listening": true,
+    "port": 67,
+    "handshake_probe_ok": true,
+    "server_id": "71.86.190.73",
+    "dns_option": ["71.86.190.73", "127.0.0.1", "192.168.47.1"],
+    "domain": "ammonet.net",
+    "sole_authority": true
+  },
+  "physical_path": {
+    "interface": "enp10s0",
+    "address": "71.86.190.73/22",
+    "gateway": "71.86.188.1",
+    "l2_neighbors": 1,
+    "l2_is_isp_segment": true,
+    "requirement": "Physical clients must share broadcast domain with Field DHCP (Field as LAN gateway/AP), or set DNS manually to 71.86.190.73"
+  },
+  "engine": "cpp",
+  "third_party": false
+}

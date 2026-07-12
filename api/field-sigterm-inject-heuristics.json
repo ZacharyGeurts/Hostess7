@@ -1,0 +1,278 @@
+{
+  "schema": "field-sigterm-inject-heuristics/v2",
+  "ironclad_cite": "ironclad:sigterm-inject-heuristics:2",
+  "commander": "Hostess 7",
+  "motto": "Hangups · freezes · D-state · SIGTERM soft-kill = terrorist assault · historics + heuristics → DEAD",
+  "updated": "2026-07-10T23:28:01.237646Z",
+  "policy": {
+    "our_kills": "SIGKILL_ONLY",
+    "sigterm_against_us": "CAPITAL_OFFENSE",
+    "hangup_is_terrorist_assault": true,
+    "rollout_stall_is_assault": true,
+    "d_state_storm_is_assault": true,
+    "soft_kill_never_used_on_hostiles": true,
+    "score_dead_threshold": 8.0,
+    "score_watch_threshold": 4.0
+  },
+  "signal_heuristics": [
+    {
+      "id": "sigterm_prelude",
+      "weight": 10.0,
+      "marks": [
+        "SIGTERM",
+        "sigterm",
+        "kill -15",
+        "kill -TERM"
+      ]
+    },
+    {
+      "id": "sigstop_freeze",
+      "weight": 9.0,
+      "marks": [
+        "SIGSTOP",
+        "kill -STOP"
+      ]
+    },
+    {
+      "id": "hangup_assault",
+      "weight": 16.0,
+      "marks": [
+        "hangup",
+        "HANGUP",
+        "hung_up",
+        "rollout_hang",
+        "phase_hang",
+        "stalled_rollout",
+        "BrokenPipeError",
+        "Connection timed out"
+      ]
+    },
+    {
+      "id": "d_state_hang",
+      "weight": 15.0,
+      "marks": [
+        " D<",
+        "uninterruptible_sleep",
+        "D-state",
+        "threat-panel-http.py"
+      ]
+    },
+    {
+      "id": "panel_zombie_storm",
+      "weight": 14.0,
+      "marks": [
+        "threat-panel-http.py",
+        "panel hang",
+        "9477 hang",
+        "spawn_storm_panel"
+      ]
+    },
+    {
+      "id": "rollout_stall_assault",
+      "weight": 15.5,
+      "marks": [
+        "world-retake hang",
+        "fleet phase hang",
+        "125k hang",
+        "expand hang",
+        "field-fleet-expand-125k"
+      ]
+    },
+    {
+      "id": "soft_signal_flood",
+      "weight": 13.0,
+      "marks": [
+        "SIGINT flood",
+        "SIGHUP flood",
+        "soft_signal_spam",
+        "signal cannon",
+        "kill spam"
+      ]
+    },
+    {
+      "id": "ptrace_attach",
+      "weight": 12.0,
+      "marks": [
+        "PTRACE_ATTACH",
+        "process_vm_writev",
+        "ptrace("
+      ]
+    },
+    {
+      "id": "ld_preload",
+      "weight": 11.0,
+      "marks": [
+        "LD_PRELOAD=",
+        "ld.so.preload"
+      ]
+    },
+    {
+      "id": "uinput_inject",
+      "weight": 10.0,
+      "marks": [
+        "uinput",
+        "evemu",
+        "hid-replay"
+      ]
+    },
+    {
+      "id": "screen_desync",
+      "weight": 10.0,
+      "marks": [
+        "xdotool",
+        "ydotool",
+        "xte ",
+        "screen_desync"
+      ]
+    },
+    {
+      "id": "remote_control",
+      "weight": 11.0,
+      "marks": [
+        "x11vnc",
+        "wayvnc",
+        "anydesk",
+        "teamviewer",
+        "rustdesk",
+        "xrdp",
+        "rfbport"
+      ]
+    },
+    {
+      "id": "root_userland_exploit",
+      "weight": 12.0,
+      "marks": [
+        "/dev/shm/",
+        "meterpreter",
+        "bash -i",
+        "chmod 4755"
+      ]
+    },
+    {
+      "id": "reverse_shell",
+      "weight": 12.0,
+      "marks": [
+        "/dev/tcp/",
+        "revshell",
+        "ncat -e",
+        "nc -e",
+        "socat exec"
+      ]
+    },
+    {
+      "id": "harness_injection",
+      "weight": 9.0,
+      "marks": [
+        "dump_bash_state",
+        "GROK_AGENT=1",
+        "harness_injection",
+        "text_inject",
+        "terrorist_inject"
+      ]
+    },
+    {
+      "id": "port_steal",
+      "weight": 10.0,
+      "marks": [
+        "port_steal",
+        "port_impostor"
+      ]
+    },
+    {
+      "id": "dns_poison",
+      "weight": 8.0,
+      "marks": [
+        "DNS_POISON",
+        "INTERNET_UNCLEAN_HOSTILE",
+        "impostor_ns"
+      ]
+    },
+    {
+      "id": "processor_lowlevel",
+      "weight": 11.0,
+      "marks": [
+        "wrmsr",
+        "rdmsr",
+        "/dev/mem",
+        "ioperm"
+      ]
+    },
+    {
+      "id": "driveby",
+      "weight": 10.0,
+      "marks": [
+        "driveby",
+        "drive-by",
+        "kill_then_inject",
+        "sigterm_inject"
+      ]
+    },
+    {
+      "id": "c2_beacon",
+      "weight": 9.0,
+      "marks": [
+        "beacon",
+        "cobaltstrike",
+        "sliver",
+        "mythic"
+      ]
+    },
+    {
+      "id": "privilege_escalation",
+      "weight": 11.0,
+      "marks": [
+        "pkexec",
+        "chmod u+s",
+        "setuid",
+        "dirty_pipe"
+      ]
+    },
+    {
+      "id": "terrorist_assault_hangup",
+      "weight": 18.0,
+      "marks": [
+        "terrorist_assault",
+        "terrorist assault",
+        "assault_hangup",
+        "presume hangups terrorist"
+      ]
+    }
+  ],
+  "process_names_dead": [
+    "xdotool",
+    "ydotool",
+    "x11vnc",
+    "wayvnc",
+    "anydesk",
+    "teamviewer",
+    "rustdesk",
+    "xrdp",
+    "vncserver",
+    "tigervnc",
+    "socat",
+    "ncat",
+    "meterpreter",
+    "msfconsole"
+  ],
+  "score_rules": {
+    "repeat_offense_per_hit": 0.5,
+    "repeat_cap": 20.0,
+    "vector_bonus": {
+      "INTERNET_UNCLEAN_HOSTILE": 8.0,
+      "DNS_POISON": 9.0,
+      "SIGTERM_THEN_INJECT": 15.0,
+      "DRIVEBY": 14.0,
+      "FOREIGN_HOSTILE_DEVICE": 10.0,
+      "REKILL": 7.0,
+      "VECTOR": 8.0,
+      "CATASTROPHE": 12.0,
+      "PROCESS_DEAD_NAME": 11.0,
+      "HANGUP_ASSAULT": 16.0,
+      "D_STATE_HANG": 15.0,
+      "ROLLOUT_STALL": 15.5,
+      "PANEL_ZOMBIE_STORM": 14.0,
+      "TERRORIST_ASSAULT": 18.0,
+      "SOFT_SIGNAL_FLOOD": 13.0
+    }
+  }
+}

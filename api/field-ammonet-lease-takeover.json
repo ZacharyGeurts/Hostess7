@@ -1,0 +1,259 @@
+{
+  "ok": true,
+  "schema": "field-ammonet-lease-takeover/v1",
+  "updated": "2026-07-09T07:32:03Z",
+  "motto": "AmmoNet lease takeover — seamless join · Field DHCP everywhere · bot API up",
+  "seed": {
+    "ok": true,
+    "schema": "field-ammonet-lease-takeover/v1",
+    "event": "seed",
+    "lease_count": 10570,
+    "added": 0,
+    "refreshed": 10567,
+    "dns_option": [
+      "192.168.47.1",
+      "127.0.0.1"
+    ],
+    "domain": "ammonet.net",
+    "lease_file": "/home/default/Desktop/SG/NewLatest/.nexus-state/field-dhcp-leases.json",
+    "motto": "Every held device has an AmmoNet lease — seamless Field join"
+  },
+  "serve": {
+    "ok": true,
+    "port_67": true,
+    "bind": "0.0.0.0:67",
+    "pid": 1247823,
+    "start": {
+      "ok": true,
+      "code": 0,
+      "stdout": "1247823\n",
+      "stderr": ""
+    },
+    "dns_option": [
+      "192.168.47.1",
+      "127.0.0.1"
+    ],
+    "domain": "ammonet.net",
+    "log": "/home/default/Desktop/SG/NewLatest/.nexus-state/field-dhcp-serve.log",
+    "motto": "Field DHCP serve — every DISCOVER gets AmmoNet"
+  },
+  "botnet_api": {
+    "field-botnet-dns-dhcp": {
+      "ok": true,
+      "code": 0,
+      "snippet": {
+        "ok": true,
+        "schema": "field-botnet-dns-dhcp-keepalive/v1",
+        "title": null,
+        "motto": null,
+        "updated": "2026-07-09T07:31:54Z",
+        "boss": "hostess7",
+        "layer": -2,
+        "fkey": "F10"
+      }
+    },
+    "field-botnet-full-dns-dhcp-authority": {
+      "ok": true,
+      "code": 0,
+      "snippet": {
+        "ok": true,
+        "schema": "field-botnet-full-dns-dhcp-authority/v1",
+        "updated": "2026-07-09T07:31:54Z",
+        "title": null,
+        "motto": null,
+        "every_bot_full_dns_authority": true,
+        "every_bot_full_dhcp_authority": true,
+        "serve_any_ip": true
+      }
+    },
+    "field-botnet-autopilot": {
+      "ok": true,
+      "code": 0,
+      "snippet": {
+        "ok": true,
+        "schema": "field-botnet-autopilot/v1",
+        "updated": "2026-07-09T07:31:54Z",
+        "title": "Botnet autopilot",
+        "motto": "Easy. L2+. Botnet fabric runs itself — hail distress · Field UDP rescue — no human buttons.",
+        "autopilot": true,
+        "human_intervention": false,
+        "no_control_buttons": true
+      }
+    },
+    "field-friendly-secure-serve": {
+      "ok": true,
+      "code": 0,
+      "snippet": {
+        "schema": "field-friendly-secure-serve/v1",
+        "updated": "2026-07-09T07:31:56Z",
+        "ok": true,
+        "motto": "Answer every machine kindly on Field UDP. Secure authority only. Foreign never re-enters.",
+        "friendly_out": {
+          "dns": true,
+          "dhcp": true,
+          "every_machine": true,
+          "civilian_passthrough": true,
+          "soft_ingress": true,
+          "answer_any_client": true,
+          "rate_limit_soft_not_kill": true
+        },
+        "secure_position": {
+          "truth_dns_udp": true,
+          "field_dhcp_udp": true,
+          "multi_bind": true,
+          "option6_for_clients": [
+            "192.168.47.1",
+            "127.0.0.1"
+          ],
+          "field_lan_dns": "192.168.47.1",
+          "loopback_truth": "127.0.0.1",
+          "note": "Remote machines get field LAN DNS (192.168.47.1), not 127.0.0.1 of the client"
+        },
+        "nobody_else_back_inside": {
+          "foreign_ns_in_resolv": false,
+          "foreign_dhcp_servers": "threat",
+          "impostor_dns": "burned",
+          "host_resolv": [
+            "127.0.0.1",
+            "::1"
+          ],
+          "ingress_gate": "deny_by_default_non_client",
+          "botnet_only": true,
+          "kill_foreign_forever": true
+        },
+        "steps": {
+          "clear_blocks": {
+            "ok": true,
+            "cleared": 0
+          },
+          "dns_friendly": {
+            "ok": true,
+            "friendly": true,
+            "answer_every_querier": true,
+            "answers": {
+              "127.0.0.1": true,
+              "192.168.47.1": true,
+              "192.168.50.1": true
+            },
+            "bound": [
+              "127.0.0.1:53",
+              "127.0.0.53:53",
+              "192.168.47.1:53",
+              "192.168.50.1:53",
+              "0.0.0.0:53",
+              "97.95.64.87:53",
+              "::1:53"
+            ],
+            "pid": 570364,
+            "motto": "DNS: friendly answer to every machine; authority stays Field UDP only"
+          },
+          "dhcp_friendly": {
+            "ok": true,
+            "friendly": true,
+            "soft_ingress": true,
+            "option6_clients": [
+              "192.168.47.1",
+              "127.0.0.1"
+            ],
+            "bind": "0.0.0.0:67",
+            "start": {
+              "ok": true,
+              "rc": 0,
+              "out": "1248610\n",
+              "err": ""
+            },
+            "port_67": true,
+            "motto": "DHCP: friendly lease to every machine; DNS option 6 → Field LAN Truth (reachable)"
+          },
+          "secure_inside": {
+            "ok": true,
+            "nobody_else_back_inside": true,
+            "host_resolv": [
+              "127.0.0.1",
+              "::1"
+            ],
+            "foreign_ns": "blocked",
+            "impostors": "burned_or_dropped",
+            "motto": "Inside: only Field Truth. Outside clients get answers; foreign authority never re-enters."
+          }
+        }
+      }
+    },
+    "field-planetary-dns-dhcp": {
+      "ok": true,
+      "code": 0,
+      "snippet": {
+        "ok": true,
+        "schema": "field-planetary-dns-dhcp/v1",
+        "updated": "2026-07-09T07:31:56Z",
+        "title": null,
+        "motto": null,
+        "boss": "hostess7",
+        "authority": {},
+        "planet_authority": true
+      }
+    },
+    "api_probe": {
+      "http://127.0.0.1:9477/api/field-botnet-dns-dhcp": {
+        "ok": true,
+        "status": 200,
+        "auth": [
+          "blank"
+        ],
+        "body_prefix": "{\"ok\": true, \"schema\": \"field-botnet-dns-dhcp-panel/v1\", \"title\": null, \"motto\": null, \"updated\": \"2026-07-09T07:31:54Z\""
+      },
+      "http://127.0.0.1:9477/api/field-botnet-registry": {
+        "ok": true,
+        "status": 200,
+        "auth": [
+          "blank"
+        ],
+        "body_prefix": "{\"ok\": true, \"schema\": \"field-botnet-registry/v1-panel\", \"title\": \"Fielded bot network — permanent member registry\", \""
+      },
+      "http://127.0.0.1:9477/api/field-dhcp": {
+        "ok": true,
+        "status": 200,
+        "auth": [
+          "blank"
+        ],
+        "body_prefix": "{\"schema\": \"field-dhcp/v2\", \"updated\": \"2026-07-06T11:47:54.753593Z\", \"running\": true, \"serve_loop\": true, \"port_67\": tr"
+      },
+      "http://127.0.0.1:9477/api/everyone-online": {
+        "ok": true,
+        "status": 200,
+        "auth": [
+          "blank"
+        ],
+        "body_prefix": "{\"ok\": true, \"schema\": \"field-everyone-online-celebrate/v1\", \"updated\": \"2026-07-09T07:25:45Z\", \"title\": \"Planetary Cele"
+      }
+    },
+    "password_note": "blank or mememe (HOSTESS7_SUDO_PW for root DHCP bind)"
+  },
+  "celebrate": {
+    "ok": false,
+    "error": "'int' object has no attribute 'get'"
+  },
+  "status": {
+    "schema": "field-ammonet-lease-takeover/v1",
+    "ok": true,
+    "lease_count": 10570,
+    "port_67": true,
+    "dns_option": [
+      "192.168.47.1",
+      "127.0.0.1"
+    ],
+    "domain": "ammonet.net",
+    "ammonet_takeover": false,
+    "held_securely": true,
+    "outside_interference": false,
+    "panel": "/home/default/Desktop/SG/NewLatest/.nexus-state/field-ammonet-lease-takeover-panel.json",
+    "api": "http://127.0.0.1:9477/api/field-botnet-dns-dhcp",
+    "celebrate": "http://127.0.0.1:9477/celebrate",
+    "password": "blank or mememe",
+    "ironclad_cite": "ironclad:ammonet-lease-takeover:1",
+    "updated": "2026-07-09T07:32:03Z"
+  },
+  "ironclad_cite": "ironclad:ammonet-lease-takeover:1",
+  "held_securely": true,
+  "outside_interference": false
+}

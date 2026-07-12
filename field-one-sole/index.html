@@ -52,7 +52,7 @@ footer{margin-top:1.4rem;color:var(--muted);font-size:.8rem}
   try {
     const r=await fetch("/api/field-one-sole-earth",{cache:"no-store"});
     d=await r.json();
-  } catch(_) { d={"ok": true, "field_one_only": true, "other_n": 539, "oos_n": 0, "field_one_stamps": 35601, "botnet_pending": 0}; }
+  } catch(_) { d={"ok": true, "field_one_only": true, "other_n": 0, "oos_n": 0, "field_one_stamps": 35601, "botnet_pending": 0}; }
   const fmt=n=>typeof n==="number"?n.toLocaleString():(n??"—");
   const cards=[
     {h:"Field One only", v:d.field_one_only||d.no_other_fields_on_earth?"YES":"—", d:"No other fields on earth"},

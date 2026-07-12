@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="irc-chat" data-nexus-c2="1" data-ammoos-desktop="1">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chat Terminal — Field IRC</title>
+  <link rel="stylesheet" href="/Hostess7/assets/nexus-theme.css?v=1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-irc-chat.css?v=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:*; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
+  <style>html, body { margin: 0; height: 100%; background: #030806; } #fic-root { height: 100%; }</style>
+</head>
+<body>
+  <div id="fic-root"></div>
+  <script src="/Hostess7/assets/field-irc-chat.js?v=1"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      globalThis.FieldIrcChat?.mount(document.getElementById("fic-root"));
+    });
+  </script>
+  <script src="/Hostess7/pages-field-boot.js"></script>
+  <script src="/Hostess7/pages-c2-wire.js"></script>
+  <script src="/Hostess7/pages-queen-rtx-bridge.js"></script>
+  <script src="/Hostess7/pages-ammonet-wire.js"></script>
+  <script src="/Hostess7/pages-github-brain-wire.js"></script>
+  <script src="/Hostess7/pages-hostess7-interaction-wire.js"></script>
+</body>
+</html>

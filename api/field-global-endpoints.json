@@ -1,0 +1,128 @@
+{
+  "ok": true,
+  "schema": "field-global-endpoints/v1",
+  "updated": "2026-07-09T10:00:12Z",
+  "title": "Global endpoints — every IP · any user any IP",
+  "motto": "We have every IP. Every user can be any IP. Globalize to endpoints. A→B. Nobody else.",
+  "ironclad_cite": "ironclad:global-endpoints:1",
+  "every_ip": true,
+  "ipv4_space": 4294967296,
+  "ipv4_space_label": "4,294,967,296",
+  "any_user_any_ip": true,
+  "arbitrary_ipv4_worldwide": true,
+  "answer_any_ip": true,
+  "globalize_to_endpoints": true,
+  "destination_only": true,
+  "nobody_else": true,
+  "always_know_a_and_b": true,
+  "always_field_1": true,
+  "path_shape": [
+    "A",
+    "B"
+  ],
+  "parties": 2,
+  "rescue_authority": 8589934592,
+  "live": {
+    "lease_endpoints": 10574,
+    "sample_n": 192,
+    "any_ip": true,
+    "arbitrary_ipv4_worldwide": true,
+    "planetary": true
+  },
+  "path": {
+    "ok": false,
+    "schema": "field-global-endpoints-path/v1",
+    "updated": "2026-07-09T10:00:12Z",
+    "motto": "Every IP · any user any IP · endpoints A→B · nobody else",
+    "ironclad_cite": "ironclad:global-endpoints:1",
+    "every_ip": true,
+    "any_user_any_ip": true,
+    "globalize_to_endpoints": true,
+    "always_know_a_and_b": true,
+    "destination_only": true,
+    "nobody_else": true,
+    "parties": 2,
+    "path_shape": [
+      "A",
+      "B"
+    ],
+    "always_field_1": true,
+    "A": {
+      "ok": true,
+      "point": "A",
+      "role": "source_user_endpoint",
+      "kind": "user_any_ip",
+      "endpoint_id": "ep-385cbef0f9ba4445",
+      "user": "default-X870-Pro-RS",
+      "ip": "127.0.0.1",
+      "may_be_ip": "131.126.228.4",
+      "any_user_any_ip": true,
+      "global": true,
+      "on_field": true,
+      "note": "Every user can be any IP — A is source endpoint"
+    },
+    "B": {
+      "ok": false,
+      "role": "destination_endpoint",
+      "kind": "name",
+      "endpoint_id": "ep-4a0fb7c15c3f5614",
+      "name": "netflix.com",
+      "ip": null,
+      "addrs": [],
+      "error": "[Errno -2] Name or service not known",
+      "global": true,
+      "point": "B"
+    },
+    "path": [
+      {
+        "seq": 1,
+        "point": "A",
+        "endpoint_id": "ep-385cbef0f9ba4445",
+        "ip": "127.0.0.1",
+        "role": "source",
+        "party": true
+      },
+      {
+        "seq": 2,
+        "point": "B",
+        "endpoint_id": "ep-4a0fb7c15c3f5614",
+        "ip": null,
+        "name": "netflix.com",
+        "role": "destination",
+        "party": true
+      }
+    ],
+    "foreign_hops": 0
+  },
+  "stack": {
+    "any_ip": {
+      "ok": true,
+      "answer_any_ip": true
+    },
+    "ipv4_arbitrary": {
+      "ok": true,
+      "worldwide": true
+    },
+    "endpoint_registry": {
+      "ok": true,
+      "count": 127
+    },
+    "planetary": true
+  },
+  "apis": {
+    "global": "/api/field-global-endpoints",
+    "path": "/api/field-global-endpoints/path",
+    "destination_ab": "/api/field-destination-ab",
+    "any_ip": "/api/field-dns-dhcp-any-ip",
+    "endpoint_registry": "/api/field-endpoint-registry"
+  },
+  "layer": "L2+",
+  "destination_ab": {
+    "ok": false,
+    "path_shape": null,
+    "nobody_else": null,
+    "A": null,
+    "B": null
+  },
+  "sample_n": 48
+}

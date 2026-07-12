@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hostess 7 — Full SG Stack Wire</title>
+<style>
+  :root { --bg:#050a08; --fg:#d8f5e8; --ok:#3dff9a; --muted:#6a9080; --line:#1a3028; }
+  body { margin:0; font-family: ui-monospace, Menlo, Consolas, monospace; background:var(--bg); color:var(--fg); padding:1.2rem; }
+  h1 { font-size:1.1rem; margin:0 0 .5rem; }
+  .meta { color:var(--muted); font-size:.75rem; margin-bottom:1rem; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:.6rem; }
+  .card { border:1px solid var(--line); border-radius:10px; padding:.75rem; background:#0a1410; }
+  .card h2 { margin:0 0 .35rem; font-size:.8rem; color:var(--ok); text-transform:uppercase; letter-spacing:.06em; }
+  .card p { margin:0; font-size:.78rem; color:var(--muted); line-height:1.4; }
+  .ok { color:var(--ok); }
+  a { color:#7dffb0; }
+  #status { white-space:pre-wrap; font-size:.72rem; color:var(--muted); margin-top:1rem; max-height:40vh; overflow:auto; border-top:1px solid var(--line); padding-top:.75rem; }
+</style>
+</head>
+<body>
+  <h1>Hostess 7 · Full SG Stack Wire</h1>
+  <p class="meta">Grok16 · Final Eye/Ear/Mouth · Ironclad BSP DNS/DHCP · Body · Toolkit · Field bash · Storm killers · Secure github-mirror</p>
+  <div class="grid">
+    <div class="card"><h2>Grok16</h2><p class="ok" id="g16">…</p></div>
+    <div class="card"><h2>Senses</h2><p class="ok" id="senses">…</p></div>
+    <div class="card"><h2>Network</h2><p class="ok" id="net">…</p></div>
+    <div class="card"><h2>Body</h2><p class="ok" id="body">…</p></div>
+    <div class="card"><h2>Security</h2><p class="ok" id="sec">…</p></div>
+    <div class="card"><h2>Storm killers</h2><p class="ok" id="storm">…</p></div>
+  </div>
+  <p class="meta" style="margin-top:1rem">
+    <a href="./">Boot</a> · <a href="./desktop/">Desktop</a> · <a href="./api/hostess7-sg-stack-map.json">Stack map API</a> ·
+    <a href="https://github.com/ZacharyGeurts/Hostess7">Repo</a>
+  </p>
+  <div id="status"></div>
+<script>
+(async function () {
+  const base = (document.querySelector('base') && document.querySelector('base').href) || './';
+  async function j(path) {
+    try {
+      const r = await fetch(path, { cache: 'no-store' });
+      return await r.json();
+    } catch (e) { return { ok: false, error: String(e) }; }
+  }
+  const map = await j('api/hostess7-sg-stack-map.json');
+  const wire = await j('api/hostess7-full-stack-wire.json');
+  const set = (id, ok, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = (ok ? 'OK · ' : '… · ') + text;
+  };
+  set('g16', map.components && map.components.grok16, 'compiler + untouchable + Hostess7 boss');
+  set('senses', map.components && map.components.final_eye, 'Final Eye / Ear / Mouth');
+  set('net', map.components && map.components.field_network_dns_dhcp, 'BSP DNS + DHCP planet');
+  set('body', map.components && map.components.full_body, 'full body wire');
+  set('sec', map.components && map.components.never_reconnect, 'toolkit · bash · never-reconnect');
+  set('storm', map.components && map.components.spawn_storm_killers, 'max intensity host injection cook');
+  document.getElementById('status').textContent = JSON.stringify({ map, wire_ok: wire && wire.ok, updated: map.updated }, null, 2);
+})();
+</script>
+</body>
+</html>

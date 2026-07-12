@@ -1,0 +1,170 @@
+{
+  "ok": true,
+  "schema": "field-ammonet-permanent-plane/v1",
+  "updated": "2026-07-11T23:51:21Z",
+  "motto": "AmmoNet permanent plane — boot · C2 · iPXE · no outside interference",
+  "ironclad_cite": "ironclad:ammonet-permanent-plane:1",
+  "never_host_pgrep": true,
+  "outside_interference": false,
+  "held_securely": true,
+  "permanent_nexus_c2": false,
+  "c2": "http://127.0.0.1:9477/field",
+  "api_botnet": "http://127.0.0.1:9477/api/field-botnet-dns-dhcp",
+  "password": "blank or mememe",
+  "lease_count": 55038,
+  "port_67": true,
+  "stages": [
+    {
+      "ok": true,
+      "stage": "field_proc_tools",
+      "tools": {
+        "field-proc-grep": true,
+        "field-ps": true,
+        "field-toolkit": true
+      },
+      "never_host_pgrep": true,
+      "proc_walk_alive": true,
+      "replaces": [
+        "pgrep",
+        "pkill",
+        "ps"
+      ],
+      "id": "field_proc_tools"
+    },
+    {
+      "ok": true,
+      "stage": "grok_orphan_kill",
+      "instakill": {
+        "ok": true,
+        "slain_session": 0
+      },
+      "orphan_cook": {
+        "ok": true,
+        "cooked": {
+          "field-grok-spawner": 1
+        }
+      },
+      "continual_serve": true,
+      "kgo_native": {
+        "present": true,
+        "ok": true,
+        "out": "stats scanned=436 orphan_checked=29 matched=0 killed=0\n"
+      },
+      "continual": true,
+      "id": "grok_orphan_kill"
+    },
+    {
+      "ok": false,
+      "stage": "antivirus_network_defender",
+      "defend_ok": false,
+      "threats": null,
+      "daemon": true,
+      "at_boot": true,
+      "product": "AntivirusNetworkDefender",
+      "id": "antivirus_network_defender"
+    },
+    {
+      "ok": false,
+      "stage": "outside_lines",
+      "ask_only": false,
+      "double_guard": false,
+      "mesh": false,
+      "outside_interference": false,
+      "no_foreign_control": true,
+      "we_tell_network_what_it_needs": true,
+      "id": "outside_lines"
+    },
+    {
+      "ok": false,
+      "stage": "kilroy_ipxe_nexus_c2",
+      "c2": {
+        "ok": false,
+        "port": 9477
+      },
+      "stack_ok": false,
+      "lane": {
+        "schema": "kilroy-ipxe-lane/v1",
+        "updated": "2026-07-11T15:22:52Z",
+        "active": true,
+        "permanent": true,
+        "autoconnect": true,
+        "lineage": "Desktop/SG/KILROY-ipxe + dist/KILROY-iPXE-v1.0",
+        "ammonet": true,
+        "nexus_c2": "http://127.0.0.1:9477/field",
+        "domain": "ammonet.net",
+        "outside_interference": false,
+        "assets": {
+          "source": "/home/default/Desktop/SG/KILROY-ipxe",
+          "kilroy.ipxe": "/home/default/Desktop/SG/NewLatest/.nexus-state/kilroy-ipxe-permanent/kilroy.ipxe",
+          "README.md": "/home/default/Desktop/SG/NewLatest/.nexus-state/kilroy-ipxe-permanent/README.md",
+          "ammonet-permanent.ipxe": "/home/default/Desktop/SG/NewLatest/.nexus-state/kilroy-ipxe-permanent/ammonet-permanent.ipxe"
+        }
+      },
+      "permanent": true,
+      "hardware_level": true,
+      "ipxe_dest": "/home/default/Desktop/SG/NewLatest/.nexus-state/kilroy-ipxe-permanent",
+      "id": "kilroy_ipxe_nexus_c2"
+    },
+    {
+      "ok": false,
+      "stage": "ammonet_lease_takeover",
+      "lease_count": null,
+      "port_67": null,
+      "domain": "ammonet.net",
+      "seamless": true,
+      "api_ok": false,
+      "on_reboot": true,
+      "id": "ammonet_lease_takeover"
+    },
+    {
+      "ok": false,
+      "stage": "redundant_mirror_truth",
+      "count": null,
+      "copies_equal": null,
+      "table": null,
+      "healed": null,
+      "outside_interference": false,
+      "id": "redundant_mirror_truth"
+    },
+    {
+      "ok": false,
+      "stage": "network_always_true",
+      "score": null,
+      "always_true": null,
+      "sole_isp": "AmmoNet",
+      "friends": null,
+      "outside_interference": false,
+      "id": "network_always_true"
+    },
+    {
+      "ok": false,
+      "stage": "local_dns_connect",
+      "dns_connect": false,
+      "never_down": false,
+      "just_works": true,
+      "os_settings_ignored": true,
+      "id": "local_dns_connect"
+    },
+    {
+      "ok": false,
+      "stage": "stack_boot",
+      "stopped_at": null,
+      "surfaces": null,
+      "id": "stack_boot"
+    }
+  ],
+  "boot_order": [
+    "field_proc_tools",
+    "grok_orphan_kill",
+    "antivirus_network_defender",
+    "outside_lines",
+    "kilroy_ipxe_nexus_c2",
+    "ammonet_lease_takeover",
+    "redundant_mirror_truth",
+    "network_always_true",
+    "local_dns_connect",
+    "stack_boot"
+  ],
+  "platforms_note": "packaging/ammonet-permanent-plane — build-all-platforms.sh",
+  "api": "/api/field-ammonet-permanent-plane"
+}

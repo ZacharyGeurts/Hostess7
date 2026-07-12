@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "schema": "field-no-outside-view/v1",
+  "updated": "2026-07-10T11:43:29Z",
+  "title": "No outside view · no outside screenshots",
+  "motto": "Prevent viewing and outside screenshots — Field tools + antivirus · just the operator",
+  "ironclad_cite": "ironclad:no-outside-view:1",
+  "no_outside_view": true,
+  "no_outside_screenshots": true,
+  "hits": 0,
+  "killed": 0,
+  "steps": {
+    "admin_window_shield": {
+      "ok": true,
+      "hits": 0
+    },
+    "inline_capture": {
+      "ok": true,
+      "hits": null
+    },
+    "direct_scan": {
+      "ok": true,
+      "hits": null
+    }
+  },
+  "celebrate_surface": {
+    "schema": "field-celebrate-no-outside-view/v1",
+    "updated": "2026-07-10T11:43:29Z",
+    "no_outside_view": true,
+    "no_outside_screenshots": true,
+    "no_embed": true,
+    "x_frame_options": "DENY",
+    "csp": "frame-ancestors 'none'; default-src 'self' http://127.0.0.1:9477",
+    "referrer_policy": "no-referrer",
+    "motto": "Celebrate is Field-only — no outside screenshots or remote viewing"
+  },
+  "tools_used": [
+    "lib/admin-window-shield.py",
+    "lib/field-inline-sovereign.py",
+    "lib/field-antivirus-network-defender.py",
+    "lib/field-no-outside-view.py"
+  ],
+  "api": "/api/field-no-outside-view"
+}
