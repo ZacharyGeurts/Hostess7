@@ -7,8 +7,9 @@
   const API = "/api/field-everyone-counter";
   const FLEET_API = "/api/field-fleet-expand-125k";
   const STORAGE = "field_panel_flyout_open";
-  const POLL_MS = 2000;
+  const POLL_MS = 2500;
   const FLEET_FLOOR = 125000;
+  const ACTIVE_LEASE_FLOOR = 1000000000; // below 1B is local sample, not plane
 
   const state = { open: false, timer: null, doc: null, wired: false };
 
@@ -77,9 +78,51 @@
     const lanes = doc.lanes || {};
     return (
       Number(f.servers_total) ||
+      Number(f.active_racks) ||
       Number(lanes.fleet_125k?.count) ||
       Number(doc.distributed_botnet?.fleet_servers) ||
       FLEET_FLOOR
+    );
+  }
+
+  // ACTIVE Internet 2.0 leases (trillions) — never use local sample as primary
+  function activeLeasesN(doc) {
+    const live = doc.servers_live || {};
+    const lanes = doc.lanes || {};
+    const al = doc.active_leases || {};
+    const pl = doc.planetary_leases || {};
+    const candidates = [
+      Number(live.dhcp_leases_active),
+      Number(al.dhcp_leases),
+      Number(lanes.active_leases?.count),
+      Number(pl.active_device_leases),
+      Number(pl.dhcp_leases_live),
+      Number(live.dhcp_leases),
+      Number(lanes.dhcp_leases?.count),
+    ];
+    let best = 0;
+    for (let i = 0; i < candidates.length; i++) {
+      const n = candidates[i];
+      if (Number.isFinite(n) && n > best) best = n;
+    }
+    // floor: plane is 7T when internet2 / active_not_capacity stamped
+    if (best < 1000000000 && (doc.internet2 || doc.active_not_capacity || al.active)) {
+      best = 7000000000000;
+    }
+    return best;
+  }
+
+  function localSampleN(doc) {
+    const live = doc.servers_live || {};
+    const lanes = doc.lanes || {};
+    const al = doc.active_leases || {};
+    const pl = doc.planetary_leases || {};
+    return (
+      Number(live.dhcp_leases_local_sample) ||
+      Number(al.local_sample_only) ||
+      Number(lanes.local_sample?.count) ||
+      Number(pl.local_dhcp_sample) ||
+      0
     );
   }
 
@@ -89,6 +132,60 @@
     // Never show the old local-only 41-style total when fleet plane is 125k
     if (!Number.isFinite(raw) || raw < fleet) return fleet + (Number(doc.lanes?.github_people?.count) || 0);
     return raw;
+  }
+
+  // Live-update the C++-baked static Everyone strip on desktop
+  function paintStaticEveryone(doc) {
+    const el = document.getElementById("h7-everyone-static");
+    if (!el) return;
+    const active = activeLeasesN(doc);
+    const fleet = fleetN(doc);
+    const everyone = everyoneN(doc);
+    const local = localSampleN(doc);
+    const live = doc.servers_live || {};
+    const lanes = doc.lanes || {};
+    const dns =
+      Number(live.dns_served) ||
+      Number(live.dns_answers) ||
+      Number(live.dns_queries) ||
+      Number(lanes.dns_served?.count) ||
+      0;
+    const dnsUp = live.dns_up === true || live.dns_up === 1 || doc.services?.dns;
+    const dhcpUp = live.dhcp_up === true || live.dhcp_up === 1 || doc.services?.dhcp;
+    el.dataset.activeLeases = String(active);
+    el.dataset.fleet = String(fleet);
+    el.dataset.everyone = String(everyone);
+    el.dataset.updated = doc.updated || "";
+    const set = function (sel, text) {
+      const n = el.querySelector(sel);
+      if (n) n.textContent = text;
+    };
+    // grid: ACTIVE, fleet, everyone, dns, local, books(optional)
+    const stats = el.querySelectorAll(".h7e-stat b");
+    if (stats[0]) stats[0].textContent = fmtN(active);
+    if (stats[1]) stats[1].textContent = fmtN(fleet);
+    if (stats[2]) stats[2].textContent = fmtN(everyone);
+    if (stats[3]) stats[3].textContent = fmtN(dns);
+    if (stats[4]) stats[4].textContent = fmtN(local);
+    const pills = el.querySelectorAll(".h7e-pill");
+    if (pills[0]) {
+      pills[0].textContent = "DNS " + (dnsUp ? "live" : "down");
+      pills[0].classList.toggle("off", !dnsUp);
+    }
+    if (pills[1]) {
+      pills[1].textContent = "DHCP " + (dhcpUp ? "live" : "down");
+      pills[1].classList.toggle("off", !dhcpUp);
+    }
+    const foot = el.querySelector(".h7e-foot");
+    if (foot) {
+      const ts = doc.updated || new Date().toISOString();
+      foot.innerHTML =
+        "Live " +
+        esc(ts) +
+        ' · <a href="/Hostess7/api/field-everyone-counter.json">API</a> · ' +
+        '<a href="/Hostess7/library/">Library</a> · ' +
+        '<a href="/Hostess7/desktop/">Desktop</a>';
+    }
   }
 
   function renderPanel(doc) {
@@ -101,6 +198,8 @@
     const leases = doc.planetary_leases || {};
     const fleet = fleetN(doc);
     const everyone = everyoneN(doc);
+    const active = activeLeasesN(doc);
+    const local = localSampleN(doc);
     const botShow = Math.max(Number(lanes.botnet?.count) || 0, fleet);
     const dnsPill = svc.dns ? "fpnl-pill" : "fpnl-pill off";
     const dhcpPill = svc.dhcp_crushing ? "fpnl-pill" : svc.dhcp ? "fpnl-pill" : "fpnl-pill off";
@@ -117,25 +216,19 @@
       Number(lanes.dns_served?.count) ||
       Number(leases.dns_served_live) ||
       0;
-    const dhcpLeases =
-      Number(live.dhcp_leases) ||
-      Number(lanes.dhcp_leases?.count) ||
-      Number(leases.dhcp_leases_live) ||
-      Number(leases.local_dhcp) ||
-      0;
     const dnsUp = live.dns_up === true || live.dns_up === 1 || svc.dns;
     const dhcpUp = live.dhcp_up === true || live.dhcp_up === 1 || svc.dhcp;
     panel.innerHTML =
       '<div class="fpnl-head">' +
       "<strong>Field Panel</strong>" +
-      '<span>' + esc(doc.version || "4.0.0-cpp") + " · Zac · AmmoNet · live servers</span>" +
+      '<span>' + esc(doc.version || "5.0.0-cpp") + " · Zac · AmmoNet · Internet 2.0</span>" +
       '<button type="button" class="fpnl-close" id="fpnl-close" aria-label="Close">×</button>' +
       "</div>" +
-      '<div class="fpnl-section">Our servers · connected · know each other</div>' +
+      '<div class="fpnl-section">ACTIVE leases · not capacity · local sample separate</div>' +
       '<div class="fpnl-grid fpnl-grid-leases">' +
-      '<div class="fpnl-stat lease total"><b>' + fmtN(dhcpLeases) + "</b><span>DHCP leases</span></div>" +
+      '<div class="fpnl-stat lease total"><b>' + fmtN(active) + "</b><span>ACTIVE leases</span></div>" +
       '<div class="fpnl-stat lease total"><b>' + fmtN(dnsServed) + "</b><span>DNS served</span></div>" +
-      '<div class="fpnl-stat lease"><b>' + fmtN(live.dns_queries || dnsServed) + "</b><span>DNS queries</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(local) + "</b><span>Local sample only</span></div>" +
       '<div class="fpnl-stat lease"><b>' + fmtN(live.dns_learned || live.dns_pins || 0) + "</b><span>DNS learned</span></div>" +
       '<div class="fpnl-stat lease"><b>' + fmtN(live.dhcp_acks || 0) + "</b><span>DHCP ACKs</span></div>" +
       '<div class="fpnl-stat lease"><b>' + fmtN(fleet) + "</b><span>Fleet servers</span></div>" +
@@ -154,12 +247,12 @@
       '<div class="fpnl-stat lease"><b>' + fmtN(leases.planet_dhcp) + "</b><span>Planet DHCP</span></div>" +
       '<div class="fpnl-stat lease"><b>' + fmtN(leases.planet_dns) + "</b><span>Planet DNS</span></div>" +
       '<div class="fpnl-stat lease"><b>' + fmtN(leases.planet_total) + "</b><span>Lease total</span></div>" +
-      '<div class="fpnl-stat lease"><b>' + fmtN(dhcpLeases || leases.local_dhcp) + "</b><span>Live leases</span></div>" +
-      '<div class="fpnl-stat lease"><b>' + fmtN(leases.devices || dhcpLeases) + "</b><span>Devices</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(active) + "</b><span>ACTIVE device leases</span></div>" +
+      '<div class="fpnl-stat lease"><b>' + fmtN(leases.devices || active) + "</b><span>Devices</span></div>" +
       "</div>" +
       '<div class="fpnl-row">' +
       '<span class="' + (dnsUp ? "fpnl-pill" : "fpnl-pill off") + '">DNS ' + (dnsUp ? "live · " + fmtN(dnsServed) : "down") + "</span>" +
-      '<span class="' + (dhcpUp ? "fpnl-pill" : "fpnl-pill off") + '">DHCP ' + (dhcpUp ? "live · " + fmtN(dhcpLeases) : "down") + "</span>" +
+      '<span class="' + (dhcpUp ? "fpnl-pill" : "fpnl-pill off") + '">DHCP ' + (dhcpUp ? "live · " + fmtN(active) : "down") + "</span>" +
       '<span class="fpnl-pill">Fleet ' + fmtN(fleet) + "</span>" +
       (live.server_id ? '<span class="fpnl-pill">ID ' + esc(live.server_id) + "</span>" : "") +
       '<span class="' + ghPill + '">GitHub ' + (dist.github_open ? "open" : "mirror") + "</span>" +
@@ -229,40 +322,43 @@
     const sub = document.getElementById("fpnl-chip-sub");
     const fleet = fleetN(doc);
     const everyone = everyoneN(doc);
+    const active = activeLeasesN(doc);
     const live = doc.servers_live || {};
-    const leasesN =
-      Number(live.dhcp_leases) ||
-      Number(doc.lanes?.dhcp_leases?.count) ||
-      Number(doc.planetary_leases?.dhcp_leases_live) ||
-      Number(doc.planetary_leases?.local_dhcp) ||
-      0;
     const dnsN =
       Number(live.dns_served) ||
       Number(live.dns_answers) ||
       Number(live.dns_queries) ||
       Number(doc.lanes?.dns_served?.count) ||
       0;
-    if (total) total.textContent = fmtN(everyone);
+    // Chip primary = ACTIVE leases (Internet 2.0), not local sample
+    if (total) total.textContent = fmtN(active);
     if (sub) {
       sub.textContent =
-        "leases " +
-        fmtN(leasesN) +
+        "ACTIVE " +
+        fmtN(active) +
         " · dns " +
         fmtN(dnsN) +
         " · fleet " +
-        fmtN(fleet);
+        fmtN(fleet) +
+        " · all " +
+        fmtN(everyone);
     }
+    paintStaticEveryone(doc);
     if (state.open) renderPanel(doc);
   }
 
   async function tick() {
     try {
-      const res = await fetch(apiUrl(API) + "?t=" + Date.now(), { cache: "no-store", credentials: "same-origin" });
+      const res = await fetch(apiUrl(API) + "?t=" + Date.now(), {
+        cache: "no-store",
+        credentials: "same-origin",
+        headers: { Accept: "application/json", "Cache-Control": "no-cache" },
+      });
       if (!res.ok) throw new Error("counter " + res.status);
       let doc = await res.json();
-      // Merge fleet 125k if counter is still stale local-only
+      // Fill fleet if missing — never clobber ACTIVE 7T leases
       try {
-        if (!doc.fleet_125k || Number(doc.everyone_total) < FLEET_FLOOR) {
+        if (!doc.fleet_125k || Number(doc.fleet_125k.servers_total) < FLEET_FLOOR) {
           const fr = await fetch(apiUrl(FLEET_API) + "?t=" + Date.now(), {
             cache: "no-store",
             credentials: "same-origin",
@@ -273,13 +369,13 @@
               Number(fleetDoc.servers_total) ||
               Number((fleetDoc.capacity || {}).servers) ||
               FLEET_FLOOR;
-            doc.fleet_125k = {
+            doc.fleet_125k = Object.assign({}, doc.fleet_125k || {}, {
               servers_total: servers,
               target: 125000,
               wired_to_everyone: true,
               ammonet: true,
               hostess7_boss: true,
-            };
+            });
             doc.lanes = doc.lanes || {};
             doc.lanes.fleet_125k = {
               count: servers,
@@ -290,23 +386,25 @@
             doc.lanes.botnet.fleet_servers = servers;
             if (Number(doc.lanes.botnet.count) < 1000) {
               doc.lanes.botnet.count = servers;
-              doc.lanes.botnet.local_nodes = doc.lanes.botnet.local_nodes || doc.lanes.botnet.count;
             }
-            const gh = Number(doc.lanes.github_people?.count) || 0;
-            const ex = Number(doc.lanes.executable_people?.count) || 0;
-            doc.everyone_total = servers + gh + ex + 1;
+            if (!Number.isFinite(Number(doc.everyone_total)) || Number(doc.everyone_total) < servers) {
+              const gh = Number(doc.lanes.github_people?.count) || 0;
+              const ex = Number(doc.lanes.executable_people?.count) || 0;
+              doc.everyone_total = servers + gh + ex + 1;
+            }
             doc.isp = doc.isp || "ammonet";
             doc.ammonet = Object.assign(
               { ok: true, boss: "hostess7", isp: "ammonet", acquainted: true },
               doc.ammonet || {}
             );
-            doc.motto =
-              "Everyone totals wired to Hostess7 AmmoNet fleet " +
-              servers.toLocaleString();
-            doc.version = doc.version || "4.0.0-cpp";
           }
         }
       } catch (_) {}
+      // Ensure active lease fields present for paint
+      if (!doc.servers_live) doc.servers_live = {};
+      if (!Number(doc.servers_live.dhcp_leases_active) && activeLeasesN(doc) >= 1000000000) {
+        doc.servers_live.dhcp_leases_active = activeLeasesN(doc);
+      }
       state.doc = doc;
       paintChip(state.doc);
     } catch (_) {
