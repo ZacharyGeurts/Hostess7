@@ -326,39 +326,44 @@ int bake(Paths& p, bool do_seal) {
     have = read_all(p.everyone_api, body, sizeof(body), &n);
   }
   if (!have || n < 20) {
-    // Minimal safe payload — 7T active plane constants
+    // Minimal safe payload — zeros measured (no fiction floors)
     std::snprintf(body, sizeof(body),
                   "{\n"
-                  "  \"ok\": true,\n"
-                  "  \"schema\": \"field-everyone-counter/v2\",\n"
-                  "  \"title\": \"Everyone — Internet 2.0 · 7T ACTIVE leases\",\n"
-                  "  \"motto\": \"Internet 2.0 · 7 trillion ACTIVE leases · 125k racks\",\n"
+                  "  \"ok\": false,\n"
+                  "  \"schema\": \"field-everyone-counter/v7-truth\",\n"
+                  "  \"title\": \"Everyone — measured · seal required\",\n"
+                  "  \"motto\": \"Measured truth only · run field-everyone seal\",\n"
                   "  \"updated\": \"%s\",\n"
                   "  \"boss\": \"hostess7\",\n"
                   "  \"isp\": \"ammonet\",\n"
                   "  \"operator\": \"Zac\",\n"
                   "  \"x\": \"@ZacharyGeurts\",\n"
-                  "  \"version\": \"5.0.0-cpp\",\n"
+                  "  \"version\": \"4.0.0-cpp-truth\",\n"
                   "  \"engine\": \"cpp\",\n"
                   "  \"python\": 0,\n"
-                  "  \"internet2\": true,\n"
-                  "  \"active_not_capacity\": true,\n"
+                  "  \"truth\": true,\n"
+                  "  \"measured_only\": true,\n"
+                  "  \"world_online\": false,\n"
                   "  \"servers_live\": {\n"
-                  "    \"connected\": true,\n"
-                  "    \"dns_up\": true,\n"
-                  "    \"dhcp_up\": true,\n"
-                  "    \"dhcp_leases\": 7000000000000,\n"
-                  "    \"dhcp_leases_active\": 7000000000000,\n"
-                  "    \"dhcp_leases_local_sample\": 0,\n"
-                  "    \"fleet_servers\": 125000\n"
+                  "    \"connected\": false,\n"
+                  "    \"dns_up\": false,\n"
+                  "    \"dhcp_up\": false,\n"
+                  "    \"dhcp_leases\": 0,\n"
+                  "    \"dhcp_leases_active\": 0,\n"
+                  "    \"dhcp_leases_table\": 0,\n"
+                  "    \"fleet_servers\": 0\n"
                   "  },\n"
-                  "  \"fleet_125k\": {\"servers_total\": 125000, \"target\": 125000},\n"
+                  "  \"fleet_125k\": {\"servers_live\": 0, \"servers_total\": 0, "
+                  "\"target\": 125000},\n"
                   "  \"lanes\": {\n"
-                  "    \"active_leases\": {\"count\": 7000000000000, \"label\": \"ACTIVE DHCP leases\"},\n"
-                  "    \"fleet_125k\": {\"count\": 125000, \"label\": \"Fleet 125k\"}\n"
+                  "    \"active_leases\": {\"count\": 0, \"label\": \"Devices on lease\"},\n"
+                  "    \"fleet_125k\": {\"count\": 0, \"label\": \"Fleet live\", \"target\": 125000}\n"
                   "  },\n"
-                  "  \"everyone_total\": 8200000000,\n"
-                  "  \"people_served\": 8200000000,\n"
+                  "  \"everyone_total\": 0,\n"
+                  "  \"devices_on_lease\": 0,\n"
+                  "  \"people_served\": 0,\n"
+                  "  \"capacity\": {\"ipv4_address_space\": 4294967296, "
+                  "\"fleet_mesh_target\": 125000},\n"
                   "  \"pages\": true,\n"
                   "  \"api\": \"/api/field-everyone-counter\"\n"
                   "}\n",
@@ -369,10 +374,11 @@ int bake(Paths& p, bool do_seal) {
   // Copy sealed body to pages API (official product path)
   (void)write_file(p.everyone_api, body, n);
 
+  // Measured only — never invent 7T/8.2B
   long long dhcp = json_ll(body, "dhcp_leases_active");
-  if (dhcp < 1000000000LL) dhcp = json_ll(body, "dhcp_leases");
-  if (dhcp < 1000000000LL) {
-    // lanes.active_leases nested — fall back constant
+  if (dhcp < 0) dhcp = json_ll(body, "dhcp_leases");
+  if (dhcp < 0) dhcp = json_ll(body, "devices_on_lease");
+  if (dhcp < 0) {
     const char* al = std::strstr(body, "\"active_leases\"");
     if (al) {
       const char* c = std::strstr(al, "\"count\"");
@@ -382,33 +388,39 @@ int bake(Paths& p, bool do_seal) {
       }
     }
   }
-  if (dhcp < 1000000000LL) dhcp = 7000000000000LL;
+  if (dhcp < 0) dhcp = 0;
 
-  long long fleet = json_ll(body, "servers_total");
-  if (fleet < 1000) fleet = json_ll(body, "fleet_servers");
-  if (fleet < 1000) fleet = 125000;
-  // Billions of people served — never collapse to fleet-node count (~125k)
-  constexpr long long kPeopleDefault = 8200000000LL;
-  constexpr long long kPeopleFloor = 2000000000LL;
-  long long everyone = json_ll(body, "people_served");
-  if (everyone < kPeopleFloor) everyone = json_ll(body, "everyone_total");
-  if (everyone < kPeopleFloor) everyone = kPeopleDefault;
+  long long fleet = json_ll(body, "servers_live");
+  if (fleet < 0) fleet = json_ll(body, "fleet_servers");
+  if (fleet < 0) fleet = json_ll(body, "servers_total");
+  if (fleet < 0) fleet = 0;
+  long long fleet_target = json_ll(body, "target");
+  if (fleet_target < 1000) fleet_target = 125000;
+
+  long long everyone = json_ll(body, "devices_on_lease");
+  if (everyone < 0) everyone = json_ll(body, "everyone_total");
+  if (everyone < 0) everyone = json_ll(body, "people_served");
+  if (everyone < 0) everyone = dhcp;
+  if (everyone < 0) everyone = 0;
+
   long long dns_served = json_ll(body, "dns_served");
   if (dns_served < 0) dns_served = json_ll(body, "dns_answers");
   if (dns_served < 0) dns_served = json_ll(body, "dns_queries");
   if (dns_served < 0) dns_served = 0;
-  long long local_sample = json_ll(body, "dhcp_leases_local_sample");
-  if (local_sample < 0) local_sample = json_ll(body, "local_sample_only");
-  if (local_sample < 0) local_sample = 0;
+  long long table = json_ll(body, "dhcp_leases_table");
+  if (table < 0) table = json_ll(body, "lease_table");
+  if (table < 0) table = 0;
   bool dns_up = json_bool(body, "dns_up") || std::strstr(body, "\"dns\": true");
   bool dhcp_up = json_bool(body, "dhcp_up") || std::strstr(body, "\"dhcp\": true");
+  bool world_on =
+      json_bool(body, "world_online") || (dns_up && dhcp_up);
 
-  char h_dhcp[32], h_fleet[32], h_every[32], h_dns[32], h_local[32];
+  char h_dhcp[32], h_fleet[32], h_every[32], h_dns[32], h_table[32];
   fmt_human(dhcp, h_dhcp, sizeof(h_dhcp));
   fmt_human(fleet, h_fleet, sizeof(h_fleet));
   fmt_human(everyone, h_every, sizeof(h_every));
   fmt_human(dns_served, h_dns, sizeof(h_dns));
-  fmt_human(local_sample, h_local, sizeof(h_local));
+  fmt_human(table, h_table, sizeof(h_table));
 
   // Library shelves
   int lib_docs = count_dir_entries(p.library);
@@ -432,35 +444,41 @@ int bake(Paths& p, bool do_seal) {
   char html[8192];
   std::snprintf(
       html, sizeof(html),
-      "<!-- field-desktop-pages-static bake %s · %s · no scripts -->\n"
+      "<!-- field-desktop-pages-static bake %s · %s · measured truth -->\n"
       "<aside id=\"h7-everyone-static\" data-engine=\"cpp\" data-ironclad=\"%s\" "
-      "data-active-leases=\"%lld\" data-fleet=\"%lld\" data-everyone=\"%lld\" "
-      "aria-label=\"Everyone · Internet 2.0 active leases\">\n"
-      "  <h2>Everyone · people served</h2>\n"
-      "  <p class=\"h7e-motto\">Billions of people served · 7T ACTIVE leases · "
-      "local sample separate · Zac @ZacharyGeurts</p>\n"
+      "data-active-leases=\"%lld\" data-fleet=\"%lld\" data-fleet-target=\"%lld\" "
+      "data-everyone=\"%lld\" data-world-online=\"%d\" "
+      "aria-label=\"Everyone · measured devices on Field\">\n"
+      "  <h2>Everyone · devices on lease</h2>\n"
+      "  <p class=\"h7e-motto\">Measured truth · world %s · capacity labeled "
+      "separate · Zac @ZacharyGeurts</p>\n"
       "  <div class=\"h7e-grid\">\n"
-      "    <div class=\"h7e-stat total\"><b>%s</b><span>ACTIVE leases</span></div>\n"
-      "    <div class=\"h7e-stat total\"><b>%s</b><span>Fleet 125k</span></div>\n"
-      "    <div class=\"h7e-stat total\"><b>%s</b><span>People served</span></div>\n"
+      "    <div class=\"h7e-stat total\"><b>%s</b><span>Devices on lease</span></div>\n"
+      "    <div class=\"h7e-stat total\"><b>%s</b><span>Fleet live</span></div>\n"
+      "    <div class=\"h7e-stat total\"><b>%s</b><span>Everyone</span></div>\n"
       "    <div class=\"h7e-stat\"><b>%s</b><span>DNS served</span></div>\n"
-      "    <div class=\"h7e-stat\"><b>%s</b><span>Local sample only</span></div>\n"
+      "    <div class=\"h7e-stat\"><b>%s</b><span>Lease table rows</span></div>\n"
       "    <div class=\"h7e-stat\"><b>%d</b><span>Library books</span></div>\n"
       "  </div>\n"
       "  <div class=\"h7e-pills\">\n"
       "    <span class=\"h7e-pill%s\">DNS %s</span>\n"
       "    <span class=\"h7e-pill%s\">DHCP %s</span>\n"
+      "    <span class=\"h7e-pill%s\">World %s</span>\n"
       "    <span class=\"h7e-pill\">AmmoNet</span>\n"
-      "    <span class=\"h7e-pill\">C++ bake</span>\n"
+      "    <span class=\"h7e-pill\">truth</span>\n"
+      "    <span class=\"h7e-pill\">target %lld</span>\n"
       "    <span class=\"h7e-pill\">shelves %d/%d</span>\n"
       "  </div>\n"
       "  <p class=\"h7e-foot\">Baked %s · <a href=\"/Hostess7/api/field-everyone-counter.json\">"
       "API</a> · <a href=\"/Hostess7/library/\">Library</a> · "
       "<a href=\"/Hostess7/desktop/\">Desktop</a></p>\n"
       "</aside>\n",
-      ts, kIronclad, kIronclad, dhcp, fleet, everyone, h_dhcp, h_fleet, h_every, h_dns,
-      h_local, books_hint, dns_up ? "" : " off", dns_up ? "live" : "down",
-      dhcp_up ? "" : " off", dhcp_up ? "live" : "down", lib_docs, lib_dewey, ts);
+      ts, kIronclad, kIronclad, dhcp, fleet, fleet_target, everyone,
+      world_on ? 1 : 0, world_on ? "online" : "offline", h_dhcp, h_fleet,
+      h_every, h_dns, h_table, books_hint, dns_up ? "" : " off",
+      dns_up ? "live" : "down", dhcp_up ? "" : " off",
+      dhcp_up ? "live" : "down", world_on ? "" : " off",
+      world_on ? "online" : "offline", fleet_target, lib_docs, lib_dewey, ts);
 
   char html_path[kPathCap];
   std::snprintf(html_path, sizeof(html_path), "%s/everyone-panel.inc.html", p.desktop);
@@ -624,16 +642,19 @@ int bake(Paths& p, bool do_seal) {
       "  \"desktop_url\": \"https://zacharygeurts.github.io/Hostess7/desktop/\",\n"
       "  \"everyone_api\": \"/api/field-everyone-counter\",\n"
       "  \"active_leases\": %lld,\n"
-      "  \"fleet_125k\": %lld,\n"
+      "  \"fleet_live\": %lld,\n"
+      "  \"fleet_target\": %lld,\n"
       "  \"everyone_total\": %lld,\n"
       "  \"dns_served\": %lld,\n"
-      "  \"local_sample\": %lld,\n"
+      "  \"lease_table\": %lld,\n"
       "  \"library_books\": %d,\n"
+      "  \"world_online\": %s,\n"
+      "  \"measured_only\": true,\n"
       "  \"panel_inc\": \"/desktop/everyone-panel.inc.html\",\n"
       "  \"panel_css\": \"/desktop/everyone-panel.css\"\n"
       "}\n",
-      kSchema, ts, kVersion, kIronclad, dhcp, fleet, everyone, dns_served,
-      local_sample, books_hint);
+      kSchema, ts, kVersion, kIronclad, dhcp, fleet, fleet_target, everyone,
+      dns_served, table, books_hint, world_on ? "true" : "false");
   char bake_path[kPathCap];
   std::snprintf(bake_path, sizeof(bake_path), "%s/field-desktop-everyone-bake.json",
                 p.api);

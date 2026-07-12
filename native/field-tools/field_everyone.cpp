@@ -1,11 +1,11 @@
-// field-everyone — Everyone totals + AmmoNet fleet 125k + training (C++ only)
+// field-everyone — measured DNS/DHCP truth + AmmoNet fleet target (C++ only)
 //
-// Replaces field-everyone-counter.py · hostess7-training python panels.
-// Hostess 7 runs AmmoNet. Everyone chip = fleet plane, not local-only 41.
+// SERIOUS MODE: never invent 7T/8.2B "active" numbers.
+// Measured table/daemon counters are primary. Capacity is labeled capacity.
 //
 //   field-everyone [seal|status|export|train|ammonet|help]
 //
-// ironclad:field-everyone-cpp:1
+// ironclad:field-everyone-cpp:5
 #define _GNU_SOURCE 1
 
 #include "field_everyone.hpp"
@@ -27,24 +27,15 @@ namespace {
 using field::everyone::kBoss;
 using field::everyone::kFleetHotDefault;
 using field::everyone::kFleetTarget;
-using field::everyone::kIPv4Owned;
+using field::everyone::kIPv4Capacity;
 using field::everyone::kIronclad;
 using field::everyone::kIsp;
 using field::everyone::kMotto;
 using field::everyone::kOperator;
-using field::everyone::kPlanetDhcp;
-using field::everyone::kPlanetDns;
-using field::everyone::kPlanetLeaseTotal;
+using field::everyone::kPlanetLeaseCapacity;
 using field::everyone::kSchema;
-using field::everyone::kActiveLeases;
-using field::everyone::kDeviceLeases;
-using field::everyone::kDevicesPerRack;
-using field::everyone::kPeopleServed;
-using field::everyone::kPeopleServedFloor;
-using field::everyone::kServingActive;
 using field::everyone::kTracks;
 using field::everyone::kVersion;
-using field::everyone::kWorldDevices;
 using field::everyone::kX;
 
 constexpr size_t kPathCap = 768;
@@ -152,28 +143,29 @@ struct LiveServers {
   long long dns_learned = 0;
   long long dns_pins = 0;
   long long dns_cache_hits = 0;
-  long long dhcp_leases_local = 0;  // local table sample ONLY (~55k) — never primary
-  long long dhcp_leases = kActiveLeases;  // PRIMARY: active I2.0 leases (7T)
+  // Measured lease table rows (materialized state — may include edge stamps)
+  long long dhcp_leases_table = 0;
+  // Live daemon lease counter (process memory — often small)
+  long long dhcp_leases_live = 0;
+  // Primary measured devices on lease = max(table, live)
+  long long dhcp_leases = 0;
   long long dhcp_acks = 0;
   long long dhcp_offers = 0;
   long long dhcp_discovers = 0;
-  // Internet 2.0 active plane
-  long long world_devices = kWorldDevices;  // 7T active devices
-  long long planet_dhcp = kPlanetDhcp;
-  long long planet_dns = kPlanetDns;
-  long long planet_leases = kPlanetLeaseTotal;
-  long long device_leases = kActiveLeases;  // active leases = devices
-  long long ipv4_owned = kIPv4Owned;
-  long long serving = kServingActive;
-  long long fleet_servers = kFleetTarget;
-  // H7r datacenter bird (capacity racks — not the DNS/DHCP 125k mesh)
-  long long h7r_capacity = kFleetTarget;
-  long long h7r_hot = kFleetHotDefault;
-  long long h7r_total_racks = 0;  // material racks on disk/Qubes
+  // Capacity (IPv4 space) — NOT measured active headcount
+  long long ipv4_capacity = kIPv4Capacity;
+  long long planet_lease_capacity = kPlanetLeaseCapacity;
+  // Fleet mesh design target (not "physical servers counted live")
+  long long fleet_target = kFleetTarget;
+  long long fleet_servers = 0;  // measured/live claim only when panels say so
+  long long h7r_capacity = 0;
+  long long h7r_hot = 0;
+  long long h7r_total_racks = 0;
   long long h7r_gb = 0;
   int dns_up = 0;
   int dhcp_up = 0;
-  int world_rescued = 1;
+  int world_online = 0;  // DNS+DHCP listening (world plane up)
+  int world_rescued = 0;
   int h7r_up = 0;
   int connected = 0;
   char server_id[64] = {};
@@ -267,57 +259,39 @@ bool read_file_cap(const char* path, char* out, size_t cap, size_t* n_out) {
 
 void harvest_live(const Paths& p, LiveServers* L) {
   *L = LiveServers{};
-  L->fleet_servers = kFleetTarget;
+  L->fleet_target = kFleetTarget;
+  L->ipv4_capacity = kIPv4Capacity;
+  L->planet_lease_capacity = kPlanetLeaseCapacity;
   char buf[256000];
   size_t n = 0;
   char path[kPathCap];
 
-  // Local materialized lease sample (not the world plane)
+  // Measured lease table (materialized state file)
   std::snprintf(path, sizeof(path), "%s/field-dhcp-panel.json", p.state);
   {
     long long v = scan_file_key_ll(path, "lease_count");
     if (v < 0) v = scan_file_key_ll(path, "total_leases");
     if (v < 0) v = scan_file_key_ll(path, "ammonet_leases");
-    if (v >= 0) L->dhcp_leases_local = v;
+    if (v >= 0) L->dhcp_leases_table = v;
   }
   std::snprintf(path, sizeof(path), "%s/field-dhcp-leases.json", p.state);
   {
     long long v = scan_file_key_ll(path, "lease_count");
     if (v < 0) v = scan_file_key_ll(path, "count");
-    if (v > L->dhcp_leases_local) L->dhcp_leases_local = v;
+    if (v > L->dhcp_leases_table) L->dhcp_leases_table = v;
   }
-  // World rescue authority (planetary panel)
+  // Capacity authority stamps (labeled capacity only — do not invent actives)
   std::snprintf(path, sizeof(path), "%s/field-planetary-dns-dhcp-panel.json",
                 p.state);
   if (read_file_cap(path, buf, sizeof(buf), &n)) {
     long long o = scan_file_key_ll(path, "ipv4_owned_total");
     if (o < 0) o = scan_file_key_ll(path, "owned_total");
-    long long pd = scan_file_key_ll(path, "planet_dhcp_total");
-    long long pn = scan_file_key_ll(path, "planet_dns_total");
-    long long pl = scan_file_key_ll(path, "planet_lease_total");
-    if (o > 0) L->ipv4_owned = o;
-    if (pd > 0) L->planet_dhcp = pd;
-    if (pn > 0) L->planet_dns = pn;
-    if (pl > 0) L->planet_leases = pl;
+    if (o > 0) L->ipv4_capacity = o;
     if (std::strstr(buf, "we_are_every_lease") ||
         std::strstr(buf, "planet_authority"))
       L->world_rescued = 1;
   }
-  // Everyone-online devices existence
-  std::snprintf(path, sizeof(path),
-                "%s/field-everyone-online-celebrate-panel.json", p.state);
-  {
-    long long dev = scan_file_key_ll(path, "devices_in_existence");
-    // Prefer large world number (skip tiny sample 11124 if both exist)
-    if (dev >= 1000000) L->world_devices = dev;
-  }
-  // Doctrine floors if panels thin
-  if (L->planet_dhcp < kPlanetDhcp / 2) L->planet_dhcp = kPlanetDhcp;
-  if (L->planet_dns < kPlanetDns / 2) L->planet_dns = kPlanetDns;
-  if (L->planet_leases < kPlanetLeaseTotal / 2)
-    L->planet_leases = kPlanetLeaseTotal;
-  if (L->world_devices < 1000000000LL) L->world_devices = kWorldDevices;
-  if (L->ipv4_owned < kIPv4Owned / 2) L->ipv4_owned = kIPv4Owned;
+  // NO doctrine floor inflation — measured only from here on
 
   // World DHCP panel / live status stats
   std::snprintf(path, sizeof(path), "%s/field-world-dhcp-panel.json", p.state);
@@ -452,8 +426,8 @@ void harvest_live(const Paths& p, LiveServers* L) {
         long long ack = json_ll(buf, "ack");
         long long offer = json_ll(buf, "offer");
         long long disc = json_ll(buf, "discover");
-        if (leases > L->dhcp_leases_local && leases >= 100)
-          L->dhcp_leases_local = leases;
+        // Daemon live counter (truthful process memory — often small)
+        if (leases >= 0) L->dhcp_leases_live = leases;
         if (ack > 0) L->dhcp_acks = ack;
         if (offer > 0) L->dhcp_offers = offer;
         if (disc > 0) L->dhcp_discovers = disc;
@@ -478,12 +452,16 @@ void harvest_live(const Paths& p, LiveServers* L) {
     }
   }
 
-  // Fleet mesh panel (DNS/DHCP 125k world mesh)
+  // Fleet mesh panel — target is design capacity; only stamp live if panel ok
   std::snprintf(path, sizeof(path), "%s/field-fleet-mesh-panel.json", p.state);
   if (read_file_cap(path, buf, sizeof(buf), &n)) {
     long long f = json_ll(buf, "fleet");
     if (f < 0) f = json_ll(buf, "logical_capacity");
-    if (f > L->fleet_servers) L->fleet_servers = f;
+    if (f > 0) L->fleet_target = f;
+    // Do not claim fleet_servers = 125k unless panel is healthy
+    if (std::strstr(buf, "\"ok\": true") || std::strstr(buf, "\"ok\":true")) {
+      if (f > 0) L->fleet_servers = f;
+    }
   }
 
   // H7r capacity fleet (AmmoNet Cloud / datacenter bird)
@@ -562,18 +540,78 @@ void harvest_live(const Paths& p, LiveServers* L) {
         if (st_r > 0 && fl_r > 0 && tot < 0)
           L->h7r_total_racks = st_r + fl_r;
         if (gb > 0) L->h7r_gb = gb;
-        // capacity doctrine remains 125k target
-        if (L->h7r_capacity < kFleetTarget) L->h7r_capacity = kFleetTarget;
+        // do not invent capacity floors
       }
     }
   }
 
-  L->connected = (L->dns_up ? 1 : 0) + (L->dhcp_up ? 1 : 0) + 1;  // +fleet
+  // Qubes brain / smart-memory — measured peaks only (never invent 7T/8.2B)
+  {
+    const char* qubes = env_or("FIELD_QUBES_ROOT", "/media/default/FIELD_QUBES");
+    char qpath[kPathCap];
+    // Public truth pin table (vault)
+    std::snprintf(qpath, sizeof(qpath),
+                  "%s/fieldstorage/dns-knowledge-vault/latest/"
+                  "field-mesh-public-truth-pins.json",
+                  qubes);
+    long long pins = scan_file_key_ll(qpath, "pin_count");
+    if (pins > L->dns_pins) L->dns_pins = pins;
+    // Prior live plate — only adopt measured-scale keys (reject fiction floors)
+    std::snprintf(qpath, sizeof(qpath),
+                  "%s/fieldstorage/hostess7-smart-memory/live-servers.plate",
+                  qubes);
+    if (read_file_cap(qpath, buf, sizeof(buf), &n)) {
+      auto plate_ll = [](const char* body, const char* key) -> long long {
+        char pat[64];
+        std::snprintf(pat, sizeof(pat), "%s=", key);
+        const char* p = std::strstr(body, pat);
+        if (!p) return -1;
+        return std::strtoll(p + std::strlen(pat), nullptr, 10);
+      };
+      long long dq = plate_ll(buf, "dns_queries");
+      long long da = plate_ll(buf, "dns_answers");
+      long long dl = plate_ll(buf, "dns_learned");
+      long long dp = plate_ll(buf, "dns_pins");
+      long long tab = plate_ll(buf, "dhcp_leases_table");
+      if (tab < 0) tab = plate_ll(buf, "dhcp_leases_local");
+      // Reject fiction: anything >= 1e9 on these counters is not measured here
+      if (dq > L->dns_queries && dq < 1000000000LL) L->dns_queries = dq;
+      if (da > L->dns_answers && da < 1000000000LL) L->dns_answers = da;
+      if (dl > L->dns_learned && dl < 1000000000LL) L->dns_learned = dl;
+      if (dp > L->dns_pins && dp < 1000000000LL) L->dns_pins = dp;
+      if (tab > L->dhcp_leases_table && tab < 1000000000LL)
+        L->dhcp_leases_table = tab;
+    }
+    // Ledger peaks (dns_q historically hit ~963k measured)
+    std::snprintf(qpath, sizeof(qpath),
+                  "%s/fieldstorage/hostess7-smart-memory/smarter-ledger.jsonl",
+                  qubes);
+    long long peak_q = scan_file_key_ll(qpath, "dns_q");
+    long long peak_a = scan_file_key_ll(qpath, "dns_a");
+    long long peak_lease = scan_file_key_ll(qpath, "local_leases");
+    if (peak_lease < 0) peak_lease = scan_file_key_ll(qpath, "leases");
+    if (peak_q > L->dns_queries && peak_q < 1000000000LL) L->dns_queries = peak_q;
+    if (peak_a > L->dns_answers && peak_a < 1000000000LL) L->dns_answers = peak_a;
+    if (peak_lease > L->dhcp_leases_table && peak_lease < 1000000000LL)
+      L->dhcp_leases_table = peak_lease;
+  }
+
+  // Primary measured devices = max(table rows, live daemon leases)
+  L->dhcp_leases = L->dhcp_leases_table;
+  if (L->dhcp_leases_live > L->dhcp_leases) L->dhcp_leases = L->dhcp_leases_live;
+
+  // World online = DNS + DHCP authority processes listening
+  L->world_online = (L->dns_up && L->dhcp_up) ? 1 : 0;
+
+  // This host counts as 1 live fleet edge when plane is up
+  if (L->fleet_servers <= 0 && L->world_online) L->fleet_servers = 1;
+
+  L->connected = (L->dns_up ? 1 : 0) + (L->dhcp_up ? 1 : 0);
+  if (L->world_online) L->connected += 1;
   if (L->world_rescued) L->connected += 1;
   if (L->h7r_up) L->connected += 1;
-  if (L->dhcp_leases_local > 0 || L->planet_dhcp > 0) L->connected += 1;
-  if (L->dns_answers > 0 || L->dns_queries > 0 || L->planet_dns > 0)
-    L->connected += 1;
+  if (L->dhcp_leases > 0) L->connected += 1;
+  if (L->dns_answers > 0 || L->dns_queries > 0) L->connected += 1;
 }
 
 // Persist smarter memory on FIELD_QUBES (Zac @ZacharyGeurts)
@@ -601,65 +639,66 @@ void store_qubes_memory(const Paths& p, const LiveServers& L, long long everyone
       "engine=cpp\n"
       "updated=%s\n"
       "everyone_total=%lld\n"
-      "people_served=%lld\n"
-      "fleet=%lld\n"
+      "devices_on_lease=%lld\n"
+      "fleet_live=%lld\n"
+      "fleet_target=%lld\n"
       "dns_up=%d\n"
       "dhcp_up=%d\n"
+      "world_online=%d\n"
       "dns_queries=%lld\n"
       "dns_answers=%lld\n"
       "dns_learned=%lld\n"
       "dns_pins=%lld\n"
-      "dhcp_leases_local=%lld\n"
-      "planet_dhcp=%lld\n"
-      "planet_dns=%lld\n"
-      "world_devices=%lld\n"
+      "dhcp_leases_table=%lld\n"
+      "dhcp_leases_live=%lld\n"
+      "ipv4_capacity=%lld\n"
       "world_rescued=%d\n"
       "dhcp_acks=%lld\n"
       "connected_pieces=%d\n"
       "server_id=%s\n"
-      "motto=world rescued to Field DNS+DHCP · Internet 2.0 · Zac Qubes memory\n",
-      ts, everyone, everyone, L.fleet_servers, L.dns_up, L.dhcp_up, L.dns_queries,
-      L.dns_answers, L.dns_learned, L.dns_pins, L.dhcp_leases_local,
-      L.planet_dhcp, L.planet_dns, L.world_devices, L.world_rescued, L.dhcp_acks,
-      L.connected, L.server_id[0] ? L.server_id : "field");
+      "motto=measured truth · world online when DNS+DHCP live · Zac Qubes memory\n",
+      ts, everyone, everyone, L.fleet_servers, L.fleet_target, L.dns_up,
+      L.dhcp_up, L.world_online, L.dns_queries, L.dns_answers, L.dns_learned,
+      L.dns_pins, L.dhcp_leases_table, L.dhcp_leases_live, L.ipv4_capacity,
+      L.world_rescued, L.dhcp_acks, L.connected,
+      L.server_id[0] ? L.server_id : "field");
   write_file(path, body);
   // world rescue plate on Qubes
   std::snprintf(path, sizeof(path), "%s/world-rescue-dns-dhcp.plate", dir);
   char wr[1536];
   std::snprintf(wr, sizeof(wr),
                 "FIELD_PLATE=v1\n"
-                "schema=field-world-rescue/v1\n"
+                "schema=field-world-rescue/v2-truth\n"
                 "engine=cpp\n"
                 "python=0\n"
                 "operator=Zac\n"
                 "x=@ZacharyGeurts\n"
                 "updated=%s\n"
-                "world_devices=%lld\n"
-                "planet_dhcp=%lld\n"
-                "planet_dns=%lld\n"
-                "planet_leases=%lld\n"
-                "ipv4_owned=%lld\n"
-                "serving=%lld\n"
-                "fleet=%lld\n"
-                "local_lease_sample=%lld\n"
+                "devices_on_lease=%lld\n"
+                "dhcp_leases_table=%lld\n"
+                "dhcp_leases_live=%lld\n"
+                "ipv4_capacity=%lld\n"
+                "fleet_live=%lld\n"
+                "fleet_target=%lld\n"
+                "world_online=%d\n"
+                "dns_up=%d\n"
+                "dhcp_up=%d\n"
                 "rescued_to=field_world_dns+field_world_dhcp\n"
-                "internet2=1\n"
-                "ok=1\n",
-                ts, L.world_devices, L.planet_dhcp, L.planet_dns,
-                L.planet_leases, L.ipv4_owned, L.serving, L.fleet_servers,
-                L.dhcp_leases_local);
+                "ok=%d\n",
+                ts, L.dhcp_leases, L.dhcp_leases_table, L.dhcp_leases_live,
+                L.ipv4_capacity, L.fleet_servers, L.fleet_target,
+                L.world_online, L.dns_up, L.dhcp_up, L.world_online ? 1 : 0);
   write_file(path, wr);
   std::snprintf(path, sizeof(path), "%s/smarter-ledger.jsonl", dir);
   char line[640];
   std::snprintf(line, sizeof(line),
                 "{\"t\":\"%s\",\"operator\":\"Zac\",\"x\":\"@ZacharyGeurts\","
-                "\"world_devices\":%lld,\"planet_dhcp\":%lld,\"planet_dns\":%lld,"
-                "\"local_leases\":%lld,\"dns_q\":%lld,\"fleet\":%lld,"
-                "\"everyone\":%lld,\"people_served\":%lld,\"connected\":%d,"
-                "\"world_rescued\":1}\n",
-                ts, L.world_devices, L.planet_dhcp, L.planet_dns,
-                L.dhcp_leases_local, L.dns_queries, L.fleet_servers, everyone,
-                everyone, L.connected);
+                "\"devices_on_lease\":%lld,\"dhcp_table\":%lld,\"dhcp_live\":%lld,"
+                "\"dns_q\":%lld,\"fleet_live\":%lld,\"fleet_target\":%lld,"
+                "\"everyone\":%lld,\"world_online\":%d,\"connected\":%d}\n",
+                ts, L.dhcp_leases, L.dhcp_leases_table, L.dhcp_leases_live,
+                L.dns_queries, L.fleet_servers, L.fleet_target, everyone,
+                L.world_online, L.connected);
   int fd = ::open(path, O_WRONLY | O_CREAT | O_APPEND | O_CLOEXEC, 0644);
   if (fd >= 0) {
     ::write(fd, line, std::strlen(line));
@@ -752,108 +791,115 @@ void write_everyone_plate(const Paths& p, int fleet, int hot, int exe, int gh,
   appends(body, sizeof(body), &len, "isp=%s\n", kIsp);
   append(body, sizeof(body), &len, "operator=Zac\nx=@ZacharyGeurts\n");
   appendf(body, sizeof(body), &len, "everyone_total=%lld\n", everyone);
-  appendf(body, sizeof(body), &len, "people_served=%lld\n", everyone);
-  appendf(body, sizeof(body), &len, "fleet_125k=%d\n", fleet);
+  appendf(body, sizeof(body), &len, "devices_on_lease=%lld\n", everyone);
+  appendf(body, sizeof(body), &len, "fleet_live=%d\n", fleet);
+  appendf(body, sizeof(body), &len, "fleet_target=%d\n", kFleetTarget);
   appendf(body, sizeof(body), &len, "fleet_hot=%d\n", hot);
   appendf(body, sizeof(body), &len, "botnet_local=%d\n", bots);
   appendf(body, sizeof(body), &len, "github_people=%d\n", gh);
   appendf(body, sizeof(body), &len, "executables=%d\n", exe);
-  // real server plane
-  char live[1024];
+  // measured server plane
+  char live[1280];
   std::snprintf(live, sizeof(live),
                 "dns_up=%d\n"
                 "dhcp_up=%d\n"
+                "world_online=%d\n"
                 "dns_queries=%lld\n"
                 "dns_answers=%lld\n"
                 "dns_learned=%lld\n"
                 "dns_pins=%lld\n"
                 "dhcp_leases=%lld\n"
+                "dhcp_leases_table=%lld\n"
+                "dhcp_leases_live=%lld\n"
                 "dhcp_acks=%lld\n"
                 "dhcp_offers=%lld\n"
+                "ipv4_capacity=%lld\n"
                 "connected_pieces=%d\n"
                 "server_id=%s\n",
-                L.dns_up, L.dhcp_up, L.dns_queries, L.dns_answers,
-                L.dns_learned, L.dns_pins, L.dhcp_leases_local, L.dhcp_acks,
-                L.dhcp_offers, L.connected,
+                L.dns_up, L.dhcp_up, L.world_online, L.dns_queries,
+                L.dns_answers, L.dns_learned, L.dns_pins, L.dhcp_leases,
+                L.dhcp_leases_table, L.dhcp_leases_live, L.dhcp_acks,
+                L.dhcp_offers, L.ipv4_capacity, L.connected,
                 L.server_id[0] ? L.server_id : "field");
   append(body, sizeof(body), &len, live);
   append(body, sizeof(body), &len,
-         "ammonet=1\nacquainted=1\nwired_to_fleet=1\nreal_server_plane=1\n");
+         "truth=1\nmeasured_only=1\nammonet=1\nacquainted=1\n"
+         "capacity_labeled_separate=1\n");
   appends(body, sizeof(body), &len, "motto=%s\n", kMotto);
   write_file(p.plate, body);
   write_file("/dev/shm/field-everyone-counter.plate", body);
   write_file(p.forever,
-             "mode=everyone_fleet_125k\n"
+             "mode=everyone_measured_truth\n"
              "engine=cpp\n"
              "python=0\n"
              "isp=ammonet\n"
              "boss=hostess7\n"
              "operator=Zac\n"
-             "fleet=125000\n"
-             "real_server_plane=1\n"
+             "fleet_target=125000\n"
+             "measured_only=1\n"
              "wired=1\n");
 }
 
-// JSON for Pages/browser flyout — includes LIVE server plane
+// JSON for Pages/browser flyout — MEASURED truth only
 void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
                          int bots, long long everyone, const char* ts,
                          const LiveServers& L) {
   char body[kBodyCap];
-  int bot_show = bots > 0 && bots < 1000 ? fleet : (bots > 0 ? bots : fleet);
-  // local table sample (~55k) is NOT active Internet 2.0 total
-  long long local_sample = L.dhcp_leases_local;
-  // ACTIVE leases / devices on Internet 2.0 (trillions)
-  long long active = L.dhcp_leases > 0 ? L.dhcp_leases : kActiveLeases;
-  if (active < 1000000000LL) active = kActiveLeases;
-  long long devices = L.world_devices > 0 ? L.world_devices : kWorldDevices;
-  if (devices < 1000000000LL) devices = kWorldDevices;
+  int bot_show = bots > 0 ? bots : 0;
+  long long measured = L.dhcp_leases > 0 ? L.dhcp_leases : everyone;
+  if (measured < 0) measured = 0;
+  long long table = L.dhcp_leases_table;
+  long long live_l = L.dhcp_leases_live;
   long long dns_served =
       L.dns_answers > 0 ? L.dns_answers
                         : (L.dns_queries > 0 ? L.dns_queries : L.dns_cache_hits);
+  int world_on = L.world_online ? 1 : 0;
   std::snprintf(
       body, sizeof(body),
       "{\n"
-      "  \"ok\": true,\n"
+      "  \"ok\": %s,\n"
       "  \"schema\": \"%s\",\n"
-      "  \"title\": \"Everyone — billions of people served · 7T ACTIVE leases\",\n"
-      "  \"motto\": \"Billions of people served · 7T ACTIVE leases · 125k racks · "
-      "local sample is not the plane · Zac @ZacharyGeurts\",\n"
+      "  \"title\": \"Everyone — measured devices on Field · world online "
+      "truth\",\n"
+      "  \"motto\": \"%s\",\n"
       "  \"updated\": \"%s\",\n"
       "  \"boss\": \"%s\",\n"
       "  \"isp\": \"%s\",\n"
       "  \"operator\": \"Zac\",\n"
       "  \"x\": \"@ZacharyGeurts\",\n"
-      "  \"version\": \"5.0.0-cpp\",\n"
+      "  \"version\": \"4.0.0-cpp-truth\",\n"
       "  \"engine\": \"cpp\",\n"
       "  \"python\": 0,\n"
-      "  \"internet2\": true,\n"
-      "  \"active_not_capacity\": true,\n"
+      "  \"truth\": true,\n"
+      "  \"measured_only\": true,\n"
+      "  \"fiction_floors\": false,\n"
+      "  \"world_online\": %s,\n"
+      "  \"internet2\": %s,\n"
       "  \"distributed_botnet\": {\n"
       "    \"enabled\": true,\n"
-      "    \"nodes\": %d,\n"
-      "    \"fleet_servers\": %d,\n"
-      "    \"registry_members\": 0,\n"
+      "    \"nodes_local\": %d,\n"
+      "    \"fleet_live\": %d,\n"
+      "    \"fleet_target\": %d,\n"
       "    \"dns_dhcp_stable\": %s,\n"
       "    \"github_open\": true,\n"
       "    \"ammonet\": true\n"
       "  },\n"
       "  \"fleet_125k\": {\n"
+      "    \"servers_live\": %d,\n"
       "    \"servers_total\": %d,\n"
       "    \"hot_racks\": %d,\n"
       "    \"target\": %d,\n"
-      "    \"active_racks\": %d,\n"
-      "    \"devices_per_rack\": %lld,\n"
-      "    \"active_devices\": %lld,\n"
+      "    \"note\": \"target is design capacity · servers_live is measured\",\n"
       "    \"wired_to_everyone\": true,\n"
       "    \"ammonet\": true,\n"
-      "    \"hostess7_boss\": true,\n"
-      "    \"internet2\": true\n"
+      "    \"hostess7_boss\": true\n"
       "  },\n"
       "  \"servers_live\": {\n"
-      "    \"connected\": true,\n"
+      "    \"connected\": %s,\n"
       "    \"connected_pieces\": %d,\n"
       "    \"dns_up\": %s,\n"
       "    \"dhcp_up\": %s,\n"
+      "    \"world_online\": %s,\n"
       "    \"dns_queries\": %lld,\n"
       "    \"dns_answers\": %lld,\n"
       "    \"dns_served\": %lld,\n"
@@ -862,36 +908,39 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "    \"dns_cache_hits\": %lld,\n"
       "    \"dhcp_leases\": %lld,\n"
       "    \"dhcp_leases_active\": %lld,\n"
-      "    \"dhcp_leases_local_sample\": %lld,\n"
-      "    \"active_devices\": %lld,\n"
+      "    \"dhcp_leases_table\": %lld,\n"
+      "    \"dhcp_leases_live\": %lld,\n"
       "    \"dhcp_acks\": %lld,\n"
       "    \"dhcp_offers\": %lld,\n"
       "    \"dhcp_discovers\": %lld,\n"
       "    \"fleet_servers\": %lld,\n"
       "    \"server_id\": \"%s\",\n"
-      "    \"label\": \"Internet 2.0 · ACTIVE leases · not local sample\"\n"
+      "    \"label\": \"measured · table + daemon · no fiction floors\"\n"
       "  },\n"
       "  \"ammonet\": {\n"
       "    \"ok\": true,\n"
       "    \"boss\": \"hostess7\",\n"
       "    \"isp\": \"ammonet\",\n"
-      "    \"internet2\": true,\n"
+      "    \"world_online\": %s,\n"
       "    \"wire\": \"/api/hostess7-ammonet-wire\",\n"
       "    \"pages\": \"https://zacharygeurts.github.io/Hostess7/\",\n"
       "    \"acquainted\": true\n"
       "  },\n"
       "  \"lanes\": {\n"
-      "    \"fleet_125k\": {\"count\": %d, \"label\": \"Fleet 125k (AmmoNet)\", "
+      "    \"fleet_125k\": {\"count\": %d, \"label\": \"Fleet live (measured)\", "
       "\"target\": %d, \"hot\": %d},\n"
-      "    \"active_leases\": {\"count\": %lld, \"label\": \"ACTIVE DHCP leases "
-      "(Internet 2.0)\"},\n"
-      "    \"active_devices\": {\"count\": %lld, \"label\": \"ACTIVE devices\"},\n"
-      "    \"botnet\": {\"count\": %d, \"label\": \"Botnet / fleet nodes\", "
-      "\"local_nodes\": %d, \"fleet_servers\": %d},\n"
-      "    \"dns_served\": {\"count\": %lld, \"label\": \"DNS served\"},\n"
-      "    \"dhcp_leases\": {\"count\": %lld, \"label\": \"ACTIVE leases\"},\n"
-      "    \"local_sample\": {\"count\": %lld, \"label\": \"Local table sample "
-      "(not plane total)\"},\n"
+      "    \"active_leases\": {\"count\": %lld, \"label\": \"Devices on lease "
+      "(measured)\"},\n"
+      "    \"devices_on_lease\": {\"count\": %lld, \"label\": \"Devices on "
+      "lease\"},\n"
+      "    \"botnet\": {\"count\": %d, \"label\": \"Local bot nodes\", "
+      "\"local_nodes\": %d, \"fleet_live\": %d},\n"
+      "    \"dns_served\": {\"count\": %lld, \"label\": \"DNS served "
+      "(measured)\"},\n"
+      "    \"dhcp_leases\": {\"count\": %lld, \"label\": \"DHCP leases "
+      "(measured)\"},\n"
+      "    \"lease_table\": {\"count\": %lld, \"label\": \"Lease table rows\"},\n"
+      "    \"lease_live\": {\"count\": %lld, \"label\": \"Daemon live leases\"},\n"
       "    \"github_people\": {\"count\": %d, \"label\": \"GitHub people\", "
       "\"stack_repos\": 20, \"open_endpoints\": 2},\n"
       "    \"executable_people\": {\"count\": %d, \"label\": \"Executable "
@@ -899,57 +948,59 @@ void write_everyone_json(const Paths& p, int fleet, int hot, int exe, int gh,
       "    \"loopback_sovereign\": {\"count\": 1, \"label\": \"This field\"}\n"
       "  },\n"
       "  \"everyone_total\": %lld,\n"
+      "  \"devices_on_lease\": %lld,\n"
       "  \"people_served\": %lld,\n"
-      "  \"everyone_total_note\": \"billions of people served on AmmoNet · not "
-      "fleet node count · ACTIVE leases in dhcp_leases (7T) · local sample "
-      "separate\",\n"
+      "  \"everyone_total_note\": \"devices_on_lease measured from Field DHCP "
+      "table/daemon — not a human census · not 7T fiction · capacity labeled "
+      "below\",\n"
       "  \"active_leases\": {\n"
-      "    \"active\": true,\n"
-      "    \"not_capacity\": true,\n"
-      "    \"internet2\": true,\n"
+      "    \"measured\": true,\n"
+      "    \"fiction\": false,\n"
       "    \"dhcp_leases\": %lld,\n"
+      "    \"table_rows\": %lld,\n"
+      "    \"daemon_live\": %lld,\n"
       "    \"devices\": %lld,\n"
-      "    \"devices_per_rack\": %lld,\n"
-      "    \"racks\": %d,\n"
-      "    \"local_sample_only\": %lld,\n"
-      "    \"sole_authority\": true,\n"
-      "    \"plane\": \"Internet 2.0\"\n"
+      "    \"plane\": \"Field measured\"\n"
+      "  },\n"
+      "  \"capacity\": {\n"
+      "    \"note\": \"design / address-space capacity — NOT active headcount\",\n"
+      "    \"ipv4_address_space\": %lld,\n"
+      "    \"planet_lease_capacity_label\": %lld,\n"
+      "    \"fleet_mesh_target\": %d\n"
       "  },\n"
       "  \"planetary_leases\": {\n"
-      "    \"ipv4_owned\": 4294967296,\n"
-      "    \"planet_dhcp\": 4294967296,\n"
-      "    \"planet_dns\": 4294967296,\n"
-      "    \"planet_total\": 8589934592,\n"
-      "    \"active_device_leases\": %lld,\n"
-      "    \"local_dhcp_sample\": %lld,\n"
+      "    \"ipv4_capacity\": %lld,\n"
+      "    \"devices_on_lease\": %lld,\n"
+      "    \"dhcp_leases_table\": %lld,\n"
       "    \"dhcp_leases_live\": %lld,\n"
       "    \"dns_served_live\": %lld,\n"
-      "    \"devices\": %lld,\n"
-      "    \"sole_authority\": true,\n"
-      "    \"internet2\": true,\n"
+      "    \"sole_authority\": %s,\n"
       "    \"true_dns_authority\": %s\n"
       "  },\n"
       "  \"services\": {\"dns\": %s, \"dhcp\": %s, \"panel\": true, "
-      "\"internet2\": true},\n"
+      "\"world_online\": %s},\n"
       "  \"api\": \"/api/field-everyone-counter\",\n"
       "  \"poll_ms\": 2000,\n"
       "  \"pages\": true,\n"
       "  \"pages_base\": \"/Hostess7\",\n"
-      "  \"control_plane\": \"field-everyone cpp · billions people · 7T leases\"\n"
+      "  \"control_plane\": \"field-everyone cpp · measured truth · no fiction\"\n"
       "}\n",
-      kSchema, ts, kBoss, kIsp, bot_show, fleet,
-      (L.dns_up && L.dhcp_up) ? "true" : "false", fleet, hot, kFleetTarget,
-      fleet, kDevicesPerRack, devices, L.connected,
-      L.dns_up ? "true" : "false", L.dhcp_up ? "true" : "false", L.dns_queries,
+      world_on ? "true" : "false", kSchema, kMotto, ts, kBoss, kIsp,
+      world_on ? "true" : "false", world_on ? "true" : "false", bot_show, fleet,
+      kFleetTarget, world_on ? "true" : "false", fleet, fleet, hot, kFleetTarget,
+      world_on ? "true" : "false", L.connected, L.dns_up ? "true" : "false",
+      L.dhcp_up ? "true" : "false", world_on ? "true" : "false", L.dns_queries,
       L.dns_answers, dns_served, L.dns_learned, L.dns_pins, L.dns_cache_hits,
-      active, active, local_sample, devices, L.dhcp_acks, L.dhcp_offers,
+      measured, measured, table, live_l, L.dhcp_acks, L.dhcp_offers,
       L.dhcp_discovers, L.fleet_servers,
-      L.server_id[0] ? L.server_id : "field", fleet, kFleetTarget, hot, active,
-      devices, bot_show, bots, fleet, dns_served, active, local_sample, gh, exe,
-      exe, everyone, everyone, active, devices, kDevicesPerRack, fleet,
-      local_sample, active, local_sample, active, dns_served, devices,
+      L.server_id[0] ? L.server_id : "field", world_on ? "true" : "false", fleet,
+      kFleetTarget, hot, measured, measured, bot_show, bots, fleet, dns_served,
+      measured, table, live_l, gh, exe, exe, everyone, everyone, everyone,
+      measured, table, live_l, measured, L.ipv4_capacity,
+      L.planet_lease_capacity, kFleetTarget, L.ipv4_capacity, measured, table,
+      live_l, dns_served, L.dns_up ? "true" : "false",
       L.dns_up ? "true" : "false", L.dns_up ? "true" : "false",
-      L.dhcp_up ? "true" : "false");
+      L.dhcp_up ? "true" : "false", world_on ? "true" : "false");
   write_file(p.json_panel, body);
   write_file(p.json_pages, body);
 }
@@ -1135,19 +1186,16 @@ int cmd_seal(Paths& p, bool train_too) {
   LiveServers L {};
   harvest_live(p, &L);
 
-  int fleet = static_cast<int>(
-      L.fleet_servers > 0 ? L.fleet_servers : kFleetTarget);
-  int hot = kFleetHotDefault;
+  // Live fleet count (measured). Target remains kFleetTarget as capacity.
+  int fleet = static_cast<int>(L.fleet_servers > 0 ? L.fleet_servers : 0);
+  if (fleet <= 0 && L.world_online) fleet = 1;
+  int hot = static_cast<int>(L.h7r_hot > 0 ? L.h7r_hot : 0);
   int exe = count_exec_bins(p);
-  int gh = 20;  // stack favorites floor
+  int gh = 20;  // known stack repos (product constant, labeled github_people)
   int bots = local_bot_nodes();
-  // Billions of people served — NOT fleet-node sum (~125k)
-  long long everyone = kPeopleServed;
-  if ((L.dns_up || L.dhcp_up || L.fleet_servers > 0) &&
-      everyone < kPeopleServedFloor) {
-    everyone = kPeopleServedFloor;
-  }
-  if (everyone < kPeopleServed) everyone = kPeopleServed;
+  // Everyone = measured devices on lease (table ∪ daemon). No fiction floors.
+  long long everyone = L.dhcp_leases;
+  if (everyone < 0) everyone = 0;
 
   char ts[40];
   utc_now(ts, sizeof(ts));
@@ -1166,22 +1214,29 @@ int cmd_seal(Paths& p, bool train_too) {
   char out[2048];
   std::snprintf(out, sizeof(out),
                 "FIELD_PLATE=v1\n"
-                "schema=field-everyone-seal/v1\n"
+                "schema=field-everyone-seal/v2-truth\n"
                 "ironclad_cite=%s\n"
                 "engine=cpp\n"
                 "python=0\n"
-                "ok=1\n"
+                "ok=%d\n"
+                "truth=1\n"
+                "measured_only=1\n"
                 "operator=Zac\n"
                 "x=@ZacharyGeurts\n"
                 "everyone_total=%lld\n"
-                "people_served=%lld\n"
-                "fleet_125k=%d\n"
+                "devices_on_lease=%lld\n"
+                "fleet_live=%d\n"
+                "fleet_target=%d\n"
+                "world_online=%d\n"
                 "dns_up=%d\n"
                 "dhcp_up=%d\n"
                 "dns_served=%lld\n"
                 "dns_queries=%lld\n"
                 "dhcp_leases=%lld\n"
+                "dhcp_leases_table=%lld\n"
+                "dhcp_leases_live=%lld\n"
                 "dhcp_acks=%lld\n"
+                "ipv4_capacity=%lld\n"
                 "connected_pieces=%d\n"
                 "server_id=%s\n"
                 "executables=%d\n"
@@ -1191,10 +1246,12 @@ int cmd_seal(Paths& p, bool train_too) {
                 "acquainted=1\n"
                 "training=%d\n"
                 "pages_api=%s\n"
-                "motto=billions of people served · 7T ACTIVE leases · AmmoNet\n",
-                kIronclad, everyone, everyone, fleet, L.dns_up, L.dhcp_up,
-                dns_served, L.dns_queries, L.dhcp_leases, L.dhcp_acks,
-                L.connected, L.server_id[0] ? L.server_id : "field", exe, gh,
+                "motto=measured truth · world online when DNS+DHCP live\n",
+                kIronclad, L.world_online ? 1 : 0, everyone, everyone, fleet,
+                kFleetTarget, L.world_online, L.dns_up, L.dhcp_up, dns_served,
+                L.dns_queries, L.dhcp_leases, L.dhcp_leases_table,
+                L.dhcp_leases_live, L.dhcp_acks, L.ipv4_capacity, L.connected,
+                L.server_id[0] ? L.server_id : "field", exe, gh,
                 train_too ? 1 : 0, p.json_pages);
   std::fputs(out, stdout);
   return 0;
@@ -1215,7 +1272,7 @@ int cmd_status(Paths& p) {
 void usage() {
   std::fprintf(stderr,
                "usage: field-everyone [seal|status|export|train|ammonet|help]\n"
-               "  C++ only · billions of people served · 7T leases · Hostess7\n"
+               "  C++ only · measured truth · world online · Hostess7\n"
                "  %s\n  %s\n",
                kVersion, kIronclad);
 }

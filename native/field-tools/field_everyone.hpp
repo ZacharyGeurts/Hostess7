@@ -1,18 +1,23 @@
-// field_everyone.hpp — Everyone · world rescue DNS/DHCP · AmmoNet (C++ only)
+// field_everyone.hpp — Everyone · measured DNS/DHCP truth · AmmoNet (C++ only)
 // Hostess 7 boss · Zac @ZacharyGeurts · NO Python
-// ironclad:field-everyone-cpp:2
+// ironclad:field-everyone-cpp:5
+//
+// SERIOUS MODE: report measured live counters only.
+// Capacity / design targets are labeled capacity — never inflated as "active".
 #pragma once
 
 namespace field {
 namespace everyone {
 
-inline constexpr const char* kIronclad = "ironclad:field-everyone-cpp:4";
+inline constexpr const char* kIronclad = "ironclad:field-everyone-cpp:5";
 inline constexpr const char* kVersion =
-    "Field-Everyone 3.2.0-cpp (billions people served · 7T ACTIVE leases)";
-inline constexpr const char* kSchema = "field-everyone-counter/v6";
+    "Field-Everyone 4.0.0-cpp (measured truth · world online when DNS+DHCP live)";
+inline constexpr const char* kSchema = "field-everyone-counter/v7-truth";
 inline constexpr const char* kMotto =
-    "Billions of people served · 7T ACTIVE leases · 125k racks · AmmoNet only";
+    "Measured truth only · world online when DNS answers + DHCP listens · "
+    "capacity labeled separate · Zac @ZacharyGeurts";
 
+// Design targets (capacity / plan — NOT measured live headcount)
 inline constexpr int kFleetTarget = 125000;
 inline constexpr int kFleetHotDefault = 208;
 inline constexpr const char* kBoss = "hostess7";
@@ -20,29 +25,10 @@ inline constexpr const char* kIsp = "ammonet";
 inline constexpr const char* kOperator = "Zac";
 inline constexpr const char* kX = "@ZacharyGeurts";
 
-// World plane — Field owns the authority surface (not tiny local ~55k sample)
-// 7 trillion devices on 125k racks (fleet-mesh doctrine)
-inline constexpr long long kWorldDevices = 7000000000000LL;  // 7T
-// Per-rack fan-out (7T / 125000)
-inline constexpr long long kDevicesPerRack = 56000000LL;
-// Full IPv4 space under Field DNS/DHCP authority
-inline constexpr long long kIPv4Owned = 4294967296LL;
-// Planet DHCP + DNS authority rows (IPv4 plane)
-inline constexpr long long kPlanetDhcp = 4294967296LL;
-inline constexpr long long kPlanetDns = 4294967296LL;
-// Combined lease authority surface (IPv4×2 doctrine surface)
-inline constexpr long long kPlanetLeaseTotal = 8589934592LL;
-// ACTIVE device leases on Internet 2.0 plane (trillions) — not capacity label
-inline constexpr long long kActiveLeases = 7000000000000LL;
-// alias for harvest defaults
-inline constexpr long long kDeviceLeases = kActiveLeases;
-// Serving plane (active)
-inline constexpr long long kServingActive = 1000000000000LL;
-// People served on AmmoNet (billions) — not fleet-node count (~125k)
-// ~8.2B humans + multi-device fan-out under Field DNS+leases
-inline constexpr long long kPeopleServed = 8200000000LL;
-// Floor: never report fewer than billions when plane is up
-inline constexpr long long kPeopleServedFloor = 2000000000LL;
+// IPv4 address-space capacity (2^32) — authority surface, not active leases
+inline constexpr long long kIPv4Capacity = 4294967296LL;
+// Dual plane capacity label (DHCP+DNS authority rows) — capacity, not live
+inline constexpr long long kPlanetLeaseCapacity = 8589934592LL;
 
 // Training tracks (C++ sealed)
 struct Track {
@@ -56,7 +42,7 @@ struct Track {
 inline constexpr Track kTracks[] = {
     {"world_rescue", "World rescue → Field DNS/DHCP", "master", 100, 1},
     {"fleet_125k", "Fleet 125k / AmmoNet", "master", 100, 1},
-    {"everyone_counter", "Everyone totals wire", "master", 100, 1},
+    {"everyone_counter", "Everyone measured truth wire", "master", 100, 1},
     {"ammonet_isp", "AmmoNet ISP / Internet 2.0", "master", 100, 1},
     {"x_truth", "X @ZacharyGeurts both-ways truth", "solid", 95, 1},
     {"cpp_control", "C++ control plane", "master", 98, 1},
