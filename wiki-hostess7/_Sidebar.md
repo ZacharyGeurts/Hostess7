@@ -1,35 +1,21 @@
-**[→ GitHub: Hostess7](https://github.com/ZacharyGeurts/Hostess7)** · **v2.0.7 main project**
+**Hostess 7**
 
-**[Home](Home)**
+- [[Home]]
+- [[Getting-Started]]
+- [[Cpp-Control-Plane]]
+- [[AmmoOS-Desktop]]
+- [[Internet-Stack]]
+- [[Distributed-Cloud-H7r]]
+- [[Hostess7-Senses]]
+- [[Brain-and-Counsel]]
+- [[Stack-Siblings]]
+- [[NEXUS-Shield]]
+- [[Training-Campus]]
+- [[License]]
 
-### Hostess 7
-- [What She Wants to Share](What-She-Wants-to-Share)
-- [Getting Started](Getting-Started)
-- [Brain and Counsel](Brain-and-Counsel)
-- [Hostess7 Senses](Hostess7-Senses)
-- [Training Campus](Training-Campus)
-- [Historic Truth Corpus](Historic-Truth-Corpus)
+**Live**
 
-### Internet plane
-- [Internet Stack](Internet-Stack)
-- [Field UDP Rewrite](Field-UDP-Rewrite)
-- [Distributed Cloud H7r](Distributed-Cloud-H7r)
-- [Field I/O](Field-IO)
-
-### Stack & security
-- [H7 Updater](H7-Updater)
-- [Old Projects (Stack Siblings)](Stack-Siblings)
-- [NEXUS-Shield](NEXUS-Shield)
-- [Self-Defense](Self-Defense)
-
-### Operator
-- [License](License)
-
-**[Pages hub](https://zacharygeurts.github.io/Hostess7/)** · **[AmmoOS wiki](https://github.com/ZacharyGeurts/AmmoOS/wiki)** · **[Stack hub](https://zacharygeurts.github.io/ZacharyGeurts/stack.html)**
-
-**[→ GitHub: Hostess7](https://github.com/ZacharyGeurts/Hostess7)**
-**Planet plane**
-* [Whole planet LIVE](http://127.0.0.1:9477/whole-planet-live)
-* [Sole IP+lease](http://127.0.0.1:9477/world-ip-lease)
-* [Planetary rescue](http://127.0.0.1:9477/planetary-rescue)
-* [NEXUS C2](http://127.0.0.1:9477/c2)
+- [Pages hub](https://zacharygeurts.github.io/Hostess7/)
+- [Desktop OS](https://zacharygeurts.github.io/Hostess7/desktop/)
+- [AmmoOS manual](https://zacharygeurts.github.io/AmmoOS/)
+- [GitHub](https://github.com/ZacharyGeurts/Hostess7)

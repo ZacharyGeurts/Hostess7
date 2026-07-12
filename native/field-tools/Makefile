@@ -30,7 +30,8 @@ all: $(BIN)/field-echo $(BIN)/field-chmod $(BIN)/field-dig $(BIN)/field-world-dn
 	$(BIN)/field-plane-chip $(BIN)/field-entry64-chip $(BIN)/field-all-chip \
 	$(BIN)/field-x86-chip $(BIN)/field-init-chip $(BIN)/field-initramfs-chip \
 	$(BIN)/field-internet2-plane $(BIN)/field-grok-identity-seal \
-	$(BIN)/field-hostess7 $(BIN)/field-hostess7-stack-update
+	$(BIN)/field-hostess7 $(BIN)/field-hostess7-stack-update \
+	$(BIN)/field-ammoos
 
 $(BIN):
 	mkdir -p $(BIN) $(BIN)/untouchable $(ROOT)/Grok16/bin
@@ -509,6 +510,20 @@ $(BIN)/field-hostess7: field_hostess7.cpp field_hostess7.hpp | $(BIN)
 
 hostess7: $(BIN)/field-hostess7
 field-hostess7: $(BIN)/field-hostess7
+
+# AmmoOS classic desktop · :9477/field · full stack · C++ only
+$(BIN)/field-ammoos: field_ammoos.cpp field_ammoos.hpp | $(BIN)
+	$(CXX) $(CXXFLAGS) $(FIELD_DEFS) -I. -o $@ field_ammoos.cpp $(LDFLAGS)
+	chmod 0555 $@
+	cp -f $@ $(BIN)/untouchable/field-ammoos 2>/dev/null || true
+	cp -f $@ $(ROOT)/Grok16/bin/field-ammoos
+	chmod 0555 $(ROOT)/Grok16/bin/field-ammoos
+	# OS entry aliases
+	ln -sfn field-ammoos $(BIN)/ammoos 2>/dev/null || true
+	ln -sfn field-ammoos $(BIN)/AmmoOS 2>/dev/null || true
+
+ammoos: $(BIN)/field-ammoos
+field-ammoos: $(BIN)/field-ammoos
 
 # KILROY iPXE Field stack · polkit HOSTILE · autoelevate
 $(BIN)/field-kilroy-ipxe-stack: field_kilroy_ipxe_stack.cpp | $(BIN)

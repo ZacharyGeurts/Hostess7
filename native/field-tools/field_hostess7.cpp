@@ -473,13 +473,15 @@ int cmd_boot(Paths& p) {
   int c2 = run_named(p, "field-nexus-c2-bank", "test", nullptr, 25);
   int h7r = run_named(p, "field-h7r-capacity-fleet", "protect", nullptr, 20);
   int plane = run_named(p, "field-plane-autopilot", "status", nullptr, 12);
+  // AmmoOS classic desktop :9477/field — full stack OS surface
+  int ammo = run_named(p, "field-ammoos", "online", nullptr, 45);
   cmd_hostiles(p);
   cmd_protect(p);
   write_brain_plate(p);
   int present = count_core_present(p);
   int ok_n = (e == 0) + (u == 0) + (d1 == 0) + (d2 == 0) +
              (m == 0 || m == 124) + (c2 == 0) + (h7r == 0 || h7r == 127) +
-             (plane == 0 || plane == 127);
+             (plane == 0 || plane == 127) + (ammo == 0);
   write_package_plate(p, present, count_core_total(), ok_n);
 
   Plate pl;
@@ -498,6 +500,7 @@ int cmd_boot(Paths& p) {
   pl.line_i("c2_bank_rc", c2);
   pl.line_i("h7r_rc", h7r);
   pl.line_i("plane_rc", plane);
+  pl.line_i("ammoos_rc", ammo);
   pl.line_i("core_bins", present);
   pl.line_i("brain_nodes", kBrainNodes);
   pl.line_i("stripe_width", kBrainStripeWidth);
@@ -505,8 +508,12 @@ int cmd_boot(Paths& p) {
   pl.line("shared", "1");
   pl.line("redundant", "1");
   pl.line("like_our_servers", "1");
+  pl.line("ammoos", "1");
+  pl.line("ammoos_desktop", "http://127.0.0.1:9477/field");
   pl.line("panel_9477", "http://127.0.0.1:9477/");
   pl.line("panel_9478", "http://127.0.0.1:9478/");
+  pl.line("pages_os", "https://zacharygeurts.github.io/Hostess7/desktop/");
+  pl.line("pages_ammoos", "https://zacharygeurts.github.io/AmmoOS/");
   pl.line("github", kGithub);
   pl.line("pages", kPages);
   pl.line("motto", kMotto);
@@ -662,7 +669,7 @@ void usage() {
       stderr,
       "usage: field-hostess7 "
       "[boot|online|status|harden|update|pulse|brain|mesh|protect|elevate|"
-      "hostiles|dns|dhcp|package|field-one|help]\n"
+      "hostiles|dns|dhcp|package|field-one|ammoos|help]\n"
       "  ALWAYS FIELD ONE · DISALLOW OTHERS · All Field all day · Grok16\n"
       "  Distributed multibrain RAID-0 · shared · redundant · like our servers\n"
       "  %s\n  %s\n  %s\n  entry: C++/HPP only · no sh · no py · no json control\n",
@@ -713,6 +720,9 @@ int main(int argc, char** argv) {
       !std::strcmp(cmd, "field_one") || !std::strcmp(cmd, "one") ||
       !std::strcmp(cmd, "only-field"))
     return cmd_field_one(p);
+  if (!std::strcmp(cmd, "ammoos") || !std::strcmp(cmd, "desktop") ||
+      !std::strcmp(cmd, "os"))
+    return run_named(p, "field-ammoos", "online", nullptr, 45);
 
   usage();
   return 2;

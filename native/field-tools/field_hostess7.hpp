@@ -65,6 +65,7 @@ inline constexpr const char* kCoreBins[] = {
     "field-kilroy-ipxe-stack",
     "field-ammonet-cloud",
     "field-compile-truth",
+    "field-ammoos",
     nullptr,
 };
 

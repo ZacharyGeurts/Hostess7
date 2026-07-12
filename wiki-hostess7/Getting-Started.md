@@ -1,78 +1,50 @@
-# Getting Started
+# Getting Started · Hostess 7 4.0.0-cpp
 
-## Quick install (Linux x86_64)
-
-From release assets — H7e archive:
+## Install
 
 ```bash
-./scripts/field-h7e-extract.sh hostess7-1.0.0-beta-source.h7e
-cd hostess7-1.0.0-beta
-./scripts/wire-stack.sh
-sudo ./install-all.sh
-./Hostess7/Hostess7.sh on
+git clone https://github.com/ZacharyGeurts/Hostess7.git
+cd Hostess7
 ```
 
-`wire-stack.sh` materializes stack siblings (AmmoOS, Grok16, Queen Browser, KILROY, ZNetwork) into one tree.
-
----
-
-## Turn ON
+Optional rebuild of field tools:
 
 ```bash
-./Hostess7/Hostess7.sh on
+make -C native/field-tools field-hostess7 field-ammoos
+# or full set
+make -C native/field-tools all
 ```
 
-This starts Prime + twelve World Experts, opens the internet gate when mandated, and prepares counsel fusion.
-
----
-
-## Surfaces after install
-
-| Surface | How to reach |
-|---------|--------------|
-| Talk UI (default) | `./Hostess7/Hostess7.sh` or `./Hostess7/Hostess7.sh talk` |
-| One-shot query | `./Hostess7/Hostess7.sh -q "your question"` |
-| Brain map | `./Hostess7/Hostess7.sh brain` |
-| Field desktop | http://127.0.0.1:9477/field |
-| Queen Browser | http://127.0.0.1:9481/world/browser.html |
-| Training | http://127.0.0.1:9477/command#training |
-
----
-
-## Workspace bias
-
-Field development workspace (left-biased):
+## Bring online
 
 ```bash
-HOSTESS7_WORKSPACE=field ./Hostess7/Hostess7.sh
+./bin/field-hostess7 online
+# AmmoOS desktop
+./bin/field-ammoos online
 ```
 
----
+Open:
 
-## Train before update
+- Local OS: http://127.0.0.1:9477/field  
+- Pages OS: https://zacharygeurts.github.io/Hostess7/desktop/  
 
-Full training runs before release pack/push:
+## Verify
 
 ```bash
-./lib/ammolang-run.sh hostess7_train_before_update
+./bin/field-hostess7 status
+./bin/field-ammoos status
+./bin/field-hostess7 brain
+./bin/field-hostess7 package
 ```
 
-See **[Training Campus](Training-Campus)**.
+Expect `engine=cpp`, `python=0`, `scripts=0`, `field_one=1`, `online=1`.
 
----
+## Obsolete paths
 
-## Software updates
+Do **not** use for ops:
 
-Official catalog: **[H7 Updater](H7-Updater)** — https://zacharygeurts.github.io/H7updater/
+- `pip install -r requirements.txt` as control  
+- `./Hostess7.sh` as shell (name may be ELF alias)  
+- JSON “control panels” → use `FIELD_PLATE=v1`  
 
-- **Sovereign lane:** reads ZacharyGeurts stack manifest (no login).
-- **Personal lane:** authorize your GitHub read-only to browse your repos the same way.
-- **Local apply:** `/ammoos-update-os` after install.
-
----
-
-## GitHub Pages (demo only)
-
-Public hub: https://zacharygeurts.github.io/Hostess7/
-
-Demo mode — no full brain, no secrets. Extract and run locally or in Codespaces for counsel and NEXUS panel.
+See [[Cpp-Control-Plane]] · [[AmmoOS-Desktop]]
