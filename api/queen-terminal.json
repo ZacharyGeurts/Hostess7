@@ -1,0 +1,386 @@
+{
+  "ok": true,
+  "schema": "field-gnu-terminal/v2",
+  "shell_terminal_identical": true,
+  "combinatronic_optional": true,
+  "universal_cli": true,
+  "universal": {
+    "schema": "kilroy-universal-cli/v1",
+    "title": "KILROY Universal CLI",
+    "motto": "Every OS \u00b7 one truth \u2014 same name, same shit",
+    "rule": "Duplicate command names across POSIX, CMD, PowerShell, and BSD generally do the same job. Resolve to one canonical op, then execute.",
+    "families": [
+      "posix",
+      "gnu",
+      "bsd",
+      "cmd",
+      "powershell",
+      "kilroy",
+      "darwin"
+    ],
+    "commands": [
+      {
+        "id": "list_dir",
+        "label": "List directory",
+        "aliases": [
+          "ls",
+          "dir",
+          "gci",
+          "get-childitem"
+        ],
+        "posix": "ls",
+        "builtin": true
+      },
+      {
+        "id": "print",
+        "label": "Print text",
+        "aliases": [
+          "echo",
+          "write-output",
+          "write-host"
+        ],
+        "posix": "echo",
+        "builtin": true
+      },
+      {
+        "id": "cat",
+        "label": "Show file",
+        "aliases": [
+          "cat",
+          "type",
+          "get-content",
+          "gc"
+        ],
+        "posix": "cat",
+        "builtin": true
+      },
+      {
+        "id": "pwd",
+        "label": "Print working directory",
+        "aliases": [
+          "pwd",
+          "get-location",
+          "gl"
+        ],
+        "posix": "pwd",
+        "builtin": true
+      },
+      {
+        "id": "cd",
+        "label": "Change directory",
+        "aliases": [
+          "cd",
+          "chdir",
+          "set-location",
+          "sl"
+        ],
+        "posix": "cd",
+        "builtin": true
+      },
+      {
+        "id": "clear",
+        "label": "Clear screen",
+        "aliases": [
+          "clear",
+          "cls",
+          "clear-host",
+          "reset"
+        ],
+        "posix": "clear",
+        "builtin": true
+      },
+      {
+        "id": "whoami",
+        "label": "Current user",
+        "aliases": [
+          "whoami"
+        ],
+        "posix": "whoami",
+        "builtin": true
+      },
+      {
+        "id": "hostname",
+        "label": "Host name",
+        "aliases": [
+          "hostname"
+        ],
+        "posix": "hostname",
+        "builtin": true
+      },
+      {
+        "id": "uname",
+        "label": "System identity",
+        "aliases": [
+          "uname",
+          "ver",
+          "sw_vers"
+        ],
+        "posix": "uname",
+        "builtin": true
+      },
+      {
+        "id": "date",
+        "label": "Date and time",
+        "aliases": [
+          "date",
+          "get-date"
+        ],
+        "posix": "date",
+        "builtin": false
+      },
+      {
+        "id": "which",
+        "label": "Locate command",
+        "aliases": [
+          "which",
+          "where",
+          "where.exe",
+          "get-command",
+          "gcm"
+        ],
+        "posix": "which",
+        "builtin": false
+      },
+      {
+        "id": "grep",
+        "label": "Search text",
+        "aliases": [
+          "grep",
+          "findstr",
+          "rg",
+          "select-string",
+          "sls"
+        ],
+        "posix": "grep",
+        "builtin": false
+      },
+      {
+        "id": "find",
+        "label": "Find files",
+        "aliases": [
+          "find",
+          "locate"
+        ],
+        "posix": "find",
+        "builtin": false
+      },
+      {
+        "id": "mkdir",
+        "label": "Make directory",
+        "aliases": [
+          "mkdir",
+          "md",
+          "new-item"
+        ],
+        "posix": "mkdir",
+        "builtin": true
+      },
+      {
+        "id": "copy",
+        "label": "Copy files",
+        "aliases": [
+          "cp",
+          "copy",
+          "copy-item",
+          "cpi"
+        ],
+        "posix": "cp",
+        "builtin": false
+      },
+      {
+        "id": "move",
+        "label": "Move/rename",
+        "aliases": [
+          "mv",
+          "move",
+          "ren",
+          "rename",
+          "move-item",
+          "mi"
+        ],
+        "posix": "mv",
+        "builtin": false
+      },
+      {
+        "id": "remove",
+        "label": "Delete",
+        "aliases": [
+          "rm",
+          "del",
+          "erase",
+          "remove-item",
+          "ri"
+        ],
+        "posix": "rm",
+        "builtin": false
+      },
+      {
+        "id": "head",
+        "label": "First lines",
+        "aliases": [
+          "head"
+        ],
+        "posix": "head",
+        "builtin": false
+      },
+      {
+        "id": "tail",
+        "label": "Last lines",
+        "aliases": [
+          "tail"
+        ],
+        "posix": "tail",
+        "builtin": false
+      },
+      {
+        "id": "wc",
+        "label": "Word/line count",
+        "aliases": [
+          "wc"
+        ],
+        "posix": "wc",
+        "builtin": false
+      },
+      {
+        "id": "env",
+        "label": "Environment",
+        "aliases": [
+          "env",
+          "set",
+          "printenv"
+        ],
+        "posix": "env",
+        "builtin": false
+      },
+      {
+        "id": "git",
+        "label": "Git",
+        "aliases": [
+          "git"
+        ],
+        "posix": "git",
+        "builtin": false
+      },
+      {
+        "id": "make",
+        "label": "Make",
+        "aliases": [
+          "make",
+          "gmake"
+        ],
+        "posix": "make",
+        "builtin": false
+      },
+      {
+        "id": "python",
+        "label": "Python",
+        "aliases": [
+          "python",
+          "python3",
+          "pythong",
+          "py"
+        ],
+        "posix": "python3",
+        "builtin": false
+      },
+      {
+        "id": "help",
+        "label": "Command help",
+        "aliases": [
+          "help",
+          "?",
+          "man"
+        ],
+        "posix": "help",
+        "builtin": true
+      },
+      {
+        "id": "kilroy_status",
+        "label": "KILROY kernel witness",
+        "aliases": [
+          "kilroy",
+          "kilroy-status",
+          "kernel"
+        ],
+        "posix": "kilroy-status",
+        "builtin": true
+      },
+      {
+        "id": "source_tree",
+        "label": "Source tree hint",
+        "aliases": [
+          "source",
+          "tree"
+        ],
+        "posix": "source",
+        "builtin": true
+      }
+    ],
+    "alias_count": 80
+  },
+  "cwd_default": "/home/default/Desktop/SG/NewLatest",
+  "sg_root": "/home/default/Desktop/SG/NewLatest",
+  "kilroy_root": "/home/default/Desktop/SG/KILROY",
+  "shell": "/bin/bash",
+  "field_kernel": {
+    "field_kernel_running": false,
+    "proc_kilroy_field": false,
+    "dev_kilroy_field": false,
+    "kernel_version": "Linux version 6.14.0-37-generic (buildd@lcy02-amd64-031) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC T",
+    "is_kilroy": false,
+    "kilroy_root": "/home/default/Desktop/SG/KILROY",
+    "kilroy_present": false,
+    "ai_default_mode": "home",
+    "proc_ai_snippet": null
+  },
+  "field_native": {
+    "g16": false,
+    "gpy16": false,
+    "path": "/home/default/Desktop/SG/Grok16/bin:/home/default/Desktop/SG/Grok16/libexec/grok16:/home/default/Desktop/SG/NewLatest/GrokPy/bin:/home/default/Desktop/SG/NewLatest/PythonG/bin:/usr/bin:/bin:/home/default/Desktop/SG/NewLatest/PythonG/bin:/ho",
+    "kilroy_by_default": true
+  },
+  "ansi": {
+    "enabled": true,
+    "palette": "256+truecolor",
+    "parser": "ellie-nav"
+  },
+  "themes": [],
+  "theme_default": "black_emerald_rose_2026",
+  "theme_mono": "mono_terminal",
+  "themes_api": "/api/ammoos-themes",
+  "minibrowser_proxy": "/browse/view",
+  "menus": [
+    "File",
+    "Edit",
+    "View",
+    "Options",
+    "Help"
+  ],
+  "programs": [
+    "truth",
+    "mspaint",
+    "modules",
+    "load-module"
+  ],
+  "dos40": true,
+  "dos40_api": "/api/field-dos40",
+  "product": "GNU EOL Terminal",
+  "posture": "GNU EOL Terminal \u2014 shell \u2261 terminal \u00b7 MS-DOS 4.0 modules \u00b7 combinatronic optional \u00b7 Ironclad truth",
+  "combinatronic_commands": [
+    "combinatorics",
+    "combinatronic",
+    "g16-combinatronics",
+    "bash -c combinatorics"
+  ],
+  "aliases": [
+    "terminal",
+    "gnu-terminal",
+    "shell",
+    "gnueol"
+  ],
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-06T00:38:54Z",
+  "deprecated_id": "queen-terminal",
+  "redirect": "gnu-eol-terminal"
+}

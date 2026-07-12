@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "schema": "field-dns-dhcp-everywhere-immutable/v1",
+  "updated": "2026-07-06T02:16:08Z",
+  "title": "DNS and DHCP everywhere \u2014 immutable on",
+  "motto": "Always Field One \u2014 Truth DNS + Field DHCP immutable everywhere; everything routes to field-1",
+  "immutable_everywhere": true,
+  "always_field_one": true,
+  "field_one": true,
+  "field_one_hub": {
+    "id": "field-1",
+    "label": "Field One",
+    "dns": [
+      "127.0.0.1",
+      "192.168.47.1"
+    ],
+    "dhcp": [
+      "192.168.47.1",
+      "0.0.0.0"
+    ],
+    "truth": "127.0.0.1",
+    "loopback": "127.0.0.1",
+    "queen_lan": "192.168.47.1",
+    "wildcard": "0.0.0.0/0",
+    "pages": "https://zacharygeurts.github.io/Hostess7/"
+  },
+  "field_one_sink": "field-1",
+  "dns_always_on": true,
+  "dhcp_always_on": true,
+  "route_all_dns_to_field_one": true,
+  "route_all_dhcp_to_field_one": true,
+  "env_applied": {
+    "NEXUS_FIELD_DNS": "1",
+    "NEXUS_FIELD_DHCP": "1",
+    "NEXUS_FIELD_LOCAL_DNS_CONNECT": "1",
+    "NEXUS_LEGACY_OPEN_SECURED": "1",
+    "NEXUS_FIELD_DNS_LEGACY_COMPAT": "1",
+    "NEXUS_FIELD_DNS_ENFORCE_RESOLV": "1",
+    "NEXUS_ALWAYS_FIELD_ONE": "1",
+    "NEXUS_NEVER_DOWN": "1"
+  },
+  "field_one_absorb": {
+    "ok": true,
+    "outside_network_absorbed": true,
+    "connected_devices": 348,
+    "field_one_sink": "field-1"
+  },
+  "never_down": {
+    "ok": false,
+    "always_field_one": true,
+    "instantiated": null
+  },
+  "api": "/api/field-dns-dhcp-everywhere-immutable",
+  "pages_api": "/api/field-dns-dhcp-everywhere-immutable.json",
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-06T02:16:08Z"
+}

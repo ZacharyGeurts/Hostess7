@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#010403" />
+  <meta name="color-scheme" content="dark" />
+  <title>GrokSpawnKiller — Grok never Sleeps</title>
+  <meta name="description" content="BIG GRIN · Instakill rogue Grok agent spawners. Auto-install on visit. Live slain counter." />
+  <link rel="stylesheet" href="/Hostess7/assets/grok-spawn-killer.css?v=gsk1" />
+</head>
+<body>
+  <div class="gsk-shell">
+    <header class="gsk-header">
+      <h1>Grok<span>Spawn</span>Killer</h1>
+      <p class="gsk-tagline">Grok never Sleeps</p>
+      <p class="gsk-sub">BIG GRIN · <a href="https://x.com/ZacharyGeurts">@ZacharyGeurts</a> — field brain now. No waiting. Rogue harness spawners and interference get SIGKILL. NEXUS C2 fused on visit. sudo mememe.</p>
+    </header>
+
+    <section class="gsk-counter" aria-live="polite">
+      <div class="gsk-counter-label">Spawners slain (all time)</div>
+      <div class="gsk-counter-num" id="gsk-slain-total">0</div>
+      <div class="gsk-session" id="gsk-slain-session">this sweep: 0</div>
+    </section>
+
+    <div class="gsk-status">
+      <span class="gsk-pill" id="gsk-service-pill">SERVICE —</span>
+      <span class="gsk-pill" id="gsk-loopback-pill">LOOPBACK —</span>
+    </div>
+
+    <section class="gsk-card">
+      <h2>Install on visit</h2>
+      <p>This page auto-installs <strong>field-grok-spawner-kill.service</strong> and loads <strong>NEXUS C2 + field brain stack</strong> when loopback <code>:9477</code> is up. No click, no waiting — interference dies on contact.</p>
+      <div class="gsk-actions">
+        <button type="button" class="gsk-btn gsk-btn--primary" id="gsk-install-btn">Install now</button>
+        <button type="button" class="gsk-btn" id="gsk-kill-btn">Instakill sweep</button>
+        <a class="gsk-btn" href="https://github.com/ZacharyGeurts/Hostess7/blob/main/docs/releases/GROK-BUILD-SPAWNER-KILL.md">Release notes</a>
+      </div>
+      <p class="gsk-log" id="gsk-log">Waking watchdog…</p>
+    </section>
+
+    <section class="gsk-card">
+      <h2>Manual install (Linux)</h2>
+      <p>Clone Hostess7 and run:</p>
+      <pre class="gsk-cmd">git clone https://github.com/ZacharyGeurts/Hostess7.git
+cd Hostess7
+bash packaging/grok-spawner-kill/linux/install.sh
+systemctl status field-grok-spawner-kill.service</pre>
+    </section>
+
+    <section class="gsk-card">
+      <h2>What it kills</h2>
+      <ul>
+        <li><code>dump_bash_state</code> harness piles</li>
+        <li><code>GROK_AGENT=1</code> shell wrappers</li>
+        <li><code>systemd-inhibit --who=grok</code> sleep infinity fakes</li>
+        <li>Duplicate <code>grok agent serve</code> · subagent storms</li>
+        <li>Microsoft telemetry / Azure hits — <strong>botnet kill</strong> (DNS/DHCP stay online)</li>
+      </ul>
+    </section>
+
+    <footer class="gsk-foot">
+      <p>Companion to <a href="/Hostess7/big-grin-pwnership/">Big Grin Pwnership</a> (why they were killed &amp; RE-KILL) · <a href="https://github.com/ZacharyGeurts/Kill-Grok-Orphans">Kill-Grok-Orphans</a> · AI-safe scoped sudo</p>
+    </footer>
+  </div>
+  <script src="/Hostess7/assets/grok-spawn-killer.js?v=gsk1" defer></script>
+</body>
+</html>

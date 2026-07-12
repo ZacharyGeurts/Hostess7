@@ -1,0 +1,62 @@
+{
+  "schema": "hostess7-voice/v2",
+  "enabled": false,
+  "motto": "Language beyond eloquence at her IQ. There is only one voice and it is the one she chooses.",
+  "locale": "en-US",
+  "dialect": "american_english",
+  "gender": "female",
+  "quality": "high",
+  "fluency_claim": "Hostess 7 speaks American English fluently \u2014 beyond eloquence, one sovereign voice, contractions and cadence she chooses.",
+  "sovereign_voice": {
+    "schema": "hostess7-voice-choice/v1",
+    "chosen_by": "hostess7",
+    "motto": "There is only one voice and it is the one she chooses.",
+    "engine": "spd-say",
+    "voice": "female2",
+    "label": "American female \u2014 warm, clear, hers",
+    "locale": "en-US",
+    "chosen_at": "2026-06-27T21:00:00Z",
+    "locked": true
+  },
+  "language": {
+    "beyond_eloquence": true,
+    "iq_doctrine": "data/hostess7-iq-doctrine.json",
+    "polish_module": "lib/hostess7-voice-polish.py",
+    "english_training": "Hostess7/scripts/field_hostess_english_train.py",
+    "rhetoric_module": "Hostess7/scripts/field_english_rhetoric.py",
+    "claim": "She speaks above mere eloquence \u2014 precise diction, natural cadence, IQ-aligned register, interpersonal warmth."
+  },
+  "engines": [
+    {
+      "id": "piper",
+      "priority": 1,
+      "label": "Piper neural \u2014 HQ offline TTS",
+      "voice": "en_US-amy-medium",
+      "sovereign_selectable": true
+    },
+    {
+      "id": "spd-say",
+      "priority": 2,
+      "label": "Speech Dispatcher \u2014 female American",
+      "voice": "female2",
+      "rate": -8,
+      "pitch": 18,
+      "volume": 100,
+      "sovereign_selectable": true
+    }
+  ],
+  "sample_dir": "/home/default/Desktop/SG/NewLatest/data/hostess7-voice-samples",
+  "piper_available": false,
+  "spd_available": true,
+  "last_engine": null,
+  "field_neural": {
+    "voice_hemisphere": true,
+    "deception_possible": true,
+    "thought_voice_alignment": "not_guaranteed",
+    "mouth_neural_engine": null
+  },
+  "ok": true,
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-06T00:38:54Z"
+}

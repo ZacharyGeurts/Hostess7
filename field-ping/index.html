@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="field-ping" data-ammoos-os-layer="0">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a1628" />
+  <title>Field Ping</title>
+  <link rel="stylesheet" href="/Hostess7/assets/field-ping.css?v=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:* https://*; img-src 'self' data:; object-src 'none'; base-uri 'self'" />
+</head>
+<body>
+  <div class="fp-root" id="fp-root">
+    <header class="fp-hero">
+      <div class="fp-hero-glow" aria-hidden="true"></div>
+      <div class="fp-hero-inner">
+        <div class="fp-brand">
+          <span class="fp-kicker">KILROY · iPXE lineage</span>
+          <h1>Field Ping</h1>
+          <p class="fp-tagline">ICMP · traceroute · full receipts</p>
+        </div>
+        <form class="fp-target" id="fp-form" autocomplete="off">
+          <label class="fp-target-label" for="fp-host">Target</label>
+          <input type="text" id="fp-host" name="host" value="127.0.0.1" spellcheck="false" placeholder="host · IPv4 · IPv6" />
+          <div class="fp-opts">
+            <label>Count <input type="number" id="fp-count" min="1" max="32" value="4" /></label>
+            <label>Size <input type="number" id="fp-size" min="16" max="1472" value="64" /></label>
+            <label>Hops <input type="number" id="fp-hops" min="1" max="64" value="30" /></label>
+          </div>
+          <div class="fp-actions">
+            <button type="submit" class="fp-btn fp-btn--ping" id="fp-run-ping">Ping</button>
+            <button type="button" class="fp-btn fp-btn--trace" id="fp-run-trace">Traceroute</button>
+            <button type="button" class="fp-btn fp-btn--both" id="fp-run-both">Both</button>
+          </div>
+        </form>
+        <div class="fp-posture" id="fp-posture">…</div>
+      </div>
+    </header>
+
+    <nav class="fp-tabs" role="tablist" aria-label="Ping panel views">
+      <button type="button" class="fp-tab fp-tab--active" role="tab" aria-selected="true" data-tab="ping">Ping</button>
+      <button type="button" class="fp-tab" role="tab" aria-selected="false" data-tab="trace">Traceroute</button>
+      <button type="button" class="fp-tab" role="tab" aria-selected="false" data-tab="details">Details</button>
+      <button type="button" class="fp-tab" role="tab" aria-selected="false" data-tab="raw">Raw</button>
+    </nav>
+
+    <section class="fp-panel fp-panel--active" id="fp-panel-ping" role="tabpanel" data-panel="ping">
+      <div class="fp-stats" id="fp-stats"></div>
+      <canvas class="fp-spark" id="fp-spark" width="900" height="120" aria-label="RTT sparkline"></canvas>
+      <div class="fp-replies" id="fp-replies" aria-live="polite"></div>
+    </section>
+
+    <section class="fp-panel" id="fp-panel-trace" role="tabpanel" data-panel="trace" hidden>
+      <div class="fp-trace-meta" id="fp-trace-meta"></div>
+      <div class="fp-trace-table-wrap">
+        <table class="fp-trace-table" id="fp-trace-table">
+          <thead>
+            <tr><th>#</th><th>Hop</th><th>RTT</th><th>Bar</th></tr>
+          </thead>
+          <tbody id="fp-trace-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="fp-panel" id="fp-panel-details" role="tabpanel" data-panel="details" hidden>
+      <div class="fp-details" id="fp-details"></div>
+    </section>
+
+    <section class="fp-panel" id="fp-panel-raw" role="tabpanel" data-panel="raw" hidden>
+      <pre class="fp-raw" id="fp-raw"></pre>
+    </section>
+
+    <footer class="fp-foot" id="fp-foot">Field Ping · Layer 0 network witness</footer>
+  </div>
+  <script src="/Hostess7/assets/field-ping.js?v=1"></script>
+  <script src="/Hostess7/pages-field-boot.js"></script>
+  <script src="/Hostess7/pages-c2-wire.js"></script>
+  <script src="/Hostess7/pages-queen-rtx-bridge.js"></script>
+  <script src="/Hostess7/pages-ammonet-wire.js"></script>
+  <script src="/Hostess7/pages-github-brain-wire.js"></script>
+  <script src="/Hostess7/pages-hostess7-interaction-wire.js"></script>
+</body>
+</html>

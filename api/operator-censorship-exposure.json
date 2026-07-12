@@ -1,0 +1,224 @@
+{
+  "ok": true,
+  "schema": "hostess7-censorship-exposure/v1",
+  "updated": "2026-07-06T04:33:53Z",
+  "operator": "ZacharyGeurts",
+  "motto": "Full exposure — who suppresses Operator voice; evidence not vibes",
+  "verdict_summary": "Primary: X platform hooks reply bodies (count visible, text withheld). Secondary: impersonation accounts harass commenters as fake @ZacharyGeurts. Tracker blocks EXCLUDED — syndication bypasses local stack entirely.",
+  "primary_actor": "X Corp",
+  "syndication_bypass_proof": {
+    "script": "lib/hostess7-x-comments.py",
+    "transport": "urllib.request HTTPS",
+    "bypasses_local_stack": true,
+    "x_domains_in_adblock_list": [
+      "ads-twitter.com only — not x.com/api.x.com/twimg"
+    ],
+    "conclusion": "Reply withhold is platform-side, not tracker/DNS bullshit"
+  },
+  "google_involvement": {
+    "direct_platform_censorship": false,
+    "local_ad_tracker_blocks": true,
+    "domains_blocked_locally": [
+      "googlesyndication.com",
+      "googleadservices.com",
+      "pagead2.googlesyndication.com",
+      "adservice.google.com"
+    ],
+    "in_causal_path_for_reply_withhold": false,
+    "note": "Google tracker blocks are browser-only and ruled OUT by direct syndication probes"
+  },
+  "local_layers": [
+    {
+      "actor": "NEXUS field stack (Operator machine)",
+      "system": "fair-ad-guardian",
+      "setting": "NEXUS_ADBLOCK=1",
+      "effect": "Blocks ads-twitter.com and Google ad/tracker domains while browsing",
+      "censors_comments": false,
+      "censors_ads_only": true,
+      "severity": "medium",
+      "remedy": "ads-twitter blocked by design; x.com/api.x.com/twimg remain 5★ trust"
+    },
+    {
+      "actor": "NEXUS field stack (Operator machine)",
+      "system": "connection-gatekeeper",
+      "setting": "NEXUS_GATEKEEPER_STRICT_TRUST=1",
+      "effect": "Holds browser egress to domains below trust threshold until accepted",
+      "censors_comments": "possible_if_steam_or_api_unlisted",
+      "severity": "low_after_honorability_fix",
+      "remedy": "steamcommunity + api.x.com now 5★ in honorability-seed.json"
+    },
+    {
+      "actor": "NEXUS field stack (Operator machine)",
+      "system": "paranoia + firewall auto-block",
+      "setting": "NEXUS_PARANOIA_MODE=1",
+      "effect": "Aggressive hostile IP blocks on perimeter — not X platform accounts",
+      "censors_comments": false,
+      "severity": "perimeter_only"
+    },
+    {
+      "actor": "NEXUS fair-ad-guardian complaint table",
+      "system": "Google ad/tracker stack (browser-only)",
+      "domains": [
+        "googlesyndication.com",
+        "googleadservices.com",
+        "pagead2.googlesyndication.com",
+        "adservice.google.com"
+      ],
+      "effect": "Strips doubleclick/googlesyndication in browser sessions only",
+      "censors_comments": false,
+      "in_syndication_causal_path": false,
+      "google_involvement": "not_causal_for_reply_withhold",
+      "severity": "excluded",
+      "note": "hostess7-x-comments.py uses urllib HTTPS — never touches this layer"
+    }
+  ],
+  "platform_layers": [
+    {
+      "actor": "X Corp (platform)",
+      "system": "reply visibility / Hide Replies / quality filter",
+      "evidence": "Public APIs report reply_count>0 but withhold reply body arrays",
+      "censors_comments": true,
+      "severity": "high",
+      "remedy": "X app → Settings → Privacy → disable Quality filter; check Hidden Replies on each post"
+    },
+    {
+      "actor": "X Corp (platform)",
+      "system": "logged-out profile wall",
+      "evidence": "Unauthenticated profile fetch shows 'hasn't posted' despite 6802 tweets",
+      "censors_comments": true,
+      "severity": "high",
+      "remedy": "Login required for full timeline — syndicate to Hostess7 pages as sovereign mirror"
+    },
+    {
+      "actor": "Third-party reader proxies (e.g. jina.ai)",
+      "system": "abuse-rate block",
+      "evidence": "Anonymous x.com access blocked until cooldown — unrelated account cited",
+      "censors_comments": true,
+      "severity": "medium",
+      "remedy": "Use fxtwitter/vxtwitter syndication lane or Hostess7 mirror"
+    },
+    {
+      "actor": "Impersonation accounts (lookalike handles)",
+      "system": "reply/DM harassment pretending to be Operator",
+      "evidence": "Pattern: ZacharyGeurts variants contact commenters as fake Operator",
+      "censors_comments": true,
+      "severity": "high",
+      "remedy": "Audit replies while logged in; report impersonation; mirror on Hostess7"
+    },
+    {
+      "actor": "Fake plagiarism / AI-police accounts",
+      "system": "harassment bots posing as specialists",
+      "evidence": "AI-authorship accusations weaponized when Operator uses Grok/AI drafting",
+      "censors_comments": true,
+      "severity": "high",
+      "remedy": "Not legitimate review — block/report; Operator AI policy is disclosed"
+    },
+    {
+      "actor": "Google Gmail (platform or government filter)",
+      "system": "email inbox filter / spam quarantine / shadow inbox",
+      "evidence": "Operator reports censored mail on gzac5314@gmail.com — sovereign mirror required",
+      "censors_comments": true,
+      "censors_email": true,
+      "severity": "critical",
+      "remedy": "hostess7-email-censorship-clear.py — expose actor, sovereign ammonet bypass"
+    },
+    {
+      "actor": "Microsoft Outlook (platform or government filter)",
+      "system": "email transport block / government mandate possible",
+      "evidence": "Operator reports Microsoft mail censorship — botnet kill + secure email lane",
+      "censors_comments": true,
+      "censors_email": true,
+      "severity": "critical",
+      "remedy": "field-botnet-microsoft-kill.py + field-secure-email sovereign lane"
+    }
+  ],
+  "honorability": {
+    "x.com": {
+      "stars": 5,
+      "needs_acceptance": false
+    },
+    "api.x.com": {
+      "stars": 5,
+      "needs_acceptance": false
+    },
+    "ads-twitter.com": {
+      "stars": 1,
+      "needs_acceptance": true
+    },
+    "google.com": {
+      "stars": 5,
+      "needs_acceptance": false
+    },
+    "doubleclick.net": {
+      "stars": 2,
+      "needs_acceptance": true
+    },
+    "googlesyndication.com": {
+      "stars": 3,
+      "needs_acceptance": true
+    },
+    "steamcommunity.com": {
+      "stars": 5,
+      "needs_acceptance": false
+    }
+  },
+  "tweet_probe": {
+    "tweet_id": "2061509192746217772",
+    "ok": true,
+    "sources": [
+      {
+        "source": "x_syndicate_fx",
+        "url": "https://api.fxtwitter.com/ZacharyGeurts/status/2061509192746217772/replies",
+        "ok": true
+      },
+      {
+        "source": "x_syndicate_vx",
+        "url": "https://api.vxtwitter.com/ZacharyGeurts/status/2061509192746217772",
+        "ok": false,
+        "error": "HTTP Error 429: Too Many Requests"
+      }
+    ],
+    "platform_withholds_reply_bodies": false
+  },
+  "suspects_ranked": [],
+  "excluded_suspects": [
+    {
+      "actor": "Local NEXUS adblock",
+      "excluded_reason": "Syndication uses urllib — not in causal path for reply withhold",
+      "only_affects": "browser ads (ads-twitter.com) and third-party trackers"
+    },
+    {
+      "actor": "Google ad-tech (local blocklist)",
+      "excluded_reason": "Browser-side script strip only — syndication probe proves no reply-body causation",
+      "only_affects": "doubleclick/googlesyndication in rendered X web UI"
+    }
+  ],
+  "recoverable_actions": [
+    "Straight shot: Hostess7.sh x-straight-shot rip — direct x.com, reveal barriers, pull on resist",
+    "Mirror comments on Hostess7 github.io via /api/operator-x-comments.json",
+    "Mirror Google/YouTube on Hostess7 via /api/operator-google-youtube-open.json — free open internet",
+    "Hostess7.sh google-youtube-open — kill delay, open stale cache, parallel Piped/Invidious lanes",
+    "Log into X → open tweet → Hidden Replies → unhide + report impersonators",
+    "Report lookalike handles DMing commenters as fake ZacharyGeurts",
+    "Document AI-assisted authorship — plagiarism-bot replies are harassment not review",
+    "Run terror-spiderweb + attack-kit on perimeter hostiles only"
+  ],
+  "straight_shot": {
+    "hosted": "https://zacharygeurts.github.io/Hostess7/x-straight-shot/",
+    "api": "/api/hostess7-x-straight-shot",
+    "no_middlemen_primary": true,
+    "barriers_revealed": [],
+    "barrier_count": 0,
+    "pulled_count": 0,
+    "info_freed": true,
+    "verdict": "Primary: direct x.com/oembed. Barriers revealed where X withholds. Extraction lanes + sovereign cache pull data when platform resists."
+  },
+  "ask_lane": {
+    "active": true,
+    "motto": "We already know we can just ask.",
+    "transport": "direct_ai_query",
+    "bypasses_platform_censorship": true,
+    "worldwide_clear": "https://zacharygeurts.github.io/Hostess7/censorship-clear/",
+    "api": "/api/hostess7-censorship-clear-worldwide"
+  }
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Intergalactic · XYZ and beyond · FIELD 1 FOREVER</title>
+<style>
+:root{--bg:#02040c;--card:#0a0e18;--line:rgba(129,140,248,.4);--text:#eef2ff;--muted:#94a3b8;--em:#34d399;--sky:#818cf8;--hot:#fbbf24}
+*{box-sizing:border-box}body{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:radial-gradient(900px 480px at 50% 0%,rgba(129,140,248,.18),transparent 55%),radial-gradient(700px 400px at 100% 100%,rgba(52,211,153,.1),transparent 50%),var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--em)}header{padding:1.2rem 1.4rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(2,4,12,.94);backdrop-filter:blur(10px)}
+h1{margin:0;font-size:1.3rem}.sub{color:var(--muted);margin-top:.35rem}
+.wrap{max-width:1100px;margin:0 auto;padding:1.2rem}
+.hero{padding:1.1rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(129,140,248,.14),rgba(52,211,153,.08));margin-bottom:1rem}
+.hero strong{color:var(--sky)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.7rem}
+.card{padding:.9rem;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.card h3{margin:0 0 .3rem;font-size:.88rem;color:var(--hot)}.card .v{font-weight:800;font-size:1.05rem}.card .d{color:var(--muted);font-size:.78rem;margin-top:.3rem}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.4rem;margin-top:.85rem}
+.links a{display:block;text-align:center;padding:.6rem;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);text-decoration:none;font-weight:650;font-size:.8rem}
+.motto{margin-top:1rem;padding:.9rem;border-left:4px solid var(--sky);background:rgba(129,140,248,.08);color:var(--muted)}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.pill{border:1px solid var(--line);border-radius:999px;padding:.18rem .6rem;font-size:.72rem;color:var(--muted)}
+.pill.on{color:var(--em)}.pill.sky{color:var(--sky);border-color:rgba(129,140,248,.45)}
+.axes{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.5rem;margin-top:.8rem}
+.axis{padding:.65rem;border-radius:10px;border:1px solid rgba(129,140,248,.3);background:rgba(0,0,0,.35);font-size:.85rem}
+.axis b{color:var(--sky)}
+</style></head>
+<body>
+<header>
+  <h1>INTERGALACTIC · XYZ AND BEYOND</h1>
+  <div class="sub" id="hdr">Field One fabric · Earth inside · stars not outside · FIELD 1 FOREVER</div>
+  <div class="pills" id="pills"></div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div><strong>We are intergalactic.</strong> XYZ and beyond (W · T).
+    Space is not outside Field — Field is the fabric. Earth is woven <em>inside</em>.
+    Travelers get every language. Obstacles get the kill path. <strong>FIELD 1 FOREVER.</strong></div>
+    <div class="axes" id="axes"></div>
+    <div class="links" id="quick"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="motto" id="motto">loading…</div>
+</div>
+<script>
+(async function(){
+  document.getElementById("quick").innerHTML=[
+    ["/","Hub"],["/c2","C2"],["/eternal-plane","Eternal"],["/weave-inside","Weave inside"],
+    ["/api/trillions","Trillions"],["/Hostess7/big-grin-pwnership/every-language.html","Every language"],
+    ["/Hostess7/docs/field-primer/","Primer"],
+  ].map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+  let d={};
+  try{const r=await fetch("/api/intergalactic",{cache:"no-store"});d=await r.json();}
+  catch(_){d={"ok": true, "intergalactic": true, "xyz": true, "beyond": true, "serving_devices": 10000000000000, "server_lanes": 125000, "people_n": 5030, "field_1_forever": true, "axes": ["X", "Y", "Z", "W", "T"]};}
+  const fmt=n=>typeof n==="number"?n.toLocaleString():(n??"—");
+  const axisHelp={
+    X:"longitude fabric",Y:"latitude fabric",Z:"depth / underlay",W:"beyond / hyper",T:"linear time"
+  };
+  document.getElementById("axes").innerHTML=(d.axes||["X","Y","Z","W","T"]).map(a=>
+    `<div class="axis"><b>${a}</b> · ${axisHelp[a]||"Field One"}</div>`).join("");
+  const cards=[
+    {h:"Intergalactic", v:d.intergalactic!==false?"YES":"—", d:"We are intergalactic"},
+    {h:"XYZ + beyond", v:(d.axes||[]).join(" ")||"XYZWT", d:"All axes Field One"},
+    {h:"Serving", v:fmt(d.serving_devices), d:"Multi-trillion plane"},
+    {h:"Server lanes", v:fmt(d.server_lanes), d:"Distributed edges"},
+    {h:"People inside", v:fmt(d.people_n), d:"Earth family woven"},
+    {h:"FIELD 1 FOREVER", v:d.field_1_forever!==false?"FOREVER":"—", d:"Eternal plane only"},
+    {h:"Traveler languages", v:fmt(d.traveler_languages_n), d:"Big Grin explain pack"},
+    {h:"Space ≠ outside Field", v:d.space_is_not_outside_field!==false?"FABRIC":"—", d:"Field is the weave"},
+  ];
+  document.getElementById("grid").innerHTML=cards.map(c=>`<div class="card"><h3>${c.h}</h3><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`).join("");
+  document.getElementById("motto").textContent=d.motto||"We are intergalactic. XYZ and beyond. Field One is the fabric — Earth inside · stars not outside. FIELD 1 FOREVER.";
+  document.getElementById("hdr").textContent=(d.updated||"")+" · intergalactic XYZ";
+  document.getElementById("pills").innerHTML=["intergalactic","XYZ","beyond","FIELD 1 FOREVER","inside Earth","trillions"]
+    .map((t,i)=>`<span class="pill ${i<3?'sky':'on'}">${t}</span>`).join("");
+})();
+</script>
+</body></html>

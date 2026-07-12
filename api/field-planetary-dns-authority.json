@@ -1,0 +1,216 @@
+{
+  "ok": true,
+  "schema": "field-planetary-dns-authority/v1",
+  "updated": "2026-07-06T00:29:29Z",
+  "title": "True planetary DNS authority — generate, expand, remove foreign servers",
+  "motto": "Generate true DNS authority across every IPv4 — expand planet-wide — remove foreign DHCP and DNS once complete.",
+  "boss": "hostess7",
+  "true_dns_authority": true,
+  "expanded": true,
+  "ipv4_complete": true,
+  "authority": {
+    "scope": "planet",
+    "truth_dns": true,
+    "forward_ipv4": "0.0.0.0/0",
+    "reverse_ipv4": "0.0.0.0/0",
+    "soa": "hostess7.ammonet.net",
+    "ns": [
+      "truth.hostess7",
+      "ns1.ammonet.net"
+    ]
+  },
+  "zones": [
+    {
+      "kind": "planetary_forward",
+      "name": ".",
+      "region": "Global root",
+      "authority": "hostess7_truth",
+      "security_level": "extreme",
+      "records": "expanded"
+    },
+    {
+      "kind": "planetary_forward",
+      "name": ".us .ca .mx .br",
+      "region": "Americas",
+      "authority": "hostess7_truth",
+      "security_level": "extreme",
+      "records": "expanded"
+    },
+    {
+      "kind": "planetary_forward",
+      "name": ".eu .de .uk .fr",
+      "region": "Europe",
+      "authority": "hostess7_truth",
+      "security_level": "extreme",
+      "records": "expanded"
+    },
+    {
+      "kind": "planetary_forward",
+      "name": ".jp .cn .au .in",
+      "region": "Asia-Pacific",
+      "authority": "hostess7_truth",
+      "security_level": "extreme",
+      "records": "expanded"
+    },
+    {
+      "kind": "planetary_forward",
+      "name": ".za .ng .ke",
+      "region": "Africa",
+      "authority": "hostess7_truth",
+      "security_level": "extreme",
+      "records": "expanded"
+    },
+    {
+      "kind": "planetary_forward",
+      "name": ".ae .il .sa",
+      "region": "Middle East",
+      "authority": "hostess7_truth",
+      "security_level": "extreme",
+      "records": "expanded"
+    },
+    {
+      "kind": "planetary_forward",
+      "name": ".localhost .invalid .test",
+      "region": "Special-use",
+      "authority": "hostess7_truth",
+      "security_level": "extreme",
+      "records": "expanded"
+    },
+    {
+      "kind": "planetary_forward",
+      "name": "arpa",
+      "region": "Infrastructure",
+      "authority": "hostess7_truth",
+      "security_level": "extreme",
+      "records": "expanded"
+    },
+    {
+      "kind": "planetary_forward",
+      "name": ".com .net .org .io .dev .app .field",
+      "region": "AmmoNet sovereign",
+      "authority": "hostess7_truth",
+      "security_level": "extreme",
+      "records": "expanded"
+    },
+    {
+      "kind": "ammonet_forward",
+      "name": "ammonet.com",
+      "authority": "ammonet_truth_dns",
+      "record_count": 9,
+      "records": "expanded"
+    },
+    {
+      "kind": "ammonet_forward",
+      "name": "ammonet.net",
+      "authority": "ammonet_truth_dns",
+      "record_count": 11,
+      "records": "expanded"
+    },
+    {
+      "kind": "ammonet_forward",
+      "name": "ammonet.org",
+      "authority": "ammonet_truth_dns",
+      "record_count": 6,
+      "records": "expanded"
+    },
+    {
+      "kind": "ammonet_forward",
+      "name": "ammonet.io",
+      "authority": "ammonet_truth_dns",
+      "record_count": 5,
+      "records": "expanded"
+    },
+    {
+      "kind": "ammonet_forward",
+      "name": "ammonet.dev",
+      "authority": "ammonet_truth_dns",
+      "record_count": 4,
+      "records": "expanded"
+    },
+    {
+      "kind": "ammonet_forward",
+      "name": "ammonet.app",
+      "authority": "ammonet_truth_dns",
+      "record_count": 3,
+      "records": "expanded"
+    },
+    {
+      "kind": "ammonet_forward",
+      "name": "ammonet.field",
+      "authority": "ammonet_truth_dns",
+      "record_count": 4,
+      "records": "expanded"
+    },
+    {
+      "kind": "ipv4_forward",
+      "name": "0.0.0.0/0",
+      "authority": "hostess7_truth",
+      "coverage": 4294967296,
+      "records": "range_enumerated",
+      "note": "True DNS authority — every IPv4 forward answer"
+    },
+    {
+      "kind": "ipv4_reverse",
+      "name": "in-addr.arpa",
+      "authority": "hostess7_truth",
+      "coverage": 4294967296,
+      "records": "range_enumerated",
+      "note": "True DNS authority — every IPv4 reverse PTR"
+    },
+    {
+      "kind": "truth_root",
+      "name": ".",
+      "authority": "hostess7_truth",
+      "soa": "hostess7.ammonet.net",
+      "ns": [
+        "truth.hostess7",
+        "ns1.ammonet.net"
+      ],
+      "records": "expanded"
+    }
+  ],
+  "zone_count": 19,
+  "counts": {
+    "ipv4_forward_records": 4294967296,
+    "ipv4_reverse_records": 4294967296,
+    "planetary_zones": 9,
+    "ammonet_zones": 7,
+    "authority_records_total": 8589934634,
+    "ipv4_coverage": 4294967296
+  },
+  "policy": {
+    "generate_true_dns_authority": true,
+    "expand_on_ipv4_complete": true,
+    "remove_foreign_on_complete": true,
+    "planetary_removal": true,
+    "internet_open_for_users": true,
+    "only_truth_dns_dhcp_remain": true,
+    "botnet_suppress_foreign": true
+  },
+  "api": "/api/field-planetary-dns-authority",
+  "completion": {
+    "complete": false,
+    "expanded": true,
+    "ipv4_enumerated": true,
+    "takeover_phase": "primary",
+    "sole_authority": {
+      "dns": false,
+      "dhcp": true,
+      "truth": false,
+      "accuracy": false,
+      "ok": false,
+      "phase": "primary",
+      "foreign_resolvers": [
+        "209.18.47.61",
+        "209.18.47.62",
+        "209.18.47.63"
+      ],
+      "internet_open": false,
+      "collision_count": 4,
+      "authority_collision_count": 4,
+      "hygiene_warnings": 0
+    },
+    "zone_count": 19,
+    "ipv4_coverage": 4294967296
+  }
+}

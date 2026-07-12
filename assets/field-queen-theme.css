@@ -1,0 +1,201 @@
+/* Queen field theme — matches /field C2 desktop + Queen Browser (black · emerald · rose) */
+
+:root,
+[data-queen-surface="settings"] {
+  --qf-bg-deep: #040508;
+  --qf-bg: #1a1624;
+  --qf-bg-mid: #241f31;
+  --qf-panel: #0a0c12;
+  --qf-elevated: rgba(4, 5, 8, 0.72);
+  --qf-edge: rgba(148, 163, 184, 0.14);
+  --qf-edge-emerald: rgba(26, 77, 50, 0.55);
+  --qf-text: #e8edf7;
+  --qf-dim: #7c8aa3;
+  --qf-emerald: #22c55e;
+  --qf-emerald-glow: #3ecf8e;
+  --qf-rose: #eb488c;
+  --qf-rose-soft: #f472b6;
+  --qf-gold: #f0d060;
+  --qf-accent: var(--qf-emerald-glow);
+  --qf-radius: 10px;
+  --qf-font: system-ui, sans-serif;
+  --qf-mono: ui-monospace, "Cascadia Code", "JetBrains Mono", monospace;
+  --qf-glow-blue: rgba(53, 132, 228, 0.28);
+  --qf-glow-emerald: rgba(62, 207, 142, 0.18);
+  --qf-glow-rose: rgba(244, 114, 182, 0.12);
+}
+
+html[data-queen-surface="settings"],
+html[data-queen-surface="settings"] body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--qf-font);
+  color: var(--qf-text);
+  background:
+    radial-gradient(ellipse 90% 70% at 20% 0%, var(--qf-glow-blue), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 90% 8%, var(--qf-glow-rose), transparent 45%),
+    linear-gradient(180deg, var(--qf-bg-mid) 0%, var(--qf-bg) 100%);
+  -webkit-font-smoothing: antialiased;
+}
+
+.qf-brand-plate {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qf-brand-plate img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px var(--qf-edge-emerald),
+    0 0 14px var(--qf-glow-emerald);
+}
+
+.qf-brand-plate h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--qf-text);
+}
+
+.qf-brand-plate p {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: var(--qf-dim);
+  letter-spacing: 0.06em;
+}
+
+.qf-brand-motto {
+  color: var(--qf-emerald-glow);
+}
+
+.qf-brand-motto span {
+  color: var(--qf-rose-soft);
+}
+
+.qf-nav-rail {
+  background: rgba(4, 5, 8, 0.88);
+  border-right: 1px solid var(--qf-edge-emerald);
+  backdrop-filter: blur(12px);
+}
+
+.qf-nav-rail button {
+  color: var(--qf-dim);
+  border: 1px solid transparent;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.qf-nav-rail button:hover {
+  background: var(--qf-glow-emerald);
+  color: var(--qf-text);
+  border-color: rgba(62, 207, 142, 0.25);
+}
+
+.qf-nav-rail button.active {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.18), rgba(235, 72, 140, 0.08));
+  color: var(--qf-emerald-glow);
+  border-color: var(--qf-edge-emerald);
+  box-shadow: inset 0 -2px 0 var(--qf-emerald);
+}
+
+.qf-card {
+  background: var(--qf-elevated);
+  border: 1px solid var(--qf-edge);
+  border-radius: var(--qf-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.qf-card:hover {
+  border-color: rgba(62, 207, 142, 0.28);
+}
+
+.qf-section h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--qf-text);
+}
+
+.qf-section .qf-lead {
+  margin: 0 0 20px;
+  color: var(--qf-dim);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.qf-btn {
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--qf-edge);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--qf-text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
+}
+
+.qf-btn:hover {
+  border-color: var(--qf-emerald-glow);
+  color: var(--qf-emerald-glow);
+}
+
+.qf-btn--primary {
+  border-color: var(--qf-edge-emerald);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.22), rgba(62, 207, 142, 0.1));
+  color: var(--qf-emerald-glow);
+}
+
+.qf-btn--primary:hover {
+  box-shadow: 0 0 16px var(--qf-glow-emerald);
+}
+
+.qf-btn--danger {
+  border-color: rgba(244, 63, 94, 0.45);
+  color: #fda4af;
+}
+
+.qf-input,
+.qf-select {
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--qf-edge);
+  background: rgba(4, 5, 8, 0.65);
+  color: var(--qf-text);
+  font: inherit;
+}
+
+.qf-input:focus,
+.qf-select:focus {
+  outline: none;
+  border-color: var(--qf-emerald-glow);
+  box-shadow: 0 0 0 2px var(--qf-glow-emerald);
+}
+
+input[type="checkbox"],
+input[type="range"] {
+  accent-color: var(--qf-emerald);
+}
+
+.qf-dock {
+  background: rgba(18, 22, 32, 0.92) !important;
+  border-bottom: 1px solid var(--qf-edge-emerald) !important;
+}
+
+.qf-dock .fsd-dock-icon:hover {
+  background: var(--qf-glow-emerald) !important;
+  color: var(--qf-emerald-glow) !important;
+}
+
+.qf-dock .fsd-dock-icon.active {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.22), rgba(244, 114, 182, 0.1)) !important;
+  color: var(--qf-emerald-glow) !important;
+  box-shadow: 0 0 0 1px rgba(62, 207, 142, 0.35) !important;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NEXUS Calendar</title>
+  <link rel="icon" href="/Hostess7/assets/queen-prog-os-48.png" type="image/png" />
+  <style>
+    :root { --bg:#0a1220; --panel:#111a2a; --accent:#38bdf8; --text:#eef4fc; --dim:#94a3b8; --today:#5eead4; }
+    body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font-family:system-ui,sans-serif; padding:20px; }
+    h1 { margin:0 0 16px; font-size:1.25rem; }
+    .nav { display:flex; gap:10px; align-items:center; margin-bottom:14px; }
+    .nav button { padding:8px 14px; border-radius:8px; border:1px solid #2d4a6e; background:var(--panel); color:var(--text); cursor:pointer; }
+    .grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; max-width:560px; }
+    .dow { font-size:0.7rem; color:var(--dim); text-align:center; text-transform:uppercase; }
+    .day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:8px; border:1px solid transparent; font-size:0.9rem; }
+    .day.other { color:var(--dim); opacity:0.45; }
+    .day.today { border-color:var(--today); background:rgba(94,234,212,0.12); font-weight:700; }
+    .clock { margin-top:20px; font-size:2rem; color:var(--accent); }
+    .timer { margin-top:16px; padding:14px; border-radius:10px; border:1px solid #3d2818; background:rgba(20,14,10,0.85); max-width:360px; }
+    .timer h2 { margin:0 0 10px; font-size:1rem; color:#dbb8a8; }
+    .timer-row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:8px; }
+    .timer input, .timer select { padding:8px 10px; border-radius:8px; border:1px solid #4a3428; background:#14100c; color:var(--text); }
+    .timer button { padding:8px 14px; border-radius:8px; border:1px solid #6b4423; background:#2a1c14; color:#f0e6dc; cursor:pointer; }
+    .timer-display { font-size:1.6rem; color:#db7093; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <h1 id="title">Calendar</h1>
+  <div class="nav">
+    <button type="button" id="prev">←</button>
+    <button type="button" id="today">Today</button>
+    <button type="button" id="next">→</button>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="clock" id="clock"></div>
+  <div class="timer" id="timer-panel" hidden>
+    <h2>Set Timer</h2>
+    <div class="timer-row">
+      <input type="number" id="timer-min" min="0" max="999" value="5" aria-label="Minutes" />
+      <span>min</span>
+      <button type="button" id="timer-start">Start</button>
+      <button type="button" id="timer-stop">Stop</button>
+    </div>
+    <div class="timer-display" id="timer-display">—</div>
+  </div>
+  <script>
+    let view = new Date();
+    const grid = document.getElementById("grid");
+    const title = document.getElementById("title");
+    const dow = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    function render() {
+      const y = view.getFullYear(), m = view.getMonth();
+      title.textContent = view.toLocaleString(undefined, { month: "long", year: "numeric" });
+      grid.innerHTML = dow.map((d) => '<div class="dow">' + d + "</div>").join("");
+      const first = new Date(y, m, 1).getDay();
+      const days = new Date(y, m + 1, 0).getDate();
+      const prevDays = new Date(y, m, 0).getDate();
+      const now = new Date();
+      for (let i = 0; i < first; i++) {
+        const d = prevDays - first + i + 1;
+        grid.innerHTML += '<div class="day other">' + d + "</div>";
+      }
+      for (let d = 1; d <= days; d++) {
+        const today = now.getFullYear() === y && now.getMonth() === m && now.getDate() === d;
+        grid.innerHTML += '<div class="day' + (today ? " today" : "") + '">' + d + "</div>";
+      }
+    }
+    document.getElementById("prev").onclick = () => { view.setMonth(view.getMonth() - 1); render(); };
+    document.getElementById("next").onclick = () => { view.setMonth(view.getMonth() + 1); render(); };
+    document.getElementById("today").onclick = () => { view = new Date(); render(); };
+    function tick() {
+      document.getElementById("clock").textContent = new Date().toLocaleString();
+    }
+    render(); tick(); setInterval(tick, 1000);
+    const params = new URLSearchParams(location.search);
+    const timerPanel = document.getElementById("timer-panel");
+    if (params.get("timer") === "1") {
+      timerPanel.hidden = false;
+      title.textContent = "Calendar · Timer";
+    }
+    let timerEnd = 0;
+    let timerIv = null;
+    function timerTick() {
+      const left = Math.max(0, timerEnd - Date.now());
+      const m = Math.floor(left / 60000);
+      const s = Math.floor((left % 60000) / 1000);
+      document.getElementById("timer-display").textContent =
+        left ? m + ":" + String(s).padStart(2, "0") : "Done!";
+      if (!left && timerIv) { clearInterval(timerIv); timerIv = null; }
+    }
+    document.getElementById("timer-start").onclick = function () {
+      const min = parseInt(document.getElementById("timer-min").value || "0", 10);
+      timerEnd = Date.now() + Math.max(0, min) * 60000;
+      if (timerIv) clearInterval(timerIv);
+      timerIv = setInterval(timerTick, 250);
+      timerTick();
+    };
+    document.getElementById("timer-stop").onclick = function () {
+      if (timerIv) clearInterval(timerIv);
+      timerIv = null;
+      timerEnd = 0;
+      document.getElementById("timer-display").textContent = "—";
+    };
+  </script>
+  <script src="/Hostess7/pages-field-boot.js"></script>
+  <script src="/Hostess7/pages-c2-wire.js"></script>
+  <script src="/Hostess7/pages-queen-rtx-bridge.js"></script>
+  <script src="/Hostess7/pages-ammonet-wire.js"></script>
+  <script src="/Hostess7/pages-github-brain-wire.js"></script>
+  <script src="/Hostess7/pages-hostess7-interaction-wire.js"></script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GNU EOL Terminal — Full Operator Manual · GNU EOL Terminal</title>
+  <link rel="stylesheet" href="../css/gnueol-terminal.css" />
+  <link rel="stylesheet" href="../css/chapters.css" />
+</head><body class="chapter-page">
+  <nav class="top"><div class="inner"><a class="logo" href="../index.html">GNU EOL TERMINAL</a>
+  <ul><li><a href="wiki/">Wiki</a></li><li><a href="terminal/">Terminal</a></li></ul></div></nav>
+  <main class="chapter-main"><h1>GNU EOL Terminal — Full Operator Manual</h1>
+<p><strong>GNUEOLTerminal</strong> is the Field Tech terminal for Hostess7: shell ≡ terminal, iron plate witness, optional combinatronic, and the Classic Schooler wiki built in.</p>
+<blockquote>Grok impersonates Richard Stallman in the <strong>textbook prose</strong> — disclosed in the preface. This manual cites <strong>implemented</strong> code paths only.</blockquote>
+<h2 id="1-what-this-is">1. What this is</h2>
+<ul>
+<li><strong>GNU EOL Terminal</strong> — last terminal software the world needs; themeable, tight paneling, GNU options restored</li>
+<li><strong>Field GNU Terminal</strong> — Python dispatch shell (<code>lib/field-gnu-terminal.py</code>) behind panel :9477</li>
+<li><strong>Iron plate</strong> — <code>field-gnu-terminal-iron-plate.py</code> — plate meld, chain hash, Ironclad read-first</li>
+<li><strong>Classic Schooler wiki</strong> — Emacs · Bash · coreutils · Field Technology v5 (22 chapters)</li>
+<li><strong>MS-DOS 4.0 host</strong> — <code>modules</code> · <code>load-module</code> · MSPaint · EDIT · MEM</li>
+</ul>
+<p><strong>Doctrine:</strong> Shell and terminal are the same surface. Combinatronic is optional. Plate meld never lies.</p>
+<h2 id="2-live-surfaces">2. Live surfaces</h2>
+<ul>
+<li><strong>Textbook (home)</strong> — https://zacharygeurts.github.io/GNUEOLTerminal/</li>
+<li><strong>This wiki</strong> — https://zacharygeurts.github.io/GNUEOLTerminal/wiki/</li>
+<li><strong>Field Tech terminal</strong> — https://zacharygeurts.github.io/GNUEOLTerminal/terminal/</li>
+<li><strong>AmmoOS desktop</strong> — https://zacharygeurts.github.io/Hostess7/desktop/</li>
+<li><strong>EOL Code panel</strong> — https://zacharygeurts.github.io/Hostess7/eol-code/</li>
+</ul>
+<p><strong>Local loopback (sovereign stack):</strong></p>
+<div class="code-block"><pre>
+http://127.0.0.1:9477/field-gnu-terminal-embed.html
+http://127.0.0.1:9477/api/field-gnu-terminal
+http://127.0.0.1:9477/terminal/
+</pre></div>
+<p><strong>Aliases:</strong> <code>terminal</code> · <code>gnu-terminal</code> · <code>shell</code> · <code>gnueol</code></p>
+<h2 id="3-boot-order">3. Boot order</h2>
+<ol>
+<li>Start field stack: <code>AML_BUILD=0 bash scripts/impl/start-field-stack.sh</code></li>
+<li>Panel :9477 serves embed + API</li>
+<li>Optional Queen :9481 for RTX browser shell</li>
+<li>Type <code>wiki</code> in the terminal → opens Classic Schooler wiki map</li>
+</ol>
+<p>Pages mirror (no local stack): use GitHub Pages terminal URL above — same JS, API shim to static JSON.</p>
+<p><strong>Hostess7 train-up (before Pages publish):</strong></p>
+<div class="code-block"><pre>
+bash scripts/hostess7-full-train.sh          # corpus + combinatronic refresh
+bash Hostess7/scripts/hostess7-pre-update.sh # AML boundary preflight
+./Hostess7.sh pages-publish                  # surfaces + GNUEOL wiki mirror
+</pre></div>
+<p>The terminal does not replace this train — it <strong>witnesses</strong> the same stack the wiki documents. If <code>help</code> works but <code>wiki</code> URLs 404, the book build did not run; see §17.</p>
+<h2 id="4-pages-runtime-vs-loopback">4. Pages runtime vs loopback</h2>
+<p>On <strong>GitHub Pages</strong>, the terminal embed uses <code>api-shim.js</code> to serve static JSON snapshots when loopback <code>:9477</code> is unreachable. Same JS bundle (<code>field-gnu-terminal.js</code>) — only the transport changes.</p>
+<p>On <strong>loopback</strong>, every command hits live <code>POST /api/field-gnu-terminal</code> with sovereign gate + iron plate chain.</p>
+<p><strong>Rule:</strong> develop on loopback; publish to Pages; verify both with <code>wiki</code> command URLs.</p>
+<h2 id="5-terminal-ui">5. Terminal UI</h2>
+<h3>5.1 Widgets</h3>
+<p>See <a href="widgets-and-paneling.html">Widgets &amp; tight paneling</a>:</p>
+<ul>
+<li>Tab strip (multi-session, split ≤4)</li>
+<li>Code preview sidebar (live source beside stderr)</li>
+<li>Scroll thumb (touch + drag)</li>
+<li>Theme picker (AmmoOS C2 themes API)</li>
+<li>Mini-browser proxy (<code>/browse/view</code>)</li>
+<li>Status bar (cwd · kernel · CLI family)</li>
+</ul>
+<h3>5.2 Themes</h3>
+<p>Default: <code>black_emerald_rose_2026</code> · Mono: <code>mono_terminal</code></p>
+<p>API: <code>GET /api/ammoos-themes</code> · client applies via <code>field-gnu-terminal.js</code></p>
+<h3>5.3 Menus</h3>
+<p>File · Edit · View · Options · Help — same families as classic GNU terminal expectations.</p>
+<h2 id="6-command-reference">6. Command reference</h2>
+<p>Commands route through <code>POST /api/field-gnu-terminal</code> with body <code>{ "action": "run", "command": "...", "cwd": "..." }</code>.</p>
+<h3>6.1 Built-in Field commands</h3>
+<ul>
+<li><code>help</code> — KILROY Universal CLI index (POSIX · GNU · BSD · CMD · PowerShell · KILROY)</li>
+<li><code>wiki</code> — print GNUEOL wiki URLs (book + classic schooler topics)</li>
+<li><code>field-tech</code> — same as <code>wiki</code></li>
+<li><code>clear</code> — clear terminal buffer</li>
+<li><code>cd <dir></code> — change cwd within KILROY_ROOT + SG_ROOT only</li>
+<li><code>kernel</code> — KILROY Field OS kernel witness (<code>/proc/kilroy_field/*</code>)</li>
+<li><code>kilroy</code> / <code>kilroy-status</code> — KILROY stack status</li>
+<li><code>truth</code> — Ironclad truth floor (<code>field-ironclad-truth.py</code>)</li>
+<li><code>truth diagnostic</code> — diagnostic truth mode</li>
+<li><code>discern <text></code> — stress/terror discern (<code>field-stress-terror-discern.py</code>)</li>
+<li><code>combinatorics</code> — combinatronic bridge status (optional engine)</li>
+<li><code>combinatronic</code> — alias</li>
+<li><code>g16-combinatronics</code> — alias</li>
+<li><code>bash -c combinatorics</code> — inner combinatronic dispatch</li>
+</ul>
+<h3>6.2 MS-DOS 4.0 module host</h3>
+<ul>
+<li><code>modules</code> — list loadable DOS 4.0 modules</li>
+<li><code>load-module <name></code> — load module (opens surface URL)</li>
+<li><code>mspaint</code> / <code>paint</code> — MSPaint at <code>/mspaint</code> (PCX · clipboard)</li>
+<li><code>edit</code> — MS-DOS Editor (GNU Terminal embed)</li>
+<li><code>mem</code> — stack witness → <code>truth memory</code></li>
+<li><code>gwbasic</code> / <code>basic</code> — coming soon (CHIPS lane)</li>
+</ul>
+<p>Right-click AmmoOS desktop → <strong>Load DOS 4.0 module…</strong></p>
+<h3>6.3 Allowed POSIX / toolchain (allowlist)</h3>
+<p>Core: <code>ls</code> <code>pwd</code> <code>echo</code> <code>cat</code> <code>head</code> <code>tail</code> <code>grep</code> <code>find</code> <code>wc</code> <code>whoami</code> <code>date</code> <code>env</code> <code>which</code> <code>file</code> <code>stat</code> <code>tree</code> <code>du</code> <code>df</code> <code>uname</code></p>
+<p>Build: <code>g16</code> <code>g16-gcc</code> <code>g16-g++</code> <code>g16-as</code> <code>g16-ld</code> <code>g16-objdump</code> <code>g16-nm</code> <code>gpy-16</code> <code>pythong</code> <code>python3</code> <code>git</code> <code>make</code> <code>bash</code> <code>sh</code></p>
+<p>Field: <code>kilroy</code> <code>ammolang-run.sh</code> <code>export</code> <code>rg</code> <code>locate</code></p>
+<p>CMD aliases: <code>dir</code> <code>type</code> <code>cls</code> <code>copy</code> <code>del</code> <code>md</code> <code>chdir</code> <code>ver</code> <code>where</code> <code>findstr</code></p>
+<p>Scripts: <code>./foo.sh</code> and <code>./foo.py</code> under field roots only.</p>
+<p><strong>Blocked:</strong> <code>rm -rf /</code>, <code>mkfs</code>, <code>dd if=</code>, <code>curl | sh</code>, shutdown/reboot — see dangerous-command guard in <code>field-gnu-terminal.py</code>.</p>
+<h3>6.4 Wiki command output</h3>
+<div class="code-block"><pre>
+wiki
+</pre></div>
+<p>Returns:</p>
+<div class="code-block"><pre>
+Field Tech Terminal — GNUEOL Classic Schooler Wiki
+  book:  https://zacharygeurts.github.io/GNUEOLTerminal/
+  wiki:  https://zacharygeurts.github.io/GNUEOLTerminal/wiki/
+  topics: emacs · bash · coreutils · ssh · gpl · field-tech
+</pre></div>
+<h2 id="7-http-api">7. HTTP API</h2>
+<h3>7.1 Terminal dispatch</h3>
+<div class="code-block"><pre>
+POST /api/field-gnu-terminal
+Content-Type: application/json
+
+{&quot;action&quot;: &quot;run&quot;, &quot;command&quot;: &quot;help&quot;, &quot;cwd&quot;: &quot;/path/to/kilroy&quot;}
+</pre></div>
+<div class="code-block"><pre>
+GET /api/field-gnu-terminal
+</pre></div>
+<p>Returns <code>field-gnu-terminal/v2</code> status: cwd, themes, kernel slice, universal CLI doctrine, DOS 4.0 flag.</p>
+<h3>7.2 Related APIs</h3>
+<ul>
+<li><code>/api/field-dos40</code> — MS-DOS 4.0 module list</li>
+<li><code>/api/ammoos-themes</code> — theme catalog</li>
+<li><code>/api/sovereign-time</code> — linear clock · slowdown ≥800ms = threat</li>
+<li><code>/browse/view</code> — mini-browser proxy</li>
+<li><code>/api/field-eol-code</code> — EOL Code BSP tree (Layer 0 paths)</li>
+<li><code>/api/field-legacy-connect</code> — legacy open + secured posture · Dreamcast modem slice</li>
+<li><code>/api/field-botnet-dns-dhcp</code> — Truth DNS + Field DHCP + GitHub control plane</li>
+<li><code>/api/field-dns-drift-threat</code> — DNS drift threat panel · servers_updated audit</li>
+<li><code>/api/field-github-legacy</code> — GitHub legacy secure lane (old browsers welcome)</li>
+</ul>
+<h3>7.3 Iron plate panel</h3>
+<p>Written to <code>.nexus-state/field-gnu-terminal-iron-plate-panel.json</code> on plate meld refresh.</p>
+<p>Doctrine: <code>data/field-gnu-terminal-iron-plate-doctrine.json</code></p>
+<h2 id="8-iron-plate-security">8. Iron plate &amp; security</h2>
+<p><strong>Policy (iron plate doctrine):</strong></p>
+<ul>
+<li><code>shell_terminal_identical</code>: true</li>
+<li><code>combinatronic_optional</code>: true</li>
+<li><code>plate_meld_required</code>: true</li>
+<li><code>ironclad_read_first</code>: true</li>
+<li><code>fsync_panel</code>: true</li>
+<li><code>chain_hash</code>: true</li>
+</ul>
+<p><strong>Chain:</strong></p>
+<div class="code-block"><pre>
+field-gnu-terminal-embed.html
+  → /api/field-gnu-terminal
+  → kilroy-universal-shell + allowlist
+  → field-gnu-terminal-iron-plate.py
+  → field-plate-meld.py (chain hash)
+  → field-ironclad-truth.py (truth command)
+  → field-gnu-identity-verify.py (rms @ GitHub 10550344)
+</pre></div>
+<p><strong>Truth command</strong> witnesses plate meld, GNU terminal posture, and diagnostic queries. Use before arguing with stderr.</p>
+<h2 id="9-eol-code-integration">9. EOL Code integration</h2>
+<p>EOL Code (<code>lib/field-eol-code.py</code>) maps the Field stack BSP tree from pending (−4) to EOL at Layer 0. GNU Terminal is an EOL marker node.</p>
+<ul>
+<li>Panel: <code>/eol-code/</code> on Hostess7 Pages</li>
+<li>Local: <code>python3 lib/field-eol-code.py panel</code></li>
+<li>AML: <code>library/dewey/000-computer-science/ammolang/eol_code.aml</code></li>
+</ul>
+<p>Terminal paths under KILROY + SG appear in the EOL tree when generator has run.</p>
+<h2 id="10-entropy-grade-sovereign-time">10. Entropy grade &amp; sovereign time</h2>
+<p>Production panels must agree: stderr, jsonl, sovereign time, panel latency.</p>
+<div class="code-block"><pre>
+curl -s http://127.0.0.1:9477/api/sovereign-time | jq .derived_utc
+grep THERMO ~/.nexus-state/*.jsonl | tail
+</pre></div>
+<p>See <a href="entropy-grade.html">Entropy grade production</a> and <a href="sovereign-time.html">Sovereign time</a>.</p>
+<h2 id="11-rtx-panels">11. RTX panels</h2>
+<p>When <code>queen_rtx</code> permit gates open (Grok16 / AMOURANTHRTX), RTX widgets unlock. CPU <code>field_opt</code> path keeps same UI — gated tools hidden.</p>
+<p>See <a href="rtx-panels.html">RTX panels</a>.</p>
+<h2 id="12-classic-schooler-wiki-map">12. Classic Schooler wiki map</h2>
+<ul>
+<li>Overview — <a href="gnu-technical-manual.html">GNU Technical Manual</a></li>
+<li>Emacs — <a href="emacs.html">emacs</a></li>
+<li>Bash — <a href="bash.html">bash</a></li>
+<li>Coreutils — <a href="coreutils.html">coreutils</a></li>
+<li>SSH — <a href="ssh.html">ssh</a></li>
+<li>GPL — <a href="gpl.html">gpl</a></li>
+<li>Field Tech — <a href="field-tech.html">field-tech</a></li>
+</ul>
+<h2 id="13-field-technology-primer-22-chapters">13. Field Technology primer (22 chapters)</h2>
+<p>Full primer from <code>Textbook/field-technology-v5.txt</code>:</p>
+<ol>
+<li><a href="ft-ch01-read-this-before-you-dispatch-anything.html">Ch 01 · Read this before you dispatch anything</a></li>
+<li><a href="ft-ch02-learning-objectives.html">Ch 02 · Learning objectives</a></li>
+<li><a href="ft-ch03-learning-objectives.html">Ch 03 · Learning objectives</a></li>
+<li><a href="ft-ch04-learning-objectives.html">Ch 04 · Learning objectives</a></li>
+<li><a href="ft-ch05-learning-objectives.html">Ch 05 · Learning objectives</a></li>
+<li><a href="ft-ch06-learning-objectives.html">Ch 06 · Learning objectives</a></li>
+<li><a href="ft-ch07-offensive-dispatch-gpu-field-engine.html">Ch 07 · Offensive Dispatch — GPU Field Engine</a></li>
+<li><a href="ft-ch08-die-resident-universe-field-die-data-bus.html">Ch 08 · Die-Resident Universe</a></li>
+<li><a href="ft-ch09-stability-under-load-fcc-tesla.html">Ch 09 · Stability Under Load — FCC &amp; Tesla</a></li>
+<li><a href="ft-ch10-hardware-spiderweb-sub-micron-mirror.html">Ch 10 · Hardware Spiderweb</a></li>
+<li><a href="ft-ch11-observability-reading-the-battlefield.html">Ch 11 · Observability</a></li>
+<li><a href="ft-ch12-reality-vs-theory-the-rocks.html">Ch 12 · Reality vs Theory — The Rocks</a></li>
+<li><a href="ft-ch13-creditor-deep-dive-thermodynamic-receipts.html">Ch 13 · Thermodynamic receipts</a></li>
+<li><a href="ft-ch14-creditor-deep-dive-shannon-oracle.html">Ch 14 · Shannon Oracle</a></li>
+<li><a href="ft-ch15-creditor-deep-dive-maxwell-gpu.html">Ch 15 · Maxwell GPU</a></li>
+<li><a href="ft-ch16-sacred-long-form-love-coupling.html">Ch 16 · Love Coupling</a></li>
+<li><a href="ft-ch17-sacred-long-form-god-boundary.html">Ch 17 · God Boundary</a></li>
+<li><a href="ft-ch18-sacred-long-form-operator-covenant.html">Ch 18 · Operator Covenant</a></li>
+<li><a href="ft-ch19-introduction-why-sovereign-time-exists.html">Ch 19 · Sovereign time</a></li>
+<li><a href="ft-ch20-introduction-public-services-under-terror-threat-posture.html">Ch 20 · Terror-threat posture</a></li>
+<li><a href="ft-ch21-introduction-queen-doctrine.html">Ch 21 · Queen doctrine</a></li>
+<li><a href="ft-ch22-glossary-field-technology-v5.html">Ch 22 · Glossary v5</a></li>
+</ol>
+<h2 id="14-troubleshooting">14. Troubleshooting</h2>
+<h3>14.1 Terminal dispatch</h3>
+<ul>
+<li><code>blocked: 'foo' not in field allowlist</code> — command not in ALLOWED_BASES; use <code>help</code> or extend allowlist in <code>field-gnu-terminal.py</code></li>
+<li><code>cd: outside field roots</code> — cwd must stay under KILROY_ROOT + SG_ROOT</li>
+<li><code>truth module unavailable</code> — ensure <code>lib/field-ironclad-truth.py</code> present; run plate meld</li>
+<li><code>discern module unavailable</code> — <code>lib/field-stress-terror-discern.py</code> missing</li>
+<li>Panel 503 on API — stack not up; start <code>AML_BUILD=0 bash scripts/impl/start-field-stack.sh</code></li>
+<li>Themes empty — check <code>data/ammoos-themes-doctrine.json</code></li>
+<li>GW-BASIC — <code>coming_soon</code>; CHIPS lane not wired yet</li>
+<li>Slow API — check sovereign-time; ≥800ms logs threat witness</li>
+</ul>
+<h3>14.2 Wiki / Pages</h3>
+<ul>
+<li><strong>Full manual 404</strong> — run <code>python3 scripts/build-site.py</code> then <code>verify-gnu-wiki-manual.py</code></li>
+<li><strong>Wiki index missing link</strong> — re-run <code>forge-gnu-wiki-manual.py</code> (preserves <code>eol-terminal-full-manual.md</code>)</li>
+<li><strong>Hostess7 mirror stale</strong> — <code>./Hostess7.sh pages-publish</code> rebuilds <code>docs/gnueol-terminal/</code></li>
+<li><strong>github.com slow</strong> — use Pages mirror URLs in §2; <code>pages-github-legacy-wire.js</code> on Hostess7</li>
+</ul>
+<h3>14.3 DNS / legacy connect</h3>
+<ul>
+<li><code>takeover_phase: observing</code> — run <code>./scripts/legacy-connect-primary.sh</code> (needs Truth DNS healthy)</li>
+<li><code>truth_up: false</code> — port 53 needs root or <code>CAP_NET_BIND_SERVICE</code>; check <code>field-dns-serve.log</code></li>
+<li>Dreamcast BBA no DNS — confirm DHCP option 6 is queen LAN IP (<code>192.168.47.1</code>), not <code>127.0.0.1</code></li>
+<li>Dreamcast dial-up — check serial device in <code>field-legacy-connect</code> panel; use generated <code>dreamcast-modem.peer</code></li>
+<li><code>DNS_DRIFT_THREAT</code> — run <code>./scripts/dns-clean-tables.sh clean</code> (not <code>clear</code> unless you know)</li>
+</ul>
+<h3>14.4 Verify before you claim done</h3>
+<div class="code-block"><pre>
+cd GNUEOLTerminal
+python3 scripts/verify-gnu-wiki-manual.py &amp;&amp; echo OK
+</pre></div>
+<p>Exit <code>0</code> means: source manual, built HTML, index link, 22 ft-chapters, and topic needles all present.</p>
+<h2 id="15-hostess7-stack-update-operator">15. Hostess7 stack update (operator)</h2>
+<p>EOL Terminal rides the <strong>Hostess7 Field stack</strong>. Update order:</p>
+<div class="code-block"><pre>
+# 1 — Truth DNS before any git push (sovereign path)
+./scripts/github-unflake.sh audit --apply
+
+# 2 — Legacy open + secured primary (Dreamcast · retro LAN welcome)
+./scripts/legacy-connect-primary.sh
+
+# 3 — Full Hostess7 Pages surfaces (includes GNUEOL wiki mirror)
+cd Hostess7 &amp;&amp; ./Hostess7.sh pages-publish
+
+# 4 — Source repo push (when ready)
+./Hostess7.sh github-secure publish
+# or from repo root:
+bash scripts/publish-hostess7-github.sh --push
+</pre></div>
+<p><strong>Pages mirrors after publish:</strong></p>
+<table class="book-table">
+<tr><td>Surface</td><td>URL</td></tr>
+<p>|---------|-----|</p>
+<tr><th>Hostess7 desktop</th><th>https://zacharygeurts.github.io/Hostess7/desktop/</th></tr>
+<table class="book-table">
+<tr><td>GNUEOL textbook</td><td>https://zacharygeurts.github.io/GNUEOLTerminal/</td></tr>
+<tr><td>**This wiki**</td><td>https://zacharygeurts.github.io/GNUEOLTerminal/wiki/</td></tr>
+<tr><td>GNUEOL on H7 mirror</td><td>https://zacharygeurts.github.io/Hostess7/gnueol-terminal/wiki/</td></tr>
+<table class="book-table">
+<tr><td>EOL Code panel</td><td>https://zacharygeurts.github.io/Hostess7/eol-code/</td></tr>
+<tr><td>Botnet DNS/DHCP</td><td>`/api/field-botnet-dns-dhcp` on Hostess7 Pages</td></tr>
+<p><code>hostess7_pages_surfaces_build.py</code> runs <code>forge-gnu-wiki-manual.py</code> + <code>build-site.py</code> before copying <code>GNUEOLTerminal/docs</code> → <code>Hostess7/docs/gnueol-terminal/</code>.</p>
+<h2 id="16-legacy-open-secured-dns-dhcp-dreamcast">16. Legacy open + secured (DNS · DHCP · Dreamcast)</h2>
+<p><strong>Forever policy:</strong> modern stack goes <strong>primary</strong>; retro gear keeps <strong>open ears</strong> through the <strong>secured gatekeeper</strong>.</p>
+<table class="book-table">
+<tr><td>Role</td><td>Authority</td></tr>
+<p>|------|-----------|</p>
+<tr><th>GitHub</th><th>Control-plane tables + doctrine (120s sync)</th></tr>
+<table class="book-table">
+<tr><td>`field-dns.py`</td><td>Truth resolver @ `127.0.0.1:53` (RFC 1035 classic for retro)</td></tr>
+<tr><td>`field-dhcp.py`</td><td>Leases; retro pool `192.168.47.100–150` for Sega OUIs</td></tr>
+<tr><td>Dreamcast BBA DNS</td><td>Queen LAN `192.168.47.1` (not loopback — console cannot use 127.0.0.1)</td></tr>
+<table class="book-table">
+<tr><td>Dreamcast dial-up</td><td>PPP peer `.nexus-state/dreamcast-modem.peer` · `pppd call dreamcast-modem`</td></tr>
+<p><strong>Operator commands:</strong></p>
+<div class="code-block"><pre>
+./scripts/legacy-connect-primary.sh
+python3 lib/field-legacy-connect.py json
+python3 lib/field-dns-drift-threat.py servers
+./scripts/dns-clean-tables.sh clean
+</pre></div>
+<p><strong>APIs:</strong> <code>/api/field-legacy-connect</code> · <code>/api/field-legacy-connect-primary</code> · <code>/api/field-dns-drift-threat</code></p>
+<p><strong>Terminal wiki command</strong> still prints GNUEOL URLs; DNS/DHCP status is on Hostess7 panel APIs when the stack is up.</p>
+<h2 id="17-build-publish-wiki">17. Build &amp; publish wiki</h2>
+<p>From <code>GNUEOLTerminal/</code>:</p>
+<div class="code-block"><pre>
+python3 scripts/forge-gnu-wiki-manual.py   # wiki/*.md (preserves eol-terminal-full-manual.md)
+python3 scripts/forge-book.py              # textbook chapters
+python3 scripts/build-site.py              # markdown → docs/*.html
+python3 scripts/verify-gnu-wiki-manual.py  # must pass before publish
+bash scripts/publish-github-wiki.sh      # github.com/.../GNUEOLTerminal/wiki
+bash ../scripts/publish-gnueol-terminal-github.sh --push
+</pre></div>
+<p><strong>Verify checklist</strong> (<code>verify-gnu-wiki-manual.py</code>):</p>
+<ul>
+<li><code>wiki/eol-terminal-full-manual.md</code> exists · ≥2000 words · sections 1–17</li>
+<li><code>docs/wiki/eol-terminal-full-manual.html</code> built</li>
+<li><code>docs/wiki/index.html</code> links to full manual</li>
+<li>Field Technology chapters <code>ft-ch01</code> … <code>ft-ch22</code> present</li>
+<li>Hostess7 mirror path documented in manual §14</li>
+</ul>
+<h2 id="18-license-dedication">18. License &amp; dedication</h2>
+<p><strong>GPL-3.0-or-later</strong> when vendored from NewLatest.</p>
+<p>Dedicated to <strong>Richard Matthew Stallman</strong> (<code>rms</code>, GitHub id <code>10550344</code>). Identity verify: <code>lib/field-gnu-identity-verify.py</code> pins <code>gnu.org</code> TLS.</p>
+<p>---</p>
+<p><strong>Repo:</strong> https://github.com/ZacharyGeurts/GNUEOLTerminal · <strong>Operator:</strong> ZacharyGeurts · Hostess7 Field Stack</p>
+<p>---</p>
+<p>*This manual is the canonical operator entry for the Classic Schooler wiki. When in doubt: run <code>verify-gnu-wiki-manual.py</code>, read stderr, then <code>wiki</code> from the terminal. The book prose may impersonate RMS; the verify script does not — it only checks files that exist on disk and links that resolve in <code>docs/wiki/</code>.*</p></main>
+  <footer class="site-foot"><p>GNU EOL Terminal — Field Tech Textbook · Grok impersonating Richard Stallman</p></footer>
+</body></html>

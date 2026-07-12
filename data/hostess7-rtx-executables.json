@@ -1,0 +1,100 @@
+{
+  "schema": "hostess7-rtx-executables/v2",
+  "version": "2.0.7",
+  "tag": "v2.0.7",
+  "product": "Hostess7 RTX Executables",
+  "statement": "RTX-capable platform binaries and bootstrap kits — Queen browser shell, AMOURANTHRTX field die, field engine.",
+  "requires_rtx_gpu_on_build": false,
+  "rtx_support": {
+    "nvidia_rtx": true,
+    "intel_arc_le": true,
+    "amd": true,
+    "profile": "queen_rtx",
+    "doctrine": "Queen/data/field-rtx-sovereign.json",
+    "gate_override": "G16_RTX_GATE_FORCE=1"
+  },
+  "executables": [
+    {
+      "id": "queen-browser",
+      "label": "Queen Browser (RTX shell)",
+      "port": 9481,
+      "required": true,
+      "windows_name": "queen-browser.exe"
+    },
+    {
+      "id": "amouranth_engine",
+      "label": "AMOURANTHRTX field engine",
+      "required": false,
+      "windows_name": "amouranth_engine.exe"
+    },
+    {
+      "id": "AMOURANTHRTX",
+      "label": "AMOURANTHRTX Vulkan field die",
+      "required": false,
+      "windows_name": "AMOURANTHRTX.exe"
+    }
+  ],
+  "platforms": [
+    {
+      "id": "linux-gnu-x86_64",
+      "os": "linux",
+      "arch": "x86_64",
+      "format": "tar.gz",
+      "bin_subdir": "Linux",
+      "rtx_tier": "primary",
+      "notes": "Primary — prebuilt queen-browser when available"
+    },
+    {
+      "id": "linux-gnu-aarch64",
+      "os": "linux",
+      "arch": "aarch64",
+      "format": "tar.gz",
+      "bin_subdir": "Linux-aarch64",
+      "rtx_tier": "bootstrap",
+      "notes": "ARM64 Linux — build queen_rtx on target with G16_RTX_GATE_FORCE=1"
+    },
+    {
+      "id": "windows-x86_64",
+      "os": "windows",
+      "arch": "x86_64",
+      "format": "zip",
+      "bin_subdir": "Windows",
+      "rtx_tier": "bootstrap",
+      "notes": "Native .exe when built; WSL2 runs linux-gnu-x86_64 stack"
+    },
+    {
+      "id": "darwin-aarch64",
+      "os": "darwin",
+      "arch": "aarch64",
+      "format": "tar.gz",
+      "bin_subdir": "Darwin",
+      "rtx_tier": "bootstrap",
+      "notes": "Apple Silicon — forge queen_rtx on target"
+    },
+    {
+      "id": "darwin-x86_64",
+      "os": "darwin",
+      "arch": "x86_64",
+      "format": "tar.gz",
+      "bin_subdir": "Darwin",
+      "rtx_tier": "bootstrap",
+      "notes": "Intel macOS — forge queen_rtx on target"
+    },
+    {
+      "id": "freebsd-amd64",
+      "os": "freebsd",
+      "arch": "amd64",
+      "format": "tar.gz",
+      "bin_subdir": "FreeBSD",
+      "rtx_tier": "bootstrap",
+      "notes": "FreeBSD amd64 — verify Queen forge on target"
+    }
+  ],
+  "build": {
+    "hostess7": "./Hostess7.sh queen-field-build rtx",
+    "integrate": "./scripts/integrate-amouranthrtx.sh --build",
+    "forge": "Queen/lib/queen-forge.py run rtx",
+    "pack": "./Hostess7.sh rtx-release pack",
+    "push": "./Hostess7.sh rtx-release push"
+  }
+}

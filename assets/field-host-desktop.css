@@ -1,0 +1,378 @@
+/* Host desktop — wallpaper, program grid, OS theme shells */
+
+:root {
+  --hd-font: system-ui, sans-serif;
+  --hd-text: #eef4ff;
+  --hd-dim: #94a3b8;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--hd-font);
+  color: var(--hd-text);
+}
+
+.hd-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hd-desktop {
+  position: relative;
+  flex: 1 1 100%;
+  width: 100%;
+  min-width: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  overflow: hidden;
+  background: #0a0806;
+}
+
+.hd-monitor:not(.hd-monitor--solo) {
+  display: none !important;
+}
+
+.hd-monitor.hd-monitor--solo {
+  position: fixed;
+  inset: 0;
+  flex: none;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+.hd-monitor.hidden {
+  display: none;
+}
+
+html:not(.nfs-taskbar-hidden) .hd-shell {
+  padding-bottom: calc(52px + env(safe-area-inset-bottom, 0));
+}
+
+html:not(.nfs-taskbar-hidden) .hd-desktop,
+html:not(.nfs-taskbar-hidden) .hd-monitor {
+  height: calc(100% - 52px - env(safe-area-inset-bottom, 0));
+}
+
+.hd-icons.hidden {
+  display: none;
+}
+
+/* Wallpapers per AmmoOS theme */
+html[data-os-theme="ammo-c2"] .hd-desktop {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 10%, rgba(0, 120, 212, 0.35), transparent 55%),
+    linear-gradient(160deg, #0a1628 0%, #1a2744 45%, #0d1117 100%);
+}
+
+html[data-os-theme="ammo-field"] .hd-desktop {
+  background:
+    radial-gradient(ellipse 90% 70% at 20% 0%, rgba(53, 132, 228, 0.28), transparent 50%),
+    linear-gradient(180deg, #241f31 0%, #1a1624 100%);
+}
+
+html[data-os-theme="ammoos"] .hd-desktop,
+html[data-os-theme="nexus-military-v8"] .hd-desktop,
+html[data-wallpaper="none"] .hd-desktop {
+  background: #0a0806;
+}
+
+html[data-os-theme="ammoos"] .hd-desktop::after,
+html[data-os-theme="nexus-military-v8"] .hd-desktop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 88% 6%, rgba(219, 112, 147, 0.08), transparent 55%),
+    radial-gradient(ellipse 80% 55% at 8% 94%, rgba(120, 72, 48, 0.12), transparent 50%);
+}
+
+html[data-os-theme="ammo-deep"] .hd-desktop {
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(61, 174, 233, 0.22), transparent),
+    linear-gradient(135deg, #1d2028 0%, #232830 100%);
+}
+
+html[data-os-theme="ammo-rose"] .hd-desktop {
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 100%, rgba(255, 120, 80, 0.2), transparent 60%),
+    linear-gradient(180deg, #2a2040 0%, #141018 50%, #0a0810 100%);
+}
+
+.hd-wall-label {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 11px;
+  color: var(--hd-dim);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.hd-icons {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 4px;
+  padding: 16px;
+  max-height: 100%;
+  overflow: auto;
+  align-items: flex-start;
+}
+
+.hd-icons--classic {
+  gap: 8px 4px;
+  padding: 18px 14px;
+  align-content: flex-start;
+}
+
+.hd-icon, .hd-icon-cartoony {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 110px;
+  min-width: 110px;
+  padding: 6px 2px;
+  border: none !important;
+  border-radius: 6px;
+  background: transparent;
+  color: #e0f0ff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+  text-align: center;
+  line-height: 1.1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  touch-action: manipulation;
+}
+
+.hd-icon-label {
+  font-size: 11px;
+  color: #e8f4ff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  margin-top: 1px;
+  max-width: 104px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.hd-icon-pin {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #c8e6c9;
+  font-size: 10px;
+  line-height: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.hd-icon:hover .hd-icon-pin,
+.hd-icon.pinned .hd-icon-pin,
+.hd-icon:focus-within .hd-icon-pin {
+  opacity: 1;
+}
+
+.hd-icon.pinned .hd-icon-pin {
+  color: #87cf3e;
+  background: rgba(20, 40, 20, 0.55);
+}
+
+.hd-icon:hover,
+.hd-icon.selected,
+.hd-icon-cartoony:hover,
+.hd-icon-cartoony.selected {
+  background: rgba(120, 72, 48, 0.22) !important;
+  outline: 1px dotted rgba(219, 112, 147, 0.45);
+}
+
+.hd-icon--layer0 .hd-icon-label::after {
+  content: " L0";
+  font-size: 9px;
+  color: rgba(219, 112, 147, 0.85);
+}
+
+.hd-icon--folder .hd-icon-glyph::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  right: 6px;
+  width: 14px;
+  height: 11px;
+  background: rgba(120, 72, 48, 0.75);
+  border: 1px solid rgba(219, 112, 147, 0.35);
+  border-radius: 2px 2px 0 0;
+  pointer-events: none;
+}
+
+.hd-folder-pop {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100010;
+  min-width: 280px;
+  max-width: min(92vw, 520px);
+  padding: 12px 14px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(120, 72, 48, 0.55);
+  background: rgba(12, 10, 8, 0.96);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+  color: #f0e6dc;
+}
+
+.hd-folder-pop.open { display: block; }
+
+.hd-folder-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.hd-folder-close {
+  border: none;
+  background: transparent;
+  color: #dbb8a8;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.hd-folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 8px;
+}
+
+.hd-folder-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #f0e6dc;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.hd-folder-item:hover {
+  background: rgba(120, 72, 48, 0.28);
+}
+
+.hd-icon-cartoony > div {
+  font-size: 82px !important;
+  width: 96px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: none;
+  text-shadow: 0 0 4px rgba(0,0,0,0.7);
+}
+
+.hd-icon img, .hd-icon span[style*="font-size"] {
+  width: 96px;
+  height: 88px;
+  object-fit: contain;
+  font-size: 82px;
+  line-height: 1;
+}
+
+.hd-icon-live-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.hd-app-icon--live {
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px rgba(255, 100, 140, 0.45), 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.hd-live-badge {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  animation: hd-live-blink 1.5s ease-in-out infinite;
+}
+
+@keyframes hd-live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
+}
+
+.hd-icon-fallback {
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 48px;
+}
+
+.hd-icon span {
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.hd-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  color: var(--hd-dim);
+  z-index: 100;
+}
+
+.hd-loading.hidden { display: none; }
+
+html[data-os-theme="macos"] .hd-icons {
+  display: none;
+}
+
+html[data-os-theme="macos"] .hd-wall-label::after {
+  content: " — open Launchpad from the dock";
+}

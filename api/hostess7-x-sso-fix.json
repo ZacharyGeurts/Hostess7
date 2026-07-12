@@ -1,0 +1,179 @@
+{
+  "ok": true,
+  "schema": "hostess7-x-sso-fix/v2",
+  "updated": "2026-07-06T04:34:17Z",
+  "motto": "Clean login lane for us and everyone. No stuck modals. No middlemen. TLS-only SSO.",
+  "title": "X login — clean and secure for everyone",
+  "broken_pattern": {
+    "url_paths": [
+      "/onboarding/web/sso",
+      "/i/onboarding/web/sso",
+      "/i/jf/onboarding/web/sso"
+    ],
+    "symptoms": [
+      "data-testid=mask dark overlay blocks login buttons underneath",
+      "fixed black/gray div covers Continue with Google/Apple/phone",
+      "login form loads but pointer-events blocked by mask",
+      "role=dialog aria-modal with empty jetfuel-style-root"
+    ],
+    "fix": "kill_overlay_keep_login_form"
+  },
+  "clean_login": {
+    "primary": "https://x.com/i/flow/login",
+    "google_sso": "https://x.com/i/flow/login?provider=google",
+    "apple_sso": "https://x.com/i/flow/login?provider=apple",
+    "never_use": [
+      "https://x.com/i/jf/onboarding/web/sso?input_flow_data=..."
+    ],
+    "note": "Broken Jetfuel SSO URLs redirect to /i/flow/login — canonical clean entry for everyone"
+  },
+  "security": {
+    "tls_only": true,
+    "no_proxy_injection": true,
+    "system_ca_only": true,
+    "block_phishing_hosts": true,
+    "allowed_login_hosts": [
+      "x.com",
+      "twitter.com",
+      "api.x.com",
+      "accounts.google.com",
+      "googleapis.com",
+      "ssl.gstatic.com",
+      "www.gstatic.com",
+      "oauth.googleusercontent.com"
+    ],
+    "never_block_during_login": [
+      "accounts.google.com",
+      "googleapis.com",
+      "oauth.googleusercontent.com",
+      "ssl.gstatic.com",
+      "www.gstatic.com",
+      "api.x.com",
+      "abs.twimg.com",
+      "pbs.twimg.com"
+    ],
+    "gone_during_login": [
+      "ads-twitter.com",
+      "t.co",
+      "syndication.twimg.com"
+    ]
+  },
+  "sso_allow": [
+    {
+      "host": "x.com",
+      "paths": [
+        "/i/flow/login",
+        "/i/jf/onboarding",
+        "/i/api"
+      ],
+      "stars": 5
+    },
+    {
+      "host": "api.x.com",
+      "paths": [
+        "/1.1/onboarding",
+        "/graphql"
+      ],
+      "stars": 5
+    },
+    {
+      "host": "accounts.google.com",
+      "stars": 5
+    },
+    {
+      "host": "googleapis.com",
+      "stars": 5
+    },
+    {
+      "host": "oauth.googleusercontent.com",
+      "stars": 5
+    },
+    {
+      "host": "ssl.gstatic.com",
+      "stars": 5
+    },
+    {
+      "host": "www.gstatic.com",
+      "stars": 5
+    }
+  ],
+  "never_block_during_sso": [
+    "accounts.google.com",
+    "googleapis.com",
+    "oauth.googleusercontent.com",
+    "ssl.gstatic.com",
+    "www.gstatic.com",
+    "api.x.com",
+    "abs.twimg.com",
+    "pbs.twimg.com"
+  ],
+  "honorability": {
+    "ok": true,
+    "patched": [
+      "accounts.google.com",
+      "googleapis.com",
+      "oauth.googleusercontent.com",
+      "ssl.gstatic.com",
+      "www.gstatic.com"
+    ]
+  },
+  "url_kill_allow": {
+    "ok": true,
+    "added": []
+  },
+  "probes": [
+    {
+      "lane": "x_clean_login",
+      "url": "https://x.com/i/flow/login",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://x.com/i/flow/login"
+    },
+    {
+      "lane": "x_google_login",
+      "url": "https://x.com/i/flow/login?provider=google",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://x.com/i/flow/login?provider=google"
+    },
+    {
+      "lane": "google_accounts",
+      "url": "https://accounts.google.com/",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&dsh=S-197638599%3A1783312455880816&followup=https%3A%2F%2Faccounts.google.com%2F&passive=1209600&flowName=WebLiteSignIn&flowEntry=ServiceLogin&ifkv=AcDsRvwnjTd-9vrnk_P9QkYwVcoNkPl7a6sMUo6Tl5ePaW1pofgnQiV48gO6u3YwpxiAljH4xiJbeA"
+    },
+    {
+      "lane": "google_apis",
+      "url": "https://www.googleapis.com/",
+      "ok": false,
+      "status": 404
+    }
+  ],
+  "probes_ok": 3,
+  "probes_total": 4,
+  "login_ready": true,
+  "client_repair": {
+    "module": "Hostess7/docs/assets/x-jetfuel-sso-fix.js",
+    "early_redirect": true,
+    "fallback_login": "https://x.com/i/flow/login",
+    "hosted": "https://zacharygeurts.github.io/Hostess7/x-login/",
+    "css": "/* hostess7-x-login-fix — kill overlay bullshit, keep login form */\nhtml[data-x-login-killed=\"1\"] [data-testid=\"mask\"],\nhtml[data-x-login-killed=\"1\"] [role=\"dialog\"][aria-modal=\"true\"]:not(:has(button, input, iframe)),\nhtml[data-x-login-killed=\"1\"] [data-x-overlay-killed=\"1\"],\nhtml[data-x-login-killed=\"1\"] .jetfuel-style-root:empty {\n  display: none !important;\n  pointer-events: none !important;\n  opacity: 0 !important;\n  visibility: hidden !important;\n}\nhtml[data-x-login-killed=\"1\"] body {\n  overflow: auto !important;\n  pointer-events: auto !important;\n}\niframe[src*=\"accounts.google\"], iframe[src*=\"googleapis\"] {\n  display: block !important;\n  visibility: visible !important;\n  pointer-events: auto !important;\n}",
+    "script": "https://zacharygeurts.github.io/Hostess7/assets/x-jetfuel-sso-fix.js",
+    "detect": {
+      "broken_sso": "/i/jf/onboarding/web/sso",
+      "mask": "[data-testid=\"mask\"]",
+      "dialog": "[role=\"dialog\"][aria-modal=\"true\"]"
+    }
+  },
+  "hosted": {
+    "login": "https://zacharygeurts.github.io/Hostess7/x-login/",
+    "fix": "https://zacharygeurts.github.io/Hostess7/x-sso-fix/"
+  },
+  "for_everyone": true,
+  "witness": {
+    "ok": true,
+    "detail": "X login clean and secure — lanes open, early redirect armed"
+  },
+  "api": "/api/hostess7-x-sso-fix"
+}

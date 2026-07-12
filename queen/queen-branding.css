@@ -1,0 +1,300 @@
+/* Queen Browser 2026 — black · emerald · rose undertones (local assets only) */
+body[data-queen-surface="browser"] {
+  --qb-void: #010302;
+  --qb-panel: #08100c;
+  --qb-elevated: #0c1812;
+  --qb-border: #1a4d32;
+  --qb-emerald: #22c55e;
+  --qb-emerald-glow: #3ecf8e;
+  --qb-emerald-dim: #14532d;
+  --qb-rose: #eb488c;
+  --qb-rose-soft: #f472b6;
+  --qb-rose-tinge: rgba(235, 72, 140, 0.14);
+  --qb-accent: #3ecf8e;
+  --qb-text: #e8f2ea;
+  --qb-dim: #6b9a7a;
+}
+
+body[data-queen-surface="browser"].qw-browser-shell {
+  background:
+    radial-gradient(ellipse 100% 70% at 92% 4%, var(--qb-rose-tinge), transparent 42%),
+    radial-gradient(ellipse 80% 55% at 4% 96%, rgba(34, 197, 94, 0.1), transparent 48%),
+    linear-gradient(165deg, #010302 0%, #040806 50%, #020403 100%);
+}
+
+body[data-queen-surface="browser"] .qb-chrome {
+  background: linear-gradient(0deg, #0a120e 0%, #050806 100%) !important;
+  border-top: 1px solid var(--qb-border) !important;
+  border-bottom: none !important;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(244, 114, 182, 0.12) !important;
+}
+
+body[data-queen-surface="browser"].qw-chrome-minimized .qb-queen-crown-egg {
+  right: 34px;
+}
+
+/* Plated field viewport — see queen-field-plate.css */
+body[data-queen-surface="browser"] .qb-viewport {
+  position: relative;
+}
+
+body[data-queen-surface="browser"] .qb-brand-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--qb-emerald);
+  box-shadow:
+    0 0 0 1px rgba(235, 72, 140, 0.4),
+    0 0 14px rgba(34, 197, 94, 0.3);
+  flex-shrink: 0;
+  cursor: help;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+body[data-queen-surface="browser"] .qb-brand-avatar:hover {
+  transform: scale(1.06);
+  box-shadow:
+    0 0 0 2px rgba(244, 114, 182, 0.5),
+    0 0 18px rgba(34, 197, 94, 0.45);
+}
+
+body[data-queen-surface="browser"] .qb-brand-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 6px;
+  padding: 2px 10px 2px 2px;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  background: linear-gradient(135deg, rgba(2, 4, 3, 0.85), rgba(12, 24, 18, 0.6));
+}
+
+body[data-queen-surface="browser"] .qb-brand-strip span {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--qb-rose-soft);
+  font-weight: 600;
+}
+
+/* Humans & AI strip */
+body[data-queen-surface="browser"] .qb-humans-ai {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  padding: 4px 10px;
+  margin: 0 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  background: rgba(4, 10, 7, 0.75);
+}
+
+body[data-queen-surface="browser"] .qb-ha-who {
+  flex-shrink: 0;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 6px;
+  cursor: help;
+}
+
+body[data-queen-surface="browser"] .qb-ha-who--human {
+  color: var(--qb-rose-soft);
+  background: rgba(235, 72, 140, 0.12);
+  border: 1px solid rgba(244, 114, 182, 0.35);
+}
+
+body[data-queen-surface="browser"] .qb-ha-who--ai {
+  color: var(--qb-emerald-glow);
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(62, 207, 142, 0.35);
+}
+
+body[data-queen-surface="browser"] .qb-ha-tip {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.62rem;
+  color: var(--qb-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: help;
+}
+
+body[data-queen-surface="browser"] .qb-ha-vector {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+body[data-queen-surface="browser"] .qb-ha-pill {
+  font-size: 0.55rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--qb-border);
+  cursor: help;
+}
+
+body[data-queen-surface="browser"] .qb-ha-pill.qb-ha-human {
+  color: var(--qb-rose-soft);
+  border-color: rgba(244, 114, 182, 0.3);
+}
+
+body[data-queen-surface="browser"] .qb-ha-pill.qb-ha-ai {
+  color: var(--qb-emerald-glow);
+  border-color: rgba(62, 207, 142, 0.3);
+}
+
+body[data-queen-surface="browser"] .qb-ha-pill.qb-ha-unknown {
+  color: var(--qb-dim);
+}
+
+body[data-queen-surface="browser"] .qb-ha-help {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--qb-emerald);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 6px;
+  opacity: 0.7;
+}
+
+body[data-queen-surface="browser"] .qb-ha-help:hover {
+  opacity: 1;
+  background: rgba(34, 197, 94, 0.12);
+}
+
+/* Hidden Queen crown — nearly invisible until found */
+body[data-queen-surface="browser"] .qb-queen-crown-egg {
+  position: fixed;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2500;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.45) 0%, rgba(235, 72, 140, 0.12) 55%, transparent 72%);
+  opacity: 0.32;
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body[data-queen-surface="browser"] .qb-queen-crown-egg::after {
+  content: "♛";
+  font-size: 9px;
+  line-height: 18px;
+  display: block;
+  text-align: center;
+  color: rgba(244, 114, 182, 0.55);
+  pointer-events: none;
+}
+
+body[data-queen-surface="browser"] .qb-queen-crown-egg:hover,
+body[data-queen-surface="browser"] .qb-queen-crown-egg:focus-visible {
+  opacity: 0.95;
+  transform: scale(1.35);
+  box-shadow: 0 0 16px rgba(235, 72, 140, 0.45);
+  outline: none;
+}
+
+body[data-queen-surface="browser"] .qb-queen-crown-toast {
+  position: fixed;
+  right: 16px;
+  bottom: 28px;
+  z-index: 3000;
+  max-width: 240px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--qb-border);
+  background: linear-gradient(145deg, rgba(10, 18, 14, 0.97), rgba(4, 8, 6, 0.98));
+  color: var(--qb-text);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(244, 114, 182, 0.15);
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+body[data-queen-surface="browser"] .qb-queen-crown-toast strong {
+  color: var(--qb-rose-soft);
+}
+
+body[data-queen-surface="browser"] .qb-queen-crown-toast.qb-queen-crown-toast--show {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+body[data-queen-surface="browser"] .qb-queen-crown-toast img,
+body[data-queen-surface="browser"] .qb-queen-crown-toast a {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+body[data-queen-surface="browser"] .qb-queen-crown-toast a {
+  color: var(--qb-emerald-glow);
+}
+
+body[data-queen-surface="browser"] .qb-queen-crown-reveal .qb-viewport::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(ellipse at 80% 90%, rgba(235, 72, 140, 0.08), transparent 55%);
+  animation: qb-rose-flash 2s ease-out;
+}
+
+@keyframes qb-rose-flash {
+  0% { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+
+body[data-queen-surface="browser"] .qb-security-strip {
+  color: var(--qb-rose-soft) !important;
+  border-color: rgba(34, 197, 94, 0.35) !important;
+  background: rgba(235, 72, 140, 0.06) !important;
+}
+
+body[data-queen-surface="browser"] .qb-tab.active,
+body[data-queen-surface="browser"] .qb-tab--active {
+  border-color: var(--qb-emerald) !important;
+  box-shadow: inset 0 -2px 0 var(--qb-rose) !important;
+}
+
+body[data-queen-surface="browser"] .qb-btn--go {
+  background: linear-gradient(135deg, var(--qb-emerald-dim), var(--qb-emerald)) !important;
+  border-color: var(--qb-emerald) !important;
+  color: #ecfdf5 !important;
+}
+
+body[data-queen-surface="browser"] .qb-btn--go:hover {
+  box-shadow: 0 0 12px rgba(244, 114, 182, 0.25);
+}
+
+body[data-queen-surface="browser"] .qb-url:focus {
+  border-color: var(--qb-rose-soft) !important;
+  box-shadow: 0 0 0 2px rgba(235, 72, 140, 0.2) !important;
+}
+
+body[data-queen-surface="browser"] .qb-import-chip {
+  border-color: rgba(34, 197, 94, 0.35);
+  background: rgba(235, 72, 140, 0.04);
+}
+
+body[data-queen-surface="browser"] .qb-update-btn.qb-update-ready {
+  border-color: rgba(244, 114, 182, 0.55) !important;
+}

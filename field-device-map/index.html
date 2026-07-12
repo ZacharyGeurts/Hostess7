@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="device-map">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#060a12" />
+  <title>DeviceMap</title>
+  <link rel="stylesheet" href="/Hostess7/assets/field-device-map.css?v=1" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="dm-root">
+    <header class="dm-header">
+      <div>
+        <h1>DeviceMap</h1>
+        <p class="dm-sub">Sub-micron operator · 3D bearing &amp; distance · everyone connected · flying or grounded</p>
+      </div>
+      <div class="dm-toolbar">
+        <button type="button" id="dm-focus-op">Focus You</button>
+        <button type="button" id="dm-refresh">Refresh</button>
+      </div>
+    </header>
+    <p id="dm-status" class="dm-sub" style="padding:0 14px;margin:0;"></p>
+    <div class="dm-layout">
+      <div class="dm-canvas-wrap">
+        <div class="dm-hud" id="dm-hud">Loading device lattice…</div>
+        <canvas id="dm-canvas" aria-label="DeviceMap 3D world lattice"></canvas>
+      </div>
+      <aside class="dm-sidebar">
+        <h2>Your position</h2>
+        <div class="dm-op" id="dm-operator">—</div>
+        <h2>Devices</h2>
+        <ul class="dm-list" id="dm-device-list"></ul>
+      </aside>
+    </div>
+  </div>
+  <script type="module" src="/Hostess7/assets/field-device-map.js?v=1"></script>
+</body>
+</html>

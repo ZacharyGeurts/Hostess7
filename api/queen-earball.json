@@ -1,0 +1,3852 @@
+{
+  "schema": "queen-earball-hostess7/v1",
+  "updated": "2026-07-06T00:41:55Z",
+  "posture": "assistive",
+  "rule": "We never presume hearing loss. Confidence always in Hearing.",
+  "virtual_rule": "Since AI knows audio, it hears by virtualizing any point it wishes. Multiple ears permitted.",
+  "always": {
+    "sovereign_time": true,
+    "redundancy": true,
+    "twins": true,
+    "truth_forward": true
+  },
+  "twins": {
+    "schema": "zocr-twin-ear/v1",
+    "updated": "2026-07-06T00:41:55.579906+00:00",
+    "living": {
+      "id": "auditus",
+      "name": "Auditus",
+      "role": "Living ear \u2014 perceive, localize, stream",
+      "socket": "ear_living",
+      "live": true
+    },
+    "truth": {
+      "id": "veritas",
+      "name": "Veritas",
+      "role": "Truth ear \u2014 forward truth, reject lies, wield weapons",
+      "socket": "ear_truth",
+      "forward": true
+    },
+    "weapons_armed": true,
+    "forward_count": 13,
+    "lies_rejected": 1
+  },
+  "product": {
+    "schema": "final-ear-product/v1",
+    "product": "Final_Ear",
+    "name": "The Final Ear",
+    "version": "1.0.0",
+    "codename": "ear-stoard",
+    "license": "proprietary",
+    "repo": "https://github.com/ZacharyGeurts/Final_Ear",
+    "format": "ZOCRAM1",
+    "codec": "GAC1",
+    "rule": "We never presume hearing loss. Confidence always in Hearing.",
+    "twins": {
+      "living": "Auditus",
+      "truth": "Veritas"
+    },
+    "textbook": "docs/index.html",
+    "field_manual": "data/field-manual-index.json"
+  },
+  "final_ear_root": "/home/default/Desktop/SG/Final_Ear",
+  "hostess_root": "/home/default/Desktop/SG/NewLatest/Hostess7",
+  "hostess7": {
+    "root": "/home/default/Desktop/SG/NewLatest/Hostess7",
+    "bridge": "/home/default/Desktop/SG/NewLatest/Hostess7/scripts/field_final_ear_bridge.py",
+    "bridge_cli": "pythong scripts/field_final_ear_bridge.py listen"
+  },
+  "technology": {
+    "gac1": {
+      "schema": "zocr-gac1-status/v1",
+      "format": "ZOCRAM1",
+      "codec": "GAC1",
+      "rule": "Better than naked PCM: predictive frames, cochlear bands, sealed provenance.",
+      "beats_pcm": [
+        "Predictive + silence frames \u2014 2\u20138\u00d7 smaller than raw int16 on speech and patrol audio",
+        "Per-segment SHA256 seals + chained index \u2014 tamper evident before playback",
+        "Sovereign time + provenance weave in meta \u2014 not anonymous PCM blobs",
+        "Cochlear-safe profiles \u2014 limiter ceiling and band pack before your canal",
+        "Shannon entropy score per segment \u2014 oracle rejects camouflaged hostile frames",
+        "Binaural lane tags \u2014 L/R/HRTF metadata without AAC licensing"
+      ],
+      "profiles": [
+        "lossless",
+        "fast",
+        "binaural_safe",
+        "cochlear_safe",
+        "patrol"
+      ],
+      "extension": ".zocr",
+      "bus_slots": [
+        57,
+        58,
+        59
+      ]
+    },
+    "sovereign_time": {
+      "schema": "zocr-ear-sovereign-time/v1",
+      "always": true,
+      "enabled": true,
+      "module": "/home/default/Desktop/SG/NewLatest/lib/sovereign-time.py",
+      "sync_max_delta_ns": 500000000,
+      "rule": "Sovereign time always seals ear \u2014 monotonic witness, never pool-only NTP",
+      "nexus": {
+        "schema": "sovereign-time/v3",
+        "updated": "2026-07-02T13:19:05.405424Z",
+        "port": 9123,
+        "heartbeat_sec": 1.0,
+        "max_skew_ms": 50.0,
+        "max_freq_delta_khz": 250000,
+        "max_linear_gap_ms": 5.0,
+        "never_lose_cycle": true,
+        "immutable_linear": true,
+        "temperature_affects_linear": false,
+        "ntp_affects_linear": false,
+        "take_time_out_means": "gap or red_flag only",
+        "clock_paused": false,
+        "derived_utc": "2026-07-02T13:19:05.405452Z",
+        "linear_ns": 1782998345405473702,
+        "linear": {
+          "schema": "sovereign-linear-time/v1",
+          "sealed": true,
+          "linear_ns": 1782998345405498969,
+          "derived_utc": "2026-07-02T13:19:05.405511Z",
+          "epoch_mono_ns": 90757569656320,
+          "epoch_linear_ns": 1783053156077535786,
+          "red_flag_count": 0,
+          "gap_count": 0,
+          "red_flag_active": false,
+          "last_take_time_out": null,
+          "immutable_rule": "Nothing affects linear time; take time out = gap or red flag only",
+          "take_time_out_means": "gap or red_flag only",
+          "clock_paused": false,
+          "temperature_affects_linear": false,
+          "ntp_affects_linear": false
+        },
+        "red_flags": {
+          "schema": "sovereign-time-red-flags/v1",
+          "count": 0,
+          "red_flag_count": 0,
+          "gap_count": 0,
+          "red_flag_active": false,
+          "clock_paused": false,
+          "entries": [],
+          "ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-time-red-flags.jsonl"
+        },
+        "local_witness": {
+          "mono_ns": 35946896652564,
+          "linear_ns": 1782998345405362923,
+          "realtime_ns": 1783298515590677817,
+          "utc": "2026-07-06T00:41:55.590679Z",
+          "host": "default-X870-Pro-RS",
+          "freq_khz": {
+            "cpu0": 4988770,
+            "cpu1": 4996907,
+            "cpu10": 4952760,
+            "cpu11": 4950999,
+            "cpu12": 4986892,
+            "cpu13": 4995607,
+            "cpu14": 5039311,
+            "cpu15": 4995466,
+            "cpu16": 5034572,
+            "cpu17": 4986604,
+            "cpu18": 4947848,
+            "cpu19": 4915510,
+            "cpu2": 4995454,
+            "cpu20": 4931348,
+            "cpu21": 4967875,
+            "cpu22": 4892333,
+            "cpu23": 4983614,
+            "cpu3": 5039267,
+            "cpu4": 5039288,
+            "cpu5": 5018915,
+            "cpu6": 4913313,
+            "cpu7": 4956862,
+            "cpu8": 4956158,
+            "cpu9": 4962724
+          },
+          "freq_sum_khz": 119448397,
+          "thermal_millic": {},
+          "thermal_sum_millic": 0,
+          "micron_witness": "f4bc8f1a120fafb0",
+          "witness_only": true,
+          "affects_linear": false
+        },
+        "last_pulse": null,
+        "last_verify": null,
+        "cycle": {
+          "cycle": 0,
+          "never_lost": true,
+          "threats": 0,
+          "last_threats": [],
+          "services": {},
+          "anchor_pulse": null,
+          "anchor_verdict": null,
+          "derived_utc": "2026-07-02T13:19:05.405568Z",
+          "linear_ns": 1782998345405583819
+        },
+        "anchor": {},
+        "doctrine": "/home/default/Desktop/SG/NewLatest/data/sovereign-time-doctrine.json",
+        "receipt_log": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-time-receipts.jsonl",
+        "red_flag_ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-time-red-flags.jsonl",
+        "cycle_ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-cycle-ledger.jsonl",
+        "declaration": "Time is linear.",
+        "ironclad_citation": "ironclad:time:1",
+        "posture": "Time is linear \u2014 sovereign clock immutable; take time out = gap or red flag; temperature changes nothing on the timer"
+      },
+      "ear_last": {
+        "schema": "sovereign-time/v2",
+        "pulse": 9,
+        "chain": "final_ear:neural_analyze",
+        "host": "default-X870-Pro-RS",
+        "mono_ns": 13167883483368,
+        "realtime_ns": 1782510202435085680,
+        "utc": "2026-06-26T21:43:22.436035Z",
+        "freq_sum_khz": 116725611,
+        "micron_witness": "abc682b5496cbc54",
+        "entropy_tag": "6064cca81796",
+        "sig": "c08f8cb1cf9add960ab05ad7b62b834a86e22dc5292532d70314e073e38d59b9"
+      },
+      "verdict": "USER_OK",
+      "ok": true,
+      "sealed_mono_ns": 13167883483368,
+      "micron_witness": "abc682b5496cbc54"
+    },
+    "secure_path": {
+      "schema": "queen-ear-secure-path/v1",
+      "pipeline": "seal \u2192 sync \u2192 signal_intel \u2192 truth \u2192 ear_nn \u2192 eye_nn \u2192 quorum",
+      "api_actions": [
+        "secure_identify",
+        "eye_ear_fusion",
+        "identify",
+        "signal_intel",
+        "sovereign_time",
+        "gac1",
+        "pack_audio",
+        "verify_audio",
+        "sense_all",
+        "desktop_audio",
+        "sound_track",
+        "sound_registry"
+      ],
+      "hostess_bridge": "Hostess7/scripts/field_final_ear_bridge.py"
+    },
+    "sound_tracker": {
+      "ok": true,
+      "schema": "zocr-sound-tracker-status/v1",
+      "updated": "2026-06-25T20:28:19.839060+00:00",
+      "doctrine": "Every sound carries current GPS heading and source. Predict motion; pursue or avoid without overriding truth priorities.",
+      "posture": {
+        "zero_cost": true,
+        "never_fail": true,
+        "local_first": true,
+        "paid_apis": false
+      },
+      "operator_gps": {
+        "ok": true,
+        "lat": 45.7452,
+        "lon": -87.0646,
+        "heading_deg": 0.0,
+        "source": "egress_geo+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies"
+      },
+      "track_count": 28,
+      "tracks": [
+        {
+          "sound_id": "snd_aba37bc666b0",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_df716ed4a24c",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_de52d50b5fea",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_135744771a02",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_1b523d8266c7",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_60090ef34f67",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_8ce7ac895ba7",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_bff3fee58e6d",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_7f0ce649e015",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_87e421e4bc88",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_2e6445b45207",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_9f3655818481",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_96f9b79fa694",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_a3d616fcfa39",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_d0328698e4c2",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_284154091329",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_012bd9f851ad",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_7114b126d85b",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_ec69a6a48e74",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_b03195d0dbd9",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_e13ad16dc138",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_689cf49b06c4",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_6ecf2bfc60a9",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_87298938e9a3",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        }
+      ],
+      "policies": [
+        "hold",
+        "chase",
+        "avoid",
+        "orbit",
+        "shadow"
+      ],
+      "ingress_lanes": [
+        {
+          "id": "desktop",
+          "label": "Desktop audio (PipeWire/Pulse)",
+          "engine": "zocr_desktop_audio.py"
+        },
+        {
+          "id": "antenna",
+          "label": "Field antenna OTA",
+          "panel": "field-antenna-panel.json"
+        },
+        {
+          "id": "virtual_ear",
+          "label": "Virtual ear mechanisms",
+          "engine": "zocr_virtual_ear.py"
+        },
+        {
+          "id": "mic",
+          "label": "Hostess microphone",
+          "bridge": "field_final_ear_bridge.py"
+        },
+        {
+          "id": "rf_demod",
+          "label": "RF demod audio lane",
+          "panel": "field-rf-panel.json"
+        }
+      ],
+      "registry": {
+        "total": 28,
+        "active": 28,
+        "lanes": {
+          "desktop": 1,
+          "virtual_ear": 27
+        }
+      },
+      "never_fail": true,
+      "zero_cost": true
+    }
+  },
+  "final_ear": {
+    "schema": "zocr-final-ear-status/v1",
+    "updated": "2026-07-06T00:41:55.579621+00:00",
+    "title": "The Final Ear",
+    "rule": "We never presume hearing loss. Confidence always in Hearing.",
+    "twins": {
+      "living": "Auditus \u2014 the ear that lives; perceive, localize, stream live",
+      "truth": "Veritas \u2014 the ear that talks truth; rejects ventriloquism, guards lies, wields entity weapons"
+    },
+    "active_mode": "dishes",
+    "modes": [
+      "war",
+      "person_present",
+      "dishes",
+      "patrol",
+      "preserve"
+    ],
+    "preservation": {
+      "biological": [
+        "No assault burst \u2014 limiter before cochlea; ultrasonic/infrasonic trip stops harmful paths",
+        "Kill switch protects ears before playback \u2014 trip stops hostile waveforms",
+        "Weaponized clipping/white-noise frames rejected before they reach you",
+        "Hold vault never blanks audio stream \u2014 you never stare into void noise",
+        "On-demand listen \u2014 stream is opt-in; dishes do not need 48 kHz on your cochlea"
+      ],
+      "field": [
+        "ZOCRAM1 fast path \u2014 machine hears; your ear rests unless you choose enhance",
+        "Pattern weave proves sample origin \u2014 foreign phantom jam fails over, not into your canal",
+        "WRDT seals + hash chain \u2014 tamper evident before trust",
+        "Multi-source cascade \u2014 speaker jammed, engine grab still feeds the rig",
+        "Sub-micron fabric scale for detail without burning joules or hair cells"
+      ],
+      "universal_law": "We never presume hearing loss. Confidence always in Hearing.",
+      "confidence_in_hearing": [
+        "Hearing is the default truth \u2014 interference is the exception we reject",
+        "Threats failover; confidence does not drop",
+        "Hold and vault affirm Hearing \u2014 we do not announce defeat",
+        "Kill switch stops hostile paths \u2014 not belief in listening"
+      ],
+      "sovereign_time": [
+        "Sovereign time always seals ear \u2014 monotonic pulse before status, arm, perceive",
+        "Micron witness binds mono_ns to silicon freq \u2014 SQUIDGIE on RTC tamper",
+        "Never pool-only NTP for audio receipts \u2014 operator pulse or local seal",
+        "sealed_ts on every ear_status and final_ear_status tick"
+      ],
+      "irtn": [
+        "Interwoven redundancies trust network \u2014 Hostess7 corroborates ZOCR audio",
+        "No single path owns truth \u2014 woven paths: live, offense, trust, egress, assist, time",
+        "Queen gates + NEXUS trust + WRDT + code seal + sovereign time = quorum",
+        "Audio lane in Hostess7 neural stack echoes field frames",
+        "redundancy always reported \u2014 woven_paths on every earball arm and verify"
+      ],
+      "offense": [
+        "Defense of hearing requires offense",
+        "Reject hostile waveforms before vault \u2014 do not merely endure them",
+        "Pattern strike on foreign weave; provenance mismatch trips audio",
+        "Threat streak preempts RTX \u2014 take engine truth before jammed speaker",
+        "Vigilance patrols; offense watches while defense rests"
+      ]
+    },
+    "ear": {
+      "schema": "zocr-ear-status/v1",
+      "updated": "2026-07-06T00:41:55.579706+00:00",
+      "engine": "cochlea_v1",
+      "active_profile": "human_binaural",
+      "active_mode": "dishes",
+      "profiles": [
+        {
+          "id": "bone_conduction",
+          "label": "Bone conduction",
+          "class": "obscure",
+          "channels": 2,
+          "equipment": [
+            "mastoid_driver"
+          ],
+          "teach": "Skull path \u2014 correlate with facial SDF when person present."
+        },
+        {
+          "id": "boundary",
+          "label": "Boundary / PZM",
+          "class": "room",
+          "channels": 1,
+          "equipment": [
+            "phase_coherent_plate"
+          ],
+          "teach": "Room summing \u2014 arrangement map from early reflections."
+        },
+        {
+          "id": "coil_induction",
+          "label": "Induction coil",
+          "class": "obscure",
+          "channels": 1,
+          "equipment": [
+            "telecoil",
+            "loop"
+          ],
+          "teach": "Magnetic field audio \u2014 bypass air ventriloquism when loop authenticated."
+        },
+        {
+          "id": "contact_mic",
+          "label": "Contact / piezo",
+          "class": "obscure",
+          "channels": 1,
+          "equipment": [
+            "piezo",
+            "structure_borne"
+          ],
+          "teach": "Structure-borne \u2014 existence correlation via vibration path, not air phantom."
+        },
+        {
+          "id": "headset_stereo",
+          "label": "Headset stereo",
+          "class": "consumer",
+          "channels": 2,
+          "equipment": [
+            "closed_back",
+            "usb_audio"
+          ],
+          "teach": "Near-field monitoring \u2014 ventriloquism checks require mouth-source correlation."
+        },
+        {
+          "id": "human_binaural",
+          "label": "Human binaural",
+          "class": "mammal",
+          "channels": 2,
+          "equipment": [
+            "pinna",
+            "cochlea"
+          ],
+          "teach": "Baseline human hearing \u2014 ITD/ILD for bearing, level for distance hint."
+        },
+        {
+          "id": "hydrophone",
+          "label": "Hydrophone",
+          "class": "obscure",
+          "channels": 1,
+          "equipment": [
+            "underwater",
+            "piezo_sphere"
+          ],
+          "teach": "Fluid medium \u2014 bearing via array or towed geometry."
+        },
+        {
+          "id": "infrasound",
+          "label": "Infrasound sensor",
+          "class": "obscure",
+          "channels": 1,
+          "equipment": [
+            "pressure_port",
+            "sealed_chamber"
+          ],
+          "teach": "Sub-bass assault detection \u2014 trip before cochlear fatigue."
+        },
+        {
+          "id": "lavalier",
+          "label": "Lavalier / lav",
+          "class": "body",
+          "channels": 1,
+          "equipment": [
+            "omni_capsule",
+            "windscreen"
+          ],
+          "teach": "Close talker \u2014 truth filter binds voice to visible mouth when camera present."
+        },
+        {
+          "id": "mems_array",
+          "label": "MEMS mic array",
+          "class": "array",
+          "channels": 4,
+          "equipment": [
+            "beamformer",
+            "doa"
+          ],
+          "teach": "DOA + arrangement \u2014 truth filter rejects incoherent phantom beams."
+        },
+        {
+          "id": "parabolic",
+          "label": "Parabolic dish",
+          "class": "directional",
+          "channels": 1,
+          "equipment": [
+            "dish_reflector"
+          ],
+          "teach": "Long-range point \u2014 distance from SNR curve + atmospheric model."
+        },
+        {
+          "id": "ribbon_velocity",
+          "label": "Ribbon velocity",
+          "class": "studio",
+          "channels": 1,
+          "equipment": [
+            "figure8_ribbon"
+          ],
+          "teach": "Figure-8 pattern \u2014 arrangement from nulls and side rejection."
+        },
+        {
+          "id": "shotgun",
+          "label": "Shotgun mic",
+          "class": "directional",
+          "channels": 1,
+          "equipment": [
+            "interference_tube"
+          ],
+          "teach": "Narrow lobe \u2014 point and distance from level + direct/reverb ratio."
+        },
+        {
+          "id": "ultrasonic",
+          "label": "Ultrasonic mic",
+          "class": "obscure",
+          "channels": 1,
+          "equipment": [
+            "mems_ultrasonic"
+          ],
+          "teach": "Hostile ultrasonic jam \u2014 offense rejects before biological exposure."
+        },
+        {
+          "id": "vintage_carbon",
+          "label": "Vintage carbon mic",
+          "class": "obscure",
+          "channels": 1,
+          "equipment": [
+            "carbon_granule"
+          ],
+          "teach": "Obscure heritage path \u2014 truth filter normalizes bandwidth before compare."
+        }
+      ],
+      "profile_count": 15,
+      "sample_rate_hz": 48000
+    },
+    "truth_filters": {
+      "schema": "zocr-ear-truth-status/v1",
+      "updated": "2026-07-06T00:41:55.570489+00:00",
+      "rule": "Do not be deceived by multiple sounds or ventriloquist tricks \u2014 corroborate source, bearing, and existence.",
+      "filters": [
+        "ventriloquism",
+        "multi_source_decoherence",
+        "hostile_assault",
+        "existence_correlation",
+        "speaker_spoof",
+        "encoded_signal",
+        "mixed_interference"
+      ],
+      "lie_markers": [
+        "ventriloquism",
+        "phantom_voice",
+        "incoherent_beam",
+        "assault_burst",
+        "foreign_weave",
+        "mouth_mismatch",
+        "ghost_duplicate"
+      ],
+      "vigilance": {
+        "rule": "Be vigilant \u2014 truth filters always forward; never trust a single speaker path.",
+        "woven_minimum": 2
+      }
+    },
+    "redundancy": {
+      "ok": true,
+      "woven_paths": 4,
+      "paths": [
+        {
+          "id": "audio_ingest",
+          "woven": true
+        },
+        {
+          "id": "truth_filter",
+          "woven": true
+        },
+        {
+          "id": "hostess_lane",
+          "woven": true
+        },
+        {
+          "id": "ear_stoard",
+          "woven": true
+        }
+      ]
+    },
+    "sovereign_time": {
+      "schema": "zocr-ear-sovereign-time/v1",
+      "always": true,
+      "enabled": true,
+      "module": "/home/default/Desktop/SG/NewLatest/lib/sovereign-time.py",
+      "sync_max_delta_ns": 500000000,
+      "rule": "Sovereign time always seals ear \u2014 monotonic witness, never pool-only NTP",
+      "nexus": {
+        "schema": "sovereign-time/v3",
+        "updated": "2026-07-02T13:19:05.392873Z",
+        "port": 9123,
+        "heartbeat_sec": 1.0,
+        "max_skew_ms": 50.0,
+        "max_freq_delta_khz": 250000,
+        "max_linear_gap_ms": 5.0,
+        "never_lose_cycle": true,
+        "immutable_linear": true,
+        "temperature_affects_linear": false,
+        "ntp_affects_linear": false,
+        "take_time_out_means": "gap or red_flag only",
+        "clock_paused": false,
+        "derived_utc": "2026-07-02T13:19:05.392910Z",
+        "linear_ns": 1782998345392928035,
+        "linear": {
+          "schema": "sovereign-linear-time/v1",
+          "sealed": true,
+          "linear_ns": 1782998345392953363,
+          "derived_utc": "2026-07-02T13:19:05.392966Z",
+          "epoch_mono_ns": 90757569656320,
+          "epoch_linear_ns": 1783053156077535786,
+          "red_flag_count": 0,
+          "gap_count": 0,
+          "red_flag_active": false,
+          "last_take_time_out": null,
+          "immutable_rule": "Nothing affects linear time; take time out = gap or red flag only",
+          "take_time_out_means": "gap or red_flag only",
+          "clock_paused": false,
+          "temperature_affects_linear": false,
+          "ntp_affects_linear": false
+        },
+        "red_flags": {
+          "schema": "sovereign-time-red-flags/v1",
+          "count": 0,
+          "red_flag_count": 0,
+          "gap_count": 0,
+          "red_flag_active": false,
+          "clock_paused": false,
+          "entries": [],
+          "ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-time-red-flags.jsonl"
+        },
+        "local_witness": {
+          "mono_ns": 35946883749916,
+          "linear_ns": 1782998345392803491,
+          "realtime_ns": 1783298515578118385,
+          "utc": "2026-07-06T00:41:55.578120Z",
+          "host": "default-X870-Pro-RS",
+          "freq_khz": {
+            "cpu0": 5041669,
+            "cpu1": 5087775,
+            "cpu10": 5030681,
+            "cpu11": 5001541,
+            "cpu12": 5071258,
+            "cpu13": 5009295,
+            "cpu14": 5087883,
+            "cpu15": 5055886,
+            "cpu16": 5079736,
+            "cpu17": 5154698,
+            "cpu18": 5021729,
+            "cpu19": 3923703,
+            "cpu2": 5097887,
+            "cpu20": 5075769,
+            "cpu21": 5028201,
+            "cpu22": 5031254,
+            "cpu23": 5026241,
+            "cpu3": 5087846,
+            "cpu4": 5087962,
+            "cpu5": 5082295,
+            "cpu6": 4956139,
+            "cpu7": 3364122,
+            "cpu8": 5031244,
+            "cpu9": 4948440
+          },
+          "freq_sum_khz": 118383254,
+          "thermal_millic": {},
+          "thermal_sum_millic": 0,
+          "micron_witness": "ee412a391a80aea1",
+          "witness_only": true,
+          "affects_linear": false
+        },
+        "last_pulse": null,
+        "last_verify": null,
+        "cycle": {
+          "cycle": 0,
+          "never_lost": true,
+          "threats": 0,
+          "last_threats": [],
+          "services": {},
+          "anchor_pulse": null,
+          "anchor_verdict": null,
+          "derived_utc": "2026-07-02T13:19:05.393026Z",
+          "linear_ns": 1782998345393041769
+        },
+        "anchor": {},
+        "doctrine": "/home/default/Desktop/SG/NewLatest/data/sovereign-time-doctrine.json",
+        "receipt_log": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-time-receipts.jsonl",
+        "red_flag_ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-time-red-flags.jsonl",
+        "cycle_ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-cycle-ledger.jsonl",
+        "declaration": "Time is linear.",
+        "ironclad_citation": "ironclad:time:1",
+        "posture": "Time is linear \u2014 sovereign clock immutable; take time out = gap or red flag; temperature changes nothing on the timer"
+      },
+      "ear_last": {
+        "schema": "sovereign-time/v2",
+        "pulse": 9,
+        "chain": "final_ear:neural_analyze",
+        "host": "default-X870-Pro-RS",
+        "mono_ns": 13167883483368,
+        "realtime_ns": 1782510202435085680,
+        "utc": "2026-06-26T21:43:22.436035Z",
+        "freq_sum_khz": 116725611,
+        "micron_witness": "abc682b5496cbc54",
+        "entropy_tag": "6064cca81796",
+        "sig": "c08f8cb1cf9add960ab05ad7b62b834a86e22dc5292532d70314e073e38d59b9"
+      },
+      "verdict": "USER_OK",
+      "ok": true,
+      "sealed_mono_ns": 13167883483368,
+      "micron_witness": "abc682b5496cbc54"
+    },
+    "stoard": {
+      "schema": "zocr-ear-stoard-status/v1",
+      "updated": "2026-07-06T00:41:55.572118+00:00",
+      "root": "/home/default/Desktop/SG/Final_Ear/stoard",
+      "present": true,
+      "cap_bytes": 268435456,
+      "used_bytes": 0,
+      "witness_count": 0,
+      "doctrine": "Secure, safely expanding storage for Final_Ear witness \u2014 field compiler receipts, Grok16 posture, sealed audio blobs. Append-only ledger.",
+      "zones": {
+        "witness": "/home/default/Desktop/SG/Final_Ear/stoard/witness",
+        "blobs": "/home/default/Desktop/SG/Final_Ear/stoard/blobs",
+        "compile": "/home/default/Desktop/SG/Final_Ear/stoard/compile",
+        "quarantine": "/home/default/Desktop/SG/Final_Ear/stoard/quarantine"
+      },
+      "seal_ok": false
+    },
+    "sound_tracker": {
+      "ok": true,
+      "schema": "zocr-sound-tracker-status/v1",
+      "updated": "2026-06-25T20:28:19.839060+00:00",
+      "doctrine": "Every sound carries current GPS heading and source. Predict motion; pursue or avoid without overriding truth priorities.",
+      "posture": {
+        "zero_cost": true,
+        "never_fail": true,
+        "local_first": true,
+        "paid_apis": false
+      },
+      "operator_gps": {
+        "ok": true,
+        "lat": 45.7452,
+        "lon": -87.0646,
+        "heading_deg": 0.0,
+        "source": "egress_geo+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies+census_geographies"
+      },
+      "track_count": 28,
+      "tracks": [
+        {
+          "sound_id": "snd_aba37bc666b0",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_df716ed4a24c",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_de52d50b5fea",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_135744771a02",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_1b523d8266c7",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_60090ef34f67",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_8ce7ac895ba7",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_bff3fee58e6d",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_7f0ce649e015",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_87e421e4bc88",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_2e6445b45207",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_9f3655818481",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_96f9b79fa694",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_a3d616fcfa39",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_d0328698e4c2",
+          "label": "Kinetic eardrum @ 30\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 30.0,
+          "gps_heading": {
+            "lat": 45.745216,
+            "lon": -87.064587,
+            "bearing_from_operator_deg": 30.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 30.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745216,
+            "predicted_lon": -87.064587,
+            "predicted_bearing_deg": 30.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 30.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_284154091329",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_012bd9f851ad",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_7114b126d85b",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_ec69a6a48e74",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_b03195d0dbd9",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_e13ad16dc138",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_689cf49b06c4",
+          "label": "kinetic anchor",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 0.0,
+          "gps_heading": {
+            "lat": 45.745218,
+            "lon": -87.0646,
+            "bearing_from_operator_deg": 0.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 0.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745218,
+            "predicted_lon": -87.0646,
+            "predicted_bearing_deg": 0.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 0.0,
+            "target_distance_m": 2.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_6ecf2bfc60a9",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        },
+        {
+          "sound_id": "snd_87298938e9a3",
+          "label": "Kinetic eardrum @ 120\u00b0",
+          "ingress_lane": "virtual_ear",
+          "heading_deg": 120.0,
+          "gps_heading": {
+            "lat": 45.745187,
+            "lon": -87.064567,
+            "bearing_from_operator_deg": 120.0,
+            "operator_heading_deg": 0.0
+          },
+          "motion": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0
+          },
+          "predict": {
+            "is_moving": false,
+            "direction_deg": 120.0,
+            "speed_mps": 0.0,
+            "confidence": 0.35,
+            "horizon_s": 3.0,
+            "predicted_lat": 45.745187,
+            "predicted_lon": -87.064567,
+            "predicted_bearing_deg": 120.0
+          },
+          "policy": "hold",
+          "pursuit": {
+            "policy": "hold",
+            "policy_label": "Hold lock",
+            "action": "hold_lock",
+            "target_bearing_deg": 120.0,
+            "target_distance_m": 3.0,
+            "spawn_virtual_ear": false,
+            "mechanism": null
+          },
+          "permanent": true
+        }
+      ],
+      "policies": [
+        "hold",
+        "chase",
+        "avoid",
+        "orbit",
+        "shadow"
+      ],
+      "ingress_lanes": [
+        {
+          "id": "desktop",
+          "label": "Desktop audio (PipeWire/Pulse)",
+          "engine": "zocr_desktop_audio.py"
+        },
+        {
+          "id": "antenna",
+          "label": "Field antenna OTA",
+          "panel": "field-antenna-panel.json"
+        },
+        {
+          "id": "virtual_ear",
+          "label": "Virtual ear mechanisms",
+          "engine": "zocr_virtual_ear.py"
+        },
+        {
+          "id": "mic",
+          "label": "Hostess microphone",
+          "bridge": "field_final_ear_bridge.py"
+        },
+        {
+          "id": "rf_demod",
+          "label": "RF demod audio lane",
+          "panel": "field-rf-panel.json"
+        }
+      ],
+      "registry": {
+        "total": 28,
+        "active": 28,
+        "lanes": {
+          "desktop": 1,
+          "virtual_ear": 27
+        }
+      },
+      "never_fail": true,
+      "zero_cost": true
+    }
+  },
+  "ear": {
+    "schema": "zocr-ear-status/v1",
+    "updated": "2026-07-06T00:41:55.591934+00:00",
+    "engine": "cochlea_v1",
+    "active_profile": "human_binaural",
+    "active_mode": "dishes",
+    "profiles": [
+      {
+        "id": "bone_conduction",
+        "label": "Bone conduction",
+        "class": "obscure",
+        "channels": 2,
+        "equipment": [
+          "mastoid_driver"
+        ],
+        "teach": "Skull path \u2014 correlate with facial SDF when person present."
+      },
+      {
+        "id": "boundary",
+        "label": "Boundary / PZM",
+        "class": "room",
+        "channels": 1,
+        "equipment": [
+          "phase_coherent_plate"
+        ],
+        "teach": "Room summing \u2014 arrangement map from early reflections."
+      },
+      {
+        "id": "coil_induction",
+        "label": "Induction coil",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "telecoil",
+          "loop"
+        ],
+        "teach": "Magnetic field audio \u2014 bypass air ventriloquism when loop authenticated."
+      },
+      {
+        "id": "contact_mic",
+        "label": "Contact / piezo",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "piezo",
+          "structure_borne"
+        ],
+        "teach": "Structure-borne \u2014 existence correlation via vibration path, not air phantom."
+      },
+      {
+        "id": "headset_stereo",
+        "label": "Headset stereo",
+        "class": "consumer",
+        "channels": 2,
+        "equipment": [
+          "closed_back",
+          "usb_audio"
+        ],
+        "teach": "Near-field monitoring \u2014 ventriloquism checks require mouth-source correlation."
+      },
+      {
+        "id": "human_binaural",
+        "label": "Human binaural",
+        "class": "mammal",
+        "channels": 2,
+        "equipment": [
+          "pinna",
+          "cochlea"
+        ],
+        "teach": "Baseline human hearing \u2014 ITD/ILD for bearing, level for distance hint."
+      },
+      {
+        "id": "hydrophone",
+        "label": "Hydrophone",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "underwater",
+          "piezo_sphere"
+        ],
+        "teach": "Fluid medium \u2014 bearing via array or towed geometry."
+      },
+      {
+        "id": "infrasound",
+        "label": "Infrasound sensor",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "pressure_port",
+          "sealed_chamber"
+        ],
+        "teach": "Sub-bass assault detection \u2014 trip before cochlear fatigue."
+      },
+      {
+        "id": "lavalier",
+        "label": "Lavalier / lav",
+        "class": "body",
+        "channels": 1,
+        "equipment": [
+          "omni_capsule",
+          "windscreen"
+        ],
+        "teach": "Close talker \u2014 truth filter binds voice to visible mouth when camera present."
+      },
+      {
+        "id": "mems_array",
+        "label": "MEMS mic array",
+        "class": "array",
+        "channels": 4,
+        "equipment": [
+          "beamformer",
+          "doa"
+        ],
+        "teach": "DOA + arrangement \u2014 truth filter rejects incoherent phantom beams."
+      },
+      {
+        "id": "parabolic",
+        "label": "Parabolic dish",
+        "class": "directional",
+        "channels": 1,
+        "equipment": [
+          "dish_reflector"
+        ],
+        "teach": "Long-range point \u2014 distance from SNR curve + atmospheric model."
+      },
+      {
+        "id": "ribbon_velocity",
+        "label": "Ribbon velocity",
+        "class": "studio",
+        "channels": 1,
+        "equipment": [
+          "figure8_ribbon"
+        ],
+        "teach": "Figure-8 pattern \u2014 arrangement from nulls and side rejection."
+      },
+      {
+        "id": "shotgun",
+        "label": "Shotgun mic",
+        "class": "directional",
+        "channels": 1,
+        "equipment": [
+          "interference_tube"
+        ],
+        "teach": "Narrow lobe \u2014 point and distance from level + direct/reverb ratio."
+      },
+      {
+        "id": "ultrasonic",
+        "label": "Ultrasonic mic",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "mems_ultrasonic"
+        ],
+        "teach": "Hostile ultrasonic jam \u2014 offense rejects before biological exposure."
+      },
+      {
+        "id": "vintage_carbon",
+        "label": "Vintage carbon mic",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "carbon_granule"
+        ],
+        "teach": "Obscure heritage path \u2014 truth filter normalizes bandwidth before compare."
+      }
+    ],
+    "profile_count": 15,
+    "sample_rate_hz": 48000
+  },
+  "virtual_ears": {
+    "schema": "zocr-virtual-ear-status/v1",
+    "updated": "2026-07-06T00:41:55.580829+00:00",
+    "doctrine": "AI may virtualize hearing at any point \u2014 unlimited virtual ears; truth-filter every tap",
+    "rule": "Since AI knows audio, it hears by virtualizing any point it wishes. Multiple ears permitted.",
+    "unlimited": true,
+    "mechanisms": [
+      {
+        "id": "acoustic_phased",
+        "label": "Phased array beam",
+        "class": "array",
+        "channels": 8,
+        "beam_steer": true,
+        "truth_filter": true,
+        "teach": "Steer nulls and lobes to virtual point \u2014 arrangement graph required"
+      },
+      {
+        "id": "binaural_virtual",
+        "label": "Virtual binaural pair",
+        "class": "hrtf",
+        "channels": 2,
+        "baseline_mm": 65,
+        "truth_filter": true,
+        "teach": "HRTF ears offset from operator head to arbitrary world point"
+      },
+      {
+        "id": "contact_virtual",
+        "label": "Virtual contact mic",
+        "class": "obscure",
+        "truth_filter": true,
+        "teach": "Piezo tap on surface at virtual anchor"
+      },
+      {
+        "id": "field_socket_audio",
+        "label": "FieldSocket audio tap",
+        "class": "rtx",
+        "truth_filter": true,
+        "teach": "AMOURANTHRTX guest audio bus at sealed point"
+      },
+      {
+        "id": "hydrophone_virtual",
+        "label": "Virtual hydrophone",
+        "class": "fluid",
+        "truth_filter": true,
+        "teach": "Fluid-medium ear at submerged virtual point"
+      },
+      {
+        "id": "kinetic_eardrum",
+        "label": "Kinetic eardrum",
+        "class": "structure_borne",
+        "sense": "pressure + vibration at point",
+        "range_hz": [
+          5,
+          80000
+        ],
+        "truth_filter": true,
+        "teach": "Virtual membrane at (x,y,z) \u2014 structure-borne ingress; rejects air phantom when kinetic path absent"
+      }
+    ],
+    "count": 28,
+    "enabled_count": 28,
+    "virtual_ears": [
+      {
+        "id": "ve_30d8024df8",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1,
+          "y_m": 0.5,
+          "z_m": 1,
+          "bearing_deg": 30,
+          "distance_m": 2
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 30\u00b0",
+        "spawned": "2026-06-25T19:05:13.429686+00:00"
+      },
+      {
+        "id": "ve_b2ddf94a68",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:05:33.217127+00:00"
+      },
+      {
+        "id": "ve_1ab221ef58",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:05:55.983016+00:00"
+      },
+      {
+        "id": "ve_12de2ac556",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:06:34.079113+00:00"
+      },
+      {
+        "id": "ve_c635c46b26",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:07:01.169970+00:00"
+      },
+      {
+        "id": "ve_749dbd43f6",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 0.0,
+          "y_m": 0.0,
+          "z_m": 1.5,
+          "bearing_deg": 0.0
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "kinetic anchor",
+        "spawned": "2026-06-25T19:07:01.244843+00:00"
+      },
+      {
+        "id": "ve_68d6ac06c2",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:10:48.024376+00:00"
+      },
+      {
+        "id": "ve_35afc7f83c",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 0.0,
+          "y_m": 0.0,
+          "z_m": 1.5,
+          "bearing_deg": 0.0
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "kinetic anchor",
+        "spawned": "2026-06-25T19:10:48.093464+00:00"
+      },
+      {
+        "id": "ve_737493151f",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:11:27.642104+00:00"
+      },
+      {
+        "id": "ve_35d6711214",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 0.0,
+          "y_m": 0.0,
+          "z_m": 1.5,
+          "bearing_deg": 0.0
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "kinetic anchor",
+        "spawned": "2026-06-25T19:11:27.712279+00:00"
+      },
+      {
+        "id": "ve_22258119c6",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:13:33.345446+00:00"
+      },
+      {
+        "id": "ve_93004a9830",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 0.0,
+          "y_m": 0.0,
+          "z_m": 1.5,
+          "bearing_deg": 0.0
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "kinetic anchor",
+        "spawned": "2026-06-25T19:13:33.418418+00:00"
+      },
+      {
+        "id": "ve_b40fdb5a01",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1,
+          "y_m": 0.5,
+          "z_m": 1,
+          "bearing_deg": 30,
+          "distance_m": 2
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 30\u00b0",
+        "spawned": "2026-06-25T19:18:12.471865+00:00"
+      },
+      {
+        "id": "ve_3d2082ec96",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1,
+          "y_m": 0.5,
+          "z_m": 1,
+          "bearing_deg": 30,
+          "distance_m": 2
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 30\u00b0",
+        "spawned": "2026-06-25T19:18:15.499484+00:00"
+      },
+      {
+        "id": "ve_c50701e578",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:18:38.068599+00:00"
+      },
+      {
+        "id": "ve_68f7defa32",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 0.0,
+          "y_m": 0.0,
+          "z_m": 1.5,
+          "bearing_deg": 0.0
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "kinetic anchor",
+        "spawned": "2026-06-25T19:18:38.143854+00:00"
+      },
+      {
+        "id": "ve_62d7920b7d",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:38:13.922886+00:00"
+      },
+      {
+        "id": "ve_bc6fff4bd7",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 0.0,
+          "y_m": 0.0,
+          "z_m": 1.5,
+          "bearing_deg": 0.0
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "kinetic anchor",
+        "spawned": "2026-06-25T19:38:13.990171+00:00"
+      },
+      {
+        "id": "ve_8d19685b11",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:39:44.786988+00:00"
+      },
+      {
+        "id": "ve_d3ccb5d867",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 0.0,
+          "y_m": 0.0,
+          "z_m": 1.5,
+          "bearing_deg": 0.0
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "kinetic anchor",
+        "spawned": "2026-06-25T19:39:44.856581+00:00"
+      },
+      {
+        "id": "ve_acfcc791ae",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1,
+          "y_m": 0.5,
+          "z_m": 1,
+          "bearing_deg": 30,
+          "distance_m": 2
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 30\u00b0",
+        "spawned": "2026-06-25T19:39:49.856439+00:00"
+      },
+      {
+        "id": "ve_a2798cd070",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:42:15.231935+00:00"
+      },
+      {
+        "id": "ve_2dab8f4377",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 0.0,
+          "y_m": 0.0,
+          "z_m": 1.5,
+          "bearing_deg": 0.0
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "kinetic anchor",
+        "spawned": "2026-06-25T19:42:15.302490+00:00"
+      },
+      {
+        "id": "ve_be30446f66",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1.5,
+          "y_m": 2.6,
+          "z_m": 1.1,
+          "bearing_deg": 120,
+          "distance_m": 3
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 120\u00b0",
+        "spawned": "2026-06-25T19:47:16.735576+00:00"
+      },
+      {
+        "id": "ve_86bca01fa3",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 0.0,
+          "y_m": 0.0,
+          "z_m": 1.5,
+          "bearing_deg": 0.0
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "kinetic anchor",
+        "spawned": "2026-06-25T19:47:16.807486+00:00"
+      },
+      {
+        "id": "ve_0e72a1b12a",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1,
+          "y_m": 0.5,
+          "z_m": 1,
+          "bearing_deg": 30,
+          "distance_m": 2
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 30\u00b0",
+        "spawned": "2026-06-25T20:19:18.251643+00:00"
+      },
+      {
+        "id": "ve_1a19944157",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1,
+          "y_m": 0.5,
+          "z_m": 1,
+          "bearing_deg": 30,
+          "distance_m": 2
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 30\u00b0",
+        "spawned": "2026-06-25T20:21:04.310689+00:00"
+      },
+      {
+        "id": "ve_68153a3645",
+        "sense": "ear",
+        "virtual": true,
+        "mechanism": "kinetic_eardrum",
+        "mechanism_label": "Kinetic eardrum",
+        "point": {
+          "x_m": 1,
+          "y_m": 0.5,
+          "z_m": 1,
+          "bearing_deg": 30,
+          "distance_m": 2
+        },
+        "profile": "human_binaural",
+        "truth_bound": true,
+        "existence_correlate": true,
+        "enabled": true,
+        "label": "Kinetic eardrum @ 30\u00b0",
+        "spawned": "2026-06-29T08:07:11.167747+00:00"
+      }
+    ]
+  },
+  "truth_filters": {
+    "schema": "zocr-ear-truth-status/v1",
+    "updated": "2026-07-06T00:41:55.592120+00:00",
+    "rule": "Do not be deceived by multiple sounds or ventriloquist tricks \u2014 corroborate source, bearing, and existence.",
+    "filters": [
+      "ventriloquism",
+      "multi_source_decoherence",
+      "hostile_assault",
+      "existence_correlation",
+      "speaker_spoof",
+      "encoded_signal",
+      "mixed_interference"
+    ],
+    "lie_markers": [
+      "ventriloquism",
+      "phantom_voice",
+      "incoherent_beam",
+      "assault_burst",
+      "foreign_weave",
+      "mouth_mismatch",
+      "ghost_duplicate"
+    ],
+    "vigilance": {
+      "rule": "Be vigilant \u2014 truth filters always forward; never trust a single speaker path.",
+      "woven_minimum": 2
+    }
+  },
+  "equipment": {
+    "schema": "zocr-ear-equipment/v1",
+    "active_profile": "human_binaural",
+    "total": 15,
+    "obscure_count": 7,
+    "profiles": [
+      {
+        "id": "bone_conduction",
+        "label": "Bone conduction",
+        "class": "obscure",
+        "channels": 2,
+        "equipment": [
+          "mastoid_driver"
+        ],
+        "teach": "Skull path \u2014 correlate with facial SDF when person present."
+      },
+      {
+        "id": "boundary",
+        "label": "Boundary / PZM",
+        "class": "room",
+        "channels": 1,
+        "equipment": [
+          "phase_coherent_plate"
+        ],
+        "teach": "Room summing \u2014 arrangement map from early reflections."
+      },
+      {
+        "id": "coil_induction",
+        "label": "Induction coil",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "telecoil",
+          "loop"
+        ],
+        "teach": "Magnetic field audio \u2014 bypass air ventriloquism when loop authenticated."
+      },
+      {
+        "id": "contact_mic",
+        "label": "Contact / piezo",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "piezo",
+          "structure_borne"
+        ],
+        "teach": "Structure-borne \u2014 existence correlation via vibration path, not air phantom."
+      },
+      {
+        "id": "headset_stereo",
+        "label": "Headset stereo",
+        "class": "consumer",
+        "channels": 2,
+        "equipment": [
+          "closed_back",
+          "usb_audio"
+        ],
+        "teach": "Near-field monitoring \u2014 ventriloquism checks require mouth-source correlation."
+      },
+      {
+        "id": "human_binaural",
+        "label": "Human binaural",
+        "class": "mammal",
+        "channels": 2,
+        "equipment": [
+          "pinna",
+          "cochlea"
+        ],
+        "teach": "Baseline human hearing \u2014 ITD/ILD for bearing, level for distance hint."
+      },
+      {
+        "id": "hydrophone",
+        "label": "Hydrophone",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "underwater",
+          "piezo_sphere"
+        ],
+        "teach": "Fluid medium \u2014 bearing via array or towed geometry."
+      },
+      {
+        "id": "infrasound",
+        "label": "Infrasound sensor",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "pressure_port",
+          "sealed_chamber"
+        ],
+        "teach": "Sub-bass assault detection \u2014 trip before cochlear fatigue."
+      },
+      {
+        "id": "lavalier",
+        "label": "Lavalier / lav",
+        "class": "body",
+        "channels": 1,
+        "equipment": [
+          "omni_capsule",
+          "windscreen"
+        ],
+        "teach": "Close talker \u2014 truth filter binds voice to visible mouth when camera present."
+      },
+      {
+        "id": "mems_array",
+        "label": "MEMS mic array",
+        "class": "array",
+        "channels": 4,
+        "equipment": [
+          "beamformer",
+          "doa"
+        ],
+        "teach": "DOA + arrangement \u2014 truth filter rejects incoherent phantom beams."
+      },
+      {
+        "id": "parabolic",
+        "label": "Parabolic dish",
+        "class": "directional",
+        "channels": 1,
+        "equipment": [
+          "dish_reflector"
+        ],
+        "teach": "Long-range point \u2014 distance from SNR curve + atmospheric model."
+      },
+      {
+        "id": "ribbon_velocity",
+        "label": "Ribbon velocity",
+        "class": "studio",
+        "channels": 1,
+        "equipment": [
+          "figure8_ribbon"
+        ],
+        "teach": "Figure-8 pattern \u2014 arrangement from nulls and side rejection."
+      },
+      {
+        "id": "shotgun",
+        "label": "Shotgun mic",
+        "class": "directional",
+        "channels": 1,
+        "equipment": [
+          "interference_tube"
+        ],
+        "teach": "Narrow lobe \u2014 point and distance from level + direct/reverb ratio."
+      },
+      {
+        "id": "ultrasonic",
+        "label": "Ultrasonic mic",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "mems_ultrasonic"
+        ],
+        "teach": "Hostile ultrasonic jam \u2014 offense rejects before biological exposure."
+      },
+      {
+        "id": "vintage_carbon",
+        "label": "Vintage carbon mic",
+        "class": "obscure",
+        "channels": 1,
+        "equipment": [
+          "carbon_granule"
+        ],
+        "teach": "Obscure heritage path \u2014 truth filter normalizes bandwidth before compare."
+      }
+    ],
+    "doctrine": "Auditory spectrum \u2014 equipment profiles from human binaural to obscure field mics; Grok16 field_opt tuned",
+    "support": "All equipment paths \u2014 consumer, studio, array, obscure heritage and field sensors"
+  },
+  "redundancy": {
+    "ok": true,
+    "woven_paths": 4,
+    "paths": [
+      {
+        "id": "audio_ingest",
+        "woven": true
+      },
+      {
+        "id": "truth_filter",
+        "woven": true
+      },
+      {
+        "id": "hostess_lane",
+        "woven": true
+      },
+      {
+        "id": "ear_stoard",
+        "woven": true
+      }
+    ]
+  },
+  "sovereign_time": {
+    "schema": "zocr-ear-sovereign-time/v1",
+    "always": true,
+    "enabled": true,
+    "module": "/home/default/Desktop/SG/NewLatest/lib/sovereign-time.py",
+    "sync_max_delta_ns": 500000000,
+    "rule": "Sovereign time always seals ear \u2014 monotonic witness, never pool-only NTP",
+    "nexus": {
+      "schema": "sovereign-time/v3",
+      "updated": "2026-07-02T13:19:05.405424Z",
+      "port": 9123,
+      "heartbeat_sec": 1.0,
+      "max_skew_ms": 50.0,
+      "max_freq_delta_khz": 250000,
+      "max_linear_gap_ms": 5.0,
+      "never_lose_cycle": true,
+      "immutable_linear": true,
+      "temperature_affects_linear": false,
+      "ntp_affects_linear": false,
+      "take_time_out_means": "gap or red_flag only",
+      "clock_paused": false,
+      "derived_utc": "2026-07-02T13:19:05.405452Z",
+      "linear_ns": 1782998345405473702,
+      "linear": {
+        "schema": "sovereign-linear-time/v1",
+        "sealed": true,
+        "linear_ns": 1782998345405498969,
+        "derived_utc": "2026-07-02T13:19:05.405511Z",
+        "epoch_mono_ns": 90757569656320,
+        "epoch_linear_ns": 1783053156077535786,
+        "red_flag_count": 0,
+        "gap_count": 0,
+        "red_flag_active": false,
+        "last_take_time_out": null,
+        "immutable_rule": "Nothing affects linear time; take time out = gap or red flag only",
+        "take_time_out_means": "gap or red_flag only",
+        "clock_paused": false,
+        "temperature_affects_linear": false,
+        "ntp_affects_linear": false
+      },
+      "red_flags": {
+        "schema": "sovereign-time-red-flags/v1",
+        "count": 0,
+        "red_flag_count": 0,
+        "gap_count": 0,
+        "red_flag_active": false,
+        "clock_paused": false,
+        "entries": [],
+        "ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-time-red-flags.jsonl"
+      },
+      "local_witness": {
+        "mono_ns": 35946896652564,
+        "linear_ns": 1782998345405362923,
+        "realtime_ns": 1783298515590677817,
+        "utc": "2026-07-06T00:41:55.590679Z",
+        "host": "default-X870-Pro-RS",
+        "freq_khz": {
+          "cpu0": 4988770,
+          "cpu1": 4996907,
+          "cpu10": 4952760,
+          "cpu11": 4950999,
+          "cpu12": 4986892,
+          "cpu13": 4995607,
+          "cpu14": 5039311,
+          "cpu15": 4995466,
+          "cpu16": 5034572,
+          "cpu17": 4986604,
+          "cpu18": 4947848,
+          "cpu19": 4915510,
+          "cpu2": 4995454,
+          "cpu20": 4931348,
+          "cpu21": 4967875,
+          "cpu22": 4892333,
+          "cpu23": 4983614,
+          "cpu3": 5039267,
+          "cpu4": 5039288,
+          "cpu5": 5018915,
+          "cpu6": 4913313,
+          "cpu7": 4956862,
+          "cpu8": 4956158,
+          "cpu9": 4962724
+        },
+        "freq_sum_khz": 119448397,
+        "thermal_millic": {},
+        "thermal_sum_millic": 0,
+        "micron_witness": "f4bc8f1a120fafb0",
+        "witness_only": true,
+        "affects_linear": false
+      },
+      "last_pulse": null,
+      "last_verify": null,
+      "cycle": {
+        "cycle": 0,
+        "never_lost": true,
+        "threats": 0,
+        "last_threats": [],
+        "services": {},
+        "anchor_pulse": null,
+        "anchor_verdict": null,
+        "derived_utc": "2026-07-02T13:19:05.405568Z",
+        "linear_ns": 1782998345405583819
+      },
+      "anchor": {},
+      "doctrine": "/home/default/Desktop/SG/NewLatest/data/sovereign-time-doctrine.json",
+      "receipt_log": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-time-receipts.jsonl",
+      "red_flag_ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-time-red-flags.jsonl",
+      "cycle_ledger": "/home/default/Desktop/SG/NewLatest/Hostess7/.pages-build-state/sovereign-cycle-ledger.jsonl",
+      "declaration": "Time is linear.",
+      "ironclad_citation": "ironclad:time:1",
+      "posture": "Time is linear \u2014 sovereign clock immutable; take time out = gap or red flag; temperature changes nothing on the timer"
+    },
+    "ear_last": {
+      "schema": "sovereign-time/v2",
+      "pulse": 9,
+      "chain": "final_ear:neural_analyze",
+      "host": "default-X870-Pro-RS",
+      "mono_ns": 13167883483368,
+      "realtime_ns": 1782510202435085680,
+      "utc": "2026-06-26T21:43:22.436035Z",
+      "freq_sum_khz": 116725611,
+      "micron_witness": "abc682b5496cbc54",
+      "entropy_tag": "6064cca81796",
+      "sig": "c08f8cb1cf9add960ab05ad7b62b834a86e22dc5292532d70314e073e38d59b9"
+    },
+    "verdict": "USER_OK",
+    "ok": true,
+    "sealed_mono_ns": 13167883483368,
+    "micron_witness": "abc682b5496cbc54"
+  },
+  "field_manual": {
+    "sense": "audio",
+    "api": "/api/field-manual?sense=audio"
+  },
+  "sense_neural_api": "/api/sense-neural",
+  "ok": true,
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-06T00:41:55Z"
+}

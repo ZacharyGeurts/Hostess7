@@ -1,0 +1,113 @@
+{
+  "schema": "field-dns-dhcp-collision-guard/v1",
+  "updated": "2026-07-06T00:41:52Z",
+  "motto": "Sole IPv4 DHCP/DNS \u2014 ZNetwork sole internet pipe. Live leases quarantined never killed.",
+  "collisions": [
+    {
+      "kind": "foreign_resolver_collision",
+      "nameservers": [
+        "209.18.47.61",
+        "209.18.47.62",
+        "209.18.47.63"
+      ],
+      "severity": "critical"
+    },
+    {
+      "kind": "foreign_dns_resolver",
+      "nameserver": "209.18.47.61",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "resolv.conf nameserver not truth",
+      "phase": "primary"
+    },
+    {
+      "kind": "foreign_dns_resolver",
+      "nameserver": "209.18.47.62",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "resolv.conf nameserver not truth",
+      "phase": "primary"
+    },
+    {
+      "kind": "foreign_dns_resolver",
+      "nameserver": "209.18.47.63",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "resolv.conf nameserver not truth",
+      "phase": "primary"
+    }
+  ],
+  "collision_count": 4,
+  "lease_collisions": 0,
+  "duplicate_processes": 0,
+  "incumbent_conflicts": 1,
+  "foreign_server_threats": [
+    {
+      "kind": "foreign_dns_resolver",
+      "nameserver": "209.18.47.61",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "resolv.conf nameserver not truth",
+      "phase": "primary"
+    },
+    {
+      "kind": "foreign_dns_resolver",
+      "nameserver": "209.18.47.62",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "resolv.conf nameserver not truth",
+      "phase": "primary"
+    },
+    {
+      "kind": "foreign_dns_resolver",
+      "nameserver": "209.18.47.63",
+      "vector": "FOREIGN_DNS_SERVER",
+      "severity": "critical",
+      "note": "resolv.conf nameserver not truth",
+      "phase": "primary"
+    }
+  ],
+  "foreign_threat_count": 3,
+  "unclean_is_hostile": true,
+  "only_our_dns_dhcp": true,
+  "internet_open": false,
+  "sole_authority": {
+    "dns": false,
+    "dhcp": true,
+    "truth": false,
+    "accuracy": false,
+    "ok": false,
+    "phase": "primary",
+    "foreign_resolvers": [
+      "209.18.47.61",
+      "209.18.47.62",
+      "209.18.47.63"
+    ],
+    "internet_open": false,
+    "collision_count": 4,
+    "authority_collision_count": 4,
+    "hygiene_warnings": 0
+  },
+  "takeover_phase": "primary",
+  "policy": {
+    "unclean_is_hostile": true,
+    "prevent_lease_collisions": true,
+    "ping_probe_before_offer": false,
+    "prune_duplicate_serve_loops": true,
+    "reject_foreign_resolvers_on_primary": true,
+    "sole_authority_required": true,
+    "only_our_dns_dhcp": true,
+    "foreign_server_is_threat": true,
+    "eradicate_on_attempt": true,
+    "nft_block_foreign_offers": true,
+    "internet_open": false,
+    "preserve_lease_connections": true,
+    "quarantine_not_kill": false,
+    "accuracy": "device_mapped_not_numbers"
+  },
+  "api": "/api/field-dns-dhcp-collision-guard",
+  "ok": false,
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-06T00:41:52Z"
+}

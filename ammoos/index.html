@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-ammoos-desktop="1" data-front-hook="nexus" data-clipboard-wire="nexus" data-nexus-clipboard-sovereign="1" data-ammoos-theme="nexus-military-v8" data-ironclad-taskbar="0" data-nexus-c2="1" data-nexus-c2-stack="ironclad">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-ammoos-scale.css" />
+  <script src="/Hostess7/pages-ammoos-scale.js"></script>
+  <script src="/Hostess7/assets/field-desktop-scale-propagate.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-deploy-everyone.css" />
+  <script src="/Hostess7/pages-deploy-everyone.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <script src="/Hostess7/pages-route-cleanup.js"></script>
+  <script src="/Hostess7/assets/zachub-source-router.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a1814" />
+  <meta name="color-scheme" content="dark" />
+  <title>Field One — AmmoOS Desktop</title>
+  <meta name="description" content="Field One Only — AmmoOS desktop, classic Start, sovereign layer stack." />
+  <link rel="icon" href="/Hostess7/assets/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="stylesheet" href="/Hostess7/assets/ammoos-c2-themes.css?v=at2" />
+  <link rel="stylesheet" href="/Hostess7/assets/dusty-midnight.css?v=1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-host-desktop.css?v=hd6" />
+
+  <link rel="stylesheet" href="/Hostess7/assets/field-ammonet-display.css?v=2" />
+
+  <link rel="stylesheet" href="/Hostess7/assets/field-monitor-dashboard.css?v=6" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-desktop-scale.css?v=2" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-startbar.css?v=12" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-panel-flyout.css?v=1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-performance-flyout.css?v=1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-error-dashboard.css?v=1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-startbar-audio.css?v=1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-screen-layers.css?v=6" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-monster-monitor.css?v=2" />
+  <link rel="stylesheet" href="/Hostess7/assets/nexus-field-shell.css?v=hd14" />
+  <link rel="stylesheet" href="/Hostess7/assets/clipboard-wire.css?v=2" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-c2-task-manager.css?v=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://127.0.0.1:* https://127.0.0.1:* https://api.github.com; frame-src 'self' https://duckduckgo.com; object-src 'none'; base-uri 'self'" />
+  <style>
+    html, body {
+      margin: 0; padding: 0; overflow: hidden;
+      width: 100%; height: 100%;
+      width: 100dvw; height: 100dvh;
+      background: #141210;
+    }
+    .hd-monitor.hd-monitor--hidden { display: none !important; }
+    #hd-toast {
+      position: fixed; bottom: 52px; left: 50%; transform: translateX(-50%);
+      padding: 8px 14px; border-radius: 8px; background: rgba(12, 14, 22, 0.95);
+      border: 1px solid rgba(255,255,255,0.1); color: #eef4ff; font: 13px system-ui, sans-serif;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 9200;
+    }
+    #hd-toast.show { opacity: 1; }
+  </style>
+</head>
+<body data-pages-runtime="1" data-ironclad-taskbar="0" data-clipboard-wire="nexus">
+  <div class="hd-shell" id="hd-shell">
+    <div class="hd-desktop" id="hd-desktop" role="main" aria-label="Field One · AmmoOS desktop">
+
+      <div class="hd-loading" id="hd-loading">Loading programs…</div>
+      <div class="hd-wall-label" id="hd-wall-label">Field One · AmmoOS · Layer -1</div>
+      <div class="hd-icons" id="hd-icons" aria-label="Desktop programs"></div>
+    </div>
+    <main class="hd-monitor hd-monitor--hidden" id="hd-monitor" hidden aria-hidden="true"></main>
+  </div>
+  <div id="h7-ammonet-mount" aria-live="polite"></div>
+  <div id="fsb-mount" aria-live="polite"></div>
+  <div id="c2tm-mount" aria-live="polite"></div>
+  <div id="hd-toast" role="status" aria-live="polite"></div>
+  <script src="/Hostess7/assets/field-sovereign-bus.js?v=1"></script>
+  <script src="/Hostess7/assets/clipboard-wire.js?v=5"></script>
+  <script src="/Hostess7/assets/field-dos40-menu.js?v=1"></script>
+  <script src="/Hostess7/assets/front-hook.js?v=cc8" defer></script>
+  <script src="/Hostess7/assets/field-desktop-scale.js?v=2" defer></script>
+  <script src="/Hostess7/assets/field-desktop-scale-propagate.js?v=1" defer></script>
+  <script src="/Hostess7/assets/queen-icon-engine.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-monitor-dashboard.js?v=4" defer></script>
+  <script src="/Hostess7/assets/field-queen-nav.js?v=qb3" defer></script>
+  <script src="/Hostess7/assets/field-internet-unified.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-ammonet-display.js?v=3" defer></script>
+  <script src="/Hostess7/assets/field-layer-input-isolation.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-screen-layers.js?v=8" defer></script>
+  <script src="/Hostess7/assets/field-startbar-audio.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-startbar.js?v=qb13" defer></script>
+  <script src="/Hostess7/assets/field-shell-context.js?v=1" defer></script>
+  <script src="/Hostess7/assets/nexus-field-shell.js?v=qb5" defer></script>
+  <script src="/Hostess7/assets/field-c2-task-manager.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-monster-monitor.js?v=3" defer></script>
+  <script src="/Hostess7/assets/field-cad-rescue.js?v=1" defer></script>
+  <script src="/Hostess7/assets/ammoos-theme-engine.js?v=at1" defer></script>
+  <script src="/Hostess7/assets/field-host-desktop.js?v=hd11" defer></script>
+  <script src="/Hostess7/assets/field-internet-unified.js?v=1" defer></script>
+  <script src="/Hostess7/assets/pages-github-everyone-wire.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-performance-flyout.js?v=2" defer></script>
+  <script src="/Hostess7/assets/field-error-dashboard.js?v=1" defer></script>
+  <script src="/Hostess7/assets/field-panel-flyout.js?v=1" defer></script>
+  <script src="/Hostess7/pages-field-boot.js"></script>
+  <script src="/Hostess7/pages-queen-rtx-bridge.js"></script>
+  <script src="/Hostess7/pages-ammonet-wire.js"></script>
+  <script src="/Hostess7/pages-github-brain-wire.js"></script>
+  <script src="/Hostess7/pages-hostess7-interaction-wire.js"></script>
+  <script src="/Hostess7/pages-github-legacy-wire.js"></script>
+  <script src="/Hostess7/pages-github-resilience.js"></script>
+  <script src="/Hostess7/pages-ammodrive-wire.js"></script>
+</body>
+</html>

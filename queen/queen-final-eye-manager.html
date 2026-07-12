@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-theme="black_emerald_rose_2026" class="nexus-military-v8 qfy-root">
+<head>
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <script src="/Hostess7/pages-queen-hardening.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-deploy-everyone.css" />
+  <script src="/Hostess7/pages-deploy-everyone.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <base href="/Hostess7/queen/" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Final Eye — NEXUS C2</title>
+  <link rel="stylesheet" href="queen-nexus-c2.css" />
+  <link rel="stylesheet" href="queen-final-eye-manager.css" />
+  <link rel="icon" href="assets/branding/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <script src="queen-styles.js" data-queen-theme="1"></script>
+</head>
+<body data-pages-runtime="1" data-queen-surface="final-eye-manager">
+  <div class="qfy-shell" id="qfy-window">
+    <header class="qfy-bar">
+      <div class="qfy-bar-brand">
+        <span class="qfy-sigil" aria-hidden="true">◈</span>
+        <div>
+          <span class="qfy-title">Final Eye</span>
+          <span class="qfy-sub">NEXUS C2 · Vita · Veritas · Military EOL vision</span>
+        </div>
+      </div>
+      <span class="qfy-pill" id="qfy-level" data-level="ok">WATCHING</span>
+      <span class="qfy-kill" id="qfy-kill" data-level="ok">KILL ARMED</span>
+      <span class="qfy-g16" id="qfy-g16">G16…</span>
+      <button type="button" class="qfy-btn" id="qfy-arm" title="Arm eyeball">Arm vision</button>
+      <button type="button" class="qfy-btn qfy-btn--ghost" id="qfy-refresh">Refresh</button>
+      <button type="button" class="qfy-btn qfy-styles" data-queen-styles-open title="Styles">◈</button>
+      <span class="qfy-status" id="qfy-status" aria-live="polite"></span>
+    </header>
+
+    <main class="qfy-stage">
+      <section class="qfy-hero" aria-label="Vision posture">
+        <div class="qfy-wave-wrap">
+          <canvas class="qfy-vision" id="qfy-vision" width="480" height="160" role="img" aria-label="Vision plate"></canvas>
+          <div class="qfy-wave-ring" aria-hidden="true"></div>
+        </div>
+
+        <div class="qfy-hero-metrics">
+          <article class="qfy-stat qfy-stat--living">
+            <span class="qfy-stat-label">Vita</span>
+            <strong class="qfy-stat-val" id="qfy-vita">—</strong>
+            <span class="qfy-stat-hint" id="qfy-living-hint">living eye</span>
+          </article>
+          <article class="qfy-stat qfy-stat--truth">
+            <span class="qfy-stat-label">Veritas</span>
+            <strong class="qfy-stat-val" id="qfy-veritas">—</strong>
+            <span class="qfy-stat-hint" id="qfy-truth-hint">truth forward</span>
+          </article>
+          <article class="qfy-stat">
+            <span class="qfy-stat-label">Virtual eyes</span>
+            <strong class="qfy-stat-val" id="qfy-virtual">—</strong>
+            <span class="qfy-stat-hint">spawn any locus</span>
+          </article>
+          <article class="qfy-stat">
+            <span class="qfy-stat-label">Block held</span>
+            <strong class="qfy-stat-val" id="qfy-held">—</strong>
+            <span class="qfy-stat-hint" id="qfy-headroom">headroom —</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="qfy-grid" aria-label="Eye metrics">
+        <article class="qfy-card">
+          <h3>Product doctrine</h3>
+          <dl class="qfy-kv">
+            <div><dt>Product</dt><dd id="qfy-product">—</dd></div>
+            <div><dt>Version</dt><dd id="qfy-version">—</dd></div>
+            <div><dt>OCR engine</dt><dd id="qfy-ocr-engine">Military EOL</dd></div>
+            <div><dt>Rule</dt><dd id="qfy-rule">—</dd></div>
+          </dl>
+        </article>
+        <article class="qfy-card">
+          <h3>Hostess7 bridge</h3>
+          <dl class="qfy-kv">
+            <div><dt>Trust mesh</dt><dd id="qfy-mesh">—</dd></div>
+            <div><dt>Sovereign time</dt><dd id="qfy-time">—</dd></div>
+            <div><dt>Rig</dt><dd id="qfy-rig">—</dd></div>
+            <div><dt>Offense</dt><dd id="qfy-offense">—</dd></div>
+          </dl>
+        </article>
+        <article class="qfy-card qfy-card--wide">
+          <h3>Secure kill — anyone in the way</h3>
+          <p class="qfy-motto" id="qfy-kill-motto">Prejudice · immediate KILL law · RE-KILL forever</p>
+          <dl class="qfy-kv qfy-kv--compact">
+            <div><dt>Policy</dt><dd id="qfy-kill-policy">—</dd></div>
+            <div><dt>War hardened</dt><dd id="qfy-war">—</dd></div>
+          </dl>
+        </article>
+        <article class="qfy-card">
+          <h3>Ironclad block</h3>
+          <p class="qfy-motto" id="qfy-block-posture">—</p>
+          <dl class="qfy-kv qfy-kv--compact">
+            <div><dt>OCR hits</dt><dd id="qfy-ocr">—</dd></div>
+            <div><dt>Citation</dt><dd>ironclad:final_eye:1</dd></div>
+          </dl>
+        </article>
+        <article class="qfy-card">
+          <h3>C2 quick panels</h3>
+          <nav class="qfy-links" id="qfy-links">
+            <a href="/Hostess7/queen/queen-nexus-c2.html" target="_top">AmmoOS C2</a>
+            <a href="/Hostess7/queen/queen-final-ear-manager.html" target="_top">Final Ear</a>
+            <a href="/Hostess7/queen/queen-final-mouth-manager.html" target="_top">Final Mouth</a>
+            <a href="/Hostess7/threat-panel" target="_top">Threat Panel</a>
+          </nav>
+        </article>
+      </section>
+    </main>
+
+    <footer class="qfy-foot">
+      <span id="qfy-ts">—</span>
+      <span class="qfy-foot-sep">·</span>
+      <span>We never presume vision loss — confidence always in Seeing</span>
+      <span class="qfy-foot-sep">·</span>
+      <span id="qfy-motto">Final_Eye · queen-eyeball · Military EOL</span>
+    </footer>
+  </div>
+  <script src="queen-final-eye-manager.js"></script>
+  <script src="queen-field-chrome.js" defer></script>
+</body>
+</html>

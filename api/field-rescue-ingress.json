@@ -1,0 +1,578 @@
+{
+  "ok": true,
+  "schema": "field-rescue-ingress/v1",
+  "updated": "2026-07-05T00:17:21Z",
+  "title": "Rescue ingress \u2014 clear fakes, DHCP/DNS through, more edges",
+  "motto": "Remove fake shit in the way \u2014 everyone's lease and DNS comes through \u00b7 quarantine never kill \u00b7 blast more hosts and edges",
+  "ingress_policy": "quarantine_not_kill",
+  "cleared_fakes": {
+    "ok": true,
+    "dhcp_leases_real": 3,
+    "registry_devices": 4,
+    "fakes_removed": true,
+    "threat_soft_unblocked": 0,
+    "policy": {
+      "never_exceed_existence": false,
+      "ai_evict_stale": false,
+      "stale_after_seconds": 86400,
+      "lan_stale_after_seconds": 7200,
+      "min_corroboration_sources": 0,
+      "existence_floor": 1,
+      "never_evict_dhcp_sourced": true,
+      "dhcp_lease_is_real": true
+    }
+  },
+  "dhcp_pool": {
+    "ok": true,
+    "pool_start": "192.168.50.2",
+    "pool_end": "192.168.51.254",
+    "legacy_pool_start": "192.168.47.100",
+    "legacy_pool_end": "192.168.47.200",
+    "host_slots": 610,
+    "soft_ingress": true,
+    "ping_soft": true
+  },
+  "edge_blast": {
+    "ok": true,
+    "hosts_per_edge": 4096,
+    "planet_edges_recommended": 5462650,
+    "local_edges_deployed": 64,
+    "edge_hosts": [
+      {
+        "edge_id": "edge-0000",
+        "bind": "10.47.0.1",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready",
+        "ping_ok": false,
+        "rtt_ms": null
+      },
+      {
+        "edge_id": "edge-0001",
+        "bind": "10.47.0.1",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready",
+        "ping_ok": false,
+        "rtt_ms": null
+      },
+      {
+        "edge_id": "edge-0002",
+        "bind": "10.47.0.2",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready",
+        "ping_ok": false,
+        "rtt_ms": null
+      },
+      {
+        "edge_id": "edge-0003",
+        "bind": "10.47.0.3",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready",
+        "ping_ok": false,
+        "rtt_ms": null
+      },
+      {
+        "edge_id": "edge-0004",
+        "bind": "10.47.0.4",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0005",
+        "bind": "10.47.0.5",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0006",
+        "bind": "10.47.0.6",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0007",
+        "bind": "10.47.0.7",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0008",
+        "bind": "10.47.0.8",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0009",
+        "bind": "10.47.0.9",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0010",
+        "bind": "10.47.0.10",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0011",
+        "bind": "10.47.0.11",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0012",
+        "bind": "10.47.0.12",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0013",
+        "bind": "10.47.0.13",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0014",
+        "bind": "10.47.0.14",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0015",
+        "bind": "10.47.0.15",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0016",
+        "bind": "10.47.0.16",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0017",
+        "bind": "10.47.0.17",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0018",
+        "bind": "10.47.0.18",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0019",
+        "bind": "10.47.0.19",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0020",
+        "bind": "10.47.0.20",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0021",
+        "bind": "10.47.0.21",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0022",
+        "bind": "10.47.0.22",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0023",
+        "bind": "10.47.0.23",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0024",
+        "bind": "10.47.0.24",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0025",
+        "bind": "10.47.0.25",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0026",
+        "bind": "10.47.0.26",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0027",
+        "bind": "10.47.0.27",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0028",
+        "bind": "10.47.0.28",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0029",
+        "bind": "10.47.0.29",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0030",
+        "bind": "10.47.0.30",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0031",
+        "bind": "10.47.0.31",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0032",
+        "bind": "10.47.0.32",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0033",
+        "bind": "10.47.0.33",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0034",
+        "bind": "10.47.0.34",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0035",
+        "bind": "10.47.0.35",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0036",
+        "bind": "10.47.0.36",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0037",
+        "bind": "10.47.0.37",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0038",
+        "bind": "10.47.0.38",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0039",
+        "bind": "10.47.0.39",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0040",
+        "bind": "10.47.0.40",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0041",
+        "bind": "10.47.0.41",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0042",
+        "bind": "10.47.0.42",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0043",
+        "bind": "10.47.0.43",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0044",
+        "bind": "10.47.0.44",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0045",
+        "bind": "10.47.0.45",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0046",
+        "bind": "10.47.0.46",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0047",
+        "bind": "10.47.0.47",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0048",
+        "bind": "10.47.0.48",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0049",
+        "bind": "10.47.0.49",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0050",
+        "bind": "10.47.0.50",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0051",
+        "bind": "10.47.0.51",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0052",
+        "bind": "10.47.0.52",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0053",
+        "bind": "10.47.0.53",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0054",
+        "bind": "10.47.0.54",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0055",
+        "bind": "10.47.0.55",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0056",
+        "bind": "10.47.0.56",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0057",
+        "bind": "10.47.0.57",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0058",
+        "bind": "10.47.0.58",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0059",
+        "bind": "10.47.0.59",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0060",
+        "bind": "10.47.0.60",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0061",
+        "bind": "10.47.0.61",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0062",
+        "bind": "10.47.0.62",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      },
+      {
+        "edge_id": "edge-0063",
+        "bind": "10.47.0.63",
+        "hosts_per_edge": 4096,
+        "dhcp_dns": "127.0.0.1",
+        "leases_capacity": 4096,
+        "status": "ready"
+      }
+    ],
+    "devices": 22375012974,
+    "people_per_local_edge": 349609577
+  },
+  "collision_guard": {
+    "ok": false,
+    "collision_count": 5
+  },
+  "planetary": {
+    "planet_dhcp_total": 4294967296,
+    "planet_dns_total": 4294967296,
+    "github_repos_indexed": null
+  },
+  "api": "/api/field-rescue-ingress",
+  "pages": true,
+  "lane": "github-mirror",
+  "exported": "2026-07-06T00:10:22Z"
+}

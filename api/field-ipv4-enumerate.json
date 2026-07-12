@@ -1,0 +1,299 @@
+{
+  "ok": true,
+  "schema": "field-ipv4-enumerate/v1",
+  "updated": "2026-07-06T00:29:29Z",
+  "title": "Full IPv4 enumeration — own and enumerate every address everywhere",
+  "motto": "We own and enumerate all IPv4 — 0.0.0.0 through 255.255.255.255 — on every box, locally and planet-wide.",
+  "boss": "hostess7",
+  "enumerate_addresses": true,
+  "own_full_space": true,
+  "enumerate_locally": true,
+  "enumerate_planet": true,
+  "ipv4": {
+    "total": 4294967296,
+    "owned": 4294967296,
+    "enumerated": 4294967296,
+    "start": "0.0.0.0",
+    "end": "255.255.255.255",
+    "scope": "0.0.0.0/0",
+    "ranges": [
+      {
+        "start": "0.0.0.0",
+        "end": "255.255.255.255",
+        "count": 4294967296,
+        "authority": "hostess7",
+        "kind": "ipv4_owned"
+      }
+    ],
+    "enumerate": true,
+    "materialized_rows": false,
+    "map_to": "device_information"
+  },
+  "local": {
+    "interface_ips": [
+      "0.0.0.0",
+      "127.0.0.1",
+      "97.95.64.87",
+      "71.86.186.130",
+      "192.168.47.1"
+    ],
+    "interface_count": 5,
+    "wildcard_bind": "0.0.0.0",
+    "full_space_on_box": true,
+    "enumerated_total": 4294967296
+  },
+  "counts": {
+    "ipv4_owned_total": 4294967296,
+    "ipv4_enumerated_total": 4294967296,
+    "local_ipv4_enumerated": 4294967296,
+    "planet_dhcp_total": 4294967296,
+    "planet_dns_total": 4294967296,
+    "planet_lease_total": 8589934592,
+    "local_dhcp_leases": 4294967296,
+    "local_dns_leases": 4294967296
+  },
+  "sample": [
+    {
+      "ip": "0.0.0.0",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": true
+    },
+    {
+      "ip": "0.0.0.1",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false
+    },
+    {
+      "ip": "10.0.0.1",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false
+    },
+    {
+      "ip": "127.0.0.1",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": true
+    },
+    {
+      "ip": "192.168.0.1",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false
+    },
+    {
+      "ip": "192.168.47.1",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": true
+    },
+    {
+      "ip": "224.0.0.1",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false
+    },
+    {
+      "ip": "255.255.255.254",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false
+    },
+    {
+      "ip": "255.255.255.255",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false
+    },
+    {
+      "ip": "97.95.64.87",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": true
+    },
+    {
+      "ip": "71.86.186.130",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": true
+    },
+    {
+      "ip": "134.24.97.132",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 11
+    },
+    {
+      "ip": "146.73.36.144",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 12
+    },
+    {
+      "ip": "158.121.231.156",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 13
+    },
+    {
+      "ip": "170.170.170.168",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 14
+    },
+    {
+      "ip": "182.219.109.180",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 15
+    },
+    {
+      "ip": "195.12.48.192",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 16
+    },
+    {
+      "ip": "207.60.243.204",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 17
+    },
+    {
+      "ip": "219.109.182.216",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 18
+    },
+    {
+      "ip": "231.158.121.228",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 19
+    },
+    {
+      "ip": "243.207.60.240",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 20
+    },
+    {
+      "ip": "255.255.255.252",
+      "kind": "ipv4",
+      "dhcp_lease": true,
+      "dns_lease": true,
+      "authority": "hostess7",
+      "enumerated": true,
+      "owned": true,
+      "local": false,
+      "stride_index": 21
+    }
+  ],
+  "policy": {
+    "enumerate_addresses": true,
+    "own_full_space": true,
+    "enumerate_locally": true,
+    "enumerate_planet": true,
+    "dhcp_lease_per_address": true,
+    "dns_lease_per_address": true,
+    "wildcard_bind": true,
+    "scope": "0.0.0.0/0"
+  },
+  "api": "/api/field-ipv4-enumerate"
+}

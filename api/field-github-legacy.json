@@ -1,0 +1,103 @@
+{
+  "ok": true,
+  "schema": "field-github-legacy-panel/v1",
+  "title": "GitHub legacy secure lane \u2014 old stack + old browsers, stable open connection",
+  "motto": "All of GitHub stays open \u2014 canonical + legacy repos \u2014 TLS secure, old clients welcome",
+  "updated": "2026-07-06T00:42:31Z",
+  "boss": "hostess7",
+  "stable_connection": false,
+  "github_always": {
+    "schema": "field-github-legacy-probe/v1",
+    "updated": "2026-07-06T00:42:31Z",
+    "ok": true,
+    "stable": false,
+    "always_open": true,
+    "open_count": 2,
+    "canonical_open": 2,
+    "legacy_open": 0,
+    "legacy_total": 5,
+    "total_probed": 2,
+    "total_catalog": 33,
+    "fast": true,
+    "secure_legacy": {
+      "tls_required": true,
+      "allow_old_user_agents": true,
+      "pages_mirror_when_repo_slow": true,
+      "probe_methods": [
+        "HEAD",
+        "GET_RANGE",
+        "GET"
+      ],
+      "fast_sample_legacy": 5
+    },
+    "endpoints": [
+      {
+        "id": "api_github",
+        "url": "https://api.github.com",
+        "role": "api",
+        "legacy": false,
+        "ok": true,
+        "status": 200,
+        "elapsed_ms": 126,
+        "method": "GET",
+        "rate_limited": true,
+        "always_open": true,
+        "pages_fallback": "https://zacharygeurts.github.io/Hostess7/api/pages-update-status.json",
+        "pages_fallback_ok": true,
+        "via_pages_mirror": true,
+        "rate_limit_bypass": true,
+        "shard": "field-loopback",
+        "live": true
+      },
+      {
+        "id": "github_com",
+        "url": "https://github.com",
+        "role": "canonical_git",
+        "legacy": false,
+        "ok": true,
+        "status": 200,
+        "elapsed_ms": 266,
+        "method": "HEAD",
+        "probe_chain": "HEAD",
+        "always_open": true,
+        "shard": "field-loopback",
+        "live": true
+      }
+    ],
+    "always_allow_domains": [
+      "github.com",
+      "api.github.com",
+      "raw.githubusercontent.com",
+      "codeload.github.com",
+      "objects.githubusercontent.com",
+      "github.io",
+      "githubassets.com",
+      "githubusercontent.com"
+    ],
+    "traffic_shard": {
+      "offload_pct": 90.0,
+      "host_share_pct": 10.0,
+      "active_shard": "field-loopback",
+      "field_nodes": 1,
+      "live_batch": 2,
+      "cached_rows": 0
+    }
+  },
+  "catalog_count": 33,
+  "always_allow_domains": [
+    "github.com",
+    "api.github.com",
+    "raw.githubusercontent.com",
+    "codeload.github.com",
+    "objects.githubusercontent.com",
+    "github.io",
+    "githubassets.com",
+    "githubusercontent.com"
+  ],
+  "api": "/api/field-github-legacy",
+  "fast": true,
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-06T00:42:31Z",
+  "pages_base": "/Hostess7"
+}

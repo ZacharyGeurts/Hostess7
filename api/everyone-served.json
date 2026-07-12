@@ -1,0 +1,31 @@
+{
+  "ok": false,
+  "updated": "2026-07-10T22:17:36Z",
+  "motto": "EVERYONE SERVED · probes 10/10 · PORT HANGUPS · DNS UP · DHCP UP · C2 UP",
+  "everyone_served": true,
+  "no_port_hangups": false,
+  "probes_ok": 10,
+  "probes_total": 10,
+  "ports": {
+    "udp_53": true,
+    "udp_67": true,
+    "tcp_9477": true,
+    "tcp_9481": false,
+    "hangups_n": 1,
+    "critical_ok": false,
+    "connect_probes": [
+      {
+        "port": 9477,
+        "ok": false,
+        "error": "timed out"
+      },
+      {
+        "port": 9481,
+        "ok": false,
+        "error": "[Errno 111] Connection refused"
+      }
+    ]
+  },
+  "api": "/api/everyone-served",
+  "ironclad_cite": "ironclad:everyone-served-no-hangups:1"
+}

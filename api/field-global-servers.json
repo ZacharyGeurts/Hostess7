@@ -1,0 +1,86 @@
+{
+  "ok": true,
+  "schema": "field-global-servers/v1",
+  "updated": "2026-07-05T23:52:38Z",
+  "title": "2500 global servers \u2014 unique metros, heterogeneous QEMU machines",
+  "motto": "Unique places \u00b7 different machines \u00b7 QEMU where it works \u2014 not only official racks",
+  "target_servers": 2500,
+  "deployed_servers": 2500,
+  "unique_locations": 2500,
+  "metro_count": 125,
+  "regions_live": [
+    "af-south",
+    "ap-northeast",
+    "ap-southeast",
+    "ca-central",
+    "eu-central",
+    "eu-west",
+    "in-south",
+    "local",
+    "me-central",
+    "oc-pacific",
+    "sa-east",
+    "us-east",
+    "us-west"
+  ],
+  "regions_live_count": 13,
+  "machine_profiles": {
+    "official": 0,
+    "unofficial": 2500,
+    "working": [
+      {
+        "id": "microvm",
+        "qemu_machine": "microvm",
+        "cpu": "qemu64",
+        "official": false,
+        "cool": true,
+        "kvm": true,
+        "probed": true
+      },
+      {
+        "id": "isapc",
+        "qemu_machine": "isapc",
+        "cpu": "486",
+        "official": false,
+        "cool": true,
+        "kvm": true,
+        "probed": true
+      },
+      {
+        "id": "pc-lite",
+        "qemu_machine": "pc",
+        "cpu": "qemu64",
+        "official": false,
+        "cool": true,
+        "kvm": true,
+        "probed": true
+      },
+      {
+        "id": "edge-bind",
+        "qemu_machine": "microvm",
+        "cpu": "qemu64",
+        "official": false,
+        "cool": true,
+        "edge": true,
+        "kvm": true,
+        "probed": true
+      }
+    ],
+    "kvm": true
+  },
+  "host_pool": 1127,
+  "ammodrive_cloud_gb": 227500,
+  "api": "/api/field-global-servers",
+  "product": "AmmoDrive",
+  "pages": true,
+  "lane": "github-mirror",
+  "writes_to_sovereign": false,
+  "sovereign_brain_unhooked": true,
+  "pages_read_only": true,
+  "canonical_api": "/api/field-global-servers",
+  "api_aliases": [
+    "/api/global-servers"
+  ],
+  "loopback_upgrade": "http://127.0.0.1:9477",
+  "exported": "2026-07-06T00:43:13Z"
+}

@@ -1,0 +1,107 @@
+:root {
+  --al-bg: #120810;
+  --al-panel: #1a0f14;
+  --al-edge: rgba(255, 120, 160, 0.22);
+  --al-text: #fff0f4;
+  --al-dim: #c9a0ad;
+  --al-live: #ef4444;
+  --al-font: system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: radial-gradient(ellipse 80% 60% at 70% 0%, rgba(220, 60, 100, 0.18), transparent 55%), var(--al-bg);
+  color: var(--al-text);
+  font-family: var(--al-font);
+}
+
+.al-root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.al-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--al-edge);
+  background: linear-gradient(90deg, rgba(40, 12, 24, 0.9), transparent);
+}
+
+.al-avatar {
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(255, 100, 140, 0.45), 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+.al-eyebrow {
+  margin: 0 0 4px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--al-live);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.al-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--al-live);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+  animation: al-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes al-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(0.88); }
+}
+
+.al-head h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.al-sub {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--al-dim);
+}
+
+.al-open {
+  margin-left: auto;
+  padding: 9px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--al-edge);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--al-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.al-open:hover {
+  border-color: rgba(255, 120, 160, 0.5);
+  background: rgba(255, 80, 120, 0.12);
+}
+
+.al-stage {
+  flex: 1;
+  min-height: 0;
+  padding: 12px;
+}
+
+.al-stage iframe {
+  width: 100%;
+  height: calc(100vh - 110px);
+  min-height: 360px;
+  border: 1px solid var(--al-edge);
+  border-radius: 12px;
+  background: #000;
+}

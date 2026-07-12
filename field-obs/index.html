@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-field-surface="broadcaster-launcher">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Broadcaster</title>
+  <meta name="description" content="AmmoOS Broadcaster — OBS Studio rebuilt from source. Native shell only." />
+  <link rel="icon" href="/Hostess7/assets/queen-prog-broadcaster.png" type="image/png" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-broadcaster.css?v=7" />
+</head>
+<body data-pages-runtime="1" class="bc-launcher-body">
+  <main class="bc-launcher" id="bc-launcher">
+    <img class="bc-launcher-icon" src="/Hostess7/assets/queen-prog-broadcaster.png" alt="" width="64" height="64" />
+    <h1 class="bc-launcher-title">Broadcaster</h1>
+  <p class="bc-launcher-sub">OBS Studio rebuilt from source · verbatim interface · Broadcaster for AmmoOS</p>
+  <p class="bc-launcher-status" id="bc-status">Starting Broadcaster…</p>
+  <div class="bc-launcher-actions">
+      <button type="button" class="bc-launcher-btn bc-launcher-btn--primary" id="bc-launch">Open Broadcaster</button>
+      <button type="button" class="bc-launcher-btn" id="bc-record">Record</button>
+      <button type="button" class="bc-launcher-btn" id="bc-studio">Studio Mode</button>
+      <button type="button" class="bc-launcher-btn" id="bc-build">Prepare source build</button>
+    </div>
+    <dl class="bc-launcher-meta" id="bc-meta"></dl>
+    <p class="bc-launcher-hint" id="bc-hint" hidden></p>
+  </main>
+  <script src="/Hostess7/assets/field-broadcaster.js?v=7" defer></script>
+  <script src="/Hostess7/pages-field-boot.js"></script>
+  <script src="/Hostess7/pages-c2-wire.js"></script>
+  <script src="/Hostess7/pages-queen-rtx-bridge.js"></script>
+  <script src="/Hostess7/pages-ammonet-wire.js"></script>
+  <script src="/Hostess7/pages-github-brain-wire.js"></script>
+  <script src="/Hostess7/pages-hostess7-interaction-wire.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+#field-inspector.field-inspector {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999;
+  background: #111;
+  color: #0f0;
+  padding: 8px 12px;
+  border: 1px solid #0f0;
+  font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  max-width: 380px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  border-radius: 4px;
+}
+
+#field-inspector.field-inspector--integrated {
+  position: static;
+  z-index: auto;
+  width: 100%;
+  max-width: none;
+  margin: 8px 0 0;
+  border-radius: 8px;
+  border-color: rgba(94, 207, 122, 0.35);
+  background: linear-gradient(180deg, rgba(8, 14, 10, 0.96), rgba(4, 8, 6, 0.98));
+  box-shadow: inset 0 1px 0 rgba(94, 207, 122, 0.08);
+}
+
+#field-inspector.field-inspector--integrated .field-inspector-body {
+  max-height: min(52vh, 520px);
+  overflow-y: auto;
+}
+
+#field-inspector.field-inspector--integrated .field-inspector-toggle {
+  display: none;
+}
+
+.field-clarity-fold {
+  border: 1px solid var(--border, #3d4f32);
+  border-radius: 10px;
+  background: rgba(8, 12, 10, 0.55);
+}
+
+.field-clarity-fold summary {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--internet, #5ecf7a);
+}
+
+.field-clarity-fold[open] summary {
+  border-bottom: 1px solid var(--border, #3d4f32);
+}
+
+.field-clarity-hint {
+  margin: 0;
+  padding: 10px 16px 0;
+  font-size: 0.92rem;
+  color: var(--muted, #9aaa8c);
+}
+
+.field-clarity-mount {
+  padding: 0 12px 12px;
+}
+
+#field-inspector.collapsed .field-inspector-body {
+  display: none;
+}
+
+.field-inspector-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.field-inspector-title {
+  flex: 1;
+  color: #0ff;
+  letter-spacing: 0.04em;
+}
+
+.field-inspector-ver {
+  color: #6a6;
+  font-size: 10px;
+}
+
+.field-inspector-toggle {
+  background: #222;
+  color: #0f0;
+  border: 1px solid #0a0;
+  padding: 2px 6px;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+}
+
+.field-inspector-toggle:hover {
+  background: #1a3a1a;
+}
+
+#field-search {
+  width: 100%;
+  box-sizing: border-box;
+  background: #222;
+  color: #0f0;
+  border: 1px solid #063;
+  padding: 4px 6px;
+  margin-bottom: 6px;
+  font: inherit;
+}
+
+#field-search:focus {
+  outline: none;
+  border-color: #0f0;
+}
+
+.field-list details {
+  margin: 4px 0;
+}
+
+.field-list summary {
+  color: #0ff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.field-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.field-row:hover,
+.field-row.active {
+  background: #1a2a1a;
+}
+
+.field-row.hidden {
+  display: none;
+}
+
+.field-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.field-live {
+  color: #9f9;
+  font-size: 10px;
+  max-width: 42%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.field-live.missing {
+  color: #666;
+}
+
+.field-live.ready {
+  color: #0f0;
+}
+
+.field-live.warn {
+  color: #fa0;
+}
+
+.field-explain {
+  margin-bottom: 6px;
+  padding: 6px 8px;
+  background: #1a1a1a;
+  border: 1px solid #063;
+  line-height: 1.35;
+}
+
+.field-explain.hidden {
+  display: none;
+}
+
+.field-explain .field-explain-title {
+  color: #0ff;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.field-explain .field-explain-tip {
+  color: #bdb;
+  margin-bottom: 4px;
+}
+
+.field-explain .field-explain-value {
+  color: #9f9;
+  word-break: break-word;
+}
+
+.field-explain .field-explain-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+}
+
+.field-explain button {
+  background: #222;
+  color: #0f0;
+  border: 1px solid #0a0;
+  padding: 2px 8px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.field-explain button:hover {
+  background: #1a3a1a;
+}

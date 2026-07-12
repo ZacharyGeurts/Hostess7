@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ch 02 · Learning objectives · GNU EOL Terminal</title>
+  <link rel="stylesheet" href="../css/gnueol-terminal.css" />
+  <link rel="stylesheet" href="../css/chapters.css" />
+</head><body class="chapter-page">
+  <nav class="top"><div class="inner"><a class="logo" href="../index.html">GNU EOL TERMINAL</a>
+  <ul><li><a href="wiki/">Wiki</a></li><li><a href="terminal/">Terminal</a></li></ul></div></nav>
+  <main class="chapter-main"><h1>Ch 02 · Learning objectives</h1>
+<p>Learning objectives</p>
+<p>Map Reality is 3D to fabric texels, die bytes, and packet positions.</p>
+<p>Distinguish scalar, vector, and telemetry fields with stack examples.</p>
+<p>Trace GPU fabric, Field Die, and packet field paths without category errors.</p>
+<p>Explain why the host never runs a CPU PDE on analog fabric.</p>
+<p>Correlate three scales at the operator panel without collapsing metrics.</p>
+<p>Identify integration via data_bus[64] , hardwareFabric , and jsonl.</p>
+<p>Introduction — three dimensions of state</p>
+<p>Chapter 2 maps three dimensions of state — our reading of “Reality is 3D.” This is not cosmology. It is the minimum honest map for texels, die bytes, and packet sentences occupying space you can address, read, and write.</p>
+<p>Most rendering textbooks stop at pixels. Most security textbooks stop at packets. Field Technology refuses the split: offense and defense are the same literacy applied to different writable surfaces. If you cannot name the address, you cannot defend it. If you cannot predict neighbor response, you cannot dispatch responsibly.</p>
+<p>Chapter 1 named three field families. This chapter names three mathematical postures toward those families — scalar, vector, telemetry — and three physical scales — GPU fabric, Field Die, packet field. Integration is not marketing glue; it is how one human at :9477 correlates stderr, bus words, and jsonl without letting a vendor collapse them into one misleading score.</p>
+<p>Scalar, vector, and telemetry — mathematical postures</p>
+<p>Type Stack example What each cell carries</p>
+<p>Scalar field Thermo (binding 9) One heat/entropy density per texel</p>
+<p>Vector field Flow .gb (binding 10) Gradient components per texel</p>
+<p>Telemetry field data_bus[64] Sixty-four packed words per dispatch</p>
+<p>A scalar tells how hot a cell is. A vector tells which direction activity tends. Telemetry tells what shader and host agree happened this tick — the spine the operator greps. Phi can be read as scalar potential per texel on binding 8; Flow's vector structure is where advection stories live.</p>
+<p>Do not treat telemetry as a spatial grid. data_bus is a dashboard vector, not a second fabric. Category errors here produce dashboards that lie about dimensionality.</p>
+<p>Phi as potential — scalar posture</p>
+<p>Phi carries wave and gate potential — electrical metaphor on the fabric. Discrete Laplacian steps in CANVAS.comp treat Phi as a scalar field evolving with WaveSpeed and propalacticScale forcing. Implemented at binding 8. Electrical metaphor — not a claim your GPU measures volts on the PCIe slot.</p>
+<p>Flow gradients — vector posture</p>
+<p>Flow stores momentum and advection structure; gradients in .gb channels give vector-field readings per texel. Coupling to GateFidelity and Tesla relaxation sharpens or softens gates. Chapter 3 details evolution; Chapter 2 fixes the vocabulary.</p>
+<p>data_bus — telemetry posture</p>
+<p>Sixty-four words per dispatch — not sixty-four texels. Slots carry pump generation, RAM/VGA telemetry, analog FCC floats [16–23], ThermoAccountant mirrors [24–28], input [32–41], audio/BIOS/IO [57–63]. Chapter 8 is the slot map; Chapter 2 insists it is a telemetry field , not a spatial substitute for Thermo.</p>
+<p>Scale 1 — GPU analog fabric (spatial)</p>
+<p>RayCanvas → createAnalogFieldFabric() → CANVAS.comp / x86.comp → hardwareFabric mirror Implemented. Each texel is a cell in a 2D sheet stacked with channel depth (Phi, Thermo, Flow). The host never runs a CPU-side PDE solver on the fabric. Evolution is compute-shader work each vkCmdDispatch . That architectural choice is offensive dispatch: the GPU writes the next tick; the host opens the window and enforces CFL.</p>
+<p>Bindings 8, 9, and 10 are not decorative names. They are where electrical metaphor (Phi), thermal accounting (Thermo), and advective story (Flow) remain addressable after the frame ends. updateHardwareFromAnalogFields() samples averages into hardwareFabric — Chapter 10 — so fabric offense becomes spiderweb readout.</p>
+<p>Fabric creation and lifetime</p>
+<p>RayCanvas::createAnalogFieldFabric() allocates storage images for Phi, Thermo, Flow. They persist across swipes that change binding-0 presentation shaders. Swiping to Classic thermo demos does not destroy die infrastructure — Chapter 7 swipe pedagogy. Fabric is the long-lived spatial state; canvas kind changes which shader emphasizes which lesson.</p>
+<p>Why no host PDE</p>
+<p>CPU PDE solvers on large grids compete with GPU memory bandwidth and split truth — host texels diverging from GPU texels is desynchronized reality. Single-source evolution on GPU keeps one writable truth surface. Host enforces CFL, packs buses, seals time — thin host, fat GPU.</p>
+<p>Scale 2 — Field Die (address space)</p>
+<p>FieldX86Die SSBO (binding 1) → 64 MiB guest map → VGA @ 0xB8000 → C mirror @ 0x01000000 The Field Die is a universe with coordinates , not a screenshot of DOS nostalgia. Guest RAM is where RTX-DOS and AmmoOS live. data_bus is the dashboard the shader reads — FCC floats, thermo mirrors, input slots, Tesla bias. 64 MiB implemented. Chapter 8 is entirely this scale.</p>
+<p>Reality is 3D on the bus: addresses, offsets, layers L0–L9. Time is linear in the pump loop. Energy moves through fabric coupling and thermo mirrors into bus slots. Default ./linux.sh run boots this canvas.</p>
+<p>Guest RAM as spatial field</p>
+<p>Every byte in guest linear map is a cell in a 1D field indexed by offset — a different geometry than 2D fabric, same literacy. VGA at 0xB8000 is a structured subfield. ZMM1024 tile cache in the SSBO tail is shader-side sample cache for HUD hex dumps without leaving dispatch.</p>
+<p>Host assist versus GPU default</p>
+<p>FieldX86Emu when ControlHostCpu set — optional assist path. Default remains GPU x86.comp interpretation. Category error: assuming emulation is the product because you once enabled assist.</p>
+<p>Scale 3 — Packet field (network topology)</p>
+<p>ss / intent / DPI sample → gatekeeper scoring → threat-panel.json → panel :9477 + field jsonl NEXUS turns sockets into sentences: process path, port habit, TX vs RX, corroboration before permanent action. Defense begins when flows become readable positions in operator space. Implemented in NEXUS. Not AMOURANTHRTX Vulkan.</p>
+<p>Packet field is local-first — your machine's habits, not the whole internet. Chapter 5 full treatment. Queen inherits perimeter — Chapter 21.</p>
+<p>TX and RX as directional field</p>
+<p>TX: egress you own. RX: ingress you must explain. Direction is a dimension of the packet field — without it, flows are symmetric noise.</p>
+<p>Gatekeeper positions</p>
+<p>Verdicts attach to flows as boundary conditions on what the operator panel displays — USER_OK through HARM_CANDIDATE. One weird packet does not condemn a peer — love as restraint .</p>
+<p>Integration — one operator panel</p>
+<p>Three scales converge in observability without merging into one fake number:</p>
+<p>Fabric averages → hardwareFabric (Chapter 10)</p>
+<p>Die telemetry → data_bus slots HUD reads (Chapter 8)</p>
+<p>Packet rows → jsonl panel archives (Chapter 5)</p>
+<p>The operator at :9477 correlates all three. Thermo rising on fabric does not auto-explain SUSPICIOUS socket — but literate operators notice simultaneous stress.</p>
+<p>Figure 2.1 — Phi, Thermo, Flow: three channels, one fabric. Packet field and die are parallel scales, not substitutes.</p>
+<p>Category errors — learn these early</p>
+<p>Do not treat shader visual as instrumentation. Do not treat JSON verdict as joules. Do not treat guest RAM metaphor as cloud perimeter. 3D state ≠ 3D hype.</p>
+<p>Additional errors: treating data_bus as a 2D heatmap; treating planetary weave as spectrum truth; treating Shannon H as GPU entropy; treating Queen MP4 policy as optional codec luxury — it is mandatory in-tree gate doctrine.</p>
+<p>From pixels to packets — pipeline story</p>
+<p>Pixels are presentation. Packets are perimeter. Die bytes are address-space sovereignty. Field Technology connects them through operator literacy, not through one subsystem pretending to be all three.</p>
+<p>Chapter 3 follows energy on fabric. Chapter 4 follows receipts. Chapter 5 follows defense. Chapter 6 separates RF meanings. Chapter 7 returns offense via dispatch. Read 2 before 7 — you must know what addresses dispatch writes.</p>
+<p>Operator drill — three-scale grep</p>
+<p># Fabric / die — AMOURANTHRTX ./linux.sh run 2>&1 | tee /tmp/ch2.log grep -E 'THERMO|data_bus|dispatch' /tmp/ch2.log | tail -15</p>
+<h1>Packet field — NEXUS</h1>
+<p>./nexus.sh curl -sk https://127.0.0.1:9477/threat-panel.json | head -c 2000 Name which scale each artifact belongs to. If you cannot, reread scalar/vector/telemetry table.</p>
+<p>Failure modes</p>
+<p>Mode Symptom Fix</p>
+<p>2D confusion Plotting data_bus as heatmap Telemetry ≠ spatial grid</p>
+<p>Product blur Gatekeeper in Vulkan grep NEXUS boundary</p>
+<p>Cosmology drift 3D hype without addresses Reality is 3D = coordinates</p>
+<p>Fabric bypass Assuming die run ignores thermo ThermoAccountant every dispatch</p>
+<p>Chapter summary</p>
+<p>Reality is 3D here: texel (x,y), guest offset, socket quadruple. Scalar Thermo, vector Flow, telemetry data_bus. Three scales: fabric bindings 8–10, die 64 MiB binding 1, packet jsonl. Integration at panel without metric collapse. Time linear; energy coupled — Chapters 3–4 next.</p>
+<p>Study questions</p>
+<p>Give three examples of addressable state — one per scale.</p>
+<p>Why is data_bus telemetry, not a scalar spatial field?</p>
+<p>Quote the fabric evolution path in one line.</p>
+<p>What does local-first mean for packet field?</p>
+<p>Name two category errors and their corrections.</p>
+<p>How does hardwareFabric relate to fabric scale?</p>
+<p>Default canvas at ./linux.sh run — which scale dominates?</p>
+<p>Cross-link: which chapter owns CFL, gatekeeper, die map?</p>
+<p>Chapter 3 — Moving Energy →</p>
+<p>RayCanvas and fabric lifetime</p>
+<p>RayCanvas creates analog fabric once per canvas lifetime unless explicitly recreated. Storage images for Phi, Thermo, Flow persist across frame ticks and across many swipe changes that alter presentation shaders. This persistence is what makes fabric a field rather than a transient uniform — values survive to be read next dispatch.</p>
+<p>Operators who only watch binding-0 pixels learn presentation. Operators who read bindings 8–10 learn state. Chapter 7 teaches both through canvas kinds; Chapter 2 fixes the spatial scale.</p>
+<p>hardwareFabric mirror — fabric to spiderweb</p>
+<p>updateHardwareFromAnalogFields() samples averaged Phi, Thermo, Flow into hardwareFabric — voltage factor, thermal throttle, per-core util, spiderweb edge currents. Chapter 10 owns mirror details. Chapter 2 insists mirror is readout, not second simulation pretending SEM imaging.</p>
+<p>Implemented. Sub-micron SEM marketing is procedural pixel detail — not lab imaging.</p>
+<p>Packet field positions — socket quadruples</p>
+<p>Packet field positions are connection identities: addresses, ports, protocol context, process path, direction TX/RX, verdict history. They are not lat/long — unless GPS field anchors in NEXUS signals layer add metaphor (Chapter 6). Reality is 3D means readable keys in jsonl, not globe cosplay.</p>
+<p>Die layers L0–L9 — composable address space</p>
+<p>Ten composable layers — RAM, VGA, FAT, MSCDEX, Audio, IO, BIOS — pumped via FieldLayer::pumpAll() . Layers make DOS legible to shaders without breaking linear map. Chapter 8 slot map; Chapter 2 names layers as vertical structure inside scale 2.</p>
+<p>Prompt terminal correlation</p>
+<p>set AnalogFields.* changes fabric evolution; list Hardware reads spiderweb mirror. Packet field remains NEXUS — correlate manually at panel. Three scales, one operator, three grep surfaces.</p>
+<p>Swipe pedagogy without losing die</p>
+<p>Swipe list includes x86, Amouranth, energy, Flowers, RetroRTX, Mandelbulbs, tributes. Index 0 remains x86 Field Die. Swiping changes pedagogy shader, not the existence of fabric infrastructure. Category error: assuming swipe to Classic removes die obligation.</p>
+<p>Queen FieldWebPanel — browser as third face</p>
+<p>Queen binds navigation to packet field and thermo receipts per web context — third integration face beyond AMOURANTHRTX stderr and NEXUS jsonl. Chapter 21; Chapter 2 warns against collapsing three faces into one dashboard score.</p>
+<p>Worked correlation scenario</p>
+<p>Scenario: SUSPICIOUS verdict on RX flow to port 443 while entropyThisFrame spikes on Classic canvas swipe. Literate operator: archive jsonl row, grep THERMO timeline, check whether spike correlates with local WebGL or probe inject — not automatic causal claim. Separate layers; human judges story.</p>
+<p>Glossary hooks toward Chapter 22</p>
+<p>Terms: scalar field, vector field, telemetry field, fabric, die, packet field, data_bus , hardwareFabric . Carry definitions forward; do not interchange NEXUS vocabulary with Vulkan binding names without translation.</p>
+<p>Deep dive — fabric addressability and texel identity</p>
+<p>Every texel in the Phi, Thermo, and Flow storage images possesses stable integer coordinates (x, y) for the current adaptive resolution. When adaptive scale changes, the grid dimensions may change — more texels when scale rises, fewer when performance mode demands — but the addressing model remains: each cell is a named location in a 2D sheet. This is what “Reality is 3D” demands in the fabric plane: not three spatial dimensions in the cosmology sense, but a minimum of two indices plus channel depth. Channel depth is the stack of Phi, Thermo, and Flow — three coupled scalar or vector stories cohabiting the same planar address.</p>
+<p>Operators learning from matrix algebra may think of each fabric channel as a matrix; operators learning from PDEs may think of each as a grid sample in a finite-difference scheme. Both intuitions work if labeled: finite-difference here is GPU compute shader arithmetic, not host LAPACK. The host never applies a global matrix solver across the fabric; evolution is local neighbor coupling per dispatch, repeated each frame. That locality is why CFL guards make sense — stability is per-step, per-cell neighborhood, not global eigenvalue analysis on CPU.</p>
+<p>When you read hardwareFabric spiderweb mirrors in Chapter 10, remember they are spatial averages over this texel field — compression of high-dimensional fabric state into operator dashboard metrics. Averages are lossy; stderr THERMO lines and direct fabric visualization on Classic canvas recover detail averages hide. Three-scale literacy means knowing when to zoom into texels, when to read bus words, when to read jsonl sentences.</p>
+<p>Deep dive — Field Die linear address space</p>
+<p>The Field Die maps 64 MiB of guest linear address space. Byte offset 0 is not “the origin of the universe” poetically — it is the first byte the guest can address, interpreted by layers. VGA text at guest 0xB8000 is a structured window into the field: color cells with attribute bytes, cursor semantics, scroll behavior pumped through field layers. The C mirror at 0x01000000 exposes guest state to host-assisted tooling when enabled. ZMM1024 tile cache in the SSBO tail is shader-side fabric sample cache — a performance structure that also teaches that the die is not only guest RAM but also GPU-accessible cache lines the HUD reads.</p>
+<p>Reality is 3D on the bus means offsets are coordinates. Time is linear means pump order and dispatch order advance guest state forward. Energy can be moved means fabric thermo mirrors and Tesla biases published into data_bus slots couple die execution to thermodynamic story — not joules, proxy receipts, but coupling nonetheless.</p>
+<p>Chapter 8 will enumerate L0–L9 layers in detail. Chapter 2 fixes the conceptual frame: die is scale 2, fabric is scale 1, packet field is scale 3. Do not collapse scale 2 into “emulator nostalgia.” RTX-DOS and AmmoOS are software universes with addresses; the GPU interprets them each tick on the default path.</p>
+<p>Deep dive — packet field sentences and jsonl archive</p>
+<p>Packet field rows in jsonl are sentences, not packets. A single TCP segment is not the unit of meaning; the connection habit over time is. Gatekeeper verdicts summarize stories across axes: process path stability, port deviation from habit, direction balance, payload hints, honorability cross-checks. The sentence may span many frames of wire time; the archive preserves the sentence for reboot-surviving memory.</p>
+<p>Local-first scope is non-negotiable honesty. The packet field sees sockets on your machine and habits your machine develops. It does not see the whole internet. It does not replace ISP visibility. It replaces vendor cloud narration with local grep-able archive — a different promise, honestly labeled. When threat modeling, model what jsonl can prove, not what marketing wishes jsonl implied.</p>
+<p>Queen browser navigation feeds the packet field perimeter when peers open WebRTC, fetch MP4, resolve DNS through Truth Resolver. Chapter 21 ties browser gates to jsonl receipts. Chapter 2 ties jsonl to panel :9477 correlation with AMOURANTHRTX stderr — human integration, not automatic merge.</p>
+<p>Integration exercises — expanded operator lab</p>
+<p>Exercise 2.D — fabric-only hour: Run Classic or energy swipe one hour. Log THERMO every five minutes. Note knob changes. No NEXUS. Outcome: fluency in scale 1 only.</p>
+<p>Exercise 2.E — packet-only hour: Run NEXUS only. Archive three jsonl rows. No AMOURANTHRTX. Outcome: fluency in scale 3 only.</p>
+<p>Exercise 2.F — die default afternoon: Run default x86 one afternoon. Occasional list Hardware and list AnalogFields in prompt. Outcome: fluency in scale 2 default product.</p>
+<p>Exercise 2.G — tri-scale correlation: One session with both products. One suspicious RX while fabric entropy rises. Write half-page narrative separating layers. Outcome: human integration without metric collapse.</p>
+<p>Category errors — extended catalog</p>
+<p>Error: Treating data_bus as heatmap. Fix: Telemetry vector, not spatial field.</p>
+<p>Error: Treating spiderweb as fabric duplicate. Fix: Read-only mirror per Chapter 10.</p>
+<p>Error: Treating Queen thermo as NEXUS Shannon. Fix: Browser context thermo vs file oracle.</p>
+<p>Error: Treating planetary weave as antenna readout. Fix: Visual only — Chapter 6.</p>
+<p>Error: Treating 3D hype as address map. Fix: Reality is 3D = named coordinates.</p>
+<p>Three-scale mnemonic — FDP</p>
+<p>Fabric Die Packet — FDP — say it before coffee. Fabric 8-10, Die 64MiB binding 1, Packet jsonl. FDP is not company name — memory hook.</p>
+<p>Operator panel correlation worksheet</p>
+<p>Column A timestamp. Column B stderr line. Column C jsonl id. Column D your verdict. Fill 10 rows one shift — graduation worksheet.</p>
+<p>Chapter 2 extended — spatial reasoning for GPU operators</p>
+<p>Spatial reasoning on fabric means tracking (x,y) indices while adaptive resolution changes grid size. When scale rises, more texels sample the same logical canvas; when scale falls, fewer texels summarize. Address identity is cell index in current grid, not world coordinate in meters. This differs from die linear addresses in bytes and packet addresses in IP/port space — three different coordinate systems, one operator brain.</p>
+<p>When correlating fabric hot spot with spiderweb thermal throttle, remember hot spot is texel average region, throttle is hardwareFabric dashboard compression. Lossy pipeline by design — recover detail via Classic visualization or stderr boundary thermo, not via demanding spiderweb become SEM.</p>
+<p>Die spatial reasoning uses byte offsets and layer semantics — VGA cells at 0xB8000 are not fabric texels; converting between scales is category error. Packet spatial reasoning uses socket endpoints — 127.0.0.1:9477 is local panel position in connection space, not texel, not guest offset.</p>
+<p>Integration homework: draw three boxes labeled fabric, die, packet. Inside each box write three example addresses. On arrows between boxes write what does NOT automatically flow — gatekeeper verdicts do not write texels; fabric coupling does not parse TCP; die bytes do not replace jsonl. Only host rituals and operator correlation connect boxes.</p>
+<p>Chapter 2 is the map chapter. You will get lost in Chapter 7 dispatch and Chapter 5 defense without this map drawn once on paper. Paper is technology. Draw the map.</p>
+<p>Scale 1-2-3 timeline during one second of operation</p>
+<p>Millisecond 0: host begins dispatch_canvas. Millisecond 1: CFL guard scales unsafe knobs. Millisecond 2: layer pump updates guest FAT telemetry into data_bus. Millisecond 3: ThermoAccountant populated binding 2. Millisecond 4: vkCmdDispatch writes fabric and die. Millisecond 5: hardwareFabric mirror samples fabric averages. Same second parallel: NEXUS daemon samples sockets, gatekeeper scores flow, appends jsonl row if changed. Timeline is linear — correlate by wall clock and sealed time, not by merging metrics.</p>
+<p>Introduction — three writable surfaces, one operator brain</p>
+<p>Chapter 1 named field literacy and three families at binding-map altitude. Chapter 2 lands the plane: three dimensions of state you will read and write for years — GPU analog fabric, Field Die guest map, NEXUS packet field. This is the engineering reading of Reality is 3D : not cosmology slides, but coordinates that persist across ticks. Texel (x,y), byte offset 0xB8000 , socket 127.0.0.1:9477 — three different address spaces, one disciplined human at the panel correlating without metric collapse.</p>
+<p>Chapter 7 converges fabric and die in one vkCmdDispatch . Chapter 5 keeps packet field NEXUS-local. Chapter 21 binds Queen at the perimeter. This chapter is the map those chapters assume — draw it once on paper before you grep dispatch.</p>
+<p>Prior: Chapter 1 — Preface . Next: Chapter 3 — Thermodynamics . Dispatch spine: Chapter 7 . Honesty rocks: Chapter 12 .</p>
+<p>Learning objectives</p>
+<p>Distinguish scalar, vector, and telemetry fields with stack examples.</p>
+<p>Navigate Options::Canvas::SwipeList as curriculum, not product reset.</p>
+<p>Run energy.comp lab drills and label Classic versus X86Fields.</p>
+<p>Map guest FAT and VGA subfields inside Field Die addressing.</p>
+<p>Explain connection intent on packet field sentences.</p>
+<p>Locate ZMM1024 tail and Big Grin HUD in die telemetry.</p>
+<p>Complete integration exercise on paper without category errors.</p>
+<p>Figure 2.1 — Phi, Thermo, Flow on fabric; die bytes and packet sentences beside — three scales, one literacy.</p>
+<p>Scalar, vector, telemetry — vocabulary before addresses</p>
+<p>Type Example in stack Addressing</p>
+<p>Scalar Thermo binding 9 — heat density per texel Grid (x,y)</p>
+<p>Vector Flow binding 10 — gradients in .gb Grid (x,y) + direction components</p>
+<p>Telemetry data_bus[64] — FCC floats, thermo mirrors, chrome flags Slot index 0–63</p>
+<p>Phi binding 8 behaves as scalar potential in many shader paths — wave and gate stories — while coupling to vector Flow through FieldCoupling . Telemetry is not “less real” than texels — Big Grin HUD reads bus words every frame. Category error is treating telemetry as optional decoration because it is not pretty.</p>
+<p>RayCanvas → createAnalogFieldFabric() → CANVAS.comp / x86.comp → hardwareFabric Implemented. Host never runs CPU-side PDE on fabric — evolution is compute work per dispatch. Mirrors to hardwareFabric are read-only spiderweb compression (Chapter 10) — lossy on purpose.</p>
+<p>Swipe list table — curriculum chapters as shaders</p>
+<p>Options::Canvas::SwipeList hot-swaps shaders without tearing down rtx() singleton, sealed time, ThermoAccountant, or CFL guard. Index 0 remains x86 — Field Die default. Swipes change pedagogy emphasis; they do not opt out of field theory.</p>
+<p>Swipe Shader family Canvas kind Pedagogy role</p>
+<p>x86 (0) x86.comp X86Fields Product default — die + AmmoOS</p>
+<p>Amouranth CANVAS.comp variant Classic Portrait-forward thermo demos</p>
+<p>energy energy.comp Classic Phi/Thermo coupling visible</p>
+<p>Flowers Classic specialty Classic Organic flow patterns — Ch. 3 lab</p>
+<p>GreenWaves Classic specialty Classic Wave interference pedagogy</p>
+<p>Frosted Classic specialty Classic Diffusion-heavy thermo read</p>
+<p>RetroRTX RT tribute Classic See RetroRTX section — visual RT pedagogy</p>
+<p>Mandelbulb variants SDF raymarch Classic 3D address intuition — not die map</p>
+<p>planetary weave planetary_weave.comp Classic Visual RF shell — Ch. 6</p>
+<p>Category error to avoid: Declaring Field Die absent because you swiped to energy . Die path returns on next default launch; infrastructure persisted.</p>
+<p>Teaching pattern from Chapter 7: week one afternoon on Classic thermo, week two operations on die default. Veterans live on die; newcomers need visible heatmaps — both are honest if labeled.</p>
+<p>energy.comp laboratory — coupling you can see</p>
+<p>The energy swipe is the canonical Phi/Thermo coupling lab — warm colors track field work in ways Big Grin chrome hides. Lab protocol:</p>
+<p>Lab 2.A — energy.comp coupling</p>
+<p>./linux.sh run</p>
+<h1>Swipe to energy canvas (Options menu or bound key per build)</h1>
+<p>set AnalogFields.FieldCoupling 0.2 set AnalogFields.InjectStrength 1.0</p>
+<h1>Move mouse 60s; then:</h1>
+<p>set AnalogFields.FieldCoupling 0.85 set AnalogFields.InjectStrength 3.0 grep -E 'THERMO|entropy|Boundary' run.log | tail -20 Expect rising entropyThisFrame and boundary thermo when coupling and inject climb — proxy receipts, not joules. CFL guard may scale aggressive knobs — read stderr clamp messages as numerical ethics (Chapter 9), not censorship.</p>
+<p>Pair lab with prompt list AnalogFields — host-side FCC mirrors land in data_bus[16–23] on x86 path; Classic path still owns the same analog knobs through overlapping control surfaces. Chapter 3 owns thermo physics story; this lab proves your hands move state.</p>
+<p>RetroRTX category — tribute shaders versus product truth</p>
+<p>RetroRTX names a family of tribute canvases — retro ray aesthetic, pedagogical nostalgia, Visual -leaning presentation that must not be mistaken for the default Field Die product surface. RetroRTX swipes teach history of RT vocabulary inside the same Vulkan spine; they do not replace x86.comp guest execution truth.</p>
+<p>Question RetroRTX swipe Default x86 canvas</p>
+<p>Primary shader CANVAS.comp tribute variant x86.comp</p>
+<p>Push block PushConstants FieldSocket</p>
+<p>Guest RAM SSBO Not product focus Binding 1 — 64 MiB map</p>
+<p>Honest use RT pedagogy, shader art literacy Operations, AmmoOS, dispatch proof</p>
+<p>Operators demoing AMOURANTHRTX to sponsors should lead with die default, then show RetroRTX as curriculum dessert — order matters for honesty. Chapter 12 rock: screenshots of tribute shaders are not proof of guest program execution.</p>
+<p>Guest FAT and VGA subfields — die is not flat RAM</p>
+<p>Field Die is 64 MiB linear guest map — but linear does not mean homogeneous. Layer pump (Chapter 8) walks L0–L9 composable subfields syncing into data_bus slots: RAM, VGA text frame, FAT tables, MSCDEX, audio, IO, BIOS regions. Operators who treat die as “one array” miss why HUD hex disagrees with FAT corruption stories.</p>
+<p>Subfield Typical guest anchor Bus / layer note</p>
+<p>VGA text 0xB8000 color cells Big Grin reads through shader; C mirror near 0x01000000</p>
+<p>Guest RAM Low linear map AmmoOS launch images land here</p>
+<p>FAT / filesystem Layer L3 pump Telemetry slots — stale FAT lies on HUD</p>
+<p>BIOS / boot vector High policy region Boot offense imposes initial conditions</p>
+<p>VGA is a subfield with cell semantics — two bytes per character, attribute nybble — not a texture you paint arbitrarily without layer sync. FAT is a subfield with cluster semantics — guest programs scribble; layer pump must resync or data_bus telemetry invents fiction.</p>
+<p>Plain English: Die is a dollhouse with rooms — kitchen RAM, parlor VGA, attic FAT — not a single undifferentiated blob.</p>
+<p>Cross-link Chapter 8 for full slot map; this chapter seats subfield vocabulary so Chapter 7 layer pump lines land with meaning.</p>
+<p>Connection intent — packet field semantics</p>
+<p>Scale three — packet field — stores sentences about sockets. Beyond TX/RX (Chapter 5), intent captures why a flow exists in operator-readable language: health check, sovereign pulse, WebRTC media, DNS trace, panel poll. Intent is not psychic — it is structured inference from port, path, habit, and honorability axes.</p>
+<p>ss / intent / DPI → gatekeeper → threat-panel.json → :9477 + field jsonl Example intents an examiner expects you to articulate:</p>
+<p>Panel poll: loopback :9477, short dwell, browser or curl path — usually USER_OK after habit learns.</p>
+<p>DNS truth query: port 53 to 127.0.0.1 — corroboration for navigation (Chapter 20).</p>
+<p>Shell-class egress: ephemeral port to global :4444 — elevated axis weight; watchlist not auto-KILL.</p>
+<p>Intent vocabulary prevents metric collapse: do not merge “intent=health” into thermo proxy. Correlate timestamps — Chapter 5 rhythm — without summing scores.</p>
+<p>Implemented in NEXUS gatekeeper + jsonl schema habits. Not written into fabric texels by default.</p>
+<p>ZMM1024 tail — die map does not end at 64 MiB headline</p>
+<p>Marketing says 64 MiB guest universe; engineering says 64 MiB map plus tail for tile cache and ZMM1024-class extensions in Field Die SSBO binding 1. The tail is where micro-architecture metaphors become addressable — grep ZMM1024 in engine headers for exact layout; chapter teaches there is more after the headline guest RAM so you do not stop reading SSBO at byte 64M−1.</p>
+<p>Why operators care: layout version skew in tail packing corrupts HUD overlays and debug hex without touching VGA cells you memorized. FIELD_LAYOUT_VERSION = 5 handshake includes tail contract — bump version in lockstep when tail fields move.</p>
+<p>Spiderweb mirror (Chapter 10) does not replace tail literacy — hardware graph compresses fabric averages, not per-ZMM lane truth.</p>
+<p>Big Grin HUD — 172×48 telemetry theater</p>
+<p>Big Grin is the die-forward HUD overlay — 172×48 character grid semantics in operator lore — reading data_bus words through shader chrome on x86 path. It is Implemented product theater with honest mirrors: thermo slots, FCC floats, chrome flags in data_bus[42] , generation counter slot 0 from layer pump.</p>
+<p>HUD read Bus / source Common mistake</p>
+<p>Thermo hex strip data_bus[24–28] mirrors Treating as room temperature</p>
+<p>FCC knobs data_bus[16–23] Assuming HUD edits bypass CFL guard</p>
+<p>Chrome flags data_bus[42] Layout version skew silent lie</p>
+<p>Pump generation Slot 0 increment Ignoring stale pump — frozen FAT story</p>
+<p>Enable ControlFieldDebugHud in FieldSocket when chrome hides thermo pedagogy — Chapter 7 flag. stderr THERMO still authoritative; HUD is parallel witness for die-scale literacy.</p>
+<p>NEXUS panel anatomy — correlating scale three at :9477</p>
+<p>Panel https://127.0.0.1:9477/ is HTML shell over jsonl memory — Chapter 5 tour. Chapter 2 adds anatomy for integration : which tab witnesses which scale.</p>
+<p>Panel tab Primary scale Never confuse with</p>
+<p>Packets Packet field sentences Phi texel heatmap</p>
+<p>Threats Gatekeeper verdicts ThermoAccountant proxy</p>
+<p>Signals Field Antenna JSON planetary weave colors</p>
+<p>DNS Truth resolution receipts Guest DNS in die</p>
+<p>System Service registry ports data_bus slot map</p>
+<p>Correlation narrative template: “At sealed time T, THERMO showed rising boundary thermo; jsonl showed RX burst on port 443; gatekeeper axis habit broke — three witnesses, one paragraph, no super-score.” Chapter 11 grep rhythm marries stderr tail with jsonl tail same session.</p>
+<p>Adaptive resolution — fabric Δx changes CFL headroom</p>
+<p>RayCanvas adaptive scale from 320×200 heritage toward 4K preference changes texel count — therefore Δx — therefore admissible Δt and wave speed via CFL (Chapter 9). Higher resolution is not free offense; harmonics guard may scale FCC floats down to protect fabric.</p>
+<p>Scale 1 operators track: when you crank resolution, watch for silent clamp messages and rising prevMaintCost (Chapter 4). Scale 2 operators track: die byte map unchanged by resolution — guest addresses stable; only fabric and presentation scale. Scale 3 unaffected by Vulkan resize — packet field is OS sockets.</p>
+<p>Integration exercise on paper — mandatory homework</p>
+<p>Exercise 2.B — paper integration (30 min)</p>
+<p>Draw three boxes labeled Fabric , Die , Packet . Inside each box write three example addresses (texel coordinate, guest offset, ip:port). On arrows between boxes write what does not automatically flow:</p>
+<p>Gatekeeper verdict → fabric texel (NO)</p>
+<p>vkCmdDispatch → jsonl append (NO)</p>
+<p>Layer pump → data_bus slots (YES — host ritual)</p>
+<p>ThermoAccountant → data_bus[24] (YES — mirror)</p>
+<p>Mouse inject → probe position in FieldSocket (YES — offense)</p>
+<p>Below the diagram write one correlation paragraph template with blanks for sealed time, THERMO line, jsonl row. Photograph page for operator journal. Teaching another human starts with this page — not with Mandelbulb screenshots.</p>
+<p>Pass criteria: student can point at FAT subfield on die diagram and at intent line on packet diagram without crossing arrows. Fail criteria: student says “NEXUS measures GPU heat” — assign Chapter 4 exam.</p>
+<p>Creditor seating — von Neumann and Turing at die scale</p>
+<p>Von Neumann gave addressable store; Turing gave symbol tape. Field Die is both: guest RAM addresses, opcodes interpreted each tick on GPU. von Neumann and Turing tribute pages humanize creditors; grep FieldX86Die humanizes implementation.</p>
+<p>Dispatch is the clock advancing tape — Chapter 7. Packet field is different tape — jsonl append. Do not merge tapes on one diagram without labeled arrows.</p>
+<p>Failure catalog — three scales edition</p>
+<p>Failure mode Symptom Fix</p>
+<p>Metric collapse Single dashboard “threat heat” Three boxes exercise; Ch. 5</p>
+<p>Swipe confusion “Die disabled on energy” Swipe table; default x86</p>
+<p>VGA fantasy Paint die like Photoshop FAT/VGA subfields; layer pump</p>
+<p>Tail ignorance HUD hex wrong after merge FIELD_LAYOUT_VERSION; ZMM1024</p>
+<p>RetroRTX as product Sponsor demo only tribute shader Lead x86 default</p>
+<p>Intent absence Port number without story Gatekeeper axes + Chapter 5</p>
+<p>Spiderweb as SEM Demand per-texel from mirror Classic canvas or stderr</p>
+<p>Chapter summary</p>
+<p>Chapter 2 maps three writable surfaces: fabric texels (Phi/Thermo/Flow bindings 8–10), die bytes with FAT/VGA subfields and ZMM1024 tail, packet field sentences with connection intent. Swipe list is curriculum — energy.comp lab for coupling, RetroRTX for tribute pedagogy, default x86 for product truth. Big Grin HUD reads data_bus mirrors. Panel :9477 correlates scale three without replacing stderr. Paper integration exercise is mandatory homework.</p>
+<p>Next: Chapter 3 — Thermodynamics . Dispatch: Chapter 7 . Defense: Chapter 5 .</p>
+<p>Study questions</p>
+<p>Name scalar, vector, telemetry examples with bindings or slots.</p>
+<p>Which swipe uses energy.comp and what lab knob pair proves coupling?</p>
+<p>How is RetroRTX categorized versus default x86?</p>
+<p>What lives at VGA 0xB8000 versus FAT layer pump?</p>
+<p>Define connection intent with three example flows.</p>
+<p>Why does ZMM1024 tail matter for layout version?</p>
+<p>List four Big Grin HUD reads and common mistakes.</p>
+<p>Complete Exercise 2.B; what three addresses did you write per box?</p>
+<p>Which panel tab must never be confused with Phi heatmap?</p>
+<p>Quote von Neumann/Turing seating in one sentence each.</p>
+<p>CANVAS.comp versus x86.comp — same fabrics different emphasis</p>
+<p>Both paths can touch bindings 8–10 when fabric active. x86 emphasizes guest RAM and AmmoOS; CANVAS emphasizes visible thermo pedagogy. Scale 1 fabric persists; scale 2 die persists on x86 default. Know which canvas you are on when interpreting grep.</p>
+<p>energy.comp swipe — coupled channel laboratory</p>
+<p>Energy swipe is laboratory for FieldCoupling visibility — operators feel heat move when coupling high. Still same AnalogFields namespace. Pedagogy shader, not separate engine.</p>
+<p>RetroRTX and Frosted — presentation not perimeter</p>
+<p>Retro and frosted swipes change presentation shaders. Do not infer packet field changes from retro aesthetics. Category discipline.</p>
+<p>Fabric resolution and adaptive scale</p>
+<p>Adaptive resolution changes texel count — addresses remain addresses at each scale. Reality is 3D does not mean fixed 4K grid; it means identifiable cells at current scale.</p>
+<p>Guest FAT and VGA as subfields</p>
+<p>Inside die, VGA and FAT layers are structured subfields with known offsets — Chapter 8 map. Scale 2 internal geometry complements scale 1 planar fabric.</p>
+<p>Connection intent metadata</p>
+<p>NEXUS enriches packet sentences with intent when available — still scale 3, still local jsonl. Correlate with scale 1 stress only by human narrative.</p>
+<p>Panel :9477 three-scale dashboard</p>
+<p>Panel is where human holds three scales in one glance — separate columns, separate JSON feeds, no merged lie score.</p>
+<p>ZMM1024 tile cache — die tail</p>
+<p>Tile cache in FieldX86Die tail lets shaders sample guest state for HUD without host readback every byte — performance and literacy win.</p>
+<p>Field layers pump order</p>
+<p>pumpAll order matters for coherent guest state before dispatch — host ritual from Chapter 7 previewed as scale 2 obligation.</p>
+<p>Big Grin HUD 172×48</p>
+<p>HUD geometry is fixed readable grid — operator-facing rendering of die state. Not separate product; die presentation.</p>
+<p>AmmoOS chrome bindings 11–14</p>
+<p>Textures for portrait, wallpaper, icons, font SDF — presentation layer on x86 path. Thermo still accrues underneath chrome.</p>
+<p>Integration exercise — table top</p>
+<p>Draw three columns: fabric texel event, die bus word change, jsonl row. Fill one row from real run. If you cannot fill, drill again.</p>
+<p>Scale integration — formal operator checklist</p>
+<p>Before declaring incident, check fabric stderr for thermo motion, die bus for pump anomalies, jsonl for new RX to unknown port. Three checks, three scales, one narrative you write — not vendor narrative.</p>
+<p>Checklist item: binding 8–10 averages moved? Checklist item: data_bus[24] entropy mirror nonzero when injecting? Checklist item: gatekeeper verdict changed on same timeline? Correlation is human art; addresses are engineering fact.</p>
+<p>Descriptor set stability across swipes</p>
+<p>Heavy bindings persist across swipe changes — fabric and die do not vanish when RetroRTX prettifies pixels. Scale literacy includes knowing persistence versus presentation.</p>
+<p>NEXUS threat panel fields — reading practice</p>
+<p>Each threat row should map to socket quadruple and process path. Practice reading one row aloud as English sentence. Packet field literacy is grammar drill.</p>
+<p>Phi binding 8 — storage image layout</p>
+<p>Storage image layout matches fabric resolution at adaptive scale — texel count changes, binding identity stable. Addresses index within current resolution.</p>
+<p>Thermo binding 9 — scalar heatmap discipline</p>
+<p>Heatmap display is visualization of binding 9 — not independent sensor. Eyes on heatmap; conscience on stderr.</p>
+<p>Flow binding 10 — gradient channels</p>
+<p>.gb channels store gradient components — vector field posture per Chapter 2 table. Flow magnitude feeds GateFidelity stories in Chapter 3.</p>
+<p>Cross-chapter drill 2.A</p>
+<p>Run AMOURANTHRTX and NEXUS together 10 minutes. Archive one jsonl row. Grep one THERMO line. Name both scales. Repeat weekly until boring — boring is competence.</p></main>
+  <footer class="site-foot"><p>GNU EOL Terminal — Field Tech Textbook · Grok impersonating Richard Stallman</p></footer>
+</body></html>

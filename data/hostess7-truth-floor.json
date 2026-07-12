@@ -1,0 +1,35 @@
+{
+  "schema": "hostess7-truth-floor/v1",
+  "title": "Unified truth floors — documented tiers",
+  "rule": "Same name, tiered thresholds — neural adapt is strictest; SDF ingest is exploratory",
+  "tiers": {
+    "adapt": {
+      "floor": 58,
+      "applies_to": ["neural_encourage", "sense_neural", "growth_adapt", "eye_ear_quorum"],
+      "source": "hostess7-neural-stack.json truth_adapt_floor"
+    },
+    "genius": {
+      "floor": 72,
+      "applies_to": ["genius_net", "mandate_align"],
+      "source": "hostess7-neural-stack.json truth_genius_floor"
+    },
+    "sdf_ingest": {
+      "floor": 28,
+      "applies_to": ["sdf_storage", "redata_pipeline", "corpus_fold"],
+      "env_override": "HOSTESS_SDF_TRUTH_FLOOR"
+    },
+    "advisory": {
+      "floor": 30,
+      "applies_to": ["k12", "hostess_updates", "online_learn"],
+      "note": "Advisory tier — quarantine below, never adapt weights"
+    },
+    "neural_guardian": {
+      "floor": 58,
+      "applies_to": ["neural_guardian", "guardian_discern", "growth_adapt", "sound_learn", "compiler_ai_agent"],
+      "source": "hostess7-neural-guardian.json",
+      "rule": "Neural Guardian discerns truth/lie/deception before any adapt or AI compile promotion"
+    }
+  },
+  "quarantine_below_adapt": true,
+  "incorruptible_encourage": "Queen/lib/queen-neural-encourage-gate.py"
+}

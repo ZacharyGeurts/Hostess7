@@ -1,0 +1,135 @@
+/* Broadcaster launcher — native OBS shell; no web studio chrome */
+
+:root {
+  --bc-bg: #141418;
+  --bc-panel: #1e1e24;
+  --bc-edge: rgba(255, 255, 255, 0.08);
+  --bc-text: #ececf0;
+  --bc-muted: #9a9aa8;
+  --bc-accent: #7c6cf0;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: radial-gradient(ellipse 120% 80% at 50% 0%, #22222c 0%, var(--bc-bg) 55%);
+  color: var(--bc-text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+}
+
+.bc-launcher-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.bc-launcher {
+  width: min(440px, 100%);
+  padding: 32px 28px;
+  background: var(--bc-panel);
+  border: 1px solid var(--bc-edge);
+  border-radius: 14px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.bc-launcher-icon {
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.bc-launcher-title {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.bc-launcher-sub {
+  margin: 0 0 18px;
+  color: var(--bc-muted);
+  font-size: 0.92rem;
+}
+
+.bc-launcher-status {
+  margin: 0 0 20px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.22);
+  font-size: 0.88rem;
+  color: var(--bc-muted);
+  line-height: 1.45;
+}
+
+.bc-launcher-status.ok { color: #86efac; }
+.bc-launcher-status.err { color: #fca5a5; }
+.bc-launcher-status.busy { color: #c4b5fd; }
+
+.bc-launcher-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.bc-launcher-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--bc-edge);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--bc-text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.bc-launcher-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.bc-launcher-btn--primary {
+  background: rgba(124, 108, 240, 0.22);
+  border-color: rgba(124, 108, 240, 0.4);
+  color: #e8e4ff;
+  font-weight: 600;
+}
+
+.bc-launcher-btn--primary:hover {
+  background: rgba(124, 108, 240, 0.32);
+}
+
+.bc-launcher-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.bc-launcher-meta {
+  margin: 0;
+  text-align: left;
+  font-size: 12px;
+  color: var(--bc-muted);
+}
+
+.bc-launcher-meta div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--bc-edge);
+}
+
+.bc-launcher-meta dt { margin: 0; font-weight: 500; color: var(--bc-text); }
+.bc-launcher-meta dd { margin: 0; text-align: right; word-break: break-all; }
+
+.bc-launcher-hint {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--bc-muted);
+  line-height: 1.5;
+  text-align: left;
+}

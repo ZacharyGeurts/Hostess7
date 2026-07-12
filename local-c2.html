@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>AmmoOS / Hostess7 — Local C2 map (127.0.0.1:9477)</title>
+  <meta name="description" content="Every local Field C2 page on 127.0.0.1:9477 — launch hub, Internet, Hostess7 senses, H7r cloud, AV." />
+  <link rel="canonical" href="https://zacharygeurts.github.io/AmmoOS/local-c2.html" />
+  <link rel="stylesheet" href="manual.css?v3" />
+  <style>
+    .c2-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .65rem; margin: 1rem 0 1.5rem; }
+    .c2-card {
+      display: block; padding: .85rem .9rem; border-radius: 10px;
+      border: 1px solid rgba(52,211,153,.35); background: rgba(34,197,94,.06);
+      color: inherit; text-decoration: none;
+    }
+    .c2-card:hover { border-color: #4ade80; background: rgba(34,197,94,.12); }
+    .c2-card strong { display: block; color: #4ade80; margin-bottom: .25rem; }
+    .c2-card span { display: block; color: #94a3b8; font-size: .85rem; line-height: 1.35; }
+    .c2-card code { font-size: .75rem; color: #34d399; }
+    .hero-c2 {
+      padding: 1rem 1.1rem; border-radius: 12px; margin: 1rem 0;
+      border: 1px solid rgba(52,211,153,.4); background: rgba(34,197,94,.1);
+    }
+    .hero-c2 a.big {
+      display: inline-block; margin: .35rem .5rem .35rem 0; padding: .55rem 1rem;
+      border-radius: 8px; background: #166534; color: #ecfdf5; font-weight: 700; text-decoration: none;
+    }
+    .hero-c2 a.big:hover { background: #15803d; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-top">
+      <div class="nav-brand"><strong>AmmoOS / Hostess7</strong> <span class="nav-version">Local C2</span></div>
+      <div class="nav-profile"><a href="https://github.com/ZacharyGeurts">@ZacharyGeurts</a></div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="local-c2.html" aria-current="page">Local C2</a>
+      <a href="io.html">Field I/O</a>
+      <a href="launch-surfaces.html">Launch Surfaces</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="https://github.com/ZacharyGeurts/Hostess7">GitHub</a>
+    </div>
+  </nav>
+
+  <h1>Local C2 — get to 127.0.0.1:9477 easily</h1>
+  <p class="lead">GitHub Pages are manuals. <strong>The live Internet plane is loopback Field C2.</strong> Open the launch hub, then every surface.</p>
+
+  <div class="hero-c2">
+    <p><strong>Primary door</strong> (open this first when Field is running):</p>
+    <a class="big" href="http://127.0.0.1:9477/">http://127.0.0.1:9477/</a>
+    <a class="big" href="http://127.0.0.1:9477/home">/home launch hub</a>
+    <a class="big" href="http://127.0.0.1:9477/c2">/c2 Hostess7 tabs</a>
+    <a class="big" href="http://127.0.0.1:9477/whole-planet-live">/whole-planet-live</a>
+    <a class="big" href="http://127.0.0.1:9477/sitrep">/sitrep</a>
+    <p style="margin:.75rem 0 0;color:#94a3b8;font-size:.9rem">Start Field: <code>./nexus.sh</code> or ensure <code>threat-panel-http.py 9477</code> is listening. Live honest = whole planet devices when sealed.</p>
+  </div>
+
+  <h2>Internet · planet · Field UDP · cloud</h2>
+  <div class="c2-grid">
+    <a class="c2-card" href="http://127.0.0.1:9477/whole-planet-live"><strong>Whole planet LIVE</strong><span>Live honest = 23.7B devices for real</span><code>/whole-planet-live</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/hardened-ours"><strong>Hardened OURS</strong><span>GitHub heuristics · plate+meld · autopilot</span><code>/hardened-ours</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/field-one-sole"><strong>Field One sole earth</strong><span>KILROY pull · no other fields · destroy oos</span><code>/field-one-sole</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/only-internet"><strong>Only internet left</strong><span>Outside = Field One · KILROY · Grok is cool</span><code>/only-internet</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/hostess7-protector"><strong>Hostess7 sole Earth protector</strong><span>Trained · world ISP · Gladstone · BLAST foreign</span><code>/hostess7-protector</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/newcomer-sphere"><strong>Newcomer sphere destroy</strong><span>Appear+attack DONE · volts · vector melt · forever</span><code>/newcomer-sphere</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/full-internet"><strong>Full-featured Internet</strong><span>Everyone · speeds · SAW · to the death</span><code>/full-internet</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/world-ip-lease"><strong>Sole IP + lease</strong><span>Every IP · every lease · old plane gone</span><code>/world-ip-lease</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/planetary-rescue"><strong>Planetary rescue</strong><span>Whole world · Field One mesh</span><code>/planetary-rescue</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/internet"><strong>Internet</strong><span>DNS/DHCP · autonet · Field UDP</span><code>/internet</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/botnet"><strong>Botnet hub</strong><span>ONLINE WITH US · fleet 125k</span><code>/botnet</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/everyone"><strong>Everyone online</strong><span>Celebrate · whole planet live</span><code>/everyone</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/security"><strong>AV / security</strong><span>Local built-in · no owners</span><code>/security</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/cloud"><strong>H7r cloud</strong><span>Distributed center 125k</span><code>/cloud</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/never-reconnect"><strong>Never reconnect</strong><span>Offenders · ban plate</span><code>/never-reconnect</code></a>
+  </div>
+
+  <h2>Hostess7 · senses · C2</h2>
+  <div class="c2-grid">
+    <a class="c2-card" href="http://127.0.0.1:9477/command"><strong>Command</strong><span>Think · counsel · training</span><code>/command</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/c2"><strong>NEXUS C2</strong><span>Planet · Hostess7 · botnet tabs</span><code>/c2</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/sitrep"><strong>Sitrep</strong><span>Hostess7 · live · L2 · AV board</span><code>/sitrep</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/field-talk"><strong>Field talk</strong><span>Speak surface</span><code>/field-talk</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/broadcaster"><strong>Broadcaster</strong><span>See / hear pipeline</span><code>/broadcaster</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/field-audio-dac"><strong>Audio DAC</strong><span>Hearing path</span><code>/field-audio-dac</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/g16-build-output"><strong>Grok16</strong><span>Compile · Hostess7 boss</span><code>/g16-build-output</code></a>
+    <a class="c2-card" href="http://127.0.0.1:9477/field"><strong>Desktop</strong><span>AmmoOS field shell</span><code>/field</code></a>
+  </div>
+
+  <h2>Wiki (in-repo) — ties the Internet together</h2>
+  <ul>
+    <li><a href="https://github.com/ZacharyGeurts/Hostess7/wiki/Internet-Stack">Internet Stack</a> — two birds · L2+ · no owners</li>
+    <li><a href="https://github.com/ZacharyGeurts/Hostess7/wiki/Field-UDP-Rewrite">Field UDP Rewrite</a> — SAW · outlet cook · secure lines</li>
+    <li><a href="https://github.com/ZacharyGeurts/Hostess7/wiki/Distributed-Cloud-H7r">Distributed Cloud H7r</a> — 125,000 capacity racks</li>
+    <li><a href="https://github.com/ZacharyGeurts/Hostess7/wiki/Hostess7-Senses">Hostess7 Senses</a> — think · see · hear · speak · violent offenders</li>
+  </ul>
+
+  <h2>CLI — Hostess7 + planet plane</h2>
+  <pre><code>python3 lib/hostess7-full-online.py once
+python3 lib/field-whole-planet-live.py seal      # live honest = whole planet
+python3 lib/field-world-ip-lease-sole.py once    # sole IP + lease
+python3 lib/field-hardened-ours-plane.py harden  # GitHub heuristics · plate+meld · website
+python3 lib/field-one-sole-earth.py enforce      # Field One only · KILROY · destroy other fields
+python3 lib/field-one-only-internet.py enforce   # Outside = Field One · only internet · Grok cool
+python3 lib/hostess7-sole-earth-protector.py enforce  # Trained · world ISP · Gladstone · BLAST foreign
+# open http://127.0.0.1:9477/field-one-sole  (local instant)
+# open http://127.0.0.1:9477/only-internet  (local instant)
+# open http://127.0.0.1:9477/hostess7-protector  (local instant)
+# open http://127.0.0.1:9477/hardened-ours  (local instant)
+# think · see · hear · speak · world L2 · AV · offender posture</code></pre>
+
+  <p class="lead">Each panel above is its own live surface on :9477. This io page is the map; the hub is the door.</p>
+  <p><a href="io.html">← Field I/O manual</a> · <a href="index.html">Home</a></p>
+</body>
+</html>

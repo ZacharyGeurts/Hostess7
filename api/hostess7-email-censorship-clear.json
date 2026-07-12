@@ -1,0 +1,448 @@
+{
+  "ok": true,
+  "schema": "hostess7-email-censorship-clear/v1",
+  "updated": "2026-07-06T04:34:26Z",
+  "motto": "Operator mail is sovereign truth — platform or government withhold is hostile; mirror + alternate lane.",
+  "providers": [
+    {
+      "provider": "microsoft",
+      "ok": true,
+      "censored": false,
+      "reachable": 9,
+      "probe_count": 10,
+      "probes": [
+        {
+          "domain": "hotmail.com",
+          "ok": true,
+          "mx": [
+            "2 hotmail-com.olc.protection.outlook.com."
+          ]
+        },
+        {
+          "domain": "live.com",
+          "ok": true,
+          "mx": [
+            "2 live-com.olc.protection.outlook.com."
+          ]
+        },
+        {
+          "domain": "outlook.com",
+          "ok": true,
+          "mx": [
+            "5 outlook-com.olc.protection.outlook.com."
+          ]
+        },
+        {
+          "domain": "office365.com",
+          "ok": false,
+          "mx": []
+        },
+        {
+          "host": "smtp.office365.com",
+          "port": 587,
+          "ok": true,
+          "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
+        },
+        {
+          "host": "outlook.office365.com",
+          "port": 993,
+          "ok": true,
+          "tls": "TLSv1.2"
+        },
+        {
+          "ok": true,
+          "status": 403,
+          "url": "https://office365.com/"
+        },
+        {
+          "ok": true,
+          "status": 417,
+          "url": "https://outlook.com/"
+        },
+        {
+          "ok": true,
+          "status": 417,
+          "url": "https://live.com/"
+        },
+        {
+          "ok": true,
+          "status": 417,
+          "url": "https://hotmail.com/"
+        }
+      ],
+      "barrier": {
+        "id": "email_censorship_microsoft",
+        "actor": "Microsoft (platform)",
+        "system": "microsoft mail transport / inbox filter",
+        "barrier_type": "platform_policy_block",
+        "government_possible": true,
+        "cleared": true,
+        "revealed": true,
+        "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
+      }
+    },
+    {
+      "provider": "google",
+      "ok": true,
+      "censored": false,
+      "reachable": 9,
+      "probe_count": 10,
+      "probes": [
+        {
+          "domain": "gmail.com",
+          "ok": true,
+          "mx": [
+            "10 alt1.gmail-smtp-in.l.google.com.",
+            "20 alt2.gmail-smtp-in.l.google.com.",
+            "5 gmail-smtp-in.l.google.com.",
+            "40 alt4.gmail-smtp-in.l.google.com.",
+            "30 alt3.gmail-smtp-in.l.google.com."
+          ]
+        },
+        {
+          "domain": "mail.google.com",
+          "ok": false,
+          "mx": []
+        },
+        {
+          "domain": "googlemail.com",
+          "ok": true,
+          "mx": [
+            "40 alt4.gmail-smtp-in.l.google.com.",
+            "10 alt1.gmail-smtp-in.l.google.com.",
+            "30 alt3.gmail-smtp-in.l.google.com.",
+            "20 alt2.gmail-smtp-in.l.google.com.",
+            "5 gmail-smtp-in.l.google.com."
+          ]
+        },
+        {
+          "domain": "accounts.google.com",
+          "ok": true,
+          "mx": [
+            "20 alt2.gmr-smtp-in.l.google.com.",
+            "10 alt1.gmr-smtp-in.l.google.com.",
+            "30 alt3.gmr-smtp-in.l.google.com.",
+            "5 gmr-smtp-in.l.google.com.",
+            "40 alt4.gmr-smtp-in.l.google.com."
+          ]
+        },
+        {
+          "host": "imap.gmail.com",
+          "port": 993,
+          "ok": true,
+          "tls": "TLSv1.3"
+        },
+        {
+          "host": "smtp.gmail.com",
+          "port": 587,
+          "ok": true,
+          "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "url": "https://accounts.google.com/"
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "url": "https://gmail.com/"
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "url": "https://googlemail.com/"
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "url": "https://mail.google.com/"
+        }
+      ],
+      "barrier": {
+        "id": "email_censorship_google",
+        "actor": "Google (platform)",
+        "system": "google mail transport / inbox filter",
+        "barrier_type": "platform_policy_block",
+        "government_possible": true,
+        "cleared": true,
+        "revealed": true,
+        "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
+      }
+    }
+  ],
+  "barriers_exposed": [],
+  "barrier_count": 0,
+  "censorship_barriers_revealed": [],
+  "mirror": {
+    "schema": "operator-email-mirror/v1",
+    "updated": "2026-07-06T04:34:26Z",
+    "mailboxes": [
+      {
+        "id": "gmail_primary",
+        "provider": "google",
+        "address": "gzac5314@gmail.com",
+        "role": "operator_primary"
+      },
+      {
+        "id": "sovereign_ammonet",
+        "provider": "ammonet",
+        "address": "operator@mail.ammonet.net",
+        "role": "sovereign_bypass"
+      }
+    ],
+    "providers": [
+      {
+        "provider": "microsoft",
+        "ok": true,
+        "censored": false,
+        "reachable": 9,
+        "probe_count": 10,
+        "probes": [
+          {
+            "domain": "hotmail.com",
+            "ok": true,
+            "mx": [
+              "2 hotmail-com.olc.protection.outlook.com."
+            ]
+          },
+          {
+            "domain": "live.com",
+            "ok": true,
+            "mx": [
+              "2 live-com.olc.protection.outlook.com."
+            ]
+          },
+          {
+            "domain": "outlook.com",
+            "ok": true,
+            "mx": [
+              "5 outlook-com.olc.protection.outlook.com."
+            ]
+          },
+          {
+            "domain": "office365.com",
+            "ok": false,
+            "mx": []
+          },
+          {
+            "host": "smtp.office365.com",
+            "port": 587,
+            "ok": true,
+            "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
+          },
+          {
+            "host": "outlook.office365.com",
+            "port": 993,
+            "ok": true,
+            "tls": "TLSv1.2"
+          },
+          {
+            "ok": true,
+            "status": 403,
+            "url": "https://office365.com/"
+          },
+          {
+            "ok": true,
+            "status": 417,
+            "url": "https://outlook.com/"
+          },
+          {
+            "ok": true,
+            "status": 417,
+            "url": "https://live.com/"
+          },
+          {
+            "ok": true,
+            "status": 417,
+            "url": "https://hotmail.com/"
+          }
+        ],
+        "barrier": {
+          "id": "email_censorship_microsoft",
+          "actor": "Microsoft (platform)",
+          "system": "microsoft mail transport / inbox filter",
+          "barrier_type": "platform_policy_block",
+          "government_possible": true,
+          "cleared": true,
+          "revealed": true,
+          "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
+        }
+      },
+      {
+        "provider": "google",
+        "ok": true,
+        "censored": false,
+        "reachable": 9,
+        "probe_count": 10,
+        "probes": [
+          {
+            "domain": "gmail.com",
+            "ok": true,
+            "mx": [
+              "10 alt1.gmail-smtp-in.l.google.com.",
+              "20 alt2.gmail-smtp-in.l.google.com.",
+              "5 gmail-smtp-in.l.google.com.",
+              "40 alt4.gmail-smtp-in.l.google.com.",
+              "30 alt3.gmail-smtp-in.l.google.com."
+            ]
+          },
+          {
+            "domain": "mail.google.com",
+            "ok": false,
+            "mx": []
+          },
+          {
+            "domain": "googlemail.com",
+            "ok": true,
+            "mx": [
+              "40 alt4.gmail-smtp-in.l.google.com.",
+              "10 alt1.gmail-smtp-in.l.google.com.",
+              "30 alt3.gmail-smtp-in.l.google.com.",
+              "20 alt2.gmail-smtp-in.l.google.com.",
+              "5 gmail-smtp-in.l.google.com."
+            ]
+          },
+          {
+            "domain": "accounts.google.com",
+            "ok": true,
+            "mx": [
+              "20 alt2.gmr-smtp-in.l.google.com.",
+              "10 alt1.gmr-smtp-in.l.google.com.",
+              "30 alt3.gmr-smtp-in.l.google.com.",
+              "5 gmr-smtp-in.l.google.com.",
+              "40 alt4.gmr-smtp-in.l.google.com."
+            ]
+          },
+          {
+            "host": "imap.gmail.com",
+            "port": 993,
+            "ok": true,
+            "tls": "TLSv1.3"
+          },
+          {
+            "host": "smtp.gmail.com",
+            "port": 587,
+            "ok": true,
+            "tls_error": "[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)"
+          },
+          {
+            "ok": true,
+            "status": 200,
+            "url": "https://accounts.google.com/"
+          },
+          {
+            "ok": true,
+            "status": 200,
+            "url": "https://gmail.com/"
+          },
+          {
+            "ok": true,
+            "status": 200,
+            "url": "https://googlemail.com/"
+          },
+          {
+            "ok": true,
+            "status": 200,
+            "url": "https://mail.google.com/"
+          }
+        ],
+        "barrier": {
+          "id": "email_censorship_google",
+          "actor": "Google (platform)",
+          "system": "google mail transport / inbox filter",
+          "barrier_type": "platform_policy_block",
+          "government_possible": true,
+          "cleared": true,
+          "revealed": true,
+          "remedy": "Sovereign mirror + field-secure-email bypass; expose actor in panel"
+        }
+      }
+    ],
+    "barriers_exposed": [],
+    "sovereign_bypass": {
+      "field_secure_email": true,
+      "domains": [
+        "mail.ammonet.net",
+        "smtp.ammonet.net",
+        "imap.ammonet.net",
+        "mail.ammonet.com",
+        "mail.ammonet.org"
+      ],
+      "ammonet_mail": "operator@mail.ammonet.net"
+    },
+    "x_posts_recovered": 21,
+    "government_censorship": {
+      "exposed": false,
+      "rule": "If government mandate confirmed — document actor, jurisdiction signal, and sovereign bypass; never accept silent loss.",
+      "verdict": "Any government or platform email withhold is hostile — sovereign lane active"
+    }
+  },
+  "countermeasures": {
+    "field_secure_email": {
+      "ok": true,
+      "schema": "field-secure-email-panel/v1",
+      "updated": "2026-07-06T04:33:55Z",
+      "motto": "Apache serves mail, not marketing pages — SMTP/IMAP on loopback, Hostess7 gates every envelope",
+      "domains": [
+        "mail.ammonet.net",
+        "smtp.ammonet.net",
+        "imap.ammonet.net",
+        "mail.ammonet.com",
+        "mail.ammonet.org"
+      ],
+      "bind": "127.0.0.1",
+      "posture": {
+        "ai_operator_only": false,
+        "hostess7_gate": true,
+        "ironclad_sealed": true,
+        "no_open_relay": true,
+        "dkim_ready": true,
+        "spf_txt": "v=spf1 a mx -all"
+      },
+      "apache": {
+        "ok": true,
+        "config": "/home/default/Desktop/SG/NewLatest/config/field-secure-email-apache.conf",
+        "rewrite_enabled": true,
+        "mail_proxy": true,
+        "human_web_disabled": false,
+        "ports": {
+          "smtp_submission": 587,
+          "smtp_tls": 465,
+          "imap_tls": 993,
+          "http_redirect": 80,
+          "https_mail": 443
+        },
+        "install_hint": "Include config/field-secure-email-apache.conf in Apache sites-enabled"
+      },
+      "ammonet_dns": {
+        "zone_count": 7,
+        "mail_host": "mail.ammonet.net",
+        "dhcp_domain": "ammonet.net"
+      },
+      "api": "/api/field-secure-email"
+    },
+    "microsoft_kill": {
+      "ok": true,
+      "schema": "field-botnet-microsoft-kill/v1",
+      "updated": "2026-07-06T04:33:55Z",
+      "motto": "If Microsoft hits us — botnet kills them. DNS/DHCP stay online.",
+      "microsoft_hitting": false,
+      "process_hits": 0,
+      "connection_hits": 0,
+      "killed_local": [],
+      "killed_remote": [],
+      "microsoft_killed_total": 3,
+      "microsoft_killed_session": 0,
+      "botnet_nodes": 0,
+      "dns_dhcp_protected": true,
+      "api": "/api/field-botnet-microsoft-kill"
+    },
+    "x_producer": {
+      "ok": true,
+      "post_count": 21
+    }
+  },
+  "verdict": "Email censorship exposed — Google/Microsoft barriers cleared on sovereign mirror; X posts recovered",
+  "api": "/api/hostess7-email-censorship-clear"
+}

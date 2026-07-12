@@ -1,0 +1,1686 @@
+{
+  "ok": true,
+  "schema": "field-endpoint-registry-public/v1",
+  "title": "Sovereign endpoint registry — everything witnessed, beyond ICANN",
+  "motto": "No endpoint moves silently: DNS, IP, port, URL, Pages, loopback, API, module, file — from→to in public hash chain.",
+  "owner": "ZacharyGeurts",
+  "scope": "More than ICANN: sovereign truth for all routable identities the field stack owns or mirrors.",
+  "updated": "2026-07-06T04:27:03Z",
+  "layers": [
+    {
+      "id": "icann_dns",
+      "title": "ICANN DNS — domains, delegations, root hints",
+      "beyond_icann": false
+    },
+    {
+      "id": "ip",
+      "title": "IPv4/IPv6 host assignments",
+      "beyond_icann": true
+    },
+    {
+      "id": "cidr",
+      "title": "CIDR blocks — GitHub pins, botnet pools",
+      "beyond_icann": true
+    },
+    {
+      "id": "port",
+      "title": "Legal port reservations — IANA + field context",
+      "beyond_icann": true
+    },
+    {
+      "id": "url",
+      "title": "HTTP/HTTPS canonical URLs",
+      "beyond_icann": true
+    },
+    {
+      "id": "pages",
+      "title": "GitHub Pages canonical + mirrors",
+      "beyond_icann": true
+    },
+    {
+      "id": "loopback",
+      "title": "127.0.0.1 / ::1 services",
+      "beyond_icann": true
+    },
+    {
+      "id": "api",
+      "title": "Threat panel / Pages API routes",
+      "beyond_icann": true
+    },
+    {
+      "id": "module",
+      "title": "lib/*.py sovereign modules",
+      "beyond_icann": true
+    },
+    {
+      "id": "file",
+      "title": "data/ path relocations",
+      "beyond_icann": true
+    },
+    {
+      "id": "service",
+      "title": "Named stack services",
+      "beyond_icann": true
+    },
+    {
+      "id": "repo",
+      "title": "Git repositories",
+      "beyond_icann": true
+    },
+    {
+      "id": "mirror",
+      "title": "Fallback chains",
+      "beyond_icann": true
+    },
+    {
+      "id": "script",
+      "title": "Canonical script paths",
+      "beyond_icann": true
+    }
+  ],
+  "beyond_icann": [
+    "ip",
+    "cidr",
+    "port",
+    "url",
+    "pages",
+    "loopback",
+    "api",
+    "module",
+    "file",
+    "service",
+    "repo",
+    "mirror",
+    "script"
+  ],
+  "verify": {
+    "ok": true,
+    "count": 221,
+    "genesis": "0000000000000000000000000000000000000000000000000000000000000000",
+    "head": "3687dbe18820bc515b113d5276eadb1a3ecbe84a10ad11da96e19bea7decb14e",
+    "broken": []
+  },
+  "route_count": 127,
+  "movement_count": 221,
+  "routes": {
+    "service:field-dns": {
+      "layer": "service",
+      "id": "field-dns",
+      "canonical": "127.0.0.1:53",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "api:field-endpoint-registry": {
+      "layer": "api",
+      "id": "field-endpoint-registry",
+      "canonical": "/api/field-endpoint-registry",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "api:field-github-everyone": {
+      "layer": "api",
+      "id": "field-github-everyone",
+      "canonical": "/api/field-github-everyone",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "api:field-h7t-truth": {
+      "layer": "api",
+      "id": "field-h7t-truth",
+      "canonical": "/api/field-h7t-truth",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "api:field-botnet-registry": {
+      "layer": "api",
+      "id": "field-botnet-registry",
+      "canonical": "/api/field-botnet-registry",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:zacharygeurts.github.io": {
+      "layer": "icann_dns",
+      "id": "zacharygeurts.github.io",
+      "canonical": "zacharygeurts.github.io",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "url:ammoos-canonical-manual": {
+      "layer": "url",
+      "id": "ammoos-canonical-manual",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "cidr:github-git-cidr-pool": {
+      "layer": "cidr",
+      "id": "github-git-cidr-pool",
+      "canonical": "192.30.252.0/22",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "module:field-endpoint-registry": {
+      "layer": "module",
+      "id": "field-endpoint-registry",
+      "canonical": "lib/field-endpoint-registry.py",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "module:field-dns": {
+      "layer": "module",
+      "id": "field-dns",
+      "canonical": "lib/field-dns.py",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "pages:ZacharyGeurts/AmmoOS": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/AmmoOS",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/index.html",
+      "updated": "2026-07-06T04:27:03Z"
+    },
+    "pages:ZacharyGeurts/Hostess7": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Hostess7",
+      "canonical": "https://zacharygeurts.github.io/Hostess7",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "pages:ZacharyGeurts/KILROY": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/KILROY",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/architecture.html",
+      "updated": "2026-07-04T20:43:23Z"
+    },
+    "pages:ZacharyGeurts/AmmoCode": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/AmmoCode",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/combinatronic.html",
+      "updated": "2026-07-04T20:43:22Z"
+    },
+    "pages:ZacharyGeurts/command": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/command",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/architecture.html",
+      "updated": "2026-07-04T20:43:24Z"
+    },
+    "pages:ZacharyGeurts/GNUEOLTerminal": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/GNUEOLTerminal",
+      "canonical": "https://zacharygeurts.github.io/GNUEOLTerminal",
+      "updated": "2026-07-04T01:56:07Z",
+      "mirror_chain": [
+        "https://zacharygeurts.github.io/GNUEOLTerminal",
+        "https://zacharygeurts.github.io/Hostess7/gnueol-terminal"
+      ]
+    },
+    "pages:ZacharyGeurts/H7updater": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/H7updater",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/stack-hub.html",
+      "updated": "2026-07-04T20:43:23Z"
+    },
+    "pages:ZacharyGeurts/Grok16": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Grok16",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/combinatronic.html",
+      "updated": "2026-07-04T20:43:23Z"
+    },
+    "pages:ZacharyGeurts/Field_Primer": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Field_Primer",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/architecture.html",
+      "updated": "2026-07-04T20:43:22Z"
+    },
+    "pages:ZacharyGeurts/Field_Research": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Field_Research",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/combinatronic.html",
+      "updated": "2026-07-04T20:43:22Z"
+    },
+    "pages:ZacharyGeurts/AMOURANTHRTX": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/AMOURANTHRTX",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/architecture.html",
+      "updated": "2026-07-04T20:43:21Z"
+    },
+    "pages:ZacharyGeurts/Kill-Grok-Orphans": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Kill-Grok-Orphans",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/architecture.html",
+      "updated": "2026-07-04T20:43:23Z"
+    },
+    "mirror:ZacharyGeurts/GNUEOLTerminal": {
+      "layer": "mirror",
+      "id": "ZacharyGeurts/GNUEOLTerminal",
+      "canonical": "https://zacharygeurts.github.io/Hostess7/gnueol-terminal",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.a": {
+      "layer": "icann_dns",
+      "id": "root.a",
+      "canonical": "a.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:a.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "a.root-servers.net/ipv4",
+      "canonical": "198.41.4.4",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:a.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "a.root-servers.net/ipv6",
+      "canonical": "2001:503:ba3e::2:30",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.b": {
+      "layer": "icann_dns",
+      "id": "root.b",
+      "canonical": "b.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:b.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "b.root-servers.net/ipv4",
+      "canonical": "199.9.14.201",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:b.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "b.root-servers.net/ipv6",
+      "canonical": "2001:500:200::b",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.c": {
+      "layer": "icann_dns",
+      "id": "root.c",
+      "canonical": "c.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:c.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "c.root-servers.net/ipv4",
+      "canonical": "192.33.4.4",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:c.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "c.root-servers.net/ipv6",
+      "canonical": "2001:500:2::c",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.d": {
+      "layer": "icann_dns",
+      "id": "root.d",
+      "canonical": "d.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:d.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "d.root-servers.net/ipv4",
+      "canonical": "199.7.91.13",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:d.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "d.root-servers.net/ipv6",
+      "canonical": "2001:500:2d::d",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.e": {
+      "layer": "icann_dns",
+      "id": "root.e",
+      "canonical": "e.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:e.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "e.root-servers.net/ipv4",
+      "canonical": "192.203.230.10",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:e.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "e.root-servers.net/ipv6",
+      "canonical": "2001:dc3::35",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.f": {
+      "layer": "icann_dns",
+      "id": "root.f",
+      "canonical": "f.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:f.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "f.root-servers.net/ipv4",
+      "canonical": "192.5.5.241",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:f.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "f.root-servers.net/ipv6",
+      "canonical": "2001:500:2f::f",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.g": {
+      "layer": "icann_dns",
+      "id": "root.g",
+      "canonical": "g.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:g.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "g.root-servers.net/ipv4",
+      "canonical": "192.112.36.4",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:g.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "g.root-servers.net/ipv6",
+      "canonical": "2001:500:12::d0d",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.h": {
+      "layer": "icann_dns",
+      "id": "root.h",
+      "canonical": "h.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:h.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "h.root-servers.net/ipv4",
+      "canonical": "198.97.190.53",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:h.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "h.root-servers.net/ipv6",
+      "canonical": "2001:500:1::53",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.i": {
+      "layer": "icann_dns",
+      "id": "root.i",
+      "canonical": "i.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:i.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "i.root-servers.net/ipv4",
+      "canonical": "192.36.148.17",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:i.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "i.root-servers.net/ipv6",
+      "canonical": "2001:7fe::53",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.j": {
+      "layer": "icann_dns",
+      "id": "root.j",
+      "canonical": "j.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:j.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "j.root-servers.net/ipv4",
+      "canonical": "192.58.128.30",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:j.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "j.root-servers.net/ipv6",
+      "canonical": "2001:503:c27::2:30",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.k": {
+      "layer": "icann_dns",
+      "id": "root.k",
+      "canonical": "k.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:k.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "k.root-servers.net/ipv4",
+      "canonical": "193.0.14.129",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:k.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "k.root-servers.net/ipv6",
+      "canonical": "2001:7fd::1",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.l": {
+      "layer": "icann_dns",
+      "id": "root.l",
+      "canonical": "l.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:l.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "l.root-servers.net/ipv4",
+      "canonical": "199.7.83.42",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:l.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "l.root-servers.net/ipv6",
+      "canonical": "2001:500:9f::42",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "icann_dns:root.m": {
+      "layer": "icann_dns",
+      "id": "root.m",
+      "canonical": "m.root-servers.net",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:m.root-servers.net/ipv4": {
+      "layer": "ip",
+      "id": "m.root-servers.net/ipv4",
+      "canonical": "202.12.27.33",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "ip:m.root-servers.net/ipv6": {
+      "layer": "ip",
+      "id": "m.root-servers.net/ipv6",
+      "canonical": "2001:dc3::35",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "loopback:threat-panel": {
+      "layer": "loopback",
+      "id": "threat-panel",
+      "canonical": "http://127.0.0.1:9477",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "loopback:queen-browser": {
+      "layer": "loopback",
+      "id": "queen-browser",
+      "canonical": "http://127.0.0.1:9481",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:github/22": {
+      "layer": "port",
+      "id": "github/22",
+      "canonical": "22",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:github/443": {
+      "layer": "port",
+      "id": "github/443",
+      "canonical": "443",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:github/9418": {
+      "layer": "port",
+      "id": "github/9418",
+      "canonical": "9418",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:context/8080": {
+      "layer": "port",
+      "id": "context/8080",
+      "canonical": "8080",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:context/8443": {
+      "layer": "port",
+      "id": "context/8443",
+      "canonical": "8443",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:context/3004": {
+      "layer": "port",
+      "id": "context/3004",
+      "canonical": "3004",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:context/3005": {
+      "layer": "port",
+      "id": "context/3005",
+      "canonical": "3005",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:context/8000": {
+      "layer": "port",
+      "id": "context/8000",
+      "canonical": "8000",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:context/8888": {
+      "layer": "port",
+      "id": "context/8888",
+      "canonical": "8888",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:context/5000": {
+      "layer": "port",
+      "id": "context/5000",
+      "canonical": "5000",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:context/5173": {
+      "layer": "port",
+      "id": "context/5173",
+      "canonical": "5173",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "port:context/4173": {
+      "layer": "port",
+      "id": "context/4173",
+      "canonical": "4173",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:boot_mint": {
+      "layer": "script",
+      "id": "boot_mint",
+      "canonical": "scripts/field-mint-boot-ready.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:boot_early": {
+      "layer": "script",
+      "id": "boot_early",
+      "canonical": "scripts/nexus-field-early-boot.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:boot_impl": {
+      "layer": "script",
+      "id": "boot_impl",
+      "canonical": "scripts/nexus-boot-impl.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:pre_reboot_test": {
+      "layer": "script",
+      "id": "pre_reboot_test",
+      "canonical": "scripts/field-mint-pre-reboot-test.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:stack_full": {
+      "layer": "script",
+      "id": "stack_full",
+      "canonical": "scripts/start-field-stack.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:stack_fast": {
+      "layer": "script",
+      "id": "stack_fast",
+      "canonical": "scripts/ammoos-direct-start.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:kilroy_load_os": {
+      "layer": "script",
+      "id": "kilroy_load_os",
+      "canonical": "scripts/kilroy-load-os.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:stack_restart": {
+      "layer": "script",
+      "id": "stack_restart",
+      "canonical": "scripts/restart-field-stack.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:stack_router": {
+      "layer": "script",
+      "id": "stack_router",
+      "canonical": "scripts/stack.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:wire": {
+      "layer": "script",
+      "id": "wire",
+      "canonical": "scripts/wire-stack.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:kilroy_core": {
+      "layer": "script",
+      "id": "kilroy_core",
+      "canonical": "lib/kilroy-core.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:kilroy_loopback": {
+      "layer": "script",
+      "id": "kilroy_loopback",
+      "canonical": "lib/kilroy-loopback.py",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:kilroy_boot_services": {
+      "layer": "script",
+      "id": "kilroy_boot_services",
+      "canonical": "lib/kilroy-boot-services.py",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:queen_profile_branding": {
+      "layer": "script",
+      "id": "queen_profile_branding",
+      "canonical": "lib/queen-profile-branding.py",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:kilroy_bzimage": {
+      "layer": "script",
+      "id": "kilroy_bzimage",
+      "canonical": "scripts/field-kilroy-bzimage.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:znetwork": {
+      "layer": "script",
+      "id": "znetwork",
+      "canonical": "scripts/integrate-znetwork.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:tristate_virtual": {
+      "layer": "script",
+      "id": "tristate_virtual",
+      "canonical": "scripts/tristate-virtual-kilroy-field.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:update_inplace": {
+      "layer": "script",
+      "id": "update_inplace",
+      "canonical": "scripts/ammoos-update-inplace.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:aml.sh": {
+      "layer": "script",
+      "id": "aml.sh",
+      "canonical": "lib/ammolang-run.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:ammoos-beta-pipeline.sh": {
+      "layer": "script",
+      "id": "ammoos-beta-pipeline.sh",
+      "canonical": "lib/ammolang-run.sh beta_pipeline",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:ammoos-ship-beta3.sh": {
+      "layer": "script",
+      "id": "ammoos-ship-beta3.sh",
+      "canonical": "lib/ammolang-run.sh ship",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:integrate-compiler-stack.sh": {
+      "layer": "script",
+      "id": "integrate-compiler-stack.sh",
+      "canonical": "lib/ammolang-run.sh compiler_stack",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:nexus-g16-recompile.sh": {
+      "layer": "script",
+      "id": "nexus-g16-recompile.sh",
+      "canonical": "lib/ammolang-run.sh g16_recompile",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:stealth_install.sh": {
+      "layer": "script",
+      "id": "stealth_install.sh",
+      "canonical": "install-all.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:nexus-field-early-boot.sh": {
+      "layer": "script",
+      "id": "nexus-field-early-boot.sh",
+      "canonical": "lib/nexus-field-early-boot.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "script:nexus-boot-impl.sh": {
+      "layer": "script",
+      "id": "nexus-boot-impl.sh",
+      "canonical": "lib/nexus-boot-impl.sh",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "pages:ZacharyGeurts/Queen": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Queen",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/queen-browser.html",
+      "updated": "2026-07-04T20:43:23Z"
+    },
+    "pages:ZacharyGeurts/ZNetwork": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/ZNetwork",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/io.html",
+      "updated": "2026-07-04T20:43:24Z"
+    },
+    "pages:ZacharyGeurts/Final_Ear": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Final_Ear",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/launch-surfaces.html",
+      "updated": "2026-07-04T20:43:22Z"
+    },
+    "pages:ZacharyGeurts/Final_Eye": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Final_Eye",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/launch-surfaces.html",
+      "updated": "2026-07-04T20:43:22Z"
+    },
+    "pages:ZacharyGeurts/Final_Mouth": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Final_Mouth",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/launch-surfaces.html",
+      "updated": "2026-07-04T20:43:22Z"
+    },
+    "pages:ZacharyGeurts/World_Redata": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/World_Redata",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/architecture.html",
+      "updated": "2026-07-04T20:43:23Z"
+    },
+    "pages:ZacharyGeurts/OBS-FieldVoiceFilter": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/OBS-FieldVoiceFilter",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/launch-surfaces.html",
+      "updated": "2026-07-04T20:43:23Z"
+    },
+    "file:releases_md": {
+      "layer": "file",
+      "id": "releases_md",
+      "canonical": "docs/releases",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "file:panel_seeds": {
+      "layer": "file",
+      "id": "panel_seeds",
+      "canonical": "data/panel-seeds",
+      "updated": "2026-07-04T01:56:07Z"
+    },
+    "pages:ZacharyGeurts/NEXUS-Shield": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/NEXUS-Shield",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS",
+      "updated": "2026-07-06T04:27:03Z"
+    },
+    "pages:ZacharyGeurts/Poop": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/Poop",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS",
+      "updated": "2026-07-06T04:27:03Z"
+    },
+    "pages:ZacharyGeurts/VSYNC-Locker": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/VSYNC-Locker",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS",
+      "updated": "2026-07-06T04:27:03Z"
+    },
+    "pages:ZacharyGeurts/ZacharyGeurts": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/ZacharyGeurts",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS",
+      "updated": "2026-07-06T04:27:03Z"
+    },
+    "pages:ZacharyGeurts/field": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/field",
+      "canonical": "http://127.0.0.1:9477/field",
+      "updated": "2026-07-06T04:27:03Z"
+    },
+    "pages:ZacharyGeurts/memes": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/memes",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS",
+      "updated": "2026-07-06T04:27:03Z"
+    },
+    "pages:ZacharyGeurts/retrotool": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/retrotool",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS",
+      "updated": "2026-07-06T04:27:03Z"
+    },
+    "pages:ZacharyGeurts/AIA": {
+      "layer": "pages",
+      "id": "ZacharyGeurts/AIA",
+      "canonical": "https://zacharygeurts.github.io/AmmoOS/combinatronic.html",
+      "updated": "2026-07-04T20:43:21Z"
+    },
+    "api:field-dynamic-routes": {
+      "layer": "api",
+      "id": "field-dynamic-routes",
+      "canonical": "/api/field-dynamic-routes",
+      "updated": "2026-07-05T06:27:36Z"
+    },
+    "api:field-toolkit-laser-corridor": {
+      "layer": "api",
+      "id": "field-toolkit-laser-corridor",
+      "canonical": "/api/field-toolkit/laser-corridor",
+      "updated": "2026-07-05T06:27:36Z"
+    },
+    "api:field-toolkit-slice-and-dice": {
+      "layer": "api",
+      "id": "field-toolkit-slice-and-dice",
+      "canonical": "/api/field-toolkit/slice-and-dice",
+      "updated": "2026-07-05T06:27:36Z"
+    },
+    "api:ammodrive-cloud": {
+      "layer": "api",
+      "id": "ammodrive-cloud",
+      "canonical": "/api/ammodrive-cloud",
+      "updated": "2026-07-05T06:27:36Z"
+    },
+    "api:ammodrive-storage": {
+      "layer": "api",
+      "id": "ammodrive-storage",
+      "canonical": "/api/ammodrive-storage",
+      "updated": "2026-07-05T06:27:36Z"
+    },
+    "api:ammodrive-qemu-racks": {
+      "layer": "api",
+      "id": "ammodrive-qemu-racks",
+      "canonical": "/api/ammodrive-qemu-racks",
+      "updated": "2026-07-05T06:27:36Z"
+    },
+    "api:ammodrive-fork-guard": {
+      "layer": "api",
+      "id": "ammodrive-fork-guard",
+      "canonical": "/api/ammodrive-fork-guard",
+      "updated": "2026-07-05T06:27:36Z"
+    },
+    "api:field-zachub-qemu-racks": {
+      "layer": "api",
+      "id": "field-zachub-qemu-racks",
+      "canonical": "/api/field-zachub-qemu-racks",
+      "updated": "2026-07-05T06:27:36Z"
+    }
+  },
+  "recent_movements": [
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-04T20:47:46Z",
+      "at": "2026-07-04T20:47:46Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "https://zacharygeurts.github.io/Hostess7/desktop",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only",
+      "meta": {},
+      "prev_hash": "d2f8e72d1925bd8afb78fad35e15da038452db4dee2ae20f4b6dcd7ddc4863d3",
+      "hash": "61460383795532e8370e13cfc347c26945ba9de0680213b704a7bc4667184bfa"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-04T20:47:46Z",
+      "at": "2026-07-04T20:47:46Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-github-planet-sweep",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "61460383795532e8370e13cfc347c26945ba9de0680213b704a7bc4667184bfa",
+      "hash": "bc30334285a86dba5304d78447cb00def7aa3536e8d4aa61b9a50ce581b2f304"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-04T21:13:25Z",
+      "at": "2026-07-04T21:13:25Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "re-fire",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "bc30334285a86dba5304d78447cb00def7aa3536e8d4aa61b9a50ce581b2f304",
+      "hash": "794296d902145125fdd44947deb9966180b192eaac2344341b91fd47ce2b64e6"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-04T21:13:29Z",
+      "at": "2026-07-04T21:13:29Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "https://zacharygeurts.github.io/Hostess7/desktop",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only",
+      "meta": {},
+      "prev_hash": "794296d902145125fdd44947deb9966180b192eaac2344341b91fd47ce2b64e6",
+      "hash": "b38e3905140ee95c4f1eb985e44b47be61bda51fc5b3e4b01f0bc989cdb41370"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-04T21:13:30Z",
+      "at": "2026-07-04T21:13:30Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-github-planet-sweep",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "b38e3905140ee95c4f1eb985e44b47be61bda51fc5b3e4b01f0bc989cdb41370",
+      "hash": "47c35dfd3885f3d1eea0e89209da027937156f1d3d11037f6309f9ebc07aa144"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:ammodrive-cloud:api_wire:2026-07-05T01:00:00Z",
+      "at": "2026-07-05T01:00:00Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "ammodrive-cloud",
+      "from": null,
+      "to": "/api/ammodrive-cloud",
+      "witness": "threat-panel-http",
+      "reason": "AmmoDrive Cloud — the new cloud, H7r rackmount, open to everyone",
+      "meta": {},
+      "prev_hash": "1b42b3e35145a1373a967456d7d2d0e0d1dd799b9ea487bdcfb36dc74b25b090",
+      "hash": "ec9babd6444137ae8f9024ab0146572ea85250fe35e3c0b9f420ee76496fdcba"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-05T06:27:36Z",
+      "at": "2026-07-05T06:27:36Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "rebuild-internet-routes-secure.sh",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "6cc1a10dc31757233fb1410088995ea1063da836dff5589c408a3d0ae2fa0569",
+      "hash": "faa45e9cb958650fdd6b52ccdf327d7b8ec317e65831a9028bbde344491c6b99"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-05T16:01:22Z",
+      "at": "2026-07-05T16:01:22Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "rebuild-internet-routes-secure.sh",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "faa45e9cb958650fdd6b52ccdf327d7b8ec317e65831a9028bbde344491c6b99",
+      "hash": "4f23e16222354a7c2e891ebff9d28bdfb7d30f4925c0b0a2c29cbec77f5a52b1"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/AmmoOS:not_redirect_hub:2026-07-06T00:42:39Z",
+      "at": "2026-07-06T00:42:39Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/AmmoOS",
+      "from": "https://zacharygeurts.github.io/AmmoOS",
+      "to": "https://zacharygeurts.github.io/AmmoOS/index.html",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "326dd8debc0be8beac854100c26d0f9135d71d1bee9bfe6f69cadd541faea730",
+      "hash": "4dd7e4aaad3ec4bd10c0441674bbde43e938c93d514ce027e246e45b3ae807ef"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/NEXUS-Shield:pages_missing:2026-07-06T00:42:39Z",
+      "at": "2026-07-06T00:42:39Z",
+      "layer": "pages",
+      "kind": "pages_missing",
+      "entity_id": "ZacharyGeurts/NEXUS-Shield",
+      "from": "https://zacharygeurts.github.io/NEXUS-Shield",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — pages_missing",
+      "meta": {},
+      "prev_hash": "4dd7e4aaad3ec4bd10c0441674bbde43e938c93d514ce027e246e45b3ae807ef",
+      "hash": "da81e2fb80ae639bce0def42945d61c8eba208717e7db19c0bf782260f8fb8a9"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/Poop:not_redirect_hub:2026-07-06T00:42:39Z",
+      "at": "2026-07-06T00:42:39Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/Poop",
+      "from": "https://github.com/ZacharyGeurts/Poop",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "da81e2fb80ae639bce0def42945d61c8eba208717e7db19c0bf782260f8fb8a9",
+      "hash": "b24b5cc2fbc5ec422d033f6513b4b5db33c529096d8a654b114de0ae6548de5d"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/VSYNC-Locker:pages_missing:2026-07-06T00:42:39Z",
+      "at": "2026-07-06T00:42:39Z",
+      "layer": "pages",
+      "kind": "pages_missing",
+      "entity_id": "ZacharyGeurts/VSYNC-Locker",
+      "from": "https://zacharygeurts.github.io/VSYNC-Locker",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — pages_missing",
+      "meta": {},
+      "prev_hash": "b24b5cc2fbc5ec422d033f6513b4b5db33c529096d8a654b114de0ae6548de5d",
+      "hash": "b91be5933a9f287b219fd6a131f4f80f69a9101209ffdf3119e2825da6e04725"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/ZacharyGeurts:not_redirect_hub:2026-07-06T00:42:39Z",
+      "at": "2026-07-06T00:42:39Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/ZacharyGeurts",
+      "from": "https://zacharygeurts.github.io/ZacharyGeurts",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "b91be5933a9f287b219fd6a131f4f80f69a9101209ffdf3119e2825da6e04725",
+      "hash": "f86b64fc263b710c3e651b75499349b9f6e2707d3dd777cdfab592d8ad44d1b4"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T00:42:39Z",
+      "at": "2026-07-06T00:42:39Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "http://127.0.0.1:9477/field",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
+      "meta": {},
+      "prev_hash": "f86b64fc263b710c3e651b75499349b9f6e2707d3dd777cdfab592d8ad44d1b4",
+      "hash": "7555aca548836588bd7ec7864738374dd6e3c63559890fcf7c7f254bc7746d9f"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/memes:not_redirect_hub:2026-07-06T00:42:39Z",
+      "at": "2026-07-06T00:42:39Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/memes",
+      "from": "https://github.com/ZacharyGeurts/memes",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "7555aca548836588bd7ec7864738374dd6e3c63559890fcf7c7f254bc7746d9f",
+      "hash": "35d8e07370954bb7950e728eb3a04e307adb4fd1de296f816106b7ea6402318d"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/retrotool:not_redirect_hub:2026-07-06T00:42:39Z",
+      "at": "2026-07-06T00:42:39Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/retrotool",
+      "from": "https://github.com/ZacharyGeurts/retrotool",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "35d8e07370954bb7950e728eb3a04e307adb4fd1de296f816106b7ea6402318d",
+      "hash": "c577a2a3d41a1e4007f0c97757ed24487a053f73409b9bcb160696443d87a183"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-06T00:42:39Z",
+      "at": "2026-07-06T00:42:39Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-github-planet-sweep",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "c577a2a3d41a1e4007f0c97757ed24487a053f73409b9bcb160696443d87a183",
+      "hash": "da08c08d35f763978f71bd9693bc02c5a5e8beb9c3e5136a870c0ea489dc9c96"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T03:55:12Z",
+      "at": "2026-07-06T03:55:12Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "http://127.0.0.1:9477/field",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
+      "meta": {},
+      "prev_hash": "4f23e16222354a7c2e891ebff9d28bdfb7d30f4925c0b0a2c29cbec77f5a52b1",
+      "hash": "bc661b3fe1b9bcdc8fecdd8e43d5df80901ed3b485cfb55c565c431c64e6747f"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-06T03:55:13Z",
+      "at": "2026-07-06T03:55:13Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-github-planet-sweep",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "bc661b3fe1b9bcdc8fecdd8e43d5df80901ed3b485cfb55c565c431c64e6747f",
+      "hash": "e043561e620dc16a219259260dcf56f2516c1a96ae410a174b243d1377517a8a"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/AmmoOS:not_redirect_hub:2026-07-06T03:55:21Z",
+      "at": "2026-07-06T03:55:21Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/AmmoOS",
+      "from": "https://zacharygeurts.github.io/AmmoOS",
+      "to": "https://zacharygeurts.github.io/AmmoOS/index.html",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "e043561e620dc16a219259260dcf56f2516c1a96ae410a174b243d1377517a8a",
+      "hash": "39a23836f41ad2de6e880469ce2e91c186719839c63c4492b1149edeb6fa5641"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/NEXUS-Shield:pages_missing:2026-07-06T03:55:21Z",
+      "at": "2026-07-06T03:55:21Z",
+      "layer": "pages",
+      "kind": "pages_missing",
+      "entity_id": "ZacharyGeurts/NEXUS-Shield",
+      "from": "https://zacharygeurts.github.io/NEXUS-Shield",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — pages_missing",
+      "meta": {},
+      "prev_hash": "39a23836f41ad2de6e880469ce2e91c186719839c63c4492b1149edeb6fa5641",
+      "hash": "a1f7dfe56816dd6adb12b08ce4bcdafc487077ba43bfd86677931e856c729921"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/Poop:not_redirect_hub:2026-07-06T03:55:21Z",
+      "at": "2026-07-06T03:55:21Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/Poop",
+      "from": "https://github.com/ZacharyGeurts/Poop",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "a1f7dfe56816dd6adb12b08ce4bcdafc487077ba43bfd86677931e856c729921",
+      "hash": "dcfc7955dc8b0520b0def4f9a5c3e7e6e506240b7c1357be758c3efb2c36e883"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/VSYNC-Locker:pages_missing:2026-07-06T03:55:22Z",
+      "at": "2026-07-06T03:55:22Z",
+      "layer": "pages",
+      "kind": "pages_missing",
+      "entity_id": "ZacharyGeurts/VSYNC-Locker",
+      "from": "https://zacharygeurts.github.io/VSYNC-Locker",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — pages_missing",
+      "meta": {},
+      "prev_hash": "dcfc7955dc8b0520b0def4f9a5c3e7e6e506240b7c1357be758c3efb2c36e883",
+      "hash": "d5b4c9cc311379da65c6deadbd980bdf2501a53a1848481ccb0d302f29fbdd2c"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/ZacharyGeurts:not_redirect_hub:2026-07-06T03:55:22Z",
+      "at": "2026-07-06T03:55:22Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/ZacharyGeurts",
+      "from": "https://zacharygeurts.github.io/ZacharyGeurts",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "d5b4c9cc311379da65c6deadbd980bdf2501a53a1848481ccb0d302f29fbdd2c",
+      "hash": "fa88c15214afef3e1adf596ef2a7d92ab23b77240828a8fe3dffe5cded44126d"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T03:55:22Z",
+      "at": "2026-07-06T03:55:22Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "http://127.0.0.1:9477/field",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
+      "meta": {},
+      "prev_hash": "fa88c15214afef3e1adf596ef2a7d92ab23b77240828a8fe3dffe5cded44126d",
+      "hash": "340c2e344a3198a96b765c2a1731aa7900ec30b303f559a25eafdd064ab20c82"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/memes:not_redirect_hub:2026-07-06T03:55:22Z",
+      "at": "2026-07-06T03:55:22Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/memes",
+      "from": "https://github.com/ZacharyGeurts/memes",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "340c2e344a3198a96b765c2a1731aa7900ec30b303f559a25eafdd064ab20c82",
+      "hash": "3f80849d6365816ac9bfc5ef14f62ae1a47f679a37b7ee483d5762af02281864"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/retrotool:not_redirect_hub:2026-07-06T03:55:22Z",
+      "at": "2026-07-06T03:55:22Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/retrotool",
+      "from": "https://github.com/ZacharyGeurts/retrotool",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "3f80849d6365816ac9bfc5ef14f62ae1a47f679a37b7ee483d5762af02281864",
+      "hash": "d4ae85e63b2c07373227fc3c9544385af8ae54c0bbd5de16f08f0b5f50e36b2a"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-06T03:55:23Z",
+      "at": "2026-07-06T03:55:23Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-github-planet-sweep",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "d4ae85e63b2c07373227fc3c9544385af8ae54c0bbd5de16f08f0b5f50e36b2a",
+      "hash": "677200a0c40756dd89b1e03655c8124db96a6ff7c4d98ac19c0c19cdeacc3dee"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T03:56:04Z",
+      "at": "2026-07-06T03:56:04Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "http://127.0.0.1:9477/field",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
+      "meta": {},
+      "prev_hash": "34dcc4020a5f82c772a001ef469abbd0daa7f1fe24741ba2c31176bb32cdc9ec",
+      "hash": "df3ccf2f91dfad8a1985492cf9af74e8001ea019ab63120a895db6104e998c89"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-06T03:56:04Z",
+      "at": "2026-07-06T03:56:04Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-github-planet-sweep",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "df3ccf2f91dfad8a1985492cf9af74e8001ea019ab63120a895db6104e998c89",
+      "hash": "102ec76aa9fa06126c93219d472868308bdec924613258f7d1fda5a8d34ff3ab"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/AmmoOS:not_redirect_hub:2026-07-06T04:26:57Z",
+      "at": "2026-07-06T04:26:57Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/AmmoOS",
+      "from": "https://zacharygeurts.github.io/AmmoOS",
+      "to": "https://zacharygeurts.github.io/AmmoOS/index.html",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "102ec76aa9fa06126c93219d472868308bdec924613258f7d1fda5a8d34ff3ab",
+      "hash": "38a846fe035d2a3b32e860559b6689784869c66f9dc07f9976cfe796134be441"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/NEXUS-Shield:pages_missing:2026-07-06T04:26:57Z",
+      "at": "2026-07-06T04:26:57Z",
+      "layer": "pages",
+      "kind": "pages_missing",
+      "entity_id": "ZacharyGeurts/NEXUS-Shield",
+      "from": "https://zacharygeurts.github.io/NEXUS-Shield",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — pages_missing",
+      "meta": {},
+      "prev_hash": "38a846fe035d2a3b32e860559b6689784869c66f9dc07f9976cfe796134be441",
+      "hash": "22bebba04a294db09ecadf6db11c3d6950e0ad8524514f6aac4af1bc5d852905"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/Poop:not_redirect_hub:2026-07-06T04:26:57Z",
+      "at": "2026-07-06T04:26:57Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/Poop",
+      "from": "https://github.com/ZacharyGeurts/Poop",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "22bebba04a294db09ecadf6db11c3d6950e0ad8524514f6aac4af1bc5d852905",
+      "hash": "7ab50e133bd278d4d6edebf770eeae418a1571f3d3a7cf0fa928457da1d4207a"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/VSYNC-Locker:pages_missing:2026-07-06T04:26:57Z",
+      "at": "2026-07-06T04:26:57Z",
+      "layer": "pages",
+      "kind": "pages_missing",
+      "entity_id": "ZacharyGeurts/VSYNC-Locker",
+      "from": "https://zacharygeurts.github.io/VSYNC-Locker",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — pages_missing",
+      "meta": {},
+      "prev_hash": "7ab50e133bd278d4d6edebf770eeae418a1571f3d3a7cf0fa928457da1d4207a",
+      "hash": "e4ffd9cdba352113602be1639e563892b058089f6b7fa47d5ba1478d30b3cc40"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/ZacharyGeurts:not_redirect_hub:2026-07-06T04:26:57Z",
+      "at": "2026-07-06T04:26:57Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/ZacharyGeurts",
+      "from": "https://zacharygeurts.github.io/ZacharyGeurts",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "e4ffd9cdba352113602be1639e563892b058089f6b7fa47d5ba1478d30b3cc40",
+      "hash": "1c22fcd576c88be36881f0494ccf5f9513468f0fc7c26e36d3bc84aefa89d3ea"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T04:26:57Z",
+      "at": "2026-07-06T04:26:57Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "http://127.0.0.1:9477/field",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
+      "meta": {},
+      "prev_hash": "1c22fcd576c88be36881f0494ccf5f9513468f0fc7c26e36d3bc84aefa89d3ea",
+      "hash": "7c16a39d941eb45bbfd0aa040cfdbf3dbe92512bb202aa75b80e9df46222aae2"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/memes:not_redirect_hub:2026-07-06T04:26:57Z",
+      "at": "2026-07-06T04:26:57Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/memes",
+      "from": "https://github.com/ZacharyGeurts/memes",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "7c16a39d941eb45bbfd0aa040cfdbf3dbe92512bb202aa75b80e9df46222aae2",
+      "hash": "ee318aa6b803d03d7546a4554d6229034fe7a87203d5b93bffeafd761485a066"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/retrotool:not_redirect_hub:2026-07-06T04:26:57Z",
+      "at": "2026-07-06T04:26:57Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/retrotool",
+      "from": "https://github.com/ZacharyGeurts/retrotool",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "ee318aa6b803d03d7546a4554d6229034fe7a87203d5b93bffeafd761485a066",
+      "hash": "34b76077e6dc979d2aa8bcd3cf2aafc2e275e83e1bc3ee09ddb237a0c361c360"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-06T04:26:58Z",
+      "at": "2026-07-06T04:26:58Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-github-planet-sweep",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "34b76077e6dc979d2aa8bcd3cf2aafc2e275e83e1bc3ee09ddb237a0c361c360",
+      "hash": "3d00fb1c168c8a14f5a7afd2d063da40aa41d695335ea78301fe6b24ce8b14a8"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/AmmoOS:not_redirect_hub:2026-07-06T04:27:03Z",
+      "at": "2026-07-06T04:27:03Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/AmmoOS",
+      "from": "https://zacharygeurts.github.io/AmmoOS",
+      "to": "https://zacharygeurts.github.io/AmmoOS/index.html",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "3d00fb1c168c8a14f5a7afd2d063da40aa41d695335ea78301fe6b24ce8b14a8",
+      "hash": "0b320fa0323c2723c30880337057d73f1e345ab65ebf9e820ab70f317f3fab49"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/NEXUS-Shield:pages_missing:2026-07-06T04:27:03Z",
+      "at": "2026-07-06T04:27:03Z",
+      "layer": "pages",
+      "kind": "pages_missing",
+      "entity_id": "ZacharyGeurts/NEXUS-Shield",
+      "from": "https://zacharygeurts.github.io/NEXUS-Shield",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — pages_missing",
+      "meta": {},
+      "prev_hash": "0b320fa0323c2723c30880337057d73f1e345ab65ebf9e820ab70f317f3fab49",
+      "hash": "5852e91071d10aa069d3c3a9f845466ab9775c663511e1b1eb2cb27411e5f49d"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/Poop:not_redirect_hub:2026-07-06T04:27:03Z",
+      "at": "2026-07-06T04:27:03Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/Poop",
+      "from": "https://github.com/ZacharyGeurts/Poop",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "5852e91071d10aa069d3c3a9f845466ab9775c663511e1b1eb2cb27411e5f49d",
+      "hash": "bd9be48a48068882df969066b70da24046bc29cb2b72e7ed20a858384fba846d"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/VSYNC-Locker:pages_missing:2026-07-06T04:27:03Z",
+      "at": "2026-07-06T04:27:03Z",
+      "layer": "pages",
+      "kind": "pages_missing",
+      "entity_id": "ZacharyGeurts/VSYNC-Locker",
+      "from": "https://zacharygeurts.github.io/VSYNC-Locker",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — pages_missing",
+      "meta": {},
+      "prev_hash": "bd9be48a48068882df969066b70da24046bc29cb2b72e7ed20a858384fba846d",
+      "hash": "dcc8a01c253180bcba5de074f1fc17c62c266e6dbc9535333fcc8bd5140ce2b9"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/ZacharyGeurts:not_redirect_hub:2026-07-06T04:27:03Z",
+      "at": "2026-07-06T04:27:03Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/ZacharyGeurts",
+      "from": "https://zacharygeurts.github.io/ZacharyGeurts",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "dcc8a01c253180bcba5de074f1fc17c62c266e6dbc9535333fcc8bd5140ce2b9",
+      "hash": "b6882cbcc859d6ae355475dbd71796f7e50a6f84ce227170b1ee34246567fff0"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/field:repo_fired:2026-07-06T04:27:03Z",
+      "at": "2026-07-06T04:27:03Z",
+      "layer": "pages",
+      "kind": "repo_fired",
+      "entity_id": "ZacharyGeurts/field",
+      "from": "https://zacharygeurts.github.io/field",
+      "to": "http://127.0.0.1:9477/field",
+      "witness": "fire-field-repo",
+      "reason": "Stale field repo FIRED — gh-pages wiped, archived, tombstone only; sovereign AmmoDrive primary",
+      "meta": {},
+      "prev_hash": "b6882cbcc859d6ae355475dbd71796f7e50a6f84ce227170b1ee34246567fff0",
+      "hash": "22c54414bb491951b1d86099963941964780995bc19cd6e0482b6261926fb449"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/memes:not_redirect_hub:2026-07-06T04:27:03Z",
+      "at": "2026-07-06T04:27:03Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/memes",
+      "from": "https://github.com/ZacharyGeurts/memes",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "22c54414bb491951b1d86099963941964780995bc19cd6e0482b6261926fb449",
+      "hash": "2b8a8f875b006dda66546fe4c0d45fb01f5b6a08a936cedb18f0f215ea69f262"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "pages:ZacharyGeurts/retrotool:not_redirect_hub:2026-07-06T04:27:03Z",
+      "at": "2026-07-06T04:27:03Z",
+      "layer": "pages",
+      "kind": "not_redirect_hub",
+      "entity_id": "ZacharyGeurts/retrotool",
+      "from": "https://github.com/ZacharyGeurts/retrotool",
+      "to": "https://zacharygeurts.github.io/AmmoOS",
+      "witness": "field-github-planet-sweep",
+      "reason": "planet sweep stale fix — not_redirect_hub",
+      "meta": {},
+      "prev_hash": "2b8a8f875b006dda66546fe4c0d45fb01f5b6a08a936cedb18f0f215ea69f262",
+      "hash": "0d86aae2c9f786fec76450bf1a360f3baa67cb41a42935cb034ef9569f86570c"
+    },
+    {
+      "schema": "field-endpoint-movement/v1",
+      "id": "api:pages_registry:propagate:2026-07-06T04:27:03Z",
+      "at": "2026-07-06T04:27:03Z",
+      "layer": "api",
+      "kind": "api_wire",
+      "entity_id": "pages_registry",
+      "from": null,
+      "to": "/Hostess7/api/field-endpoint-registry.json",
+      "witness": "field-github-planet-sweep",
+      "reason": "instant Pages registry propagation",
+      "meta": {
+        "files": [
+          "field-endpoint-registry.json",
+          "field-pages-movement.json",
+          "field-endpoint-registry-routes.json",
+          "field-endpoint-registry-ledger.json"
+        ]
+      },
+      "prev_hash": "0d86aae2c9f786fec76450bf1a360f3baa67cb41a42935cb034ef9569f86570c",
+      "hash": "3687dbe18820bc515b113d5276eadb1a3ecbe84a10ad11da96e19bea7decb14e"
+    }
+  ],
+  "public_surfaces": {
+    "api_loopback": "/api/field-endpoint-registry",
+    "api_pages": "/api/field-endpoint-registry.json",
+    "ledger_pages": "/api/field-endpoint-registry-ledger.json",
+    "routes_pages": "/api/field-endpoint-registry-routes.json",
+    "pages_alias": "/api/field-pages-movement"
+  },
+  "api": "/api/field-endpoint-registry",
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-06T00:42:43Z",
+  "pages_base": "/Hostess7",
+  "instant": true,
+  "propagated_at": "2026-07-06T04:27:03Z"
+}

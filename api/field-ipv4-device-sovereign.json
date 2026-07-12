@@ -1,0 +1,167 @@
+{
+  "ok": true,
+  "schema": "field-ipv4-device-sovereign/v1",
+  "updated": "2026-07-06T00:41:52Z",
+  "title": "All IPv4 on every box \u2014 device-mapped, never look back",
+  "motto": "We are all of IPv4 on every box \u2014 outside network routes to Field 1. Devices are the map.",
+  "boss": "hostess7",
+  "all_ipv4_every_box": true,
+  "track_devices_not_numbers": true,
+  "never_look_back": true,
+  "ipv4": {
+    "sovereign": true,
+    "arbitrary": true,
+    "symbolic_space": 4294967296,
+    "owned_total": 4294967296,
+    "enumerated_total": 4294967296,
+    "scope": "0.0.0.0/0",
+    "enumerate": true,
+    "start": "0.0.0.0",
+    "end": "255.255.255.255",
+    "map_to": "device_information",
+    "it_just_works": true
+  },
+  "ipv4_enumeration": {
+    "total": 4294967296,
+    "owned": 4294967296,
+    "enumerated": 4294967296,
+    "start": "0.0.0.0",
+    "end": "255.255.255.255",
+    "scope": "0.0.0.0/0",
+    "ranges": [
+      {
+        "start": "0.0.0.0",
+        "end": "255.255.255.255",
+        "count": 4294967296,
+        "authority": "hostess7",
+        "kind": "ipv4_owned"
+      }
+    ],
+    "enumerate": true,
+    "materialized_rows": false,
+    "map_to": "device_information"
+  },
+  "internet_arbitrary": {
+    "active": true,
+    "arbitrary_ipv4": true,
+    "it_just_works": true,
+    "anywhere": true,
+    "any_pick": true,
+    "scope": "0.0.0.0/0",
+    "dns_wildcard": "0.0.0.0",
+    "dhcp_wildcard": true,
+    "dhcp_arbitrary_pool": true,
+    "honor_requested_ip": true,
+    "map_to": "device_information",
+    "motto": "Connect anywhere on Earth \u2014 IPv4 is completely arbitrary, it just works"
+  },
+  "box": {
+    "box_id": "default-X870-Pro-RS",
+    "all_ipv4": true,
+    "ipv4_scope": "0.0.0.0/0",
+    "bind_dns": "0.0.0.0:53",
+    "bind_dhcp": "0.0.0.0:67",
+    "auto_managed": true,
+    "never_look_back": true,
+    "boss": "hostess7"
+  },
+  "devices": [
+    {
+      "device_id": "field-loopback",
+      "label": "field-loopback",
+      "kind": "sovereign",
+      "connected": true,
+      "flying": false,
+      "roles": [
+        "dns_authority",
+        "dhcp_authority",
+        "github_sync"
+      ],
+      "dns_authority": "hostess7_truth",
+      "dhcp_authority": "hostess7_field",
+      "ipv4_sovereign": true,
+      "all_ipv4_on_box": true,
+      "suppress_foreign_dns_dhcp": false,
+      "track_ip": false,
+      "auto_managed": true,
+      "source": "botnet_node"
+    },
+    {
+      "device_id": "dhcp-000100000000",
+      "label": "LAN client 00:01:00:00:00:00",
+      "kind": "dhcp_client",
+      "connected": true,
+      "dns_authority": "hostess7_truth",
+      "dhcp_authority": "hostess7_field",
+      "ipv4_sovereign": true,
+      "track_ip": false,
+      "has_lease": true,
+      "mac": "00:01:00:00:00:00",
+      "source": "field-dhcp"
+    },
+    {
+      "device_id": "dhcp-000200000000",
+      "label": "LAN client 00:02:00:00:00:00",
+      "kind": "dhcp_client",
+      "connected": true,
+      "dns_authority": "hostess7_truth",
+      "dhcp_authority": "hostess7_field",
+      "ipv4_sovereign": true,
+      "track_ip": false,
+      "has_lease": true,
+      "mac": "00:02:00:00:00:00",
+      "source": "field-dhcp"
+    },
+    {
+      "device_id": "dhcp-000900000000",
+      "label": "LAN client 00:09:00:00:00:00",
+      "kind": "dhcp_client",
+      "connected": true,
+      "dns_authority": "hostess7_truth",
+      "dhcp_authority": "hostess7_field",
+      "ipv4_sovereign": true,
+      "track_ip": false,
+      "has_lease": true,
+      "mac": "00:09:00:00:00:00",
+      "source": "field-dhcp"
+    }
+  ],
+  "device_count": 4,
+  "connected_devices": 4,
+  "any_ip": {
+    "dns_wildcard": "0.0.0.0",
+    "dhcp_wildcard": true
+  },
+  "worldwide_suppression": {
+    "active": true,
+    "internet_open": false,
+    "unclean_is_hostile": true,
+    "unclean_count": 3,
+    "foreign_dns_dhcp_off": false,
+    "foreign_threat_count": 3,
+    "threats_eradicated": 0,
+    "sole_authority": false,
+    "suppressor_nodes": 2,
+    "motto": "Unclean internet is hostile \u2014 fry the polluters; users stay open"
+  },
+  "planetary_leases": 8589934592,
+  "policy": {
+    "route_outside_to_field_one": true,
+    "field_one_hub": "127.0.0.1",
+    "all_ipv4_every_box": true,
+    "track_devices_not_numbers": true,
+    "arbitrary_ipv4_worldwide": true,
+    "it_just_works": true,
+    "auto_manage": true,
+    "never_look_back": true,
+    "suppress_foreign_dns_dhcp_worldwide": false,
+    "internet_open": true,
+    "device_map_primary": true,
+    "wildcard_bind": true,
+    "honor_requested_ip": true
+  },
+  "api": "/api/field-ipv4-device-sovereign",
+  "pages": true,
+  "lane": "pages-surfaces",
+  "exported": "2026-07-06T00:41:53Z"
+}

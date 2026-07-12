@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>X Straight Shot — barriers ripped, info freed</title>
+  <link rel="stylesheet" href="../assets/nexus-field-shell.css" />
+  <style>
+    body { margin: 0; background: #050505; color: #e8e8e8; font-family: system-ui, sans-serif; }
+    .wrap { max-width: 820px; margin: 2rem auto; padding: 0 1.25rem; }
+    h1 { font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .ok { color: #22c55e; }
+    .warn { color: #f59e0b; }
+    .barrier { border-left: 3px solid #f59e0b; padding: 8px 12px; margin: 8px 0; background: #111; }
+    .pulled { border-left: 3px solid #22c55e; padding: 8px 12px; margin: 8px 0; background: #0a120e; }
+    .actions a, .actions button {
+      display: inline-block; margin: 4px 8px 4px 0; padding: 8px 14px;
+      border: 1px solid #333; border-radius: 8px; background: #111; color: #e8e8e8;
+      text-decoration: none; cursor: pointer; font: inherit;
+    }
+    .actions a.primary { border-color: #22c55e; color: #22c55e; }
+    pre { font-size: 11px; background: #111; padding: 10px; overflow: auto; }
+  </style>
+  <script>window.HOSTESS7_PAGES_BASE = "/Hostess7";</script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>X Straight Shot</h1>
+    <p id="motto" class="ok">Direct x.com — no middlemen. Barriers revealed. Data pulled when X resists.</p>
+    <div class="actions">
+      <a class="primary" href="https://x.com/ZacharyGeurts" rel="noopener">Straight to @ZacharyGeurts</a>
+      <a href="../api/hostess7-x-straight-shot.json">API JSON</a>
+      <a href="../api/operator-x-comments.json">Freed comments</a>
+      <a href="../api/operator-censorship-exposure.json">Censorship exposure</a>
+      <a href="../x-sso-fix/">SSO fix</a>
+    </div>
+    <h2>Barriers ripped</h2>
+    <div id="barriers"></div>
+    <h2>Info pulled</h2>
+    <div id="pulled"></div>
+    <h2>Per-tweet verdict</h2>
+    <pre id="tweets"></pre>
+  </div>
+  <script>
+    (function () {
+      var base = (window.HOSTESS7_PAGES_BASE || "").replace(/\/$/, "");
+      function esc(s) {
+        return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      Promise.all([
+        fetch(base + "/api/hostess7-x-straight-shot.json", { cache: "no-store" }).then(function (r) { return r.json(); }),
+        fetch(base + "/api/operator-censorship-exposure.json", { cache: "no-store" }).then(function (r) { return r.json(); }).catch(function () { return {}; }),
+      ]).then(function (rows) {
+        var shot = rows[0] || {};
+        var exp = rows[1] || {};
+        if (shot.motto) document.getElementById("motto").textContent = shot.motto;
+        var barriers = shot.censorship_barriers_revealed || (exp.straight_shot && exp.straight_shot.barriers_revealed) || [];
+        document.getElementById("barriers").innerHTML = barriers.length
+          ? barriers.map(function (b) {
+              return '<div class="barrier"><strong>' + esc(b.id) + '</strong> · lane ' + esc(b.lane) +
+                ' · replies=' + esc(b.reply_count) + ' bodies=' + esc(b.reply_bodies) + '</div>';
+            }).join("")
+          : '<p class="warn">No barriers in cache — run x-straight-shot rip on field host.</p>';
+        var pulled = shot.pulled || [];
+        document.getElementById("pulled").innerHTML = pulled.length
+          ? pulled.slice(0, 24).map(function (p) {
+              return '<div class="pulled"><strong>' + esc(p.kind) + '</strong> ' + esc(p.text || p.author || "") + '</div>';
+            }).join("")
+          : '<p>Withheld slots opened in operator-x-comments mirror.</p>';
+        document.getElementById("tweets").textContent = JSON.stringify(shot.tweets || {}, null, 2);
+      }).catch(function () {
+        document.getElementById("barriers").innerHTML = '<p class="warn">Run publish-hostess7-pages to refresh API.</p>';
+      });
+    })();
+  </script>
+</body>
+</html>

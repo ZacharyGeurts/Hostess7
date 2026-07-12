@@ -1,0 +1,155 @@
+/* KILROY Universal Terminal — written from scratch */
+:root {
+  --kut-bg: #030806;
+  --kut-panel: #07120c;
+  --kut-text: #e8f5ec;
+  --kut-dim: #6b8f7a;
+  --kut-accent: #3ecf8e;
+  --kut-rose: #f472b6;
+  --kut-cmd: #7ee8a8;
+  --kut-err: #f87171;
+  --kut-mono: ui-monospace, "Cascadia Code", "Fira Code", Consolas, monospace;
+}
+
+.kut-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 280px;
+  background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(62, 207, 142, 0.07), transparent 55%), var(--kut-bg);
+  color: var(--kut-text);
+  font-family: var(--kut-mono);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.kut-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.2);
+  background: rgba(4, 12, 8, 0.92);
+  flex-shrink: 0;
+}
+
+.kut-title {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--kut-accent);
+  font-weight: 700;
+}
+
+.kut-badge {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(62, 207, 142, 0.35);
+  color: var(--kut-dim);
+  letter-spacing: 0.06em;
+}
+
+.kut-badge--cmd { border-color: rgba(96, 165, 250, 0.4); color: #93c5fd; }
+.kut-badge--powershell { border-color: rgba(244, 114, 182, 0.4); color: var(--kut-rose); }
+.kut-badge--posix { border-color: rgba(62, 207, 142, 0.4); color: var(--kut-accent); }
+
+.kut-mode {
+  margin-left: auto;
+  font-size: 0.65rem;
+  color: var(--kut-dim);
+}
+
+.kut-out {
+  flex: 1;
+  overflow: auto;
+  padding: 10px 12px 6px;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.kut-line {
+  margin: 0 0 3px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.kut-line--banner { color: var(--kut-accent); }
+.kut-line--dim { color: var(--kut-dim); }
+.kut-line--cmd { color: var(--kut-cmd); }
+.kut-line--out { color: var(--kut-text); }
+.kut-line--err { color: var(--kut-err); }
+.kut-line--hint { color: var(--kut-dim); font-size: 0.78rem; }
+
+.kut-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px 10px;
+  border-top: 1px solid rgba(62, 207, 142, 0.18);
+  background: var(--kut-panel);
+  flex-shrink: 0;
+}
+
+.kut-prompt {
+  color: var(--kut-accent);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.kut-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--kut-text);
+  font: inherit;
+  outline: none;
+  min-width: 0;
+}
+
+.kut-input::placeholder { color: var(--kut-dim); opacity: 0.7; }
+
+.kut-rail {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.kut-rail i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--kut-accent), var(--kut-rose));
+  transition: width 0.15s;
+}
+
+.qw-os-panel--terminal:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  min-height: 360px;
+  padding: 0;
+}
+
+.qw-os-panel--terminal .kut-root,
+.qw-os-panel--terminal .kut-embed,
+.qw-os-panel--terminal .qgt-embed,
+.qw-os-panel--terminal #qgt-shell,
+.qw-os-panel--terminal .qgt-shell {
+  flex: 1;
+  min-height: 320px;
+  height: 100%;
+}
+
+.qw-os-panel--terminal .qgt-shell {
+  border: none;
+  border-radius: 0;
+}
+
+#qgt-embed-root .qgt-embed,
+#qgt-embed-root .kut-embed {
+  min-height: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}

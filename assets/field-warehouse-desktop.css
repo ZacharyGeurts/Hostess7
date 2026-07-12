@@ -1,0 +1,102 @@
+/* AmmoOS Archival Warehouse — layer 0 official surface · caution stripes · forklift */
+
+html[data-ammoos-warehouse="1"] .hd-desktop {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 100%, rgba(60, 50, 35, 0.45), transparent 55%),
+    linear-gradient(180deg, #2a2520 0%, #1c1916 38%, #141210 100%);
+}
+
+html[data-ammoos-warehouse="1"] .hd-desktop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.hd-warehouse-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hd-caution-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #f5c518 0,
+    #f5c518 14px,
+    #1a1a1a 14px,
+    #1a1a1a 28px
+  );
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.hd-caution-top { top: 0; }
+.hd-caution-floor {
+  bottom: 0;
+  height: 18px;
+  opacity: 0.92;
+}
+
+.hd-forklift {
+  position: absolute;
+  right: 6%;
+  bottom: 12%;
+  width: min(280px, 36vw);
+  height: auto;
+  opacity: 0.88;
+  filter: drop-shadow(4px 8px 16px rgba(0, 0, 0, 0.55));
+}
+
+.hd-warehouse-badge {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #e8e0d0;
+  font: 600 13px/1.35 system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hd-warehouse-badge strong {
+  display: block;
+  font-size: 22px;
+  letter-spacing: 0.18em;
+  color: #f5c518;
+  margin-bottom: 6px;
+}
+
+.hd-warehouse-badge span {
+  display: block;
+  font-size: 11px;
+  opacity: 0.82;
+  letter-spacing: 0.08em;
+}
+
+html[data-ammoos-warehouse="1"] .hd-icons {
+  position: relative;
+  z-index: 2;
+  padding-top: 28px;
+}
+
+html[data-ammoos-warehouse="1"] .hd-wall-label {
+  z-index: 2;
+  color: #d4cbb8;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}

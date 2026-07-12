@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-queen-surface="settings" data-field-surface="audio">
+<head>
+  <base href="/Hostess7/" />
+  <script src="/Hostess7/pages-base.js"></script>
+  <script src="/Hostess7/api-shim.js"></script>
+  <link rel="stylesheet" href="/Hostess7/pages-license.css" />
+  <script src="/Hostess7/pages-license.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#040508" />
+  <meta name="color-scheme" content="dark" />
+  <title>Queen Audio Settings</title>
+  <link rel="icon" href="/Hostess7/assets/queen-favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-queen-theme.css?v=qf1" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-shell-dock.css?v=2" />
+  <link rel="stylesheet" href="/Hostess7/assets/field-audio-settings.css?v=3" />
+</head>
+<body>
+  <div class="fa-root">
+    <header class="fsd-dock fg-dock qf-dock" aria-label="Queen field dock">
+      <div class="fsd-dock-left" id="fsd-dock-left"></div>
+      <div class="fsd-dock-right" id="fsd-dock-right"></div>
+    </header>
+
+    <div class="fa-body">
+      <aside class="fa-rail" id="fa-rail" aria-label="Audio backend"></aside>
+
+      <main class="fa-main" id="fa-main">
+        <div class="fa-head">
+          <div>
+            <h1>Queen Audio</h1>
+            <p class="fa-sub" id="fa-subtitle">Output · input · volume — best pipeline locked</p>
+          </div>
+          <span class="fa-locked-pill">Always optimal</span>
+          <input type="checkbox" id="fa-advanced" hidden aria-hidden="true" tabindex="-1" />
+        </div>
+
+        <div class="fa-toast" id="fa-toast" hidden role="status" aria-live="polite"></div>
+        <section class="fa-grid fa-grid-soundcards" id="fa-soundcards"></section>
+        <section class="fa-grid" id="fa-formats"></section>
+        <section class="fa-grid" id="fa-devices"></section>
+        <section class="fa-grid" id="fa-volume"></section>
+        <section class="fa-grid" id="fa-speaker-test"></section>
+        <section class="fa-advanced" id="fa-advanced-panel" hidden aria-label="Advanced audio"></section>
+      </main>
+    </div>
+  </div>
+  <script src="/Hostess7/assets/field-shell-dock.js?v=2" defer></script>
+  <script src="/Hostess7/assets/field-audio-settings.js?v=3" defer></script>
+  <script src="/Hostess7/pages-field-boot.js"></script>
+  <script src="/Hostess7/pages-c2-wire.js"></script>
+  <script src="/Hostess7/pages-queen-rtx-bridge.js"></script>
+  <script src="/Hostess7/pages-ammonet-wire.js"></script>
+  <script src="/Hostess7/pages-github-brain-wire.js"></script>
+  <script src="/Hostess7/pages-hostess7-interaction-wire.js"></script>
+</body>
+</html>
