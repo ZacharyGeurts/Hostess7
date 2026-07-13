@@ -1,0 +1,43 @@
+{
+  "schema": "secure-layer/v1",
+  "title": "Secure Layer — enforcement face of Internet 2.0 on the die",
+  "motto": "Secure Layer is not a product beside Internet 2.0. It is how I2 is enforced on KILROY.",
+  "version": "1.0.0",
+  "updated": "2026-07-13",
+  "identity": {
+    "same_fabric_as": "internet_2_0",
+    "kernel_param": "secure_layer=1",
+    "basement": true,
+    "always_on": true
+  },
+  "slots": {
+    "TIME": "sealed epoch · monotonic generation",
+    "MEMORY": "die/region policy · no foreign write",
+    "THERMO": "entropy budget · thermal guard",
+    "CONTEXT": "layout hash · launch seal · C2 generation",
+    "INPUT": "keylog/inject deny default (GuardChip)",
+    "VIEW": "screenshot/capture deny default (GuardChip)"
+  },
+  "zero_cost": {
+    "calm_path": "if generation==sealed && (mask&NEED)==NEED → ALLOW",
+    "idle_overhead_pct": 0,
+    "motto": "Heaven passes free. Hell pays."
+  },
+  "enforcement_modules": [
+    "lib/admin-window-shield.py",
+    "lib/beyond-darpa-security.py",
+    "lib/nexus-probe-guard.py",
+    "lib/self-defense.sh",
+    "lib/field-thermal-guard.py",
+    "lib/connection-gatekeeper.py"
+  ],
+  "diagnostic": {
+    "mode": "mask_collapse",
+    "not": "plate_skip_list",
+    "clear_requires": "debug_self_pass"
+  },
+  "c2": {
+    "surface": "NEXUS C2 basement",
+    "capabilities_doctrine": "data/nexus-c2-harden-doctrine.json"
+  }
+}

@@ -133,3 +133,18 @@ pythong lib/field-unified-device.py json
 | F9 | `lib/field-queen-browser-open.py`, `lib/field-underlay-hotkey.py` |
 | Mint setup | `scripts/field-mint-boot-ready.sh` |
 | KILROY PC core | `lib/kilroy-core.sh`, `NewLatest/KILROY/` (userspace graft until bzImage live) |
+
+## KILROY unified product · Internet 2.0 (2026-07)
+
+**KILROY** is one product (kernel + iPXE face + NEXUS C2 userspace).  
+**Internet 2.0** attaches on boot (`i2=1`) *before* guest grant.  
+**Secure Layer** is I2 enforcement on the die — not a separate product.
+
+```bash
+python3 lib/kilroy-i2-attach.py attach
+python3 lib/nexus-c2-harden.py status
+```
+
+Docs: `docs/KILROY-UNIFIED-PRODUCT.md` · `boot/kilroy.ipxe`  
+Doctrines: `data/kilroy-unified-product-doctrine.json`, `internet-2.0-doctrine.json`, `secure-layer-doctrine.json`, `nexus-c2-harden-doctrine.json`
+

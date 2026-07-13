@@ -1,0 +1,96 @@
+{
+  "schema": "kilroy-unified-product/v1",
+  "title": "KILROY — one product, three faces",
+  "motto": "KILROY is the computer. Internet 2.0 is how it boots onto the field. NEXUS C2 is how you command the secure layer. iPXE is the umbilical — not a second religion.",
+  "version": "1.0.0",
+  "updated": "2026-07-13",
+  "product": {
+    "name": "KILROY",
+    "codename": "Taco",
+    "identity": "Field",
+    "loopback_authority": "127.0.0.1",
+    "repos": {
+      "canonical": "https://github.com/ZacharyGeurts/KILROY",
+      "ipxe_component": "https://github.com/ZacharyGeurts/KILROY_iPXE",
+      "ipxe_status": "component_of_kilroy_not_separate_product"
+    }
+  },
+  "faces": {
+    "kernel": {
+      "id": "kilroy_kernel",
+      "artifact": "KILROY-bzImage",
+      "role": "Field kernel — Linux-compatible substrate, self-defensive slots",
+      "tree": "KILROY/kernel"
+    },
+    "ipxe": {
+      "id": "kilroy_ipxe",
+      "artifact": ["KILROY-iPXE-undionly.kpxe", "KILROY-iPXE-virtio-net.rom", "kilroy.ipxe"],
+      "role": "Netboot face of the same product — only births this kernel",
+      "tree": "KILROY/ipxe (merge target from KILROY_iPXE)",
+      "rule": "Never chain random Linux; only KILROY release assets"
+    },
+    "c2": {
+      "id": "nexus_c2",
+      "port": 9477,
+      "bind": "127.0.0.1",
+      "role": "Userspace command surface — basement secure layer",
+      "module": "lib/threat-panel-http.py",
+      "harden": "data/nexus-c2-harden-doctrine.json"
+    }
+  },
+  "boot_contract": {
+    "id": "kilroy-i2-boot",
+    "order": [
+      "power_pxe_usb",
+      "kilroy_ipxe",
+      "kilroy_bzImage",
+      "secure_layer_seal",
+      "internet_2_0_attach",
+      "nexus_c2_basement",
+      "guest_grant_optional"
+    ],
+    "kernel_cmdline_defaults": {
+      "field": "1",
+      "loopback": "1",
+      "i2": "1",
+      "secure_layer": "1",
+      "c2": "9477",
+      "c2_bind": "127.0.0.1"
+    },
+    "script": "boot/kilroy.ipxe",
+    "docs": "docs/KILROY-UNIFIED-PRODUCT.md"
+  },
+  "internet_2_0": {
+    "doctrine": "data/internet-2.0-doctrine.json",
+    "attach_on_boot": true,
+    "before_guest": true,
+    "components": [
+      "truth_dns_loopback",
+      "single_egress_wire",
+      "secure_layer_enforcement",
+      "field_tld_slots"
+    ]
+  },
+  "secure_layer": {
+    "doctrine": "data/secure-layer-doctrine.json",
+    "same_as_i2_enforcement_face": true,
+    "slots": ["TIME", "MEMORY", "THERMO", "CONTEXT", "INPUT", "VIEW"]
+  },
+  "guest": {
+    "examples": ["AmmoMint", "Linux Mint", "Windows under grant"],
+    "rule": "Guest has no raw WAN; only field-granted sockets after I2 attach"
+  },
+  "merge_plan": {
+    "phase_1": "Doctrine + boot contract + C2 harden (this ship)",
+    "phase_2": "Monorepo KILROY/ipxe from KILROY_iPXE; single version line",
+    "phase_3": "One release workflow: bzImage + iPXE + SHA256 + GPG",
+    "phase_4": "Retire separate product marketing for KILROY_iPXE"
+  },
+  "related": [
+    "data/kilroy-core-doctrine.json",
+    "data/kilroy-boot-services.json",
+    "data/field-stack-doctrine.json",
+    "FIELD-DNS-INTERNET.md",
+    "Hostess7 2.0.8 field research v2 posture"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "internet-2.0/v1",
+  "title": "Internet 2.0 — how the world connects under KILROY",
+  "motto": "Booting KILROY is connecting to Internet 2.0. Legacy clearnet is a grant, not the machine's identity.",
+  "version": "1.0.0",
+  "updated": "2026-07-13",
+  "contrast": {
+    "internet_1_0": {
+      "path": "DHCP → random resolver → opaque ISP → apps guess trust",
+      "identity": "shared trust blob"
+    },
+    "internet_2_0": {
+      "path": "KILROY boot → Secure Layer seal → Truth DNS + single wire → then guest grant",
+      "identity": "one human · one KILROY · field domain"
+    }
+  },
+  "attach_on_boot": {
+    "required": true,
+    "before_guest": true,
+    "kernel_param": "i2=1",
+    "steps": [
+      {
+        "id": "loopback_authority",
+        "detail": "KILROY is 127.0.0.1 — all field services bind loopback first"
+      },
+      {
+        "id": "truth_dns",
+        "module": "lib/field-dns.py",
+        "bind": "127.0.0.1:53",
+        "storage": "dns-internet-field.json",
+        "model": "WHOLE TLD slots + LOCAL NOW recognition",
+        "docs": "FIELD-DNS-INTERNET.md"
+      },
+      {
+        "id": "single_egress_wire",
+        "modules": ["lib/znetwork-field.sh", "lib/hostess7-znetwork-wire.py"],
+        "rule": "No silent multi-path outbound; wire is the pipe"
+      },
+      {
+        "id": "secure_layer_enforce",
+        "doctrine": "data/secure-layer-doctrine.json",
+        "rule": "Capability mask + 4-slot / GuardChip — Heaven free, Hell pays"
+      },
+      {
+        "id": "nexus_c2_basement",
+        "port": 9477,
+        "bind": "127.0.0.1",
+        "doctrine": "data/nexus-c2-harden-doctrine.json"
+      }
+    ]
+  },
+  "field_dns": {
+    "whole_timeline": "Every IANA TLD slot held in field storage",
+    "local_now": "Live probes light recognized slots",
+    "passive_everywhere": true,
+    "puller": "lib/dns-internet-field.py"
+  },
+  "legacy_clearnet": {
+    "default": "not_identity",
+    "access": "explicit_grant_only",
+    "note": "Guest browsers use field-granted resolvers; raw WAN is not the boot path"
+  },
+  "operator_surfaces": {
+    "panel_dns": "http://127.0.0.1:9477/field#dns",
+    "status_cmd": "ammomint-i2 status || pythong lib/kilroy-i2-attach.py status"
+  }
+}
