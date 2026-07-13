@@ -72,9 +72,10 @@ Brain plane lives with the package and H7R capacity fleet — same doctrine as o
 | **Hostess7/** | Brain pins · docs · Pages surface |
 | **library/** | Dewey · plain H7 Exploring training |
 | **AmmoOS** | Field desktop · `:9477` |
-| **KILROY** | Field boot / iPXE plane |
-| **Queen** | Browser shell `:9481` |
-| **Spear** | Wartime C++ · COOKED · FIELD_UDP_WAR_BLASTERS |
+| **Spear** | **Stack of record** · wartime C++ · COOKED · FIELD_UDP_WAR_BLASTERS · FFAT |
+| **Queen / AmmoOS** | Desktop / browser when online — not separate satellite archives |
+
+**Gone (no archive):** public `KILROY` · `KILROY_iPXE` · `ZNetwork`.
 
 Spear wire: [docs/SPEAR-WIRE.md](docs/SPEAR-WIRE.md) · study plan: [library/hostess7-study-plan-today.json](library/hostess7-study-plan-today.json)
 

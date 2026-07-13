@@ -9,7 +9,9 @@ God Bless.
 Hostess 7 is the **main project** — Angel steward under God, field brain, library, and stack pin.  
 **Product path is C++ and lower only.** Shell scripts, Python, and `pip` are **not** the ops control plane.
 
-Sibling wartime stack: **[Spear](https://github.com/ZacharyGeurts/Spear)** (FIELD UDP WAR BLASTERS · COOKED · plain H7 study books).
+Wartime / field-storage stack of record: **[Spear](https://github.com/ZacharyGeurts/Spear)**  
+(FIELD UDP WAR BLASTERS · COOKED · plain H7 study books).  
+**No KILROY public repo. No satellite archives** (`KILROY_iPXE` / `ZNetwork` not product).
 
 ---
 

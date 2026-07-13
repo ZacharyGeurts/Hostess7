@@ -62,9 +62,10 @@ NewLatest **is** the Hostess 7 package. Ops run on native field ELFs. Plates + `
 | **library/** | Dewey shelves · plain **H7** Exploring books |
 | **AmmoOS** | Field desktop · `:9477` |
 | **Grok16** | Sovereign compiler |
-| **KILROY** | Field boot / iPXE |
-| **Queen** | Browser shell `:9481` |
-| **Spear** | Wartime C++ · multi-signal hunt · COOKED / FIELD UDP |
+| **Spear** | **Stack of record** · wartime C++ · FFAT · COOKED / FIELD UDP · fieldmem |
+| **Queen / AmmoOS** | Desktop / browser when that tree is online — not satellite archives |
+
+**Gone:** public `KILROY` repo · `KILROY_iPXE` · `ZNetwork` — **no archives**.
 
 ### Distributed brain
 

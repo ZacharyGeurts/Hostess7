@@ -8,8 +8,11 @@ God Bless.
 
 ## Why this wire exists
 
-Hostess 7 is the Angel / library / package commander. Spear is the wartime C++ stack
-(field storage, multi-signal hunt, lethal dispose, LIVE_PLANET, Big Grin boards).
+Hostess 7 is the Angel / library / package commander. **Spear is the wartime and
+field-storage stack of record** (multi-signal hunt, lethal dispose, LIVE_PLANET,
+Big Grin boards, FFAT, fieldmem). Public **KILROY** is deleted. Satellite repos
+**KILROY_iPXE** and **ZNetwork** are not product paths — **no archives**.
+
 After scripts were removed from the product path, Hostess 7 must not teach `pip`,
 `Hostess7.sh` as bash, or Python reapers. She trains on **plain H7 books** and lives
 beside **field ELFs** + **Spear binaries**.
@@ -42,6 +45,7 @@ beside **field ELFs** + **Spear binaries**.
 | Enemy tone | **HATED** · **PISSED** · lethal rekill forever after ladder |
 | Terror | Does not exist as allowed persistence policy |
 | Pages | Not a kill switch · operator-host defense honesty |
+| Public stack | **Spear** + Hostess7 only for wartime/field · no KILROY archive |
 
 ## Control plane map
 
