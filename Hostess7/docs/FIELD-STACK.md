@@ -2,9 +2,25 @@
 
 Hostess 7 teaches this stack to every operator. Machine-readable doctrine: `data/field-stack-doctrine.json`.
 
+**Hostess 7 2.0.8** absorbs **Field Research v2** conclusions: zero-cost security, sealed generation, CHIPs-from-CHIPs, fixed g16 profiles. Combinatorics trees and plate-meld fuses are **not** the hot-path nervous system.
+
 ## Principle: KILROY is the PC core
 
 **KILROY is `127.0.0.1`** on any computer — transparent, guest OS untouched. It delivers **security** (C2 panel, truth DNS, field protections), **Field Tech speed** (loopback-first services), and **storage space** (field-drive mirror) without bothering the incumbent desktop. **NEXUS C2** (black / green / pink `:9477`) lives inside KILROY. **F9 overrides everyone** — we got the hook.
+
+## Field Research v2 · posture (2026-07)
+
+| Idea | Role |
+|------|------|
+| **Sealed generation** | One generation + `profile_id` + capability mask — not 30-plate meld |
+| **GuardChip** | INPUT / VIEW / CONTEXT (extends 4-slot TIME·MEMORY·THERMO·CONTEXT) — zero tax when calm |
+| **CHIPs C0–C4** | Host · Era · Box · Guard · Wire — compose chips from chips |
+| **Fixed profiles** | `belt_2_0` / `field_opt` / `field_physics` — no tree walk |
+| **AmmoCodium** | Full IDE binary (Code-OSS Ammo brand) — sibling to AmmoCode :9555 |
+| **Tombstones** | Combinatorics studio + plate meld offline only |
+
+Research book: https://zacharygeurts.github.io/Field_Research/  
+Doctrine seal: `SHA256:aVYElqiNin1Q/gcaqa6CGGbJ/gjjG9KXP5ZsXg8uMD8`
 
 ## KILROY self-defensive (always on)
 

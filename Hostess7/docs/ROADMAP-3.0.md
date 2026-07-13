@@ -1,7 +1,8 @@
 # Hostess7 Roadmap — 3.0 through 5.0
 
-**Current:** 2.0.7e — packaged sovereign brain + war realism locked  
-**Next stable:** 2.0.x polish (paths, CI, embed hardening) — no version fork to 2.0.0; stay on 2.0.7x line
+**Current:** **2.0.8** — Field Research v2 · sealed generation · GuardChip · AmmoCodium · CHIPs-from-CHIPs  
+**Prior:** 2.0.7j — full NewLatest stack · strict war harden  
+**Next stable:** 2.0.x polish (paths, CI, embed hardening) then 3.0 living war brain
 
 ## 3.0 — Living War Brain (3–6 months)
 

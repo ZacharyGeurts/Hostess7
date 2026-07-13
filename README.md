@@ -1,5 +1,12 @@
 # Hostess 7
 
+**Package track `Hostess7/` · 2.0.8** — Field Research v2 · sealed generation · GuardChip · AmmoCodium  
+Details: [Hostess7/RELEASE-2.0.8.md](Hostess7/RELEASE-2.0.8.md) · [Hostess7/README.md](Hostess7/README.md)
+
+---
+
+# Hostess 7
+
 God Bless.
 
 **The last computer for the world** — sovereign field stack: full server plane, distributed multibrain, AmmoOS, Grok16, KILROY, Queen, wired siblings.
