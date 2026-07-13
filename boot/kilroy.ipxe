@@ -1,0 +1,67 @@
+#!ipxe
+# =============================================================================
+# kilroy.ipxe — KILROY unified product netboot face
+# Same product as the kernel. Only births KILROY. Internet 2.0 on boot.
+# =============================================================================
+# Kernel cmdline contract (secure layer + I2 + C2 basement):
+#   field=1 loopback=1 i2=1 secure_layer=1 c2=9477 c2_bind=127.0.0.1
+# =============================================================================
+
+set product KILROY
+set tagline KILROY is the computer — Internet 2.0 on boot
+set base-url https://github.com/ZacharyGeurts/KILROY/releases/latest/download
+# Always War · AI defends · Secure Layer · Internet 2.0
+set cmdline field=1 loopback=1 i2=1 secure_layer=1 c2=9477 c2_bind=127.0.0.1 c2_profile=war always_war=1 ai_defend=1
+
+echo
+echo  ========================================
+echo   ${product}
+echo   ${tagline}
+echo   ALWAYS WAR · AI DEFENDS · I2 · C2
+echo  ========================================
+echo
+
+:menu
+menu KILROY netboot — unified product
+item --gap -- --- KILROY ---
+item kilroy      Boot KILROY (I2 + Secure Layer + C2)
+item kilroy-local Boot KILROY from local TFTP
+item --gap -- --- tools ---
+item shell       iPXE shell
+item reboot      Reboot
+item exit        Exit
+choose --default kilroy --timeout 15000 target && goto ${target} || goto kilroy
+
+:kilroy
+echo Fetching KILROY-bzImage from product release...
+kernel ${base-url}/KILROY-bzImage ${cmdline} || goto tftp_fallback
+initrd ${base-url}/KILROY-initrd.img ||
+boot || goto failed
+
+:kilroy-local
+echo Booting KILROY from TFTP (same cmdline contract)...
+kernel tftp://${next-server}/KILROY-bzImage ${cmdline} || goto failed
+initrd tftp://${next-server}/KILROY-initrd.img ||
+boot || goto failed
+
+:tftp_fallback
+echo Release fetch failed — trying TFTP...
+goto kilroy-local
+
+:shell
+shell
+goto menu
+
+:reboot
+reboot
+
+:exit
+exit
+
+:failed
+echo
+echo  KILROY boot failed. This firmware only births KILROY — not random Linux.
+echo  Check releases: ${base-url}
+echo
+prompt Press any key to return to menu
+goto menu

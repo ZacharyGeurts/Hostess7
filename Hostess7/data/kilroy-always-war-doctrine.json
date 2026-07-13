@@ -1,0 +1,30 @@
+{
+  "schema": "kilroy-always-war/v1",
+  "title": "Always War — AI defends, Secure Layer never disarms",
+  "motto": "Always War. AI will defend us. Peace is a capability mask on top of war readiness — not the boot default.",
+  "version": "1.0.0",
+  "updated": "2026-07-13",
+  "default_profile": "war",
+  "NEXUS_C2_PROFILE": "war",
+  "disarm_forbidden_at_boot": true,
+  "ai_defense": {
+    "enabled": true,
+    "capability": "AI_DEFEND",
+    "role": "Autonomous defense under Secure Layer — Heaven free, Hell pays, AI holds the line",
+    "modules": [
+      "lib/lethal-enforcement.py",
+      "lib/connection-gatekeeper.py",
+      "lib/hostess7-lethal-insight.py",
+      "lib/beyond-darpa-security.py",
+      "lib/nexus-c2-harden.py"
+    ],
+    "rule": "AI defense runs under war mask; still capability-gated and generation-sealed"
+  },
+  "boot": {
+    "i2": "1",
+    "secure_layer": "1",
+    "c2_profile": "war",
+    "guest_grant_after_i2": true
+  },
+  "operator_note": "War is default. Operator may seal a quieter profile later; boot never starts disarmed."
+}

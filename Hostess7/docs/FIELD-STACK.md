@@ -148,3 +148,12 @@ python3 lib/nexus-c2-harden.py status
 Docs: `docs/KILROY-UNIFIED-PRODUCT.md` · `boot/kilroy.ipxe`  
 Doctrines: `data/kilroy-unified-product-doctrine.json`, `internet-2.0-doctrine.json`, `secure-layer-doctrine.json`, `nexus-c2-harden-doctrine.json`
 
+
+## Always War · AI defends
+
+Default C2 profile is **war**. AI defense (AI_DEFEND / LETHAL) is first-class under Secure Layer. Boot never starts disarmed.
+
+```bash
+export NEXUS_C2_PROFILE=war
+python3 lib/nexus-c2-harden.py seal war
+```

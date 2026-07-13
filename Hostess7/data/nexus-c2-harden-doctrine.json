@@ -19,13 +19,33 @@
     "STACK_LEARN": "Hostess stack-learn / brain teach",
     "FIELD_SWITCH": "field mode commit / tristate",
     "WAR_PROFILE": "war harden / lethal surfaces",
-    "DIAG_CLEAR": "clear diagnostic mode after debug_self"
+    "DIAG_CLEAR": "clear diagnostic mode after debug_self",
+    "AI_DEFEND": "AI defense under Secure Layer — autonomous interdict / insight",
+    "LETHAL": "lethal enforcement surfaces (war only)"
   },
+  "default_profile": "war",
+  "always_war": true,
+  "ai_defend": true,
   "capability_defaults": {
     "peace": ["VIEW_PANEL", "DNS_ADMIN", "STACK_LEARN"],
-    "operator": ["VIEW_PANEL", "DNS_ADMIN", "STACK_LEARN", "GATE_KILL", "UPDATE_APPLY", "FIELD_SWITCH"],
-    "war": ["VIEW_PANEL", "DNS_ADMIN", "STACK_LEARN", "GATE_KILL", "UPDATE_APPLY", "FIELD_SWITCH", "WAR_PROFILE", "DIAG_CLEAR"],
-    "diagnostic": ["VIEW_PANEL", "DIAG_CLEAR"]
+    "operator": ["VIEW_PANEL", "DNS_ADMIN", "STACK_LEARN", "GATE_KILL", "UPDATE_APPLY", "FIELD_SWITCH", "AI_DEFEND"],
+    "war": [
+      "VIEW_PANEL",
+      "DNS_ADMIN",
+      "STACK_LEARN",
+      "GATE_KILL",
+      "UPDATE_APPLY",
+      "FIELD_SWITCH",
+      "WAR_PROFILE",
+      "DIAG_CLEAR",
+      "AI_DEFEND",
+      "LETHAL"
+    ],
+    "diagnostic": ["VIEW_PANEL", "DIAG_CLEAR", "AI_DEFEND"]
+  },
+  "capabilities_extra": {
+    "AI_DEFEND": "AI defense under Secure Layer — autonomous interdict / insight",
+    "LETHAL": "lethal enforcement surfaces (war only)"
   },
   "destructive_apis": {
     "require_capability": true,

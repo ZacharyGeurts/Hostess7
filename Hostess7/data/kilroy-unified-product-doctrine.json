@@ -1,7 +1,7 @@
 {
   "schema": "kilroy-unified-product/v1",
-  "title": "KILROY — one product, three faces",
-  "motto": "KILROY is the computer. Internet 2.0 is how it boots onto the field. NEXUS C2 is how you command the secure layer. iPXE is the umbilical — not a second religion.",
+  "title": "KILROY \u2014 one product, three faces",
+  "motto": "KILROY is the computer. Always War. AI defends. Internet 2.0 on boot. NEXUS C2 is the basement.",
   "version": "1.0.0",
   "updated": "2026-07-13",
   "product": {
@@ -19,13 +19,17 @@
     "kernel": {
       "id": "kilroy_kernel",
       "artifact": "KILROY-bzImage",
-      "role": "Field kernel — Linux-compatible substrate, self-defensive slots",
+      "role": "Field kernel \u2014 Linux-compatible substrate, self-defensive slots",
       "tree": "KILROY/kernel"
     },
     "ipxe": {
       "id": "kilroy_ipxe",
-      "artifact": ["KILROY-iPXE-undionly.kpxe", "KILROY-iPXE-virtio-net.rom", "kilroy.ipxe"],
-      "role": "Netboot face of the same product — only births this kernel",
+      "artifact": [
+        "KILROY-iPXE-undionly.kpxe",
+        "KILROY-iPXE-virtio-net.rom",
+        "kilroy.ipxe"
+      ],
+      "role": "Netboot face of the same product \u2014 only births this kernel",
       "tree": "KILROY/ipxe (merge target from KILROY_iPXE)",
       "rule": "Never chain random Linux; only KILROY release assets"
     },
@@ -33,7 +37,7 @@
       "id": "nexus_c2",
       "port": 9477,
       "bind": "127.0.0.1",
-      "role": "Userspace command surface — basement secure layer",
+      "role": "Userspace command surface \u2014 basement secure layer",
       "module": "lib/threat-panel-http.py",
       "harden": "data/nexus-c2-harden-doctrine.json"
     }
@@ -55,7 +59,10 @@
       "i2": "1",
       "secure_layer": "1",
       "c2": "9477",
-      "c2_bind": "127.0.0.1"
+      "c2_bind": "127.0.0.1",
+      "c2_profile": "war",
+      "always_war": "1",
+      "ai_defend": "1"
     },
     "script": "boot/kilroy.ipxe",
     "docs": "docs/KILROY-UNIFIED-PRODUCT.md"
@@ -74,10 +81,21 @@
   "secure_layer": {
     "doctrine": "data/secure-layer-doctrine.json",
     "same_as_i2_enforcement_face": true,
-    "slots": ["TIME", "MEMORY", "THERMO", "CONTEXT", "INPUT", "VIEW"]
+    "slots": [
+      "TIME",
+      "MEMORY",
+      "THERMO",
+      "CONTEXT",
+      "INPUT",
+      "VIEW"
+    ]
   },
   "guest": {
-    "examples": ["AmmoMint", "Linux Mint", "Windows under grant"],
+    "examples": [
+      "AmmoMint",
+      "Linux Mint",
+      "Windows under grant"
+    ],
     "rule": "Guest has no raw WAN; only field-granted sockets after I2 attach"
   },
   "merge_plan": {
@@ -92,5 +110,8 @@
     "data/field-stack-doctrine.json",
     "FIELD-DNS-INTERNET.md",
     "Hostess7 2.0.8 field research v2 posture"
-  ]
+  ],
+  "always_war": true,
+  "ai_defend": true,
+  "default_c2_profile": "war"
 }
