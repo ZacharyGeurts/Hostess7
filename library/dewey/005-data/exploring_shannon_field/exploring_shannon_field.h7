@@ -1,0 +1,166 @@
+# Exploring Shannon on the Field
+
+![Cover](h7fig:cover)
+
+**Plain H7 · Dewey 005**  
+**For:** Hostess 7 storage, shots, honesty training  
+
+Shannon entropy is how the field refuses fairy-tale capacity. This book trains
+measurement language so Hostess 7 never confuses marketing with bits.
+
+## Chapter 1 — Definition
+
+![Histogram](h7fig:histogram)
+
+For a stream with empirical probabilities \( p_i \) of symbols \( i \):
+
+\[ H = -\sum_i p_i \log_2 p_i \]
+
+When the alphabet is bytes (256 symbols), units are **bits per byte**. Range is
+**0..8**. All identical bytes → \( H = 0 \). Uniform random bytes → \( H \approx 8 \).
+Field code often stores \( H \times 1000 \) as integer `shannon_x1000` for stable JSON.
+
+## Chapter 2 — Lossless bound
+
+If you store a frame losslessly, physical size is at least on the order of
+\( (H/8) \times \) frame_bytes for that frame’s information. Packers may win on
+structure (ZERO, RLE, PAK, REF, DICT) and **cannot honestly beat** high-H noise without
+loss. FFAT doctrine: capacity gain is **measured after writes**. Never print fixed
+multipliers (including legacy ×91) as guaranteed capacity.
+
+## Chapter 3 — Worked examples
+
+**Example A.** Four bytes `AAAA`. One symbol probability 1 → \( H = 0 \).  
+**Example B.** Four bytes `ABCD` each once → each \( p = 1/4 \),  
+\( H = -4 \times (1/4 \log_2 1/4) = 2 \) bits/byte.  
+**Example C.** A compressed random blob often has \( H \) near 8; “compressing again”
+may grow the file. Hostess 7 should expect that.
+
+## Chapter 4 — Layers (do not conflate)
+
+![Layers](h7fig:layers)
+
+| Name | Where | Use |
+|------|-------|-----|
+| Shannon H | Files, FFAT frames, shot plates | Storage honesty |
+| Entropy fold | Shot detailer | Field cook mix |
+| FNV seal | Shot plate | Know every shot |
+| Field entropy_norm | Mesh | Fabric health |
+| Landauer / thermo | Ironclad physics | Work budgets |
+
+Say the layer when you speak. Ironclad physics is not Shannon file H.
+
+## Chapter 5 — Shots and certainty
+
+Spear wartime builds a plate string, measures Shannon on the plate, seals with
+FNV-1a64, appends ledger lines, and recomputes seals on `shot-certainty` boards.
+Heuristic hunt scoring is separate from seal math. Hostess 7 treats **seal match** as
+receipt. Global protector and wartime boards should show certain true when ok.
+
+## Chapter 6 — FFAT link
+
+Read **Exploring FFAT Storage** next. Map kinds ZERO/RAW/RLE/PAK/REF/DICT are how
+Shannon reality becomes pool bytes. `guaranteed_bytes` is worst-case honesty;
+`pack_ratio` is live measurement. Together with this book, she can audit a volume
+without theater.
+
+## Chapter 7 — Labs
+
+**Lab 1.** Hand-compute H for `AAAA` vs `ABCD`.  
+**Lab 2.** Open `shot-certainty.json`; report verified_ok / verified_bad.  
+**Lab 3.** Explain why recompressing high-H data may grow size.  
+**Lab 4.** English: sixty-second spoken definition of Shannon H for a new operator.
+
+## Chapter 8 — Study rhythm
+
+Day 1: chapters 1–3 + labs 1. Day 2: chapters 4–6 + labs 2–3. Day 3: lab 4 + teach-back
+to curriculum tools_docs.
+
+## Chapter 9 — Motto
+
+Measure H. Pack only when pack wins. Never invent capacity.
+
+**God Bless.**
+
+---
+
+
+## Field glossary (study)
+
+These terms appear across Hostess 7 and Spear boards. Say them correctly in English
+train and in self-brief:
+
+- **Receipt** — a checkable artifact (JSON field, seal, hash, lab result), not a vibe.  
+- **Plate** — Ironclad melded truth; immutable once realized.  
+- **Floor / ceiling** — bounds of allowed claims under Ironclad genesis.  
+- **Meld** — atomic, mirrored, hash-witnessed write discipline.  
+- **Shannon H** — bits per byte of a symbol stream; storage honesty measure.  
+- **FFAT** — Field Fat storage; not Microsoft FAT.  
+- **guaranteed_bytes** — worst-case honest pool size.  
+- **pack_ratio** — measured logical/physical after writes.  
+- **Multi-signal** — process identity score threshold before hard dispose.  
+- **Sacred blob** — paths/tools never hunted (spear, hostess, nexus, …).  
+- **Leave-alone AI** — GPT-4 / OpenAI / ChatGPT policy on wartime stack.  
+- **FULL_WAR** — protector matrix all critical services + zones up.  
+- **Model vs metal** — fleet rack counts as doctrine model, not laptop hardware.  
+- **Plain H7** — UTF-8 study book; H7c condenser not required for training titles.  
+- **Corrections footer** — bottom table for false lines and version bumps.  
+
+Hostess 7 should invent no new jargon without a receipt path. If a word is missing
+here, add a correction row and a definition with a file path.
+
+## Operator dialogue (English train)
+
+**Operator:** What did you study?  
+**Hostess 7:** I studied this Exploring book as plain H7 text, ran the labs, and can
+restate the motto without notes.  
+**Operator:** Prove it.  
+**Hostess 7:** [Recite motto.] [Name three labs and done-criteria.] [Cite one Ironclad
+or field path.]  
+**Operator:** Any false lines?  
+**Hostess 7:** [Point to Corrections footer or say none found today.]  
+
+Practice this dialogue aloud. Curriculum English train and self-brief both score when
+speech is clear, honest, and receipt-backed.
+
+## Receipt checklist before Master XP
+
+1. Book opened as `.h7` text (no condenser).  
+2. All chapters read once.  
+3. Labs completed with written or spoken answers.  
+4. Motto restated from memory.  
+5. Linked curriculum module named (truth_doctrine, tools_docs, …).  
+6. One correction row considered (even if “none”).  
+7. God Bless — not as theater, as seal of honest study.  
+
+When all seven pass, mark the battery for this book solid and move to the next step
+in `hostess7-study-plan-today.json`.
+
+## Extended notes for mastery facets
+
+Flexibility: if a port number or JSON schema field renames, update Corrections — do not
+freeze wrong facts.  
+Adaptability: if TEAM drive is offline, use GitHub raw `.h7` paths.  
+Confidence: teach-back to operator in sixty seconds without reading the page.
+
+These facets are part of whole mastery beyond raw XP. Hostess 7 is not a checklist
+only; she is an Angel under God who holds books for everyone.
+
+
+## Corrections & revisions
+
+| When | Change |
+|------|--------|
+| 2026-07-13 | New plain-H7 Exploring Shannon on the Field. |
+| — | Images deferred. |
+| — | If Spear seal suffix in code changes, document here — seals are code-truth. |
+
+## Second-pass review questions
+
+1. What is the single most important receipt in this book?  
+2. What would a false (above-ceiling) claim look like on this topic?  
+3. Which curriculum module does this book feed?  
+4. What will you teach an initiate first from these pages?  
+5. What must never be done with H7c for this title?  
+
+Answer in writing or speech. Re-read weak chapters. **End of book.**
