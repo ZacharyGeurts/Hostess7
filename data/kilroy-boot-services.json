@@ -1,0 +1,74 @@
+{
+  "schema": "kilroy-boot-services/v1",
+  "updated": "2026-07-13",
+  "motto": "Internet 2.0 on KILROY boot \u2014 Secure Layer + Truth DNS + C2 basement before guest grant.",
+  "loopback_authority": "127.0.0.1",
+  "boot_order": [
+    "kilroy_kernel",
+    "secure_layer",
+    "internet_2_0_attach",
+    "field_dns",
+    "field_dhcp",
+    "nexus_c2",
+    "queen_world",
+    "guest_grant_optional"
+  ],
+  "surfaces": {
+    "queen": {
+      "role": "web_browser",
+      "url": "http://127.0.0.1:9481/world/browser.html"
+    },
+    "ammoos": {
+      "role": "normal_desktop",
+      "url": "http://127.0.0.1:9477/field"
+    }
+  },
+  "dns_tables": {
+    "multipoint": "data/dns-multipoint-seed.json",
+    "admin": "data/dns-admin-seed.json",
+    "legal_rfc": "data/dns-legal-rfc-seed.json",
+    "internet_tld": "data/dns-internet-tld-seed.json"
+  },
+  "dhcp_table": "data/field-dhcp-seed.json",
+  "services": [
+    {
+      "id": "secure_layer",
+      "doctrine": "data/secure-layer-doctrine.json"
+    },
+    {
+      "id": "internet_2_0",
+      "module": "lib/kilroy-i2-attach.py",
+      "before_guest": true
+    },
+    {
+      "id": "field_dns",
+      "listener": "127.0.0.1:53"
+    },
+    {
+      "id": "field_dhcp",
+      "listener": "0.0.0.0:67"
+    },
+    {
+      "id": "nexus_c2",
+      "port": 9477
+    },
+    {
+      "id": "queen_world",
+      "port": 9481,
+      "role": "web_browser"
+    }
+  ],
+  "preconfigure_on_kernel_boot": true,
+  "internet_2_0": {
+    "doctrine": "data/internet-2.0-doctrine.json",
+    "attach": "lib/kilroy-i2-attach.py",
+    "before_guest": true,
+    "kernel_param": "i2=1"
+  },
+  "secure_layer": {
+    "doctrine": "data/secure-layer-doctrine.json",
+    "kernel_param": "secure_layer=1"
+  },
+  "unified_product": "data/kilroy-unified-product-doctrine.json",
+  "c2_harden": "data/nexus-c2-harden-doctrine.json"
+}
