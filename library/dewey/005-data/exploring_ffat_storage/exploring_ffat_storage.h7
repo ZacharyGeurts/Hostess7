@@ -1,0 +1,139 @@
+Exploring FFAT Storage
+Spear Field · Hostess 7 Field Press
+====================================
+
+Field Fat (FFAT) is entropy-packed field storage. It is not Microsoft FAT16/32.
+This book is the field operator's guide: what FFAT is, what it refuses to pretend,
+and how to measure capacity honestly.
+
+Chapter 1 — What FFAT Is
+------------------------
+FFAT (Field Fat) is a field storage layout used by Spear / Hostess 7 for field drives
+and related media. On-disk identity uses field magics:
+
+  SPEARMBR     — master boot record tag (field tech)
+  FFAT\x03ENT  — superblock magic (entropy edition v4)
+  FDRV\x01     — Field Drive identity seal
+
+Legacy superblocks may appear as FFAT\x02FLD. Those are recognized as present but
+obsolete. The field stack never treats "MSDOS5.0" / host vfat as FFAT truth.
+
+Frames are the unit of work. Default field frame size is 4096 bytes. Physical media
+is still addressed in 512-byte sectors; clusters and partitions follow field geometry
+(e.g. partition type 0xE0 for Field Fat, first partition LBA often 2048 for 1 MiB align).
+
+Chapter 2 — Honesty First (Shannon Capacity)
+--------------------------------------------
+Field storage follows Primer honesty (Shannon H and lossless bounds):
+
+  H = −Σ pᵢ log₂ pᵢ    bits per byte on a frame histogram (range 0..8)
+
+A lossless store of a frame must spend at least (H/8) · frame_bytes physical bytes
+for that frame's information content. Capacity gain is MEASURED from what the packer
+actually achieves on real data:
+
+  ZERO  — all-zero logical frames (no pool bytes)
+  RLE   — run-length packed frames
+  PAK   — peak–angle pack (ramps / peaks / valleys)
+  REF   — content-dedup reference to another logical frame
+  DICT  — shared pattern dictionary (host + GPU kin)
+  RAW   — full frame when packing cannot win
+
+NEVER invent a hardcoded multiplier. The old ×91 "fake metadata" superblock is
+rejected and rewritten away. If you see legacy_fake_factor, the volume was lying;
+field tools repair it to honest accounting.
+
+Chapter 3 — Accounting Words That Mean Something
+------------------------------------------------
+Operators must use the same words the volume uses:
+
+  physical_bytes       media size
+  guaranteed_bytes     honest worst-case usable pool (all unique high-H RAW frames)
+  address_space_bytes  sparse logical map · frame size (empty costs map only)
+  logical_stored       sum of logical payload represented
+  physical_used        pool bytes actually written
+  pack_ratio           logical_stored / physical_used  (live, after writes)
+  shannon_avg          mean H over measured frames (bits/byte)
+
+pack_ratio_x1000 is stored as integer thousandths (1000 = 1.0×). It is a measurement
+after writes, not a marketing claim printed at format time.
+
+Chapter 4 — Peak–Angle Pack (PAK)
+---------------------------------
+PAK models a field signal path: more logical samples than stored control points.
+Between peaks, angle-up and angle-down (constant-step ramps) reconstruct the path.
+One PEAK or VALLEY record can cover many samples. Prefer PEAK/VALLEY (most samples
+per control point), then RAMP, FLAT, LIT when choosing encodings.
+
+PAK is for structured field signals — not a license to claim infinite density on
+noise. High Shannon H frames fall back toward RAW. That is correct behavior.
+
+Chapter 5 — Map Entry Kinds
+---------------------------
+Logical map entries are typed:
+
+  FREE 0   unused logical slot
+  ZERO 1   all-zero frame (0 pool bytes)
+  RAW  2   full frame in pool
+  RLE  3   RLE-packed in pool
+  REF  4   content-dedup → other logical id
+  PAK  5   peak–angle pack
+  DICT 6   shared pattern dictionary
+
+Reading a logical frame unpacks by kind. Writing chooses the best honest pack for
+that frame and records kind + Shannon measurement.
+
+Chapter 6 — Virtual AMMOFAT Geometry (Bus Only)
+-----------------------------------------------
+Primer ch.08 fatPack describes virtual AMMOFAT geometry on the field bus — not a
+host vfat filesystem. Typical defaults:
+
+  bytes per sector     512
+  sectors per cluster  8   (field frame / 512)
+  reserved sectors     1
+  FATs                 2
+  root entries         512
+
+Host tools must not mount FFAT volumes as MS-DOS FAT. Field Die fatPack geometry
+lives on bus indices; Field Drive identity uses the FDRV seal.
+
+Chapter 7 — Field Drive Identity
+--------------------------------
+A Field Drive is more than free space. Identity tags bind the media to field law:
+
+  FDRV family seal
+  volume label (field string)
+  secure tag SECURE01 when required
+
+ffat_probe and ffat_ensure are the C++ entry points (Spear):
+
+  ffat_probe(path)           inspect without writing
+  ffat_ensure(path, force)   create/repair honest superblock + map
+  ffat_put_frame / get_frame logical frame IO on a formatted volume
+
+map_divisor defaults to 32 for disks; field memory planes may use 8 for denser
+sparse address space (more field-logical memory per physical pool byte).
+
+Chapter 8 — Operator Rituals
+----------------------------
+1. Probe before format. Know whether you have FFAT v4, legacy, or foreign media.
+2. Reject ×91 and other fake capacity. Prefer guaranteed_bytes over fairy tales.
+3. After writes, read pack_ratio and shannon_avg. Those are the truth of the day.
+4. Seal shots and doctrine separately — storage honesty is not wartime theater.
+5. Scripts are not the product path for Spear field tools. C++ / lower owns runtime.
+
+Chapter 9 — Relationship to Hostess 7 Library
+---------------------------------------------
+This book sits on Dewey shelf 005 (computer programs & data) alongside field
+guides and format registry cards. Hostess 7 holds the books and shares them.
+The text may be stored as Hostess 7 Condenser (H7c) for lossless field packing —
+combinatronic + zlib — without changing the meaning of a single character.
+
+Chapter 10 — Motto
+------------------
+Measure entropy. Pack only when pack wins. Never invent capacity.
+Exploring FFAT Storage is complete when the operator can explain every byte of
+guaranteed_bytes without a story.
+
+God Bless.
+Spear Field · Hostess 7 · Field Fat v4 entropy edition
