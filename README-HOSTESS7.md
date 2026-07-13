@@ -70,15 +70,21 @@ Brain plane lives with the package and H7R capacity fleet — same doctrine as o
 | **field-\*** ELFs | DNS · DHCP · mesh · elevate · AV · C2 · plane |
 | **Grok16** | Sovereign compiler @ field_opt |
 | **Hostess7/** | Brain pins · docs · Pages surface |
+| **library/** | Dewey · plain H7 Exploring training |
 | **AmmoOS** | Field desktop · `:9477` |
 | **KILROY** | Field boot / iPXE plane |
 | **Queen** | Browser shell `:9481` |
+| **Spear** | Wartime C++ · COOKED · FIELD_UDP_WAR_BLASTERS |
+
+Spear wire: [docs/SPEAR-WIRE.md](docs/SPEAR-WIRE.md) · study plan: [library/hostess7-study-plan-today.json](library/hostess7-study-plan-today.json)
 
 Obsolete control plane (do not use for ops):
 
-- `Hostess7.sh` shell body (name may still point at the ELF)
-- `Hostess7/scripts/*.py` training/corpus helpers (not ops control)
+- `pip install` / Python requirements as commander
+- `Hostess7.sh` shell body (name may still point at the ELF — use `field-hostess7`)
+- `Hostess7/scripts/*.py` (not product path)
 - JSON “control panels” → replaced by `FIELD_PLATE=v1` and `.h7m`
+- Soft SIGTERM / “SIGKILL only” slogan → **FIELD_UDP_WAR_BLASTERS** + COOKED ladder
 
 ---
 

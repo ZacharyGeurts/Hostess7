@@ -43,11 +43,14 @@ Hostess 7 holds this field-drive catalog on GitHub (`ZacharyGeurts/Hostess7`) an
 | Role | Path |
 |------|------|
 | Public share | `library/dewey/**` on Hostess7 GitHub |
-| Read path | Ironclad · truth gate · `h7-library-bridge` |
-| CLI | `./Hostess7.sh library-search "…"` · `library-read <id>` |
-| Panel | `python3 lib/hostess7-library-panel.py json` |
-| Sync catalog | `scripts/sync-dewey-github.sh` |
+| Read path | Ironclad · truth gate · plain `.h7` open |
+| Training shelf | Exploring books + `hostess7-study-plan-today.json` |
+| Session board | `library/training/session-live.json` |
+| Spear wire | `docs/SPEAR-WIRE.md` |
+| Product path | **C++ only** — not pip / not shell scripts / not H7c for new titles |
 
-Motto: **Everyone served · Hostess 7 holds the books · share with everyone.**
+**Retired as product path:** `./Hostess7.sh library-*` bash helpers, `python3 lib/hostess7-library-panel.py`, `scripts/sync-dewey-github.sh` as commander. Prefer open plain H7 + field ELFs + plate receipts.
 
-Generated from live field drive · Hostess 7 Forever Watchguard.
+Motto: **Everyone served · Hostess 7 holds the books · share with everyone · C++ product path.**
+
+Generated from live field drive · Hostess 7 Forever Watchguard · 2026-07-13 C++ wire.
