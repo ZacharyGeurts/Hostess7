@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Field True Earth Map · Earth and Beyond</title>
+  <meta name="description" content="True equirectangular Earth from Field satellite base + known grids/GPS. Beyond = LIVE_PLANET field layers (honest)." />
+  <style>
+    :root {
+      --bg:#020805; --green:#33ff66; --dim:#1a993d; --hot:#9affb0; --amber:#c8f060;
+      --red:#ff4466; --cyan:#5eead4; --line:#0d3d1a; --panel:#041208;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--green);
+      font-family:"IBM Plex Mono","Courier New",monospace;font-size:13px}
+    body::before{content:"";pointer-events:none;position:fixed;inset:0;z-index:9;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,80,.03) 2px,rgba(0,255,80,.03) 4px)}
+    header{display:flex;flex-wrap:wrap;gap:.75rem 1rem;justify-content:space-between;align-items:flex-start;
+      padding:.75rem 1rem;border-bottom:1px solid var(--line);background:var(--panel);position:relative;z-index:2}
+    h1{margin:0;font-size:1.05rem;color:var(--hot);text-shadow:0 0 10px rgba(51,255,102,.4)}
+    .sub{color:var(--dim);font-size:.78rem;margin:.25rem 0 0}
+    .actions{display:flex;flex-wrap:wrap;gap:.4rem}
+    button,select{background:#010603;color:var(--green);border:1px solid var(--line);padding:.35rem .55rem;cursor:pointer;font:inherit}
+    button:hover,button.on{border-color:var(--green);color:var(--hot)}
+    main{display:grid;grid-template-columns:1fr 280px;height:calc(100% - 72px);position:relative;z-index:1}
+    @media(max-width:900px){main{grid-template-columns:1fr;height:auto}}
+    .stage-wrap{position:relative;overflow:hidden;background:#000;min-height:50vh}
+    canvas#map{display:block;width:100%;height:100%;cursor:crosshair}
+    aside{border-left:1px solid var(--line);background:var(--panel);padding:.75rem;overflow:auto}
+    .stat{border:1px solid var(--line);padding:.45rem .55rem;margin:0 0 .45rem}
+    .stat b{color:var(--amber);display:block;font-size:.7rem;letter-spacing:.08em}
+    #detail{white-space:pre-wrap;font-size:.78rem;color:var(--hot);line-height:1.4;margin-top:.5rem}
+    .legend span{display:inline-block;width:10px;height:10px;margin-right:.3rem;vertical-align:middle}
+    a{color:var(--cyan)}
+    .ok{color:var(--hot)}.warn{color:var(--amber)}.bad{color:var(--red)}
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>FIELD TRUE EARTH · AND BEYOND</h1>
+      <p class="sub">
+        Base: real equirectangular satellite (SG H7pics / Field assets) ·
+        Overlays: known GPS + 10° grids + LIVE_PLANET layers ·
+        <b class="ok">no fathom</b> · C++ wartime feeds · God Bless
+      </p>
+    </div>
+    <div class="actions">
+      <button type="button" id="btnEarth" class="on">Earth</button>
+      <button type="button" id="btnGrids">Grids</button>
+      <button type="button" id="btnPins">Enemy GPS</button>
+      <button type="button" id="btnBeyond">Beyond</button>
+      <button type="button" id="btnAll">All</button>
+      <button type="button" id="btnExport">Export JSON</button>
+    </div>
+  </header>
+  <main>
+    <div class="stage-wrap"><canvas id="map" width="1800" height="900"></canvas></div>
+    <aside>
+      <div class="stat"><b>BASE</b><span id="sBase">loading…</span></div>
+      <div class="stat"><b>GRIDS</b><span id="sGrids">—</span></div>
+      <div class="stat"><b>ENEMY GPS</b><span id="sPins">—</span></div>
+      <div class="stat"><b>NETWORK KNOWN</b><span id="sNet">—</span></div>
+      <div class="stat"><b>LIVE PLANET</b><span id="sPlanet">—</span></div>
+      <div class="stat legend">
+        <b>LEGEND</b>
+        <div><span style="background:#ff4466"></span> enemy (known GPS)</div>
+        <div><span style="background:#c8f060"></span> target grid (10°)</div>
+        <div><span style="background:#5eead4"></span> beyond / field layer</div>
+      </div>
+      <div class="stat"><b>SELECTED</b><div id="detail">click map pin or grid</div></div>
+      <p class="sub" style="margin-top:1rem">
+        SG path: <code>Desktop/SG/FieldMap/</code><br />
+        Honesty: beyond-earth markers are <b>Field stack layers</b> (LIVE_PLANET / mesh),
+        not claimed telescope photography.
+      </p>
+    </aside>
+  </main>
+  <script>
+  (function () {
+    const canvas = document.getElementById("map");
+    const ctx = canvas.getContext("2d");
+    const STATE = {
+      earth: null,
+      grids: [],
+      kills: [],
+      net: [],
+      planet: {},
+      show: { earth: true, grids: true, pins: true, beyond: true },
+      hover: null
+    };
+
+    function lonLatToXY(lon, lat, w, h) {
+      // equirectangular: lon -180..180 → x, lat 90..-90 → y
+      const x = ((Number(lon) + 180) / 360) * w;
+      const y = ((90 - Number(lat)) / 180) * h;
+      return { x, y };
+    }
+
+    async function j(url) {
+      try {
+        const r = await fetch(url + (url.includes("?") ? "&" : "?") + "t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) return null;
+        return await r.json();
+      } catch (e) { return null; }
+    }
+
+    function loadEarth() {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => { STATE.earth = img; resolve(img); };
+        img.onerror = () => {
+          // fallback lower-res
+          const img2 = new Image();
+          img2.onload = () => { STATE.earth = img2; resolve(img2); };
+          img2.onerror = () => resolve(null);
+          img2.src = "assets/world-equirectangular.jpg";
+        };
+        img.src = "assets/earth-satellite-equirectangular.jpg";
+      });
+    }
+
+    function draw() {
+      const w = canvas.width, h = canvas.height;
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, w, h);
+
+      if (STATE.show.earth && STATE.earth) {
+        ctx.drawImage(STATE.earth, 0, 0, w, h);
+      } else {
+        // procedural ocean if no image
+        const g = ctx.createLinearGradient(0, 0, 0, h);
+        g.addColorStop(0, "#0a1a28"); g.addColorStop(0.5, "#0c2840"); g.addColorStop(1, "#061018");
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
+
+      // faint lat/lon grid always (true map reference)
+      ctx.strokeStyle = "rgba(51,255,102,0.12)";
+      ctx.lineWidth = 1;
+      for (let lon = -180; lon <= 180; lon += 30) {
+        const x = lonLatToXY(lon, 0, w, h).x;
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+      for (let lat = -90; lat <= 90; lat += 30) {
+        const y = lonLatToXY(0, lat, w, h).y;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+
+      // target grids (10°)
+      if (STATE.show.grids) {
+        for (const g of STATE.grids) {
+          const p = lonLatToXY(g.lon, g.lat, w, h);
+          const cell = 10;
+          const p0 = lonLatToXY(g.ilon, g.ilat + cell, w, h);
+          const p1 = lonLatToXY(g.ilon + cell, g.ilat, w, h);
+          ctx.strokeStyle = "rgba(200,240,96,0.55)";
+          ctx.fillStyle = "rgba(200,240,96,0.08)";
+          ctx.lineWidth = 1.5;
+          const rw = p1.x - p0.x, rh = p1.y - p0.y;
+          ctx.fillRect(p0.x, p0.y, rw, rh);
+          ctx.strokeRect(p0.x, p0.y, rw, rh);
+          ctx.fillStyle = "#c8f060";
+          ctx.beginPath(); ctx.arc(p.x, p.y, 4 + Math.min(8, (g.count || 1)), 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "rgba(200,240,96,0.9)";
+          ctx.font = "10px monospace";
+          ctx.fillText(g.id || "G", p.x + 6, p.y - 4);
+        }
+      }
+
+      // enemy GPS pins
+      if (STATE.show.pins) {
+        for (const k of STATE.kills) {
+          const g = k.gps || {};
+          if (g.lat == null || g.lon == null) continue;
+          const p = lonLatToXY(g.lon, g.lat, w, h);
+          ctx.fillStyle = (k.dead || k.status === "DEAD") ? "#ff4466" : "#ff88aa";
+          ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = "rgba(255,255,255,0.35)";
+          ctx.stroke();
+        }
+      }
+
+      // BEYOND — honest Field layers (not fake telescope frames)
+      if (STATE.show.beyond) {
+        // LEO schematic ring (not real TLEs unless provided)
+        ctx.strokeStyle = "rgba(94,234,212,0.35)";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 6]);
+        ctx.beginPath();
+        ctx.ellipse(w / 2, h / 2, w * 0.48, h * 0.48, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#5eead4";
+        ctx.font = "11px monospace";
+        ctx.fillText("FIELD LEO SCHEMATIC (not TLE)", w * 0.62, h * 0.12);
+
+        // LIVE_PLANET node — operator host / field heart
+        const op = lonLatToXY(-97.5, 35.5, w, h); // mid-US placeholder unless operator GPS exists
+        ctx.fillStyle = "#5eead4";
+        ctx.beginPath(); ctx.arc(op.x, op.y, 7, 0, Math.PI * 2); ctx.fill();
+        ctx.fillText("LIVE_PLANET · Field heart", op.x + 10, op.y - 6);
+
+        // beyond markers from planet-live
+        const def = STATE.planet.defending || STATE.planet.racks_online || 0;
+        ctx.fillStyle = "rgba(94,234,212,0.9)";
+        ctx.fillText("BEYOND: LIVE_PLANET defending=" + def + " · mesh zones · Field fabric", 16, h - 16);
+        ctx.fillText("Moon/Mars not photographed here — Field layer labels only", 16, h - 32);
+      }
+
+      // crosshair at hover
+      if (STATE.hover) {
+        const p = lonLatToXY(STATE.hover.lon, STATE.hover.lat, w, h);
+        ctx.strokeStyle = "#9affb0";
+        ctx.beginPath(); ctx.moveTo(p.x - 12, p.y); ctx.lineTo(p.x + 12, p.y);
+        ctx.moveTo(p.x, p.y - 12); ctx.lineTo(p.x, p.y + 12); ctx.stroke();
+      }
+    }
+
+    function pick(mx, my) {
+      const rect = canvas.getBoundingClientRect();
+      const x = (mx - rect.left) * (canvas.width / rect.width);
+      const y = (my - rect.top) * (canvas.height / rect.height);
+      const lon = (x / canvas.width) * 360 - 180;
+      const lat = 90 - (y / canvas.height) * 180;
+      let best = null, bestD = 1e9;
+      const consider = (lat2, lon2, payload) => {
+        const p = lonLatToXY(lon2, lat2, canvas.width, canvas.height);
+        const d = (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y);
+        if (d < bestD && d < 18 * 18) { bestD = d; best = payload; }
+      };
+      for (const g of STATE.grids) consider(g.lat, g.lon, { type: "grid", ...g });
+      for (const k of STATE.kills) {
+        const g = k.gps || {};
+        if (g.lat != null) consider(g.lat, g.lon, { type: "kill", ...k });
+      }
+      return { lon, lat, hit: best };
+    }
+
+    canvas.addEventListener("click", (ev) => {
+      const r = pick(ev.clientX, ev.clientY);
+      STATE.hover = r.hit ? { lat: r.hit.lat || r.hit.gps?.lat, lon: r.hit.lon || r.hit.gps?.lon } : { lat: r.lat, lon: r.lon };
+      const d = document.getElementById("detail");
+      if (r.hit && r.hit.type === "grid") {
+        d.textContent = "GRID " + r.hit.id + "\ncount=" + r.hit.count + " dead=" + r.hit.dead +
+          "\n" + (r.hit.city || "") + ", " + (r.hit.country || "") +
+          "\nseal " + (r.hit.seal || "") + "\nKNOW_OR_SHOTS";
+      } else if (r.hit && r.hit.type === "kill") {
+        const g = r.hit.gps || {};
+        d.textContent = (r.hit.dead || r.hit.status === "DEAD" ? "☠ DEAD " : "") + (r.hit.target || r.hit.id) +
+          "\n" + (r.hit.vector || "") + " · rekill " + (r.hit.rekill_count || 0) +
+          "\nGPS " + g.lat + ", " + g.lon + "\n" + [g.city, g.country, g.isp].filter(Boolean).join(" · ");
+      } else {
+        d.textContent = "map " + r.lat.toFixed(3) + ", " + r.lon.toFixed(3) + "\n(no known pin — not fathomed)";
+      }
+      draw();
+    });
+
+    function setMode(earth, grids, pins, beyond) {
+      STATE.show = { earth, grids, pins, beyond };
+      document.querySelectorAll(".actions button").forEach(b => b.classList.remove("on"));
+      draw();
+    }
+    document.getElementById("btnEarth").onclick = function () { setMode(true, false, false, false); this.classList.add("on"); };
+    document.getElementById("btnGrids").onclick = function () { setMode(true, true, false, false); this.classList.add("on"); };
+    document.getElementById("btnPins").onclick = function () { setMode(true, false, true, false); this.classList.add("on"); };
+    document.getElementById("btnBeyond").onclick = function () { setMode(true, false, false, true); this.classList.add("on"); };
+    document.getElementById("btnAll").onclick = function () { setMode(true, true, true, true); this.classList.add("on"); };
+    document.getElementById("btnExport").onclick = () => {
+      const pack = {
+        schema: "field-true-earth-export/v1",
+        base: "earth-satellite-equirectangular.jpg",
+        projection: "equirectangular",
+        grids: STATE.grids,
+        kills_with_gps: STATE.kills.filter(k => k.gps && k.gps.lat != null).length,
+        planet: STATE.planet,
+        honesty: "beyond layers are Field LIVE_PLANET / mesh labels, not telescope imagery",
+        ts: new Date().toISOString()
+      };
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(pack, null, 2)], { type: "application/json" }));
+      a.download = "field-true-earth-export.json";
+      a.click();
+    };
+
+    async function boot() {
+      await loadEarth();
+      document.getElementById("sBase").textContent = STATE.earth
+        ? ("equirectangular " + STATE.earth.naturalWidth + "×" + STATE.earth.naturalHeight)
+        : "no base image";
+      const [tg, kd, net, pl] = await Promise.all([
+        j("data/target-grids.json"),
+        j("data/kill-dossiers.json"),
+        j("data/network-rekill-live.json"),
+        j("data/planet-live.json")
+      ]);
+      STATE.grids = (tg && tg.grids) || [];
+      STATE.kills = (kd && kd.kills) || [];
+      STATE.net = (net && net.ips) || [];
+      STATE.planet = pl || {};
+      document.getElementById("sGrids").textContent = STATE.grids.length + " cells · " + (tg && tg.pins_gridded || 0) + " pins";
+      document.getElementById("sPins").textContent = STATE.kills.filter(k => k.gps && k.gps.lat != null).length + " / " + STATE.kills.length + " dossiers";
+      document.getElementById("sNet").textContent = (net && net.known_ips) || STATE.net.length || 0;
+      document.getElementById("sPlanet").textContent = (STATE.planet.mode || "—") + " · defending " + (STATE.planet.defending || "—");
+      draw();
+      // live refresh
+      setInterval(async () => {
+        const [tg2, kd2, net2, pl2] = await Promise.all([
+          j("data/target-grids.json"), j("data/kill-dossiers.json"),
+          j("data/network-rekill-live.json"), j("data/planet-live.json")
+        ]);
+        if (tg2) STATE.grids = tg2.grids || STATE.grids;
+        if (kd2) STATE.kills = kd2.kills || STATE.kills;
+        if (net2) STATE.net = net2.ips || STATE.net;
+        if (pl2) STATE.planet = pl2;
+        document.getElementById("sGrids").textContent = STATE.grids.length + " cells";
+        document.getElementById("sPins").textContent = STATE.kills.filter(k => k.gps && k.gps.lat != null).length + " GPS";
+        document.getElementById("sNet").textContent = (net2 && net2.known_ips) || STATE.net.length || 0;
+        document.getElementById("sPlanet").textContent = (STATE.planet.mode || "—") + " · defending " + (STATE.planet.defending || "—");
+        draw();
+      }, 5000);
+    }
+    boot();
+  })();
+  </script>
+</body>
+</html>
