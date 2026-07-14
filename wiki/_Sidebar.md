@@ -11,6 +11,10 @@
 - [[Stack-Siblings]]
 - [[NEXUS-Shield]]
 - [[Training-Campus]]
+- [[Ironclad-3D-Chain]]
+- [[Spear-Field]]
+- [[Exploring-Spear-Books]]
+- [[Field-Manual-CRT]]
 - [[License]]
 
 **Live**

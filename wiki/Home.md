@@ -31,6 +31,10 @@ cd Hostess7   # NewLatest tree
 
 ## Wiki map
 
+- [[Ironclad-3D-Chain]] — operator top 3D pictures up the plate
+- [CRT Field Manual](https://zacharygeurts.github.io/Hostess7/manual/)
+- [Ironclad 3D gallery](https://zacharygeurts.github.io/Hostess7/manual/ironclad-3d.html)
+
 - [[Getting-Started]]
 - [[Cpp-Control-Plane]] — field ELFs · plates · no sh/py
 - [[AmmoOS-Desktop]] — classic OS · `:9477` · Pages desktop
