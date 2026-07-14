@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Field product ISO · Hostess 7 Manual</title>
+  <link rel="stylesheet" href="crt.css" />
+</head>
+<body>
+  <div class="wrap">
+    <p class="kicker">FIELD MANUAL · PRODUCT BOOT</p>
+    <h1 class="cursor">FIELD PRODUCT ISO</h1>
+    <p class="sub">Same path as the test boot drive · no Mint underlay · no casper · no QEMU required</p>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="spear.html">Spear</a>
+      <a href="https://github.com/ZacharyGeurts/Spear/releases">Releases</a>
+    </nav>
+
+    <div class="panel">
+      <span class="badge">PRODUCT</span> Field boot ISO (~18 MiB class)<br />
+      <span class="badge">NOT PRODUCT</span> Mint casper lean remaster (utility only)<br />
+      <span class="badge">STACK</span> kernel + Field initrd + spear · Field1 CLAIMED
+    </div>
+
+    <h2>Build (operator)</h2>
+    <pre>cd Spear
+make product
+# → out/spear-field-*-field-product-*.iso
+# → out/spear-field-latest.iso
+# → out/field-product-receipt.json</pre>
+
+    <h2>Boot menu (test-drive spirit)</h2>
+    <ul>
+      <li><b>Field</b> — default · fast stack</li>
+      <li><b>Normal</b> — full Field path</li>
+      <li><b>Create Field Drive</b> — FFAT claim</li>
+      <li><b>War</b> · <b>Debug</b></li>
+    </ul>
+    <p>Init is SPEAR FIELD (<code>boot/init</code>), not casper. Attach label <b>FIELD1</b> when present.</p>
+
+    <h2>Doctrine</h2>
+    <p>See Spear <code>docs/PRODUCT-BOOT.md</code>. QEMU is optional harness only.</p>
+
+    <div class="footer"><a href="index.html">← Manual home</a> · God Bless</div>
+  </div>
+</body>
+</html>

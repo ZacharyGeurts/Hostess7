@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Field apt · Hostess 7 Manual</title>
+  <link rel="stylesheet" href="crt.css" />
+</head>
+<body>
+  <div class="wrap">
+    <p class="kicker">FIELD MANUAL · APT</p>
+    <h1 class="cursor">HOSTESS 7 FIELD APT</h1>
+    <p class="sub">Sole package origin · GitHub Pages · no Mint nets</p>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="../apt/">Open apt/</a>
+      <a href="https://github.com/ZacharyGeurts/Hostess7/tree/main/apt">Source (main)</a>
+    </nav>
+
+    <div class="panel">
+      Live: <a href="https://zacharygeurts.github.io/Hostess7/apt/">zacharygeurts.github.io/Hostess7/apt/</a>
+    </div>
+
+    <h2>sources.list</h2>
+    <pre>deb [trusted=yes arch=amd64] https://zacharygeurts.github.io/Hostess7/apt field main</pre>
+
+    <h2>On Spear</h2>
+    <pre>field-apt sources
+field-apt update
+field-apt install &lt;pkg&gt;</pre>
+    <p>Foreign Ubuntu/Mint origins are pin-priority −10. Product path is Field tree only.</p>
+
+    <h2>Layout</h2>
+    <pre>apt/
+  dists/field/Release
+  dists/field/main/binary-amd64/Packages[.gz]
+  pool/main/…</pre>
+
+    <div class="footer"><a href="index.html">← Manual home</a> · God Bless</div>
+  </div>
+</body>
+</html>
