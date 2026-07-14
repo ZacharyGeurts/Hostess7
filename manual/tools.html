@@ -9,36 +9,52 @@
 <body>
   <div class="wrap">
     <p class="kicker">FIELD MANUAL · TOOLS</p>
-    <h1 class="cursor">FIELD LINUX TOOLS</h1>
-    <p class="sub">We own the names · multicall fieldbox · ~100 KiB</p>
+    <h1 class="cursor">FIELD TOOLS WE REWRITE</h1>
+    <p class="sub">C++ · tiny ELFs · own the command names · GitHub cap safe</p>
     <nav class="nav">
       <a href="index.html">Home</a>
       <a href="spear.html">Spear</a>
       <a href="tools.html">Field tools</a>
       <a href="apt.html">Field apt</a>
+      <a href="iso.html">ISO</a>
       <a href="training.html">Training</a>
     </nav>
 
     <div class="panel">
-      <code>top</code> <code>nvtop</code> <code>ls</code> <code>ps</code> <code>df</code> <code>free</code>
-      <code>cat</code> <code>uname</code> … → <b>fieldbox</b><br />
-      <code>nvtop</code> / <code>nv-top</code> → <b>field-nvtop</b> (AMOURANTHRTX)
+      Product ISO ~18 MiB Field boot · tools install to <code>/usr/local/bin</code><br />
+      We do <b>not</b> ship Electron OBS, full GTK GIMP, LibreOffice piles.
     </div>
 
-    <h2>Try</h2>
-    <pre>field help
-field ls -la
-top
-nvtop
-field free -h
-field chips</pre>
+    <h2>Core (fieldbox multicall)</h2>
+    <pre>top  ls  ps  df  free  cat  uname  …
+field help</pre>
 
-    <h2>Why she likes them</h2>
-    <p>
-      Hostess 7 can teach-back short mottos: honest <code>/proc</code> metrics,
-      phosphor-clear tables, no Python commander, Ironclad floor (receipts only).
-      Pair with Exploring Field Linux Tools H7 book.
-    </p>
+    <h2>GPU — AMOURANTHRTX</h2>
+    <pre>nvtop
+field-nvtop --once
+field-nvtop --json</pre>
+
+    <h2>Fun rewrites</h2>
+    <table>
+      <tr><th>You type</th><th>Field ELF</th><th>Not shipping</th></tr>
+      <tr><td><code>obs</code></td><td>field-obs · cams · snap · rec</td><td>Electron OBS</td></tr>
+      <tr><td><code>gimp</code></td><td>field-gimp · PPM · chips CRT grade</td><td>GTK GIMP</td></tr>
+      <tr><td><code>nvtop</code></td><td>field-nvtop</td><td>heavy deps</td></tr>
+    </table>
+
+    <h3>Try</h3>
+    <pre>field-obs status
+field-obs cams
+field-obs snap /dev/video0 shot.ppm
+
+field-gimp new 640 480 canvas.ppm
+field-gimp chips canvas.ppm field.ppm
+field-gimp ascii field.ppm 60
+field-gimp invert field.ppm inv.ppm</pre>
+
+    <h2>CHIPs</h2>
+    <pre>spear chip-status
+field chips</pre>
 
     <div class="footer"><a href="index.html">← Manual home</a> · God Bless</div>
   </div>
